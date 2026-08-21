@@ -1,0 +1,640 @@
+{{ 'nw-marquee.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="NwMarquee-{{ section.id }}"
+  class="nw-marquee-section nw-marquee--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} nw-marquee--pause-hover{% endif %}{% if section.settings.enable_parallax %} nw-marquee--parallax{% endif %}"
+  style="
+    --nw-marquee-bg: {{ section.settings.bg_color }};
+    --nw-marquee-color: {{ section.settings.text_color }};
+    --nw-marquee-icon-color: {{ section.settings.icon_color }};
+    --nw-marquee-speed: {{ section.settings.speed }}s;
+    --nw-marquee-font-size-dt: {{ section.settings.font_size_desktop }}px;
+    --nw-marquee-font-size-mb: {{ section.settings.font_size_mobile }}px;
+    --nw-marquee-font-weight: {{ section.settings.font_weight }};
+    --nw-marquee-text-transform: {{ section.settings.text_transform }};
+    --nw-marquee-letter-spacing: {{ section.settings.letter_spacing }}px;
+    --nw-marquee-gap-dt: {{ section.settings.gap_items_desktop }}px;
+    --nw-marquee-gap-mb: {{ section.settings.gap_items_mobile }}px;
+    --nw-marquee-icon-gap-dt: {{ section.settings.gap_icon_text_desktop }}px;
+    --nw-marquee-icon-gap-mb: {{ section.settings.gap_icon_text_mobile }}px;
+    --nw-marquee-icon-size-dt: {{ section.settings.icon_size_desktop }}px;
+    --nw-marquee-icon-size-mb: {{ section.settings.icon_size_mobile }}px;
+    --nw-marquee-min-height-dt: {{ section.settings.section_height_desktop }}px;
+    --nw-marquee-min-height-mb: {{ section.settings.section_height_mobile }}px;
+    --nw-marquee-padding-top-dt: {{ section.settings.padding_top_desktop }}px;
+    --nw-marquee-padding-bottom-dt: {{ section.settings.padding_bottom_desktop }}px;
+    --nw-marquee-padding-top-mb: {{ section.settings.padding_top_mobile }}px;
+    --nw-marquee-padding-bottom-mb: {{ section.settings.padding_bottom_mobile }}px;
+  "
+  data-direction="{{ section.settings.direction }}"
+  data-parallax="{{ section.settings.enable_parallax }}"
+>
+  <div class="nw-marquee__wrapper">
+    <div class="nw-marquee__track">
+      {%- for i in (1..2) -%}
+        <div class="nw-marquee__group" aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}">
+          {%- for repeat_idx in (1..section.settings.repeat_count) -%}
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign icon_to_show = block.settings.icon_override
+                if icon_to_show == 'inherit'
+                  assign icon_to_show = section.settings.icon
+                endif
+              -%}
+              <div class="nw-marquee__item" {{ block.shopify_attributes }}>
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}" class="nw-marquee__link">
+                {%- endif -%}
+
+                {%- if block.settings.image_icon != blank -%}
+                  <span class="nw-marquee__icon nw-marquee__icon--image">
+                    {{ block.settings.image_icon | image_url: width: 100 | image_tag: loading: 'lazy', class: 'nw-marquee__custom-img', alt: block.settings.text }}
+                  </span>
+                {%- elsif section.settings.custom_icon_image != blank and icon_to_show != 'none' and block.settings.icon_override == 'inherit' -%}
+                  <span class="nw-marquee__icon nw-marquee__icon--image">
+                    {{ section.settings.custom_icon_image | image_url: width: 100 | image_tag: loading: 'lazy', class: 'nw-marquee__custom-img', alt: block.settings.text }}
+                  </span>
+                {%- elsif icon_to_show != 'none' -%}
+                  <span class="nw-marquee__icon">
+                    {%- case icon_to_show -%}
+                      {%- when 'verified' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5c.8 0 1.5.5 1.9 1.1l.6.9c.4.6 1.1.9 1.8.8l1.1-.1c.9-.1 1.7.4 2.1 1.2l.4 1c.3.7.9 1.1 1.6 1.3l1.1.2c.9.2 1.5.9 1.5 1.8v1.1c0 .7.5 1.4 1 1.8l.8.7c.6.6.8 1.5.4 2.3l-.5 1c-.3.7-.3 1.5 0 2.2l.5 1c.4.8.2 1.7-.4 2.3l-.8.7c-.5.4-1 1.1-1 1.8v1.1c0 .9-.6 1.6-1.5 1.8l-1.1.2c-.7.2-1.3.6-1.6 1.3l-.4 1c-.4.8-1.2 1.3-2.1 1.2l-1.1-.1c-.7-.1-1.4.2-1.8.8l-.6.9c-.4.6-1.1 1.1-1.9 1.1s-1.5-.5-1.9-1.1l-.6-.9c-.4-.6-1.1-.9-1.8-.8l-1.1.1c-.9.1-1.7-.4-2.1-1.2l-.4-1c-.3-.7-.9-1.1-1.6-1.3l-1.1-.2c-.9-.2-1.5-.9-1.5-1.8v-1.1c0-.7-.5-1.4-1-1.8l-.8-.7c-.6-.6-.8-1.5-.4-2.3l.5-1c.3-.7.3-1.5 0-2.2l-.5-1c-.4-.8-.2-1.7.4-2.3l.8-.7c.5-.4 1-1.1 1-1.8v-1.1c0-.9.6-1.6 1.5-1.8l-1.1-.2c.7-.2 1.3-.6 1.6-1.3l.4-1c.4-.8 1.2-1.3 2.1-1.2l1.1.1c.7.1 1.4-.2 1.8-.8l.6-.9c.4-.6 1.1-1.1 1.9-1.1z" fill="currentColor"/>
+                          <path d="M8.5 12.3l2.4 2.4 5.1-5.1" fill="none" stroke="var(--nw-marquee-bg, #613916)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      {%- when 'star' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      {%- when 'checkmark' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      {%- when 'leaf' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3 9 0 14-6 14-12V6h-2c-1 0-2 .67-3 2zm-4.7 9.7c-2.3 0-4.3-.8-5.3-2.3C8.5 13 11 11.5 14 11c-.5 2.5-2.2 6.7-1.7 6.7z"/>
+                        </svg>
+                      {%- when 'shield' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                        </svg>
+                      {%- when 'heart' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                      {%- when 'truck' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20 8h-3V4H1v13h2a3 3 0 0 0 6 0h6a3 3 0 0 0 6 0h2v-6l-3-3zM6 18.5A1.5 1.5 0 1 1 6 15.5a1.5 1.5 0 0 1 0 3zm12 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM17 12V9.5h2.5l1.5 2.5H17z"/>
+                        </svg>
+                      {%- when 'award' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="8" r="7"/>
+                          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                        </svg>
+                      {%- when 'sparkle' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2zm6 14l1.2 3.6L23 21l-3.8 1.4L18 26l-1.2-3.6L13 21l3.8-1.4L18 16z"/>
+                        </svg>
+                      {%- when 'moon' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12.3 2a10 10 0 0 0 9.7 13.7 10 10 0 1 1-11.4-13.4c.6-.2 1.2-.3 1.7-.3z"/>
+                        </svg>
+                      {%- when 'sun' -%}
+                        <svg class="nw-marquee__icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="12" cy="12" r="5" fill="currentColor"/>
+                          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    {%- endcase -%}
+                  </span>
+                {%- endif -%}
+
+                <span class="nw-marquee__text">{{ block.settings.text }}</span>
+
+                {%- if block.settings.link != blank -%}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.enable_parallax -%}
+<script>
+  (function() {
+    var sectionEl = document.getElementById('NwMarquee-{{ section.id }}');
+    if (!sectionEl) return;
+    var ticking = false;
+    var direction = sectionEl.getAttribute('data-direction') === 'left_to_right' ? 1 : -1;
+    
+    function updateParallax() {
+      var rect = sectionEl.getBoundingClientRect();
+      var inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (inView) {
+        var scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        var offset = (scrollProgress - 0.5) * 160 * direction;
+        sectionEl.style.setProperty('--nw-parallax-shift', offset + 'px');
+      }
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateParallax();
+  })();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "NW Marquee",
+  "tag": "section",
+  "class": "section-nw-marquee",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Animation & Motion"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Scroll Direction",
+      "options": [
+        {
+          "value": "right_to_left",
+          "label": "Right to Left"
+        },
+        {
+          "value": "left_to_right",
+          "label": "Left to Right"
+        }
+      ],
+      "default": "right_to_left"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll Speed",
+      "min": 5,
+      "max": 80,
+      "step": 1,
+      "unit": "s",
+      "default": 25
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on Hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Enable Parallax Scroll Effect",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "repeat_count",
+      "label": "Loop Item Repeat Count",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#F4EFE8"
+    },
+    {
+      "type": "header",
+      "content": "Icon Settings"
+    },
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "Default Icon",
+      "options": [
+        {
+          "value": "verified",
+          "label": "Verified Badge"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "checkmark",
+          "label": "Checkmark"
+        },
+        {
+          "value": "leaf",
+          "label": "Leaf"
+        },
+        {
+          "value": "shield",
+          "label": "Shield"
+        },
+        {
+          "value": "heart",
+          "label": "Heart"
+        },
+        {
+          "value": "truck",
+          "label": "Truck"
+        },
+        {
+          "value": "award",
+          "label": "Award"
+        },
+        {
+          "value": "sparkle",
+          "label": "Sparkle"
+        },
+        {
+          "value": "moon",
+          "label": "Moon"
+        },
+        {
+          "value": "sun",
+          "label": "Sun"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "verified"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_icon_image",
+      "label": "Default Custom Icon Image"
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "label": "Icon Size (Desktop)",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Icon Size (Mobile)",
+      "min": 10,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "label": "Font Size (Desktop)",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Font Size (Mobile)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular (400)"
+        },
+        {
+          "value": "500",
+          "label": "Medium (500)"
+        },
+        {
+          "value": "600",
+          "label": "Semi Bold (600)"
+        },
+        {
+          "value": "700",
+          "label": "Bold (700)"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text Transform",
+      "options": [
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter Spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Spacing & Dimensions"
+    },
+    {
+      "type": "range",
+      "id": "gap_icon_text_desktop",
+      "label": "Gap between Icon & Text (Desktop)",
+      "min": 2,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "gap_icon_text_mobile",
+      "label": "Gap between Icon & Text (Mobile)",
+      "min": 2,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "gap_items_desktop",
+      "label": "Gap between Items (Desktop)",
+      "min": 6,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "gap_items_mobile",
+      "label": "Gap between Items (Mobile)",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "section_height_desktop",
+      "label": "Min Section Height (Desktop)",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "section_height_mobile",
+      "label": "Min Section Height (Mobile)",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding (Desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding (Desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding (Mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding (Mobile)",
+      "default": 14
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Marquee Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "100% ORGANIC MATERIALS"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "icon_override",
+          "label": "Icon Override",
+          "options": [
+            {
+              "value": "inherit",
+              "label": "Use Section Icon"
+            },
+            {
+              "value": "verified",
+              "label": "Verified Badge"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "none",
+              "label": "No Icon"
+            }
+          ],
+          "default": "inherit"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_icon",
+          "label": "Custom Image Icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Marquee",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "text": "100% ORGANIC MATERIALS"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "MADE IN THE USA"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "NO CHEMICAL FOAMS"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "30-YEAR WARRANTY"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "100-NIGHT TRIAL"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "FREE WHITE-GLOVE DELIVERY"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

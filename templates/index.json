@@ -35,36 +35,37 @@
         "heading",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "image_overlay_opacity": 40,
         "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
         "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
         "desktop_content_alignment": "center",
+        "show_text_box": false,
         "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
         "show_text_below": false
       }
     },
     "featured_collection": {
       "type": "featured-collection",
+      "disabled": true,
       "settings": {
+        "collection": "all",
+        "products_to_show": 8,
         "title": "Featured products",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
         "columns_desktop": 4,
-        "color_scheme": "scheme-1",
+        "enable_desktop_slider": false,
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
+        "color_scheme": "scheme-1",
         "image_ratio": "adapt",
         "image_shape": "default",
         "show_secondary_image": true,
@@ -72,13 +73,208 @@
         "show_rating": false,
         "quick_add": "none",
         "columns_mobile": "2",
+        "swipe_on_mobile": false,
         "padding_top": 44,
         "padding_bottom": 36
+      }
+    },
+    "nw_hero_YTR6GB": {
+      "type": "nw-hero",
+      "blocks": {
+        "trust_badge_zWwKea": {
+          "type": "trust_badge",
+          "settings": {
+            "icon_color": "#cc926a",
+            "icon": "moneyback",
+            "custom_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
+            "text": "<p>100-Night Risk-Free Trial</p>"
+          }
+        },
+        "trust_badge_frbj7z": {
+          "type": "trust_badge",
+          "settings": {
+            "icon_color": "#cc926a",
+            "icon": "moneyback",
+            "custom_icon": "shopify://shop_images/truck.svg",
+            "text": "<p>free shipping</p>"
+          }
+        },
+        "trust_badge_wUW6yW": {
+          "type": "trust_badge",
+          "settings": {
+            "icon_color": "#cc926a",
+            "icon": "moneyback",
+            "custom_icon": "shopify://shop_images/warrenty.svg",
+            "text": "<p>30-Year Warranty</p>"
+          }
+        },
+        "trust_badge_H39Hkf": {
+          "type": "trust_badge",
+          "settings": {
+            "icon_color": "#cc926a",
+            "icon": "moneyback",
+            "custom_icon": "shopify://shop_images/interest.svg",
+            "text": "<p>0% Interest financing options</p>"
+          }
+        },
+        "promo_countdown_r7yEcE": {
+          "type": "promo_countdown",
+          "settings": {
+            "promo_title": "<p>🇺🇸 Fourth of July Celebration</p>",
+            "status_text": "<p>LIVE</p>",
+            "promo_subtext": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>",
+            "countdown_label": "<p>Event Ending In</p>",
+            "countdown_end_date": "2026-10-11 23:59:59",
+            "hide_after_timer_end": true
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_zWwKea",
+        "trust_badge_frbj7z",
+        "trust_badge_wUW6yW",
+        "trust_badge_H39Hkf",
+        "promo_countdown_r7yEcE"
+      ],
+      "name": "NW Hero",
+      "settings": {
+        "enable_transparent_header": false,
+        "content_position_h": "space-between",
+        "content_position_v": "center",
+        "text_alignment": "left",
+        "show_reviews": true,
+        "rating_stars": 5,
+        "star_color": "#e57b1e",
+        "rating_text": "<p>4.8/5 from 21,000+ sleepers</p>",
+        "heading": "<h1>Organic Mattress From the Inside Out.</h1>",
+        "subheading": "<p>Bio-optimized mattress engineered with pure materials for deeper recovery.</p>",
+        "show_button": true,
+        "btn_text": "SHOP MATTRESSES",
+        "btn_link": "",
+        "btn_style": "primary",
+        "enable_video_button": true,
+        "video_autoplay": true,
+        "video_source": "shopify_hosted",
+        "shopify_video": "shopify://files/videos/SNO_3_WIDE_FINAL_NOCTA.mp4",
+        "video_url": "",
+        "custom_video_url": "",
+        "overlay_color": "#000000",
+        "overlay_opacity": 80,
+        "bg_type": "none",
+        "bg_image": "shopify://shop_images/image_2_1.png",
+        "bg_color": "#613916",
+        "bg_gradient": "linear-gradient(228deg, rgba(21, 209, 252, 1) 14%, rgba(187, 48, 254, 1) 83%)",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_marquee_RHRj4N": {
+      "type": "nw-marquee",
+      "blocks": {
+        "item_Cgpt9L": {
+          "type": "item",
+          "settings": {
+            "text": "100% ORGANIC MATERIALS",
+            "link": "",
+            "icon_override": "inherit"
+          }
+        },
+        "item_PC6UUy": {
+          "type": "item",
+          "settings": {
+            "text": "MADE IN THE USA",
+            "link": "",
+            "icon_override": "inherit"
+          }
+        },
+        "item_GXiQaE": {
+          "type": "item",
+          "settings": {
+            "text": "100% ORGANIC MATERIALS",
+            "link": "",
+            "icon_override": "inherit"
+          }
+        },
+        "item_qkVXKc": {
+          "type": "item",
+          "settings": {
+            "text": "NO CHEMICAL FOAMS",
+            "link": "",
+            "icon_override": "inherit"
+          }
+        },
+        "item_6RpLjB": {
+          "type": "item",
+          "settings": {
+            "text": "30-YEAR WARRANTY",
+            "link": "",
+            "icon_override": "inherit"
+          }
+        },
+        "item_hR6ExU": {
+          "type": "item",
+          "settings": {
+            "text": "100-NIGHT TRIAL",
+            "link": "",
+            "icon_override": "inherit"
+          }
+        },
+        "item_HAbUeR": {
+          "type": "item",
+          "settings": {
+            "text": "FREE WHITE-GLOVE DELIVERY",
+            "link": "",
+            "icon_override": "inherit"
+          }
+        }
+      },
+      "block_order": [
+        "item_Cgpt9L",
+        "item_PC6UUy",
+        "item_GXiQaE",
+        "item_qkVXKc",
+        "item_6RpLjB",
+        "item_hR6ExU",
+        "item_HAbUeR"
+      ],
+      "name": "NW Marquee",
+      "settings": {
+        "direction": "left_to_right",
+        "speed": 45,
+        "pause_on_hover": true,
+        "enable_parallax": true,
+        "repeat_count": 3,
+        "bg_color": "#613916",
+        "text_color": "#ffffff",
+        "icon_color": "#f4efe8",
+        "icon": "checkmark",
+        "custom_icon_image": "shopify://shop_images/verified.svg",
+        "icon_size_desktop": 24,
+        "icon_size_mobile": 16,
+        "font_size_desktop": 18,
+        "font_size_mobile": 12,
+        "font_weight": "500",
+        "text_transform": "uppercase",
+        "letter_spacing": 0,
+        "gap_icon_text_desktop": 18,
+        "gap_icon_text_mobile": 10,
+        "gap_items_desktop": 18,
+        "gap_items_mobile": 10,
+        "section_height_desktop": 56,
+        "section_height_mobile": 44,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_top_mobile": 14,
+        "padding_bottom_mobile": 14
       }
     }
   },
   "order": [
     "image_banner",
-    "featured_collection"
+    "featured_collection",
+    "nw_hero_YTR6GB",
+    "nw_marquee_RHRj4N"
   ]
 }

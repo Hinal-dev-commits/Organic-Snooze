@@ -1,0 +1,73 @@
+<style>
+  .nw-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 32px;
+    min-height: 56px;
+    border-radius: 1000px;
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 140%;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+    width: 100%;
+    text-align: center;
+  }
+  .nw-btn--primary {
+    background: #CC926A;
+    color: #FFFFFF;
+    border: 1px solid #CC926A;
+  }
+  .nw-btn--primary:hover {
+    background: #b57d57;
+    border-color: #b57d57;
+    color: #FFFFFF;
+  }
+  .nw-btn--secondary {
+    background: #878735;
+    color: #FFFFFF;
+    border: 1px solid #878735;
+  }
+  .nw-btn--secondary:hover {
+    background: #73732d;
+    border-color: #73732d;
+    color: #FFFFFF;
+  }
+  .nw-btn--outline {
+    background: transparent;
+    color: #613916;
+    border: 1px solid #613916;
+  }
+  .nw-btn--outline:hover {
+    background: #613916;
+    color: #FFFFFF;
+  }
+  @media screen and (max-width: 749px) {
+    .nw-btn {
+      font-size: 16px;
+      padding: 18px 24px;
+    }
+  }
+</style>
+
+{%- liquid
+  assign btn_style = style | default: 'primary'
+  assign btn_text = text | default: 'Shop Now'
+  assign btn_link = link | default: '#'
+  assign btn_class = class | default: ''
+-%}
+{%- if btn_link != blank -%}
+  <a href="{{ btn_link }}" class="nw-btn nw-btn--{{ btn_style }}{% if btn_class != blank %} {{ btn_class }}{% endif %}">
+    <span class="nw-btn__text">{{ btn_text }}</span>
+  </a>
+{%- else -%}
+  <button type="button" class="nw-btn nw-btn--{{ btn_style }}{% if btn_class != blank %} {{ btn_class }}{% endif %}">
+    <span class="nw-btn__text">{{ btn_text }}</span>
+  </button>
+{%- endif -%}

@@ -1,0 +1,876 @@
+{{ 'nw-hero.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwHero-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+      background-image: none;
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' %}
+      {% if section.settings.bg_image != blank %}
+        background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      {% endif %}
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+      background-image: none;
+    {% endif %}
+  }
+
+  #NwHero-{{ section.id }} .nw-hero__overlay {
+    background-color: {{ section.settings.overlay_color }};
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwHero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<div
+  id="NwHero-{{ section.id }}"
+  class="nw-hero__wrapper{% if section.settings.enable_transparent_header %} nw-hero--transparent-header{% endif %}"
+  style="
+    --nw-hero-overlay-color: {{ section.settings.overlay_color }};
+    --nw-hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --nw-hero-pt-dt: {{ section.settings.padding_top_desktop }}px;
+    --nw-hero-pb-dt: {{ section.settings.padding_bottom_desktop }}px;
+    --nw-hero-pt-mb: {{ section.settings.padding_top_mobile }}px;
+    --nw-hero-pb-mb: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  {%- if section.settings.video_source == 'shopify_hosted' and section.settings.shopify_video != blank -%}
+    <div class="nw-hero__bg-video-wrapper">
+      {{ section.settings.shopify_video | video_tag: autoplay: section.settings.video_autoplay, loop: true, muted: true, controls: false, playsinline: true, class: 'nw-hero__bg-video' }}
+    </div>
+  {%- elsif section.settings.custom_video_url != blank -%}
+    <div class="nw-hero__bg-video-wrapper">
+      <video class="nw-hero__bg-video"{% if section.settings.video_autoplay %} autoplay{% endif %} loop muted playsinline src="{{ section.settings.custom_video_url }}"></video>
+    </div>
+  {%- elsif section.settings.video_source == 'url' and section.settings.video_url != blank -%}
+    <div class="nw-hero__bg-video-wrapper">
+      {%- if section.settings.video_url.type == 'youtube' -%}
+        <iframe
+          class="nw-hero__bg-video"
+          src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?{% if section.settings.video_autoplay %}autoplay=1&{% endif %}mute=1&loop=1&playlist={{ section.settings.video_url.id }}&controls=0&showinfo=0&rel=0&enablejsapi=1"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      {%- elsif section.settings.video_url.type == 'vimeo' -%}
+        <iframe
+          class="nw-hero__bg-video"
+          src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?{% if section.settings.video_autoplay %}autoplay=1&{% endif %}muted=1&loop=1&background=1"
+          frameborder="0"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+        ></iframe>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="nw-hero__overlay"></div>
+
+  <div class="page-width">
+    <div class="nw-hero__inner nw-hero__inner--h-{{ section.settings.content_position_h }} nw-hero__inner--v-{{ section.settings.content_position_v }}">
+      <div class="nw-hero__content nw-hero__content--align-{{ section.settings.text_alignment }}">
+        {%- if section.settings.show_reviews -%}
+          <div
+            class="nw-hero__rating-wrap"
+            style="--nw-hero-star-color: {{ section.settings.star_color }};"
+          >
+            <div class="nw-hero__stars">
+              {%- for i in (1..5) -%}
+                {%- if i <= section.settings.rating_stars -%}
+                  <span class="nw-hero__star">
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  </span>
+                {%- else -%}
+                  <span class="nw-hero__star nw-hero__star--empty">
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  </span>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            {%- if section.settings.rating_text != blank -%}
+              <div class="nw-hero__rating-text">{{ section.settings.rating_text }}</div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <div class="nw-heading">
+            {{ section.settings.heading }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <div class="nw-hero__subheading">
+            {{ section.settings.subheading }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_button and section.settings.btn_text != blank -%}
+          <div class="nw-hero__button-wrap">
+            {% render 'nw-button',
+              text: section.settings.btn_text,
+              link: section.settings.btn_link,
+              style: section.settings.btn_style,
+              class: 'nw-hero__cta-btn'
+            %}
+          </div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'trust_badge' -%}
+              {%- if forloop.first or prev_block_type != 'trust_badge' -%}
+                <div class="nw-hero__trust-badges">
+              {%- endif -%}
+
+              <div class="nw-hero__trust-item" {{ block.shopify_attributes }}>
+                <span class="nw-hero__trust-icon" style="color: {{ block.settings.icon_color }};">
+                  {%- if block.settings.custom_icon != blank -%}
+                    {{ block.settings.custom_icon | image_url: width: 40 | image_tag: loading: 'lazy', class: 'nw-hero__trust-img' }}
+                  {%- elsif block.settings.icon == 'moneyback' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'truck' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 8h-3V4H1v13h2a3 3 0 0 0 6 0h6a3 3 0 0 0 6 0h2v-6l-3-3zM6 18.5A1.5 1.5 0 1 1 6 15.5a1.5 1.5 0 0 1 0 3zm12 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM17 12V9.5h2.5l1.5 2.5H17z"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'warranty' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="8" r="6"/>
+                      <path d="M7 13l-3 8 8-4 8 4-3-8"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'financing' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'checkmark' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'leaf' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'shield' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'heart' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'award' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="8" r="7"/>
+                      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                    </svg>
+                  {%- elsif block.settings.icon == 'sparkle' -%}
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2L9.5 9.5 2 12l7.5 2.5L12 22l2.5-7.5L22 12l-7.5-2.5z"/>
+                    </svg>
+                  {%- endif -%}
+                </span>
+                {%- if block.settings.text != blank -%}
+                  <div class="nw-hero__trust-text">{{ block.settings.text }}</div>
+                {%- endif -%}
+              </div>
+
+              {%- if forloop.last or section.blocks[forloop.index].type != 'trust_badge' -%}
+                </div>
+              {%- endif -%}
+
+            {%- when 'promo_countdown' -%}
+              <div
+                class="nw-hero__promo-module"
+                data-countdown-date="{{ block.settings.countdown_end_date }}"
+                data-hide-on-end="{{ block.settings.hide_after_timer_end }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="nw-hero__promo-header">
+                  {%- if block.settings.promo_title != blank -%}
+                    <div class="nw-hero__promo-title">{{ block.settings.promo_title }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.status_text != blank -%}
+                    <div class="nw-hero__status-badge">
+                      <span class="nw-hero__status-dot"></span>
+                      <div class="nw-hero__status-text">{{ block.settings.status_text }}</div>
+                    </div>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.promo_subtext != blank -%}
+                  <div class="nw-hero__promo-subtext">{{ block.settings.promo_subtext }}</div>
+                {%- endif -%}
+                <div class="nw-hero__countdown-wrap">
+                  {%- if block.settings.countdown_label != blank -%}
+                    <div class="nw-hero__countdown-label">{{ block.settings.countdown_label }}</div>
+                  {%- endif -%}
+                  <div class="nw-hero__timer-units">
+                    <div class="nw-hero__timer-unit">
+                      <span class="nw-hero__timer-num nw-countdown-days">00</span>
+                      <span class="nw-hero__timer-txt">DAYS</span>
+                    </div>
+                    <span class="nw-hero__timer-sep">:</span>
+                    <div class="nw-hero__timer-unit">
+                      <span class="nw-hero__timer-num nw-countdown-hours">00</span>
+                      <span class="nw-hero__timer-txt">HRS</span>
+                    </div>
+                    <span class="nw-hero__timer-sep">:</span>
+                    <div class="nw-hero__timer-unit">
+                      <span class="nw-hero__timer-num nw-countdown-mins">00</span>
+                      <span class="nw-hero__timer-txt">MINS</span>
+                    </div>
+                    <span class="nw-hero__timer-sep">:</span>
+                    <div class="nw-hero__timer-unit">
+                      <span class="nw-hero__timer-num nw-countdown-secs">00</span>
+                      <span class="nw-hero__timer-txt">SECS</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          {%- endcase -%}
+          {%- assign prev_block_type = block.type -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.enable_video_button -%}
+        <div class="nw-hero__media-col">
+          <button type="button" class="nw-hero__play-btn" aria-label="Play or pause video">
+            <svg class="nw-hero__play-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg class="nw-hero__pause-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var heroEl = document.getElementById('NwHero-{{ section.id }}');
+    if (!heroEl) return;
+    
+    var countdownEl = heroEl.querySelector('[data-countdown-date]');
+    if (countdownEl) {
+      var targetDateStr = countdownEl.getAttribute('data-countdown-date');
+      var hideOnEnd = countdownEl.getAttribute('data-hide-on-end') === 'true';
+      var daysEl = countdownEl.querySelector('.nw-countdown-days');
+      var hoursEl = countdownEl.querySelector('.nw-countdown-hours');
+      var minsEl = countdownEl.querySelector('.nw-countdown-mins');
+      var secsEl = countdownEl.querySelector('.nw-countdown-secs');
+      
+      function padZero(num) {
+        return num < 10 ? '0' + num : num;
+      }
+      
+      if (targetDateStr && targetDateStr.trim() !== '') {
+        var targetDate = new Date(targetDateStr.replace(/-/g, '/')).getTime();
+        
+        function updateTimer() {
+          var now = new Date().getTime();
+          var diff = targetDate - now;
+          if (isNaN(targetDate)) {
+            return;
+          }
+          if (diff <= 0) {
+            if (hideOnEnd) {
+              countdownEl.style.display = 'none';
+            } else {
+              if (daysEl) daysEl.textContent = '00';
+              if (hoursEl) hoursEl.textContent = '00';
+              if (minsEl) minsEl.textContent = '00';
+              if (secsEl) secsEl.textContent = '00';
+            }
+            return;
+          }
+          var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          var secs = Math.floor((diff % (1000 * 60)) / 1000);
+          
+          if (daysEl) daysEl.textContent = padZero(days);
+          if (hoursEl) hoursEl.textContent = padZero(hours);
+          if (minsEl) minsEl.textContent = padZero(mins);
+          if (secsEl) secsEl.textContent = padZero(secs);
+        }
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
+      }
+    }
+
+    var playBtn = heroEl.querySelector('.nw-hero__play-btn');
+    var bgVideo = heroEl.querySelector('.nw-hero__bg-video');
+    if (playBtn && bgVideo) {
+      if (bgVideo.tagName === 'VIDEO') {
+        if (!bgVideo.paused) {
+          heroEl.classList.add('is-video-playing');
+        }
+        bgVideo.addEventListener('play', function() {
+          heroEl.classList.add('is-video-playing');
+        });
+        bgVideo.addEventListener('pause', function() {
+          heroEl.classList.remove('is-video-playing');
+        });
+      }
+      playBtn.addEventListener('click', function() {
+        if (bgVideo.tagName === 'VIDEO') {
+          if (bgVideo.paused) {
+            bgVideo.play();
+          } else {
+            bgVideo.pause();
+          }
+        } else if (bgVideo.tagName === 'IFRAME') {
+          if (heroEl.classList.contains('is-video-playing')) {
+            if (bgVideo.src.indexOf('youtube.com') !== -1) {
+              bgVideo.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            } else if (bgVideo.src.indexOf('vimeo.com') !== -1) {
+              bgVideo.contentWindow.postMessage('{"method":"pause"}', '*');
+            }
+            heroEl.classList.remove('is-video-playing');
+          } else {
+            if (bgVideo.src.indexOf('youtube.com') !== -1) {
+              bgVideo.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            } else if (bgVideo.src.indexOf('vimeo.com') !== -1) {
+              bgVideo.contentWindow.postMessage('{"method":"play"}', '*');
+            }
+            heroEl.classList.add('is-video-playing');
+          }
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "NW Hero",
+  "tag": "section",
+  "class": "section-nw-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header Integration"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header",
+      "label": "Enable Transparent Header Over Hero",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Hero Content Box & Positioning"
+    },
+    {
+      "type": "select",
+      "id": "content_position_h",
+      "label": "Horizontal Positioning",
+      "options": [
+        {
+          "value": "space-between",
+          "label": "Space Between (Content Left & Video Right)"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "space-between"
+    },
+    {
+      "type": "select",
+      "id": "content_position_v",
+      "label": "Vertical Positioning",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "top",
+          "label": "Top"
+        },
+        {
+          "value": "bottom",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Reviews / Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show Reviews / Rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rating_stars",
+      "label": "Rating Stars Count",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_reviews == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#E57B1E",
+      "visible_if": "{{ section.settings.show_reviews == true }}"
+    },
+    {
+      "type": "richtext",
+      "id": "rating_text",
+      "label": "Review Text",
+      "default": "<p>4.8/5 from 21,000+ sleepers</p>",
+      "visible_if": "{{ section.settings.show_reviews == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Organic Mattress From the Inside Out.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Subheading"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Bio-optimized mattress engineered with pure materials for deeper recovery.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "SHOP MATTRESSES",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Video Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_button",
+      "label": "Show Play Video Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay Video in Background",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "video_source",
+      "label": "Video Source",
+      "options": [
+        {
+          "value": "shopify_hosted",
+          "label": "Shopify Hosted Video"
+        },
+        {
+          "value": "url",
+          "label": "YouTube / Vimeo / External URL"
+        }
+      ],
+      "default": "shopify_hosted"
+    },
+    {
+      "type": "video",
+      "id": "shopify_video",
+      "label": "Shopify Hosted Video",
+      "visible_if": "{{ section.settings.video_source == 'shopify_hosted' }}"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "YouTube / Vimeo URL",
+      "accept": ["youtube", "vimeo"],
+      "visible_if": "{{ section.settings.video_source == 'url' }}"
+    },
+    {
+      "type": "text",
+      "id": "custom_video_url",
+      "label": "Direct MP4 Video URL",
+      "visible_if": "{{ section.settings.video_source == 'url' }}"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding (Mobile)",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon Color",
+          "default": "#CC926A"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "options": [
+            {
+              "value": "moneyback",
+              "label": "Moneyback / Shield"
+            },
+            {
+              "value": "truck",
+              "label": "Truck / Free Shipping"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty / Ribbon"
+            },
+            {
+              "value": "financing",
+              "label": "0% Financing"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "leaf",
+              "label": "Organic / Leaf"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "default": "moneyback"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "<p>100-Night Risk-Free Trial</p>"
+        }
+      ]
+    },
+    {
+      "type": "promo_countdown",
+      "name": "Promo & Countdown Box",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "promo_title",
+          "label": "Offer Title",
+          "default": "<p>🇺🇸 Fourth of July Celebration</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "status_text",
+          "label": "Status Badge Text",
+          "default": "<p>LIVE</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "promo_subtext",
+          "label": "Offer Subtext / Coupon",
+          "default": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "countdown_label",
+          "label": "Countdown Label",
+          "default": "<p>Event Ending In</p>"
+        },
+        {
+          "type": "text",
+          "id": "countdown_end_date",
+          "label": "Countdown Target Date (YYYY-MM-DD HH:MM:SS)",
+          "default": "2026-12-31 23:59:59"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_after_timer_end",
+          "label": "Hide this box after timer ends",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Hero",
+      "blocks": [
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "moneyback",
+            "text": "<p>100-Night Risk-Free Trial</p>"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "truck",
+            "text": "<p>Free Shipping</p>"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "warranty",
+            "text": "<p>30-Year Warranty</p>"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "financing",
+            "text": "<p>0% Interest financing options</p>"
+          }
+        },
+        {
+          "type": "promo_countdown"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
