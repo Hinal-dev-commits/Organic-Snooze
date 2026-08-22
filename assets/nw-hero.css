@@ -557,7 +557,7 @@
 @media screen and (max-width: 749px) {
   .nw-hero__wrapper {
     min-height: 821px;
-    align-items: center;
+    align-items: flex-end;
   }
 
   .nw-hero--transparent-header {
