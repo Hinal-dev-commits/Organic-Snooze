@@ -7,7 +7,7 @@ Renders a section description using global rte styles.
 {% enddoc %}
 
 {%- if text != blank -%}
-  <div class="nw-section-description rte{% if class != blank %} {{ class }}{% endif %}">
+  <div class="nw-section-description rte{% if class != blank %} {{ class }}{% endif %}" id="description">
     {{ text }}
   </div>
 {%- endif -%}

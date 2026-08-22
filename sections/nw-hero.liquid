@@ -11,8 +11,15 @@
 
 <style>
   #NwHero-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% if section.settings.enable_transparent_header %}
+      margin-top: calc(-1 * var(--header-height, 76px));
+      min-height: calc(727px + var(--header-height, 76px));
+      padding-top: calc(var(--header-height, 76px) + {{ section.settings.padding_top_desktop | default: 43 }}px) !important;
+      padding-bottom: {{ section.settings.padding_bottom_desktop | default: 43 }}px !important;
+    {% else %}
+      padding-top: {{ section.settings.padding_top_desktop | default: 43 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop | default: 43 }}px;
+    {% endif %}
     {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
       background-color: {{ section.settings.bg_color }};
       background-image: none;
@@ -37,8 +44,15 @@
 
   @media screen and (max-width: 749px) {
     #NwHero-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.enable_transparent_header %}
+        margin-top: calc(-1 * var(--header-height, 60px));
+        min-height: calc(821px + var(--header-height, 60px));
+        padding-top: calc(var(--header-height, 60px) + {{ section.settings.padding_top_mobile | default: 43 }}px) !important;
+        padding-bottom: {{ section.settings.padding_bottom_mobile | default: 43 }}px !important;
+      {% else %}
+        padding-top: {{ section.settings.padding_top_mobile | default: 43 }}px;
+        padding-bottom: {{ section.settings.padding_bottom_mobile | default: 43 }}px;
+      {% endif %}
       {% if section.settings.bg_type == 'image' and hero_media_type != 'image' and section.settings.bg_image_mobile != blank %}
         background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
       {% endif %}
@@ -243,7 +257,30 @@
               >
                 <div class="nw-hero__promo-header">
                   {%- if block.settings.promo_title != blank -%}
-                    <div class="nw-hero__promo-title">{{ block.settings.promo_title }}</div>
+                    <div class="nw-hero__promo-title">
+                      {%- if block.settings.show_icon -%}
+                        {%- if block.settings.icon_type == 'us_flag' -%}
+                          <span class="nw-hero__promo-icon" aria-hidden="true">
+                            <svg width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <rect width="20" height="15" fill="#B22234"/>
+                              <rect y="1.15381" width="20" height="1.15385" fill="white"/>
+                              <rect y="3.46143" width="20" height="1.15385" fill="white"/>
+                              <rect y="5.76904" width="20" height="1.15385" fill="white"/>
+                              <rect y="8.07666" width="20" height="1.15385" fill="white"/>
+                              <rect y="10.3843" width="20" height="1.15385" fill="white"/>
+                              <rect y="12.6919" width="20" height="1.15385" fill="white"/>
+                              <rect width="8" height="8.07692" fill="#3C3B6E"/>
+                              <path d="M1.33 1.5l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zM2.66 3.5l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zM1.33 5.5l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1z" fill="white"/>
+                            </svg>
+                          </span>
+                        {%- elsif block.settings.icon_type == 'custom' and block.settings.custom_icon != blank -%}
+                          <span class="nw-hero__promo-icon" aria-hidden="true">
+                            <img src="{{ block.settings.custom_icon | image_url: width: 40 }}" alt="" width="20" height="15" loading="lazy">
+                          </span>
+                        {%- endif -%}
+                      {%- endif -%}
+                      {{ block.settings.promo_title }}
+                    </div>
                   {%- endif -%}
                   {%- if block.settings.status_text != blank -%}
                     <div class="nw-hero__status-badge">
@@ -273,11 +310,6 @@
                     <div class="nw-hero__timer-unit">
                       <span class="nw-hero__timer-num nw-countdown-mins">00</span>
                       <span class="nw-hero__timer-txt">MINS</span>
-                    </div>
-                    <span class="nw-hero__timer-sep">:</span>
-                    <div class="nw-hero__timer-unit">
-                      <span class="nw-hero__timer-num nw-countdown-secs">00</span>
-                      <span class="nw-hero__timer-txt">SECS</span>
                     </div>
                   </div>
                 </div>
@@ -739,40 +771,40 @@
       "id": "padding_top_desktop",
       "min": 0,
       "max": 100,
-      "step": 2,
+      "step": 1,
       "unit": "px",
       "label": "Top Padding (Desktop)",
-      "default": 0
+      "default": 43
     },
     {
       "type": "range",
       "id": "padding_bottom_desktop",
       "min": 0,
       "max": 100,
-      "step": 2,
+      "step": 1,
       "unit": "px",
       "label": "Bottom Padding (Desktop)",
-      "default": 0
+      "default": 43
     },
     {
       "type": "range",
       "id": "padding_top_mobile",
       "min": 0,
-      "max": 80,
-      "step": 2,
+      "max": 100,
+      "step": 1,
       "unit": "px",
       "label": "Top Padding (Mobile)",
-      "default": 0
+      "default": 43
     },
     {
       "type": "range",
       "id": "padding_bottom_mobile",
       "min": 0,
-      "max": 80,
-      "step": 2,
+      "max": 100,
+      "step": 1,
       "unit": "px",
       "label": "Bottom Padding (Mobile)",
-      "default": 0
+      "default": 43
     }
   ],
   "blocks": [
@@ -857,10 +889,51 @@
       "limit": 1,
       "settings": [
         {
+          "type": "header",
+          "content": "Icon Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show Icon",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "default": "us_flag",
+          "options": [
+            {
+              "value": "us_flag",
+              "label": "US Flag"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Icon"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "visible_if": "{{ block.settings.show_icon == true }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Flag / Icon Image",
+          "visible_if": "{{ block.settings.show_icon == true and block.settings.icon_type == 'custom' }}"
+        },
+        {
+          "type": "header",
+          "content": "Text & Countdown"
+        },
+        {
           "type": "richtext",
           "id": "promo_title",
           "label": "Offer Title",
-          "default": "<p>🇺🇸 Fourth of July Celebration</p>"
+          "default": "<p>Fourth of July Celebration</p>"
         },
         {
           "type": "richtext",
@@ -906,8 +979,8 @@
         "show_reviews": true,
         "rating_stars": 5,
         "star_color": "#E57B1E",
-        "rating_text": "<p>4.8/5 from 21,000+ sleepers</p>",
-        "heading": "<h1>Organic Mattress From the Inside Out.</h1>",
+        "rating_text": "<p>4.9/5 (10,000+ happy sleepers)</p>",
+        "heading": "<h1>The World's Only 100% Organic, Certified Non-Toxic Mattress</h1>",
         "subheading": "<p>Bio-optimized mattress engineered with pure materials for deeper recovery.</p>",
         "show_button": true,
         "btn_text": "SHOP MATTRESSES",
@@ -920,26 +993,18 @@
         "overlay_opacity": 30,
         "bg_type": "image",
         "bg_color": "#613916",
-        "padding_top_desktop": 0,
-        "padding_bottom_desktop": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_top_desktop": 43,
+        "padding_bottom_desktop": 43,
+        "padding_top_mobile": 43,
+        "padding_bottom_mobile": 43
       },
       "blocks": [
         {
           "type": "trust_badge",
           "settings": {
             "icon_color": "#CC926A",
-            "icon": "moneyback",
+            "icon": "trial",
             "text": "<p>100-Night Risk-Free Trial</p>"
-          }
-        },
-        {
-          "type": "trust_badge",
-          "settings": {
-            "icon_color": "#CC926A",
-            "icon": "truck",
-            "text": "<p>Free Shipping</p>"
           }
         },
         {
@@ -951,17 +1016,11 @@
           }
         },
         {
-          "type": "trust_badge",
-          "settings": {
-            "icon_color": "#CC926A",
-            "icon": "financing",
-            "text": "<p>0% Interest financing options</p>"
-          }
-        },
-        {
           "type": "promo_countdown",
           "settings": {
-            "promo_title": "<p>🇺🇸 Fourth of July Celebration</p>",
+            "show_icon": true,
+            "icon_type": "us_flag",
+            "promo_title": "<p>Fourth of July Celebration</p>",
             "status_text": "<p>LIVE</p>",
             "promo_subtext": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>",
             "countdown_label": "<p>Event Ending In</p>",

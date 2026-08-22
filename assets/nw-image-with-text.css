@@ -121,7 +121,7 @@
 .nw-image-with-text__features {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 32px;
+  gap: 14px;
   width: max-content;
   max-width: 100%;
   list-style: none;
@@ -209,7 +209,6 @@
   }
 
   .nw-image-with-text__features {
-    gap: 8px 24px;
     width: 100%;
   }
 

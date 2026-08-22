@@ -56,12 +56,12 @@
 
         faqItems.forEach(function (item) {
           item.classList.remove('is-hidden-by-limit');
+          item.removeAttribute('open');
           var qEl = item.querySelector('.nw-faq__question');
           var aEl = item.querySelector('.nw-faq__answer');
           var text = ((qEl ? qEl.textContent : '') + ' ' + (aEl ? aEl.textContent : '')).toLowerCase();
           if (text.indexOf(query) !== -1) {
             item.style.display = '';
-            item.setAttribute('open', '');
           } else {
             item.style.display = 'none';
           }

@@ -456,6 +456,9 @@
           const section = trigger.closest('.shopify-section') || trigger;
           const { header } = getHeaderElements();
           const headerHeight = header ? header.offsetHeight : 0;
+          if (headerHeight > 0) {
+            document.documentElement.style.setProperty('--header-height', headerHeight + 'px');
+          }
           const sectionBottom = section.getBoundingClientRect().bottom;
           const shouldEnable = sectionBottom > headerHeight;
 
