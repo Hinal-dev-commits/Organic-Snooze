@@ -156,6 +156,35 @@
      * CARD TOGGLE
      * =========================================================
      */
+    function setCardsExpanded(slideIndex, isExpanded) {
+      var cards;
+
+      if (slideIndex !== null && slideIndex !== '') {
+        cards = sectionEl.querySelectorAll(
+          '.swiper-slide[data-slide-index="' + slideIndex + '"] [data-nw-tp-card]'
+        );
+      } else {
+        cards = [];
+      }
+
+      if (!cards.length) {
+        return;
+      }
+
+      cards.forEach(function (card) {
+        card.classList.toggle('is-expanded', isExpanded);
+
+        var toggle = card.querySelector('[data-nw-tp-toggle]');
+        if (toggle) {
+          toggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        }
+      });
+
+      if (swiperInstance) {
+        swiperInstance.update();
+      }
+    }
+
     function initToggles() {
       if (sectionEl.dataset.nwTpToggleBound === 'true') {
         return;
@@ -180,14 +209,32 @@
           return;
         }
 
-        if (!slide.classList.contains('swiper-slide-fully-visible')) {
+        /*
+         * Center-mode clones often get swiper-slide-active but not
+         * swiper-slide-fully-visible (progress rounding / peeking slides).
+         * Blocking on fully-visible made the + button appear dead on copies.
+         */
+        var isActive = slide.classList.contains('swiper-slide-active');
+        var isFullyVisible = slide.classList.contains('swiper-slide-fully-visible');
+
+        if (!isActive && !isFullyVisible) {
           return;
         }
 
         var isExpanded = !card.classList.contains('is-expanded');
+        var slideIndex = slide.getAttribute('data-slide-index');
+
+        if (slideIndex !== null && slideIndex !== '') {
+          setCardsExpanded(slideIndex, isExpanded);
+          return;
+        }
 
         card.classList.toggle('is-expanded', isExpanded);
         btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+
+        if (swiperInstance) {
+          swiperInstance.update();
+        }
       });
     }
 
@@ -281,20 +328,21 @@
 
     function cloneSlide(slide) {
       var clone = slide.cloneNode(true);
+      var sourceCard = slide.querySelector('[data-nw-tp-card]');
+      var sourceExpanded = !!(sourceCard && sourceCard.classList.contains('is-expanded'));
 
       clone.removeAttribute('data-shopify-editor-block');
       clone.removeAttribute('data-shopify-editor-block-index');
-      clone.removeAttribute('data-slide-index');
       clone.setAttribute('data-nw-tp-clone', 'true');
       clone.setAttribute('aria-hidden', 'true');
 
       var card = clone.querySelector('[data-nw-tp-card]');
       if (card) {
-        card.classList.remove('is-expanded');
+        card.classList.toggle('is-expanded', sourceExpanded);
       }
 
       clone.querySelectorAll('[data-nw-tp-toggle]').forEach(function (btn) {
-        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-expanded', sourceExpanded ? 'true' : 'false');
       });
 
       clone.querySelectorAll('[data-nw-tp-expand]').forEach(function (expand) {
