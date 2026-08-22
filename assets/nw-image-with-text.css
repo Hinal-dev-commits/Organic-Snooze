@@ -1,0 +1,226 @@
+.nw-image-with-text .page-width {
+  max-width: 1263px;
+}
+
+.nw-image-with-text {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-image-with-text__grid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.nw-image-with-text__grid--image-right {
+  flex-direction: row-reverse;
+}
+
+.nw-image-with-text__media-wrap {
+  flex: 1 1 616px;
+  max-width: 616px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.nw-image-with-text__side {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1 1 auto;
+  max-width: 500px;
+  width: 100%;
+}
+
+.nw-image-with-text__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.nw-image-with-text__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.nw-image-with-text .nw-section-heading .h2,
+.nw-image-with-text .nw-section-heading .h2 * {
+  color: var(--nw-iwt-heading-color, #613916);
+  text-align: left;
+}
+
+.nw-image-with-text .nw-section-description,
+.nw-image-with-text .nw-section-description * {
+  color: var(--nw-iwt-desc-color, #613916);
+  text-align: left;
+}
+
+.nw-image-with-text__media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px 12px 0px 0px;
+}
+
+.nw-image-with-text__image,
+.nw-image-with-text__placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nw-image-with-text__placeholder {
+  background: var(--nw-iwt-media-bg, #ece8e0);
+  fill: rgba(97, 57, 22, 0.25);
+}
+
+.nw-image-with-text__promo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 16px;
+  background: var(--nw-iwt-promo-bg, #878735);
+  color: var(--nw-iwt-promo-text, #ffffff);
+  box-sizing: border-box;
+  border-radius: 0px 0px 12px 12px;
+}
+
+.nw-image-with-text__promo-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nw-image-with-text__promo-icon img {
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+  display: block;
+}
+
+.nw-image-with-text__promo-text {
+  font-family: var(--font-body-family);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.14px;
+  text-transform: uppercase;
+  color: var(--nw-iwt-promo-text, #ffffff);
+}
+
+.nw-image-with-text__features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  width: max-content;
+  max-width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nw-image-with-text__feature {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+  flex: 0 0 calc(38% - 16px);
+  max-width: calc(50% - 16px);
+  font-family: var(--font-body-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--nw-iwt-feature-color, #613916);
+}
+
+.nw-image-with-text__feature-plus {
+  flex-shrink: 0;
+  color: var(--nw-iwt-feature-plus-color, #613916);
+}
+
+.nw-image-with-text__header.mobile-only {
+  display: none;
+}
+
+@media screen and (max-width: 1023px) {
+  .nw-image-with-text__grid{
+    gap: 36px;
+  }
+  .nw-image-with-text__media-wrap{
+    max-width: 50%;
+    flex: 1 auto;
+  }
+  .nw-image-with-text__side{
+    max-width: 50%;
+    flex: 1 auto;
+  }
+  .nw-image-with-text__feature{
+    flex: 0 0 calc(50% - 16px)
+  }
+  .nw-image-with-text__side{
+    gap: 24px
+  }
+}
+@media screen and (max-width: 749px) {
+  .nw-image-with-text__grid,
+  .nw-image-with-text__grid--image-right {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nw-image-with-text__side {
+    display: flex;
+    flex: unset;
+    max-width: none;
+  }
+
+  .nw-image-with-text__media-wrap {
+    flex: none;
+    max-width: none;
+  }
+
+  .nw-image-with-text__header {
+    display: none;
+    text-align: center;
+    align-items: center;
+  }
+  .nw-image-with-text__header.mobile-only {
+    display: flex;
+    margin-bottom: 32px;
+  }
+
+  .nw-image-with-text .nw-section-heading .h2,
+  .nw-image-with-text .nw-section-heading .h2 * {
+    text-align: center;
+  }
+
+  .nw-image-with-text .nw-section-description,
+  .nw-image-with-text .nw-section-description * {
+    text-align: center;
+  }
+
+  .nw-image-with-text__features {
+    gap: 8px 24px;
+    width: 100%;
+  }
+
+  .nw-image-with-text__feature {
+    flex: 0 0 calc(50% - 12px);
+    max-width: calc(50% - 12px);
+  }
+  .nw-image-with-text__promo{
+    border-radius: 0px 0px 10px 10px;
+  }
+  .nw-image-with-text__media{
+    border-radius: 10px 10px 0px 0px;
+  }
+}

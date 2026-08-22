@@ -1,0 +1,101 @@
+{% doc %}
+Renders a CTA button with optional icon+text trust items below it.
+Use the same setting ids in any section schema: button_text, button_link, button_style,
+badge_1_text..badge_4_text, badge_1_icon..badge_4_icon, badge_1_custom_icon..badge_4_custom_icon.
+@param {object} settings - Section settings object
+@param {string} [class] - Optional extra class on the wrapper
+@example
+{% render 'nw-cta-badges', settings: section.settings %}
+{% enddoc %}
+
+{%- liquid
+  assign show_button = false
+  if settings.button_text != blank
+    assign show_button = true
+  endif
+
+  assign show_badges = false
+  for i in (1..4)
+    case i
+      when 1
+        assign badge_text = settings.badge_1_text
+        assign badge_icon = settings.badge_1_icon
+        assign badge_custom_icon = settings.badge_1_custom_icon
+      when 2
+        assign badge_text = settings.badge_2_text
+        assign badge_icon = settings.badge_2_icon
+        assign badge_custom_icon = settings.badge_2_custom_icon
+      when 3
+        assign badge_text = settings.badge_3_text
+        assign badge_icon = settings.badge_3_icon
+        assign badge_custom_icon = settings.badge_3_custom_icon
+      when 4
+        assign badge_text = settings.badge_4_text
+        assign badge_icon = settings.badge_4_icon
+        assign badge_custom_icon = settings.badge_4_custom_icon
+    endcase
+
+    if badge_text != blank
+      if badge_custom_icon != blank or badge_icon != blank and badge_icon != 'none'
+        assign show_badges = true
+        break
+      endif
+    endif
+  endfor
+-%}
+
+{%- if show_button or show_badges -%}
+  <div class="nw-cta-badges{% if class != blank %} {{ class }}{% endif %}">
+    {%- if show_button -%}
+      <div class="nw-cta-badges__button">
+        {% render 'nw-button',
+          text: settings.button_text,
+          link: settings.button_link,
+          style: settings.button_style
+        %}
+      </div>
+    {%- endif -%}
+
+    {%- if show_badges -%}
+      <div class="nw-cta-badges__list">
+        {%- for i in (1..4) -%}
+          {%- liquid
+            case i
+              when 1
+                assign badge_text = settings.badge_1_text
+                assign badge_icon = settings.badge_1_icon
+                assign badge_custom_icon = settings.badge_1_custom_icon
+              when 2
+                assign badge_text = settings.badge_2_text
+                assign badge_icon = settings.badge_2_icon
+                assign badge_custom_icon = settings.badge_2_custom_icon
+              when 3
+                assign badge_text = settings.badge_3_text
+                assign badge_icon = settings.badge_3_icon
+                assign badge_custom_icon = settings.badge_3_custom_icon
+              when 4
+                assign badge_text = settings.badge_4_text
+                assign badge_icon = settings.badge_4_icon
+                assign badge_custom_icon = settings.badge_4_custom_icon
+            endcase
+
+            assign show_badge = false
+            if badge_text != blank
+              if badge_custom_icon != blank or badge_icon != blank and badge_icon != 'none'
+                assign show_badge = true
+              endif
+            endif
+          -%}
+          {%- if show_badge -%}
+            <div class="nw-cta-badges__item">
+              <span class="nw-cta-badges__icon">
+                {% render 'nw-trust-badge-icon', icon: badge_icon, custom_icon: badge_custom_icon %}
+              </span>
+              <div class="nw-cta-badges__text">{{ badge_text }}</div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

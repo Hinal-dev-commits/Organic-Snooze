@@ -1,0 +1,1209 @@
+{{ 'nw-trusted-people.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwTrustedPeople-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwTrustedPeople-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<section
+  id="NwTrustedPeople-{{ section.id }}"
+  class="nw-trusted-people"
+  style="
+    --nw-tp-heading-color: {{ section.settings.heading_color }};
+    --nw-tp-desc-color: {{ section.settings.description_color }};
+    --nw-tp-card-bg: {{ section.settings.card_bg_color }};
+    --nw-tp-card-text: {{ section.settings.card_text_color }};
+    --nw-tp-card-border: {{ section.settings.card_border_color }};
+    --nw-tp-verified-color: {{ section.settings.verified_icon_color }};
+    --nw-tp-toggle-border: {{ section.settings.toggle_border_color }};
+    --nw-tp-badge-text: {{ section.settings.badge_text_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+    --nw-tp-overlay-color: {{ section.settings.overlay_color }};
+  "
+>
+  <div class="nw-trusted-people__wrapper">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="nw-trusted-people__header">
+        {% render 'nw-section-heading', text: section.settings.heading %}
+        {% render 'nw-section-description', text: section.settings.subheading %}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="nw-trusted-people__slider-wrap">
+        <div class="swiper nw-trusted-people__swiper" id="NwTrustedPeopleSwiper-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+              <div
+                class="swiper-slide"
+                {{ block.shopify_attributes }}
+                data-slide-index="{{ forloop.index0 }}"
+              >
+                {% render 'nw-trusted-people-card', block: block %}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- if section.settings.show_arrows -%}
+          <button type="button" class="nw-swiper-btn nw-swiper-btn--prev" aria-label="Previous slide">
+            {{ 'arrow-left.svg' | inline_asset_content }}
+          </button>
+          <button type="button" class="nw-swiper-btn nw-swiper-btn--next" aria-label="Next slide">
+            {{ 'arrow-right.svg' | inline_asset_content }}
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.show_pagination and section.blocks.size > 1 -%}
+          <div class="nw-swiper-pagination" id="NwTrustedPeoplePagination-{{ section.id }}">
+            {%- for block in section.blocks -%}
+              <span
+                class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+                data-bullet-index="{{ forloop.index0 }}"
+              ></span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_text != blank or section.settings.badge_1_text != blank or section.settings.badge_2_text != blank or section.settings.badge_3_text != blank or section.settings.badge_4_text != blank -%}
+      <div class="nw-trusted-people__footer">
+        {%- if section.settings.button_text != blank -%}
+          <div class="nw-trusted-people__cta">
+            {% render 'nw-button',
+              text: section.settings.button_text,
+              link: section.settings.button_link,
+              style: section.settings.button_style
+            %}
+          </div>
+        {%- endif -%}
+
+        <div class="nw-trusted-people__badges">
+          {%- for i in (1..4) -%}
+            {%- liquid
+              case i
+                when 1
+                  assign badge_text = section.settings.badge_1_text
+                  assign badge_icon = section.settings.badge_1_icon
+                when 2
+                  assign badge_text = section.settings.badge_2_text
+                  assign badge_icon = section.settings.badge_2_icon
+                when 3
+                  assign badge_text = section.settings.badge_3_text
+                  assign badge_icon = section.settings.badge_3_icon
+                when 4
+                  assign badge_text = section.settings.badge_4_text
+                  assign badge_icon = section.settings.badge_4_icon
+              endcase
+            -%}
+            {%- if badge_text != blank and badge_icon != blank -%}
+              <div class="nw-trusted-people__badge">
+                <span class="nw-trusted-people__badge-icon">
+                  {{ badge_icon | image_url: width: 40 | image_tag: loading: 'lazy', alt: '' }}
+                </span>
+                <div class="nw-trusted-people__badge-text">{{ badge_text }}</div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var sectionEl = document.getElementById(
+      'NwTrustedPeople-{{ section.id }}'
+    );
+
+    if (!sectionEl) return;
+
+    var swiperInstance = null;
+
+    /*
+     * Number of REAL Shopify blocks.
+     * Cloned slides are never included in this count.
+     */
+    var originalCount = {{ section.blocks.size | default: 0 }};
+
+
+    /*
+     * =========================================================
+     * CARD TOGGLE
+     * =========================================================
+     */
+    function initToggles() {
+      if (sectionEl.dataset.nwTpToggleBound === 'true') {
+        return;
+      }
+
+      sectionEl.dataset.nwTpToggleBound = 'true';
+
+      sectionEl.addEventListener('click', function (event) {
+        var btn = event.target.closest('[data-nw-tp-toggle]');
+
+        if (!btn || !sectionEl.contains(btn)) {
+          return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        var card = btn.closest('[data-nw-tp-card]');
+        var slide = btn.closest('.swiper-slide');
+
+        if (!card || !slide) {
+          return;
+        }
+
+        if (!slide.classList.contains('swiper-slide-fully-visible')) {
+          return;
+        }
+
+        var isExpanded = !card.classList.contains('is-expanded');
+
+        card.classList.toggle('is-expanded', isExpanded);
+        btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      });
+    }
+
+
+    /*
+     * =========================================================
+     * CUSTOM PAGINATION
+     * =========================================================
+     */
+    function updateCustomPagination() {
+
+      if (!swiperInstance || originalCount <= 1) {
+        return;
+      }
+
+      var paginationEl = sectionEl.querySelector(
+        '#NwTrustedPeoplePagination-{{ section.id }}'
+      );
+
+      if (!paginationEl) return;
+
+      var bullets = paginationEl.querySelectorAll(
+        '.swiper-pagination-bullet'
+      );
+
+      if (!bullets.length) return;
+
+      var currentIndex = getRealSlideIndex(
+        swiperInstance.activeIndex
+      );
+
+      bullets.forEach(function (bullet, index) {
+
+        bullet.classList.toggle(
+          'swiper-pagination-bullet-active',
+          index === currentIndex
+        );
+
+      });
+    }
+
+
+    /*
+     * =========================================================
+     * CUSTOM DOT CLICK
+     * =========================================================
+     */
+    function bindPagination() {
+
+      if (!swiperInstance) return;
+
+      var paginationEl = sectionEl.querySelector(
+        '#NwTrustedPeoplePagination-{{ section.id }}'
+      );
+
+      if (!paginationEl) return;
+
+      var bullets = paginationEl.querySelectorAll(
+        '.swiper-pagination-bullet'
+      );
+
+      bullets.forEach(function (bullet, index) {
+
+        if (
+          bullet.dataset.nwTpPaginationBound === 'true'
+        ) {
+          return;
+        }
+
+        bullet.dataset.nwTpPaginationBound = 'true';
+
+        bullet.addEventListener('click', function (event) {
+
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (!swiperInstance) return;
+
+          var sliderEl = sectionEl.querySelector('.nw-trusted-people__swiper');
+          var meta = sliderEl ? getSlideMeta(sliderEl) : { startIndex: 0 };
+
+          swiperInstance.slideTo(meta.startIndex + index, 600);
+
+        });
+
+      });
+
+      updateCustomPagination();
+    }
+
+
+    function cloneSlide(slide) {
+      var clone = slide.cloneNode(true);
+
+      clone.removeAttribute('data-shopify-editor-block');
+      clone.removeAttribute('data-shopify-editor-block-index');
+      clone.removeAttribute('data-slide-index');
+      clone.setAttribute('data-nw-tp-clone', 'true');
+      clone.setAttribute('aria-hidden', 'true');
+
+      var card = clone.querySelector('[data-nw-tp-card]');
+      if (card) {
+        card.classList.remove('is-expanded');
+      }
+
+      clone.querySelectorAll('[data-nw-tp-toggle]').forEach(function (btn) {
+        btn.setAttribute('aria-expanded', 'false');
+      });
+
+      clone.querySelectorAll('[data-nw-tp-expand]').forEach(function (expand) {
+        expand.removeAttribute('hidden');
+      });
+
+      return clone;
+    }
+
+    function removeClones(wrapper) {
+      wrapper
+        .querySelectorAll(':scope > .swiper-slide[data-nw-tp-clone]')
+        .forEach(function (slide) {
+          slide.remove();
+        });
+    }
+
+    function getSlideMeta(sliderEl) {
+      return {
+        startIndex: parseInt(sliderEl.dataset.nwTpStartIndex, 10) || 0,
+        copyCount: parseInt(sliderEl.dataset.nwTpCopyCount, 10) || originalCount,
+        middleEnd: parseInt(sliderEl.dataset.nwTpMiddleEnd, 10) || originalCount
+      };
+    }
+
+    function ensureEnoughSlides(sliderEl) {
+      var wrapper = sliderEl.querySelector('.swiper-wrapper');
+      if (!wrapper) {
+        return { startIndex: 0, copyCount: originalCount, middleEnd: originalCount };
+      }
+
+      removeClones(wrapper);
+
+      var originalSlides = Array.from(
+        wrapper.querySelectorAll(':scope > .swiper-slide:not([data-nw-tp-clone])')
+      );
+
+      var count = originalSlides.length;
+
+      if (count <= 1) {
+        sliderEl.dataset.nwTpStartIndex = '0';
+        sliderEl.dataset.nwTpCopyCount = String(count);
+        sliderEl.dataset.nwTpMiddleEnd = String(count);
+        return { startIndex: 0, copyCount: count, middleEnd: count };
+      }
+
+      var sliderWidth = sliderEl.clientWidth;
+      var slideWidth = originalSlides[0].getBoundingClientRect().width;
+
+      if (!sliderWidth || !slideWidth || slideWidth <= 0) {
+        sliderEl.dataset.nwTpStartIndex = String(count);
+        sliderEl.dataset.nwTpCopyCount = String(count);
+        sliderEl.dataset.nwTpMiddleEnd = String(count * 2);
+        return { startIndex: count, copyCount: count, middleEnd: count * 2 };
+      }
+
+      var spaceBetween = window.innerWidth >= 750 ? 16 : 12;
+      var visibleSlides = Math.ceil(sliderWidth / (slideWidth + spaceBetween));
+      var setsNeeded = Math.max(
+        3,
+        Math.ceil((visibleSlides * 2 + count) / count) + 1
+      );
+
+      var extraSets = setsNeeded - 1;
+      var prependSets = Math.ceil(extraSets / 2);
+      var appendSets = extraSets - prependSets;
+      var p;
+      var a;
+      var fragment;
+
+      for (p = 0; p < prependSets; p++) {
+        fragment = document.createDocumentFragment();
+
+        originalSlides.forEach(function (slide) {
+          fragment.appendChild(cloneSlide(slide));
+        });
+
+        wrapper.insertBefore(fragment, wrapper.firstChild);
+      }
+
+      for (a = 0; a < appendSets; a++) {
+        originalSlides.forEach(function (slide) {
+          wrapper.appendChild(cloneSlide(slide));
+        });
+      }
+
+      var startIndex = count * prependSets;
+      var middleEnd = count * (prependSets + 1);
+
+      sliderEl.dataset.nwTpStartIndex = String(startIndex);
+      sliderEl.dataset.nwTpCopyCount = String(count);
+      sliderEl.dataset.nwTpMiddleEnd = String(middleEnd);
+
+      return {
+        startIndex: startIndex,
+        copyCount: count,
+        middleEnd: middleEnd
+      };
+    }
+
+    function fixInfinitePosition(swiper) {
+      if (!swiper || originalCount <= 1) return;
+
+      var sliderEl = swiper.el;
+      var meta = getSlideMeta(sliderEl);
+      var activeIndex = swiper.activeIndex;
+
+      if (activeIndex >= meta.middleEnd) {
+        swiper.slideTo(activeIndex - meta.copyCount, 0);
+      } else if (activeIndex < meta.startIndex) {
+        swiper.slideTo(activeIndex + meta.copyCount, 0);
+      }
+    }
+
+    function getRealSlideIndex(activeIndex) {
+      return ((activeIndex % originalCount) + originalCount) % originalCount;
+    }
+
+
+    /*
+     * =========================================================
+     * INITIALIZE SWIPER
+     * =========================================================
+     */
+    function initSwiper() {
+
+      /*
+       * Wait for Swiper library.
+       */
+      if (typeof Swiper === 'undefined') {
+
+        window.setTimeout(
+          initSwiper,
+          50
+        );
+
+        return;
+      }
+
+
+      var sliderEl = sectionEl.querySelector(
+        '.nw-trusted-people__swiper'
+      );
+
+
+      if (!sliderEl) return;
+
+
+      /*
+       * Destroy previous Swiper instance.
+       *
+       * Required for Shopify Theme Editor reloads.
+       */
+      if (sliderEl.swiper) {
+
+        sliderEl.swiper.destroy(
+          true,
+          true
+        );
+
+      }
+
+
+      swiperInstance = null;
+
+      var enableInfinite = originalCount > 1;
+      var slideMeta = { startIndex: 0, copyCount: originalCount, middleEnd: originalCount };
+
+      if (enableInfinite) {
+        slideMeta = ensureEnoughSlides(sliderEl);
+      }
+
+      var swiperOptions = {
+        slidesPerView: 'auto',
+        spaceBetween: 12,
+        centeredSlides: true,
+        centeredSlidesBounds: false,
+        loop: false,
+        initialSlide: slideMeta.startIndex,
+        speed: 600,
+        grabCursor: true,
+        simulateTouch: true,
+        allowTouchMove: true,
+        watchSlidesProgress: true,
+        watchOverflow: false,
+        observer: true,
+        observeParents: true,
+        resizeObserver: true,
+        {% if section.settings.show_arrows %}
+        navigation: {
+          nextEl: sectionEl.querySelector('.nw-swiper-btn--next'),
+          prevEl: sectionEl.querySelector('.nw-swiper-btn--prev'),
+          disabledClass: 'swiper-button-disabled'
+        },
+        {% endif %}
+        breakpoints: {
+          750: {
+            spaceBetween: 16
+          }
+        }
+      };
+
+      swiperInstance = new Swiper(sliderEl, swiperOptions);
+
+      swiperInstance.on('slideChange', function () {
+        updateCustomPagination();
+      });
+
+      swiperInstance.on('slideChangeTransitionEnd', function () {
+        fixInfinitePosition(swiperInstance);
+        updateCustomPagination();
+      });
+
+      swiperInstance.on('transitionEnd', function () {
+        updateCustomPagination();
+      });
+
+      swiperInstance.on('resize', function () {
+        var savedIndex = getRealSlideIndex(swiperInstance.activeIndex);
+        var refreshedMeta = slideMeta;
+
+        if (enableInfinite) {
+          refreshedMeta = ensureEnoughSlides(sliderEl);
+        }
+
+        swiperInstance.update();
+        swiperInstance.slideTo(refreshedMeta.startIndex + savedIndex, 0);
+        updateCustomPagination();
+
+        {% if section.settings.show_arrows %}
+        if (swiperInstance.navigation) {
+          swiperInstance.navigation.update();
+        }
+        {% endif %}
+      });
+
+      updateCustomPagination();
+      bindPagination();
+
+      {% if section.settings.show_arrows %}
+      if (swiperInstance.navigation) {
+        swiperInstance.navigation.update();
+      }
+      {% endif %}
+
+      window.requestAnimationFrame(function () {
+        if (!swiperInstance) return;
+
+        swiperInstance.update();
+        swiperInstance.slideTo(slideMeta.startIndex + getRealSlideIndex(swiperInstance.activeIndex), 0);
+        fixInfinitePosition(swiperInstance);
+
+        {% if section.settings.show_arrows %}
+        if (swiperInstance.navigation) {
+          swiperInstance.navigation.update();
+        }
+        {% endif %}
+
+        updateCustomPagination();
+      });
+
+      window.setTimeout(function () {
+        if (!swiperInstance) return;
+
+        if (enableInfinite) {
+          slideMeta = ensureEnoughSlides(sliderEl);
+        }
+
+        swiperInstance.update();
+        swiperInstance.slideTo(slideMeta.startIndex + getRealSlideIndex(swiperInstance.activeIndex), 0);
+        fixInfinitePosition(swiperInstance);
+
+        {% if section.settings.show_arrows %}
+        if (swiperInstance.navigation) {
+          swiperInstance.navigation.update();
+        }
+        {% endif %}
+
+        updateCustomPagination();
+      }, 150);
+    }
+
+
+    /*
+     * =========================================================
+     * SECTION INIT
+     * =========================================================
+     */
+    function initSection() {
+
+      initToggles();
+
+      initSwiper();
+
+    }
+
+
+    /*
+     * =========================================================
+     * INITIAL PAGE LOAD
+     * =========================================================
+     */
+    if (
+      document.readyState === 'loading'
+    ) {
+
+      document.addEventListener(
+        'DOMContentLoaded',
+        initSection
+      );
+
+    } else {
+
+      initSection();
+
+    }
+
+
+    /*
+     * =========================================================
+     * SHOPIFY SECTION LOAD
+     * =========================================================
+     */
+    document.addEventListener(
+      'shopify:section:load',
+      function (event) {
+
+        if (
+          event.target &&
+          event.target.contains(sectionEl)
+        ) {
+
+          initSection();
+
+        }
+
+      }
+    );
+
+
+    /*
+     * =========================================================
+     * SHOPIFY SECTION SELECT
+     * =========================================================
+     */
+    document.addEventListener(
+      'shopify:section:select',
+      function () {
+
+        var sliderEl =
+          sectionEl.querySelector(
+            '.nw-trusted-people__swiper'
+          );
+
+
+        if (
+          !sliderEl ||
+          !sliderEl.swiper
+        ) {
+          return;
+        }
+
+
+        sliderEl.swiper.update();
+
+
+        {% if section.settings.show_arrows %}
+
+        if (
+          sliderEl.swiper.navigation
+        ) {
+
+          sliderEl.swiper.navigation.update();
+
+        }
+
+        {% endif %}
+
+
+        updateCustomPagination();
+
+      }
+    );
+
+
+    /*
+     * =========================================================
+     * SHOPIFY BLOCK SELECT
+     * =========================================================
+     */
+    document.addEventListener(
+      'shopify:block:select',
+      function (event) {
+
+        var sliderEl =
+          sectionEl.querySelector(
+            '.nw-trusted-people__swiper'
+          );
+
+
+        if (
+          !sliderEl ||
+          !sliderEl.swiper
+        ) {
+          return;
+        }
+
+
+        /*
+         * Ignore cloned slides.
+         */
+        if (
+          event.target &&
+          event.target.getAttribute(
+            'data-nw-tp-clone'
+          ) === 'true'
+        ) {
+
+          return;
+
+        }
+
+
+        var slideIndex =
+          event.target &&
+          event.target.getAttribute(
+            'data-slide-index'
+          );
+
+
+        if (
+          slideIndex === null ||
+          slideIndex === undefined
+        ) {
+
+          return;
+
+        }
+
+
+        var index =
+          parseInt(
+            slideIndex,
+            10
+          );
+
+
+        if (isNaN(index)) return;
+
+
+        if (
+          sliderEl.swiper.params.loop
+        ) {
+
+          sliderEl.swiper.slideToLoop(
+            index,
+            400
+          );
+
+        } else {
+
+          var meta = getSlideMeta(sliderEl);
+
+          sliderEl.swiper.slideTo(
+            meta.startIndex + index,
+            400
+          );
+
+        }
+
+
+        sliderEl.swiper.update();
+
+
+        {% if section.settings.show_arrows %}
+
+        if (
+          sliderEl.swiper.navigation
+        ) {
+
+          sliderEl.swiper.navigation.update();
+
+        }
+
+        {% endif %}
+
+
+        updateCustomPagination();
+
+      }
+    );
+
+
+    /*
+     * =========================================================
+     * SHOPIFY BLOCK DESELECT
+     * =========================================================
+     */
+    document.addEventListener(
+      'shopify:block:deselect',
+      function () {
+
+        var sliderEl =
+          sectionEl.querySelector(
+            '.nw-trusted-people__swiper'
+          );
+
+
+        if (
+          !sliderEl ||
+          !sliderEl.swiper
+        ) {
+          return;
+        }
+
+
+        sliderEl.swiper.update();
+
+
+        {% if section.settings.show_arrows %}
+
+        if (
+          sliderEl.swiper.navigation
+        ) {
+
+          sliderEl.swiper.navigation.update();
+
+        }
+
+        {% endif %}
+
+      }
+    );
+
+
+  })();
+</script>
+{% schema %}
+{
+  "name": "NW Trusted People",
+  "tag": "section",
+  "class": "section-nw-trusted-people",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sleep Like The People Who Win"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Trusted by athletes, founders, and leaders who need stronger mornings and healthier years ahead.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "Card colors"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text",
+      "alpha": true,
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "alpha": true,
+      "default": "#61391633"
+    },
+    {
+      "type": "color",
+      "id": "verified_icon_color",
+      "label": "Verified icon color",
+      "alpha": true,
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "id": "toggle_border_color",
+      "label": "Toggle button border",
+      "alpha": true,
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show slider arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show slider pagination",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination bullet",
+      "alpha": true,
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "CTA button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop the mattress"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Trust badges"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload a custom icon for each badge. Badges without an icon will not display."
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "alpha": true,
+      "default": "#613916"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_1_icon",
+      "label": "Badge 1 icon"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_1_text",
+      "label": "Badge 1 text",
+      "default": "<p>100-Night Risk-Free Trial</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_2_icon",
+      "label": "Badge 2 icon"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_2_text",
+      "label": "Badge 2 text",
+      "default": "<p>Free Shipping</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_3_icon",
+      "label": "Badge 3 icon"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_3_text",
+      "label": "Badge 3 text",
+      "default": "<p>30-Year Warranty</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_4_icon",
+      "label": "Badge 4 icon"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_4_text",
+      "label": "Badge 4 text",
+      "default": "<p>0% Interest financing options</p>"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "alpha": true,
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "person",
+      "name": "Person card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portrait image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Jesse Itzler"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role / title",
+          "default": "Entrepreneur, author, endurance athlete"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "quote",
+          "label": "Quote (shown on plus click)",
+          "default": "“I'm obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”"
+        },
+        {
+          "type": "text",
+          "id": "social_handle",
+          "label": "Social handle",
+          "default": "@jesseitzler"
+        },
+        {
+          "type": "text",
+          "id": "follower_count",
+          "label": "Follower count",
+          "default": "1.4M followers"
+        },
+        {
+          "type": "image_picker",
+          "id": "social_avatar",
+          "label": "Social avatar (optional)"
+        },
+        {
+          "type": "url",
+          "id": "social_url",
+          "label": "Social profile URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_instagram",
+          "label": "Show Instagram icon",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Trusted People",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "person",
+          "settings": {
+            "name": "Jesse Itzler",
+            "role": "Entrepreneur, author, endurance athlete",
+            "social_handle": "@jesseitzler",
+            "follower_count": "1.4M followers"
+          }
+        },
+        {
+          "type": "person",
+          "settings": {
+            "name": "Durana Elmi",
+            "role": "Co-Founder Cymbiotika",
+            "social_handle": "@duranaelmi",
+            "follower_count": "1M followers"
+          }
+        },
+        {
+          "type": "person",
+          "settings": {
+            "name": "Chase Elliott",
+            "role": "NASCAR driver",
+            "social_handle": "@chaseelliott",
+            "follower_count": "1.2M followers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

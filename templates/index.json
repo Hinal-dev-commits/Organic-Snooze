@@ -152,6 +152,7 @@
         "btn_text": "SHOP MATTRESSES",
         "btn_link": "shopify://collections/mattress",
         "btn_style": "primary",
+        "media_type": "video",
         "enable_video_button": true,
         "video_autoplay": true,
         "video_source": "shopify_hosted",
@@ -284,35 +285,35 @@
           "type": "tab",
           "settings": {
             "label": "Mattress",
-            "collection": ""
+            "collection": "mattress"
           }
         },
         "tab_xBfytM": {
           "type": "tab",
           "settings": {
             "label": "Bedding",
-            "collection": ""
+            "collection": "family-organic-mattress-and-bedding-for-kids"
           }
         },
         "tab_hGaVj4": {
           "type": "tab",
           "settings": {
             "label": "Bundle & Save",
-            "collection": ""
+            "collection": "bundles-ultimate-sleep-optimization-system"
           }
         },
         "tab_8MGfk8": {
           "type": "tab",
           "settings": {
             "label": "Bases",
-            "collection": ""
+            "collection": "adjustable-bases-1"
           }
         },
         "tab_y3MpR9": {
           "type": "tab",
           "settings": {
             "label": "Kids",
-            "collection": ""
+            "collection": "baby-snooze-nest"
           }
         },
         "sidebar_JprNwH": {
@@ -325,13 +326,24 @@
             "show_verified": true,
             "author_title": "<p>Longevity Expert & Co-founder of The Ultimate Human</p>",
             "author_image": "shopify://shop_images/auth.png",
+            "show_promo": true,
+            "promo_title": "<p>🇺🇸 Fourth of July Celebration</p>",
+            "status_text": "<p>Live</p>",
+            "promo_subtext": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>",
+            "countdown_label": "<p>Event Ending In</p>",
+            "countdown_end_date": "2026-12-31 23:59:59",
+            "hide_after_timer_end": false,
             "badge_1_icon": "moneyback",
+            "badge_1_custom_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
             "badge_1_text": "<p>100-Night Risk-Free Trial</p>",
             "badge_2_icon": "truck",
+            "badge_2_custom_icon": "shopify://shop_images/truck.svg",
             "badge_2_text": "<p>Free Shipping</p>",
             "badge_3_icon": "warranty",
+            "badge_3_custom_icon": "shopify://shop_images/svgviewer-output_42.svg",
             "badge_3_text": "<p>30-Year Warranty</p>",
             "badge_4_icon": "financing",
+            "badge_4_custom_icon": "shopify://shop_images/interest.svg",
             "badge_4_text": "<p>0% Interest financing options</p>"
           }
         }
@@ -358,45 +370,341 @@
         "pcard_button_text": "Shop Now",
         "show_shop_all": true,
         "shop_all_text": "Shop All",
-        "shop_all_link": "",
+        "shop_all_link": "shopify://collections",
         "shop_all_style": "outline",
-        "tab_bg": "#FFFCF0",
+        "tab_bg": "#fffcf0",
         "tab_text": "#613916",
-        "tab_border": "#E8DDD4",
-        "tab_active_bg": "#CC926A",
-        "tab_active_text": "#FFFFFF",
-        "sidebar_bg": "#F4EFE8",
+        "tab_border": "#e8ddd4",
+        "tab_active_bg": "#cc926a",
+        "tab_active_text": "#ffffff",
+        "sidebar_bg": "#f4efe8",
         "sidebar_text": "#613916",
-        "quote_bg": "#FFFCF0",
-        "quote_border": "#F0EBE3",
+        "quote_bg": "#fffcf0",
+        "quote_border": "#f0ebe3",
         "quote_icon_color": "#878735",
         "verified_color": "#878735",
-        "trust_icon_color": "#613916",
+        "trust_icon_color": "#cc926a",
         "pcard_text": "#613916",
-        "pcard_star_color": "#E57B1E",
-        "pcard_star_empty_color": "#D9CFC4",
-        "pcard_save_bg": "#FFFCF0",
+        "pcard_star_color": "#e57b1e",
+        "pcard_star_empty_color": "#d9cfc4",
+        "pcard_save_bg": "#fffcf0",
         "pcard_save_text": "#613916",
-        "pcard_seller_bg": "#70804A",
-        "pcard_seller_text": "#FFFFFF",
-        "pcard_firmness_bg": "#F4EFE8",
-        "pcard_firmness_dot": "#C9B9A8",
+        "pcard_seller_bg": "#70804a",
+        "pcard_seller_text": "#ffffff",
+        "pcard_firmness_bg": "#f4efe8",
+        "pcard_firmness_dot": "#c9b9a8",
         "pcard_firmness_dot_active": "#613916",
-        "pcard_firmness_line": "#D9CFC4",
-        "pcard_btn_bg": "#CC926A",
-        "pcard_btn_bg_hover": "#B57D57",
-        "pcard_btn_text": "#FFFFFF",
-        "slider_fade_color": "#FFFFFF",
+        "pcard_firmness_line": "#d9cfc4",
+        "pcard_btn_bg": "#cc926a",
+        "pcard_btn_bg_hover": "#b57d57",
+        "pcard_btn_text": "#ffffff",
+        "slider_fade_color": "#ffffff",
         "swiper_arrow_bg": "#613916",
-        "swiper_arrow_color": "#FFFFFF",
+        "swiper_arrow_color": "#ffffff",
         "swiper_bullet_color": "#613916",
+        "promo_bg": "#613916",
+        "promo_border": "#cc926a",
+        "promo_status_bg": "#cc926a",
+        "promo_timer_bg": "#cc926a",
+        "promo_sep_color": "#cc926a",
         "bg_type": "color",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_testimonials_GhpGXC": {
+      "type": "nw-testimonials",
+      "blocks": {
+        "testimonial_XfyJQw": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”",
+            "author": "Marcello Delle Grotti",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        },
+        "testimonial_PkGBLj": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”",
+            "author": "Phillip Page",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        },
+        "testimonial_8PMVEb": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”",
+            "author": "Chloe",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        },
+        "testimonial_iEMP99": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“Incredible mattress I want to invest in more!”",
+            "author": "Kristin McGee",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_XfyJQw",
+        "testimonial_PkGBLj",
+        "testimonial_8PMVEb",
+        "testimonial_iEMP99"
+      ],
+      "name": "NW Testimonials",
+      "settings": {
+        "heading": "In Their Own Words",
+        "subheading": "",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_bg_color": "#f4efe8",
+        "card_text_color": "#613916",
+        "star_color": "#e57b1e",
+        "star_empty_color": "#d1c7ba",
+        "verified_icon_color": "#878735",
+        "show_arrows": false,
+        "show_pagination": true,
+        "pagination_color": "#613916",
+        "bg_type": "color",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_trusted_people_H336LH": {
+      "type": "nw-trusted-people",
+      "blocks": {
+        "person_LmWBRV": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/people-3_4f3d6278-f5f8-485e-ba32-86954f4b7323.png",
+            "name": "Jesse Itzler",
+            "role": "Entrepreneur, author, endurance athlete",
+            "quote": "\"Im obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”",
+            "social_handle": "@jesseitzler",
+            "follower_count": "1.4M followers",
+            "social_avatar": "shopify://shop_images/image_1251.png",
+            "social_url": "",
+            "show_instagram": true
+          }
+        },
+        "person_LrnyFB": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/people-2_0db591a5-30e4-4401-b4f0-1f73ac07c298.png",
+            "name": "Durana Elmi",
+            "role": "Co-Founder Cymbiotika",
+            "quote": "\"Sleep is one of the most important investments you can make in your health. The Ultimate Snooze has become an essential part of my nightly routine—thoughtfully designed, incredibly comfortable, and made with materials I feel good about bringing into my home.\"",
+            "social_handle": "@duranaelmi",
+            "follower_count": "1M followers",
+            "social_avatar": "shopify://shop_images/image_1251-1.png",
+            "social_url": "",
+            "show_instagram": true
+          }
+        },
+        "person_D4BpKH": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/people-1_66939faf-1038-4c3e-9df2-e60f3d70b38f.png",
+            "name": "Chase Elliott",
+            "role": "NASCAR driver",
+            "quote": "“If you know me, you know I’ve been focused on optimizing my sleep and recovery—and it’s made a huge difference. After adding the Ultimate Snooze pillow to my routine, this has been another great piece of the puzzle. As a driver, performance starts with recovery—and recovery starts with sleep.”",
+            "social_handle": "@chaseelliott",
+            "follower_count": "1.2M followers",
+            "social_avatar": "shopify://shop_images/image_1251-2.png",
+            "social_url": "",
+            "show_instagram": true
+          }
+        },
+        "person_zXnRwi": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/people-3_4f3d6278-f5f8-485e-ba32-86954f4b7323.png",
+            "name": "Jesse Itzler",
+            "role": "Entrepreneur, author, endurance athlete",
+            "quote": "\"Im obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”",
+            "social_handle": "@jesseitzler",
+            "follower_count": "1.4M followers",
+            "social_avatar": "shopify://shop_images/image_1251.png",
+            "social_url": "",
+            "show_instagram": true
+          }
+        },
+        "person_Ri4zeg": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/people-2_0db591a5-30e4-4401-b4f0-1f73ac07c298.png",
+            "name": "Durana Elmi",
+            "role": "Co-Founder Cymbiotika",
+            "quote": "\"Sleep is one of the most important investments you can make in your health. The Ultimate Snooze has become an essential part of my nightly routine—thoughtfully designed, incredibly comfortable, and made with materials I feel good about bringing into my home.\"",
+            "social_handle": "@duranaelmi",
+            "follower_count": "1M followers",
+            "social_avatar": "shopify://shop_images/image_1251-1.png",
+            "social_url": "",
+            "show_instagram": true
+          }
+        },
+        "person_V8BEL7": {
+          "type": "person",
+          "settings": {
+            "image": "shopify://shop_images/people-1_66939faf-1038-4c3e-9df2-e60f3d70b38f.png",
+            "name": "Chase Elliott",
+            "role": "NASCAR driver",
+            "quote": "“If you know me, you know I’ve been focused on optimizing my sleep and recovery—and it’s made a huge difference. After adding the Ultimate Snooze pillow to my routine, this has been another great piece of the puzzle. As a driver, performance starts with recovery—and recovery starts with sleep.”",
+            "social_handle": "@chaseelliott",
+            "follower_count": "1.2M followers",
+            "social_avatar": "shopify://shop_images/image_1251-2.png",
+            "social_url": "",
+            "show_instagram": true
+          }
+        }
+      },
+      "block_order": [
+        "person_LmWBRV",
+        "person_LrnyFB",
+        "person_D4BpKH",
+        "person_zXnRwi",
+        "person_Ri4zeg",
+        "person_V8BEL7"
+      ],
+      "name": "NW Trusted People",
+      "settings": {
+        "heading": "Sleep Like The People Who Win",
+        "subheading": "<p>Trusted by athletes, founders, and leaders who need stronger mornings and healthier years ahead.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_bg_color": "#fffcf0",
+        "card_text_color": "#613916",
+        "card_border_color": "#61391633",
+        "verified_icon_color": "#878735",
+        "toggle_border_color": "#613916",
+        "show_arrows": true,
+        "show_pagination": true,
+        "pagination_color": "#613916",
+        "overlay_color": "#ffffff",
+        "button_text": "Shop the mattress",
+        "button_link": "",
+        "button_style": "primary",
+        "badge_text_color": "#613916",
+        "badge_1_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
+        "badge_1_text": "<p>100-Night Risk-Free Trial</p>",
+        "badge_2_icon": "shopify://shop_images/truck.svg",
+        "badge_2_text": "<p>Free Shipping</p>",
+        "badge_3_icon": "shopify://shop_images/svgviewer-output_42.svg",
+        "badge_3_text": "<p>30-Year Warranty</p>",
+        "badge_4_icon": "shopify://shop_images/interest.svg",
+        "badge_4_text": "<p>0% Interest financing options</p>",
+        "bg_type": "none",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_image_with_text_MPQp7m": {
+      "type": "nw-image-with-text",
+      "blocks": {
+        "feature_jE3PQ7": {
+          "type": "feature",
+          "settings": {
+            "text": "+ Organic Mattress"
+          }
+        },
+        "feature_qUwzGx": {
+          "type": "feature",
+          "settings": {
+            "text": "+ Adjustable Base"
+          }
+        },
+        "feature_R3t878": {
+          "type": "feature",
+          "settings": {
+            "text": "+ Organic Sheet Set"
+          }
+        },
+        "feature_qKgH3p": {
+          "type": "feature",
+          "settings": {
+            "text": "+ Organic Pillow Cases"
+          }
+        },
+        "feature_6gGTK6": {
+          "type": "feature",
+          "settings": {
+            "text": "+ Pillows"
+          }
+        },
+        "feature_X7iLEt": {
+          "type": "feature",
+          "settings": {
+            "text": "+ Mattress Protector"
+          }
+        }
+      },
+      "block_order": [
+        "feature_jE3PQ7",
+        "feature_qUwzGx",
+        "feature_R3t878",
+        "feature_qKgH3p",
+        "feature_6gGTK6",
+        "feature_X7iLEt"
+      ],
+      "name": "NW Image With Text",
+      "settings": {
+        "image": "shopify://shop_images/image-text.png",
+        "image_position": "left",
+        "media_bg_color": "#ece8e0",
+        "show_promo_bar": true,
+        "promo_icon": "shopify://shop_images/Promo.svg",
+        "promo_text": "BUNDLE & SAVE 30%+",
+        "promo_bg_color": "#878735",
+        "promo_text_color": "#ffffff",
+        "heading": "Bundle & Save On Your Recovery System",
+        "subheading": "<p>Bundle your mattress, adjustable base, and organic bedding essentials to save 30% or more on the complete setup.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "feature_text_color": "#613916",
+        "feature_plus_color": "#613916",
+        "button_text": "Bundle and save",
+        "button_link": "shopify://collections/bundles-ultimate-sleep-optimization-system",
+        "button_style": "secondary",
+        "badge_icon_color": "#cc926a",
+        "badge_text_color": "#613916",
+        "badge_1_icon": "truck",
+        "badge_1_text": "<p>Free Shipping & Installation</p>",
+        "badge_2_icon": "warranty",
+        "badge_2_text": "<p>30-Year Warranty</p>",
+        "badge_3_icon": "moneyback",
+        "badge_3_text": "<p>100-Night Risk-Free Trial</p>",
+        "badge_4_icon": "financing",
+        "badge_4_text": "",
+        "bg_type": "none",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
       }
     }
   },
@@ -405,6 +713,9 @@
     "featured_collection",
     "nw_hero_YTR6GB",
     "nw_marquee_RHRj4N",
-    "nw_collection_v2_a4yrmy"
+    "nw_collection_v2_a4yrmy",
+    "nw_testimonials_GhpGXC",
+    "nw_trusted_people_H336LH",
+    "nw_image_with_text_MPQp7m"
   ]
 }

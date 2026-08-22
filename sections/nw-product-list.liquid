@@ -1,0 +1,442 @@
+{{ 'nw-product-list.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwProductList-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwProductList-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<section
+  id="NwProductList-{{ section.id }}"
+  class="nw-product-list"
+  style="
+    --nw-pl-heading-color: {{ section.settings.heading_color }};
+    --nw-pl-desc-color: {{ section.settings.description_color }};
+    --nw-pcard-text: {{ section.settings.pcard_text }};
+    --nw-pcard-star: {{ section.settings.pcard_star_color }};
+    --nw-pcard-star-empty: {{ section.settings.pcard_star_empty_color }};
+    --nw-pcard-save-bg: {{ section.settings.pcard_save_bg }};
+    --nw-pcard-save-text: {{ section.settings.pcard_save_text }};
+    --nw-pcard-seller-bg: {{ section.settings.pcard_seller_bg }};
+    --nw-pcard-seller-text: {{ section.settings.pcard_seller_text }};
+    --nw-pcard-btn-bg: {{ section.settings.pcard_btn_bg }};
+    --nw-pcard-btn-bg-hover: {{ section.settings.pcard_btn_bg_hover }};
+    --nw-pcard-btn-text: {{ section.settings.pcard_btn_text }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-product-list__wrapper">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="nw-product-list__header">
+          {% render 'nw-section-heading', text: section.settings.heading %}
+          {% render 'nw-section-description', text: section.settings.subheading %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.collection != blank and section.settings.collection.products_count > 0 -%}
+        <div class="nw-product-list__slider-wrap">
+          <div class="swiper nw-product-list__swiper" id="NwProductListSwiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+                <div class="swiper-slide">
+                  {% render 'nw-product-card',
+                    product: product,
+                    section_id: section.id,
+                    show_rating: section.settings.show_rating,
+                    show_firmness: section.settings.show_firmness,
+                    show_seller_tag: section.settings.show_seller_tag,
+                    firmness_label_soft: section.settings.firmness_label_soft,
+                    firmness_label_firm: section.settings.firmness_label_firm,
+                    button_text: section.settings.button_text,
+                    button_style: section.settings.button_style,
+                    lazy_load: true
+                  %}
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.settings.show_pagination -%}
+            <div class="nw-swiper-pagination" id="NwProductListPagination-{{ section.id }}"></div>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <div class="nw-product-list__empty">{{ section.settings.empty_text }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var sectionEl = document.getElementById('NwProductList-{{ section.id }}');
+    if (!sectionEl) return;
+
+    function initSwiper() {
+      if (typeof Swiper === 'undefined') {
+        window.setTimeout(initSwiper, 50);
+        return;
+      }
+
+      var sliderEl = sectionEl.querySelector('.nw-product-list__swiper');
+      if (!sliderEl) return;
+      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
+
+      new Swiper(sliderEl, {
+        slidesPerView: 'auto',
+        spaceBetween: 12,
+        centeredSlides: true,
+        grabCursor: true,
+        watchOverflow: true,
+        {% if section.settings.show_pagination %}
+        pagination: {
+          el: '#NwProductListPagination-{{ section.id }}',
+          clickable: true
+        },
+        {% endif %}
+        breakpoints: {
+          750: {
+            spaceBetween: 20
+          }
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSwiper);
+    } else {
+      initSwiper();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.target.contains(sectionEl)) initSwiper();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "NW Product List",
+  "tag": "section",
+  "class": "section-nw-product-list",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Complete Your Recovery System"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Add organic pillows, protectors, and covers. Mix, match, and save on your full sleep system.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty collection message",
+      "default": "Select a collection to display products."
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "alpha": true,
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "alpha": true,
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_firmness",
+      "label": "Show firmness bar",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_seller_tag",
+      "label": "Show seller tag",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "firmness_label_soft",
+      "label": "Firmness label (soft)",
+      "default": "Soft",
+      "visible_if": "{{ section.settings.show_firmness == true }}"
+    },
+    {
+      "type": "text",
+      "id": "firmness_label_firm",
+      "label": "Firmness label (firm)",
+      "default": "Firm",
+      "visible_if": "{{ section.settings.show_firmness == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Product card colors"
+    },
+    {
+      "type": "color",
+      "id": "pcard_text",
+      "label": "Text color",
+      "alpha": true,
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "pcard_star_color",
+      "label": "Star color",
+      "alpha": true,
+      "default": "#E57B1E"
+    },
+    {
+      "type": "color",
+      "id": "pcard_star_empty_color",
+      "label": "Empty star color",
+      "alpha": true,
+      "default": "#D9CFC4"
+    },
+    {
+      "type": "color",
+      "id": "pcard_save_bg",
+      "label": "Save tag background",
+      "alpha": true,
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "color",
+      "id": "pcard_save_text",
+      "label": "Save tag text",
+      "alpha": true,
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "pcard_seller_bg",
+      "label": "Seller tag background",
+      "alpha": true,
+      "default": "#70804A"
+    },
+    {
+      "type": "color",
+      "id": "pcard_seller_text",
+      "label": "Seller tag text",
+      "alpha": true,
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pcard_btn_bg",
+      "label": "Button background",
+      "alpha": true,
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "pcard_btn_bg_hover",
+      "label": "Button background hover",
+      "alpha": true,
+      "default": "#B57D57"
+    },
+    {
+      "type": "color",
+      "id": "pcard_btn_text",
+      "label": "Button text",
+      "alpha": true,
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show slider pagination",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination bullet",
+      "alpha": true,
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "alpha": true,
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Product List",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

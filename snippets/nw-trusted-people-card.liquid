@@ -1,0 +1,105 @@
+{% doc %}
+Renders a trusted people slider card.
+@param {object} block - Section block
+@param {boolean} [is_clone] - Duplicate slide for infinite feel
+@param {number} [real_index] - Original block index
+{% enddoc %}
+
+<article class="nw-trusted-people__card" data-nw-tp-card>
+  {%- if block.settings.image != blank -%}
+    <div class="nw-trusted-people__card-media">
+      <img
+        src="{{ block.settings.image | image_url }}"
+        alt="{{ block.settings.name | escape }}"
+        class="nw-trusted-people__card-image"
+        width=""
+        height=""
+        loading="lazy"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="nw-trusted-people__card-body">
+    <div class="nw-trusted-people__card-head">
+      <div class="nw-trusted-people__card-head-inner">
+        {%- if block.settings.name != blank -%}
+          <h3 class="nw-trusted-people__card-name">{{ block.settings.name }}</h3>
+        {%- endif -%}
+        {%- if block.settings.role != blank -%}
+          <div class="nw-trusted-people__role">
+            <span class="nw-trusted-people__role-icon" aria-hidden="true">
+              {{ 'verified.svg' | inline_asset_content }}
+            </span>
+            <span class="nw-trusted-people__role-text">{{ block.settings.role }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if block.settings.quote != blank -%}
+        <button
+          type="button"
+          class="nw-trusted-people__toggle"
+          data-nw-tp-toggle
+          aria-expanded="false"
+          aria-label="Toggle quote for {{ block.settings.name | escape }}"
+        >
+          <span class="nw-trusted-people__toggle-icon" aria-hidden="true"></span>
+        </button>
+      {%- endif -%}
+    </div>
+
+    {%- if block.settings.social_handle != blank or block.settings.follower_count != blank -%}
+      <div class="nw-trusted-people__social">
+        {%- liquid
+          assign avatar = block.settings.social_avatar
+          if avatar == blank
+            assign avatar = block.settings.image
+          endif
+        -%}
+        {%- if avatar != blank -%}
+          {{
+            avatar
+            | image_url: width: 48
+            | image_tag: loading: 'lazy', class: 'nw-trusted-people__social-avatar', alt: ''
+          }}
+        {%- endif -%}
+
+        <span class="nw-trusted-people__social-text">
+          {%- if block.settings.social_handle != blank -%}
+            {{ block.settings.social_handle }}
+          {%- endif -%}
+          {%- if block.settings.social_handle != blank and block.settings.follower_count != blank -%}
+            &nbsp;·&nbsp;
+          {%- endif -%}
+          {%- if block.settings.follower_count != blank -%}
+            {{ block.settings.follower_count }}
+          {%- endif -%}
+        </span>
+
+        {%- if block.settings.show_instagram and block.settings.social_url != blank -%}
+          <a
+            href="{{ block.settings.social_url }}"
+            class="nw-trusted-people__social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram profile for {{ block.settings.name | escape }}"
+          >
+            {{ 'icon-instagram.svg' | inline_asset_content }}
+          </a>
+        {%- elsif block.settings.show_instagram -%}
+          <span class="nw-trusted-people__social-link" aria-hidden="true">
+            {{ 'insta-color.svg' | inline_asset_content }}
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.quote != blank -%}
+      <div class="nw-trusted-people__expand" data-nw-tp-expand>
+        <div class="nw-trusted-people__expand-inner">
+          <p class="nw-trusted-people__quote">{{ block.settings.quote }}</p>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</article>

@@ -6,7 +6,9 @@ Renders the NW product card used across collection sliders and grids.
 @param {boolean} [show_firmness] - Allow firmness bar when metafield is set
 @param {string} [firmness_label_soft] - Left firmness label
 @param {string} [firmness_label_firm] - Right firmness label
+@param {boolean} [show_seller_tag] - Show seller tag from product metafield
 @param {string} [button_text] - CTA button label
+@param {string} [button_style] - Button style: primary, secondary, outline
 @param {boolean} [lazy_load] - Lazy load product image
 @example
 {% render 'nw-product-card', product: product, section_id: section.id %}
@@ -16,9 +18,11 @@ Renders the NW product card used across collection sliders and grids.
   assign card_product = product
   assign show_rating = show_rating | default: true
   assign show_firmness = show_firmness | default: false
+  assign show_seller_tag = show_seller_tag | default: true
   assign firmness_label_soft = firmness_label_soft | default: 'Soft'
   assign firmness_label_firm = firmness_label_firm | default: 'Firm'
   assign button_text = button_text | default: 'Shop Now'
+  assign button_style = button_style | default: 'primary'
   assign lazy_load = lazy_load | default: true
 
   assign card_price = card_product.price_min
@@ -80,7 +84,7 @@ Renders the NW product card used across collection sliders and grids.
       <span class="nw-product-card__tag nw-product-card__tag--save">Save {{ save_percent }}%</span>
     {%- endif -%}
 
-    {%- if seller_tag != blank -%}
+    {%- if show_seller_tag and seller_tag != blank -%}
       <span class="nw-product-card__tag nw-product-card__tag--seller">{{ seller_tag }}</span>
     {%- endif -%}
   </div>
@@ -159,9 +163,11 @@ Renders the NW product card used across collection sliders and grids.
         {%- endif -%}
       </div>
 
-      <a href="{{ card_product.url }}" class="nw-product-card__btn">
-        <span>{{ button_text }}</span>
-      </a>
+      {% render 'nw-button',
+        text: button_text,
+        link: card_product.url,
+        style: button_style
+      %}
     </div>
   </div>
 </article>

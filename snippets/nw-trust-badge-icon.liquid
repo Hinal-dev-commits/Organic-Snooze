@@ -1,0 +1,19 @@
+{% doc %}
+Renders a trust badge icon from a preset or custom upload.
+@param {string} icon - Preset icon: truck, warranty, moneyback, financing, none
+@param {image} [custom_icon] - Optional custom icon image
+@example
+{% render 'nw-trust-badge-icon', icon: 'truck', custom_icon: block.settings.custom_icon %}
+{% enddoc %}
+
+{%- if custom_icon != blank -%}
+  {{ custom_icon | image_url: width: 40 | image_tag: loading: 'lazy', alt: '', class: 'nw-cta-badges__icon-img' }}
+{%- elsif icon == 'moneyback' -%}
+  {{ 'money.svg' | inline_asset_content }}
+{%- elsif icon == 'truck' -%}
+  {{ 'truck.svg' | inline_asset_content }}
+{%- elsif icon == 'warranty' -%}
+  {{ 'shield.svg' | inline_asset_content }}
+{%- elsif icon == 'financing' -%}
+  {{ 'offer.svg' | inline_asset_content }}
+{%- endif -%}

@@ -72,11 +72,27 @@
     --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
     --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
     --nw-swiper-bullet: {{ section.settings.swiper_bullet_color }};
+    --nw-colv2-promo-bg: {{ section.settings.promo_bg }};
+    --nw-colv2-promo-border: {{ section.settings.promo_border }};
+    --nw-colv2-promo-status-bg: {{ section.settings.promo_status_bg }};
+    --nw-colv2-promo-timer-bg: {{ section.settings.promo_timer_bg }};
+    --nw-colv2-promo-sep: {{ section.settings.promo_sep_color }};
   "
   data-products-limit="{{ section.settings.products_to_show }}"
 >
   <div class="page-width">
     <div class="nw-collection-v2__inner">
+      {%- if sidebar_block -%}
+        <div class="nw-collection-v2__mobile-heading">
+          {%- if sidebar_block.settings.heading != blank -%}
+            <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
+          {%- endif -%}
+          {%- if sidebar_block.settings.subheading != blank -%}
+            <div class="nw-collection-v2__sidebar-subheading">{{ sidebar_block.settings.subheading }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
       {%- if tab_blocks.size > 0 -%}
         <div class="nw-collection-v2__tabs-wrap">
           <div class="nw-collection-v2__tabs" role="tablist" aria-label="Collection categories">
@@ -128,9 +144,7 @@
                         <div class="nw-collection-v2__quote-name">{{ sidebar_block.settings.author_name }}</div>
                         {%- if sidebar_block.settings.show_verified -%}
                           <span class="nw-collection-v2__quote-verified" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.8 14.4L6.4 12.6l1.4-1.4 2.8 2.8 6-6 1.4 1.4-7.4 7.4z"/>
-                            </svg>
+                            {{ "verified.svg" | inline_asset_content }}
                           </span>
                         {%- endif -%}
                       </div>
@@ -148,6 +162,52 @@
                       }}
                     </div>
                   {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- if sidebar_block.settings.show_promo -%}
+              <div
+                class="nw-collection-v2__promo"
+                data-countdown-date="{{ sidebar_block.settings.countdown_end_date }}"
+                data-hide-on-end="{{ sidebar_block.settings.hide_after_timer_end }}"
+              >
+                <div class="nw-collection-v2__promo-content">
+                  <div class="nw-collection-v2__promo-header">
+                    {%- if sidebar_block.settings.promo_title != blank -%}
+                      <div class="nw-collection-v2__promo-title">{{ sidebar_block.settings.promo_title }}</div>
+                    {%- endif -%}
+                    {%- if sidebar_block.settings.status_text != blank -%}
+                      <div class="nw-collection-v2__promo-status">
+                        <span class="nw-collection-v2__promo-status-dot"></span>
+                        <div class="nw-collection-v2__promo-status-text">{{ sidebar_block.settings.status_text }}</div>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  {%- if sidebar_block.settings.promo_subtext != blank -%}
+                    <div class="nw-collection-v2__promo-subtext">{{ sidebar_block.settings.promo_subtext }}</div>
+                  {%- endif -%}
+                </div>
+                <div class="nw-collection-v2__promo-countdown">
+                  {%- if sidebar_block.settings.countdown_label != blank -%}
+                    <div class="nw-collection-v2__promo-countdown-label">{{ sidebar_block.settings.countdown_label }}</div>
+                  {%- endif -%}
+                  <div class="nw-collection-v2__promo-timer">
+                    <div class="nw-collection-v2__promo-timer-unit">
+                      <span class="nw-collection-v2__promo-timer-num nw-colv2-countdown-days">00</span>
+                      <span class="nw-collection-v2__promo-timer-txt">Days</span>
+                    </div>
+                    <span class="nw-collection-v2__promo-timer-sep">:</span>
+                    <div class="nw-collection-v2__promo-timer-unit">
+                      <span class="nw-collection-v2__promo-timer-num nw-colv2-countdown-hours">00</span>
+                      <span class="nw-collection-v2__promo-timer-txt">Hrs</span>
+                    </div>
+                    <span class="nw-collection-v2__promo-timer-sep">:</span>
+                    <div class="nw-collection-v2__promo-timer-unit">
+                      <span class="nw-collection-v2__promo-timer-num nw-colv2-countdown-mins">00</span>
+                      <span class="nw-collection-v2__promo-timer-txt">Mins</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             {%- endif -%}
@@ -348,6 +408,48 @@
       }
       var firstPanel = sectionEl.querySelector('[data-nw-panel]:not([hidden])');
       initPanelSwiper(firstPanel);
+    }
+
+    var countdownEl = sectionEl.querySelector('.nw-collection-v2__promo[data-countdown-date]');
+    if (countdownEl) {
+      var targetDateStr = countdownEl.getAttribute('data-countdown-date');
+      var hideOnEnd = countdownEl.getAttribute('data-hide-on-end') === 'true';
+      var daysEl = countdownEl.querySelector('.nw-colv2-countdown-days');
+      var hoursEl = countdownEl.querySelector('.nw-colv2-countdown-hours');
+      var minsEl = countdownEl.querySelector('.nw-colv2-countdown-mins');
+
+      function padZero(num) {
+        return num < 10 ? '0' + num : num;
+      }
+
+      if (targetDateStr && targetDateStr.trim() !== '') {
+        var targetDate = new Date(targetDateStr.replace(/-/g, '/')).getTime();
+
+        function updateTimer() {
+          var now = new Date().getTime();
+          var diff = targetDate - now;
+          if (isNaN(targetDate)) return;
+          if (diff <= 0) {
+            if (hideOnEnd) {
+              countdownEl.style.display = 'none';
+            } else {
+              if (daysEl) daysEl.textContent = '00';
+              if (hoursEl) hoursEl.textContent = '00';
+              if (minsEl) minsEl.textContent = '00';
+            }
+            return;
+          }
+          var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          if (daysEl) daysEl.textContent = padZero(days);
+          if (hoursEl) hoursEl.textContent = padZero(hours);
+          if (minsEl) minsEl.textContent = padZero(mins);
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+      }
     }
 
     if (document.readyState === 'loading') {
@@ -671,6 +773,40 @@
     },
     {
       "type": "header",
+      "content": "Promo Colors (Mobile)"
+    },
+    {
+      "type": "color",
+      "id": "promo_bg",
+      "label": "Promo background",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "promo_border",
+      "label": "Promo border",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "promo_status_bg",
+      "label": "Status badge background",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "promo_timer_bg",
+      "label": "Timer unit background",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "promo_sep_color",
+      "label": "Timer separator",
+      "default": "#CC926A"
+    },
+    {
+      "type": "header",
       "content": "Section Background"
     },
     {
@@ -822,6 +958,58 @@
           "type": "image_picker",
           "id": "author_image",
           "label": "Author image"
+        },
+        {
+          "type": "header",
+          "content": "Promo & Countdown (Mobile only)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_promo",
+          "label": "Show promo module",
+          "default": true
+        },
+        {
+          "type": "richtext",
+          "id": "promo_title",
+          "label": "Offer title",
+          "default": "<p>🇺🇸 Fourth of July Celebration</p>",
+          "visible_if": "{{ block.settings.show_promo == true }}"
+        },
+        {
+          "type": "richtext",
+          "id": "status_text",
+          "label": "Status badge text",
+          "default": "<p>Live</p>",
+          "visible_if": "{{ block.settings.show_promo == true }}"
+        },
+        {
+          "type": "richtext",
+          "id": "promo_subtext",
+          "label": "Offer subtext / coupon",
+          "default": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>",
+          "visible_if": "{{ block.settings.show_promo == true }}"
+        },
+        {
+          "type": "richtext",
+          "id": "countdown_label",
+          "label": "Countdown label",
+          "default": "<p>Event Ending In</p>",
+          "visible_if": "{{ block.settings.show_promo == true }}"
+        },
+        {
+          "type": "text",
+          "id": "countdown_end_date",
+          "label": "Countdown target date (YYYY-MM-DD HH:MM:SS)",
+          "default": "2026-12-31 23:59:59",
+          "visible_if": "{{ block.settings.show_promo == true }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_after_timer_end",
+          "label": "Hide promo after timer ends",
+          "default": false,
+          "visible_if": "{{ block.settings.show_promo == true }}"
         },
         {
           "type": "header",

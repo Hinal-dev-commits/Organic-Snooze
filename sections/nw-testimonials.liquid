@@ -1,0 +1,435 @@
+{{ 'nw-testimonials.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwTestimonials-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwTestimonials-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<section
+  id="NwTestimonials-{{ section.id }}"
+  class="nw-testimonials"
+  style="
+    --nw-testimonials-heading-color: {{ section.settings.heading_color }};
+    --nw-testimonials-desc-color: {{ section.settings.description_color }};
+    --nw-testimonials-card-bg: {{ section.settings.card_bg_color }};
+    --nw-testimonials-card-text: {{ section.settings.card_text_color }};
+    --nw-testimonials-star-color: {{ section.settings.star_color }};
+    --nw-testimonials-star-empty-color: {{ section.settings.star_empty_color }};
+    --nw-testimonials-verified-color: {{ section.settings.verified_icon_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-testimonials__wrapper">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="nw-testimonials__header">
+          {% render 'nw-section-heading', text: section.settings.heading %}
+          {% render 'nw-section-description', text: section.settings.subheading %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-testimonials__slider-wrap">
+          <div class="swiper nw-testimonials__swiper" id="NwTestimonialsSwiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                  <article class="nw-testimonials__card">
+                    <div class="nw-testimonials__card-top">
+                      {%- assign rating_val = block.settings.rating | default: 5 -%}
+                      <div class="nw-testimonials__stars" aria-label="{{ rating_val }} out of 5 stars">
+                        {%- for i in (1..5) -%}
+                          <span class="nw-testimonials__star{% if i <= rating_val %} nw-testimonials__star--active{% else %} nw-testimonials__star--inactive{% endif %}">
+                            {{ 'star.svg' | inline_asset_content }}
+                          </span>
+                        {%- endfor -%}
+                      </div>
+
+                      {%- if block.settings.quote != blank -%}
+                        <p class="nw-testimonials__quote">{{ block.settings.quote }}</p>
+                      {%- endif -%}
+                    </div>
+
+                    <div class="nw-testimonials__card-bottom">
+                      {%- if block.settings.author != blank -%}
+                        <span class="nw-testimonials__author">{{ block.settings.author }}</span>
+                      {%- endif -%}
+
+                      {%- if block.settings.verified -%}
+                        <div class="nw-testimonials__verified">
+                          <span class="nw-testimonials__verified-icon" aria-hidden="true">
+                            {{ 'verified.svg' | inline_asset_content }}
+                          </span>
+                          <span class="nw-testimonials__verified-text">{{ block.settings.verified_text | default: 'Verified' }}</span>
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </article>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+          {%- if section.settings.show_arrows -%}
+            <button type="button" class="nw-swiper-btn nw-swiper-btn--prev" aria-label="Previous slide">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="nw-swiper-btn nw-swiper-btn--next" aria-label="Next slide">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          {%- endif -%}
+          {%- if section.settings.show_pagination -%}
+            <div class="nw-swiper-pagination" id="NwTestimonialsPagination-{{ section.id }}"></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var sectionEl = document.getElementById('NwTestimonials-{{ section.id }}');
+    if (!sectionEl) return;
+
+    function initSwiper() {
+      if (typeof Swiper === 'undefined') {
+        window.setTimeout(initSwiper, 50);
+        return;
+      }
+
+      var sliderEl = sectionEl.querySelector('.nw-testimonials__swiper');
+      if (!sliderEl) return;
+      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
+
+      new Swiper(sliderEl, {
+        slidesPerView: 'auto',
+        spaceBetween: 12,
+        centeredSlides: true,
+        grabCursor: true,
+        watchOverflow: true,
+        {% if section.settings.show_arrows %}
+        navigation: {
+          nextEl: sectionEl.querySelector('.nw-swiper-btn--next'),
+          prevEl: sectionEl.querySelector('.nw-swiper-btn--prev')
+        },
+        {% endif %}
+        {% if section.settings.show_pagination %}
+        pagination: {
+          el: '#NwTestimonialsPagination-{{ section.id }}',
+          clickable: true
+        },
+        {% endif %}
+        breakpoints: {
+          750: {
+            centeredSlides: false,
+            spaceBetween: 20
+          }
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSwiper);
+    } else {
+      initSwiper();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.target.contains(sectionEl)) initSwiper();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "NW Testimonials",
+  "tag": "section",
+  "class": "section-nw-testimonials",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "In Their Own Words"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "Card colors"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#F4EFE8"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#E57B1E"
+    },
+    {
+      "type": "color",
+      "id": "star_empty_color",
+      "label": "Empty star color",
+      "default": "#D1C7BA"
+    },
+    {
+      "type": "color",
+      "id": "verified_icon_color",
+      "label": "Verified icon color",
+      "default": "#878735"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show slider arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show slider pagination",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Slider colors"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination bullet",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial card",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author name",
+          "default": "Chloe"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show verified badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "verified_text",
+          "label": "Verified text",
+          "default": "Verified"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Testimonials",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "author": "Marcello Delle Grotti",
+            "quote": "“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”",
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "author": "Phillip Page",
+            "quote": "“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”",
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "author": "Chloe",
+            "quote": "“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”",
+            "verified": true
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "author": "Kristin McGee",
+            "quote": "“Incredible mattress I want to invest in more!”",
+            "verified": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

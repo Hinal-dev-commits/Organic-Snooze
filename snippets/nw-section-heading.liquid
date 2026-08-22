@@ -1,0 +1,13 @@
+{% doc %}
+Renders a section heading using global h2 styles.
+@param {string} text - Heading content
+@param {string} [class] - Optional wrapper class
+@example
+{% render 'nw-section-heading', text: section.settings.heading %}
+{% enddoc %}
+
+{%- if text != blank -%}
+  <div class="nw-section-heading{% if class != blank %} {{ class }}{% endif %}">
+    <h2 class="h2">{{ text }}</h2>
+  </div>
+{%- endif -%}

@@ -1,0 +1,13 @@
+{% doc %}
+Renders a section description using global rte styles.
+@param {string} text - Description content
+@param {string} [class] - Optional wrapper class
+@example
+{% render 'nw-section-description', text: section.settings.subheading %}
+{% enddoc %}
+
+{%- if text != blank -%}
+  <div class="nw-section-description rte{% if class != blank %} {{ class }}{% endif %}">
+    {{ text }}
+  </div>
+{%- endif -%}
