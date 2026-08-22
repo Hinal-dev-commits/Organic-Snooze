@@ -33,6 +33,16 @@
     body{
         letter-spacing: 0;
     }
+    h1, .h1, 
+    h2, .h2,
+    h3, .h3,
+    h4, .h4,
+    h5, .h5,
+    h6, .h6{
+        font-family: var(--font-heading-family);
+        font-weight: 400;
+        color: var(--primary-color);
+    }
     h3, .h3{
         font-family: var(--font-heading-family);
         font-weight: 400;
@@ -43,7 +53,33 @@
         text-transform: capitalize;
         color: var(--primary-color);
     }
+    h2 , .h2{
+        font-family: var(--font-heading-family);
+        font-weight:400;
+        font-size: 36px;
+        line-height: 114.99999999999999%;
+        letter-spacing: -1%;
+        text-align: center;
+        text-transform: capitalize;
+    }
+    .rte{
+        font-family: var(--font-body-family);
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 18px;
+        line-height: 140%;
+        letter-spacing: 0%;
+        text-align: center;
+        color: var(--primary-color);
+        vertical-align: middle;
 
+    }
+    .rte > *:first-child{
+        margin-top: 0;
+    }
+    .rte > *:last-child{
+        margin-bottom: 0;
+    }
     .announcement-bar__message {
         display: flex;
         gap: 10px;
