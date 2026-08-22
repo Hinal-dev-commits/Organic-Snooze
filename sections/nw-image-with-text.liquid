@@ -52,7 +52,28 @@
           </div>
         {%- endif -%}
         <div class="nw-image-with-text__media">
-          {%- if section.settings.image != blank -%}
+          {%- if section.settings.image != blank and section.settings.image_mobile != blank -%}
+            {{
+              section.settings.image_mobile
+              | image_url: width: 750
+              | image_tag:
+                loading: 'lazy',
+                class: 'nw-image-with-text__image nw-image-with-text__image--mobile',
+                widths: '375, 550, 750',
+                sizes: '100vw',
+                alt: section.settings.image_mobile.alt | default: section.settings.heading
+            }}
+            {{
+              section.settings.image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                class: 'nw-image-with-text__image nw-image-with-text__image--desktop',
+                widths: '375, 550, 750, 900, 1200',
+                sizes: '(min-width: 750px) 50vw, 100vw',
+                alt: section.settings.image.alt | default: section.settings.heading
+            }}
+          {%- elsif section.settings.image != blank -%}
             {{
               section.settings.image
               | image_url: width: 1200
@@ -62,6 +83,17 @@
                 widths: '375, 550, 750, 900, 1200',
                 sizes: '(min-width: 750px) 50vw, 100vw',
                 alt: section.settings.image.alt | default: section.settings.heading
+            }}
+          {%- elsif section.settings.image_mobile != blank -%}
+            {{
+              section.settings.image_mobile
+              | image_url: width: 750
+              | image_tag:
+                loading: 'lazy',
+                class: 'nw-image-with-text__image',
+                widths: '375, 550, 750',
+                sizes: '100vw',
+                alt: section.settings.image_mobile.alt | default: section.settings.heading
             }}
           {%- else -%}
             {{ 'hero-apparel-1' | placeholder_svg_tag: 'nw-image-with-text__placeholder placeholder-svg' }}
@@ -123,8 +155,14 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Image",
+      "label": "Image (desktop)",
       "info": "Shows a default placeholder when empty."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (mobile)",
+      "info": "Optional. Uses the desktop image when empty."
     },
     {
       "type": "select",

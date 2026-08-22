@@ -81,7 +81,7 @@
   data-products-limit="{{ section.settings.products_to_show }}"
 >
   <div class="page-width">
-    <div class="nw-collection-v2__inner{%- render 'nw-scroll-animation' -%}">
+    <div class="nw-collection-v2__inner">
       {%- if sidebar_block -%}
         <div class="nw-collection-v2__mobile-heading">
           {%- if sidebar_block.settings.heading != blank -%}
@@ -328,6 +328,7 @@
         </div>
       {%- endif -%}
     </div>
+  </div>
   </div>
 </section>
 <script>

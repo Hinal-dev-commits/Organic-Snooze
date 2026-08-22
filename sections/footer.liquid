@@ -79,9 +79,9 @@
                 {%- if section.settings.newsletter_heading != blank -%}
                   <h2 class="footer-block__heading inline-richtext">{{ section.settings.newsletter_heading }}</h2>
                 {%- endif -%}
-                <p class="footer__newsletter-description">
-                  Sign up for our newsletter to get exclusive updates, deals, and promotions
-                </p>
+                {%- if section.settings.newsletter_description != blank -%}
+                  <p class="footer__newsletter-description inline-richtext">{{ section.settings.newsletter_description }}</p>
+                {%- endif -%}
                 {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
                 <input type="hidden" name="contact[tags]" value="newsletter">
                 <div class="newsletter-form__field-wrapper">
@@ -360,7 +360,12 @@
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
         <small class="copyright__content"
-          >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
+          >&copy; {{ 'now' | date: '%Y' }} 
+          {%- if section.settings.copyright_name != blank -%}
+            <a href="{{ routes.root_url }}">{{ section.settings.copyright_name | escape }}</a>
+          {%- else -%}
+            {{ shop.name | link_to: routes.root_url }}
+          {%- endif -%}
         </small>
         <small class="copyright__content">{{ powered_by_link }}</small>
         {%- if section.settings.show_policy -%}
@@ -515,6 +520,12 @@
       "label": "t:sections.footer.settings.newsletter_heading.label"
     },
     {
+      "type": "inline_richtext",
+      "id": "newsletter_description",
+      "label": "Newsletter description",
+      "default": "Sign up for our newsletter to get exclusive updates, deals, and promotions"
+    },
+    {
       "type": "header",
       "content": "t:sections.footer.settings.header__9.content"
     },
@@ -558,6 +569,16 @@
       "default": true,
       "label": "t:sections.footer.settings.show_policy.label",
       "info": "t:sections.footer.settings.show_policy.info"
+    },
+    {
+      "type": "header",
+      "content": "Copyright"
+    },
+    {
+      "type": "text",
+      "id": "copyright_name",
+      "label": "Copyright business name",
+      "info": "Leave blank to use the store name."
     },
     {
       "type": "header",

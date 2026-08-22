@@ -77,16 +77,8 @@ Renders the NW product card used across collection sliders and grids.
         {%- if lazy_load -%}
           {%- assign image_loading = 'lazy' -%}
         {%- endif -%}
-        {{
-          card_product.featured_media
-          | image_url: width: 720
-          | image_tag:
-            class: 'nw-product-card__image',
-            loading: image_loading,
-            widths: '260, 360, 520, 720',
-            sizes: '(min-width: 990px) 260px, 45vw',
-            alt: card_product.featured_media.alt | default: card_product.title | escape
-        }}
+        <img src="{{ card_product.featured_media | image_url }}" alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}" width="" height="">
+        
       {%- else -%}
         {{ 'product-apparel-2' | placeholder_svg_tag: 'nw-product-card__image nw-product-card__image--placeholder' }}
       {%- endif -%}

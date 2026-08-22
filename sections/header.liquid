@@ -277,10 +277,17 @@
         </shopify-account>
       {%- endif -%}
 
-      <a href="{{ routes.contact_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+      {%- if section.settings.contact_number != blank -%}
+        <a href="tel:{{ section.settings.contact_number | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' }}" class="header__icon header__icon--cart link focus-inset">
+          <span class="svg-wrapper">{{ 'nw-call.svg' | inline_asset_content }}</span>
+          <span class="visually-hidden">{{ section.settings.contact_number | escape }}</span>
+        </a>
+      {%- else -%}
+      <a href="{{ routes.contact_url }}" class="header__icon header__icon--cart link focus-inset">
         <span class="svg-wrapper">{{ 'nw-call.svg' | inline_asset_content }}</span>
         <span class="visually-hidden">{{ 'templates.contact.contact' | t }}</span>
       </a>
+      {%- endif -%}
 
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -654,6 +661,12 @@
     {
       "type": "header",
       "content": "t:sections.header.settings.header__utilities.content"
+    },
+    {
+      "type": "text",
+      "id": "contact_number",
+      "label": "Contact phone number",
+      "info": "Used for the call icon link in the header. Example: +1 (888) 555-1234"
     },
     {
       "type": "checkbox",

@@ -124,6 +124,7 @@
   overflow: hidden;
   border-radius: 12px;
   background: #ece8e0;
+  border: 1px solid #61391626;
 }
 
 .nw-trusted-people__card-image {
@@ -154,10 +155,10 @@
 
 .nw-trusted-people__card-name {
   margin: 0;
-  font-family: var(--font-heading-family);
+  font-family: var(--font-body-family);
   font-size: 18px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.4;
   color: var(--nw-tp-card-text, #613916);
 }
 
@@ -200,13 +201,13 @@
 }
 
 .nw-trusted-people__toggle-icon::before {
-  width: 12px;
+  width: 20px;
   height: 1.5px;
 }
 
 .nw-trusted-people__toggle-icon::after {
   width: 1.5px;
-  height: 12px;
+  height: 20px;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
@@ -306,6 +307,9 @@
   grid-template-rows: 1fr;
   padding-bottom: 8px;
 }
+.nw-trusted-people__header{
+  max-width: 600px;
+}
 
 .nw-trusted-people__expand-inner {
   overflow: hidden;
@@ -327,27 +331,16 @@
   max-width: 700px;
 }
 
-.nw-trusted-people__footer {
+.nw-trusted-people__footer.nw-cta-badges {
   width: 100%;
   max-width: 520px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 14px;
   padding: 0 16px;
   box-sizing: border-box;
 }
 
-.nw-trusted-people__cta {
-  width: 100%;
-}
-
-.nw-trusted-people__badges {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 8px 18px;
+.nw-trusted-people__footer .nw-cta-badges__button {
   width: 100%;
 }
 
@@ -366,7 +359,6 @@
   justify-content: center;
   flex-shrink: 0;
 }
-
 
 .nw-trusted-people__badge-icon img {
   width: 20px;
@@ -465,6 +457,7 @@
     height: 100%;
     z-index: 30;
     pointer-events: none;
+    display: none;
   }
 
   .nw-trusted-people__slider-wrap::before {
@@ -493,10 +486,12 @@
 
   .nw-trusted-people__slider-wrap .nw-swiper-btn--prev {
     left: 12px;
+    display: none;
   }
 
   .nw-trusted-people__slider-wrap .nw-swiper-btn--next {
     right: 12px;
+    display: none;
   }
 
   .nw-trusted-people__slider-wrap .nw-swiper-pagination {
@@ -515,5 +510,8 @@
     width: 30px;
     height: 5px;
     border-radius: 6px;
+  }
+  .nw-trusted-people__header{
+    padding: 0 16px;
   }
 }

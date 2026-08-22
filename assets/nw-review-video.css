@@ -34,7 +34,6 @@
   justify-content: center;
   align-items: center;
   padding: 0;
-  gap: 14px;
   width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -48,6 +47,7 @@
   align-items: center;
   padding: 0;
   gap: 4px;
+  margin-bottom: 14px;
   width: 100%;
 }
 
@@ -475,13 +475,13 @@
   }
 
   .nw-review-video__header {
-    gap: 12px;
     max-width: 343px;
     width: 100%;
   }
 
   .nw-review-video__rating {
     height: 18px;
+    margin-bottom: 12px;
   }
 
   .nw-review-video__stars {
@@ -570,12 +570,14 @@
     width: 60px;
     height: 517.72px;
     left: 0;
+    display: none;
   }
 
   .nw-review-video__slider-wrap::after {
     width: 60px;
     height: 517.72px;
     right: 0;
+    display: none;
   }
 
   .nw-review-video__nav-btn {

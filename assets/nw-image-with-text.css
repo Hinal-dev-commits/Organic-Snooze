@@ -74,6 +74,18 @@
   display: block;
 }
 
+@media screen and (min-width: 750px) {
+  .nw-image-with-text__image--mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-image-with-text__image--desktop {
+    display: none;
+  }
+}
+
 .nw-image-with-text__placeholder {
   background: var(--nw-iwt-media-bg, #ece8e0);
   fill: rgba(97, 57, 22, 0.25);

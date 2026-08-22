@@ -38,7 +38,8 @@
     --nw-tp-card-border: {{ section.settings.card_border_color }};
     --nw-tp-verified-color: {{ section.settings.verified_icon_color }};
     --nw-tp-toggle-border: {{ section.settings.toggle_border_color }};
-    --nw-tp-badge-text: {{ section.settings.badge_text_color }};
+    --nw-cta-badge-text: {{ section.settings.badge_text_color }};
+    --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
     --nw-swiper-bullet: {{ section.settings.pagination_color }};
     --nw-tp-overlay-color: {{ section.settings.overlay_color }};
   "
@@ -89,48 +90,7 @@
       </div>
     {%- endif -%}
 
-    {%- if section.settings.button_text != blank or section.settings.badge_1_text != blank or section.settings.badge_2_text != blank or section.settings.badge_3_text != blank or section.settings.badge_4_text != blank -%}
-      <div class="nw-trusted-people__footer">
-        {%- if section.settings.button_text != blank -%}
-          <div class="nw-trusted-people__cta">
-            {% render 'nw-button',
-              text: section.settings.button_text,
-              link: section.settings.button_link,
-              style: section.settings.button_style
-            %}
-          </div>
-        {%- endif -%}
-
-        <div class="nw-trusted-people__badges">
-          {%- for i in (1..4) -%}
-            {%- liquid
-              case i
-                when 1
-                  assign badge_text = section.settings.badge_1_text
-                  assign badge_icon = section.settings.badge_1_icon
-                when 2
-                  assign badge_text = section.settings.badge_2_text
-                  assign badge_icon = section.settings.badge_2_icon
-                when 3
-                  assign badge_text = section.settings.badge_3_text
-                  assign badge_icon = section.settings.badge_3_icon
-                when 4
-                  assign badge_text = section.settings.badge_4_text
-                  assign badge_icon = section.settings.badge_4_icon
-              endcase
-            -%}
-            {%- if badge_text != blank and badge_icon != blank -%}
-              <div class="nw-trusted-people__badge">
-                <span class="nw-trusted-people__badge-icon">
-                  {{ badge_icon | image_url: width: 40 | image_tag: loading: 'lazy', alt: '' }}
-                </span>
-                <div class="nw-trusted-people__badge-text">{{ badge_text }}</div>
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
-      </div>
-    {%- endif -%}
+    {% render 'nw-cta-badges', settings: section.settings, class: 'nw-trusted-people__footer' %}
   </div>
 </section>
 
@@ -1019,57 +979,116 @@
     },
     {
       "type": "paragraph",
-      "content": "Upload a custom icon for each badge. Badges without an icon will not display."
+      "content": "Choose a preset icon or upload a custom icon for each item. Items show when text is filled in."
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Icon color",
+      "alpha": true,
+      "default": "#CC926A"
     },
     {
       "type": "color",
       "id": "badge_text_color",
-      "label": "Badge text color",
+      "label": "Icon text color",
       "alpha": true,
       "default": "#613916"
     },
     {
-      "type": "image_picker",
+      "type": "select",
       "id": "badge_1_icon",
-      "label": "Badge 1 icon"
+      "label": "Item 1 icon",
+      "default": "moneyback",
+      "options": [
+        { "value": "truck", "label": "Free shipping" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "moneyback", "label": "Moneyback" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_1_custom_icon",
+      "label": "Item 1 custom icon"
     },
     {
       "type": "richtext",
       "id": "badge_1_text",
-      "label": "Badge 1 text",
+      "label": "Item 1 text",
       "default": "<p>100-Night Risk-Free Trial</p>"
     },
     {
-      "type": "image_picker",
+      "type": "select",
       "id": "badge_2_icon",
-      "label": "Badge 2 icon"
+      "label": "Item 2 icon",
+      "default": "truck",
+      "options": [
+        { "value": "truck", "label": "Free shipping" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "moneyback", "label": "Moneyback" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_2_custom_icon",
+      "label": "Item 2 custom icon"
     },
     {
       "type": "richtext",
       "id": "badge_2_text",
-      "label": "Badge 2 text",
+      "label": "Item 2 text",
       "default": "<p>Free Shipping</p>"
     },
     {
-      "type": "image_picker",
+      "type": "select",
       "id": "badge_3_icon",
-      "label": "Badge 3 icon"
+      "label": "Item 3 icon",
+      "default": "warranty",
+      "options": [
+        { "value": "truck", "label": "Free shipping" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "moneyback", "label": "Moneyback" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_3_custom_icon",
+      "label": "Item 3 custom icon"
     },
     {
       "type": "richtext",
       "id": "badge_3_text",
-      "label": "Badge 3 text",
+      "label": "Item 3 text",
       "default": "<p>30-Year Warranty</p>"
     },
     {
-      "type": "image_picker",
+      "type": "select",
       "id": "badge_4_icon",
-      "label": "Badge 4 icon"
+      "label": "Item 4 icon",
+      "default": "financing",
+      "options": [
+        { "value": "truck", "label": "Free shipping" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "moneyback", "label": "Moneyback" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_4_custom_icon",
+      "label": "Item 4 custom icon"
     },
     {
       "type": "richtext",
       "id": "badge_4_text",
-      "label": "Badge 4 text",
+      "label": "Item 4 text",
       "default": "<p>0% Interest financing options</p>"
     },
     {
