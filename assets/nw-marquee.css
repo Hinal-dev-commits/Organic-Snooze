@@ -21,7 +21,7 @@
 }
 
 .nw-marquee--parallax .nw-marquee__wrapper {
-  transform: translate3d(var(--nw-parallax-shift, 0px), 0, 0);
+  /* transform: translate3d(var(--nw-parallax-shift, 0px), 0, 0); */
   transition: transform 0.08s ease-out;
 }
 

@@ -58,9 +58,8 @@
 
 {%- liquid
   assign btn_style = style | default: 'primary'
-  assign btn_text = text | default: 'Shop Now'
+  assign btn_text = text 
   assign btn_link = link | default: '#'
-  assign btn_class = class | default: ''
 -%}
 {%- if btn_link != blank -%}
   <a href="{{ btn_link }}" class="nw-btn nw-btn--{{ btn_style }}{% if btn_class != blank %} {{ btn_class }}{% endif %}">

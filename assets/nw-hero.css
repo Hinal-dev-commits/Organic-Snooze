@@ -185,7 +185,7 @@
 
 .nw-hero__rating-text,
 .nw-hero__rating-text * {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -199,7 +199,7 @@
 
 .nw-heading,
 .nw-heading * {
-  font-family: 'Optima', 'DM Sans', serif, sans-serif;
+  font-family: var(--font-heading-family);
   font-style: normal;
   font-weight: 400;
   font-size: 44px;
@@ -216,7 +216,7 @@
 
 .nw-hero__subheading,
 .nw-hero__subheading * {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -298,7 +298,7 @@
 
 .nw-hero__trust-text,
 .nw-hero__trust-text * {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -339,7 +339,7 @@
 
 .nw-hero__promo-title,
 .nw-hero__promo-title * {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -375,7 +375,7 @@
 
 .nw-hero__status-text,
 .nw-hero__status-text * {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: italic;
   font-weight: 600;
   font-size: 12px;
@@ -387,7 +387,7 @@
 
 .nw-hero__promo-subtext,
 .nw-hero__promo-subtext * {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -412,7 +412,7 @@
 
 .nw-hero__countdown-label,
 .nw-hero__countdown-label * {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: italic;
   font-weight: 500;
   font-size: 13px;
@@ -445,7 +445,7 @@
 }
 
 .nw-hero__timer-num {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -454,7 +454,7 @@
 }
 
 .nw-hero__timer-txt {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 300;
   font-size: 13px;
@@ -464,7 +464,7 @@
 }
 
 .nw-hero__timer-sep {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
@@ -538,16 +538,16 @@
   }
 
   .nw-hero__wrapper .page-width {
-    padding: 0 16px;
-    display: flex;
+    padding: 0 10px;
+    display: flex; 
     align-items: center;
   }
 
   .nw-hero__inner {
     flex-direction: column-reverse;
     align-items: center;
-    gap: 20px;
-    padding: 30px 0;
+    gap: 0px;
+    padding: 0px 0;
   }
 
   .nw-hero__content {
@@ -652,5 +652,8 @@
 
   .nw-hero__timer-units {
     gap: 6px;
+  }
+  .nw-hero__media-col{
+    flex: 1;
   }
 }

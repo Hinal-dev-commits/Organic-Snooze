@@ -322,6 +322,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+
+    {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+    {{ 'nw-swiper-bundle.min.js' | asset_url | script_tag }}
     {% render 'nw-css' %}
   </head>
 
@@ -405,5 +408,39 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    <script>
+      (function () {
+        const TRANSPARENT_HEADER_SELECTOR = '[data-nw-transparent-header]';
+        const TRANSPARENT_HEADER_CLASS = 'nw-header-transprant';
+
+        function isFirstMainSection(element) {
+          const main = document.getElementById('MainContent');
+          if (!main || !element) return false;
+
+          const section = element.closest('.shopify-section') || element;
+          return main.firstElementChild === section;
+        }
+
+        function updateTransparentHeader() {
+          const trigger = document.querySelector(TRANSPARENT_HEADER_SELECTOR);
+          const shouldEnable = Boolean(trigger && isFirstMainSection(trigger));
+          const header = document.querySelector('.header');
+          const headerWrapper = document.querySelector('.header-wrapper');
+
+          if (header) {
+            header.classList.toggle(TRANSPARENT_HEADER_CLASS, shouldEnable);
+          }
+
+          if (headerWrapper) {
+            headerWrapper.classList.toggle(TRANSPARENT_HEADER_CLASS, shouldEnable);
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateTransparentHeader);
+        document.addEventListener('shopify:section:load', updateTransparentHeader);
+        document.addEventListener('shopify:section:unload', updateTransparentHeader);
+      })();
+    </script>
   </body>
 </html>

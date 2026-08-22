@@ -1,5 +1,14 @@
 {{ 'nw-hero.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign hero_media_type = section.settings.media_type
+  if hero_media_type == blank and section.settings.shopify_video != blank
+    assign hero_media_type = 'video'
+  elsif hero_media_type == blank
+    assign hero_media_type = 'image'
+  endif
+-%}
+
 <style>
   #NwHero-{{ section.id }} {
     padding-top: {{ section.settings.padding_top_desktop }}px;
@@ -9,10 +18,12 @@
       background-image: none;
     {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
       background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' %}
+    {% elsif section.settings.bg_type == 'image' and hero_media_type != 'image' %}
       {% if section.settings.bg_image != blank %}
         background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
       {% endif %}
+    {% elsif section.settings.bg_type == 'image' and hero_media_type == 'image' %}
+      background-image: none;
     {% elsif section.settings.bg_type == 'none' %}
       background: transparent;
       background-image: none;
@@ -28,7 +39,7 @@
     #NwHero-{{ section.id }} {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+      {% if section.settings.bg_type == 'image' and hero_media_type != 'image' and section.settings.bg_image_mobile != blank %}
         background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
       {% endif %}
     }
@@ -38,6 +49,7 @@
 <div
   id="NwHero-{{ section.id }}"
   class="nw-hero__wrapper{% if section.settings.enable_transparent_header %} nw-hero--transparent-header{% endif %}"
+  {% if section.settings.enable_transparent_header %}data-nw-transparent-header{% endif %}
   style="
     --nw-hero-overlay-color: {{ section.settings.overlay_color }};
     --nw-hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
@@ -47,6 +59,30 @@
     --nw-hero-pb-mb: {{ section.settings.padding_bottom_mobile }}px;
   "
 >
+  {%- if hero_media_type == 'image' -%}
+    <div class="nw-hero__bg-video-wrapper">
+      {%- if section.settings.bg_image != blank -%}
+        <picture>
+          {%- if section.settings.bg_image_mobile != blank -%}
+            <source media="(max-width: 749px)" srcset="{{ section.settings.bg_image_mobile | image_url: width: 1200 }}">
+          {%- endif -%}
+          {{
+            section.settings.bg_image
+            | image_url: width: 2880
+            | image_tag:
+              class: 'nw-hero__bg-video',
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '750, 1100, 1500, 2000, 2880',
+              sizes: '100vw',
+              alt: section.settings.bg_image.alt | default: section.settings.heading | strip_html | escape
+          }}
+        </picture>
+      {%- else -%}
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg nw-hero__bg-video' }}
+      {%- endif -%}
+    </div>
+  {%- elsif hero_media_type == 'video' -%}
   {%- if section.settings.video_source == 'shopify_hosted' and section.settings.shopify_video != blank -%}
     <div class="nw-hero__bg-video-wrapper">
       {{ section.settings.shopify_video | video_tag: autoplay: section.settings.video_autoplay, loop: true, muted: true, controls: false, playsinline: true, class: 'nw-hero__bg-video' }}
@@ -75,6 +111,7 @@
         ></iframe>
       {%- endif -%}
     </div>
+  {%- endif -%}
   {%- endif -%}
 
   <div class="nw-hero__overlay"></div>
@@ -250,7 +287,7 @@
         {%- endfor -%}
       </div>
 
-      {%- if section.settings.enable_video_button -%}
+      {%- if hero_media_type == 'video' and section.settings.enable_video_button -%}
         <div class="nw-hero__media-col">
           <button type="button" class="nw-hero__play-btn" aria-label="Play or pause video">
             <svg class="nw-hero__play-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -489,7 +526,7 @@
       "type": "richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "<p>Organic Mattress From the Inside Out.</p>"
+      "default": "<h1>Organic Mattress From the Inside Out.</h1>"
     },
     {
       "type": "header",
@@ -547,19 +584,41 @@
     },
     {
       "type": "header",
+      "content": "Background Media"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Background Media Type",
+      "options": [
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "video",
+          "label": "Video"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "header",
       "content": "Video Settings"
     },
     {
       "type": "checkbox",
       "id": "enable_video_button",
       "label": "Show Play Video Button",
-      "default": true
+      "default": true,
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
       "type": "checkbox",
       "id": "video_autoplay",
       "label": "Autoplay Video in Background",
-      "default": true
+      "default": true,
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
       "type": "select",
@@ -575,26 +634,27 @@
           "label": "YouTube / Vimeo / External URL"
         }
       ],
-      "default": "shopify_hosted"
+      "default": "shopify_hosted",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
       "type": "video",
       "id": "shopify_video",
       "label": "Shopify Hosted Video",
-      "visible_if": "{{ section.settings.video_source == 'shopify_hosted' }}"
+      "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_source == 'shopify_hosted' }}"
     },
     {
       "type": "video_url",
       "id": "video_url",
       "label": "YouTube / Vimeo URL",
       "accept": ["youtube", "vimeo"],
-      "visible_if": "{{ section.settings.video_source == 'url' }}"
+      "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_source == 'url' }}"
     },
     {
       "type": "text",
       "id": "custom_video_url",
       "label": "Direct MP4 Video URL",
-      "visible_if": "{{ section.settings.video_source == 'url' }}"
+      "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_source == 'url' }}"
     },
     {
       "type": "header",
@@ -648,13 +708,14 @@
       "type": "image_picker",
       "id": "bg_image",
       "label": "Background Image (Desktop)",
-      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+      "info": "Shows a placeholder image when empty.",
+      "visible_if": "{{ section.settings.media_type == 'image' and section.settings.bg_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image_mobile",
       "label": "Background Image (Mobile)",
-      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+      "visible_if": "{{ section.settings.media_type == 'image' and section.settings.bg_type == 'image' }}"
     },
     {
       "type": "color",
@@ -837,10 +898,38 @@
   "presets": [
     {
       "name": "NW Hero",
+      "settings": {
+        "enable_transparent_header": true,
+        "content_position_h": "space-between",
+        "content_position_v": "center",
+        "text_alignment": "left",
+        "show_reviews": true,
+        "rating_stars": 5,
+        "star_color": "#E57B1E",
+        "rating_text": "<p>4.8/5 from 21,000+ sleepers</p>",
+        "heading": "<h1>Organic Mattress From the Inside Out.</h1>",
+        "subheading": "<p>Bio-optimized mattress engineered with pure materials for deeper recovery.</p>",
+        "show_button": true,
+        "btn_text": "SHOP MATTRESSES",
+        "btn_style": "primary",
+        "media_type": "image",
+        "enable_video_button": true,
+        "video_autoplay": true,
+        "video_source": "shopify_hosted",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30,
+        "bg_type": "image",
+        "bg_color": "#613916",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      },
       "blocks": [
         {
           "type": "trust_badge",
           "settings": {
+            "icon_color": "#CC926A",
             "icon": "moneyback",
             "text": "<p>100-Night Risk-Free Trial</p>"
           }
@@ -848,6 +937,7 @@
         {
           "type": "trust_badge",
           "settings": {
+            "icon_color": "#CC926A",
             "icon": "truck",
             "text": "<p>Free Shipping</p>"
           }
@@ -855,6 +945,7 @@
         {
           "type": "trust_badge",
           "settings": {
+            "icon_color": "#CC926A",
             "icon": "warranty",
             "text": "<p>30-Year Warranty</p>"
           }
@@ -862,12 +953,21 @@
         {
           "type": "trust_badge",
           "settings": {
+            "icon_color": "#CC926A",
             "icon": "financing",
             "text": "<p>0% Interest financing options</p>"
           }
         },
         {
-          "type": "promo_countdown"
+          "type": "promo_countdown",
+          "settings": {
+            "promo_title": "<p>🇺🇸 Fourth of July Celebration</p>",
+            "status_text": "<p>LIVE</p>",
+            "promo_subtext": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>",
+            "countdown_label": "<p>Event Ending In</p>",
+            "countdown_end_date": "2026-12-31 23:59:59",
+            "hide_after_timer_end": false
+          }
         }
       ]
     }

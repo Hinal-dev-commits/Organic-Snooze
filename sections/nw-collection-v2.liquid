@@ -1,0 +1,977 @@
+{{ 'nw-collection-v2.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign sidebar_block = nil
+  assign tab_blocks = section.blocks | where: 'type', 'tab'
+  for block in section.blocks
+    if block.type == 'sidebar'
+      assign sidebar_block = block
+    endif
+  endfor
+-%}
+
+<style>
+  #NwCollectionV2-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2400 }}');
+      background-size: cover;
+      background-position: center;
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwCollectionV2-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<section
+  id="NwCollectionV2-{{ section.id }}"
+  class="nw-collection-v2"
+  style="
+    --nw-colv2-tab-bg: {{ section.settings.tab_bg }};
+    --nw-colv2-tab-text: {{ section.settings.tab_text }};
+    --nw-colv2-tab-border: {{ section.settings.tab_border }};
+    --nw-colv2-tab-active-bg: {{ section.settings.tab_active_bg }};
+    --nw-colv2-tab-active-text: {{ section.settings.tab_active_text }};
+    --nw-colv2-sidebar-bg: {{ section.settings.sidebar_bg }};
+    --nw-colv2-sidebar-text: {{ section.settings.sidebar_text }};
+    --nw-colv2-quote-bg: {{ section.settings.quote_bg }};
+    --nw-colv2-quote-border: {{ section.settings.quote_border }};
+    --nw-colv2-quote-icon: {{ section.settings.quote_icon_color }};
+    --nw-colv2-verified-color: {{ section.settings.verified_color }};
+    --nw-colv2-trust-icon: {{ section.settings.trust_icon_color }};
+    --nw-colv2-fade-color: {{ section.settings.slider_fade_color }};
+    --nw-pcard-text: {{ section.settings.pcard_text }};
+    --nw-pcard-star: {{ section.settings.pcard_star_color }};
+    --nw-pcard-star-empty: {{ section.settings.pcard_star_empty_color }};
+    --nw-pcard-save-bg: {{ section.settings.pcard_save_bg }};
+    --nw-pcard-save-text: {{ section.settings.pcard_save_text }};
+    --nw-pcard-seller-bg: {{ section.settings.pcard_seller_bg }};
+    --nw-pcard-seller-text: {{ section.settings.pcard_seller_text }};
+    --nw-pcard-firmness-bg: {{ section.settings.pcard_firmness_bg }};
+    --nw-pcard-firmness-dot: {{ section.settings.pcard_firmness_dot }};
+    --nw-pcard-firmness-dot-active: {{ section.settings.pcard_firmness_dot_active }};
+    --nw-pcard-firmness-line: {{ section.settings.pcard_firmness_line }};
+    --nw-pcard-btn-bg: {{ section.settings.pcard_btn_bg }};
+    --nw-pcard-btn-bg-hover: {{ section.settings.pcard_btn_bg_hover }};
+    --nw-pcard-btn-text: {{ section.settings.pcard_btn_text }};
+    --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
+    --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
+    --nw-swiper-bullet: {{ section.settings.swiper_bullet_color }};
+  "
+  data-products-limit="{{ section.settings.products_to_show }}"
+>
+  <div class="page-width">
+    <div class="nw-collection-v2__inner">
+      {%- if tab_blocks.size > 0 -%}
+        <div class="nw-collection-v2__tabs-wrap">
+          <div class="nw-collection-v2__tabs" role="tablist" aria-label="Collection categories">
+            {%- assign tab_index = 0 -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'tab' -%}
+                <button
+                  type="button"
+                  class="nw-collection-v2__tab{% if tab_index == 0 %} is-active{% endif %}"
+                  role="tab"
+                  aria-selected="{% if tab_index == 0 %}true{% else %}false{% endif %}"
+                  data-nw-tab="{{ tab_index }}"
+                  data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.label | escape }}
+                </button>
+                {%- assign tab_index = tab_index | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="nw-collection-v2__main">
+        {%- if sidebar_block -%}
+          <aside class="nw-collection-v2__sidebar" {{ sidebar_block.shopify_attributes }}>
+            <div class="nw-collection-v2__sidebar-heading">
+              {%- if sidebar_block.settings.heading != blank -%}
+                <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
+              {%- endif -%}
+              {%- if sidebar_block.settings.subheading != blank -%}
+                <div class="nw-collection-v2__sidebar-subheading">{{ sidebar_block.settings.subheading }}</div>
+              {%- endif -%}
+            </div>
+
+            {%- if sidebar_block.settings.quote != blank or sidebar_block.settings.author_name != blank -%}
+              <div class="nw-collection-v2__quote">
+                <span class="nw-collection-v2__quote-mark" aria-hidden="true">
+                  {{ "quote.svg" | inline_asset_content }}
+                </span>
+                {%- if sidebar_block.settings.quote != blank -%}
+                  <div class="nw-collection-v2__quote-text">{{ sidebar_block.settings.quote }}</div>
+                {%- endif -%}
+                <div class="nw-collection-v2__quote-author-wrap">
+                  <div class="nw-collection-v2__quote-author">
+                    {%- if sidebar_block.settings.author_name != blank -%}
+                      <div class="nw-collection-v2__quote-name-row">
+                        <div class="nw-collection-v2__quote-name">{{ sidebar_block.settings.author_name }}</div>
+                        {%- if sidebar_block.settings.show_verified -%}
+                          <span class="nw-collection-v2__quote-verified" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.8 14.4L6.4 12.6l1.4-1.4 2.8 2.8 6-6 1.4 1.4-7.4 7.4z"/>
+                            </svg>
+                          </span>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                    {%- if sidebar_block.settings.author_title != blank -%}
+                      <div class="nw-collection-v2__quote-title">{{ sidebar_block.settings.author_title }}</div>
+                    {%- endif -%}
+                  </div>
+                  {%- if sidebar_block.settings.author_image != blank -%}
+                    <div class="nw-collection-v2__quote-image">
+                      {{
+                        sidebar_block.settings.author_image
+                        | image_url: width: 360
+                        | image_tag: loading: 'lazy', alt: sidebar_block.settings.author_name | escape
+                      }}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+
+            <div class="nw-collection-v2__trust-badges">
+              {%- for i in (1..4) -%}
+                {%- liquid
+                  case i
+                    when 1
+                      assign badge_text = sidebar_block.settings.badge_1_text
+                      assign badge_icon = sidebar_block.settings.badge_1_icon
+                      assign badge_custom_icon = sidebar_block.settings.badge_1_custom_icon
+                    when 2
+                      assign badge_text = sidebar_block.settings.badge_2_text
+                      assign badge_icon = sidebar_block.settings.badge_2_icon
+                      assign badge_custom_icon = sidebar_block.settings.badge_2_custom_icon
+                    when 3
+                      assign badge_text = sidebar_block.settings.badge_3_text
+                      assign badge_icon = sidebar_block.settings.badge_3_icon
+                      assign badge_custom_icon = sidebar_block.settings.badge_3_custom_icon
+                    when 4
+                      assign badge_text = sidebar_block.settings.badge_4_text
+                      assign badge_icon = sidebar_block.settings.badge_4_icon
+                      assign badge_custom_icon = sidebar_block.settings.badge_4_custom_icon
+                  endcase
+                -%}
+                {%- if badge_text != blank -%}
+                  <div class="nw-collection-v2__trust-item">
+                    <span class="nw-collection-v2__trust-icon">
+                      {%- if badge_custom_icon != blank -%}
+                        {{ badge_custom_icon | image_url: width: 40 | image_tag: loading: 'lazy', class: 'nw-collection-v2__trust-img' }}
+                      {%- elsif badge_icon == 'moneyback' -%}
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"/></svg>
+                      {%- elsif badge_icon == 'truck' -%}
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 8h-3V4H1v13h2a3 3 0 0 0 6 0h6a3 3 0 0 0 6 0h2v-6l-3-3zM6 18.5A1.5 1.5 0 1 1 6 15.5a1.5 1.5 0 0 1 0 3zm12 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM17 12V9.5h2.5l1.5 2.5H17z"/></svg>
+                      {%- elsif badge_icon == 'warranty' -%}
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="6"/><path d="M7 13l-3 8 8-4 8 4-3-8"/></svg>
+                      {%- elsif badge_icon == 'financing' -%}
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                      {%- endif -%}
+                    </span>
+                    <div class="nw-collection-v2__trust-text">{{ badge_text }}</div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </aside>
+        {%- endif -%}
+
+        <div class="nw-collection-v2__slider-col">
+          {%- assign panel_index = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'tab' -%}
+              <div
+                class="nw-collection-v2__panel"
+                data-nw-panel="{{ panel_index }}"
+                role="tabpanel"
+                {% unless panel_index == 0 %}hidden{% endunless %}
+              >
+                <div class="nw-collection-v2__slider-wrap">
+                  {%- if block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
+                    <div class="swiper nw-collection-v2__swiper" id="NwCollectionSwiper-{{ section.id }}-{{ panel_index }}">
+                      <div class="swiper-wrapper">
+                        {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
+                          <div class="swiper-slide">
+                            {% render 'nw-product-card',
+                              product: product,
+                              section_id: section.id,
+                              show_rating: section.settings.show_rating,
+                              show_firmness: section.settings.show_firmness,
+                              firmness_label_soft: section.settings.firmness_label_soft,
+                              firmness_label_firm: section.settings.firmness_label_firm,
+                              button_text: section.settings.pcard_button_text,
+                              lazy_load: true
+                            %}
+                          </div>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                    {%- if section.settings.show_arrows -%}
+                      <button type="button" class="nw-swiper-btn nw-swiper-btn--prev" aria-label="Previous slide">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <button type="button" class="nw-swiper-btn nw-swiper-btn--next" aria-label="Next slide">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                    {%- endif -%}
+                  {%- else -%}
+                    <div class="nw-collection-v2__empty">{{ section.settings.empty_text }}</div>
+                  {%- endif -%}
+                </div>
+                {%- if section.settings.show_pagination and block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
+                  <div class="nw-swiper-pagination" id="NwCollectionPagination-{{ section.id }}-{{ panel_index }}"></div>
+                {%- endif -%}
+              </div>
+              {%- assign panel_index = panel_index | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- if section.settings.show_shop_all and section.settings.shop_all_text != blank -%}
+        <div class="nw-collection-v2__footer nw-collection-v2__shop-all">
+          {%- liquid
+            assign shop_all_link = section.settings.shop_all_link
+            if shop_all_link == blank and tab_blocks.size > 0
+              assign first_tab = tab_blocks | first
+              if first_tab.settings.collection != blank
+                assign shop_all_link = first_tab.settings.collection.url
+              endif
+            endif
+          -%}
+          {% render 'nw-button',
+            text: section.settings.shop_all_text,
+            link: shop_all_link,
+            style: section.settings.shop_all_style,
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+<script>
+  (function () {
+    var sectionEl = document.getElementById('NwCollectionV2-{{ section.id }}');
+    if (!sectionEl) return;
+
+    function initPanelSwiper(panel) {
+      if (!panel || panel.hidden) return;
+      var swiperEl = panel.querySelector('.nw-collection-v2__swiper');
+      if (!swiperEl || swiperEl.dataset.initialized === 'true') return;
+      if (typeof Swiper === 'undefined') return;
+
+      var panelIndex = panel.getAttribute('data-nw-panel');
+      var paginationEl = document.getElementById('NwCollectionPagination-{{ section.id }}-' + panelIndex);
+
+      new Swiper(swiperEl, {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        watchOverflow: true,
+        {% if section.settings.show_arrows %}
+        navigation: {
+          nextEl: panel.querySelector('.nw-swiper-btn--next'),
+          prevEl: panel.querySelector('.nw-swiper-btn--prev')
+        },
+        {% endif %}
+        {% if section.settings.show_pagination %}
+        pagination: paginationEl ? {
+          el: paginationEl,
+          clickable: true
+        } : false,
+        {% endif %}
+        breakpoints: {
+          750: {
+            spaceBetween: 16
+          }
+        }
+      });
+
+      swiperEl.dataset.initialized = 'true';
+    }
+
+    function setActiveTab(index) {
+      var tabs = sectionEl.querySelectorAll('[data-nw-tab]');
+      var panels = sectionEl.querySelectorAll('[data-nw-panel]');
+      var shopAllBtn = sectionEl.querySelector('.nw-collection-v2__shop-all-btn');
+      var activeTab = null;
+
+      tabs.forEach(function (tab) {
+        var isActive = tab.getAttribute('data-nw-tab') === String(index);
+        tab.classList.toggle('is-active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        if (isActive) activeTab = tab;
+      });
+
+      panels.forEach(function (panel) {
+        var isActive = panel.getAttribute('data-nw-panel') === String(index);
+        panel.hidden = !isActive;
+        if (isActive) initPanelSwiper(panel);
+      });
+
+      if (shopAllBtn && activeTab) {
+        var collectionUrl = activeTab.getAttribute('data-collection-url');
+        if (collectionUrl) shopAllBtn.setAttribute('href', collectionUrl);
+      }
+    }
+
+    sectionEl.querySelectorAll('[data-nw-tab]').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        setActiveTab(tab.getAttribute('data-nw-tab'));
+      });
+    });
+
+    function boot() {
+      if (typeof Swiper === 'undefined') {
+        window.setTimeout(boot, 50);
+        return;
+      }
+      var firstPanel = sectionEl.querySelector('[data-nw-panel]:not([hidden])');
+      initPanelSwiper(firstPanel);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.target.contains(sectionEl)) boot();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "NW Collection V2",
+  "tag": "section",
+  "class": "section-nw-collection-v2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Slider"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 24,
+      "step": 1,
+      "label": "Products to show per tab",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show slider arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show slider pagination",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty collection message",
+      "default": "Select a collection for this tab."
+    },
+    {
+      "type": "header",
+      "content": "Product Card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show product rating",
+      "default": true,
+      "info": "Requires a product reviews app."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_firmness",
+      "label": "Show firmness scale",
+      "default": false,
+      "info": "Only displays when the product custom.firmness metafield is set."
+    },
+    {
+      "type": "text",
+      "id": "firmness_label_soft",
+      "label": "Firmness left label",
+      "default": "Soft",
+      "visible_if": "{{ section.settings.show_firmness == true }}"
+    },
+    {
+      "type": "text",
+      "id": "firmness_label_firm",
+      "label": "Firmness right label",
+      "default": "Firm",
+      "visible_if": "{{ section.settings.show_firmness == true }}"
+    },
+    {
+      "type": "text",
+      "id": "pcard_button_text",
+      "label": "Product card button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "header",
+      "content": "Shop All Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shop_all",
+      "label": "Show shop all button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shop_all_text",
+      "label": "Shop all button text",
+      "default": "Shop All",
+      "visible_if": "{{ section.settings.show_shop_all == true }}"
+    },
+    {
+      "type": "url",
+      "id": "shop_all_link",
+      "label": "Shop all button link",
+      "info": "Defaults to the active tab collection when empty.",
+      "visible_if": "{{ section.settings.show_shop_all == true }}"
+    },
+    {
+      "type": "select",
+      "id": "shop_all_style",
+      "label": "Shop all button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "outline",
+      "visible_if": "{{ section.settings.show_shop_all == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Tab Colors"
+    },
+    {
+      "type": "color",
+      "id": "tab_bg",
+      "label": "Tab background",
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "color",
+      "id": "tab_text",
+      "label": "Tab text",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "tab_border",
+      "label": "Tab border",
+      "default": "#E8DDD4"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_bg",
+      "label": "Active tab background",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_text",
+      "label": "Active tab text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Sidebar Colors"
+    },
+    {
+      "type": "color",
+      "id": "sidebar_bg",
+      "label": "Sidebar background",
+      "default": "#F4EFE8"
+    },
+    {
+      "type": "color",
+      "id": "sidebar_text",
+      "label": "Sidebar text",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "quote_bg",
+      "label": "Quote card background",
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "color",
+      "id": "quote_border",
+      "label": "Quote card border",
+      "default": "#F0EBE3"
+    },
+    {
+      "type": "color",
+      "id": "quote_icon_color",
+      "label": "Quote icon color",
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "id": "verified_color",
+      "label": "Verified badge color",
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "id": "trust_icon_color",
+      "label": "Trust badge icon color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "Product Card Colors"
+    },
+    {
+      "type": "color",
+      "id": "pcard_text",
+      "label": "Text color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "pcard_star_color",
+      "label": "Star color",
+      "default": "#E57B1E"
+    },
+    {
+      "type": "color",
+      "id": "pcard_star_empty_color",
+      "label": "Empty star color",
+      "default": "#D9CFC4"
+    },
+    {
+      "type": "color",
+      "id": "pcard_save_bg",
+      "label": "Save tag background",
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "color",
+      "id": "pcard_save_text",
+      "label": "Save tag text",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "pcard_seller_bg",
+      "label": "Seller tag background",
+      "default": "#70804A"
+    },
+    {
+      "type": "color",
+      "id": "pcard_seller_text",
+      "label": "Seller tag text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pcard_firmness_bg",
+      "label": "Firmness bar background",
+      "default": "#F4EFE8"
+    },
+    {
+      "type": "color",
+      "id": "pcard_firmness_dot",
+      "label": "Firmness dot",
+      "default": "#C9B9A8"
+    },
+    {
+      "type": "color",
+      "id": "pcard_firmness_dot_active",
+      "label": "Active firmness dot",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "pcard_firmness_line",
+      "label": "Firmness line",
+      "default": "#D9CFC4"
+    },
+    {
+      "type": "color",
+      "id": "pcard_btn_bg",
+      "label": "Button background",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "pcard_btn_bg_hover",
+      "label": "Button hover background",
+      "default": "#B57D57"
+    },
+    {
+      "type": "color",
+      "id": "pcard_btn_text",
+      "label": "Button text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Slider Colors"
+    },
+    {
+      "type": "color",
+      "id": "slider_fade_color",
+      "label": "Slider edge fade",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_bg",
+      "label": "Arrow background",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_color",
+      "label": "Arrow icon",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "swiper_bullet_color",
+      "label": "Pagination bullet",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding (mobile)",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Collection Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tab label",
+          "default": "Mattress"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    },
+    {
+      "type": "sidebar",
+      "name": "Sidebar Content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "<p>Shop Organic Mattresses and Bedding</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "<p>Start with a mattress, then complete your organic sleep system.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Testimonial"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>“If deep sleep and true recovery matter to you, this is the only mattress I’d put my body on in my own home. Nothing else even comes close.”</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "author_name",
+          "label": "Author name",
+          "default": "<p>Gary Brecka</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "Show verified badge",
+          "default": true
+        },
+        {
+          "type": "richtext",
+          "id": "author_title",
+          "label": "Author title",
+          "default": "<p>Longevity Expert & Co-founder of The Ultimate Human</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Author image"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 1"
+        },
+        {
+          "type": "select",
+          "id": "badge_1_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "moneyback", "label": "Moneyback" },
+            { "value": "truck", "label": "Free Shipping" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "financing", "label": "Financing" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "moneyback"
+        },
+        {
+          "type": "image_picker",
+          "id": "badge_1_custom_icon",
+          "label": "Custom icon"
+        },
+        {
+          "type": "richtext",
+          "id": "badge_1_text",
+          "label": "Text",
+          "default": "<p>100-Night Risk-Free Trial</p>"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 2"
+        },
+        {
+          "type": "select",
+          "id": "badge_2_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "moneyback", "label": "Moneyback" },
+            { "value": "truck", "label": "Free Shipping" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "financing", "label": "Financing" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "image_picker",
+          "id": "badge_2_custom_icon",
+          "label": "Custom icon"
+        },
+        {
+          "type": "richtext",
+          "id": "badge_2_text",
+          "label": "Text",
+          "default": "<p>Free Shipping</p>"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 3"
+        },
+        {
+          "type": "select",
+          "id": "badge_3_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "moneyback", "label": "Moneyback" },
+            { "value": "truck", "label": "Free Shipping" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "financing", "label": "Financing" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "warranty"
+        },
+        {
+          "type": "image_picker",
+          "id": "badge_3_custom_icon",
+          "label": "Custom icon"
+        },
+        {
+          "type": "richtext",
+          "id": "badge_3_text",
+          "label": "Text",
+          "default": "<p>30-Year Warranty</p>"
+        },
+        {
+          "type": "header",
+          "content": "Trust Badge 4"
+        },
+        {
+          "type": "select",
+          "id": "badge_4_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "moneyback", "label": "Moneyback" },
+            { "value": "truck", "label": "Free Shipping" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "financing", "label": "Financing" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "financing"
+        },
+        {
+          "type": "image_picker",
+          "id": "badge_4_custom_icon",
+          "label": "Custom icon"
+        },
+        {
+          "type": "richtext",
+          "id": "badge_4_text",
+          "label": "Text",
+          "default": "<p>0% Interest financing options</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Collection V2",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": { "label": "Ultimate Snooze" }
+        },
+        {
+          "type": "tab",
+          "settings": { "label": "Mattress" }
+        },
+        {
+          "type": "tab",
+          "settings": { "label": "Bedding" }
+        },
+        {
+          "type": "tab",
+          "settings": { "label": "Bundle & Save" }
+        },
+        {
+          "type": "tab",
+          "settings": { "label": "Bases" }
+        },
+        {
+          "type": "tab",
+          "settings": { "label": "Kids" }
+        },
+        {
+          "type": "sidebar"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

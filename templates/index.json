@@ -104,7 +104,7 @@
           "settings": {
             "icon_color": "#cc926a",
             "icon": "moneyback",
-            "custom_icon": "shopify://shop_images/warrenty.svg",
+            "custom_icon": "shopify://shop_images/svgviewer-output_42.svg",
             "text": "<p>30-Year Warranty</p>"
           }
         },
@@ -138,7 +138,7 @@
       ],
       "name": "NW Hero",
       "settings": {
-        "enable_transparent_header": false,
+        "enable_transparent_header": true,
         "content_position_h": "space-between",
         "content_position_v": "center",
         "text_alignment": "left",
@@ -152,6 +152,7 @@
         "btn_text": "SHOP MATTRESSES",
         "btn_link": "",
         "btn_style": "primary",
+        "media_type": "video",
         "enable_video_button": true,
         "video_autoplay": true,
         "video_source": "shopify_hosted",
@@ -164,10 +165,10 @@
         "bg_image": "shopify://shop_images/image_2_1.png",
         "bg_color": "#613916",
         "bg_gradient": "linear-gradient(228deg, rgba(21, 209, 252, 1) 14%, rgba(187, 48, 254, 1) 83%)",
-        "padding_top_desktop": 0,
-        "padding_bottom_desktop": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
+        "padding_top_desktop": 44,
+        "padding_bottom_desktop": 44,
+        "padding_top_mobile": 68,
+        "padding_bottom_mobile": 48
       }
     },
     "nw_marquee_RHRj4N": {
@@ -269,12 +270,142 @@
         "padding_top_mobile": 14,
         "padding_bottom_mobile": 14
       }
+    },
+    "nw_collection_v2_a4yrmy": {
+      "type": "nw-collection-v2",
+      "blocks": {
+        "tab_zzBgcE": {
+          "type": "tab",
+          "settings": {
+            "label": "Ultimate Snooze",
+            "collection": "ultimate-pillows"
+          }
+        },
+        "tab_QzhKAT": {
+          "type": "tab",
+          "settings": {
+            "label": "Mattress",
+            "collection": ""
+          }
+        },
+        "tab_xBfytM": {
+          "type": "tab",
+          "settings": {
+            "label": "Bedding",
+            "collection": ""
+          }
+        },
+        "tab_hGaVj4": {
+          "type": "tab",
+          "settings": {
+            "label": "Bundle & Save",
+            "collection": ""
+          }
+        },
+        "tab_8MGfk8": {
+          "type": "tab",
+          "settings": {
+            "label": "Bases",
+            "collection": ""
+          }
+        },
+        "tab_y3MpR9": {
+          "type": "tab",
+          "settings": {
+            "label": "Kids",
+            "collection": ""
+          }
+        },
+        "sidebar_JprNwH": {
+          "type": "sidebar",
+          "settings": {
+            "heading": "<h2>Shop Organic Mattresses and Bedding</h2>",
+            "subheading": "<p>Start with a mattress, then complete your organic sleep system.</p>",
+            "quote": "<p>“If deep sleep and true recovery matter to you, this is the only mattress I’d put my body on in my own home. Nothing else even comes close.”</p>",
+            "author_name": "<p>Gary Brecka</p>",
+            "show_verified": true,
+            "author_title": "<p>Longevity Expert & Co-founder of The Ultimate Human</p>",
+            "author_image": "shopify://shop_images/auth.png",
+            "badge_1_icon": "moneyback",
+            "badge_1_text": "<p>100-Night Risk-Free Trial</p>",
+            "badge_2_icon": "truck",
+            "badge_2_text": "<p>Free Shipping</p>",
+            "badge_3_icon": "warranty",
+            "badge_3_text": "<p>30-Year Warranty</p>",
+            "badge_4_icon": "financing",
+            "badge_4_text": "<p>0% Interest financing options</p>"
+          }
+        }
+      },
+      "block_order": [
+        "tab_zzBgcE",
+        "tab_QzhKAT",
+        "tab_xBfytM",
+        "tab_hGaVj4",
+        "tab_8MGfk8",
+        "tab_y3MpR9",
+        "sidebar_JprNwH"
+      ],
+      "name": "NW Collection V2",
+      "settings": {
+        "products_to_show": 8,
+        "show_arrows": true,
+        "show_pagination": true,
+        "empty_text": "Select a collection for this tab.",
+        "show_rating": true,
+        "show_firmness": true,
+        "firmness_label_soft": "Soft",
+        "firmness_label_firm": "Firm",
+        "pcard_button_text": "Shop Now",
+        "show_shop_all": true,
+        "shop_all_text": "Shop All",
+        "shop_all_link": "",
+        "shop_all_style": "outline",
+        "tab_bg": "#FFFCF0",
+        "tab_text": "#613916",
+        "tab_border": "#E8DDD4",
+        "tab_active_bg": "#CC926A",
+        "tab_active_text": "#FFFFFF",
+        "sidebar_bg": "#F4EFE8",
+        "sidebar_text": "#613916",
+        "quote_bg": "#FFFCF0",
+        "quote_border": "#F0EBE3",
+        "quote_icon_color": "#878735",
+        "verified_color": "#878735",
+        "trust_icon_color": "#613916",
+        "pcard_text": "#613916",
+        "pcard_star_color": "#E57B1E",
+        "pcard_star_empty_color": "#D9CFC4",
+        "pcard_save_bg": "#FFFCF0",
+        "pcard_save_text": "#613916",
+        "pcard_seller_bg": "#70804A",
+        "pcard_seller_text": "#FFFFFF",
+        "pcard_firmness_bg": "#F4EFE8",
+        "pcard_firmness_dot": "#C9B9A8",
+        "pcard_firmness_dot_active": "#613916",
+        "pcard_firmness_line": "#D9CFC4",
+        "pcard_btn_bg": "#CC926A",
+        "pcard_btn_bg_hover": "#B57D57",
+        "pcard_btn_text": "#FFFFFF",
+        "slider_fade_color": "#FFFFFF",
+        "swiper_arrow_bg": "#613916",
+        "swiper_arrow_color": "#FFFFFF",
+        "swiper_bullet_color": "#613916",
+        "bg_type": "color",
+        "bg_color": "#FFFFFF",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
     }
   },
   "order": [
     "image_banner",
     "featured_collection",
     "nw_hero_YTR6GB",
-    "nw_marquee_RHRj4N"
+    "nw_marquee_RHRj4N",
+    "nw_collection_v2_a4yrmy"
   ]
 }

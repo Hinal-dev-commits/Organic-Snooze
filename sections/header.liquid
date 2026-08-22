@@ -128,6 +128,25 @@
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
   }
+
+  {%- if section.settings.transparent_text_color != blank -%}
+    .header.nw-header-transprant {
+      --nw-header-transparent-text: {{ section.settings.transparent_text_color.red }}, {{ section.settings.transparent_text_color.green }}, {{ section.settings.transparent_text_color.blue }};
+    }
+  {%- endif -%}
+
+  {%- if section.settings.transparent_icon_color != blank -%}
+    .header.nw-header-transprant {
+      --nw-header-transparent-icon: {{ section.settings.transparent_icon_color.red }}, {{ section.settings.transparent_icon_color.green }}, {{ section.settings.transparent_icon_color.blue }};
+    }
+  {%- endif -%}
+
+  {%- if section.settings.transparent_border_color != blank -%}
+    .header-wrapper.nw-header-transprant.header-wrapper--border-bottom,
+    .header-wrapper:has(.header.nw-header-transprant).header-wrapper--border-bottom {
+      border-bottom-color: {{ section.settings.transparent_border_color }};
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
@@ -191,28 +210,7 @@
         <div class="header__heading">
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-        {%- if settings.logo != blank -%}
-          <div class="header__heading-logo-wrapper">
-            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-            {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
-            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{
-              settings.logo
-              | image_url: width: 600
-              | image_tag:
-                class: 'header__heading-logo motion-reduce',
-                widths: widths,
-                height: logo_height,
-                width: settings.logo_width,
-                alt: logo_alt,
-                sizes: sizes,
-                preload: true
-            }}
-          </div>
-        {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
-        {%- endif -%}
+        {%- render 'nw-header-logo', logo_position: section.settings.logo_position -%}
       </a>
       {%- if request.page_type == 'index' -%}
         </div>
@@ -234,28 +232,7 @@
         <div class="header__heading">
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-        {%- if settings.logo != blank -%}
-          <div class="header__heading-logo-wrapper">
-            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-            {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
-            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-            {{
-              settings.logo
-              | image_url: width: 600
-              | image_tag:
-                class: 'header__heading-logo',
-                widths: widths,
-                height: logo_height,
-                width: settings.logo_width,
-                alt: logo_alt,
-                sizes: sizes,
-                preload: true
-            }}
-          </div>
-        {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
-        {%- endif -%}
+        {%- render 'nw-header-logo', logo_position: section.settings.logo_position -%}
       </a>
       {%- if request.page_type == 'index' -%}
         </div>
@@ -629,6 +606,50 @@
       "id": "menu_color_scheme",
       "label": "t:sections.header.settings.menu_color_scheme.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Transparent header"
+    },
+    {
+      "type": "paragraph",
+      "content": "Used when a page section enables transparent header over hero."
+    },
+    {
+      "type": "image_picker",
+      "id": "transparent_logo",
+      "label": "Transparent header logo"
+    },
+    {
+      "type": "range",
+      "id": "transparent_logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 5,
+      "default": 200,
+      "unit": "px",
+      "label": "Transparent header logo width"
+    },
+    {
+      "type": "color",
+      "id": "transparent_text_color",
+      "label": "Transparent header text color",
+      "alpha": true,
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "transparent_icon_color",
+      "label": "Transparent header icon color",
+      "alpha": true,
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "transparent_border_color",
+      "label": "Transparent header border color",
+      "alpha": true,
+      "default": "#FFFFFF"
     },
     {
       "type": "header",

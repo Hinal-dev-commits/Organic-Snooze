@@ -1,0 +1,56 @@
+{%- liquid
+  assign transparent_logo_width = section.settings.transparent_logo_width
+  if transparent_logo_width == blank
+    assign transparent_logo_width = settings.logo_width
+  endif
+
+  assign logo_alt = settings.logo.alt | default: shop.name | escape
+
+  if logo_position == 'middle-center'
+    assign logo_sizes = '(min-width: 750px) 200px, 50vw'
+  else
+    assign logo_sizes = '(max-width: 400px) 50vw, 200px'
+  endif
+-%}
+
+{%- capture logo_widths -%}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{%- endcapture -%}
+
+{%- capture transparent_logo_widths -%}{{ transparent_logo_width }}, {{ transparent_logo_width | times: 1.5 | round }}, {{ transparent_logo_width | times: 2 }}{%- endcapture -%}
+
+{%- if settings.logo != blank or section.settings.transparent_logo != blank -%}
+  <div class="header__heading-logo-wrapper">
+    {%- if settings.logo != blank -%}
+      {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+      {{
+        settings.logo
+        | image_url: width: 600
+        | image_tag:
+          class: 'header__heading-logo header__heading-logo--default motion-reduce',
+          widths: logo_widths,
+          height: logo_height,
+          width: settings.logo_width,
+          alt: logo_alt,
+          sizes: logo_sizes,
+          preload: true
+      }}
+    {%- endif -%}
+    {%- if section.settings.transparent_logo != blank -%}
+      {%- assign transparent_logo_alt = section.settings.transparent_logo.alt | default: shop.name | escape -%}
+      {%- assign transparent_logo_height = transparent_logo_width | divided_by: section.settings.transparent_logo.aspect_ratio -%}
+      {{
+        section.settings.transparent_logo
+        | image_url: width: 600
+        | image_tag:
+          class: 'header__heading-logo header__heading-logo--transparent motion-reduce',
+          widths: transparent_logo_widths,
+          height: transparent_logo_height,
+          width: transparent_logo_width,
+          alt: transparent_logo_alt,
+          sizes: logo_sizes,
+          loading: 'lazy'
+      }}
+    {%- endif -%}
+  </div>
+{%- else -%}
+  <span class="h2">{{ shop.name }}</span>
+{%- endif -%}

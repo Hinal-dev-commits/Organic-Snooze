@@ -1,0 +1,167 @@
+{% doc %}
+Renders the NW product card used across collection sliders and grids.
+@param {product} product - Product object
+@param {string} section_id - Section id for unique ids
+@param {boolean} [show_rating] - Show review rating
+@param {boolean} [show_firmness] - Allow firmness bar when metafield is set
+@param {string} [firmness_label_soft] - Left firmness label
+@param {string} [firmness_label_firm] - Right firmness label
+@param {string} [button_text] - CTA button label
+@param {boolean} [lazy_load] - Lazy load product image
+@example
+{% render 'nw-product-card', product: product, section_id: section.id %}
+{% enddoc %}
+
+{%- liquid
+  assign card_product = product
+  assign show_rating = show_rating | default: true
+  assign show_firmness = show_firmness | default: false
+  assign firmness_label_soft = firmness_label_soft | default: 'Soft'
+  assign firmness_label_firm = firmness_label_firm | default: 'Firm'
+  assign button_text = button_text | default: 'Shop Now'
+  assign lazy_load = lazy_load | default: true
+
+  assign card_price = card_product.price_min
+  assign card_compare_at = card_product.compare_at_price_min
+  assign save_percent = 0
+
+  if card_compare_at > card_price and card_compare_at > 0
+    assign save_diff = card_compare_at | minus: card_price
+    assign save_percent = save_diff | times: 100.0 | divided_by: card_compare_at | round
+  endif
+
+  assign seller_tag = card_product.metafields.custom.seller_tag.value | default: card_product.metafields.custom.seller_tag
+  assign firmness_value = card_product.metafields.custom.firmness.value | default: card_product.metafields.custom.firmness
+  assign firmness_key = firmness_value | downcase | strip
+  assign firmness_index = 0
+
+  if firmness_key == 'soft'
+    assign firmness_index = 1
+  elsif firmness_key == 'medium soft' or firmness_key == 'medium-soft' or firmness_key == 'medium_soft'
+    assign firmness_index = 2
+  elsif firmness_key == 'medium'
+    assign firmness_index = 3
+  elsif firmness_key == 'firm'
+    assign firmness_index = 4
+  elsif firmness_key == 'extra firm' or firmness_key == 'extra-firm' or firmness_key == 'extra_firm'
+    assign firmness_index = 5
+  endif
+
+  assign show_firmness_bar = false
+  if show_firmness and firmness_index > 0
+    assign show_firmness_bar = true
+  endif
+-%}
+
+<article class="nw-product-card" id="NwProductCard-{{ section_id }}-{{ card_product.id }}">
+  <div class="nw-product-card__media">
+    <a href="{{ card_product.url }}" class="nw-product-card__media-link" aria-label="{{ card_product.title | escape }}">
+      {%- if card_product.featured_media -%}
+        {%- assign image_loading = 'eager' -%}
+        {%- if lazy_load -%}
+          {%- assign image_loading = 'lazy' -%}
+        {%- endif -%}
+        {{
+          card_product.featured_media
+          | image_url: width: 720
+          | image_tag:
+            class: 'nw-product-card__image',
+            loading: image_loading,
+            widths: '260, 360, 520, 720',
+            sizes: '(min-width: 990px) 260px, 45vw',
+            alt: card_product.featured_media.alt | default: card_product.title | escape
+        }}
+      {%- else -%}
+        {{ 'product-apparel-2' | placeholder_svg_tag: 'nw-product-card__image nw-product-card__image--placeholder' }}
+      {%- endif -%}
+    </a>
+
+    {%- if save_percent > 0 -%}
+      <span class="nw-product-card__tag nw-product-card__tag--save">Save {{ save_percent }}%</span>
+    {%- endif -%}
+
+    {%- if seller_tag != blank -%}
+      <span class="nw-product-card__tag nw-product-card__tag--seller">{{ seller_tag }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="nw-product-card__body">
+    {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
+      {%- liquid
+        assign rating_decimal = 0
+        assign decimal = card_product.metafields.reviews.rating.value.rating | modulo: 1
+        if decimal >= 0.3 and decimal <= 0.7
+          assign rating_decimal = 0.5
+        elsif decimal > 0.7
+          assign rating_decimal = 1
+        endif
+        assign rating_floor = card_product.metafields.reviews.rating.value.rating | floor
+        assign rating_max = card_product.metafields.reviews.rating.value.scale_max
+        assign rating_count = card_product.metafields.reviews.rating_count
+      -%}
+      <div
+        class="nw-product-card__rating"
+        role="img"
+        aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: card_product.metafields.reviews.rating.value, rating_max: rating_max }}"
+      >
+        <span class="nw-product-card__stars" aria-hidden="true">
+          {%- liquid
+            assign rating_ceil = rating_floor | plus: 1
+          -%}
+          {%- for i in (1..5) -%}
+            {%- liquid
+              assign star_fill = 'empty'
+              if i <= rating_floor
+                assign star_fill = 'full'
+              elsif i == rating_ceil and rating_decimal >= 0.5
+                assign star_fill = 'full'
+              endif
+            -%}
+            <span class="nw-product-card__star nw-product-card__star--{{ star_fill }}">
+              <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </span>
+          {%- endfor -%}
+        </span>
+        <span class="nw-product-card__rating-value">{{ card_product.metafields.reviews.rating.value }}/{{ rating_max }}</span>
+        {%- if rating_count != blank -%}
+          <span class="nw-product-card__rating-count">({{ rating_count }})</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <h3 class="nw-product-card__title">
+      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+    </h3>
+
+    {%- if show_firmness_bar -%}
+      <div class="nw-product-card__firmness">
+        <span class="nw-product-card__firmness-label">{{ firmness_label_soft }}</span>
+        <div class="nw-product-card__firmness-track" aria-hidden="true">
+          {%- for i in (1..5) -%}
+            <span class="nw-product-card__firmness-dot{% if i == firmness_index %} is-active{% endif %}"></span>
+            {%- unless forloop.last -%}
+              <span class="nw-product-card__firmness-line"></span>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+        <span class="nw-product-card__firmness-label">{{ firmness_label_firm }}</span>
+      </div>
+    {%- endif -%}
+
+    <div class="nw-product-card__footer">
+      <div class="nw-product-card__price">
+        <span class="nw-product-card__price-from">from</span>
+        <span class="nw-product-card__price-current">{{ card_price | money }}</span>
+        {%- if card_compare_at > card_price -%}
+          <span class="nw-product-card__price-compare">{{ card_compare_at | money }}</span>
+        {%- endif -%}
+      </div>
+
+      <a href="{{ card_product.url }}" class="nw-product-card__btn">
+        <span>{{ button_text }}</span>
+      </a>
+    </div>
+  </div>
+</article>
