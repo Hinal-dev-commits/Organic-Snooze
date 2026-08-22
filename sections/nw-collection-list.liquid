@@ -61,7 +61,7 @@
 
 <section class="nw-collection-list nw-main-section section-{{ section.id }}">
   <div class="nw-collection-list__container">
-    <div class="nw-collection-list__inner">
+    <div class="nw-collection-list__inner{%- render 'nw-scroll-animation' -%}">
       {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
         <div class="nw-collection-list__header">
           {%- if section.settings.heading != blank -%}

@@ -48,7 +48,7 @@
 
 <div
   id="NwHero-{{ section.id }}"
-  class="nw-hero__wrapper{% if section.settings.enable_transparent_header %} nw-hero--transparent-header{% endif %}"
+  class="nw-hero__wrapper{% if section.settings.enable_transparent_header %} nw-hero--transparent-header{% endif %}{%- render 'nw-scroll-animation', type: 'fade-in' -%}"
   {% if section.settings.enable_transparent_header %}data-nw-transparent-header{% endif %}
   style="
     --nw-hero-overlay-color: {{ section.settings.overlay_color }};

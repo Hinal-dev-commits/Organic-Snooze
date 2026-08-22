@@ -1,0 +1,11 @@
+{%- comment -%}
+  Shopify theme scroll reveal classes. Respects Theme settings > Animations > Reveal sections on scroll.
+  Usage: class="my-class{%- render 'nw-scroll-animation' -%}"
+  Optional: {% render 'nw-scroll-animation', type: 'fade-in' %}
+{%- endcomment -%}
+{%- liquid
+  assign animation_type = type | default: 'slide-in'
+  if settings.animations_reveal_on_scroll
+    echo ' scroll-trigger animate--' | append: animation_type
+  endif
+-%}

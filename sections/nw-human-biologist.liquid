@@ -49,7 +49,7 @@
 
 <section class="nw-human-biologist section-{{ section.id }}">
   <div class="nw page-width">
-    <div class="nw-human-biologist__wrapper">
+    <div class="nw-human-biologist__wrapper{%- render 'nw-scroll-animation' -%}">
       {%- if section.settings.heading != blank -%}
         {% render 'nw-section-heading', text: section.settings.heading %}
       {%- endif -%}

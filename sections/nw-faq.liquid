@@ -49,7 +49,7 @@
 
 <section class="nw-faq section-{{ section.id }}">
   <div class="nw page-width">
-    <div class="nw-faq__wrapper">
+    <div class="nw-faq__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-faq__main">
         {%- if section.settings.heading != blank -%}
           <div class="nw-faq__heading-wrap">

@@ -49,7 +49,7 @@
 
 <section class="nw-natural-layers section-{{ section.id }}">
   <div class="nw page-width">
-    <div class="nw-natural-layers__wrapper">
+    <div class="nw-natural-layers__wrapper{%- render 'nw-scroll-animation' -%}">
       {%- if section.settings.heading != blank -%}
         {% render 'nw-section-heading', text: section.settings.heading %}
       {%- endif -%}

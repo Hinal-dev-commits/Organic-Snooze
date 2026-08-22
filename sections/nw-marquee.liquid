@@ -2,7 +2,7 @@
 
 <div
   id="NwMarquee-{{ section.id }}"
-  class="nw-marquee-section nw-marquee--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} nw-marquee--pause-hover{% endif %}{% if section.settings.enable_parallax %} nw-marquee--parallax{% endif %}"
+  class="nw-marquee-section nw-marquee--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} nw-marquee--pause-hover{% endif %}{% if section.settings.enable_parallax %} nw-marquee--parallax{% endif %}{%- render 'nw-scroll-animation' -%}"
   style="
     --nw-marquee-bg: {{ section.settings.bg_color }};
     --nw-marquee-color: {{ section.settings.text_color }};

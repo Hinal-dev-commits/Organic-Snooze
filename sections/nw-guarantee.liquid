@@ -72,7 +72,7 @@
 
 <section class="nw-guarantee section-{{ section.id }}">
   <div class="nw page-width">
-    <div class="nw-guarantee__wrapper">
+    <div class="nw-guarantee__wrapper{%- render 'nw-scroll-animation' -%}">
       {%- if section.settings.heading != blank -%}
         {% render 'nw-section-heading', text: section.settings.heading %}
       {%- endif -%}

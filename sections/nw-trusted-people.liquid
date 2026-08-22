@@ -43,7 +43,7 @@
     --nw-tp-overlay-color: {{ section.settings.overlay_color }};
   "
 >
-  <div class="nw-trusted-people__wrapper">
+  <div class="nw-trusted-people__wrapper{%- render 'nw-scroll-animation' -%}">
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="nw-trusted-people__header">
         {% render 'nw-section-heading', text: section.settings.heading %}

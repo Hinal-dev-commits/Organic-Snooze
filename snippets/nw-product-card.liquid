@@ -16,9 +16,21 @@ Renders the NW product card used across collection sliders and grids.
 
 {%- liquid
   assign card_product = product
-  assign show_rating = show_rating | default: true
-  assign show_firmness = show_firmness | default: false
-  assign show_seller_tag = show_seller_tag | default: true
+  assign display_rating = true
+  if show_rating == false
+    assign display_rating = false
+  endif
+
+  assign show_firmness_enabled = true
+  if show_firmness == false
+    assign show_firmness_enabled = false
+  endif
+
+  assign display_seller_tag = true
+  if show_seller_tag == false
+    assign display_seller_tag = false
+  endif
+
   assign firmness_label_soft = firmness_label_soft | default: 'Soft'
   assign firmness_label_firm = firmness_label_firm | default: 'Firm'
   assign button_text = button_text | default: 'Shop Now'
@@ -52,7 +64,7 @@ Renders the NW product card used across collection sliders and grids.
   endif
 
   assign show_firmness_bar = false
-  if show_firmness and firmness_index > 0
+  if show_firmness_enabled and firmness_index > 0
     assign show_firmness_bar = true
   endif
 -%}
@@ -84,13 +96,13 @@ Renders the NW product card used across collection sliders and grids.
       <span class="nw-product-card__tag nw-product-card__tag--save">Save {{ save_percent }}%</span>
     {%- endif -%}
 
-    {%- if show_seller_tag and seller_tag != blank -%}
+    {%- if display_seller_tag and seller_tag != blank -%}
       <span class="nw-product-card__tag nw-product-card__tag--seller">{{ seller_tag }}</span>
     {%- endif -%}
   </div>
 
   <div class="nw-product-card__body">
-    {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
+    {%- if display_rating and card_product.metafields.reviews.rating.value != blank -%}
       {%- liquid
         assign rating_decimal = 0
         assign decimal = card_product.metafields.reviews.rating.value.rating | modulo: 1

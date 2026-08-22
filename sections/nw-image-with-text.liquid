@@ -43,7 +43,7 @@
   "
 >
   <div class="page-width">
-    <div class="nw-image-with-text__grid nw-image-with-text__grid--{% if section.settings.image_position == 'right' %}image-right{% else %}image-left{% endif %}">
+    <div class="nw-image-with-text__grid nw-image-with-text__grid--{% if section.settings.image_position == 'right' %}image-right{% else %}image-left{% endif %}{%- render 'nw-scroll-animation' -%}">
       <div class="nw-image-with-text__media-wrap">
         {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
           <div class="nw-image-with-text__header mobile-only">

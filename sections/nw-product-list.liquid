@@ -29,7 +29,7 @@
 
 <section
   id="NwProductList-{{ section.id }}"
-  class="nw-product-list"
+  class="nw-product-list{% if section.settings.hide_arrows %} nw-product-list--hide-arrows{% endif %}"
   style="
     --nw-pl-heading-color: {{ section.settings.heading_color }};
     --nw-pl-desc-color: {{ section.settings.description_color }};
@@ -44,10 +44,12 @@
     --nw-pcard-btn-bg-hover: {{ section.settings.pcard_btn_bg_hover }};
     --nw-pcard-btn-text: {{ section.settings.pcard_btn_text }};
     --nw-swiper-bullet: {{ section.settings.pagination_color }};
+    --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
+    --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
+    --nw-pl-overlay-color: {{ section.settings.overlay_color }};
   "
 >
-  <div class="page-width">
-    <div class="nw-product-list__wrapper">
+    <div class="nw-product-list__wrapper{%- render 'nw-scroll-animation' -%}">
       {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
         <div class="nw-product-list__header">
           {% render 'nw-section-heading', text: section.settings.heading %}
@@ -55,44 +57,266 @@
         </div>
       {%- endif -%}
 
-      {%- if section.settings.collection != blank and section.settings.collection.products_count > 0 -%}
+      {%- liquid
+        assign has_products = false
+        assign product_source = section.settings.product_source | default: 'product_list'
+        assign product_count = 0
+
+        if product_source == 'collection'
+          if section.settings.collection != blank and section.settings.collection.products_count > 0
+            assign has_products = true
+            assign product_count = section.settings.collection.products_count
+            if product_count > section.settings.products_to_show
+              assign product_count = section.settings.products_to_show
+            endif
+          endif
+        elsif section.settings.product_list != blank and section.settings.product_list.size > 0
+          assign has_products = true
+          assign product_count = section.settings.product_list.size
+        endif
+      -%}
+
+      {%- if has_products -%}
         <div class="nw-product-list__slider-wrap">
           <div class="swiper nw-product-list__swiper" id="NwProductListSwiper-{{ section.id }}">
             <div class="swiper-wrapper">
-              {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
-                <div class="swiper-slide">
-                  {% render 'nw-product-card',
-                    product: product,
-                    section_id: section.id,
-                    show_rating: section.settings.show_rating,
-                    show_firmness: section.settings.show_firmness,
-                    show_seller_tag: section.settings.show_seller_tag,
-                    firmness_label_soft: section.settings.firmness_label_soft,
-                    firmness_label_firm: section.settings.firmness_label_firm,
-                    button_text: section.settings.button_text,
-                    button_style: section.settings.button_style,
-                    lazy_load: true
-                  %}
-                </div>
-              {%- endfor -%}
+              {%- if product_source == 'collection' -%}
+                {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+                  <div class="swiper-slide">
+                    {% render 'nw-product-card',
+                      product: product,
+                      section_id: section.id,
+                      show_rating: section.settings.show_rating,
+                      show_firmness: section.settings.show_firmness,
+                      show_seller_tag: section.settings.show_seller_tag,
+                      firmness_label_soft: section.settings.firmness_label_soft,
+                      firmness_label_firm: section.settings.firmness_label_firm,
+                      button_text: section.settings.button_text,
+                      button_style: section.settings.button_style,
+                      lazy_load: true
+                    %}
+                  </div>
+                {%- endfor -%}
+              {%- else -%}
+                {%- for product in section.settings.product_list -%}
+                  <div class="swiper-slide">
+                    {% render 'nw-product-card',
+                      product: product,
+                      section_id: section.id,
+                      show_rating: section.settings.show_rating,
+                      show_firmness: section.settings.show_firmness,
+                      show_seller_tag: section.settings.show_seller_tag,
+                      firmness_label_soft: section.settings.firmness_label_soft,
+                      firmness_label_firm: section.settings.firmness_label_firm,
+                      button_text: section.settings.button_text,
+                      button_style: section.settings.button_style,
+                      lazy_load: true
+                    %}
+                  </div>
+                {%- endfor -%}
+              {%- endif -%}
             </div>
           </div>
 
-          {%- if section.settings.show_pagination -%}
-            <div class="nw-swiper-pagination" id="NwProductListPagination-{{ section.id }}"></div>
+          {%- unless section.settings.hide_arrows -%}
+            <button type="button" class="nw-swiper-btn nw-swiper-btn--prev nw-product-list__arrow" aria-label="Previous slide">
+              {{ 'arrow-left.svg' | inline_asset_content }}
+            </button>
+            <button type="button" class="nw-swiper-btn nw-swiper-btn--next nw-product-list__arrow" aria-label="Next slide">
+              {{ 'arrow-right.svg' | inline_asset_content }}
+            </button>
+          {%- endunless -%}
+
+          {%- if section.settings.show_pagination and product_count > 1 -%}
+            <div class="nw-swiper-pagination" id="NwProductListPagination-{{ section.id }}">
+              {%- for i in (1..product_count) -%}
+                <span
+                  class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+                  data-bullet-index="{{ forloop.index0 }}"
+                ></span>
+              {%- endfor -%}
+            </div>
           {%- endif -%}
         </div>
       {%- else -%}
         <div class="nw-product-list__empty">{{ section.settings.empty_text }}</div>
       {%- endif -%}
     </div>
-  </div>
 </section>
 
 <script>
   (function () {
     var sectionEl = document.getElementById('NwProductList-{{ section.id }}');
     if (!sectionEl) return;
+
+    var swiperInstance = null;
+    var originalCount = {{ product_count | default: 0 }};
+
+    function getRealSlideIndex(activeIndex) {
+      return ((activeIndex % originalCount) + originalCount) % originalCount;
+    }
+
+    function updateCustomPagination() {
+      if (!swiperInstance || originalCount <= 1) return;
+
+      var paginationEl = sectionEl.querySelector('#NwProductListPagination-{{ section.id }}');
+      if (!paginationEl) return;
+
+      var bullets = paginationEl.querySelectorAll('.swiper-pagination-bullet');
+      if (!bullets.length) return;
+
+      var currentIndex = getRealSlideIndex(swiperInstance.activeIndex);
+
+      bullets.forEach(function (bullet, index) {
+        bullet.classList.toggle('swiper-pagination-bullet-active', index === currentIndex);
+      });
+    }
+
+    function bindPagination() {
+      if (!swiperInstance) return;
+
+      var paginationEl = sectionEl.querySelector('#NwProductListPagination-{{ section.id }}');
+      if (!paginationEl) return;
+
+      var bullets = paginationEl.querySelectorAll('.swiper-pagination-bullet');
+
+      bullets.forEach(function (bullet, index) {
+        if (bullet.dataset.nwPlPaginationBound === 'true') return;
+
+        bullet.dataset.nwPlPaginationBound = 'true';
+
+        bullet.addEventListener('click', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (!swiperInstance) return;
+
+          var sliderEl = sectionEl.querySelector('.nw-product-list__swiper');
+          var meta = sliderEl ? getSlideMeta(sliderEl) : { startIndex: 0 };
+
+          swiperInstance.slideTo(meta.startIndex + index, 600);
+        });
+      });
+
+      updateCustomPagination();
+    }
+
+    function cloneSlide(slide) {
+      var clone = slide.cloneNode(true);
+
+      clone.removeAttribute('data-shopify-editor-block');
+      clone.removeAttribute('data-shopify-editor-block-index');
+      clone.removeAttribute('data-slide-index');
+      clone.setAttribute('data-nw-pl-clone', 'true');
+      clone.setAttribute('aria-hidden', 'true');
+
+      return clone;
+    }
+
+    function removeClones(wrapper) {
+      wrapper
+        .querySelectorAll(':scope > .swiper-slide[data-nw-pl-clone]')
+        .forEach(function (slide) {
+          slide.remove();
+        });
+    }
+
+    function getSlideMeta(sliderEl) {
+      return {
+        startIndex: parseInt(sliderEl.dataset.nwPlStartIndex, 10) || 0,
+        copyCount: parseInt(sliderEl.dataset.nwPlCopyCount, 10) || originalCount,
+        middleEnd: parseInt(sliderEl.dataset.nwPlMiddleEnd, 10) || originalCount
+      };
+    }
+
+    function ensureEnoughSlides(sliderEl) {
+      var wrapper = sliderEl.querySelector('.swiper-wrapper');
+      if (!wrapper) {
+        return { startIndex: 0, copyCount: originalCount, middleEnd: originalCount };
+      }
+
+      removeClones(wrapper);
+
+      var originalSlides = Array.from(
+        wrapper.querySelectorAll(':scope > .swiper-slide:not([data-nw-pl-clone])')
+      );
+
+      var count = originalSlides.length;
+
+      if (count <= 1) {
+        sliderEl.dataset.nwPlStartIndex = '0';
+        sliderEl.dataset.nwPlCopyCount = String(count);
+        sliderEl.dataset.nwPlMiddleEnd = String(count);
+        return { startIndex: 0, copyCount: count, middleEnd: count };
+      }
+
+      var sliderWidth = sliderEl.clientWidth;
+      var slideWidth = originalSlides[0].getBoundingClientRect().width;
+
+      if (!sliderWidth || !slideWidth || slideWidth <= 0) {
+        sliderEl.dataset.nwPlStartIndex = String(count);
+        sliderEl.dataset.nwPlCopyCount = String(count);
+        sliderEl.dataset.nwPlMiddleEnd = String(count * 2);
+        return { startIndex: count, copyCount: count, middleEnd: count * 2 };
+      }
+
+      var spaceBetween = window.innerWidth >= 750 ? 20 : 12;
+      var visibleSlides = Math.ceil(sliderWidth / (slideWidth + spaceBetween));
+      var setsNeeded = Math.max(
+        3,
+        Math.ceil((visibleSlides * 2 + count) / count) + 1
+      );
+
+      var extraSets = setsNeeded - 1;
+      var prependSets = Math.ceil(extraSets / 2);
+      var appendSets = extraSets - prependSets;
+      var p;
+      var a;
+      var fragment;
+
+      for (p = 0; p < prependSets; p++) {
+        fragment = document.createDocumentFragment();
+
+        originalSlides.forEach(function (slide) {
+          fragment.appendChild(cloneSlide(slide));
+        });
+
+        wrapper.insertBefore(fragment, wrapper.firstChild);
+      }
+
+      for (a = 0; a < appendSets; a++) {
+        originalSlides.forEach(function (slide) {
+          wrapper.appendChild(cloneSlide(slide));
+        });
+      }
+
+      var startIndex = count * prependSets;
+      var middleEnd = count * (prependSets + 1);
+
+      sliderEl.dataset.nwPlStartIndex = String(startIndex);
+      sliderEl.dataset.nwPlCopyCount = String(count);
+      sliderEl.dataset.nwPlMiddleEnd = String(middleEnd);
+
+      return {
+        startIndex: startIndex,
+        copyCount: count,
+        middleEnd: middleEnd
+      };
+    }
+
+    function fixInfinitePosition(swiper) {
+      if (!swiper || originalCount <= 1) return;
+
+      var sliderEl = swiper.el;
+      var meta = getSlideMeta(sliderEl);
+      var activeIndex = swiper.activeIndex;
+
+      if (activeIndex >= meta.middleEnd) {
+        swiper.slideTo(activeIndex - meta.copyCount, 0);
+      } else if (activeIndex < meta.startIndex) {
+        swiper.slideTo(activeIndex + meta.copyCount, 0);
+      }
+    }
 
     function initSwiper() {
       if (typeof Swiper === 'undefined') {
@@ -102,26 +326,119 @@
 
       var sliderEl = sectionEl.querySelector('.nw-product-list__swiper');
       if (!sliderEl) return;
-      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
 
-      new Swiper(sliderEl, {
+      if (sliderEl.swiper) {
+        sliderEl.swiper.destroy(true, true);
+      }
+
+      swiperInstance = null;
+
+      var enableInfinite = originalCount > 1;
+      var slideMeta = { startIndex: 0, copyCount: originalCount, middleEnd: originalCount };
+
+      if (enableInfinite) {
+        slideMeta = ensureEnoughSlides(sliderEl);
+      }
+
+      swiperInstance = new Swiper(sliderEl, {
         slidesPerView: 'auto',
         spaceBetween: 12,
-        centeredSlides: true,
+        centeredSlides: false,
+        centeredSlidesBounds: false,
+        loop: false,
+        initialSlide: slideMeta.startIndex,
+        speed: 600,
         grabCursor: true,
-        watchOverflow: true,
-        {% if section.settings.show_pagination %}
-        pagination: {
-          el: '#NwProductListPagination-{{ section.id }}',
-          clickable: true
+        simulateTouch: true,
+        allowTouchMove: true,
+        watchSlidesProgress: true,
+        watchOverflow: false,
+        observer: true,
+        observeParents: true,
+        resizeObserver: true,
+        {% unless section.settings.hide_arrows %}
+        navigation: {
+          nextEl: sectionEl.querySelector('.nw-swiper-btn--next'),
+          prevEl: sectionEl.querySelector('.nw-swiper-btn--prev'),
+          disabledClass: 'swiper-button-disabled'
         },
-        {% endif %}
+        {% endunless %}
         breakpoints: {
           750: {
+            centeredSlides: true,
             spaceBetween: 20
           }
         }
       });
+
+      swiperInstance.on('slideChange', updateCustomPagination);
+      swiperInstance.on('slideChangeTransitionEnd', function () {
+        fixInfinitePosition(swiperInstance);
+        updateCustomPagination();
+      });
+      swiperInstance.on('transitionEnd', updateCustomPagination);
+
+      swiperInstance.on('resize', function () {
+        var savedIndex = getRealSlideIndex(swiperInstance.activeIndex);
+        var refreshedMeta = slideMeta;
+
+        if (enableInfinite) {
+          refreshedMeta = ensureEnoughSlides(sliderEl);
+        }
+
+        swiperInstance.update();
+        swiperInstance.slideTo(refreshedMeta.startIndex + savedIndex, 0);
+        updateCustomPagination();
+
+        {% unless section.settings.hide_arrows %}
+        if (swiperInstance.navigation) {
+          swiperInstance.navigation.update();
+        }
+        {% endunless %}
+      });
+
+      updateCustomPagination();
+      bindPagination();
+
+      {% unless section.settings.hide_arrows %}
+      if (swiperInstance.navigation) {
+        swiperInstance.navigation.update();
+      }
+      {% endunless %}
+
+      window.requestAnimationFrame(function () {
+        if (!swiperInstance) return;
+
+        swiperInstance.update();
+        swiperInstance.slideTo(slideMeta.startIndex + getRealSlideIndex(swiperInstance.activeIndex), 0);
+        fixInfinitePosition(swiperInstance);
+        updateCustomPagination();
+
+        {% unless section.settings.hide_arrows %}
+        if (swiperInstance.navigation) {
+          swiperInstance.navigation.update();
+        }
+        {% endunless %}
+      });
+
+      window.setTimeout(function () {
+        if (!swiperInstance) return;
+
+        if (enableInfinite) {
+          slideMeta = ensureEnoughSlides(sliderEl);
+        }
+
+        swiperInstance.update();
+        swiperInstance.slideTo(slideMeta.startIndex + getRealSlideIndex(swiperInstance.activeIndex), 0);
+        fixInfinitePosition(swiperInstance);
+        updateCustomPagination();
+
+        {% unless section.settings.hide_arrows %}
+        if (swiperInstance.navigation) {
+          swiperInstance.navigation.update();
+        }
+        {% endunless %}
+      }, 150);
     }
 
     if (document.readyState === 'loading') {
@@ -163,6 +480,28 @@
       "content": "Products"
     },
     {
+      "type": "select",
+      "id": "product_source",
+      "label": "Product source",
+      "default": "product_list",
+      "options": [
+        {
+          "value": "product_list",
+          "label": "Product list"
+        },
+        {
+          "value": "collection",
+          "label": "Collection"
+        }
+      ]
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Products",
+      "limit": 50
+    },
+    {
       "type": "collection",
       "id": "collection",
       "label": "Collection"
@@ -171,16 +510,16 @@
       "type": "range",
       "id": "products_to_show",
       "label": "Products to show",
-      "min": 2,
-      "max": 12,
+      "min": 1,
+      "max": 50,
       "step": 1,
       "default": 8
     },
     {
       "type": "text",
       "id": "empty_text",
-      "label": "Empty collection message",
-      "default": "Select a collection to display products."
+      "label": "Empty message",
+      "default": "Select products or a collection to display."
     },
     {
       "type": "header",
@@ -333,9 +672,39 @@
     },
     {
       "type": "checkbox",
+      "id": "hide_arrows",
+      "label": "Hide slider arrows",
+      "info": "Hides navigation arrows on desktop. Arrows are always hidden on mobile.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
       "id": "show_pagination",
       "label": "Show slider pagination",
       "default": true
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Side fade background (desktop)",
+      "alpha": true,
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_bg",
+      "label": "Arrow background",
+      "alpha": true,
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_color",
+      "label": "Arrow icon color",
+      "alpha": true,
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_arrows == true }}"
     },
     {
       "type": "color",

@@ -42,7 +42,7 @@
   "
 >
   <div class="page-width">
-    <div class="nw-testimonials__wrapper">
+    <div class="nw-testimonials__wrapper{%- render 'nw-scroll-animation' -%}">
       {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
         <div class="nw-testimonials__header">
           {% render 'nw-section-heading', text: section.settings.heading %}

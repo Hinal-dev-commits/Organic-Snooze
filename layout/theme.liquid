@@ -415,6 +415,8 @@
         const TRANSPARENT_HEADER_SELECTOR = '[data-nw-transparent-header]';
         const TRANSPARENT_HEADER_CLASS = 'nw-header-transprant';
 
+        let scrollTicking = false;
+
         function isFirstMainSection(element) {
           const main = document.getElementById('MainContent');
           if (!main || !element) return false;
@@ -423,22 +425,65 @@
           return main.firstElementChild === section;
         }
 
-        function updateTransparentHeader() {
-          const trigger = document.querySelector(TRANSPARENT_HEADER_SELECTOR);
-          const shouldEnable = Boolean(trigger && isFirstMainSection(trigger));
-          const header = document.querySelector('.header');
-          const headerWrapper = document.querySelector('.header-wrapper');
+        function getHeaderElements() {
+          return {
+            header: document.querySelector('.header'),
+            headerWrapper: document.querySelector('.header-wrapper')
+          };
+        }
+
+        function setTransparentHeader(enabled) {
+          const { header, headerWrapper } = getHeaderElements();
 
           if (header) {
-            header.classList.toggle(TRANSPARENT_HEADER_CLASS, shouldEnable);
+            header.classList.toggle(TRANSPARENT_HEADER_CLASS, enabled);
           }
 
           if (headerWrapper) {
-            headerWrapper.classList.toggle(TRANSPARENT_HEADER_CLASS, shouldEnable);
+            headerWrapper.classList.toggle(TRANSPARENT_HEADER_CLASS, enabled);
           }
         }
 
-        document.addEventListener('DOMContentLoaded', updateTransparentHeader);
+        function updateTransparentHeader() {
+          const trigger = document.querySelector(TRANSPARENT_HEADER_SELECTOR);
+          const isEligible = Boolean(trigger && isFirstMainSection(trigger));
+
+          if (!isEligible) {
+            setTransparentHeader(false);
+            return;
+          }
+
+          const section = trigger.closest('.shopify-section') || trigger;
+          const { header } = getHeaderElements();
+          const headerHeight = header ? header.offsetHeight : 0;
+          const sectionBottom = section.getBoundingClientRect().bottom;
+          const shouldEnable = sectionBottom > headerHeight;
+
+          setTransparentHeader(shouldEnable);
+        }
+
+        function onScrollOrResize() {
+          if (scrollTicking) return;
+          scrollTicking = true;
+
+          window.requestAnimationFrame(function () {
+            updateTransparentHeader();
+            scrollTicking = false;
+          });
+        }
+
+        function initTransparentHeader() {
+          updateTransparentHeader();
+          window.addEventListener('scroll', onScrollOrResize, { passive: true });
+          window.addEventListener('resize', onScrollOrResize, { passive: true });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTransparentHeader);
+        } else {
+          initTransparentHeader();
+        }
+
         document.addEventListener('shopify:section:load', updateTransparentHeader);
         document.addEventListener('shopify:section:unload', updateTransparentHeader);
       })();
