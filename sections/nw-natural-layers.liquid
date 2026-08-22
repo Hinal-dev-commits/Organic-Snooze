@@ -1,0 +1,821 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-natural-layers.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .nw-natural-layers.section-{{ section.id }} {
+    position: relative;
+    background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    isolation: isolate;
+    overflow: hidden;
+    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% endif %}
+  }
+
+  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
+    .nw-natural-layers.section-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: calc({{ section.settings.bg_image_opacity | default: 16 }} / 100);
+      z-index: -1;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  @media screen and (max-width: 749px) {
+    .nw-natural-layers.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    }
+
+    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
+      .nw-natural-layers.section-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<section class="nw-natural-layers section-{{ section.id }}">
+  <div class="nw page-width">
+    <div class="nw-natural-layers__wrapper">
+      {%- if section.settings.heading != blank -%}
+        {% render 'nw-section-heading', text: section.settings.heading %}
+      {%- endif -%}
+
+      <div class="nw-natural-layers__main">
+        {%- assign layer_cards = section.blocks | where: 'type', 'layer_card' -%}
+        {%- if layer_cards.size > 0 -%}
+          <div class="nw-natural-layers__cards">
+            {%- for block in layer_cards -%}
+              <div class="nw-natural-layers__card" {{ block.shopify_attributes }}>
+                <div class="nw-natural-layers__card-media">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 600 }}"
+                      alt="{{ block.settings.title | escape }}"
+                      width="300"
+                      height="300"
+                      loading="lazy"
+                      class="nw-natural-layers__card-img"
+                    >
+                  {%- else -%}
+                    <span class="nw-natural-layers__card-placeholder" aria-hidden="true"></span>
+                  {%- endif -%}
+                </div>
+                <div class="nw-natural-layers__card-body">
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="nw-natural-layers__card-title">{{ block.settings.title }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.feature_text != blank -%}
+                    <div class="nw-natural-layers__card-feature">
+                      {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+                        <img
+                          src="{{ block.settings.custom_icon | image_url: width: 40 }}"
+                          alt="{{ block.settings.feature_text | escape }}"
+                          width="20"
+                          height="20"
+                          loading="lazy"
+                        >
+                      {%- elsif block.settings.icon == 'cross' -%}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M11.9994 23.0139C18.0828 23.0139 23.0144 18.0823 23.0144 11.9989C23.0144 5.91548 18.0828 0.983887 11.9994 0.983887C5.91597 0.983887 0.984375 5.91548 0.984375 11.9989C0.984375 18.0823 5.91597 23.0139 11.9994 23.0139Z" fill="#B61919"/>
+                          <path d="M15.3082 8.69482L8.69922 15.3038" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M8.69922 8.69482L15.3082 15.3038" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      {%- elsif block.settings.icon != 'none' -%}
+                        <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect y="2" width="20" height="20" rx="10" fill="#878735"/>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M17.18 6.70721C17.5299 7.01339 17.5616 7.5468 17.2504 7.89224L8.48879 17.6171C8.17592 17.9643 7.63874 17.9864 7.29843 17.6661L2.22841 12.8931C1.91222 12.5954 1.88196 12.0994 2.15323 11.7603C2.45257 11.3862 3.00999 11.3347 3.36623 11.6551L7.29989 15.1933C7.64174 15.5008 8.16805 15.4733 8.47604 15.1319L16.0123 6.77614C16.3172 6.43801 16.8373 6.40736 17.18 6.70721Z" fill="#FEFEFE"/>
+                        </svg>
+                      {%- endif -%}
+                      <span class="nw-natural-layers__card-feature-text">{{ block.settings.feature_text }}</span>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign leave_out_items = section.blocks | where: 'type', 'leave_out_item' -%}
+        {%- if section.settings.show_leave_out_box and leave_out_items.size > 0 or section.settings.leave_out_title != blank -%}
+          <div class="nw-natural-layers__leave-out">
+            {%- if section.settings.leave_out_title != blank -%}
+              <h3 class="nw-natural-layers__leave-out-title">{{ section.settings.leave_out_title }}</h3>
+            {%- endif -%}
+            {%- if leave_out_items.size > 0 -%}
+              <div class="nw-natural-layers__leave-out-grid">
+                {%- for block in leave_out_items -%}
+                  <div class="nw-natural-layers__leave-out-item" {{ block.shopify_attributes }}>
+                    {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+                      <img
+                        src="{{ block.settings.custom_icon | image_url: width: 48 }}"
+                        alt="{{ block.settings.text | escape }}"
+                        width="24"
+                        height="24"
+                        loading="lazy"
+                      >
+                    {%- elsif block.settings.icon == 'check' -%}
+                      <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect y="2" width="20" height="20" rx="10" fill="#878735"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.18 6.70721C17.5299 7.01339 17.5616 7.5468 17.2504 7.89224L8.48879 17.6171C8.17592 17.9643 7.63874 17.9864 7.29843 17.6661L2.22841 12.8931C1.91222 12.5954 1.88196 12.0994 2.15323 11.7603C2.45257 11.3862 3.00999 11.3347 3.36623 11.6551L7.29989 15.1933C7.64174 15.5008 8.16805 15.4733 8.47604 15.1319L16.0123 6.77614C16.3172 6.43801 16.8373 6.40736 17.18 6.70721Z" fill="#FEFEFE"/>
+                      </svg>
+                    {%- elsif block.settings.icon != 'none' -%}
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.9994 23.0139C18.0828 23.0139 23.0144 18.0823 23.0144 11.9989C23.0144 5.91548 18.0828 0.983887 11.9994 0.983887C5.91597 0.983887 0.984375 5.91548 0.984375 11.9989C0.984375 18.0823 5.91597 23.0139 11.9994 23.0139Z" fill="#B61919"/>
+                        <path d="M15.3082 8.69482L8.69922 15.3038" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.69922 8.69482L15.3082 15.3038" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    {%- endif -%}
+                    <span class="nw-natural-layers__leave-out-text">{{ block.settings.text }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign trust_badges = section.blocks | where: 'type', 'trust_badge' -%}
+        {%- if section.settings.show_button or trust_badges.size > 0 -%}
+          <div class="nw-natural-layers__cta-wrap">
+            {%- if section.settings.show_button and section.settings.btn_text != blank -%}
+              {% render 'nw-button',
+                text: section.settings.btn_text,
+                link: section.settings.btn_link,
+                style: section.settings.btn_style
+              %}
+            {%- endif -%}
+
+            {%- if trust_badges.size > 0 -%}
+              <div class="nw-natural-layers__badges">
+                {%- for block in trust_badges -%}
+                  <div class="nw-natural-layers__badge" {{ block.shopify_attributes }}>
+                    <span class="nw-natural-layers__badge-icon">
+                      {%- if block.settings.custom_icon != blank -%}
+                        <img
+                          src="{{ block.settings.custom_icon | image_url: width: 40 }}"
+                          alt="{{ block.settings.text | escape }}"
+                          width="20"
+                          height="20"
+                          loading="lazy"
+                        >
+                      {%- elsif block.settings.icon == 'warranty' -%}
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10 2L12.3 4.3L15.5 3.9L16.5 6.9L19.4 8.4L18.8 11.6L20 14.5L17.9 17L17.9 20.2L14.7 20.7L12.8 23.3L10 22.4L7.2 23.3L5.3 20.7L2.1 20.2L2.1 17L0 14.5L1.2 11.6L0.6 8.4L3.5 6.9L4.5 3.9L7.7 4.3L10 2Z" fill="#CC926A" transform="scale(0.8) translate(2,2)"/>
+                          <path d="M7 10L9 12L13 8" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      {%- elsif block.settings.icon == 'truck' -%}
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1 3H13V13H1V3Z" stroke="#CC926A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M13 7H16L19 10V13H13V7Z" stroke="#CC926A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <circle cx="5.5" cy="15.5" r="2.5" stroke="#CC926A" stroke-width="1.5"/>
+                          <circle cx="15.5" cy="15.5" r="2.5" stroke="#CC926A" stroke-width="1.5"/>
+                        </svg>
+                      {%- else -%}
+                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M10 1.5L3 4.5V9.5C3 14 6 17.5 10 18.5C14 17.5 17 14 17 9.5V4.5L10 1.5Z" fill="#CC926A"/>
+                          <path d="M7 9.5L9 11.5L13 7.5" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      {%- endif -%}
+                    </span>
+                    {%- if block.settings.text != blank -%}
+                      <span class="nw-natural-layers__badge-text">{{ block.settings.text }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign insight_slides = section.blocks | where: 'type', 'insight_slide' -%}
+        {%- if section.settings.show_insights_slider and insight_slides.size > 0 -%}
+          <div class="nw-natural-layers__insights">
+            <div class="swiper nw-natural-layers__insights-slider" id="nw-natural-layers-insights-{{ section.id }}">
+              <div class="swiper-wrapper">
+                {%- for block in insight_slides -%}
+                  <div class="swiper-slide" {{ block.shopify_attributes }}>
+                    <div class="nw-natural-layers__insights-slide">
+                      {%- if block.settings.icon != 'none' or block.settings.custom_icon != blank -%}
+                        <div class="nw-natural-layers__insight-icon-wrap">
+                          {%- if block.settings.custom_icon != blank -%}
+                            <img
+                              src="{{ block.settings.custom_icon | image_url: width: 48 }}"
+                              alt="{{ block.settings.tag | escape }}"
+                              width="24"
+                              height="24"
+                              loading="lazy"
+                            >
+                          {%- elsif block.settings.icon == 'moon' -%}
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          {%- elsif block.settings.icon == 'thermometer' -%}
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M14 14.76V3.5a2.5 2.5 0 00-5 0v11.26a4.5 4.5 0 105 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          {%- elsif block.settings.icon == 'wind' -%}
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                      <div class="nw-natural-layers__insight-content">
+                        {%- if block.settings.tag != blank -%}
+                          <span class="nw-natural-layers__insight-tag">{{ block.settings.tag }}</span>
+                        {%- endif -%}
+                        {%- if block.settings.quote != blank -%}
+                          <div class="nw-natural-layers__insight-quote{% if block.settings.is_italic %} is-italic{% endif %}">
+                            {{ block.settings.quote }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+
+            {%- if section.settings.show_dots and insight_slides.size > 1 -%}
+              <div class="nw-natural-layers__insights-pagination swiper-pagination" id="nw-natural-layers-pagination-{{ section.id }}"></div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    function initInsightsSlider() {
+      if (typeof Swiper === 'undefined') {
+        var script = document.querySelector('#nw-swiper-bundle-js');
+        if (!script) {
+          script = document.createElement('script');
+          script.id = 'nw-swiper-bundle-js';
+          script.src = '{{ "nw-swiper-bundle.min.js" | asset_url }}';
+          script.onload = runInsightsSlider;
+          document.head.appendChild(script);
+        } else {
+          script.addEventListener('load', runInsightsSlider);
+          var checkCount = 0;
+          var checkSwiper = setInterval(function() {
+            checkCount++;
+            if (typeof Swiper !== 'undefined' || checkCount > 60) {
+              clearInterval(checkSwiper);
+              if (typeof Swiper !== 'undefined') runInsightsSlider();
+            }
+          }, 50);
+        }
+      } else {
+        runInsightsSlider();
+      }
+    }
+
+    function runInsightsSlider() {
+      var sliderEl = document.querySelector('#nw-natural-layers-insights-{{ section.id }}');
+      if (!sliderEl) return;
+      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
+      var slideCount = sliderEl.querySelectorAll('.swiper-slide').length;
+
+      var swiperOptions = {
+        slidesPerView: 1,
+        spaceBetween: 16,
+        loop: slideCount > 1,
+        speed: 500,
+        grabCursor: true,
+        autoHeight: true
+      };
+
+      {% if section.settings.enable_autoplay %}
+      swiperOptions.autoplay = {
+        delay: {{ section.settings.autoplay_delay | default: 4 | times: 1000 }},
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      };
+      {% endif %}
+
+      {% if section.settings.show_dots %}
+      swiperOptions.pagination = {
+        el: '#nw-natural-layers-pagination-{{ section.id }}',
+        clickable: true
+      };
+      {% endif %}
+
+      new Swiper(sliderEl, swiperOptions);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initInsightsSlider);
+    } else {
+      initInsightsSlider();
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target.classList.contains('section-{{ section.id }}') || e.target.querySelector('.section-{{ section.id }}')) {
+        initInsightsSlider();
+      }
+    });
+
+    document.addEventListener('shopify:section:select', function(e) {
+      var sliderEl = document.querySelector('#nw-natural-layers-insights-{{ section.id }}');
+      if (sliderEl && sliderEl.swiper) {
+        sliderEl.swiper.update();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "NW Natural Layers",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADING"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Natural Layers Behind Better Rest"
+    },
+    {
+      "type": "header",
+      "content": "LEAVE OUT BOX"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_leave_out_box",
+      "label": "Show Leave Out Box",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "leave_out_title",
+      "label": "Leave Out Title",
+      "default": "What We Leave Out Matters Too",
+      "visible_if": "{{ section.settings.show_leave_out_box == true }}"
+    },
+    {
+      "type": "header",
+      "content": "CTA BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "SHOP MATTRESSES",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "INSIGHTS SLIDER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_insights_slider",
+      "label": "Show Insights Box & Slider",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Pagination Dots",
+      "default": true,
+      "visible_if": "{{ section.settings.show_insights_slider == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": true,
+      "visible_if": "{{ section.settings.show_insights_slider == true }}"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (Seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.show_insights_slider == true and section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' or section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "layer_card",
+      "name": "Natural Layer Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Layer Image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Layer Title",
+          "default": "Organic Cotton"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Feature Icon",
+          "default": "check",
+          "options": [
+            { "value": "check", "label": "Checkmark (Green Default)" },
+            { "value": "cross", "label": "Cross (Red)" },
+            { "value": "custom", "label": "Custom Icon Image" },
+            { "value": "none", "label": "None" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "feature_text",
+          "label": "Feature / Benefit Text",
+          "default": "soft, breathable surface"
+        }
+      ]
+    },
+    {
+      "type": "leave_out_item",
+      "name": "Leave Out Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Item Icon",
+          "default": "cross",
+          "options": [
+            { "value": "cross", "label": "Cross (Red Default)" },
+            { "value": "check", "label": "Checkmark (Green)" },
+            { "value": "custom", "label": "Custom Icon Image" },
+            { "value": "none", "label": "None" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Item Text",
+          "default": "No Fiberglass"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "default": "moneyback",
+          "options": [
+            { "value": "moneyback", "label": "Moneyback Shield" },
+            { "value": "warranty", "label": "Warranty Ribbon" },
+            { "value": "truck", "label": "Truck Shipping" },
+            { "value": "custom", "label": "Custom Icon Image" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    },
+    {
+      "type": "insight_slide",
+      "name": "Insight Slide",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "tag",
+          "label": "Insight Tag / Eyebrow",
+          "default": "Recovery Insight #1"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote / Insight Text",
+          "default": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_italic",
+          "label": "Italicize Text",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Slide Icon",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "moon", "label": "Moon / Night" },
+            { "value": "thermometer", "label": "Thermometer / Cooler" },
+            { "value": "wind", "label": "Wind / Breath" },
+            { "value": "custom", "label": "Custom Icon Image" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Natural Layers",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "layer_card",
+          "settings": {
+            "title": "Organic Cotton",
+            "feature_text": "soft, breathable surface",
+            "icon": "check"
+          }
+        },
+        {
+          "type": "layer_card",
+          "settings": {
+            "title": "Organic Wool",
+            "feature_text": "moisture control & flame safety",
+            "icon": "check"
+          }
+        },
+        {
+          "type": "layer_card",
+          "settings": {
+            "title": "Organic Latex",
+            "feature_text": "pressure relief without sink",
+            "icon": "check"
+          }
+        },
+        {
+          "type": "layer_card",
+          "settings": {
+            "title": "Pocketed Steel Coils",
+            "feature_text": "spinal support & less motion",
+            "icon": "check"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Fiberglass",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Plastic Fibers",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Polyurethane",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Formaldehyde",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Toxic Glues",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Off-Gassing",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "warranty",
+            "text": "30-Year Warranty"
+          }
+        },
+        {
+          "type": "insight_slide",
+          "settings": {
+            "tag": "Recovery Insight #1",
+            "quote": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>",
+            "is_italic": false,
+            "icon": "none"
+          }
+        },
+        {
+          "type": "insight_slide",
+          "settings": {
+            "tag": "SLEEP FACT · 02",
+            "quote": "<p>Deep sleep is when your body repairs and recovers.</p>",
+            "is_italic": true,
+            "icon": "moon"
+          }
+        },
+        {
+          "type": "insight_slide",
+          "settings": {
+            "tag": "SLEEP FACT · 03",
+            "quote": "<p>A cooler bed supports deeper, less interrupted sleep.</p>",
+            "is_italic": true,
+            "icon": "thermometer"
+          }
+        },
+        {
+          "type": "insight_slide",
+          "settings": {
+            "tag": "SLEEP FACT · 04",
+            "quote": "<p>What you breathe at night is as important as your sleep duration.</p>",
+            "is_italic": true,
+            "icon": "wind"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

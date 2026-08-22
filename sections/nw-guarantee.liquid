@@ -1,0 +1,387 @@
+{{ 'nw-guarantee.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .nw-guarantee.section-{{ section.id }} {
+    position: relative;
+    background-color: {{ section.settings.bg_color | default: '#FFFCF0' }};
+    padding-top: {{ section.settings.padding_top_desktop | default: 48 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 48 }}px;
+    isolation: isolate;
+    overflow: hidden;
+    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% endif %}
+  }
+
+  .nw-guarantee.section-{{ section.id }} .nw-btn {
+    {% if section.settings.btn_style == 'custom' %}
+      background-color: {{ section.settings.btn_bg_color | default: '#FFFFFF' }} !important;
+      color: {{ section.settings.btn_text_color | default: '#613916' }} !important;
+      {% if section.settings.btn_border_color != blank %}
+        border: 1px solid {{ section.settings.btn_border_color }} !important;
+      {% else %}
+        border: none !important;
+      {% endif %}
+    {% elsif section.settings.btn_style == 'primary' %}
+      background-color: var(--secondary-color, #CC926A) !important;
+      color: var(--senary-color, #FFFFFF) !important;
+      border: 1px solid var(--secondary-color, #CC926A) !important;
+    {% elsif section.settings.btn_style == 'secondary' %}
+      background-color: var(--quaternary-color, #878735) !important;
+      color: var(--senary-color, #FFFFFF) !important;
+      border: 1px solid var(--quaternary-color, #878735) !important;
+    {% elsif section.settings.btn_style == 'outline' %}
+      background-color: transparent !important;
+      color: var(--primary-color, #613916) !important;
+      border: 1px solid var(--primary-color, #613916) !important;
+    {% endif %}
+  }
+
+  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
+    .nw-guarantee.section-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: calc({{ section.settings.bg_image_opacity | default: 35 }} / 100);
+      z-index: -1;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  @media screen and (max-width: 749px) {
+    .nw-guarantee.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    }
+
+    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
+      .nw-guarantee.section-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<section class="nw-guarantee section-{{ section.id }}">
+  <div class="nw page-width">
+    <div class="nw-guarantee__wrapper">
+      {%- if section.settings.heading != blank -%}
+        {% render 'nw-section-heading', text: section.settings.heading %}
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-guarantee__grid">
+          {%- for block in section.blocks -%}
+            <article class="nw-guarantee__card" {{ block.shopify_attributes }}>
+              <div class="nw-guarantee__icon">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 320 }}"
+                    alt="{{ block.settings.heading | strip_html | escape }}"
+                    width="{{ block.settings.image.width | default: 140 }}"
+                    height="{{ block.settings.image.height | default: 110 }}"
+                    loading="lazy"
+                    class="nw-guarantee__icon-img"
+                  >
+                {%- elsif block.settings.icon_type == 'seal' -%}
+                  {%- liquid
+                    assign seal_ring = block.settings.seal_ring | default: 'MONEY BACK GUARANTEE'
+                    assign seal_number = block.settings.seal_number | default: '100'
+                    assign seal_label = block.settings.seal_label | default: 'NIGHTS'
+                    assign seal_id = section.id | append: '-' | append: block.id
+                  -%}
+                  <svg class="nw-guarantee__seal" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="{{ seal_number }} {{ seal_label }} {{ seal_ring | escape }}">
+                    <circle cx="70" cy="70" r="70" fill="#878735"/>
+                    <circle cx="70" cy="70" r="58" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.35"/>
+                    <defs>
+                      <path id="nw-guarantee-seal-{{ seal_id }}" d="M 70,18 A 52,52 0 1,1 69.99,18"/>
+                    </defs>
+                    <text class="nw-guarantee__seal-ring" fill="#ffffff">
+                      <textPath href="#nw-guarantee-seal-{{ seal_id }}" xlink:href="#nw-guarantee-seal-{{ seal_id }}" startOffset="0%" text-anchor="middle">{{ seal_ring | escape }}</textPath>
+                    </text>
+                    <text class="nw-guarantee__seal-number" x="70" y="78" text-anchor="middle" fill="#ffffff">{{ seal_number | escape }}</text>
+                    <text class="nw-guarantee__seal-label" x="70" y="96" text-anchor="middle" fill="#ffffff">{{ seal_label | escape }}</text>
+                  </svg>
+                {%- else -%}
+                  <svg class="nw-guarantee__affirm" viewBox="0 0 168 44" role="img" aria-label="Affirm">
+                    <path d="M104.2 6.4c10.8-3.2 23.4-2.6 32.6 3.4" fill="none" stroke="#0FA0EA" stroke-width="4.2" stroke-linecap="round"/>
+                    <text x="2" y="36" font-family="DM Sans, Arial, sans-serif" font-weight="700" font-size="32" fill="#111111">affirm</text>
+                  </svg>
+                {%- endif -%}
+              </div>
+
+              <div class="nw-guarantee__content-wrap">
+                {%- if block.settings.heading != blank -%}
+                  <h3 class="nw-guarantee__heading">{{ block.settings.heading }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                  <div class="nw-guarantee__text rte">{{ block.settings.text }}</div>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.btn_label != blank -%}
+        <div class="nw-guarantee__btn-wrap">
+          {% render 'nw-button',
+            text: section.settings.btn_label,
+            link: section.settings.btn_link,
+            style: section.settings.btn_style
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW Guarantee",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADING"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Button Style",
+      "default": "custom",
+      "options": [
+        { "value": "custom", "label": "Custom" },
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.btn_style == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.btn_style == 'custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Button Border Color",
+      "visible_if": "{{ section.settings.btn_style == 'custom' }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' or section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 35,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Guarantee Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "default": "seal",
+          "options": [
+            { "value": "seal", "label": "100-Night Seal" },
+            { "value": "logo", "label": "Logo (Affirm)" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Icon / Logo"
+        },
+        {
+          "type": "text",
+          "id": "seal_ring",
+          "label": "Seal Ring Text",
+          "default": "MONEY BACK GUARANTEE"
+        },
+        {
+          "type": "text",
+          "id": "seal_number",
+          "label": "Seal Number",
+          "default": "100"
+        },
+        {
+          "type": "text",
+          "id": "seal_label",
+          "label": "Seal Label",
+          "default": "NIGHTS"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Sleep On It for 100 Nights. Risk-Free."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a <strong>30-year warranty</strong> because it’s built to last.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "NW Guarantee",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "seal",
+            "seal_ring": "MONEY BACK GUARANTEE",
+            "seal_number": "100",
+            "seal_label": "NIGHTS",
+            "heading": "Sleep On It for 100 Nights. Risk-Free.",
+            "text": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a 30-year warranty because it’s built to last.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_type": "logo",
+            "heading": "No Interest, Low Monthly Payments.",
+            "text": "<p>Explore interest free monthly financing options at checkout with Affirm. Also available: ShopPay, Acima, and TrueMed (HSA/FSA eligible).</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,8 +1,8 @@
 {% style %}
 
     :root {
-        --font-body-family: 'DM Sans', sans-serif;
-        --font-heading-family: 'Optima LT Pro', sans-serif;
+ --font-body-family: 'DM Sans', sans-serif;
+ --font-heading-family: 'Optima LT Pro', sans-serif;
         --primary-color: #613916;
         --secondary-color: #cc926a;
         --tertiary-color: #f4efe8;
@@ -12,7 +12,8 @@
         --septenary-color: #e57b1e;
         --white: #ffffff;
         --octonary-color: #e0e0e0;
-    }
+ }
+
     @font-face {
         font-family: 'Optima LT Pro';
         src: url('{{ "OptimaLTPro-Medium.woff2" | asset_url }}') format('woff2'),
@@ -175,6 +176,35 @@
         margin-left: 0px !important;
     }
 
+
+    .nw-eyebrow {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: var(--primary-color);
+  padding-left: 3px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+h2, .h2 {
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 115%;
+  text-align: center;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  color: var(--primary-color);
+  margin: 0;
+  width: 100%;
+}
+
+
     .header-wrapper.nw-header-transprant,
     .header-wrapper:has(.header.nw-header-transprant) {
         background: transparent;
@@ -245,6 +275,48 @@
         .list-menu--inline{
             justify-content: center;
         }
+    }
+    @media screen and (max-width: 749px) {
+        .header--middle-left{
+            gap: 6px
+        }
+        header-drawer, .menu-drawer-container{
+            width: 36px;
+            justify-content: center;
+        }
+        header-drawer .icon{
+            width: 24px !important;
+            height: 24px !important;
+        }
+        .header__heading .header__heading-link{
+            padding: 0px 10px;
+        }
+        .header__icons{
+            gap: 6px
+        }
+        header-drawer .header__icon span{
+            width: 36px;
+            height: 36px;
+        }
+        .menu-drawer__menu-item{
+            padding: 14px 22px !important;
+        }
+        .list-menu li:first-child a{
+            padding-left: 11px;
+        }
+        .list-menu li:last-child a{
+            padding-right: 11px;
+        }
+
+        .nw-eyebrow {
+    font-size: 12px;
+    line-height: 150%;
+  }
+
+         h2, .h2 {
+    font-size: 32px;
+    line-height: 115%;
+  }
     }
 
     /* Footer */

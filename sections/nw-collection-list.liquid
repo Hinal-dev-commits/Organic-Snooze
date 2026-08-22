@@ -1,0 +1,699 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-collection-list.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign collection_blocks = section.blocks | where: 'type', 'collection'
+  assign slide_count = collection_blocks.size
+-%}
+
+<style>
+  .nw-collection-list.section-{{ section.id }} {
+    position: relative;
+    background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    isolation: isolate;
+    overflow: hidden;
+    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% endif %}
+  }
+
+  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
+    .nw-collection-list.section-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: calc({{ section.settings.bg_image_opacity | default: 100 }} / 100);
+      z-index: -1;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- unless section.settings.show_fade -%}
+    .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap .swiper::before,
+    .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap .swiper::after {
+      display: none !important;
+    }
+  {%- endunless -%}
+
+  @media screen and (max-width: 749px) {
+    .nw-collection-list.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    }
+
+    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
+      .nw-collection-list.section-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<section class="nw-collection-list nw-main-section section-{{ section.id }}">
+  <div class="nw-collection-list__container">
+    <div class="nw-collection-list__inner">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="nw-collection-list__header">
+          {%- if section.settings.heading != blank -%}
+            {% render 'nw-section-heading', text: section.settings.heading %}
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="nw-collection-list__subheading">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if slide_count > 0 -%}
+        <div class="nw-collection-list__slider-wrap">
+          {%- if section.settings.show_arrows and slide_count > 1 -%}
+            <button
+              type="button"
+              class="nw-collection-list__nav nw-collection-list__nav--prev"
+              id="nw-collection-list-prev-{{ section.id }}"
+              aria-label="Previous collections"
+            >
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.3594 12.8574H5.35938" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12.8594 5.35742L5.35938 12.8574L12.8594 20.3574" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            </button>
+          {%- endif -%}
+
+          <div class="swiper" id="nw-collection-list-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {%- assign repeat_times = 1 -%}
+              {%- if slide_count > 0 and slide_count < 6 -%}
+                {%- assign repeat_times = 3 -%}
+              {%- elsif slide_count >= 6 and slide_count < 10 -%}
+                {%- assign repeat_times = 2 -%}
+              {%- endif -%}
+
+              {%- for r in (1..repeat_times) -%}
+                {%- for block in collection_blocks -%}
+                  {%- liquid
+                    assign selected_collection = collections[block.settings.collection]
+                    assign card_title = block.settings.custom_title
+                    if card_title == blank and selected_collection != blank
+                      assign card_title = selected_collection.title
+                    endif
+                    if card_title == blank
+                      assign card_title = 'Collection'
+                    endif
+
+                    assign card_url = block.settings.custom_link
+                    if card_url == blank and selected_collection != blank
+                      assign card_url = selected_collection.url
+                    endif
+                    if card_url == blank
+                      assign card_url = '#'
+                    endif
+
+                    assign card_image = block.settings.custom_image
+                    if card_image == blank and selected_collection != blank and selected_collection.image != blank
+                      assign card_image = selected_collection.image
+                    elsif card_image == blank and selected_collection != blank and selected_collection.products.first.featured_media.preview_image != blank
+                      assign card_image = selected_collection.products.first.featured_media.preview_image
+                    endif
+                  -%}
+
+                  <div class="swiper-slide"{% if r == 1 %} {{ block.shopify_attributes }}{% endif %}>
+                    <a href="{{ card_url }}" class="nw-collection-list__card">
+                      {%- if card_image != blank -%}
+                        <img
+                          src="{{ card_image | image_url: width: 800 }}"
+                          alt="{{ card_title | escape }}"
+                          width="282"
+                          height="423"
+                          loading="lazy"
+                          class="nw-collection-list__card-image"
+                        >
+                      {%- else -%}
+                        <div class="nw-collection-list__card-placeholder" aria-hidden="true"></div>
+                      {%- endif -%}
+                      <div class="nw-collection-list__card-label">
+                        <p class="nw-collection-list__card-title">{{ card_title }}</p>
+                      </div>
+                    </a>
+                  </div>
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.settings.show_arrows and slide_count > 1 -%}
+            <button
+              type="button"
+              class="nw-collection-list__nav nw-collection-list__nav--next"
+              id="nw-collection-list-next-{{ section.id }}"
+              aria-label="Next collections"
+            >
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.35547 12.8574H20.3555" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.8555 5.35742L20.3555 12.8574L12.8555 20.3574" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+            </button>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_dots and slide_count > 1 -%}
+          <div class="nw-collection-list__pagination swiper-pagination" id="nw-collection-list-pagination-{{ section.id }}"></div>
+        {%- endif -%}
+      {%- endif -%}
+
+      <div class="nw-collection-list__actions">
+        {%- if section.settings.button_label != blank -%}
+          {% render 'nw-button',
+            text: section.settings.button_label,
+            link: section.settings.button_link,
+            style: section.settings.button_style
+          %}
+        {%- endif -%}
+
+        {%- if section.settings.show_features -%}
+          <div class="nw-collection-list__features">
+            {%- for i in (1..4) -%}
+              {%- liquid
+                case i
+                  when 1
+                    assign feature_icon = section.settings.feature_1_icon
+                    assign feature_custom_icon = section.settings.feature_1_custom_icon
+                    assign feature_text = section.settings.feature_1_text
+                  when 2
+                    assign feature_icon = section.settings.feature_2_icon
+                    assign feature_custom_icon = section.settings.feature_2_custom_icon
+                    assign feature_text = section.settings.feature_2_text
+                  when 3
+                    assign feature_icon = section.settings.feature_3_icon
+                    assign feature_custom_icon = section.settings.feature_3_custom_icon
+                    assign feature_text = section.settings.feature_3_text
+                  when 4
+                    assign feature_icon = section.settings.feature_4_icon
+                    assign feature_custom_icon = section.settings.feature_4_custom_icon
+                    assign feature_text = section.settings.feature_4_text
+                endcase
+              -%}
+
+              {%- if feature_text != blank -%}
+                <div class="nw-collection-list__feature">
+                  <span class="nw-collection-list__feature-icon" aria-hidden="true">
+                    {%- if feature_icon == 'custom' and feature_custom_icon != blank -%}
+                      <img
+                        src="{{ feature_custom_icon | image_url: width: 40 }}"
+                        alt=""
+                        width="20"
+                        height="20"
+                        loading="lazy"
+                      >
+                    {%- else -%}
+                      {%- render 'nw-collection-list-icon', icon: feature_icon -%}
+                    {%- endif -%}
+                  </span>
+                  <span class="nw-collection-list__feature-text">{{ feature_text }}</span>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    var sectionId = '{{ section.id }}';
+
+    function initCollectionListSlider() {
+      if (typeof Swiper === 'undefined') {
+        var script = document.querySelector('#nw-swiper-bundle-js');
+        if (!script) {
+          script = document.createElement('script');
+          script.id = 'nw-swiper-bundle-js';
+          script.src = '{{ "nw-swiper-bundle.min.js" | asset_url }}';
+          script.onload = runCollectionListSlider;
+          document.head.appendChild(script);
+        } else {
+          script.addEventListener('load', runCollectionListSlider);
+          var checkCount = 0;
+          var checkSwiper = setInterval(function() {
+            checkCount++;
+            if (typeof Swiper !== 'undefined' || checkCount > 60) {
+              clearInterval(checkSwiper);
+              if (typeof Swiper !== 'undefined') runCollectionListSlider();
+            }
+          }, 50);
+        }
+      } else {
+        runCollectionListSlider();
+      }
+    }
+
+    function runCollectionListSlider() {
+      var sliderEl = document.querySelector('#nw-collection-list-' + sectionId);
+      if (!sliderEl) return;
+      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
+
+      var slideCount = sliderEl.querySelectorAll('.swiper-slide').length;
+      if (slideCount === 0) return;
+
+      var swiperOptions = {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        loop: slideCount > 1,
+        loopedSlides: slideCount,
+        grabCursor: true,
+        observer: true,
+        observeParents: true,
+        observeSlideChildren: true
+      };
+
+      {% if section.settings.enable_autoplay %}
+      swiperOptions.autoplay = {
+        delay: {{ section.settings.autoplay_delay | default: 4 | times: 1000 }},
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      };
+      {% endif %}
+
+      {% if section.settings.show_arrows %}
+      swiperOptions.navigation = {
+        nextEl: '#nw-collection-list-next-' + sectionId,
+        prevEl: '#nw-collection-list-prev-' + sectionId
+      };
+      {% endif %}
+
+      {% if section.settings.show_dots %}
+      swiperOptions.pagination = {
+        el: '#nw-collection-list-pagination-' + sectionId,
+        clickable: true
+      };
+      {% endif %}
+
+      swiperOptions.breakpoints = {
+        0: {
+          slidesPerView: 'auto',
+          spaceBetween: 12,
+          centeredSlides: true
+        },
+        750: {
+          slidesPerView: 'auto',
+          spaceBetween: 16,
+          centeredSlides: true
+        }
+      };
+
+      new Swiper(sliderEl, swiperOptions);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCollectionListSlider);
+    } else {
+      initCollectionListSlider();
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target.classList.contains('section-' + sectionId) || e.target.querySelector('.section-' + sectionId)) {
+        initCollectionListSlider();
+      }
+    });
+
+    document.addEventListener('shopify:section:select', function(e) {
+      var sliderEl = document.querySelector('#nw-collection-list-' + sectionId);
+      if (sliderEl && sliderEl.swiper) {
+        sliderEl.swiper.update();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "NW Collection List",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADING"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Explore Our Collections"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Find the right organic sleep essentials for every stage of your recovery."
+    },
+    {
+      "type": "header",
+      "content": "SLIDER CONTROLS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Navigation Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Pagination Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_fade",
+      "label": "Show Left/Right Fade Shadows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (Seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP ALL"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "FEATURES / BADGES"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_features",
+      "label": "Show Features Row",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "feature_1_icon",
+      "label": "Feature 1 Icon",
+      "default": "trial",
+      "options": [
+        { "value": "trial", "label": "100-Night Trial" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "shipping", "label": "Shipping" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "custom", "label": "Custom Icon" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_1_custom_icon",
+      "label": "Feature 1 Custom Icon",
+      "visible_if": "{{ section.settings.feature_1_icon == 'custom' }}"
+    },
+    {
+      "type": "text",
+      "id": "feature_1_text",
+      "label": "Feature 1 Text",
+      "default": "100-Night Risk-Free Trial"
+    },
+    {
+      "type": "select",
+      "id": "feature_2_icon",
+      "label": "Feature 2 Icon",
+      "default": "warranty",
+      "options": [
+        { "value": "trial", "label": "100-Night Trial" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "shipping", "label": "Shipping" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "custom", "label": "Custom Icon" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_2_custom_icon",
+      "label": "Feature 2 Custom Icon",
+      "visible_if": "{{ section.settings.feature_2_icon == 'custom' }}"
+    },
+    {
+      "type": "text",
+      "id": "feature_2_text",
+      "label": "Feature 2 Text",
+      "default": "30-Year Warranty"
+    },
+    {
+      "type": "select",
+      "id": "feature_3_icon",
+      "label": "Feature 3 Icon",
+      "default": "shipping",
+      "options": [
+        { "value": "trial", "label": "100-Night Trial" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "shipping", "label": "Shipping" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "custom", "label": "Custom Icon" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_3_custom_icon",
+      "label": "Feature 3 Custom Icon",
+      "visible_if": "{{ section.settings.feature_3_icon == 'custom' }}"
+    },
+    {
+      "type": "text",
+      "id": "feature_3_text",
+      "label": "Feature 3 Text",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "select",
+      "id": "feature_4_icon",
+      "label": "Feature 4 Icon",
+      "default": "financing",
+      "options": [
+        { "value": "trial", "label": "100-Night Trial" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "shipping", "label": "Shipping" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "custom", "label": "Custom Icon" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "feature_4_custom_icon",
+      "label": "Feature 4 Custom Icon",
+      "visible_if": "{{ section.settings.feature_4_icon == 'custom' }}"
+    },
+    {
+      "type": "text",
+      "id": "feature_4_text",
+      "label": "Feature 4 Text",
+      "default": "0% Interest Financing Options"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' or section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Title (Overrides Collection Name)"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image (Overrides Collection Image)"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom Link (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Collection List",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "collection",
+          "settings": {
+            "custom_title": "Bedding"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "custom_title": "Mattresses"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "custom_title": "Kids"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "custom_title": "Bases"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "custom_title": "Bundle & Save"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

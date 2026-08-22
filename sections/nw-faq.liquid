@@ -1,0 +1,447 @@
+{{ 'nw-faq.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'faq.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  .nw-faq.section-{{ section.id }} {
+    position: relative;
+    background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    isolation: isolate;
+    overflow: hidden;
+    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% endif %}
+  }
+
+  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
+    .nw-faq.section-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: calc({{ section.settings.bg_image_opacity | default: 100 }} / 100);
+      z-index: -1;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  @media screen and (max-width: 749px) {
+    .nw-faq.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    }
+
+    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
+      .nw-faq.section-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<section class="nw-faq section-{{ section.id }}">
+  <div class="nw page-width">
+    <div class="nw-faq__wrapper">
+      <div class="nw-faq__main">
+        {%- if section.settings.heading != blank -%}
+          <div class="nw-faq__heading-wrap">
+            {% render 'nw-section-heading', text: section.settings.heading %}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_search -%}
+          <div class="nw-faq__search"> 
+            <input
+              type="text"
+              class="nw-faq__search-input"
+              placeholder="{{ section.settings.search_placeholder | default: 'What can we help with?' }}"
+              aria-label="{{ section.settings.search_placeholder | default: 'What can we help with?' }}"
+            >
+            <span class="nw-faq__search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="nw-faq__list" data-initial-limit="{{ section.settings.initial_faq_count | default: 6 }}">
+            {%- for block in section.blocks -%}
+              <details class="nw-faq__item"{% if section.settings.open_first_faq and forloop.first %} open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="nw-faq__summary">
+                  <span class="nw-faq__question">{{ block.settings.question }}</span>
+                  <span class="nw-faq__toggle" aria-hidden="true">
+                    <span class="nw-faq__toggle-h"></span>
+                    <span class="nw-faq__toggle-v"></span>
+                  </span>
+                </summary>
+                {%- if block.settings.answer != blank -%}
+                  <div class="nw-faq__answer">{{ block.settings.answer }}</div>
+                {%- endif -%}
+              </details>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.more_label != blank -%}
+          <div class="nw-faq__more-wrap">
+            <button
+              type="button"
+              class="nw-faq__more"
+              data-toggle="true"
+              data-more-text="{{ section.settings.more_label | default: "SEE MORE FAQ'S" }}"
+              data-less-text="SEE LESS FAQ'S"
+            >
+              {{ section.settings.more_label }}
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.contact_heading != blank or section.settings.call_label != blank or section.settings.text_label != blank or section.settings.quiz_label != blank -%}
+        <div class="nw-faq__contact">
+          {%- if section.settings.contact_heading != blank -%}
+            <div class="nw-faq__contact-heading-wrap" id="faq-heading">
+              {% render 'nw-section-heading', text: section.settings.contact_heading %}
+            </div>
+          {%- endif -%}
+
+          <div class="nw-faq__actions">
+            {%- if section.settings.call_label != blank -%}
+              {% render 'nw-button',
+                text: section.settings.call_label,
+                link: section.settings.call_link,
+                style: section.settings.call_style
+              %}
+            {%- endif -%}
+
+            {%- if section.settings.text_label != blank or section.settings.quiz_label != blank -%}
+              <div class="nw-faq__btn-row">
+                {%- if section.settings.text_label != blank -%}
+                  {% render 'nw-button',
+                    text: section.settings.text_label,
+                    link: section.settings.text_link,
+                    style: section.settings.text_style
+                  %}
+                {%- endif -%}
+
+                {%- if section.settings.quiz_label != blank -%}
+                  {% render 'nw-button',
+                    text: section.settings.quiz_label,
+                    link: section.settings.quiz_link,
+                    style: section.settings.quiz_style
+                  %}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW FAQ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "FAQ SETTINGS"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show Live Search",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search Placeholder",
+      "default": "What can we help with?",
+      "visible_if": "{{ section.settings.show_search == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_faq",
+      "label": "Open First FAQ By Default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "initial_faq_count",
+      "label": "Initial FAQs To Show Before Expand",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "more_label",
+      "label": "See More Button Label",
+      "default": "SEE MORE FAQ’S"
+    },
+    {
+      "type": "header",
+      "content": "CONTACT SETTINGS"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "contact_heading",
+      "label": "Contact Heading",
+      "default": "Speak with Our Live Sleep Experts."
+    },
+    {
+      "type": "text",
+      "id": "call_label",
+      "label": "Call Button Label",
+      "default": "CALL (443) 333-1213"
+    },
+    {
+      "type": "url",
+      "id": "call_link",
+      "label": "Call Button Link"
+    },
+    {
+      "type": "select",
+      "id": "call_style",
+      "label": "Call Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "text_label",
+      "label": "Text Button Label",
+      "default": "TEXT US"
+    },
+    {
+      "type": "url",
+      "id": "text_link",
+      "label": "Text Button Link"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "Text Button Style",
+      "default": "outline",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "quiz_label",
+      "label": "Quiz Button Label",
+      "default": "SLEEP QUIZ"
+    },
+    {
+      "type": "url",
+      "id": "quiz_link",
+      "label": "Quiz Button Link"
+    },
+    {
+      "type": "select",
+      "id": "quiz_style",
+      "label": "Quiz Button Style",
+      "default": "outline",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' or section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What makes the Ultimate Snooze different from other organic mattresses?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Ultimate Snooze combines certified organic latex, organic wool, and pocket coils with zero toxic chemicals, glues, or fiberglass for restorative, clean sleep.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW FAQ",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What makes the Ultimate Snooze different from other organic mattresses?",
+            "answer": "<p>Ultimate Snooze combines certified organic latex, organic wool, and pocket coils with zero toxic chemicals, glues, or fiberglass for restorative, clean sleep.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What materials are used?",
+            "answer": "<p>We use 100% GOLS certified organic latex, GOTS certified organic wool, and GOTS certified organic cotton with recycled steel pocket coils.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does it contain flame retardants or fiberglass?",
+            "answer": "<p>No. We never use chemical flame retardants or fiberglass. We use natural organic wool as our flame barrier.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will I sleep hot?",
+            "answer": "<p>Organic latex and wool are naturally temperature regulating and breathable, keeping you cool all night long.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What if I don’t like it?",
+            "answer": "<p>We offer a 100-night risk-free trial. If it's not the right fit, you can return it hassle-free.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I finance it or use HSA/FSA?",
+            "answer": "<p>Yes, we offer financing through Affirm, ShopPay, and Acima, as well as TrueMed HSA/FSA eligibility at checkout.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,764 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-review-video.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .nw-review-video.section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% endif %}
+    --nw-rv-bg-color: {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}{{ section.settings.bg_color }}{% else %}#FFFFFF{% endif %};
+    --nw-rv-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+    --nw-rv-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .nw-review-video.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+<section class="nw-review-video section-{{ section.id }}">
+  <div class="nw page-width"> 
+    <div class="nw-review-video__wrapper">
+      <div class="nw-review-video__header">
+        {%- if section.settings.show_rating -%}
+          {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
+          <div class="nw-review-video__rating">
+            <div class="nw-review-video__stars" aria-label="{{ active_stars }} out of 5 stars">
+              {%- for i in (1..5) -%}
+                <span class="nw-review-video__star{% if i <= active_stars %} nw-review-video__star--active{% endif %}">
+                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
+                  </svg>
+                </span>
+              {%- endfor -%}
+            </div>
+            {%- if section.settings.eyebrow != blank -%}
+              <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
+            {%- endif -%}
+          </div>
+        {%- elsif section.settings.eyebrow != blank -%}
+          <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+       {%- if section.settings.heading != blank -%}
+        {% render 'nw-section-heading', text: section.settings.heading %}
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+            {% render 'nw-section-description', text: section.settings.subheading %}
+        {%- endif -%}
+
+      </div>
+    </div>
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    {%- liquid
+      assign repeat_times = 1
+      if section.blocks.size == 1
+        assign repeat_times = 8
+      elsif section.blocks.size == 2
+        assign repeat_times = 5
+      elsif section.blocks.size == 3
+        assign repeat_times = 4
+      elsif section.blocks.size == 4
+        assign repeat_times = 3
+      elsif section.blocks.size <= 7
+        assign repeat_times = 2
+      endif
+    -%}
+    <div class="nw-review-video__slider-wrap">
+      {%- if section.settings.show_arrows -%}
+        <button
+          type="button"
+          class="nw-review-video__nav-btn nw-review-video__nav-btn--prev"
+          id="nw-review-video-prev-{{ section.id }}"
+          aria-label="Previous video"
+        >
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.3594 12.8572H5.35938" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.8594 5.35718L5.35938 12.8572L12.8594 20.3572" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+        </button>
+        <button
+          type="button"
+          class="nw-review-video__nav-btn nw-review-video__nav-btn--next"
+          id="nw-review-video-next-{{ section.id }}"
+          aria-label="Next video"
+        >
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.35547 12.8572H20.3555" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.8555 5.35718L20.3555 12.8572L12.8555 20.3572" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+        </button>
+      {%- endif -%}
+
+      <div class="swiper" id="nw-review-videos-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {%- for r in (1..repeat_times) -%}
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign review_product = block.settings.product
+                assign product_image = block.settings.custom_image
+                if product_image == blank and review_product != blank and review_product.featured_image != blank
+                  assign product_image = review_product.featured_image
+                endif
+                assign product_title = block.settings.custom_title
+                if product_title == blank and review_product != blank
+                  assign product_title = review_product.title
+                endif
+                assign product_url = block.settings.custom_link
+                if product_url == blank and review_product != blank
+                  assign product_url = review_product.url
+                endif
+                assign poster = block.settings.poster
+                if poster == blank and block.settings.video != blank and block.settings.video.preview_image != blank
+                  assign poster = block.settings.video.preview_image
+                endif
+              -%}
+              <div class="swiper-slide" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+                <article class="nw-review-video__card">
+                  <div class="nw-review-video__media">
+                    {%- if block.settings.video != blank -%}
+                      {{
+                        block.settings.video
+                        | video_tag:
+                          autoplay: false,
+                          loop: false,
+                          muted: false,
+                          controls: true,
+                          playsinline: true,
+                          preload: 'none',
+                          class: 'nw-review-video__video',
+                          image_size: '800x'
+                      }}
+                    {%- endif -%}
+
+                    {%- if poster != blank -%}
+                      <img
+                        src="{{ poster | image_url: width: 800 }}"
+                        alt="{{ block.settings.author | escape }}"
+                        width="400"
+                        height="520"
+                        loading="lazy"
+                        class="nw-review-video__poster"
+                      >
+                    {%- else -%}
+                      <div class="nw-review-video__placeholder" aria-hidden="true"></div>
+                    {%- endif -%}
+
+                    {%- if block.settings.overlay_text != blank -%}
+                      <span class="nw-review-video__overlay-text">{{ block.settings.overlay_text }}</span>
+                    {%- endif -%}
+
+                    <button type="button" class="nw-review-video__play" aria-label="Play video">
+                      <span class="nw-review-video__play-icon">
+                        <svg width="18" height="20" viewBox="0 0 18 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M17.64 9.94191L1.43224e-05 19.8839L1.51916e-05 -5.79915e-05L17.64 9.94191Z" fill="white"/>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+
+                  <div class="nw-review-video__body">
+                    <div class="nw-review-video__author-row">
+                      {%- if block.settings.author != blank -%}
+                        <span class="nw-review-video__author">{{ block.settings.author }}</span>
+                      {%- endif -%}
+                      {%- if block.settings.show_verified -%}
+                        <span class="nw-review-video__verified">
+                          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                            <path d="M8 0.5L9.8 2.2L12.3 1.9L13.1 4.2L15.3 5.3L14.9 7.7L16 9.9L14.4 11.8L14.4 14.3L11.9 14.7L10.4 16.6L8 15.9L5.6 16.6L4.1 14.7L1.6 14.3L1.6 11.8L0 9.9L1.1 7.7L0.7 5.3L2.9 4.2L3.7 1.9L6.2 2.2L8 0.5Z" fill="#878735"/>
+                            <path d="M5.5 8.2L7.2 9.8L10.8 6.2" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                          <span>{{ block.settings.verified_text | default: 'Verified Customer' }}</span>
+                        </span>
+                      {%- endif -%}
+                    </div>
+
+                    <hr class="nw-review-video__divider">
+
+                    {%- if product_title != blank or product_image != blank -%}
+                      {%- if product_url != blank -%}
+                        <a href="{{ product_url }}" class="nw-review-video__product">
+                      {%- else -%}
+                        <div class="nw-review-video__product">
+                      {%- endif -%}
+                        <div class="nw-review-video__product-info">
+                          {%- if product_image != blank -%}
+                            <img
+                              src="{{ product_image | image_url: width: 120 }}"
+                              alt="{{ product_title | escape }}"
+                              width="58"
+                              height="31"
+                              loading="lazy"
+                              class="nw-review-video__product-img"
+                            >
+                          {%- else -%}
+                            <span class="nw-review-video__product-placeholder" aria-hidden="true"></span>
+                          {%- endif -%}
+                          {%- if product_title != blank -%}
+                            <span class="nw-review-video__product-title">{{ product_title }}</span>
+                          {%- endif -%}
+                        </div>
+                        <span class="nw-review-video__product-arrow" aria-hidden="true">
+                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.75 9H14.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 3.75L14.25 9L9 14.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </span>
+                      {%- if product_url != blank -%}
+                        </a>
+                      {%- else -%}
+                        </div>
+                      {%- endif -%}
+                    {%- endif -%}
+                  </div>
+                </article>
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- if section.settings.show_dots and section.blocks.size > 1 -%}
+        <div class="nw-review-video__pagination" id="nw-review-videos-pagination-{{ section.id }}">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="nw-review-video__bullet{% if forloop.first %} nw-review-video__bullet--active{% endif %}"
+              data-bullet-index="{{ forloop.index0 }}"
+              aria-label="Go to slide {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</section>
+
+<script>
+  (function() {
+    function initReviewVideos() {
+      if (typeof Swiper === 'undefined') {
+        var script = document.querySelector('#nw-swiper-bundle-js');
+        if (!script) {
+          script = document.createElement('script');
+          script.id = 'nw-swiper-bundle-js';
+          script.src = '{{ "nw-swiper-bundle.min.js" | asset_url }}';
+          script.onload = runReviewVideos;
+          document.head.appendChild(script);
+        } else {
+          script.addEventListener('load', runReviewVideos);
+          var checkCount = 0;
+          var checkSwiper = setInterval(function() {
+            checkCount++;
+            if (typeof Swiper !== 'undefined' || checkCount > 60) {
+              clearInterval(checkSwiper);
+              if (typeof Swiper !== 'undefined') runReviewVideos();
+            }
+          }, 50);
+        }
+      } else {
+        runReviewVideos();
+      }
+    }
+
+    function pauseOtherVideos(currentVideo) {
+      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
+      if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay && sliderEl.swiper.autoplay.running) {
+        sliderEl.swiper.autoplay.stop();
+      }
+      document.querySelectorAll('.nw-review-video.section-{{ section.id }} video').forEach(function(video) {
+        if (video !== currentVideo) {
+          video.pause();
+          var card = video.closest('.nw-review-video__card');
+          if (card) card.classList.remove('is-playing');
+        }
+      });
+    }
+
+    function bindVideoEvents() {
+      var sectionEl = document.querySelector('.nw-review-video.section-{{ section.id }}');
+      if (!sectionEl || sectionEl._videoBound) return;
+      sectionEl._videoBound = true;
+
+      sectionEl.addEventListener('click', function(e) {
+        var btn = e.target.closest('.nw-review-video__play');
+        if (!btn) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var card = btn.closest('.nw-review-video__card');
+        if (!card) return;
+        var video = card.querySelector('video');
+        if (!video) return;
+        pauseOtherVideos(video);
+        card.classList.add('is-playing');
+        video.play();
+      });
+
+      sectionEl.addEventListener('pause', function(e) {
+        if (e.target && e.target.tagName === 'VIDEO') {
+          var card = e.target.closest('.nw-review-video__card');
+          if (e.target.currentTime === 0 || e.target.ended) {
+            if (card) card.classList.remove('is-playing');
+          }
+          var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
+          if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay) {
+            sliderEl.swiper.autoplay.start();
+          }
+        }
+      }, true);
+
+      sectionEl.addEventListener('ended', function(e) {
+        if (e.target && e.target.tagName === 'VIDEO') {
+          var card = e.target.closest('.nw-review-video__card');
+          if (card) card.classList.remove('is-playing');
+          var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
+          if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay) {
+            sliderEl.swiper.autoplay.start();
+          }
+        }
+      }, true);
+    }
+
+    function updateCustomPagination(swiper) {
+      var totalBlocks = {{ section.blocks.size | default: 1 }};
+      if (totalBlocks <= 1) return;
+      var currentRealIndex = swiper.realIndex % totalBlocks;
+      var bullets = document.querySelectorAll('#nw-review-videos-pagination-{{ section.id }} .nw-review-video__bullet');
+      bullets.forEach(function(bullet, idx) {
+        if (idx === currentRealIndex) {
+          bullet.classList.add('nw-review-video__bullet--active');
+        } else {
+          bullet.classList.remove('nw-review-video__bullet--active');
+        }
+      });
+    }
+
+    function runReviewVideos() {
+      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
+      if (!sliderEl) return;
+      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
+
+      var swiperOptions = {
+        slidesPerView: 'auto',
+        spaceBetween: 20,
+        centeredSlides: true,
+        loop: true,
+        speed: 600,
+        grabCursor: true,
+        simulateTouch: true,
+        allowTouchMove: true,
+        watchSlidesProgress: true,
+        breakpoints: {
+          0: {
+            slidesPerView: 'auto',
+            spaceBetween: 12,
+            centeredSlides: true
+          },
+          750: {
+            slidesPerView: 'auto',
+            spaceBetween: 16,
+            centeredSlides: true
+          },
+          990: {
+            slidesPerView: 'auto',
+            spaceBetween: 20,
+            centeredSlides: true
+          }
+        }
+      };
+
+      {% if section.settings.enable_autoplay %}
+      swiperOptions.autoplay = {
+        delay: {{ section.settings.autoplay_delay | default: 3 | times: 1000 }},
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      };
+      {% endif %}
+
+      {% if section.settings.show_arrows %}
+      swiperOptions.navigation = {
+        nextEl: '#nw-review-video-next-{{ section.id }}',
+        prevEl: '#nw-review-video-prev-{{ section.id }}'
+      };
+      {% endif %}
+
+      var swiperInstance = new Swiper(sliderEl, swiperOptions);
+
+      swiperInstance.on('slideChange', function() {
+        updateCustomPagination(swiperInstance);
+      });
+      swiperInstance.on('init', function() {
+        updateCustomPagination(swiperInstance);
+      });
+      updateCustomPagination(swiperInstance);
+
+      var paginationEl = document.querySelector('#nw-review-videos-pagination-{{ section.id }}');
+      if (paginationEl && !paginationEl._bound) {
+        paginationEl._bound = true;
+        paginationEl.addEventListener('click', function(e) {
+          var bullet = e.target.closest('.nw-review-video__bullet');
+          if (!bullet) return;
+          var targetIndex = parseInt(bullet.getAttribute('data-bullet-index'), 10);
+          if (!isNaN(targetIndex) && sliderEl.swiper) {
+            sliderEl.swiper.slideToLoop(targetIndex, 600);
+          }
+        });
+      }
+
+      bindVideoEvents();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReviewVideos);
+    } else {
+      initReviewVideos();
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target.classList.contains('section-{{ section.id }}') || e.target.querySelector('.section-{{ section.id }}')) {
+        initReviewVideos();
+      }
+    });
+
+    document.addEventListener('shopify:section:select', function(e) {
+      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
+      if (sliderEl && sliderEl.swiper) {
+        sliderEl.swiper.update();
+      }
+    });
+
+    document.addEventListener('shopify:block:select', function(e) {
+      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
+      if (!sliderEl || !sliderEl.swiper) return;
+      var slideIndex = e.target.getAttribute('data-slide-index');
+      if (slideIndex !== null && slideIndex !== undefined) {
+        if (sliderEl.swiper.params.loop) {
+          sliderEl.swiper.slideToLoop(parseInt(slideIndex, 10), 400);
+        } else {
+          sliderEl.swiper.slideTo(parseInt(slideIndex, 10), 400);
+        }
+        sliderEl.swiper.update();
+      }
+    });
+
+    document.addEventListener('shopify:block:deselect', function(e) {
+      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
+      if (sliderEl && sliderEl.swiper) {
+        sliderEl.swiper.update();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "NW Review Videos",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating (Active Stars)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Active Star Color",
+      "default": "#E57B1E",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color_inactive",
+      "label": "Inactive Star Color",
+      "default": "#D1D5DB",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Real sleepers, real mornings"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Hear It From People Who Sleep On It"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real customers, real results in their own words"
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Slider Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Slider Pagination Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (Seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 3,
+      "visible_if": "{{ section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Video Review",
+      "settings": [
+        {
+          "type": "header",
+          "content": "VIDEO"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Shopify-hosted Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Video Poster / Placeholder Image"
+        },
+        {
+          "type": "text",
+          "id": "overlay_text",
+          "label": "Overlay Text (optional)"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Katherine"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "Show Verified Badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer"
+        },
+        {
+          "type": "header",
+          "content": "PRODUCT"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Product Image (overrides product image)"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom Product Title (overrides product title)",
+          "default": "Pillowtop Mattress"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom Product Link (overrides product URL)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Review Videos",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "author": "Katherine",
+            "custom_title": "Pillowtop Mattress",
+            "overlay_text": "I LOVE IT."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Courtney",
+            "custom_title": "Pillowtop Mattress"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Rivera",
+            "custom_title": "Pure Mattress"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Gary Brecka",
+            "custom_title": "Mitopure Softgels"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

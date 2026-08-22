@@ -1,0 +1,548 @@
+.nw-human-biologist {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--senary-color, #FFFFFF);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.nw-human-biologist .page-width {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 0;
+  gap: 32px;
+  width: 520px;
+  flex: 0 0 520px;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__bio-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__author-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__name-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__name {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 140%;
+  display: flex;
+  align-items: center;
+  color: var(--primary-color, #613916);
+  margin: 0;
+}
+
+.nw-human-biologist__verified-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nw-human-biologist__verified-icon svg,
+.nw-human-biologist__verified-icon img {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.nw-human-biologist__role {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  display: flex;
+  align-items: center;
+  color: var(--primary-color, #613916);
+  margin: 0;
+  width: 100%;
+}
+
+.nw-human-biologist__quote {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  color: var(--primary-color, #613916);
+  margin: 0;
+  width: 100%;
+}
+
+.nw-human-biologist__quote p {
+  margin: 0;
+}
+
+.nw-human-biologist__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__buttons .nw-btn {
+  width: 100%;
+}
+
+.nw-human-biologist__featured {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__featured-title {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--primary-color, #613916);
+  margin: 0;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.nw-human-biologist__featured-marquee {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.nw-human-biologist__featured-track {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 32px;
+  flex-shrink: 0;
+  margin-right: 32px;
+  animation: nw-biologist-marquee 20s linear infinite;
+}
+
+.nw-human-biologist__featured-marquee:hover .nw-human-biologist__featured-track {
+  animation-play-state: paused;
+}
+
+@keyframes nw-biologist-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - 32px));
+  }
+}
+
+.nw-human-biologist__featured-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 40px;
+}
+
+.nw-human-biologist__featured-img {
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: contrast(100%);
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.nw-human-biologist__featured-img:hover {
+  opacity: 1;
+}
+
+.nw-human-biologist__image-wrap {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+  height: 496px;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: var(--tertiary-color, #F4EFE8);
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+.nw-human-biologist__image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--octonary-color, #EAE3D9);
+  border-radius: 14px;
+  display: block;
+}
+
+.nw-human-biologist__insights {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px 24px;
+  gap: 0;
+  width: 100%;
+  max-width: 700px;
+  background: rgba(0, 0, 0, 0.004);
+  box-shadow: 0px 2px 7.3px rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.nw-human-biologist__insights-slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.nw-human-biologist__insights-slide {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-human-biologist__insight-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--quaternary-color, #878735);
+  border-radius: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  color: var(--quaternary-color, #878735);
+}
+
+.nw-human-biologist__insight-icon-wrap svg,
+.nw-human-biologist__insight-icon-wrap img {
+  width: 24px;
+  height: 24px;
+  display: block;
+  object-fit: contain;
+}
+
+.nw-human-biologist__insight-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.nw-human-biologist__insight-tag {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 115%;
+  text-align: center;
+  letter-spacing: 0.07em;
+  text-transform: capitalize;
+  color:  #878735;
+  margin: 0;
+}
+
+.nw-human-biologist__insight-quote {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  text-align: center;
+  color: var(--primary-color, #613916);
+  margin: 0;
+}
+
+.nw-human-biologist__insight-quote p {
+  margin: 0;
+}
+
+.nw-human-biologist__insight-quote.is-italic,
+.nw-human-biologist__insight-quote.is-italic p {
+  font-style: italic;
+}
+
+.nw-human-biologist__insights-pagination,
+.nw-human-biologist__insights .swiper-pagination {
+  position: static !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  gap: 4px !important;
+  width: 100% !important;
+  margin-top: 20px !important;
+  margin-bottom: 0 !important;
+  inset: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  z-index: 2 !important;
+}
+
+.nw-human-biologist__insights-pagination .swiper-pagination-bullet,
+.nw-human-biologist__insights .swiper-pagination-bullet {
+  width: 5px;
+  height: 5px;
+  background: var(--primary-color, #613916);
+  opacity: 0.3;
+  border-radius: 5px;
+  margin: 0 !important;
+  cursor: pointer;
+  transition: width 0.3s ease, opacity 0.3s ease, border-radius 0.3s ease;
+}
+
+.nw-human-biologist__insights-pagination .swiper-pagination-bullet-active,
+.nw-human-biologist__insights .swiper-pagination-bullet-active {
+  width: 30px;
+  height: 5px;
+  background: var(--primary-color, #613916);
+  opacity: 1;
+  border-radius: 6px;
+}
+
+@media screen and (max-width: 1199px) {
+  .nw-human-biologist__content{
+    width: 50%;
+    flex: 0 0 50%;
+  }
+
+  .nw-human-biologist .page-width{
+    padding: 5rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-human-biologist .page-width {
+    padding: 0 16px;
+  }
+
+  .nw-human-biologist__wrapper {
+    gap: 0px;
+  }
+
+  .nw-human-biologist__content{
+    padding: 0;
+  }
+
+  .nw-human-biologist__main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .nw-human-biologist__image-wrap {
+    order: 0;
+    width: 100%;
+    height: 305px;
+    border-radius: 10px;
+    flex: none;
+    margin-top: 32px;
+  }
+
+  .nw-human-biologist__image {
+    border-radius: 10px;
+  }
+
+  .nw-human-biologist__image-placeholder {
+    border-radius: 10px;
+  }
+
+  .nw-human-biologist__content {
+    order: 1;
+    width: 100%;
+    flex: none;
+  }
+
+  .nw-human-biologist__bio-wrap {
+    width: 100%;
+  }
+
+  .nw-human-biologist__author-info {
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .nw-human-biologist__name-row {
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .nw-human-biologist__name {
+    font-size: 24px;
+  }
+
+  .nw-human-biologist__verified-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nw-human-biologist__verified-icon svg,
+  .nw-human-biologist__verified-icon img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nw-human-biologist__role {
+    font-size: 13px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .nw-human-biologist__quote {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .nw-human-biologist__buttons {
+    gap: 12px;
+    width: 100%;
+  }
+
+  .nw-human-biologist__featured {
+    gap: 12px;
+    width: 100%;
+  }
+
+  .nw-human-biologist__featured-title {
+    font-size: 14px;
+  }
+
+  .nw-human-biologist__featured-marquee {
+    mask-image: none;
+    -webkit-mask-image: none;
+    border-bottom: 1px solid var(--primary-color, #613916);
+    padding-bottom: 14px;
+  }
+
+  .nw-human-biologist__featured-track {
+    gap: 20px;
+    margin-right: 20px;
+  }
+
+  .nw-human-biologist__featured-item {
+    height: 32px;
+  }
+
+  .nw-human-biologist__featured-img {
+    max-height: 32px;
+  }
+
+  .nw-human-biologist__insights {
+    padding: 12px 12px 20px;
+    gap: 0;
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .nw-human-biologist__insights-pagination,
+  .nw-human-biologist__insights .swiper-pagination {
+    margin-top: 12px !important;
+  }
+
+  .nw-human-biologist__insight-tag {
+    font-size: 13px;
+  }
+
+  .nw-human-biologist__insight-quote {
+    font-size: 16px;
+  }
+}
