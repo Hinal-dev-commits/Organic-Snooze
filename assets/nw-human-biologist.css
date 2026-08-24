@@ -215,6 +215,13 @@
   animation-play-state: paused;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .nw-human-biologist__featured-track,
+  .nw-human-biologist__featured-marquee:hover .nw-human-biologist__featured-track {
+    animation: none;
+  }
+}
+
 @keyframes nw-biologist-marquee {
   0% {
     transform: translateX(0);

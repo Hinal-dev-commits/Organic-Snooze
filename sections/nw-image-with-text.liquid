@@ -1,31 +1,7 @@
 {{ 'nw-image-with-text.css' | asset_url | stylesheet_tag }}
 
-<style>
-  #NwImageWithText-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% endif %}
-  }
-
-  @media screen and (max-width: 749px) {
-    #NwImageWithText-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      {% endif %}
-    }
-  }
-</style>
+{%- assign nw_shell_selector = '#NwImageWithText-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
 <section
   id="NwImageWithText-{{ section.id }}"
@@ -47,8 +23,11 @@
       <div class="nw-image-with-text__media-wrap">
         {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
           <div class="nw-image-with-text__header mobile-only">
-            {% render 'nw-section-heading', text: section.settings.heading, tag: 'h2' %}
-            {% render 'nw-section-description', text: section.settings.subheading %}
+            {% render 'nw-section-header',
+              heading: section.settings.heading,
+              description: section.settings.subheading,
+              tag: 'h2'
+            %}
           </div>
         {%- endif -%}
         <div class="nw-image-with-text__media">
@@ -116,8 +95,11 @@
         <div class="nw-image-with-text__content">
           {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
             <div class="nw-image-with-text__header">
-              {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-              {% render 'nw-section-description', text: section.settings.subheading %}
+              {% render 'nw-section-header',
+                heading: section.settings.heading,
+                description: section.settings.subheading,
+                section_index: section.index
+              %}
             </div>
           {%- endif -%}
 
@@ -144,7 +126,7 @@
 
 {% schema %}
 {
-  "name": "NW Image With Text",
+  "name": "t:sections.nw-image-with-text.name",
   "tag": "section",
   "class": "section-nw-image-with-text",
   "settings": [
@@ -520,7 +502,7 @@
   ],
   "presets": [
     {
-      "name": "NW Image With Text",
+      "name": "t:sections.nw-image-with-text.name",
       "category": "NW Sections",
       "blocks": [
         { "type": "feature", "settings": { "text": "Organic Mattress" } },
@@ -531,6 +513,9 @@
         { "type": "feature", "settings": { "text": "Mattress Protector" } }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index"]
+  }
 }
 {% endschema %}

@@ -1,3 +1,13 @@
+{% doc %}
+Renders a primary, secondary, or outline CTA. Empty links become a button so the markup stays valid.
+@param {string} text - Button label
+@param {string} [link] - Optional URL. If blank, a button is rendered
+@param {string} [style] - primary, secondary, or outline. Default: primary
+@param {string} [btn_class] - Extra CSS class
+@example
+{% render 'nw-button', text: section.settings.button_text, link: section.settings.button_link, style: 'primary' %}
+{% enddoc %}
+
 {%- liquid
   assign btn_style = style | default: 'primary'
   assign btn_text = text

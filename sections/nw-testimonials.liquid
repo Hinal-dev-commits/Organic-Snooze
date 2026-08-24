@@ -3,32 +3,8 @@
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-testimonials.js' | asset_url }}" defer="defer"></script>
 
-<style>
-  #NwTestimonials-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% endif %}
-  }
-
-  @media screen and (max-width: 749px) {
-    #NwTestimonials-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      {% endif %}
-    }
-  }
-</style>
+{%- assign nw_shell_selector = '#NwTestimonials-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
 <nw-testimonials
   id="NwTestimonials-{{ section.id }}"
@@ -37,6 +13,8 @@
   data-show-pagination="{{ section.settings.show_pagination }}"
   data-pagination-id="NwTestimonialsPagination-{{ section.id }}"
   style="
+    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     --nw-testimonials-header-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
     --nw-testimonials-header-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     --nw-testimonials-heading-color: {{ section.settings.heading_color }};
@@ -53,33 +31,14 @@
   <div class="page-width">
     <div class="nw-testimonials__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-testimonials__header">
-        {%- if section.settings.show_rating -%}
-          {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
-          <div class="nw-testimonials__rating">
-            <div class="nw-testimonials__header-stars" aria-label="{{ active_stars }} out of 5 stars">
-              {%- for i in (1..5) -%}
-                <span class="nw-testimonials__header-star{% if i <= active_stars %} nw-testimonials__header-star--active{% endif %}">
-                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                    <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
-                  </svg>
-                </span>
-              {%- endfor -%}
-            </div>
-            {%- if section.settings.eyebrow != blank -%}
-              <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
-            {%- endif -%}
-          </div>
-        {%- elsif section.settings.eyebrow != blank -%}
-          <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-        {%- endif -%}
-
-        {%- if section.settings.subheading != blank -%}
-          {% render 'nw-section-description', text: section.settings.subheading %}
-        {%- endif -%}
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
       </div>
 
       {%- if section.blocks.size > 0 -%}
@@ -91,13 +50,12 @@
                   <article class="nw-testimonials__card">
                     <div class="nw-testimonials__card-top">
                       {%- assign rating_val = block.settings.rating | default: 5 -%}
-                      <div class="nw-testimonials__stars" aria-label="{{ rating_val }} out of 5 stars">
-                        {%- for i in (1..5) -%}
-                          <span class="nw-testimonials__star{% if i <= rating_val %} nw-testimonials__star--active{% else %} nw-testimonials__star--inactive{% endif %}">
-                            {% render 'nw-icon', icon: 'star' %}
-                          </span>
-                        {%- endfor -%}
-                      </div>
+                      {% render 'nw-stars',
+                        rating: rating_val,
+                        class: 'nw-testimonials__stars',
+                        star_class: 'nw-testimonials__star',
+                        icon: 'star'
+                      %}
 
                       {%- if block.settings.quote != blank -%}
                         <div class="nw-testimonials__quote rte">{{ block.settings.quote }}</div>
@@ -137,7 +95,7 @@
 
 {% schema %}
 {
-  "name": "NW Testimonials",
+  "name": "t:sections.nw-testimonials.name",
   "tag": "section",
   "class": "section-nw-testimonials",
   "settings": [
@@ -415,7 +373,7 @@
   ],
   "presets": [
     {
-      "name": "NW Testimonials",
+      "name": "t:sections.nw-testimonials.name",
       "category": "NW Sections",
       "blocks": [
         {
@@ -456,6 +414,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index", "product"]
+  }
 }
 {% endschema %}

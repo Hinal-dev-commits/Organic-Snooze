@@ -1,3 +1,10 @@
+{% doc %}
+Renders the header logo, including an optional transparent-header variant.
+@param {string} [logo_position] - Header logo position from the header section
+@example
+{% render 'nw-header-logo', logo_position: section.settings.logo_position %}
+{% enddoc %}
+
 {%- liquid
   assign transparent_logo_width = section.settings.transparent_logo_width
   if transparent_logo_width == blank

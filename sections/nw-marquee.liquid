@@ -83,7 +83,7 @@
 
 {% schema %}
 {
-  "name": "NW Marquee",
+  "name": "t:sections.nw-marquee.name",
   "tag": "section",
   "class": "section-nw-marquee",
   "settings": [
@@ -514,7 +514,7 @@
   ],
   "presets": [
     {
-      "name": "NW Marquee",
+      "name": "t:sections.nw-marquee.name",
       "blocks": [
         {
           "type": "item",
@@ -554,6 +554,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index"]
+  }
 }
 {% endschema %}

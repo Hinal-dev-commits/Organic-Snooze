@@ -254,17 +254,17 @@
                   <div class="nw-hero__timer-units">
                     <div class="nw-hero__timer-unit">
                       <span class="nw-hero__timer-num nw-countdown-days">00</span>
-                      <span class="nw-hero__timer-txt">DAYS</span>
+                      <span class="nw-hero__timer-txt">{{ 'nw.countdown.days' | t }}</span>
                     </div>
                     <span class="nw-hero__timer-sep">:</span>
                     <div class="nw-hero__timer-unit">
                       <span class="nw-hero__timer-num nw-countdown-hours">00</span>
-                      <span class="nw-hero__timer-txt">HRS</span>
+                      <span class="nw-hero__timer-txt">{{ 'nw.countdown.hours' | t }}</span>
                     </div>
                     <span class="nw-hero__timer-sep">:</span>
                     <div class="nw-hero__timer-unit">
                       <span class="nw-hero__timer-num nw-countdown-mins">00</span>
-                      <span class="nw-hero__timer-txt">MINS</span>
+                      <span class="nw-hero__timer-txt">{{ 'nw.countdown.minutes' | t }}</span>
                     </div>
                   </div>
                   {% endif %}
@@ -289,7 +289,7 @@
 
 {% schema %}
 {
-  "name": "NW Hero",
+  "name": "t:sections.nw-hero.name",
   "tag": "section",
   "class": "section-nw-hero",
   "settings": [
@@ -805,7 +805,7 @@
   ],
   "presets": [
     {
-      "name": "NW Hero",
+      "name": "t:sections.nw-hero.name",
       "settings": {
         "enable_transparent_header": true,
         "content_position_h": "left",
@@ -863,6 +863,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index"]
+  }
 }
 {% endschema %}

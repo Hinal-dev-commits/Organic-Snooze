@@ -1,8 +1,10 @@
-{%- comment -%}
-  Shopify theme scroll reveal classes. Respects Theme settings > Animations > Reveal sections on scroll.
-  Usage: class="my-class{%- render 'nw-scroll-animation' -%}"
-  Optional: {% render 'nw-scroll-animation', type: 'fade-in' %}
-{%- endcomment -%}
+{% doc %}
+Returns Dawn scroll-reveal classes when Theme settings > Animations > Reveal sections on scroll is enabled.
+Use inside a class attribute.
+@param {string} [type] - Animation type. Default: slide-in
+@example
+<div class="my-class{%- render 'nw-scroll-animation' -%}">
+{% enddoc %}
 {%- liquid
   assign animation_type = type | default: 'slide-in'
   if settings.animations_reveal_on_scroll

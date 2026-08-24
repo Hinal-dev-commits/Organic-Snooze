@@ -3,85 +3,27 @@
 <script src="{{ 'nw-insights-slider.js' | asset_url }}" defer="defer"></script>
 {{ 'nw-human-biologist.css' | asset_url | stylesheet_tag }}
 
-<style>
-  .nw-human-biologist.section-{{ section.id }} {
-    --nw-hb-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-    --nw-hb-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-    position: relative;
-    background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    isolation: isolate;
-    overflow: hidden;
-    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'none' %}
-      background: transparent;
-    {% endif %}
-  }
-
-  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
-    .nw-human-biologist.section-{{ section.id }}::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: calc({{ section.settings.bg_image_opacity | default: 100 }} / 100);
-      z-index: -1;
-      pointer-events: none;
-    }
-  {%- endif -%}
-
-  @media screen and (max-width: 749px) {
-    .nw-human-biologist.section-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-    }
-
-    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
-      .nw-human-biologist.section-{{ section.id }}::before {
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      }
-    {%- endif -%}
-  }
-</style>
+{%- assign nw_shell_selector = '.nw-human-biologist.section-' | append: section.id -%}
+{% capture nw_shell_extra %}
+  --nw-hb-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+  --nw-hb-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+  --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+  --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, extra: nw_shell_extra %}
 
 <section class="nw-human-biologist section-{{ section.id }}">
   <div class="nw page-width">
     <div class="nw-human-biologist__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-human-biologist__header">
-        {%- if section.settings.show_rating -%}
-          {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
-          <div class="nw-rating">
-            <div class="nw-stars" aria-label="{{ active_stars }} out of 5 stars">
-              {%- for i in (1..5) -%}
-                <span class="nw-star{% if i <= active_stars %} nw-star--active{% endif %}">
-                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                    <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
-                  </svg>
-                </span>
-              {%- endfor -%}
-            </div>
-            {%- if section.settings.eyebrow != blank -%}
-              <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
-            {%- endif -%}
-          </div>
-        {%- elsif section.settings.eyebrow != blank -%}
-          <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-        {%- endif -%}
-
-        {%- if section.settings.subheading != blank -%}
-          {% render 'nw-section-description', text: section.settings.subheading %}
-        {%- endif -%}
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
       </div>
 
       <div class="nw-human-biologist__main">
@@ -259,7 +201,7 @@
 
       {%- assign insight_slides = section.blocks | where: 'type', 'insight_slide' -%}
       {%- if section.settings.show_insights_slider and insight_slides.size > 0 -%}
-        <div
+        <nw-insights-slider
           class="nw-human-biologist__insights"
           data-enable-autoplay="{{ section.settings.enable_autoplay }}"
           data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
@@ -267,7 +209,9 @@
           data-show-dots="{{ section.settings.show_dots }}"
         >
           {%- if section.settings.show_arrows and insight_slides.size > 1 -%}
-            {% render 'nw-swiper-arrows', prev_label: 'Previous insight', next_label: 'Next insight' %}
+            {%- assign prev_insight_label = 'nw.accessibility.previous_insight' | t -%}
+            {%- assign next_insight_label = 'nw.accessibility.next_insight' | t -%}
+            {% render 'nw-swiper-arrows', prev_label: prev_insight_label, next_label: next_insight_label %}
           {%- endif -%}
           <div class="swiper nw-human-biologist__insights-slider" id="nw-human-biologist-insights-{{ section.id }}" data-nw-insights-slider>
             <div class="swiper-wrapper">
@@ -308,7 +252,7 @@
           {%- if section.settings.show_dots and insight_slides.size > 1 -%}
             <div class="nw-human-biologist__insights-pagination swiper-pagination" id="nw-human-biologist-pagination-{{ section.id }}" data-nw-insights-pagination></div>
           {%- endif -%}
-        </div>
+        </nw-insights-slider>
       {%- endif -%}
     </div>
   </div>
@@ -316,7 +260,7 @@
 
 {% schema %}
 {
-  "name": "NW Human Biologist",
+  "name": "t:sections.nw-human-biologist.name",
   "tag": "section",
   "settings": [
     {
@@ -717,7 +661,7 @@
   ],
   "presets": [
     {
-      "name": "NW Human Biologist",
+      "name": "t:sections.nw-human-biologist.name",
       "category": "NW Sections",
       "blocks": [
         {
@@ -758,6 +702,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index", "page"]
+  }
 }
 {% endschema %}

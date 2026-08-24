@@ -3,40 +3,15 @@
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-review-video.js' | asset_url }}" defer="defer"></script>
 
-<style>
-  .nw-review-video.section-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% elsif section.settings.bg_type == 'none' %}
-      background: transparent;
-    {% endif %}
-    --nw-rv-bg-color: {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}{{ section.settings.bg_color }}{% else %}#FFFFFF{% endif %};
-    --nw-rv-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-    --nw-rv-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-  }
-
-  @media screen and (max-width: 749px) {
-    .nw-review-video.section-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-      {% endif %}
-    }
-  }
-</style>
+{%- assign nw_shell_selector = '.nw-review-video.section-' | append: section.id -%}
+{% capture nw_shell_extra %}
+  --nw-rv-bg-color: {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}{{ section.settings.bg_color }}{% else %}#FFFFFF{% endif %};
+  --nw-rv-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+  --nw-rv-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+  --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+  --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', extra: nw_shell_extra %}
 
 <nw-review-video
   class="nw-review-video section-{{ section.id }}{%- render 'nw-scroll-animation' -%}"
@@ -48,32 +23,14 @@
   <div class="nw page-width"> 
     <div class="nw-review-video__wrapper">
       <div class="nw-review-video__header">
-        {%- if section.settings.show_rating -%}
-          {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
-          <div class="nw-review-video__rating">
-            <div class="nw-review-video__stars" aria-label="{{ active_stars }} out of 5 stars">
-              {%- for i in (1..5) -%}
-                <span class="nw-review-video__star{% if i <= active_stars %} nw-review-video__star--active{% endif %}">
-                  {% render 'nw-icon', icon: 'star-rating-sm' %}
-                </span>
-              {%- endfor -%}
-            </div>
-            {%- if section.settings.eyebrow != blank -%}
-              <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
-            {%- endif -%}
-          </div>
-        {%- elsif section.settings.eyebrow != blank -%}
-          <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- endif -%}
-
-       {%- if section.settings.heading != blank -%}
-        {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-        {%- endif -%}
-
-        {%- if section.settings.subheading != blank -%}
-            {% render 'nw-section-description', text: section.settings.subheading %}
-        {%- endif -%}
-
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
       </div>
     </div>
   </div>
@@ -236,7 +193,7 @@
 
 {% schema %}
 {
-  "name": "NW Review Videos",
+  "name": "t:sections.nw-review-video.name",
   "tag": "section",
   "settings": [
     {
@@ -489,7 +446,7 @@
   ],
   "presets": [
     {
-      "name": "NW Review Videos",
+      "name": "t:sections.nw-review-video.name",
       "category": "NW Sections",
       "blocks": [
         {
@@ -523,6 +480,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index", "page"]
+  }
 }
 {% endschema %}

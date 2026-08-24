@@ -11,14 +11,21 @@ if (!customElements.get('nw-collection-tab')) {
         clearInterval(this._countdownInterval);
         this._countdownInterval = null;
       }
+
+      if (this._onTabClick) {
+        this.removeEventListener('click', this._onTabClick);
+      }
+
+      if (this._tablist && this._onTabKeydown) {
+        this._tablist.removeEventListener('keydown', this._onTabKeydown);
+      }
+
+      this._tabsBound = false;
+      this._tablist = null;
     }
 
     _whenSwiperReady(callback) {
-      if (typeof Swiper !== 'undefined') {
-        callback();
-      } else {
-        window.setTimeout(() => this._whenSwiperReady(callback), 50);
-      }
+      window.nwWhenSwiperReady(callback);
     }
 
     _initPanelSwiper(panel) {
@@ -60,16 +67,18 @@ if (!customElements.get('nw-collection-tab')) {
       swiperEl.dataset.initialized = 'true';
     }
 
-    _setActiveTab(index) {
+    _setActiveTab(index, options) {
       var tabs = this.querySelectorAll('[data-nw-tab]');
       var panels = this.querySelectorAll('[data-nw-panel]');
       var shopAllBtn = this.querySelector('.nw-collection-tab__shop-all-btn');
       var activeTab = null;
+      var focusTab = options && options.focus;
 
       tabs.forEach(function (tab) {
         var isActive = tab.getAttribute('data-nw-tab') === String(index);
         tab.classList.toggle('is-active', isActive);
         tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        tab.setAttribute('tabindex', isActive ? '0' : '-1');
         if (isActive) activeTab = tab;
       });
 
@@ -83,62 +92,70 @@ if (!customElements.get('nw-collection-tab')) {
         var collectionUrl = activeTab.getAttribute('data-collection-url');
         if (collectionUrl) shopAllBtn.setAttribute('href', collectionUrl);
       }
+
+      if (focusTab && activeTab) activeTab.focus();
+    }
+
+    _handleTabKeydown(event) {
+      var tabs = Array.from(this.querySelectorAll('[data-nw-tab]'));
+      if (!tabs.length) return;
+
+      var current = event.target.closest('[data-nw-tab]');
+      if (!current || !this.contains(current)) return;
+
+      var currentIndex = tabs.indexOf(current);
+      var nextIndex = -1;
+
+      switch (event.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+          nextIndex = (currentIndex + 1) % tabs.length;
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+          break;
+        case 'Home':
+          nextIndex = 0;
+          break;
+        case 'End':
+          nextIndex = tabs.length - 1;
+          break;
+        default:
+          return;
+      }
+
+      event.preventDefault();
+      this._setActiveTab(tabs[nextIndex].getAttribute('data-nw-tab'), { focus: true });
     }
 
     _bindTabs() {
-      this.querySelectorAll('[data-nw-tab]').forEach((tab) => {
-        tab.addEventListener('click', () => {
-          this._setActiveTab(tab.getAttribute('data-nw-tab'));
-        });
-      });
+      if (this._tabsBound) return;
+      this._tabsBound = true;
+
+      this._onTabClick = (event) => {
+        var tab = event.target.closest('[data-nw-tab]');
+        if (!tab || !this.contains(tab)) return;
+        this._setActiveTab(tab.getAttribute('data-nw-tab'));
+      };
+
+      this._onTabKeydown = (event) => this._handleTabKeydown(event);
+      this._tablist = this.querySelector('[role="tablist"]');
+
+      this.addEventListener('click', this._onTabClick);
+      if (this._tablist) {
+        this._tablist.addEventListener('keydown', this._onTabKeydown);
+      }
     }
 
     _initCountdown() {
       var countdownEl = this.querySelector('.nw-collection-tab__promo[data-countdown-date]');
-      if (!countdownEl) return;
-
-      var targetDateStr = countdownEl.getAttribute('data-countdown-date');
-      var hideOnEnd = countdownEl.getAttribute('data-hide-on-end') === 'true';
-      var daysEl = countdownEl.querySelector('.nw-collection-tab-countdown-days');
-      var hoursEl = countdownEl.querySelector('.nw-collection-tab-countdown-hours');
-      var minsEl = countdownEl.querySelector('.nw-collection-tab-countdown-mins');
-
-      function padZero(num) {
-        return num < 10 ? '0' + num : num;
-      }
-
-      if (!targetDateStr || targetDateStr.trim() === '') return;
-
-      var targetDate = new Date(targetDateStr.replace(/-/g, '/')).getTime();
-
-      var updateTimer = () => {
-        var now = new Date().getTime();
-        var diff = targetDate - now;
-        if (isNaN(targetDate)) return;
-        if (diff <= 0) {
-          if (hideOnEnd) {
-            countdownEl.style.display = 'none';
-          } else {
-            if (daysEl) daysEl.textContent = '00';
-            if (hoursEl) hoursEl.textContent = '00';
-            if (minsEl) minsEl.textContent = '00';
-          }
-          if (this._countdownInterval) {
-            clearInterval(this._countdownInterval);
-            this._countdownInterval = null;
-          }
-          return;
-        }
-        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        if (daysEl) daysEl.textContent = padZero(days);
-        if (hoursEl) hoursEl.textContent = padZero(hours);
-        if (minsEl) minsEl.textContent = padZero(mins);
-      };
-
-      updateTimer();
-      this._countdownInterval = setInterval(updateTimer, 1000);
+      if (!countdownEl || typeof window.nwStartCountdown !== 'function') return;
+      this._countdownInterval = window.nwStartCountdown(countdownEl, {
+        days: '.nw-collection-tab-countdown-days',
+        hours: '.nw-collection-tab-countdown-hours',
+        mins: '.nw-collection-tab-countdown-mins'
+      });
     }
 
     _boot() {

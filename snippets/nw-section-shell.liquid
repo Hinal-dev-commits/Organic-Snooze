@@ -1,0 +1,92 @@
+{% doc %}
+Outputs padding and background CSS from the current section settings.
+@param {string} selector - CSS selector for the section root
+@param {string} [mode] - overlay uses a ::before image layer; direct paints the background on the element. Default: overlay
+@param {string} [extra] - Extra CSS declarations inside the selector
+@param {string} [default_bg] - Fallback background color. Default: #FFFFFF
+@example
+Render with selector set to the section root, for example .nw-faq.section- plus section.id
+{% enddoc %}
+
+{%- liquid
+  assign shell_mode = mode | default: 'overlay'
+  assign shell_bg = default_bg | default: '#FFFFFF'
+  assign pad_top_dt = section.settings.padding_top_desktop | default: 80
+  assign pad_bot_dt = section.settings.padding_bottom_desktop | default: 80
+  assign pad_top_mb = section.settings.padding_top_mobile | default: 48
+  assign pad_bot_mb = section.settings.padding_bottom_mobile | default: 48
+  assign bg_opacity = section.settings.bg_image_opacity | default: 100
+-%}
+<style>
+  {{ selector }} {
+    {%- if shell_mode == 'overlay' -%}
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background-color: {{ section.settings.bg_color | default: shell_bg }};
+    {%- endif -%}
+    padding-top: {{ pad_top_dt }}px;
+    padding-bottom: {{ pad_bot_dt }}px;
+    {%- if extra != blank -%}
+      {{ extra }}
+    {%- endif -%}
+    {%- if shell_mode == 'overlay' -%}
+      {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+        background: {{ section.settings.bg_gradient }};
+      {% elsif section.settings.bg_type == 'none' %}
+        background: transparent;
+      {% endif %}
+    {%- else -%}
+      {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+        background-color: {{ section.settings.bg_color }};
+      {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+        background: {{ section.settings.bg_gradient }};
+      {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+        background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% elsif section.settings.bg_type == 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: shell_bg }};
+      {% endif %}
+    {%- endif -%}
+  }
+
+  {%- if shell_mode == 'overlay' and section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
+    {{ selector }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: calc({{ bg_opacity }} / 100);
+      z-index: -1;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  @media screen and (max-width: 749px) {
+    {{ selector }} {
+      padding-top: {{ pad_top_mb }}px;
+      padding-bottom: {{ pad_bot_mb }}px;
+      {%- if shell_mode == 'direct' and section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {%- endif -%}
+    }
+
+    {%- if shell_mode == 'overlay' and section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
+      {{ selector }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>

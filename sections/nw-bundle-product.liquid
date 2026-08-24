@@ -1,35 +1,7 @@
 {{ 'nw-bundle-product.css' | asset_url | stylesheet_tag }}
 
-<style>
-  #NwBundleProduct-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% elsif section.settings.bg_type == 'none' %}
-      background: transparent;
-    {% else %}
-      background-color: {{ section.settings.bg_color | default: '#FFFAF3' }};
-    {% endif %}
-  }
-
-  @media screen and (max-width: 749px) {
-    #NwBundleProduct-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      {% endif %}
-    }
-  }
-</style>
+{%- assign nw_shell_selector = '#NwBundleProduct-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFAF3' %}
 
 <div id="NwBundleProduct-{{ section.id }}" class="nw-bundle-product section-{{ section.id }}">
   <div class="page-width">
@@ -40,7 +12,10 @@
         {%- endif -%}
 
         {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            section_index: section.index
+          %}
         {%- endif -%}
 
         {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
@@ -137,7 +112,7 @@
 
 {% schema %}
 {
-  "name": "NW Bundle Product",
+  "name": "t:sections.nw-bundle-product.name",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -499,7 +474,7 @@
   ],
   "presets": [
     {
-      "name": "NW Bundle Product",
+      "name": "t:sections.nw-bundle-product.name",
       "blocks": [
         {
           "type": "feature",
@@ -573,6 +548,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
 }
 {% endschema %}

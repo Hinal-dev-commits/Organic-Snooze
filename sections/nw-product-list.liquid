@@ -3,32 +3,8 @@
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-product-list.js' | asset_url }}" defer="defer"></script>
 
-<style>
-  #NwProductList-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% endif %}
-  }
-
-  @media screen and (max-width: 749px) {
-    #NwProductList-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      {% endif %}
-    }
-  }
-</style>
+{%- assign nw_shell_selector = '#NwProductList-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
 <nw-product-list
   id="NwProductList-{{ section.id }}"
@@ -47,33 +23,14 @@
 >
     <div class="nw-product-list__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-product-list__header">
-        {%- if section.settings.show_header_rating -%}
-          {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
-          <div class="nw-rating">
-            <div class="nw-stars" aria-label="{{ active_stars }} out of 5 stars">
-              {%- for i in (1..5) -%}
-                <span class="nw-star{% if i <= active_stars %} nw-star--active{% endif %}">
-                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                    <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
-                  </svg>
-                </span>
-              {%- endfor -%}
-            </div>
-            {%- if section.settings.eyebrow != blank -%}
-              <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
-            {%- endif -%}
-          </div>
-        {%- elsif section.settings.eyebrow != blank -%}
-          <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-        {%- endif -%}
-
-        {%- if section.settings.subheading != blank -%}
-          {% render 'nw-section-description', text: section.settings.subheading %}
-        {%- endif -%}
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_header_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
       </div>
 
       {%- liquid
@@ -160,7 +117,7 @@
 
 {% schema %}
 {
-  "name": "NW Product List",
+  "name": "t:sections.nw-product-list.name",
   "tag": "section",
   "class": "section-nw-product-list",
   "settings": [
@@ -472,9 +429,12 @@
   ],
   "presets": [
     {
-      "name": "NW Product List",
+      "name": "t:sections.nw-product-list.name",
       "category": "NW Sections"
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index"]
+  }
 }
 {% endschema %}

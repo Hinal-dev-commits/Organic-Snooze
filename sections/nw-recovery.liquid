@@ -68,12 +68,11 @@
       <div class="nw-recovery__content">
         {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
           <div class="nw-recovery__header">
-            {%- if section.settings.heading != blank -%}
-              {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-            {%- endif -%}
-            {%- if section.settings.subheading != blank -%}
-              {% render 'nw-section-description', text: section.settings.subheading %}
-            {%- endif -%}
+            {% render 'nw-section-header',
+              heading: section.settings.heading,
+              description: section.settings.subheading,
+              section_index: section.index
+            %}
           </div>
         {%- endif -%}
 
@@ -119,7 +118,7 @@
 
 {% schema %}
 {
-  "name": "NW Recovery",
+  "name": "t:sections.nw-recovery.name",
   "tag": "section",
   "class": "section-nw-recovery",
   "settings": [
@@ -359,7 +358,7 @@
   ],
   "presets": [
     {
-      "name": "NW Recovery",
+      "name": "t:sections.nw-recovery.name",
       "category": "NW Sections",
       "blocks": [
         {
@@ -396,6 +395,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index", "page", "product"]
+  }
 }
 {% endschema %}

@@ -1,0 +1,55 @@
+.nw-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 32px;
+    min-height: 56px;
+    border-radius: 1000px;
+    font-family: var(--font-body-family);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 135%;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    width: 100%;
+    text-align: center;
+}
+.nw-btn--primary {
+    background: var(--nw-tan);
+    color: var(--nw-white);
+    border: 1px solid var(--nw-tan);
+}
+.nw-btn--primary:hover {
+    background: var(--nw-pcard-btn-bg-hover, #b57d57);
+    border-color: var(--nw-pcard-btn-bg-hover, #b57d57);
+    color: var(--nw-white);
+}
+.nw-btn--secondary {
+    background: var(--nw-moss);
+    color: var(--nw-white);
+    border: 1px solid var(--nw-moss);
+}
+.nw-btn--secondary:hover {
+    background: #73732d;
+    border-color: #73732d;
+    color: var(--nw-white);
+}
+.nw-btn--outline {
+    background: transparent;
+    color: var(--nw-brown);
+    border: 1px solid var(--nw-brown);
+}
+.nw-btn--outline:hover {
+    background: var(--nw-brown);
+    color: var(--nw-white);
+}
+@media screen and (max-width: 749px) {
+    .nw-btn {
+        font-size: 16px;
+        padding: 16px 24px;
+    }
+}

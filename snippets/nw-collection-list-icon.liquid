@@ -1,3 +1,10 @@
+{% doc %}
+Maps collection-list badge icon aliases onto nw-icon names.
+@param {string} icon - Badge icon key from the section schema
+@example
+{% render 'nw-collection-list-icon', icon: block.settings.icon %}
+{% enddoc %}
+
 {%- liquid
   assign icon_name = icon
   case icon

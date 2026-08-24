@@ -89,20 +89,7 @@
   }
 
   function whenSwiperReady(callback) {
-    if (typeof Swiper !== 'undefined') {
-      callback();
-    } else {
-      var checkCount = 0;
-      var interval = setInterval(function () {
-        checkCount++;
-        if (typeof Swiper !== 'undefined') {
-          clearInterval(interval);
-          callback();
-        } else if (checkCount > 120) {
-          clearInterval(interval);
-        }
-      }, 50);
-    }
+    window.nwWhenSwiperReady(callback);
   }
 
   function bootAll() {

@@ -1,38 +1,24 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
 {{ 'nw-layer-product.css' | asset_url | stylesheet_tag }}
+{% comment %} Shared padding/background styles come from nw-section-shell. {% endcomment %}
 
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-layer-product.js' | asset_url }}" defer="defer"></script>
 
+{%- assign nw_shell_selector = '#NwLayerProduct-' | append: section.id -%}
+{% capture nw_shell_extra %}
+  --nw-lp-hotspot-active: {{ section.settings.hotspot_active_color | default: '#613916' }};
+  --nw-lp-hotspot-inactive: {{ section.settings.hotspot_inactive_color | default: '#BB967C' }};
+  --nw-lp-hotspot-text: {{ section.settings.hotspot_text_color | default: '#FFFFFF' }};
+  --nw-lp-card-bg: {{ section.settings.card_bg_color | default: '#FFFFFF' }};
+  --nw-lp-card-border: {{ section.settings.card_border_color | default: 'rgba(97, 57, 22, 0.15)' }};
+  --nw-lp-card-title: {{ section.settings.card_title_color | default: '#613916' }};
+  --nw-lp-card-subtitle: {{ section.settings.card_subtitle_color | default: '#CC926A' }};
+  --nw-lp-card-desc: {{ section.settings.card_desc_color | default: '#613916' }};
+  --nw-swiper-bullet: {{ section.settings.pagination_color | default: '#613916' }};
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', extra: nw_shell_extra, default_bg: '#FFFAF3' %}
 <style>
-  #NwLayerProduct-{{ section.id }} {
-    --nw-lp-hotspot-active: {{ section.settings.hotspot_active_color | default: '#613916' }};
-    --nw-lp-hotspot-inactive: {{ section.settings.hotspot_inactive_color | default: '#BB967C' }};
-    --nw-lp-hotspot-text: {{ section.settings.hotspot_text_color | default: '#FFFFFF' }};
-    --nw-lp-card-bg: {{ section.settings.card_bg_color | default: '#FFFFFF' }};
-    --nw-lp-card-border: {{ section.settings.card_border_color | default: 'rgba(97, 57, 22, 0.15)' }};
-    --nw-lp-card-title: {{ section.settings.card_title_color | default: '#613916' }};
-    --nw-lp-card-subtitle: {{ section.settings.card_subtitle_color | default: '#CC926A' }};
-    --nw-lp-card-desc: {{ section.settings.card_desc_color | default: '#613916' }};
-    --nw-swiper-bullet: {{ section.settings.pagination_color | default: '#613916' }};
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% elsif section.settings.bg_type == 'none' %}
-      background: transparent;
-    {% else %}
-      background-color: {{ section.settings.bg_color | default: '#FFFAF3' }};
-    {% endif %}
-  }
-
   {%- for block in section.blocks -%}
     #NwLayerProduct-{{ section.id }}
     [data-hotspot-index="{{ forloop.index0 }}"] {
@@ -42,13 +28,6 @@
   {%- endfor -%}
 
   @media screen and (max-width: 749px) {
-    #NwLayerProduct-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      {% endif %}
-    }
     {%- for block in section.blocks -%}
       #NwLayerProduct-{{ section.id }}
       [data-hotspot-index="{{ forloop.index0 }}"] {
@@ -71,12 +50,11 @@
     <div class="nw-layer-product__wrapper{%- render 'nw-scroll-animation' -%}">
       {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
         <div class="nw-layer-product__header">
-          {%- if section.settings.heading != blank -%}
-            {% render 'nw-section-heading', text: section.settings.heading %}
-          {%- endif -%}
-          {%- if section.settings.subheading != blank -%}
-            {% render 'nw-section-description', text: section.settings.subheading %}
-          {%- endif -%}
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
         </div>
       {%- endif -%}
 
@@ -208,46 +186,7 @@
               </div>
 
               {%- if section.settings.show_arrows -%}
-                <button
-                  type="button"
-                  class="nw-swiper-btn nw-swiper-btn--prev"
-                  aria-label="Previous slide"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M15 18L9 12L15 6"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  class="nw-swiper-btn nw-swiper-btn--next"
-                  aria-label="Next slide"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 18L15 12L9 6"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round" />
-                  </svg>
-                </button>
+                {% render 'nw-swiper-arrows' %}
               {%- endif -%}
 
               {%- if section.settings.show_dots and section.blocks.size > 1 -%}
@@ -263,7 +202,7 @@
 
 {% schema %}
 {
-  "name": "NW Layer Product",
+  "name": "t:sections.nw-layer-product.name",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -584,7 +523,7 @@
   ],
   "presets": [
     {
-      "name": "NW Layer Product",
+      "name": "t:sections.nw-layer-product.name",
       "blocks": [
         {
           "type": "layer",
@@ -648,6 +587,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
 }
 {% endschema %}

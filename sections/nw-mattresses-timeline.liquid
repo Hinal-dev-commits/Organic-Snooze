@@ -1,34 +1,9 @@
 {{ 'nw-mattress.css' | asset_url | stylesheet_tag }}
+{% comment %} Shared padding/background styles come from nw-section-shell. {% endcomment %}
 
+{%- assign nw_shell_selector = '.nw_labor_mattress.section-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 <style>
-  .nw_labor_mattress.section-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% endif %}
-  }
-
-  @media screen and (max-width: 749px) {
-    .nw_labor_mattress.section-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-      {% endif %}
-    }
-  }
-
   .nw_labor_mattress.section-{{ section.id }} .nw_labor_mattress__card {
     {% if section.settings.card_wrap_bg != blank %}
       background-color: {{ section.settings.card_wrap_bg }};
@@ -228,7 +203,7 @@
 
 {% schema %}
 {
-  "name": "NW Mattress Timeline",
+  "name": "t:sections.nw-mattresses-timeline.name",
   "tag": "section",
   "settings": [
     {
@@ -266,19 +241,19 @@
       "type": "color",
       "alpha": true,
       "id": "card_wrap_bg",
-      "label": "Card Background",
+      "label": "Card Background"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_heading_color",
-      "label": "Card Heading Color",
+      "label": "Card Heading Color"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_desc_color",
-      "label": "Card Description Color",
+      "label": "Card Description Color"
     },
     {
       "type": "header",
@@ -471,7 +446,7 @@
   ],
   "presets": [
     {
-      "name": "NW Mattress Timeline",
+      "name": "t:sections.nw-mattresses-timeline.name",
       "category": "NW Sections",
       "blocks": [
         {
@@ -508,6 +483,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
 }
 {% endschema %}

@@ -18,11 +18,7 @@ if (!customElements.get('nw-trusted-people')) {
     }
 
     _whenSwiperReady(callback) {
-      if (typeof Swiper !== 'undefined') {
-        callback();
-      } else {
-        window.setTimeout(() => this._whenSwiperReady(callback), 50);
-      }
+      window.nwWhenSwiperReady(callback);
     }
 
     _setCardsExpanded(slideIndex, isExpanded) {

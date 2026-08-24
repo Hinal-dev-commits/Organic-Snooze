@@ -1,3 +1,12 @@
+{% doc %}
+Renders a CTA button plus optional trust badges from section or block settings.
+@param {object} settings - Section or block settings with button and badge fields
+@param {object} [blocks] - Optional badge blocks
+@param {string} [class] - Extra class on the wrapper
+@example
+{% render 'nw-cta-badges', settings: section.settings, blocks: section.blocks %}
+{% enddoc %}
+
 {%- liquid
   assign cta_text = settings.button_text | default: settings.btn_text | default: settings.button_label | default: settings.btn_label
   assign cta_link = settings.button_link | default: settings.btn_link

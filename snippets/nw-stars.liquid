@@ -1,0 +1,30 @@
+{% doc %}
+Renders a 5-star rating row using the shared NW star icon.
+@param {number} [rating] - Filled star count from 1 to 5. Default: 5
+@param {string} [class] - Optional extra class on the row
+@param {string} [star_class] - Optional class on each star. Default: nw-star
+@param {string} [icon] - Icon name passed to nw-icon. Default: star-rating-sm
+@example
+{% render 'nw-stars', rating: section.settings.star_rating %}
+{% enddoc %}
+
+{%- liquid
+  assign star_count = rating | default: 5 | plus: 0
+  if star_count < 0
+    assign star_count = 0
+  elsif star_count > 5
+    assign star_count = 5
+  endif
+  assign star_item_class = star_class | default: 'nw-star'
+  assign star_icon = icon | default: 'star-rating-sm'
+-%}
+<div
+  class="nw-stars{% if class != blank %} {{ class }}{% endif %}"
+  aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: star_count, rating_max: 5 }}"
+>
+  {%- for i in (1..5) -%}
+    <span class="{{ star_item_class }}{% if i <= star_count %} {{ star_item_class }}--active{% endif %}">
+      {% render 'nw-icon', icon: star_icon %}
+    </span>
+  {%- endfor -%}
+</div>

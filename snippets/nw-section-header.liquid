@@ -1,0 +1,44 @@
+{% doc %}
+Renders the shared NW section header: optional stars, eyebrow, heading, and description.
+@param {boolean} [show_rating] - Show the 5-star row
+@param {number} [rating] - Filled star count. Default: 5
+@param {string} [eyebrow] - Small label beside or below the stars
+@param {string} [heading] - Section heading
+@param {string} [description] - Rich text description
+@param {number} [section_index] - Used to pick h1 vs h2
+@param {string} [tag] - Optional heading tag override
+@param {string} [heading_class] - Extra class on the heading wrapper
+@param {string} [heading_wrap_class] - Optional extra wrapper around the heading
+@param {string} [star_class] - Extra class on the stars row
+@example
+{% render 'nw-section-header', show_rating: section.settings.show_rating, rating: section.settings.star_rating, eyebrow: section.settings.eyebrow, heading: section.settings.heading, description: section.settings.subheading, section_index: section.index %}
+{% enddoc %}
+
+{%- liquid
+  assign show_stars = false
+  if show_rating == true
+    assign show_stars = true
+  endif
+-%}
+{%- if show_stars -%}
+  <div class="nw-rating">
+    {% render 'nw-stars', rating: rating, class: star_class %}
+    {%- if eyebrow != blank -%}
+      <span class="nw-eyebrow">{{ eyebrow }}</span>
+    {%- endif -%}
+  </div>
+{%- elsif eyebrow != blank -%}
+  <p class="nw-eyebrow">{{ eyebrow }}</p>
+{%- endif -%}
+
+{%- if heading != blank -%}
+  {%- if heading_wrap_class != blank -%}
+    <div class="{{ heading_wrap_class }}">
+      {% render 'nw-section-heading', text: heading, section_index: section_index, tag: tag, class: heading_class %}
+    </div>
+  {%- else -%}
+    {% render 'nw-section-heading', text: heading, section_index: section_index, tag: tag, class: heading_class %}
+  {%- endif -%}
+{%- endif -%}
+
+{% render 'nw-section-description', text: description %}

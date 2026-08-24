@@ -12,11 +12,7 @@ if (!customElements.get('nw-collection-list')) {
     }
 
     _whenSwiperReady(callback) {
-      if (typeof Swiper !== 'undefined') {
-        callback();
-      } else {
-        window.setTimeout(() => this._whenSwiperReady(callback), 50);
-      }
+      window.nwWhenSwiperReady(callback);
     }
 
     _initSlider() {

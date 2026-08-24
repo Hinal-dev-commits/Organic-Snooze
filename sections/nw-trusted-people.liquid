@@ -3,32 +3,8 @@
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-trusted-people.js' | asset_url }}" defer="defer"></script>
 
-<style>
-  #NwTrustedPeople-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% endif %}
-  }
-
-  @media screen and (max-width: 749px) {
-    #NwTrustedPeople-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      {% endif %}
-    }
-  }
-</style>
+{%- assign nw_shell_selector = '#NwTrustedPeople-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
 {%- liquid
   assign person_blocks = section.blocks | where: 'type', 'person'
@@ -57,8 +33,11 @@
   <div class="nw-trusted-people__wrapper{%- render 'nw-scroll-animation' -%}">
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="nw-trusted-people__header">
-        {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-        {% render 'nw-section-description', text: section.settings.subheading %}
+        {% render 'nw-section-header',
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
       </div>
     {%- endif -%}
 
@@ -101,7 +80,7 @@
 
 {% schema %}
 {
-  "name": "NW Trusted People",
+  "name": "t:sections.nw-trusted-people.name",
   "tag": "section",
   "class": "section-nw-trusted-people",
   "settings": [
@@ -442,7 +421,7 @@
   ],
   "presets": [
     {
-      "name": "NW Trusted People",
+      "name": "t:sections.nw-trusted-people.name",
       "category": "NW Sections",
       "blocks": [
         {
@@ -502,6 +481,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index"]
+  }
 }
 {% endschema %}

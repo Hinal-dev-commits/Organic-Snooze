@@ -42,8 +42,12 @@
   animation: nwMarqueeRight var(--nw-marquee-speed, 25s) linear infinite;
 }
 
-.nw-marquee--pause-hover:hover .nw-marquee__track {
-  animation-play-state: paused;
+@media (prefers-reduced-motion: reduce) {
+  .nw-marquee--right_to_left .nw-marquee__track,
+  .nw-marquee--left_to_right .nw-marquee__track,
+  .nw-marquee--pause-hover:hover .nw-marquee__track {
+    animation: none;
+  }
 }
 
 @keyframes nwMarqueeLeft {

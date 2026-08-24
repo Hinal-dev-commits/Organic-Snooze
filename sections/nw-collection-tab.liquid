@@ -13,33 +13,8 @@
   endfor
 -%}
 
-<style>
-  #NwCollectionTab-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2400 }}');
-      background-size: cover;
-      background-position: center;
-    {% elsif section.settings.bg_type == 'none' %}
-      background: transparent;
-    {% endif %}
-  }
-
-  @media screen and (max-width: 749px) {
-    #NwCollectionTab-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      {% endif %}
-    }
-  }
-</style>
+{%- assign nw_shell_selector = '#NwCollectionTab-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
 <nw-collection-tab
   id="NwCollectionTab-{{ section.id }}"
@@ -93,8 +68,11 @@
                 <button
                   type="button"
                   class="nw-collection-tab__tab{% if tab_index == 0 %} is-active{% endif %}"
+                  id="NwCollectionTabBtn-{{ section.id }}-{{ tab_index }}"
                   role="tab"
                   aria-selected="{% if tab_index == 0 %}true{% else %}false{% endif %}"
+                  aria-controls="NwCollectionTabPanel-{{ section.id }}-{{ tab_index }}"
+                  tabindex="{% if tab_index == 0 %}0{% else %}-1{% endif %}"
                   data-nw-tab="{{ tab_index }}"
                   data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}"
                   {{ block.shopify_attributes }}
@@ -186,17 +164,17 @@
                   <div class="nw-collection-tab__promo-timer">
                     <div class="nw-collection-tab__promo-timer-unit">
                       <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-days">00</span>
-                      <span class="nw-collection-tab__promo-timer-txt">Days</span>
+                      <span class="nw-collection-tab__promo-timer-txt">{{ 'nw.countdown.days' | t }}</span>
                     </div>
                     <span class="nw-collection-tab__promo-timer-sep">:</span>
                     <div class="nw-collection-tab__promo-timer-unit">
                       <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-hours">00</span>
-                      <span class="nw-collection-tab__promo-timer-txt">Hrs</span>
+                      <span class="nw-collection-tab__promo-timer-txt">{{ 'nw.countdown.hours' | t }}</span>
                     </div>
                     <span class="nw-collection-tab__promo-timer-sep">:</span>
                     <div class="nw-collection-tab__promo-timer-unit">
                       <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-mins">00</span>
-                      <span class="nw-collection-tab__promo-timer-txt">Mins</span>
+                      <span class="nw-collection-tab__promo-timer-txt">{{ 'nw.countdown.minutes' | t }}</span>
                     </div>
                   </div>
                 </div>
@@ -248,8 +226,10 @@
             {%- if block.type == 'tab' -%}
               <div
                 class="nw-collection-tab__panel"
+                id="NwCollectionTabPanel-{{ section.id }}-{{ panel_index }}"
                 data-nw-panel="{{ panel_index }}"
                 role="tabpanel"
+                aria-labelledby="NwCollectionTabBtn-{{ section.id }}-{{ panel_index }}"
                 {% unless panel_index == 0 %}hidden{% endunless %}
               >
                 <div class="nw-collection-tab__slider-wrap">
@@ -313,7 +293,7 @@
 
 {% schema %}
 {
-  "name": "NW Collection Tab",
+  "name": "t:sections.nw-collection-tab.name",
   "tag": "section",
   "class": "section-nw-collection-tab",
   "settings": [
@@ -903,7 +883,7 @@
   ],
   "presets": [
     {
-      "name": "NW Collection Tab",
+      "name": "t:sections.nw-collection-tab.name",
       "category": "NW Sections",
       "blocks": [
         {
@@ -935,6 +915,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index"]
+  }
 }
 {% endschema %}

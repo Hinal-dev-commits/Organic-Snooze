@@ -76,7 +76,7 @@
 
 {% schema %}
 {
-  "name": "NW Marquee V2",
+  "name": "t:sections.nw-marquee-v2.name",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -320,7 +320,7 @@
   ],
   "presets": [
     {
-      "name": "NW Marquee V2",
+      "name": "t:sections.nw-marquee-v2.name",
       "blocks": [
         {
           "type": "item",
@@ -359,6 +359,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index", "product"]
+  }
 }
 {% endschema %}

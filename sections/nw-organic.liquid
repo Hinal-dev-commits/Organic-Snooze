@@ -1,47 +1,17 @@
 {{ 'nw-organic.css' | asset_url | stylesheet_tag }}
 
-<style>
-  #NwOrganic-{{ section.id }} {
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
-      background-color: {{ section.settings.bg_color }};
-    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    {% elsif section.settings.bg_type == 'none' %}
-      background: transparent;
-    {% else %}
-      background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
-    {% endif %}
-  }
-
-  @media screen and (max-width: 749px) {
-    #NwOrganic-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      {% endif %}
-    }
-  }
-</style>
+{%- assign nw_shell_selector = '#NwOrganic-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
 <div id="NwOrganic-{{ section.id }}" class="nw-organic section-{{ section.id }}">
   <div class="page-width">
     <div class="nw-organic__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-organic__header">
-        {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-        {%- endif -%}
-
-        {%- if section.settings.description != blank -%}
-          {% render 'nw-section-description', text: section.settings.description %}
-        {%- endif -%}
+        {% render 'nw-section-header',
+          heading: section.settings.heading,
+          description: section.settings.description,
+          section_index: section.index
+        %}
       </div>
 
       <div class="nw-organic__main{% if section.settings.image_position == 'left' %} nw-organic__main--image-left{% endif %}">
@@ -174,7 +144,7 @@
 
 {% schema %}
 {
-  "name": "NW Organic",
+  "name": "t:sections.nw-organic.name",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -576,7 +546,7 @@
   ],
   "presets": [
     {
-      "name": "NW Organic",
+      "name": "t:sections.nw-organic.name",
       "blocks": [
         {
           "type": "table_row",
@@ -664,6 +634,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
 }
 {% endschema %}

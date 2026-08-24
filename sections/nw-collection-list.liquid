@@ -9,61 +9,21 @@
   assign slide_count = collection_blocks.size
 -%}
 
-<style>
-  .nw-collection-list.section-{{ section.id }} {
-    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-    --nw-collection-fade-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
-    position: relative;
-    background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
-    isolation: isolate;
-    overflow: hidden;
-    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'none' %}
-      background: transparent;
-    {% endif %}
-  }
-
-  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
-    .nw-collection-list.section-{{ section.id }}::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: calc({{ section.settings.bg_image_opacity | default: 100 }} / 100);
-      z-index: -1;
-      pointer-events: none;
-    }
-  {%- endif -%}
-
-  {%- unless section.settings.show_fade -%}
+{%- assign nw_shell_selector = '.nw-collection-list.section-' | append: section.id -%}
+{% capture nw_shell_extra %}
+  --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+  --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+  --nw-collection-fade-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, extra: nw_shell_extra %}
+{%- unless section.settings.show_fade -%}
+  <style>
     .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap::before,
     .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap::after {
       display: none !important;
     }
-  {%- endunless -%}
-
-  @media screen and (max-width: 749px) {
-    .nw-collection-list.section-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
-    }
-
-    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
-      .nw-collection-list.section-{{ section.id }}::before {
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
-      }
-    {%- endif -%}
-  }
-</style>
+  </style>
+{%- endunless -%}
 
 <nw-collection-list
   class="nw-collection-list nw-main-section section-{{ section.id }}"
@@ -75,33 +35,14 @@
   <div class="nw-collection-list__container">
     <div class="nw-collection-list__inner{%- render 'nw-scroll-animation' -%}">
       <div class="nw-collection-list__header">
-        {%- if section.settings.show_rating -%}
-          {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
-          <div class="nw-rating">
-            <div class="nw-stars" aria-label="{{ active_stars }} out of 5 stars">
-              {%- for i in (1..5) -%}
-                <span class="nw-star{% if i <= active_stars %} nw-star--active{% endif %}">
-                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                    <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
-                  </svg>
-                </span>
-              {%- endfor -%}
-            </div>
-            {%- if section.settings.eyebrow != blank -%}
-              <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
-            {%- endif -%}
-          </div>
-        {%- elsif section.settings.eyebrow != blank -%}
-          <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
-        {%- endif -%}
-
-        {%- if section.settings.subheading != blank -%}
-          {% render 'nw-section-description', text: section.settings.subheading %}
-        {%- endif -%}
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
       </div>
 
       {%- if slide_count > 0 -%}
@@ -186,7 +127,7 @@
 
 {% schema %}
 {
-  "name": "NW Collection List",
+  "name": "t:sections.nw-collection-list.name",
   "tag": "section",
   "settings": [
     {
@@ -482,7 +423,7 @@
   ],
   "presets": [
     {
-      "name": "NW Collection List",
+      "name": "t:sections.nw-collection-list.name",
       "category": "NW Sections",
       "blocks": [
         {
@@ -545,6 +486,9 @@
         }
       ]
     }
-  ]
+  ],
+  "enabled_on": {
+    "templates": ["index", "page"]
+  }
 }
 {% endschema %}

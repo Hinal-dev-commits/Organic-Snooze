@@ -14,11 +14,7 @@ if (!customElements.get('nw-collection-v2')) {
     }
 
     _whenSwiperReady(callback) {
-      if (typeof Swiper !== 'undefined') {
-        callback();
-      } else {
-        window.setTimeout(() => this._whenSwiperReady(callback), 50);
-      }
+      window.nwWhenSwiperReady(callback);
     }
 
     _initPanelSwiper(panel) {
@@ -95,50 +91,12 @@ if (!customElements.get('nw-collection-v2')) {
 
     _initCountdown() {
       var countdownEl = this.querySelector('.nw-collection-v2__promo[data-countdown-date]');
-      if (!countdownEl) return;
-
-      var targetDateStr = countdownEl.getAttribute('data-countdown-date');
-      var hideOnEnd = countdownEl.getAttribute('data-hide-on-end') === 'true';
-      var daysEl = countdownEl.querySelector('.nw-colv2-countdown-days');
-      var hoursEl = countdownEl.querySelector('.nw-colv2-countdown-hours');
-      var minsEl = countdownEl.querySelector('.nw-colv2-countdown-mins');
-
-      function padZero(num) {
-        return num < 10 ? '0' + num : num;
-      }
-
-      if (!targetDateStr || targetDateStr.trim() === '') return;
-
-      var targetDate = new Date(targetDateStr.replace(/-/g, '/')).getTime();
-
-      var updateTimer = () => {
-        var now = new Date().getTime();
-        var diff = targetDate - now;
-        if (isNaN(targetDate)) return;
-        if (diff <= 0) {
-          if (hideOnEnd) {
-            countdownEl.style.display = 'none';
-          } else {
-            if (daysEl) daysEl.textContent = '00';
-            if (hoursEl) hoursEl.textContent = '00';
-            if (minsEl) minsEl.textContent = '00';
-          }
-          if (this._countdownInterval) {
-            clearInterval(this._countdownInterval);
-            this._countdownInterval = null;
-          }
-          return;
-        }
-        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        if (daysEl) daysEl.textContent = padZero(days);
-        if (hoursEl) hoursEl.textContent = padZero(hours);
-        if (minsEl) minsEl.textContent = padZero(mins);
-      };
-
-      updateTimer();
-      this._countdownInterval = setInterval(updateTimer, 1000);
+      if (!countdownEl || typeof window.nwStartCountdown !== 'function') return;
+      this._countdownInterval = window.nwStartCountdown(countdownEl, {
+        days: '.nw-colv2-countdown-days',
+        hours: '.nw-colv2-countdown-hours',
+        mins: '.nw-colv2-countdown-mins'
+      });
     }
 
     _boot() {
