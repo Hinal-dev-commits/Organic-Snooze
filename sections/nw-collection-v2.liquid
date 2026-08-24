@@ -1,4 +1,5 @@
 {{ 'nw-collection-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-collection-v2.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign sidebar_block = nil
@@ -38,9 +39,11 @@
   }
 </style>
 
-<section
+<nw-collection-v2
   id="NwCollectionV2-{{ section.id }}"
   class="nw-collection-v2"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
   style="
     --nw-colv2-tab-bg: {{ section.settings.tab_bg }};
     --nw-colv2-tab-text: {{ section.settings.tab_text }};
@@ -132,7 +135,7 @@
             {%- if sidebar_block.settings.quote != blank or sidebar_block.settings.author_name != blank -%}
               <div class="nw-collection-v2__quote">
                 <span class="nw-collection-v2__quote-mark" aria-hidden="true">
-                  {{ "quote.svg" | inline_asset_content }}
+                  {% render 'nw-icon', icon: 'quote' %}
                 </span>
                 {%- if sidebar_block.settings.quote != blank -%}
                   <div class="nw-collection-v2__quote-text">{{ sidebar_block.settings.quote }}</div>
@@ -144,7 +147,7 @@
                         <div class="nw-collection-v2__quote-name">{{ sidebar_block.settings.author_name }}</div>
                         {%- if sidebar_block.settings.show_verified -%}
                           <span class="nw-collection-v2__quote-verified" aria-hidden="true">
-                            {{ "verified.svg" | inline_asset_content }}
+                            {% render 'nw-icon', icon: 'verified' %}
                           </span>
                         {%- endif -%}
                       </div>
@@ -238,15 +241,9 @@
                   <div class="nw-collection-v2__trust-item">
                     <span class="nw-collection-v2__trust-icon">
                       {%- if badge_custom_icon != blank -%}
-                        {{ badge_custom_icon | image_url: width: 40 | image_tag: loading: 'lazy', class: 'nw-collection-v2__trust-img' }}
-                      {%- elsif badge_icon == 'moneyback' -%}
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"/></svg>
-                      {%- elsif badge_icon == 'truck' -%}
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 8h-3V4H1v13h2a3 3 0 0 0 6 0h6a3 3 0 0 0 6 0h2v-6l-3-3zM6 18.5A1.5 1.5 0 1 1 6 15.5a1.5 1.5 0 0 1 0 3zm12 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM17 12V9.5h2.5l1.5 2.5H17z"/></svg>
-                      {%- elsif badge_icon == 'warranty' -%}
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="6"/><path d="M7 13l-3 8 8-4 8 4-3-8"/></svg>
-                      {%- elsif badge_icon == 'financing' -%}
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                        {% render 'nw-icon', icon: badge_icon, custom_icon: badge_custom_icon, img_class: 'nw-collection-v2__trust-img' %}
+                      {%- elsif badge_icon != blank and badge_icon != 'none' -%}
+                        {% render 'nw-icon', icon: badge_icon %}
                       {%- endif -%}
                     </span>
                     <div class="nw-collection-v2__trust-text">{{ badge_text }}</div>
@@ -288,19 +285,14 @@
                       </div>
                     </div>
                     {%- if section.settings.show_arrows -%}
-                      <button type="button" class="nw-swiper-btn nw-swiper-btn--prev" aria-label="Previous slide">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                      </button>
-                      <button type="button" class="nw-swiper-btn nw-swiper-btn--next" aria-label="Next slide">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                      </button>
+                      {% render 'nw-swiper-arrows' %}
                     {%- endif -%}
                   {%- else -%}
                     <div class="nw-collection-v2__empty">{{ section.settings.empty_text }}</div>
                   {%- endif -%}
                 </div>
                 {%- if section.settings.show_pagination and block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
-                  <div class="nw-swiper-pagination" id="NwCollectionPagination-{{ section.id }}-{{ panel_index }}"></div>
+                  <div class="nw-swiper-pagination" id="NwCollectionPagination-{{ section.id }}-{{ panel_index }}" data-nw-panel-pagination="{{ panel_index }}"></div>
                 {%- endif -%}
               </div>
               {%- assign panel_index = panel_index | plus: 1 -%}
@@ -330,140 +322,7 @@
     </div>
   </div>
   </div>
-</section>
-<script>
-  (function () {
-    var sectionEl = document.getElementById('NwCollectionV2-{{ section.id }}');
-    if (!sectionEl) return;
-
-    function initPanelSwiper(panel) {
-      if (!panel || panel.hidden) return;
-      var swiperEl = panel.querySelector('.nw-collection-v2__swiper');
-      if (!swiperEl || swiperEl.dataset.initialized === 'true') return;
-      if (typeof Swiper === 'undefined') return;
-
-      var panelIndex = panel.getAttribute('data-nw-panel');
-      var paginationEl = document.getElementById('NwCollectionPagination-{{ section.id }}-' + panelIndex);
-
-      new Swiper(swiperEl, {
-        slidesPerView: 'auto',
-        spaceBetween: 16,
-        watchOverflow: true,
-        {% if section.settings.show_arrows %}
-        navigation: {
-          nextEl: panel.querySelector('.nw-swiper-btn--next'),
-          prevEl: panel.querySelector('.nw-swiper-btn--prev')
-        },
-        {% endif %}
-        {% if section.settings.show_pagination %}
-        pagination: paginationEl ? {
-          el: paginationEl,
-          clickable: true
-        } : false,
-        {% endif %}
-        breakpoints: {
-          750: {
-            spaceBetween: 16
-          }
-        }
-      });
-
-      swiperEl.dataset.initialized = 'true';
-    }
-
-    function setActiveTab(index) {
-      var tabs = sectionEl.querySelectorAll('[data-nw-tab]');
-      var panels = sectionEl.querySelectorAll('[data-nw-panel]');
-      var shopAllBtn = sectionEl.querySelector('.nw-collection-v2__shop-all-btn');
-      var activeTab = null;
-
-      tabs.forEach(function (tab) {
-        var isActive = tab.getAttribute('data-nw-tab') === String(index);
-        tab.classList.toggle('is-active', isActive);
-        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
-        if (isActive) activeTab = tab;
-      });
-
-      panels.forEach(function (panel) {
-        var isActive = panel.getAttribute('data-nw-panel') === String(index);
-        panel.hidden = !isActive;
-        if (isActive) initPanelSwiper(panel);
-      });
-
-      if (shopAllBtn && activeTab) {
-        var collectionUrl = activeTab.getAttribute('data-collection-url');
-        if (collectionUrl) shopAllBtn.setAttribute('href', collectionUrl);
-      }
-    }
-
-    sectionEl.querySelectorAll('[data-nw-tab]').forEach(function (tab) {
-      tab.addEventListener('click', function () {
-        setActiveTab(tab.getAttribute('data-nw-tab'));
-      });
-    });
-
-    function boot() {
-      if (typeof Swiper === 'undefined') {
-        window.setTimeout(boot, 50);
-        return;
-      }
-      var firstPanel = sectionEl.querySelector('[data-nw-panel]:not([hidden])');
-      initPanelSwiper(firstPanel);
-    }
-
-    var countdownEl = sectionEl.querySelector('.nw-collection-v2__promo[data-countdown-date]');
-    if (countdownEl) {
-      var targetDateStr = countdownEl.getAttribute('data-countdown-date');
-      var hideOnEnd = countdownEl.getAttribute('data-hide-on-end') === 'true';
-      var daysEl = countdownEl.querySelector('.nw-colv2-countdown-days');
-      var hoursEl = countdownEl.querySelector('.nw-colv2-countdown-hours');
-      var minsEl = countdownEl.querySelector('.nw-colv2-countdown-mins');
-
-      function padZero(num) {
-        return num < 10 ? '0' + num : num;
-      }
-
-      if (targetDateStr && targetDateStr.trim() !== '') {
-        var targetDate = new Date(targetDateStr.replace(/-/g, '/')).getTime();
-
-        function updateTimer() {
-          var now = new Date().getTime();
-          var diff = targetDate - now;
-          if (isNaN(targetDate)) return;
-          if (diff <= 0) {
-            if (hideOnEnd) {
-              countdownEl.style.display = 'none';
-            } else {
-              if (daysEl) daysEl.textContent = '00';
-              if (hoursEl) hoursEl.textContent = '00';
-              if (minsEl) minsEl.textContent = '00';
-            }
-            return;
-          }
-          var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          if (daysEl) daysEl.textContent = padZero(days);
-          if (hoursEl) hoursEl.textContent = padZero(hours);
-          if (minsEl) minsEl.textContent = padZero(mins);
-        }
-
-        updateTimer();
-        setInterval(updateTimer, 1000);
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', boot);
-    } else {
-      boot();
-    }
-
-    document.addEventListener('shopify:section:load', function (event) {
-      if (event.target.contains(sectionEl)) boot();
-    });
-  })();
-</script>
+</nw-collection-v2>
 
 {% schema %}
 {
@@ -916,10 +775,10 @@
       "limit": 1,
       "settings": [
         {
-          "type": "richtext",
+          "type": "inline_richtext",
           "id": "heading",
           "label": "Heading",
-          "default": "<p>Shop Organic Mattresses and Bedding</p>"
+          "default": "Shop Organic Mattresses and Bedding"
         },
         {
           "type": "richtext",

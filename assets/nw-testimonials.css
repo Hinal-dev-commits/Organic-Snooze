@@ -22,7 +22,7 @@
 
 .nw-testimonials .nw-section-heading .h2,
 .nw-testimonials .nw-section-heading .h2 * {
-  color: var(--nw-testimonials-heading-color, #613916);
+  color: var(--nw-testimonials-heading-color, var(--primary-color));
 }
 
 .nw-testimonials .nw-section-description {
@@ -32,7 +32,7 @@
 
 .nw-testimonials .nw-section-description,
 .nw-testimonials .nw-section-description * {
-  color: var(--nw-testimonials-desc-color, #613916);
+  color: var(--nw-testimonials-desc-color, var(--primary-color));
 }
 
 .nw-testimonials__slider-wrap {
@@ -65,7 +65,7 @@
   min-height: 100%;
   padding: 14px;
   border-radius: 10px;
-  background: var(--nw-testimonials-card-bg, #f4efe8);
+  background: var(--nw-testimonials-card-bg, var(--tertiary-color));
   box-sizing: border-box;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .nw-testimonials__star--active {
-  color: var(--nw-testimonials-star-color, #e57b1e);
+  color: var(--nw-testimonials-star-color, var(--septenary-color));
 }
 
 .nw-testimonials__star--inactive {
@@ -112,7 +112,7 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.43;
-  color: var(--nw-testimonials-card-text, #613916);
+  color: var(--nw-testimonials-card-text, var(--primary-color));
   width: 100%;
 }
 
@@ -129,7 +129,7 @@
   font-size: 14px;
   font-weight: 700;
   line-height: 1.45;
-  color: var(--nw-testimonials-card-text, #613916);
+  color: var(--nw-testimonials-card-text, var(--primary-color));
 }
 
 .nw-testimonials__verified {
@@ -145,14 +145,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--nw-testimonials-verified-color, #878735);
+  color: var(--nw-testimonials-verified-color, var(--nonary-color));
 }
 
 .nw-testimonials__verified-icon svg {
   width: 14px;
   height: 14px;
   display: block;
-  fill: var(--nw-testimonials-verified-color, #878735);
+  fill: var(--nw-testimonials-verified-color, var(--nonary-color));
 }
 
 .nw-testimonials__verified-text {
@@ -161,7 +161,7 @@
   font-style: italic;
   font-weight: 400;
   line-height: 1.4;
-  color: var(--nw-testimonials-card-text, #613916);
+  color: var(--nw-testimonials-card-text, var(--primary-color));
 }
 
 @media screen and (max-width: 749px) {

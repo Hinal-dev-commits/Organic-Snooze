@@ -49,7 +49,7 @@
   }
 </style>
 
-<section class="nw-faq section-{{ section.id }}">
+<div class="nw-faq section-{{ section.id }}">
   <div class="nw page-width">
     <div class="nw-faq__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-faq__main">
@@ -76,7 +76,7 @@
 
           {%- if section.settings.heading != blank -%}
             <div class="nw-faq__heading-wrap">
-              {% render 'nw-section-heading', text: section.settings.heading %}
+              {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
             </div>
           {%- endif -%}
 
@@ -94,10 +94,7 @@
               aria-label="{{ section.settings.search_placeholder | default: 'What can we help with?' }}"
             >
             <span class="nw-faq__search-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
+              {% render 'nw-icon', icon: 'search-sm' %}
             </span>
           </div>
         {%- endif -%}
@@ -105,18 +102,34 @@
         {%- if section.blocks.size > 0 -%}
           <div class="nw-faq__list" data-initial-limit="{{ section.settings.initial_faq_count | default: 6 }}">
             {%- for block in section.blocks -%}
-              <details class="nw-faq__item"{% if section.settings.open_first_faq and forloop.first %} open{% endif %} {{ block.shopify_attributes }}>
-                <summary class="nw-faq__summary">
-                  <span class="nw-faq__question">{{ block.settings.question }}</span>
-                  <span class="nw-faq__toggle" aria-hidden="true">
-                    <span class="nw-faq__toggle-h"></span>
-                    <span class="nw-faq__toggle-v"></span>
-                  </span>
-                </summary>
-                {%- if block.settings.answer != blank -%}
-                  <div class="nw-faq__answer">{{ block.settings.answer }}</div>
-                {%- endif -%}
-              </details>
+              <div class="nw-faq__item accordion smooth" {{ block.shopify_attributes }}>
+                <details
+                  id="Details-{{ block.id }}-{{ section.id }}"
+                  {% if section.settings.open_first_faq and forloop.first %}
+                    open
+                  {% endif %}
+                >
+                  <summary id="Summary-{{ block.id }}-{{ section.id }}" class="nw-faq__summary">
+                    <h3 class="accordion__title nw-faq__question">
+                      {{ block.settings.question }}
+                    </h3>
+                    <span class="nw-faq__toggle" aria-hidden="true">
+                      <span class="nw-faq__toggle-h"></span>
+                      <span class="nw-faq__toggle-v"></span>
+                    </span>
+                  </summary>
+                  {%- if block.settings.answer != blank -%}
+                    <div
+                      class="accordion__content nw-faq__answer rte"
+                      id="CollapsibleAccordion-{{ block.id }}-{{ section.id }}"
+                      role="region"
+                      aria-labelledby="Summary-{{ block.id }}-{{ section.id }}"
+                    >
+                      {{ block.settings.answer }}
+                    </div>
+                  {%- endif -%}
+                </details>
+              </div>
             {%- endfor -%}
           </div>
         {%- endif -%}
@@ -157,7 +170,7 @@
         <div class="nw-faq__contact">
           {%- if section.settings.contact_heading != blank -%}
             <div class="nw-faq__contact-heading-wrap" id="faq-heading">
-              {% render 'nw-section-heading', text: section.settings.contact_heading %}
+              {% render 'nw-section-heading', text: section.settings.contact_heading, tag: 'h2' %}
             </div>
           {%- endif -%}
 
@@ -196,7 +209,7 @@
       {%- endif -%}
     </div>
   </div>
-</section>
+</div>
 
 {% schema %}
 {

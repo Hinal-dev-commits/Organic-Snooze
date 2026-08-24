@@ -28,7 +28,7 @@ Renders a trusted people slider card.
         {%- if block.settings.role != blank -%}
           <div class="nw-trusted-people__role">
             <span class="nw-trusted-people__role-icon" aria-hidden="true">
-              {{ 'verified.svg' | inline_asset_content }}
+              {% render 'nw-icon', icon: 'verified' %}
             </span>
             <span class="nw-trusted-people__role-text">{{ block.settings.role }}</span>
           </div>
@@ -84,11 +84,11 @@ Renders a trusted people slider card.
             rel="noopener noreferrer"
             aria-label="Instagram profile for {{ block.settings.name | escape }}"
           >
-            {{ 'icon-instagram.svg' | inline_asset_content }}
+            {% render 'nw-icon', icon: 'instagram' %}
           </a>
         {%- elsif block.settings.show_instagram -%}
           <span class="nw-trusted-people__social-link" aria-hidden="true">
-            {{ 'insta-color.svg' | inline_asset_content }}
+            {% render 'nw-icon', icon: 'insta-color' %}
           </span>
         {%- endif -%}
       </div>

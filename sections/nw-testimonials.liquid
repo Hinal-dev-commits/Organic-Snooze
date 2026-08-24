@@ -1,4 +1,5 @@
 {{ 'nw-testimonials.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-testimonials.js' | asset_url }}" defer="defer"></script>
 
 <style>
   #NwTestimonials-{{ section.id }} {
@@ -27,9 +28,12 @@
   }
 </style>
 
-<section
+<nw-testimonials
   id="NwTestimonials-{{ section.id }}"
   class="nw-testimonials"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
+  data-pagination-id="NwTestimonialsPagination-{{ section.id }}"
   style="
     --nw-testimonials-header-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
     --nw-testimonials-header-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
@@ -67,7 +71,7 @@
         {%- endif -%}
 
         {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading %}
+          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
         {%- endif -%}
 
         {%- if section.settings.subheading != blank -%}
@@ -87,7 +91,7 @@
                       <div class="nw-testimonials__stars" aria-label="{{ rating_val }} out of 5 stars">
                         {%- for i in (1..5) -%}
                           <span class="nw-testimonials__star{% if i <= rating_val %} nw-testimonials__star--active{% else %} nw-testimonials__star--inactive{% endif %}">
-                            {{ 'star.svg' | inline_asset_content }}
+                            {% render 'nw-icon', icon: 'star' %}
                           </span>
                         {%- endfor -%}
                       </div>
@@ -105,7 +109,7 @@
                       {%- if block.settings.verified -%}
                         <div class="nw-testimonials__verified">
                           <span class="nw-testimonials__verified-icon" aria-hidden="true">
-                            {{ 'verified.svg' | inline_asset_content }}
+                            {% render 'nw-icon', icon: 'verified' %}
                           </span>
                           <span class="nw-testimonials__verified-text">{{ block.settings.verified_text | default: 'Verified' }}</span>
                         </div>
@@ -117,12 +121,7 @@
             </div>
           </div>
           {%- if section.settings.show_arrows -%}
-            <button type="button" class="nw-swiper-btn nw-swiper-btn--prev" aria-label="Previous slide">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button type="button" class="nw-swiper-btn nw-swiper-btn--next" aria-label="Next slide">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+            {% render 'nw-swiper-arrows' %}
           {%- endif -%}
           {%- if section.settings.show_pagination -%}
             <div class="nw-swiper-pagination" id="NwTestimonialsPagination-{{ section.id }}"></div>
@@ -131,61 +130,7 @@
       {%- endif -%}
     </div>
   </div>
-</section>
-
-<script>
-  (function () {
-    var sectionEl = document.getElementById('NwTestimonials-{{ section.id }}');
-    if (!sectionEl) return;
-
-    function initSwiper() {
-      if (typeof Swiper === 'undefined') {
-        window.setTimeout(initSwiper, 50);
-        return;
-      }
-
-      var sliderEl = sectionEl.querySelector('.nw-testimonials__swiper');
-      if (!sliderEl) return;
-      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
-
-      new Swiper(sliderEl, {
-        slidesPerView: 'auto',
-        spaceBetween: 12,
-        centeredSlides: true,
-        grabCursor: true,
-        watchOverflow: true,
-        {% if section.settings.show_arrows %}
-        navigation: {
-          nextEl: sectionEl.querySelector('.nw-swiper-btn--next'),
-          prevEl: sectionEl.querySelector('.nw-swiper-btn--prev')
-        },
-        {% endif %}
-        {% if section.settings.show_pagination %}
-        pagination: {
-          el: '#NwTestimonialsPagination-{{ section.id }}',
-          clickable: true
-        },
-        {% endif %}
-        breakpoints: {
-          750: {
-            centeredSlides: false,
-            spaceBetween: 20
-          }
-        }
-      });
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initSwiper);
-    } else {
-      initSwiper();
-    }
-
-    document.addEventListener('shopify:section:load', function (event) {
-      if (event.target.contains(sectionEl)) initSwiper();
-    });
-  })();
-</script>
+</nw-testimonials>
 
 {% schema %}
 {

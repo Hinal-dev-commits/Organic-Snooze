@@ -56,7 +56,8 @@
 
         faqItems.forEach(function (item) {
           item.classList.remove('is-hidden-by-limit');
-          item.removeAttribute('open');
+          var details = item.querySelector('details');
+          if (details) details.removeAttribute('open');
           var qEl = item.querySelector('.nw-faq__question');
           var aEl = item.querySelector('.nw-faq__answer');
           var text = ((qEl ? qEl.textContent : '') + ' ' + (aEl ? aEl.textContent : '')).toLowerCase();

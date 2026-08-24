@@ -1,4 +1,5 @@
 {{ 'nw-trusted-people.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-trusted-people.js' | asset_url }}" defer="defer"></script>
 
 <style>
   #NwTrustedPeople-{{ section.id }} {
@@ -27,12 +28,12 @@
   }
 </style>
 
-<section
+<nw-trusted-people
   id="NwTrustedPeople-{{ section.id }}"
   class="nw-trusted-people"
+  data-block-count="{{ section.blocks.size | default: 0 }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
   style="
-    --nw-tp-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-    --nw-tp-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     --nw-tp-heading-color: {{ section.settings.heading_color }};
     --nw-tp-desc-color: {{ section.settings.description_color }};
     --nw-tp-card-bg: {{ section.settings.card_bg_color }};
@@ -47,35 +48,12 @@
   "
 >
   <div class="nw-trusted-people__wrapper{%- render 'nw-scroll-animation' -%}">
-    <div class="nw-trusted-people__header">
-      {%- if section.settings.show_rating -%}
-        {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
-        <div class="nw-trusted-people__rating">
-          <div class="nw-trusted-people__stars" aria-label="{{ active_stars }} out of 5 stars">
-            {%- for i in (1..5) -%}
-              <span class="nw-trusted-people__star{% if i <= active_stars %} nw-trusted-people__star--active{% endif %}">
-                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                  <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
-                </svg>
-              </span>
-            {%- endfor -%}
-          </div>
-          {%- if section.settings.eyebrow != blank -%}
-            <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
-          {%- endif -%}
-        </div>
-      {%- elsif section.settings.eyebrow != blank -%}
-        <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
-      {%- endif -%}
-
-      {%- if section.settings.heading != blank -%}
-        {% render 'nw-section-heading', text: section.settings.heading %}
-      {%- endif -%}
-
-      {%- if section.settings.subheading != blank -%}
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="nw-trusted-people__header">
+        {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
         {% render 'nw-section-description', text: section.settings.subheading %}
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
       <div class="nw-trusted-people__slider-wrap">
@@ -94,16 +72,11 @@
         </div>
 
         {%- if section.settings.show_arrows -%}
-          <button type="button" class="nw-swiper-btn nw-swiper-btn--prev" aria-label="Previous slide">
-            {{ 'arrow-left.svg' | inline_asset_content }}
-          </button>
-          <button type="button" class="nw-swiper-btn nw-swiper-btn--next" aria-label="Next slide">
-            {{ 'arrow-right.svg' | inline_asset_content }}
-          </button>
+          {% render 'nw-swiper-arrows' %}
         {%- endif -%}
 
         {%- if section.settings.show_pagination and section.blocks.size > 1 -%}
-          <div class="nw-swiper-pagination" id="NwTrustedPeoplePagination-{{ section.id }}">
+            <div class="nw-swiper-pagination" id="NwTrustedPeoplePagination-{{ section.id }}" data-nw-tp-pagination>
             {%- for block in section.blocks -%}
               <span
                 class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
@@ -117,597 +90,8 @@
 
     {% render 'nw-cta-badges', settings: section.settings, class: 'nw-trusted-people__footer' %}
   </div>
-</section>
+</nw-trusted-people>
 
-<script>
-  (function () {
-    var sectionEl = document.getElementById(
-      'NwTrustedPeople-{{ section.id }}'
-    );
-
-    if (!sectionEl) return;
-
-    var swiperInstance = null;
-    var originalCount = {{ section.blocks.size | default: 0 }};
-
-    function setCardsExpanded(slideIndex, isExpanded) {
-      var cards;
-
-      if (slideIndex !== null && slideIndex !== '') {
-        cards = sectionEl.querySelectorAll(
-          '.swiper-slide[data-slide-index="' + slideIndex + '"] [data-nw-tp-card]'
-        );
-      } else {
-        cards = [];
-      }
-
-      if (!cards.length) {
-        return;
-      }
-
-      cards.forEach(function (card) {
-        card.classList.toggle('is-expanded', isExpanded);
-
-        var toggle = card.querySelector('[data-nw-tp-toggle]');
-        if (toggle) {
-          toggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-        }
-      });
-
-      if (swiperInstance) {
-        swiperInstance.update();
-      }
-    }
-
-    function initToggles() {
-      if (sectionEl.dataset.nwTpToggleBound === 'true') {
-        return;
-      }
-
-      sectionEl.dataset.nwTpToggleBound = 'true';
-
-      sectionEl.addEventListener('click', function (event) {
-        var btn = event.target.closest('[data-nw-tp-toggle]');
-
-        if (!btn || !sectionEl.contains(btn)) {
-          return;
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        var card = btn.closest('[data-nw-tp-card]');
-        var slide = btn.closest('.swiper-slide');
-
-        if (!card || !slide) {
-          return;
-        }
-
-        var isActive = slide.classList.contains('swiper-slide-active');
-        var isFullyVisible = slide.classList.contains('swiper-slide-fully-visible');
-
-        if (!isActive && !isFullyVisible) {
-          return;
-        }
-
-        var isExpanded = !card.classList.contains('is-expanded');
-        var slideIndex = slide.getAttribute('data-slide-index');
-
-        if (slideIndex !== null && slideIndex !== '') {
-          setCardsExpanded(slideIndex, isExpanded);
-          return;
-        }
-
-        card.classList.toggle('is-expanded', isExpanded);
-        btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-
-        if (swiperInstance) {
-          swiperInstance.update();
-        }
-      });
-    }
-
-    function updateCustomPagination() {
-      if (!swiperInstance || originalCount <= 1) {
-        return;
-      }
-
-      var paginationEl = sectionEl.querySelector(
-        '#NwTrustedPeoplePagination-{{ section.id }}'
-      );
-
-      if (!paginationEl) return;
-
-      var bullets = paginationEl.querySelectorAll(
-        '.swiper-pagination-bullet'
-      );
-
-      if (!bullets.length) return;
-
-      var currentIndex = getRealSlideIndex(
-        swiperInstance.activeIndex
-      );
-
-      bullets.forEach(function (bullet, index) {
-        bullet.classList.toggle(
-          'swiper-pagination-bullet-active',
-          index === currentIndex
-        );
-      });
-    }
-
-    function bindPagination() {
-      if (!swiperInstance) return;
-
-      var paginationEl = sectionEl.querySelector(
-        '#NwTrustedPeoplePagination-{{ section.id }}'
-      );
-
-      if (!paginationEl) return;
-
-      var bullets = paginationEl.querySelectorAll(
-        '.swiper-pagination-bullet'
-      );
-
-      bullets.forEach(function (bullet, index) {
-        if (bullet.dataset.nwTpPaginationBound === 'true') {
-          return;
-        }
-
-        bullet.dataset.nwTpPaginationBound = 'true';
-
-        bullet.addEventListener('click', function (event) {
-          event.preventDefault();
-          event.stopPropagation();
-
-          if (!swiperInstance) return;
-
-          var sliderEl = sectionEl.querySelector('.nw-trusted-people__swiper');
-          var meta = sliderEl ? getSlideMeta(sliderEl) : { startIndex: 0 };
-
-          swiperInstance.slideTo(meta.startIndex + index, 600);
-        });
-      });
-
-      updateCustomPagination();
-    }
-
-    function cloneSlide(slide) {
-      var clone = slide.cloneNode(true);
-      var sourceCard = slide.querySelector('[data-nw-tp-card]');
-      var sourceExpanded = !!(sourceCard && sourceCard.classList.contains('is-expanded'));
-
-      clone.removeAttribute('data-shopify-editor-block');
-      clone.removeAttribute('data-shopify-editor-block-index');
-      clone.setAttribute('data-nw-tp-clone', 'true');
-      clone.setAttribute('aria-hidden', 'true');
-
-      var card = clone.querySelector('[data-nw-tp-card]');
-      if (card) {
-        card.classList.toggle('is-expanded', sourceExpanded);
-      }
-
-      clone.querySelectorAll('[data-nw-tp-toggle]').forEach(function (btn) {
-        btn.setAttribute('aria-expanded', sourceExpanded ? 'true' : 'false');
-      });
-
-      clone.querySelectorAll('[data-nw-tp-expand]').forEach(function (expand) {
-        expand.removeAttribute('hidden');
-      });
-
-      return clone;
-    }
-
-    function removeClones(wrapper) {
-      wrapper
-        .querySelectorAll(':scope > .swiper-slide[data-nw-tp-clone]')
-        .forEach(function (slide) {
-          slide.remove();
-        });
-    }
-
-    function getSlideMeta(sliderEl) {
-      return {
-        startIndex: parseInt(sliderEl.dataset.nwTpStartIndex, 10) || 0,
-        copyCount: parseInt(sliderEl.dataset.nwTpCopyCount, 10) || originalCount,
-        middleEnd: parseInt(sliderEl.dataset.nwTpMiddleEnd, 10) || originalCount
-      };
-    }
-
-    function ensureEnoughSlides(sliderEl) {
-      var wrapper = sliderEl.querySelector('.swiper-wrapper');
-      if (!wrapper) {
-        return { startIndex: 0, copyCount: originalCount, middleEnd: originalCount };
-      }
-
-      removeClones(wrapper);
-
-      var originalSlides = Array.from(
-        wrapper.querySelectorAll(':scope > .swiper-slide:not([data-nw-tp-clone])')
-      );
-
-      var count = originalSlides.length;
-
-      if (count <= 1) {
-        sliderEl.dataset.nwTpStartIndex = '0';
-        sliderEl.dataset.nwTpCopyCount = String(count);
-        sliderEl.dataset.nwTpMiddleEnd = String(count);
-        return { startIndex: 0, copyCount: count, middleEnd: count };
-      }
-
-      var sliderWidth = sliderEl.clientWidth;
-      var slideWidth = originalSlides[0].getBoundingClientRect().width;
-
-      if (!sliderWidth || !slideWidth || slideWidth <= 0) {
-        sliderEl.dataset.nwTpStartIndex = String(count);
-        sliderEl.dataset.nwTpCopyCount = String(count);
-        sliderEl.dataset.nwTpMiddleEnd = String(count * 2);
-        return { startIndex: count, copyCount: count, middleEnd: count * 2 };
-      }
-
-      var spaceBetween = window.innerWidth >= 750 ? 16 : 12;
-      var visibleSlides = Math.ceil(sliderWidth / (slideWidth + spaceBetween));
-      var setsNeeded = Math.max(
-        3,
-        Math.ceil((visibleSlides * 2 + count) / count) + 1
-      );
-
-      var extraSets = setsNeeded - 1;
-      var prependSets = Math.ceil(extraSets / 2);
-      var appendSets = extraSets - prependSets;
-      var p;
-      var a;
-      var fragment;
-
-      for (p = 0; p < prependSets; p++) {
-        fragment = document.createDocumentFragment();
-
-        originalSlides.forEach(function (slide) {
-          fragment.appendChild(cloneSlide(slide));
-        });
-
-        wrapper.insertBefore(fragment, wrapper.firstChild);
-      }
-
-      for (a = 0; a < appendSets; a++) {
-        originalSlides.forEach(function (slide) {
-          wrapper.appendChild(cloneSlide(slide));
-        });
-      }
-
-      var startIndex = count * prependSets;
-      var middleEnd = count * (prependSets + 1);
-
-      sliderEl.dataset.nwTpStartIndex = String(startIndex);
-      sliderEl.dataset.nwTpCopyCount = String(count);
-      sliderEl.dataset.nwTpMiddleEnd = String(middleEnd);
-
-      return {
-        startIndex: startIndex,
-        copyCount: count,
-        middleEnd: middleEnd
-      };
-    }
-
-    function fixInfinitePosition(swiper) {
-      if (!swiper || originalCount <= 1) return;
-
-      var sliderEl = swiper.el;
-      var meta = getSlideMeta(sliderEl);
-      var activeIndex = swiper.activeIndex;
-
-      if (activeIndex >= meta.middleEnd) {
-        swiper.slideTo(activeIndex - meta.copyCount, 0);
-      } else if (activeIndex < meta.startIndex) {
-        swiper.slideTo(activeIndex + meta.copyCount, 0);
-      }
-    }
-
-    function getRealSlideIndex(activeIndex) {
-      return ((activeIndex % originalCount) + originalCount) % originalCount;
-    }
-
-    function initSwiper() {
-      if (typeof Swiper === 'undefined') {
-        window.setTimeout(
-          initSwiper,
-          50
-        );
-        return;
-      }
-
-      var sliderEl = sectionEl.querySelector(
-        '.nw-trusted-people__swiper'
-      );
-
-      if (!sliderEl) return;
-
-      if (sliderEl.swiper) {
-        sliderEl.swiper.destroy(
-          true,
-          true
-        );
-      }
-
-      swiperInstance = null;
-
-      var enableInfinite = originalCount > 1;
-      var slideMeta = { startIndex: 0, copyCount: originalCount, middleEnd: originalCount };
-
-      if (enableInfinite) {
-        slideMeta = ensureEnoughSlides(sliderEl);
-      }
-
-      var swiperOptions = {
-        slidesPerView: 'auto',
-        spaceBetween: 12,
-        centeredSlides: true,
-        centeredSlidesBounds: false,
-        loop: false,
-        initialSlide: slideMeta.startIndex,
-        speed: 600,
-        grabCursor: true,
-        simulateTouch: true,
-        allowTouchMove: true,
-        watchSlidesProgress: true,
-        watchOverflow: false,
-        observer: true,
-        observeParents: true,
-        resizeObserver: true,
-        {% if section.settings.show_arrows %}
-        navigation: {
-          nextEl: sectionEl.querySelector('.nw-swiper-btn--next'),
-          prevEl: sectionEl.querySelector('.nw-swiper-btn--prev'),
-          disabledClass: 'swiper-button-disabled'
-        },
-        {% endif %}
-        breakpoints: {
-          750: {
-            spaceBetween: 16
-          }
-        }
-      };
-
-      swiperInstance = new Swiper(sliderEl, swiperOptions);
-
-      swiperInstance.on('slideChange', function () {
-        updateCustomPagination();
-      });
-
-      swiperInstance.on('slideChangeTransitionEnd', function () {
-        fixInfinitePosition(swiperInstance);
-        updateCustomPagination();
-      });
-
-      swiperInstance.on('transitionEnd', function () {
-        updateCustomPagination();
-      });
-
-      swiperInstance.on('resize', function () {
-        var savedIndex = getRealSlideIndex(swiperInstance.activeIndex);
-        var refreshedMeta = slideMeta;
-
-        if (enableInfinite) {
-          refreshedMeta = ensureEnoughSlides(sliderEl);
-        }
-
-        swiperInstance.update();
-        swiperInstance.slideTo(refreshedMeta.startIndex + savedIndex, 0);
-        updateCustomPagination();
-
-        {% if section.settings.show_arrows %}
-        if (swiperInstance.navigation) {
-          swiperInstance.navigation.update();
-        }
-        {% endif %}
-      });
-
-      updateCustomPagination();
-      bindPagination();
-
-      {% if section.settings.show_arrows %}
-      if (swiperInstance.navigation) {
-        swiperInstance.navigation.update();
-      }
-      {% endif %}
-
-      window.requestAnimationFrame(function () {
-        if (!swiperInstance) return;
-
-        swiperInstance.update();
-        swiperInstance.slideTo(slideMeta.startIndex + getRealSlideIndex(swiperInstance.activeIndex), 0);
-        fixInfinitePosition(swiperInstance);
-
-        {% if section.settings.show_arrows %}
-        if (swiperInstance.navigation) {
-          swiperInstance.navigation.update();
-        }
-        {% endif %}
-
-        updateCustomPagination();
-      });
-
-      window.setTimeout(function () {
-        if (!swiperInstance) return;
-
-        if (enableInfinite) {
-          slideMeta = ensureEnoughSlides(sliderEl);
-        }
-
-        swiperInstance.update();
-        swiperInstance.slideTo(slideMeta.startIndex + getRealSlideIndex(swiperInstance.activeIndex), 0);
-        fixInfinitePosition(swiperInstance);
-
-        {% if section.settings.show_arrows %}
-        if (swiperInstance.navigation) {
-          swiperInstance.navigation.update();
-        }
-        {% endif %}
-
-        updateCustomPagination();
-      }, 150);
-    }
-
-    function initSection() {
-      initToggles();
-      initSwiper();
-    }
-
-    if (
-      document.readyState === 'loading'
-    ) {
-      document.addEventListener(
-        'DOMContentLoaded',
-        initSection
-      );
-    } else {
-      initSection();
-    }
-
-    document.addEventListener(
-      'shopify:section:load',
-      function (event) {
-        if (
-          event.target &&
-          event.target.contains(sectionEl)
-        ) {
-          initSection();
-        }
-      }
-    );
-
-    document.addEventListener(
-      'shopify:section:select',
-      function () {
-        var sliderEl =
-          sectionEl.querySelector(
-            '.nw-trusted-people__swiper'
-          );
-
-        if (
-          !sliderEl ||
-          !sliderEl.swiper
-        ) {
-          return;
-        }
-
-        sliderEl.swiper.update();
-
-        {% if section.settings.show_arrows %}
-        if (
-          sliderEl.swiper.navigation
-        ) {
-          sliderEl.swiper.navigation.update();
-        }
-        {% endif %}
-
-        updateCustomPagination();
-      }
-    );
-
-    document.addEventListener(
-      'shopify:block:select',
-      function (event) {
-        var sliderEl =
-          sectionEl.querySelector(
-            '.nw-trusted-people__swiper'
-          );
-
-        if (
-          !sliderEl ||
-          !sliderEl.swiper
-        ) {
-          return;
-        }
-
-        if (
-          event.target &&
-          event.target.getAttribute(
-            'data-nw-tp-clone'
-          ) === 'true'
-        ) {
-          return;
-        }
-
-        var slideIndex =
-          event.target &&
-          event.target.getAttribute(
-            'data-slide-index'
-          );
-
-        if (
-          slideIndex === null ||
-          slideIndex === undefined
-        ) {
-          return;
-        }
-
-        var index =
-          parseInt(
-            slideIndex,
-            10
-          );
-
-        if (isNaN(index)) return;
-
-        if (
-          sliderEl.swiper.params.loop
-        ) {
-          sliderEl.swiper.slideToLoop(
-            index,
-            400
-          );
-        } else {
-          var meta = getSlideMeta(sliderEl);
-          sliderEl.swiper.slideTo(
-            meta.startIndex + index,
-            400
-          );
-        }
-
-        sliderEl.swiper.update();
-
-        {% if section.settings.show_arrows %}
-        if (
-          sliderEl.swiper.navigation
-        ) {
-          sliderEl.swiper.navigation.update();
-        }
-        {% endif %}
-
-        updateCustomPagination();
-      }
-    );
-
-    document.addEventListener(
-      'shopify:block:deselect',
-      function () {
-        var sliderEl =
-          sectionEl.querySelector(
-            '.nw-trusted-people__swiper'
-          );
-
-        if (
-          !sliderEl ||
-          !sliderEl.swiper
-        ) {
-          return;
-        }
-
-        sliderEl.swiper.update();
-
-        {% if section.settings.show_arrows %}
-        if (
-          sliderEl.swiper.navigation
-        ) {
-          sliderEl.swiper.navigation.update();
-        }
-        {% endif %}
-      }
-    );
-
-  })();
-</script>
 {% schema %}
 {
   "name": "NW Trusted People",
@@ -716,49 +100,13 @@
   "settings": [
     {
       "type": "header",
-      "content": "SECTION HEADER"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_rating",
-      "label": "Show Rating Stars",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "star_rating",
-      "label": "Star Rating (Active Stars)",
-      "min": 1,
-      "max": 5,
-      "step": 1,
-      "default": 5,
-      "visible_if": "{{ section.settings.show_rating == true }}"
-    },
-    {
-      "type": "color",
-      "id": "star_color",
-      "label": "Active Star Color",
-      "default": "#E57B1E",
-      "visible_if": "{{ section.settings.show_rating == true }}"
-    },
-    {
-      "type": "color",
-      "id": "star_color_inactive",
-      "label": "Inactive Star Color",
-      "default": "#D1D5DB",
-      "visible_if": "{{ section.settings.show_rating == true }}"
+      "content": "Section content"
     },
     {
       "type": "inline_richtext",
-      "id": "eyebrow",
-      "label": "Eyebrow Text",
-      "default": "Real sleepers, real mornings"
-    },
-    {
-      "type": "richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "<h2>Sleep Like The People Who Win</h2>"
+      "default": "Sleep Like The People Who Win"
     },
     {
       "type": "richtext",
@@ -856,23 +204,15 @@
       "content": "CTA button"
     },
     {
-      "type": "checkbox",
-      "id": "show_button",
-      "label": "Show button",
-      "default": true
-    },
-    {
       "type": "text",
       "id": "button_text",
-      "label": "Button Label",
-      "default": "Shop the mattress",
-      "visible_if": "{{ section.settings.show_button == true }}"
+      "label": "Button text",
+      "default": "Shop the mattress"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button link",
-      "visible_if": "{{ section.settings.show_button == true }}"
+      "label": "Button link"
     },
     {
       "type": "select",
@@ -883,8 +223,7 @@
         { "value": "primary", "label": "Primary" },
         { "value": "secondary", "label": "Secondary" },
         { "value": "outline", "label": "Outline" }
-      ],
-      "visible_if": "{{ section.settings.show_button == true }}"
+      ]
     },
     {
       "type": "header",

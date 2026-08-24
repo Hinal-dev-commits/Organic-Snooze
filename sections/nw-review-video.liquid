@@ -1,5 +1,6 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
 {{ 'nw-review-video.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-review-video.js' | asset_url }}" defer="defer"></script>
 
 <style>
   .nw-review-video.section-{{ section.id }} {
@@ -36,7 +37,13 @@
   }
 </style>
 
-<section class="nw-review-video section-{{ section.id }}{%- render 'nw-scroll-animation' -%}">
+<nw-review-video
+  class="nw-review-video section-{{ section.id }}{%- render 'nw-scroll-animation' -%}"
+  data-block-count="{{ section.blocks.size | default: 1 }}"
+  data-enable-autoplay="{{ section.settings.enable_autoplay }}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | default: 3 | times: 1000 }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+>
   <div class="nw page-width"> 
     <div class="nw-review-video__wrapper">
       <div class="nw-review-video__header">
@@ -46,9 +53,7 @@
             <div class="nw-review-video__stars" aria-label="{{ active_stars }} out of 5 stars">
               {%- for i in (1..5) -%}
                 <span class="nw-review-video__star{% if i <= active_stars %} nw-review-video__star--active{% endif %}">
-                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                    <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
-                  </svg>
+                  {% render 'nw-icon', icon: 'star-rating-sm' %}
                 </span>
               {%- endfor -%}
             </div>
@@ -61,7 +66,7 @@
         {%- endif -%}
 
        {%- if section.settings.heading != blank -%}
-        {% render 'nw-section-heading', text: section.settings.heading %}
+        {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
         {%- endif -%}
 
         {%- if section.settings.subheading != blank -%}
@@ -89,31 +94,10 @@
     -%}
     <div class="nw-review-video__slider-wrap">
       {%- if section.settings.show_arrows -%}
-        <button
-          type="button"
-          class="nw-review-video__nav-btn nw-review-video__nav-btn--prev"
-          id="nw-review-video-prev-{{ section.id }}"
-          aria-label="Previous video"
-        >
-          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M20.3594 12.8572H5.35938" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12.8594 5.35718L5.35938 12.8572L12.8594 20.3572" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-        </button>
-        <button
-          type="button"
-          class="nw-review-video__nav-btn nw-review-video__nav-btn--next"
-          id="nw-review-video-next-{{ section.id }}"
-          aria-label="Next video"
-        >
-          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M5.35547 12.8572H20.3555" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12.8555 5.35718L20.3555 12.8572L12.8555 20.3572" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-        </button>
+        {% render 'nw-swiper-arrows', prev_label: 'Previous video', next_label: 'Next video' %}
       {%- endif -%}
 
-      <div class="swiper" id="nw-review-videos-{{ section.id }}">
+      <div class="swiper" id="nw-review-videos-{{ section.id }}" data-nw-review-slider>
         <div class="swiper-wrapper">
           {%- for r in (1..repeat_times) -%}
             {%- for block in section.blocks -%}
@@ -173,9 +157,7 @@
 
                     <button type="button" class="nw-review-video__play" aria-label="Play video">
                       <span class="nw-review-video__play-icon">
-                        <svg width="18" height="20" viewBox="0 0 18 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M17.64 9.94191L1.43224e-05 19.8839L1.51916e-05 -5.79915e-05L17.64 9.94191Z" fill="white"/>
-                        </svg>
+                        {% render 'nw-icon', icon: 'play' %}
                       </span>
                     </button>
                   </div>
@@ -187,10 +169,7 @@
                       {%- endif -%}
                       {%- if block.settings.show_verified -%}
                         <span class="nw-review-video__verified">
-                          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                            <path d="M8 0.5L9.8 2.2L12.3 1.9L13.1 4.2L15.3 5.3L14.9 7.7L16 9.9L14.4 11.8L14.4 14.3L11.9 14.7L10.4 16.6L8 15.9L5.6 16.6L4.1 14.7L1.6 14.3L1.6 11.8L0 9.9L1.1 7.7L0.7 5.3L2.9 4.2L3.7 1.9L6.2 2.2L8 0.5Z" fill="#878735"/>
-                            <path d="M5.5 8.2L7.2 9.8L10.8 6.2" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
+                          {% render 'nw-icon', icon: 'verified' %}
                           <span>{{ block.settings.verified_text | default: 'Verified Customer' }}</span>
                         </span>
                       {%- endif -%}
@@ -222,10 +201,7 @@
                           {%- endif -%}
                         </div>
                         <span class="nw-review-video__product-arrow" aria-hidden="true">
-                          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3.75 9H14.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9 3.75L14.25 9L9 14.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
+                          {% render 'nw-icon', icon: 'arrow-right' %}
                         </span>
                       {%- if product_url != blank -%}
                         </a>
@@ -242,7 +218,7 @@
       </div>
 
       {%- if section.settings.show_dots and section.blocks.size > 1 -%}
-        <div class="nw-review-video__pagination" id="nw-review-videos-pagination-{{ section.id }}">
+        <div class="nw-review-video__pagination" id="nw-review-videos-pagination-{{ section.id }}" data-nw-review-pagination>
           {%- for block in section.blocks -%}
             <button
               type="button"
@@ -255,223 +231,7 @@
       {%- endif -%}
     </div>
   {%- endif -%}
-</section>
-
-<script>
-  (function() {
-    function initReviewVideos() {
-      if (typeof Swiper === 'undefined') {
-        var script = document.querySelector('#nw-swiper-bundle-js');
-        if (!script) {
-          script = document.createElement('script');
-          script.id = 'nw-swiper-bundle-js';
-          script.src = '{{ "nw-swiper-bundle.min.js" | asset_url }}';
-          script.onload = runReviewVideos;
-          document.head.appendChild(script);
-        } else {
-          script.addEventListener('load', runReviewVideos);
-          var checkCount = 0;
-          var checkSwiper = setInterval(function() {
-            checkCount++;
-            if (typeof Swiper !== 'undefined' || checkCount > 60) {
-              clearInterval(checkSwiper);
-              if (typeof Swiper !== 'undefined') runReviewVideos();
-            }
-          }, 50);
-        }
-      } else {
-        runReviewVideos();
-      }
-    }
-
-    function pauseOtherVideos(currentVideo) {
-      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
-      if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay && sliderEl.swiper.autoplay.running) {
-        sliderEl.swiper.autoplay.stop();
-      }
-      document.querySelectorAll('.nw-review-video.section-{{ section.id }} video').forEach(function(video) {
-        if (video !== currentVideo) {
-          video.pause();
-          var card = video.closest('.nw-review-video__card');
-          if (card) card.classList.remove('is-playing');
-        }
-      });
-    }
-
-    function bindVideoEvents() {
-      var sectionEl = document.querySelector('.nw-review-video.section-{{ section.id }}');
-      if (!sectionEl || sectionEl._videoBound) return;
-      sectionEl._videoBound = true;
-
-      sectionEl.addEventListener('click', function(e) {
-        var btn = e.target.closest('.nw-review-video__play');
-        if (!btn) return;
-        e.preventDefault();
-        e.stopPropagation();
-        var card = btn.closest('.nw-review-video__card');
-        if (!card) return;
-        var video = card.querySelector('video');
-        if (!video) return;
-        pauseOtherVideos(video);
-        card.classList.add('is-playing');
-        video.play();
-      });
-
-      sectionEl.addEventListener('pause', function(e) {
-        if (e.target && e.target.tagName === 'VIDEO') {
-          var card = e.target.closest('.nw-review-video__card');
-          if (e.target.currentTime === 0 || e.target.ended) {
-            if (card) card.classList.remove('is-playing');
-          }
-          var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
-          if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay) {
-            sliderEl.swiper.autoplay.start();
-          }
-        }
-      }, true);
-
-      sectionEl.addEventListener('ended', function(e) {
-        if (e.target && e.target.tagName === 'VIDEO') {
-          var card = e.target.closest('.nw-review-video__card');
-          if (card) card.classList.remove('is-playing');
-          var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
-          if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay) {
-            sliderEl.swiper.autoplay.start();
-          }
-        }
-      }, true);
-    }
-
-    function updateCustomPagination(swiper) {
-      var totalBlocks = {{ section.blocks.size | default: 1 }};
-      if (totalBlocks <= 1) return;
-      var currentRealIndex = swiper.realIndex % totalBlocks;
-      var bullets = document.querySelectorAll('#nw-review-videos-pagination-{{ section.id }} .nw-review-video__bullet');
-      bullets.forEach(function(bullet, idx) {
-        if (idx === currentRealIndex) {
-          bullet.classList.add('nw-review-video__bullet--active');
-        } else {
-          bullet.classList.remove('nw-review-video__bullet--active');
-        }
-      });
-    }
-
-    function runReviewVideos() {
-      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
-      if (!sliderEl) return;
-      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
-
-      var swiperOptions = {
-        slidesPerView: 'auto',
-        spaceBetween: 20,
-        centeredSlides: true,
-        loop: true,
-        speed: 600,
-        grabCursor: true,
-        simulateTouch: true,
-        allowTouchMove: true,
-        watchSlidesProgress: true,
-        breakpoints: {
-          0: {
-            slidesPerView: 'auto',
-            spaceBetween: 12,
-            centeredSlides: true
-          },
-          750: {
-            slidesPerView: 'auto',
-            spaceBetween: 16,
-            centeredSlides: true
-          },
-          990: {
-            slidesPerView: 'auto',
-            spaceBetween: 20,
-            centeredSlides: true
-          }
-        }
-      };
-
-      {% if section.settings.enable_autoplay %}
-      swiperOptions.autoplay = {
-        delay: {{ section.settings.autoplay_delay | default: 3 | times: 1000 }},
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true
-      };
-      {% endif %}
-
-      {% if section.settings.show_arrows %}
-      swiperOptions.navigation = {
-        nextEl: '#nw-review-video-next-{{ section.id }}',
-        prevEl: '#nw-review-video-prev-{{ section.id }}'
-      };
-      {% endif %}
-
-      var swiperInstance = new Swiper(sliderEl, swiperOptions);
-
-      swiperInstance.on('slideChange', function() {
-        updateCustomPagination(swiperInstance);
-      });
-      swiperInstance.on('init', function() {
-        updateCustomPagination(swiperInstance);
-      });
-      updateCustomPagination(swiperInstance);
-
-      var paginationEl = document.querySelector('#nw-review-videos-pagination-{{ section.id }}');
-      if (paginationEl && !paginationEl._bound) {
-        paginationEl._bound = true;
-        paginationEl.addEventListener('click', function(e) {
-          var bullet = e.target.closest('.nw-review-video__bullet');
-          if (!bullet) return;
-          var targetIndex = parseInt(bullet.getAttribute('data-bullet-index'), 10);
-          if (!isNaN(targetIndex) && sliderEl.swiper) {
-            sliderEl.swiper.slideToLoop(targetIndex, 600);
-          }
-        });
-      }
-
-      bindVideoEvents();
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initReviewVideos);
-    } else {
-      initReviewVideos();
-    }
-
-    document.addEventListener('shopify:section:load', function(e) {
-      if (e.target.classList.contains('section-{{ section.id }}') || e.target.querySelector('.section-{{ section.id }}')) {
-        initReviewVideos();
-      }
-    });
-
-    document.addEventListener('shopify:section:select', function(e) {
-      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
-      if (sliderEl && sliderEl.swiper) {
-        sliderEl.swiper.update();
-      }
-    });
-
-    document.addEventListener('shopify:block:select', function(e) {
-      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
-      if (!sliderEl || !sliderEl.swiper) return;
-      var slideIndex = e.target.getAttribute('data-slide-index');
-      if (slideIndex !== null && slideIndex !== undefined) {
-        if (sliderEl.swiper.params.loop) {
-          sliderEl.swiper.slideToLoop(parseInt(slideIndex, 10), 400);
-        } else {
-          sliderEl.swiper.slideTo(parseInt(slideIndex, 10), 400);
-        }
-        sliderEl.swiper.update();
-      }
-    });
-
-    document.addEventListener('shopify:block:deselect', function(e) {
-      var sliderEl = document.querySelector('#nw-review-videos-{{ section.id }}');
-      if (sliderEl && sliderEl.swiper) {
-        sliderEl.swiper.update();
-      }
-    });
-  })();
-</script>
+</nw-review-video>
 
 {% schema %}
 {
@@ -519,10 +279,10 @@
       "default": "Real sleepers, real mornings"
     },
     {
-      "type": "richtext",
+      "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "<h2>Hear It From People Who Sleep On It</h2>"
+      "default": "Hear It From People Who Sleep On It"
     },
     {
       "type": "richtext",

@@ -2,8 +2,8 @@
   display: block;
   width: 100%;
   overflow: hidden;
-  background-color: var(--nw-marquee-bg, #613916);
-  color: var(--nw-marquee-color, #ffffff);
+  background-color: var(--nw-marquee-bg, var(--primary-color));
+  color: var(--nw-marquee-color, var(--senary-color));
   min-height: var(--nw-marquee-min-height-dt, 56px);
   padding-top: var(--nw-marquee-padding-top-dt, 16px);
   padding-bottom: var(--nw-marquee-padding-bottom-dt, 16px);
@@ -99,7 +99,7 @@
   min-width: var(--nw-marquee-icon-size-dt, 24px);
   min-height: var(--nw-marquee-icon-size-dt, 24px);
   flex-shrink: 0;
-  color: var(--nw-marquee-icon-color, #f4efe8);
+  color: var(--nw-marquee-icon-color, var(--tertiary-color));
   position: relative;
 }
 
@@ -117,14 +117,14 @@
 }
 
 .nw-marquee__text {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family);
   font-style: normal;
   font-weight: var(--nw-marquee-font-weight, 500);
   font-size: var(--nw-marquee-font-size-dt, 18px);
   line-height: 130%;
   text-transform: var(--nw-marquee-text-transform, uppercase);
   letter-spacing: var(--nw-marquee-letter-spacing, 0px);
-  color: var(--nw-marquee-color, #ffffff);
+  color: var(--nw-marquee-color, var(--senary-color));
   white-space: nowrap;
   display: flex;
   align-items: center;

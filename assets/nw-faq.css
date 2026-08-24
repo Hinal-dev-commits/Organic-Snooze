@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     box-sizing: border-box;
-    background-color: var(--senary-color, #FFFFFF);
+    background-color: var(--senary-color, var(--senary-color));
     isolation: isolate;
     overflow: hidden;
 }
@@ -61,7 +61,7 @@
     padding: 0 16px 0 24px;
     gap: 12px;
     background: rgba(255, 255, 255, 0.15);
-    border: 1px solid var(--primary-color, #613916);
+    border: 1px solid var(--primary-color, var(--primary-color));
     border-radius: 1000px;
     box-sizing: border-box;
 }
@@ -78,7 +78,7 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 135%;
-    color: var(--primary-color, #613916);
+    color: var(--primary-color, var(--primary-color));
     box-sizing: border-box;
     padding: 0;
 }
@@ -110,7 +110,7 @@
     width: 24px;
     height: 24px;
     flex-shrink: 0;
-    color: var(--primary-color, #613916);
+    color: var(--primary-color, var(--primary-color));
 }
 
 .nw-faq__search-icon svg {
@@ -130,8 +130,9 @@
 
 .nw-faq__item {
     width: 100%;
-    border-bottom: 1px solid var(--primary-color, #613916);
+    border-bottom: 1px solid var(--primary-color, var(--primary-color));
     box-sizing: border-box;
+    overflow: hidden;
     transition: all 0.2s ease;
 }
 
@@ -164,7 +165,7 @@
     font-weight: 600;
     font-size: 18px;
     line-height: 140%;
-    color: var(--primary-color, #613916);
+    color: var(--primary-color, var(--primary-color));
     margin: 0;
     text-align: left;
 }
@@ -175,7 +176,7 @@
     height: 32px;
     min-width: 32px;
     border-radius: 50%;
-    background: var(--secondary-color, #CC926A);
+    background: var(--secondary-color, var(--secondary-color));
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -187,7 +188,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    background: var(--senary-color, #FFFFFF);
+    background: var(--senary-color, var(--senary-color));
     border-radius: 2px;
     transform: translate(-50%, -50%);
 }
@@ -203,7 +204,11 @@
     transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-.nw-faq__item[open] .nw-faq__toggle-v {
+.nw-faq__item details {
+    width: 100%;
+}
+
+.nw-faq__item details[open] .nw-faq__toggle-v {
     transform: translate(-50%, -50%) scaleY(0);
     opacity: 0;
 }
@@ -215,8 +220,9 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
-    color: var(--primary-color, #613916);
+    color: var(--primary-color, var(--primary-color));
     box-sizing: border-box;
+    text-align: left;
 }
 
 .nw-faq__answer p {
@@ -242,7 +248,7 @@
     line-height: 140%;
     text-decoration: underline;
     text-transform: uppercase;
-    color: var(--primary-color, #613916);
+    color: var(--primary-color, var(--primary-color));
     background: none;
     border: none;
     cursor: pointer;

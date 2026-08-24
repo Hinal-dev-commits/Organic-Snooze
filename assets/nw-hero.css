@@ -172,7 +172,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--nw-hero-star-color, #E57B1E);
+  color: var(--nw-hero-star-color, var(--septenary-color));
 }
 
 .nw-hero__star svg {
@@ -192,7 +192,7 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 150%;
-  color: #FFFFFF;
+  color: var(--senary-color);
   margin: 0;
   padding-left: 3px;
   display: inline-flex;
@@ -210,7 +210,7 @@
   line-height: 115%;
   letter-spacing: -0.01em;
   text-transform: capitalize;
-  color: #FFFFFF;
+  color: var(--senary-color);
   margin: 0;
 }
 
@@ -229,7 +229,7 @@
   font-weight: 400;
   font-size: 20px;
   line-height: 150%;
-  color: #FFFFFF;
+  color: var(--senary-color);
   margin: 0;
   text-align: left;
   margin-bottom: 24px;
@@ -310,7 +310,7 @@
   height: 20px;
   min-width: 20px;
   min-height: 20px;
-  color: #CC926A;
+  color: var(--secondary-color);
 }
 
 .nw-hero__trust-icon svg {
@@ -334,7 +334,7 @@
   font-size: 14px;
   line-height: 130%;
   text-align: center;
-  color: #FFFFFF;
+  color: var(--senary-color);
   white-space: nowrap;
   margin: 0;
   display: inline;
@@ -382,7 +382,7 @@
   font-weight: 700;
   font-size: 18px;
   line-height: 120%;
-  color: #FFFFFF;
+  color: var(--senary-color);
   margin: 0;
 }
 
@@ -435,7 +435,7 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  color: #FFFFFF;
+  color: var(--senary-color);
   margin: 0;
   display: inline;
 }
@@ -505,7 +505,7 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: var(--senary-color);
 }
 
 .nw-hero__timer-txt {
@@ -515,7 +515,7 @@
   font-size: 13px;
   line-height: 17px;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: var(--senary-color);
 }
 
 .nw-hero__timer-sep {
@@ -524,7 +524,7 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  color: #CC926A;
+  color: var(--secondary-color);
 }
 
 .nw-hero__media-col {
@@ -562,7 +562,7 @@
 .nw-hero__play-icon {
   width: 32px;
   height: 32px;
-  fill: #FFFFFF;
+  fill: var(--senary-color);
   margin-left: 4px;
   display: block;
 }
@@ -570,7 +570,7 @@
 .nw-hero__pause-icon {
   width: 32px;
   height: 32px;
-  fill: #FFFFFF;
+  fill: var(--senary-color);
   display: none;
 }
 

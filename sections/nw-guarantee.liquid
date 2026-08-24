@@ -72,7 +72,7 @@
   }
 </style>
 
-<section class="nw-guarantee section-{{ section.id }}">
+<div class="nw-guarantee section-{{ section.id }}">
   <div class="nw page-width">
     <div class="nw-guarantee__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-guarantee__header">
@@ -97,7 +97,7 @@
         {%- endif -%}
 
         {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading %}
+          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
         {%- endif -%}
 
         {%- if section.settings.subheading != blank -%}
@@ -171,7 +171,7 @@
       {%- endif -%}
     </div>
   </div>
-</section>
+</div>
 
 {% schema %}
 {

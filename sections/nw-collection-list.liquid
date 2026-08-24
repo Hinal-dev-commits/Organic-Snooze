@@ -1,4 +1,5 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-collection-list.js' | asset_url }}" defer="defer"></script>
 {{ 'nw-collection-list.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
@@ -61,7 +62,13 @@
   }
 </style>
 
-<section class="nw-collection-list nw-main-section section-{{ section.id }}">
+<nw-collection-list
+  class="nw-collection-list nw-main-section section-{{ section.id }}"
+  data-enable-autoplay="{{ section.settings.enable_autoplay }}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-dots="{{ section.settings.show_dots }}"
+>
   <div class="nw-collection-list__container">
     <div class="nw-collection-list__inner{%- render 'nw-scroll-animation' -%}">
       <div class="nw-collection-list__header">
@@ -86,7 +93,7 @@
         {%- endif -%}
 
         {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading %}
+          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
         {%- endif -%}
 
         {%- if section.settings.subheading != blank -%}
@@ -97,20 +104,10 @@
       {%- if slide_count > 0 -%}
         <div class="nw-collection-list__slider-wrap">
           {%- if section.settings.show_arrows and slide_count > 1 -%}
-            <button
-              type="button"
-              class="nw-collection-list__nav nw-collection-list__nav--prev"
-              id="nw-collection-list-prev-{{ section.id }}"
-              aria-label="Previous collections"
-            >
-            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20.3594 12.8574H5.35938" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12.8594 5.35742L5.35938 12.8574L12.8594 20.3574" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            </button>
+            {% render 'nw-swiper-arrows', prev_label: 'Previous collections', next_label: 'Next collections' %}
           {%- endif -%}
 
-          <div class="swiper" id="nw-collection-list-{{ section.id }}">
+          <div class="swiper" id="nw-collection-list-{{ section.id }}" data-nw-collection-slider>
             <div class="swiper-wrapper">
               {%- assign repeat_times = 1 -%}
               {%- if slide_count > 0 and slide_count < 6 -%}
@@ -161,9 +158,11 @@
                       {%- else -%}
                         <div class="nw-collection-list__card-placeholder" aria-hidden="true"></div>
                       {%- endif -%}
+                      {%- if card_title != blank -%}  
                       <div class="nw-collection-list__card-label">
                         <p class="nw-collection-list__card-title">{{ card_title }}</p>
                       </div>
+                      {%- endif -%}
                     </a>
                   </div>
                 {%- endfor -%}
@@ -171,137 +170,20 @@
             </div>
           </div>
 
-          {%- if section.settings.show_arrows and slide_count > 1 -%}
-            <button
-              type="button"
-              class="nw-collection-list__nav nw-collection-list__nav--next"
-              id="nw-collection-list-next-{{ section.id }}"
-              aria-label="Next collections"
-            >
-              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M5.35547 12.8574H20.3555" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12.8555 5.35742L20.3555 12.8574L12.8555 20.3574" stroke="white" stroke-width="1.42857" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-            </button>
-          {%- endif -%}
         </div>
 
         {%- if section.settings.show_dots and slide_count > 1 -%}
-          <div class="nw-collection-list__pagination swiper-pagination" id="nw-collection-list-pagination-{{ section.id }}"></div>
+          <div class="nw-collection-list__pagination swiper-pagination" id="nw-collection-list-pagination-{{ section.id }}" data-nw-collection-pagination></div>
         {%- endif -%}
       {%- endif -%}
-
-      {% render 'nw-cta-badges', settings: section.settings, class: 'nw-collection-list__actions' %}
+      {% if section.settings.button_label != blank or section.settings.show_features %}
+        <div class="nw-collection-list__actions">
+          {% render 'nw-cta-badges', settings: section.settings, class: 'nw-collection-list__actions' %}
+        </div>
+      {% endif %}
     </div>
   </div>
-</section>
-
-<script>
-  (function() {
-    var sectionId = '{{ section.id }}';
-
-    function initCollectionListSlider() {
-      if (typeof Swiper === 'undefined') {
-        var script = document.querySelector('#nw-swiper-bundle-js');
-        if (!script) {
-          script = document.createElement('script');
-          script.id = 'nw-swiper-bundle-js';
-          script.src = '{{ "nw-swiper-bundle.min.js" | asset_url }}';
-          script.onload = runCollectionListSlider;
-          document.head.appendChild(script);
-        } else {
-          script.addEventListener('load', runCollectionListSlider);
-          var checkCount = 0;
-          var checkSwiper = setInterval(function() {
-            checkCount++;
-            if (typeof Swiper !== 'undefined' || checkCount > 60) {
-              clearInterval(checkSwiper);
-              if (typeof Swiper !== 'undefined') runCollectionListSlider();
-            }
-          }, 50);
-        }
-      } else {
-        runCollectionListSlider();
-      }
-    }
-
-    function runCollectionListSlider() {
-      var sliderEl = document.querySelector('#nw-collection-list-' + sectionId);
-      if (!sliderEl) return;
-      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
-
-      var slideCount = sliderEl.querySelectorAll('.swiper-slide').length;
-      if (slideCount === 0) return;
-
-      var swiperOptions = {
-        slidesPerView: 'auto',
-        spaceBetween: 16,
-        loop: slideCount > 1,
-        loopedSlides: slideCount,
-        grabCursor: true,
-        observer: true,
-        observeParents: true,
-        observeSlideChildren: true
-      };
-
-      {% if section.settings.enable_autoplay %}
-      swiperOptions.autoplay = {
-        delay: {{ section.settings.autoplay_delay | default: 4 | times: 1000 }},
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true
-      };
-      {% endif %}
-
-      {% if section.settings.show_arrows %}
-      swiperOptions.navigation = {
-        nextEl: '#nw-collection-list-next-' + sectionId,
-        prevEl: '#nw-collection-list-prev-' + sectionId
-      };
-      {% endif %}
-
-      {% if section.settings.show_dots %}
-      swiperOptions.pagination = {
-        el: '#nw-collection-list-pagination-' + sectionId,
-        clickable: true
-      };
-      {% endif %}
-
-      swiperOptions.breakpoints = {
-        0: {
-          slidesPerView: 'auto',
-          spaceBetween: 12,
-          centeredSlides: true
-        },
-        750: {
-          slidesPerView: 'auto',
-          spaceBetween: 16,
-          centeredSlides: true
-        }
-      };
-
-      new Swiper(sliderEl, swiperOptions);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCollectionListSlider);
-    } else {
-      initCollectionListSlider();
-    }
-
-    document.addEventListener('shopify:section:load', function(e) {
-      if (e.target.classList.contains('section-' + sectionId) || e.target.querySelector('.section-' + sectionId)) {
-        initCollectionListSlider();
-      }
-    });
-
-    document.addEventListener('shopify:section:select', function(e) {
-      var sliderEl = document.querySelector('#nw-collection-list-' + sectionId);
-      if (sliderEl && sliderEl.swiper) {
-        sliderEl.swiper.update();
-      }
-    });
-  })();
-</script>
+</nw-collection-list>
 
 {% schema %}
 {

@@ -1,4 +1,5 @@
 {{ 'nw-hero.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-hero.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign hero_media_type = section.settings.media_type
@@ -61,7 +62,7 @@
   }
 </style>
 
-<div
+<nw-hero
   id="NwHero-{{ section.id }}"
   class="nw-hero__wrapper{% if section.settings.enable_transparent_header %} nw-hero--transparent-header{% endif %}{%- render 'nw-scroll-animation', type: 'fade-in' -%}"
   {% if section.settings.enable_transparent_header %}data-nw-transparent-header{% endif %}
@@ -143,15 +144,11 @@
               {%- for i in (1..5) -%}
                 {%- if i <= section.settings.rating_stars -%}
                   <span class="nw-hero__star">
-                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
+                    {% render 'nw-icon', icon: 'star-rating' %}
                   </span>
                 {%- else -%}
                   <span class="nw-hero__star nw-hero__star--empty">
-                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
+                    {% render 'nw-icon', icon: 'star-rating' %}
                   </span>
                 {%- endif -%}
               {%- endfor -%}
@@ -163,7 +160,7 @@
         {%- endif -%}
 
         {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading, class: 'nw-heading' %}
+          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index, class: 'nw-heading' %}
         {%- endif -%}
 
         {%- if section.settings.subheading != blank -%}
@@ -192,17 +189,7 @@
                       {%- if block.settings.show_icon -%}
                         {%- if block.settings.icon_type == 'us_flag' -%}
                           <span class="nw-hero__promo-icon" aria-hidden="true">
-                            <svg width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <rect width="20" height="15" fill="#B22234"/>
-                              <rect y="1.15381" width="20" height="1.15385" fill="white"/>
-                              <rect y="3.46143" width="20" height="1.15385" fill="white"/>
-                              <rect y="5.76904" width="20" height="1.15385" fill="white"/>
-                              <rect y="8.07666" width="20" height="1.15385" fill="white"/>
-                              <rect y="10.3843" width="20" height="1.15385" fill="white"/>
-                              <rect y="12.6919" width="20" height="1.15385" fill="white"/>
-                              <rect width="8" height="8.07692" fill="#3C3B6E"/>
-                              <path d="M1.33 1.5l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zM2.66 3.5l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zM1.33 5.5l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1zm2.66 0l.3.9h1l-.8.6.3.9-.8-.6-.8.6.3-.9-.8-.6h1z" fill="white"/>
-                            </svg>
+                            {% render 'nw-icon', icon: 'us-flag' %}
                           </span>
                         {%- elsif block.settings.icon_type == 'custom' and block.settings.custom_icon != blank -%}
                           <span class="nw-hero__promo-icon" aria-hidden="true">
@@ -223,10 +210,12 @@
                 {%- if block.settings.promo_subtext != blank -%}
                   <div class="nw-hero__promo-subtext">{{ block.settings.promo_subtext }}</div>
                 {%- endif -%}
+                {% if block.settings.countdown_end_date != blank or block.settings.countdown_label != blank %}
                 <div class="nw-hero__countdown-wrap">
                   {%- if block.settings.countdown_label != blank -%}
                     <div class="nw-hero__countdown-label">{{ block.settings.countdown_label }}</div>
                   {%- endif -%}
+                  {% if block.settings.countdown_end_date != blank %}
                   <div class="nw-hero__timer-units">
                     <div class="nw-hero__timer-unit">
                       <span class="nw-hero__timer-num nw-countdown-days">00</span>
@@ -243,7 +232,9 @@
                       <span class="nw-hero__timer-txt">MINS</span>
                     </div>
                   </div>
+                  {% endif %}
                 </div>
+                {% endif %}
               </div>
           {%- endcase -%}
         {%- endfor -%}
@@ -252,115 +243,14 @@
       {%- if hero_media_type == 'video' and section.settings.enable_video_button -%}
         <div class="nw-hero__media-col">
           <button type="button" class="nw-hero__play-btn" aria-label="Play or pause video">
-            <svg class="nw-hero__play-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg class="nw-hero__pause-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
+            {% render 'nw-icon', icon: 'play-hero' %}
+            {% render 'nw-icon', icon: 'pause-hero' %}
           </button>
         </div>
       {%- endif -%}
     </div>
   </div>
-</div>
-
-<script>
-  (function() {
-    var heroEl = document.getElementById('NwHero-{{ section.id }}');
-    if (!heroEl) return;
-    
-    var countdownEl = heroEl.querySelector('[data-countdown-date]');
-    if (countdownEl) {
-      var targetDateStr = countdownEl.getAttribute('data-countdown-date');
-      var hideOnEnd = countdownEl.getAttribute('data-hide-on-end') === 'true';
-      var daysEl = countdownEl.querySelector('.nw-countdown-days');
-      var hoursEl = countdownEl.querySelector('.nw-countdown-hours');
-      var minsEl = countdownEl.querySelector('.nw-countdown-mins');
-      var secsEl = countdownEl.querySelector('.nw-countdown-secs');
-      
-      function padZero(num) {
-        return num < 10 ? '0' + num : num;
-      }
-      
-      if (targetDateStr && targetDateStr.trim() !== '') {
-        var targetDate = new Date(targetDateStr.replace(/-/g, '/')).getTime();
-        
-        function updateTimer() {
-          var now = new Date().getTime();
-          var diff = targetDate - now;
-          if (isNaN(targetDate)) {
-            return;
-          }
-          if (diff <= 0) {
-            if (hideOnEnd) {
-              countdownEl.style.display = 'none';
-            } else {
-              if (daysEl) daysEl.textContent = '00';
-              if (hoursEl) hoursEl.textContent = '00';
-              if (minsEl) minsEl.textContent = '00';
-              if (secsEl) secsEl.textContent = '00';
-            }
-            return;
-          }
-          var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          var secs = Math.floor((diff % (1000 * 60)) / 1000);
-          
-          if (daysEl) daysEl.textContent = padZero(days);
-          if (hoursEl) hoursEl.textContent = padZero(hours);
-          if (minsEl) minsEl.textContent = padZero(mins);
-          if (secsEl) secsEl.textContent = padZero(secs);
-        }
-        
-        updateTimer();
-        setInterval(updateTimer, 1000);
-      }
-    }
-
-    var playBtn = heroEl.querySelector('.nw-hero__play-btn');
-    var bgVideo = heroEl.querySelector('.nw-hero__bg-video');
-    if (playBtn && bgVideo) {
-      if (bgVideo.tagName === 'VIDEO') {
-        if (!bgVideo.paused) {
-          heroEl.classList.add('is-video-playing');
-        }
-        bgVideo.addEventListener('play', function() {
-          heroEl.classList.add('is-video-playing');
-        });
-        bgVideo.addEventListener('pause', function() {
-          heroEl.classList.remove('is-video-playing');
-        });
-      }
-      playBtn.addEventListener('click', function() {
-        if (bgVideo.tagName === 'VIDEO') {
-          if (bgVideo.paused) {
-            bgVideo.play();
-          } else {
-            bgVideo.pause();
-          }
-        } else if (bgVideo.tagName === 'IFRAME') {
-          if (heroEl.classList.contains('is-video-playing')) {
-            if (bgVideo.src.indexOf('youtube.com') !== -1) {
-              bgVideo.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-            } else if (bgVideo.src.indexOf('vimeo.com') !== -1) {
-              bgVideo.contentWindow.postMessage('{"method":"pause"}', '*');
-            }
-            heroEl.classList.remove('is-video-playing');
-          } else {
-            if (bgVideo.src.indexOf('youtube.com') !== -1) {
-              bgVideo.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            } else if (bgVideo.src.indexOf('vimeo.com') !== -1) {
-              bgVideo.contentWindow.postMessage('{"method":"play"}', '*');
-            }
-            heroEl.classList.add('is-video-playing');
-          }
-        }
-      });
-    }
-  })();
-</script>
+</nw-hero>
 
 {% schema %}
 {
@@ -485,10 +375,10 @@
       "content": "Heading"
     },
     {
-      "type": "richtext",
+      "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "<h1>Organic Mattress From the Inside Out.</h1>"
+      "default": "Organic Mattress From the Inside Out."
     },
     {
       "type": "header",
@@ -786,10 +676,6 @@
               "label": "Heart"
             },
             {
-              "value": "award",
-              "label": "Award"
-            },
-            {
               "value": "sparkle",
               "label": "Sparkle"
             },
@@ -910,7 +796,7 @@
         "rating_stars": 5,
         "star_color": "#E57B1E",
         "rating_text": "<p>4.9/5 (10,000+ happy sleepers)</p>",
-        "heading": "<h1>The World's Only 100% Organic, Certified Non-Toxic Mattress</h1>",
+        "heading": "The World's Only 100% Organic, Certified Non-Toxic Mattress",
         "subheading": "<p>Bio-optimized mattress engineered with pure materials for deeper recovery.</p>",
         "show_button": true,
         "btn_text": "SHOP MATTRESSES",

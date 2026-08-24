@@ -1,0 +1,12 @@
+{%- liquid
+  assign prev_extra_class = prev_class | default: ''
+  assign next_extra_class = next_class | default: ''
+  assign prev_aria = prev_label | default: 'Previous slide'
+  assign next_aria = next_label | default: 'Next slide'
+-%}
+<button type="button" class="nw-swiper-btn nw-swiper-btn--prev{{ prev_extra_class }}" aria-label="{{ prev_aria }}">
+  {% render 'nw-icon', icon: 'arrow-left' %}
+</button>
+<button type="button" class="nw-swiper-btn nw-swiper-btn--next{{ next_extra_class }}" aria-label="{{ next_aria }}">
+  {% render 'nw-icon', icon: 'arrow-right' %}
+</button>

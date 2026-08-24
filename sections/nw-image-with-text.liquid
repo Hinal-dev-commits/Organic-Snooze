@@ -47,7 +47,7 @@
       <div class="nw-image-with-text__media-wrap">
         {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
           <div class="nw-image-with-text__header mobile-only">
-            {% render 'nw-section-heading', text: section.settings.heading %}
+            {% render 'nw-section-heading', text: section.settings.heading, tag: 'h2' %}
             {% render 'nw-section-description', text: section.settings.subheading %}
           </div>
         {%- endif -%}
@@ -116,7 +116,7 @@
         <div class="nw-image-with-text__content">
           {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
             <div class="nw-image-with-text__header">
-              {% render 'nw-section-heading', text: section.settings.heading %}
+              {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
               {% render 'nw-section-description', text: section.settings.subheading %}
             </div>
           {%- endif -%}

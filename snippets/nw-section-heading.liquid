@@ -1,13 +1,25 @@
 {% doc %}
-Renders a section heading using global h2 styles.
+Renders a section heading using global heading styles.
+Uses h1 when section_index is 1, otherwise h2.
 @param {string} text - Heading content
+@param {number} [section_index] - Section position in the template (1 = h1)
+@param {string} [tag] - Optional tag override (h1 or h2)
 @param {string} [class] - Optional wrapper class
 @example
-{% render 'nw-section-heading', text: section.settings.heading %}
+{% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
 {% enddoc %}
 
 {%- if text != blank -%}
+  {%- liquid
+    if tag != blank
+      assign heading_tag = tag
+    elsif section_index == 1
+      assign heading_tag = 'h1'
+    else
+      assign heading_tag = 'h2'
+    endif
+  -%}
   <div class="nw-section-heading{% if class != blank %} {{ class }}{% endif %}">
-    <h2 class="h2">{{ text }}</h2>
+    <{{ heading_tag }} class="{{ heading_tag }}">{{ text }}</{{ heading_tag }}>
   </div>
 {%- endif -%}

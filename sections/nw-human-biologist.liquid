@@ -1,4 +1,5 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-insights-slider.js' | asset_url }}" defer="defer"></script>
 {{ 'nw-human-biologist.css' | asset_url | stylesheet_tag }}
 
 <style>
@@ -74,7 +75,7 @@
         {%- endif -%}
 
         {%- if section.settings.heading != blank -%}
-          {% render 'nw-section-heading', text: section.settings.heading %}
+          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
         {%- endif -%}
 
         {%- if section.settings.subheading != blank -%}
@@ -84,6 +85,7 @@
 
       <div class="nw-human-biologist__main">
         <div class="nw-human-biologist__content">
+          {%- if section.settings.name != blank or section.settings.role != blank or section.settings.quote != blank -%}
           <div class="nw-human-biologist__bio-wrap">
             <div class="nw-human-biologist__author-info">
               {%- if section.settings.name != blank -%}
@@ -100,11 +102,7 @@
                           loading="lazy"
                         >
                       {%- else -%}
-                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13.9498 3.21788C13.9795 3.19627 14.0198 3.19627 14.0495 3.21788L16.8434 5.24774H20.2968C20.3336 5.24774 20.3662 5.27141 20.3775 5.30637L21.4447 8.59073L24.2386 10.6206C24.2683 10.6422 24.2807 10.6805 24.2694 10.7155L23.2022 13.9998L24.2694 17.2842C24.2807 17.3191 24.2683 17.3574 24.2386 17.379L21.4447 19.4089L20.3775 22.6933C20.3662 22.7282 20.3336 22.7519 20.2968 22.7519H16.8434L14.0495 24.7818C14.0198 24.8034 13.9795 24.8034 13.9498 24.7818L11.1559 22.7519H7.70253C7.66578 22.7519 7.6332 22.7282 7.62184 22.6933L6.55469 19.4089L3.76081 17.379C3.73107 17.3574 3.71863 17.3191 3.72999 17.2842L4.79713 13.9998L3.72999 10.7155C3.71863 10.6805 3.73107 10.6422 3.76081 10.6206L6.55469 8.59073L7.62184 5.30637C7.6332 5.27141 7.66578 5.24774 7.70253 5.24774H11.156L13.9498 3.21788Z" fill="#70804A" stroke="#70804A" stroke-width="0.848485" stroke-miterlimit="10" stroke-linecap="round"/>
-                            <path d="M9.3125 13.6263L12.6286 16.9424C12.6617 16.9756 12.7155 16.9756 12.7486 16.9424L18.6905 11.0005" fill="#70804A"/>
-                            <path d="M9.3125 13.6263L12.6286 16.9424C12.6617 16.9756 12.7155 16.9756 12.7486 16.9424L18.6905 11.0005" stroke="white" stroke-width="1.27273" stroke-miterlimit="10" stroke-linecap="round"/>
-                        </svg>
+                        {% render 'nw-icon', icon: 'verified-lg' %}
                       {%- endif -%}
                     </span>
                   {%- endif -%}
@@ -122,6 +120,7 @@
               </div>
             {%- endif -%}
           </div>
+          {%- endif -%}
 
           {%- liquid
             assign show_btn_1 = false
@@ -197,26 +196,79 @@
           {%- endif -%}
         </div>
 
+        {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
+        {%- liquid
+          assign image_alt = section.settings.image.alt | default: section.settings.name | default: 'Author' | escape
+          assign image_mobile_alt = section.settings.image_mobile.alt | default: section.settings.name | default: 'Author' | escape
+        -%}
         <div class="nw-human-biologist__image-wrap">
-          {%- if section.settings.image != blank -%}
-            <img
-              src="{{ section.settings.image | image_url: width: 1440 }}"
-              alt="{{ section.settings.name | default: 'Gary Brecka' | escape }}"
-              loading="lazy"
-              class="nw-human-biologist__image"
-              width="712"
-              height="496"
-            >
+          {%- if section.settings.image != blank and section.settings.image_mobile != blank -%}
+            {{
+              section.settings.image_mobile
+              | image_url: width: 750
+              | image_tag:
+                loading: 'lazy',
+                class: 'nw-human-biologist__image nw-human-biologist__image--mobile',
+                widths: '375, 550, 750',
+                sizes: '100vw',
+                alt: image_mobile_alt
+            }}
+            {{
+              section.settings.image
+              | image_url: width: 1440
+              | image_tag:
+                loading: 'lazy',
+                class: 'nw-human-biologist__image nw-human-biologist__image--desktop',
+                widths: '712, 900, 1200, 1440',
+                sizes: '(min-width: 750px) 712px, 100vw',
+                alt: image_alt,
+                width: 712,
+                height: 496
+            }}
+          {%- elsif section.settings.image != blank -%}
+            {{
+              section.settings.image
+              | image_url: width: 1440
+              | image_tag:
+                loading: 'lazy',
+                class: 'nw-human-biologist__image',
+                widths: '712, 900, 1200, 1440',
+                sizes: '(min-width: 750px) 712px, 100vw',
+                alt: image_alt,
+                width: 712,
+                height: 496
+            }}
+          {%- elsif section.settings.image_mobile != blank -%}
+            {{
+              section.settings.image_mobile
+              | image_url: width: 750
+              | image_tag:
+                loading: 'lazy',
+                class: 'nw-human-biologist__image',
+                widths: '375, 550, 750',
+                sizes: '100vw',
+                alt: image_mobile_alt
+            }}
           {%- else -%}
             <span class="nw-human-biologist__image-placeholder" aria-hidden="true"></span>
           {%- endif -%}
         </div>
+        {%- endif -%}
       </div>
 
       {%- assign insight_slides = section.blocks | where: 'type', 'insight_slide' -%}
       {%- if section.settings.show_insights_slider and insight_slides.size > 0 -%}
-        <div class="nw-human-biologist__insights">
-          <div class="swiper nw-human-biologist__insights-slider" id="nw-human-biologist-insights-{{ section.id }}">
+        <div
+          class="nw-human-biologist__insights"
+          data-enable-autoplay="{{ section.settings.enable_autoplay }}"
+          data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
+          data-show-arrows="{{ section.settings.show_arrows }}"
+          data-show-dots="{{ section.settings.show_dots }}"
+        >
+          {%- if section.settings.show_arrows and insight_slides.size > 1 -%}
+            {% render 'nw-swiper-arrows', prev_label: 'Previous insight', next_label: 'Next insight' %}
+          {%- endif -%}
+          <div class="swiper nw-human-biologist__insights-slider" id="nw-human-biologist-insights-{{ section.id }}" data-nw-insights-slider>
             <div class="swiper-wrapper">
               {%- for block in insight_slides -%}
                 <div class="swiper-slide" {{ block.shopify_attributes }}>
@@ -231,18 +283,8 @@
                             height="24"
                             loading="lazy"
                           >
-                        {%- elsif block.settings.icon == 'moon' -%}
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        {%- elsif block.settings.icon == 'thermometer' -%}
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M14 14.76V3.5a2.5 2.5 0 00-5 0v11.26a4.5 4.5 0 105 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                        {%- elsif block.settings.icon == 'wind' -%}
-                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
+                        {%- elsif block.settings.icon == 'moon' or block.settings.icon == 'thermometer' or block.settings.icon == 'wind' -%}
+                          {% render 'nw-icon', icon: block.settings.icon %}
                         {%- endif -%}
                       </div>
                     {%- endif -%}
@@ -263,94 +305,13 @@
           </div>
 
           {%- if section.settings.show_dots and insight_slides.size > 1 -%}
-            <div class="nw-human-biologist__insights-pagination swiper-pagination" id="nw-human-biologist-pagination-{{ section.id }}"></div>
+            <div class="nw-human-biologist__insights-pagination swiper-pagination" id="nw-human-biologist-pagination-{{ section.id }}" data-nw-insights-pagination></div>
           {%- endif -%}
         </div>
       {%- endif -%}
     </div>
   </div>
 </section>
-
-<script>
-  (function() {
-    function initBiologistSlider() {
-      if (typeof Swiper === 'undefined') {
-        var script = document.querySelector('#nw-swiper-bundle-js');
-        if (!script) {
-          script = document.createElement('script');
-          script.id = 'nw-swiper-bundle-js';
-          script.src = '{{ "nw-swiper-bundle.min.js" | asset_url }}';
-          script.onload = runBiologistSlider;
-          document.head.appendChild(script);
-        } else {
-          script.addEventListener('load', runBiologistSlider);
-          var checkCount = 0;
-          var checkSwiper = setInterval(function() {
-            checkCount++;
-            if (typeof Swiper !== 'undefined' || checkCount > 60) {
-              clearInterval(checkSwiper);
-              if (typeof Swiper !== 'undefined') runBiologistSlider();
-            }
-          }, 50);
-        }
-      } else {
-        runBiologistSlider();
-      }
-    }
-
-    function runBiologistSlider() {
-      var sliderEl = document.querySelector('#nw-human-biologist-insights-{{ section.id }}');
-      if (!sliderEl) return;
-      if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
-      var slideCount = sliderEl.querySelectorAll('.swiper-slide').length;
-
-      var swiperOptions = {
-        slidesPerView: 1,
-        spaceBetween: 16,
-        loop: slideCount > 1,
-        speed: 500,
-        grabCursor: true,
-        autoHeight: true
-      };
-
-      {% if section.settings.enable_autoplay %}
-      swiperOptions.autoplay = {
-        delay: {{ section.settings.autoplay_delay | default: 4 | times: 1000 }},
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true
-      };
-      {% endif %}
-
-      {% if section.settings.show_dots %}
-      swiperOptions.pagination = {
-        el: '#nw-human-biologist-pagination-{{ section.id }}',
-        clickable: true
-      };
-      {% endif %}
-
-      new Swiper(sliderEl, swiperOptions);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initBiologistSlider);
-    } else {
-      initBiologistSlider();
-    }
-
-    document.addEventListener('shopify:section:load', function(e) {
-      if (e.target.classList.contains('section-{{ section.id }}') || e.target.querySelector('.section-{{ section.id }}')) {
-        initBiologistSlider();
-      }
-    });
-
-    document.addEventListener('shopify:section:select', function(e) {
-      var sliderEl = document.querySelector('#nw-human-biologist-insights-{{ section.id }}');
-      if (sliderEl && sliderEl.swiper) {
-        sliderEl.swiper.update();
-      }
-    });
-  })();
-</script>
 
 {% schema %}
 {
@@ -398,10 +359,10 @@
       "default": "Real sleepers, real mornings"
     },
     {
-      "type": "richtext",
+      "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "<h2>Why a Human Biologist Built a Mattress</h2>"
+      "default": "Why a Human Biologist Built a Mattress"
     },
     {
       "type": "richtext",
@@ -445,7 +406,13 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Author Image"
+      "label": "Author Image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Author Image (mobile)",
+      "info": "Optional. Uses the desktop image when empty."
     },
     {
       "type": "header",
@@ -543,6 +510,13 @@
       "id": "show_insights_slider",
       "label": "Show Insights Box & Slider",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Slider Arrows",
+      "default": false,
+      "visible_if": "{{ section.settings.show_insights_slider == true }}"
     },
     {
       "type": "checkbox",

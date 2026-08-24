@@ -327,9 +327,13 @@
     {{ 'nw-swiper-bundle.min.js' | asset_url | script_tag }}
 
     {% render 'nw-css' %}
+    {% render 'nw-script' %}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    <div id="scrollbar-measure" >
+      <div class="scrollbar-measure-inner" style="width: 200px; height: 200px;"></div>
+    </div>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -432,6 +436,11 @@
           };
         }
 
+        function getAnnouncementBarHeight() {
+          const announcementBar = document.querySelector('.announcement-bar-section');
+          return announcementBar ? announcementBar.offsetHeight : 0;
+        }
+
         function setTransparentHeader(enabled) {
           const { header, headerWrapper } = getHeaderElements();
 
@@ -460,7 +469,10 @@
             document.documentElement.style.setProperty('--header-height', headerHeight + 'px');
           }
           const sectionBottom = section.getBoundingClientRect().bottom;
-          const shouldEnable = sectionBottom > headerHeight;
+          const announcementBarHeight = getAnnouncementBarHeight();
+          const scrollThreshold = headerHeight + announcementBarHeight;
+          const isWithinThreshold = window.scrollY <= scrollThreshold;
+          const shouldEnable = isWithinThreshold && sectionBottom > headerHeight;
 
           setTransparentHeader(shouldEnable);
         }
