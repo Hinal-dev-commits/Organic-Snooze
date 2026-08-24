@@ -147,7 +147,7 @@
         "enable_transparent_header": true,
         "content_position_h": "space-between",
         "text_alignment": "left",
-        "text_color": "#FFFFFF",
+        "text_color": "#ffffff",
         "show_reviews": true,
         "rating_stars": 5,
         "star_color": "#e57b1e",
@@ -1071,7 +1071,6 @@
         "image": "shopify://shop_images/image-text.png",
         "image_mobile": "shopify://shop_images/Frame_48099595_1_1.png",
         "image_position": "left",
-        "media_bg_color": "#ece8e0",
         "show_promo_bar": true,
         "promo_icon": "shopify://shop_images/Promo.svg",
         "promo_text": "BUNDLE & SAVE 30%+",
@@ -1295,6 +1294,35 @@
     "nw_collection_list_yeNiLx": {
       "type": "nw-collection-list",
       "blocks": {
+        "trust_badge_qqNQ8q": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "trial",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_jc7xEe": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        },
+        "trust_badge_bX3Vmn": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shipping",
+            "text": "free shipping"
+          }
+        },
+        "trust_badge_d9URPq": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/interest.svg",
+            "text": "0% Interest financing options"
+          }
+        },
         "collection_XHC9VB": {
           "type": "collection",
           "settings": {
@@ -1351,6 +1379,10 @@
         }
       },
       "block_order": [
+        "trust_badge_qqNQ8q",
+        "trust_badge_jc7xEe",
+        "trust_badge_bX3Vmn",
+        "trust_badge_d9URPq",
         "collection_XHC9VB",
         "collection_qpMhMA",
         "collection_MnEi8L",
