@@ -1,0 +1,270 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "disabled": true,
+      "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "nw_mattresses_timeline_KchVjw": {
+      "type": "nw-mattresses-timeline",
+      "blocks": {
+        "layer_rNbH7w": {
+          "type": "layer",
+          "settings": {
+            "tag": "LAYER 1",
+            "tag_bg": "#613916",
+            "title": "Organic Cover",
+            "subtitle": "Breathable GOTS cotton",
+            "image": "shopify://shop_images/Frame_2147238821_1.png"
+          }
+        },
+        "layer_hmPbkt": {
+          "type": "layer",
+          "settings": {
+            "tag": "LAYER 2",
+            "tag_bg": "#613916",
+            "title": "CloudWool",
+            "subtitle": "Temperature Regulating Fire Barrier",
+            "image": "shopify://shop_images/Frame_2147238822-2.png"
+          }
+        },
+        "layer_YiYeQ7": {
+          "type": "layer",
+          "settings": {
+            "tag": "LAYER 3",
+            "tag_bg": "#613916",
+            "title": "Perforated Latex",
+            "subtitle": "Perforated breathable design for max airflow",
+            "image": "shopify://shop_images/Frame_2147238822-1.png"
+          }
+        },
+        "layer_7A44AC": {
+          "type": "layer",
+          "settings": {
+            "tag": "LAYER 4",
+            "tag_bg": "#613916",
+            "title": "Steel Coils",
+            "subtitle": "Provide stable support and limits motion transfer",
+            "image": "shopify://shop_images/Frame_2147238822_2_6aa4d2b2-b0aa-43d1-95ae-4a8cf469c700.png"
+          }
+        }
+      },
+      "block_order": [
+        "layer_rNbH7w",
+        "layer_hmPbkt",
+        "layer_YiYeQ7",
+        "layer_7A44AC"
+      ],
+      "name": "NW Mattress Timeline",
+      "settings": {
+        "heading": "Every Layer Has a Purpose",
+        "subheading": "Four layers, zero compromises. See exactly what you're sleeping on.",
+        "main_image": "shopify://shop_images/mattress.png",
+        "main_image_mobile": "shopify://shop_images/mattress-mobile.png",
+        "card_wrap_bg": "#fbf9f6",
+        "card_heading_color": "#613916",
+        "card_desc_color": "#cc926a",
+        "show_comparison": true,
+        "comparison_title": "Long-Term Value Comparison",
+        "foam_brand": "Popular Foam Brands",
+        "foam_price": "$1.02 / night",
+        "foam_note": "Replaced every 10 years",
+        "snooze_logo": "shopify://shop_images/logo_57dd014e-a1f8-4e19-be2a-7824822bd75b.png",
+        "snooze_brand": "ORGANIC SNOOZE",
+        "snooze_price": "$0.16 / night",
+        "snooze_note": "Built to last 30 years",
+        "snooze_bg": "#878735",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_testimonials_BU9rMk": {
+      "type": "nw-testimonials",
+      "blocks": {
+        "testimonial_PwYfRk": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“Sitting all day wrecked my shoulders and neck. I didn’t realize my mattress was making it worse. Now I wake up without that pinched feeling and I’m not dragging myself through the day.”",
+            "author": "Marcello Delle Grotti",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        },
+        "testimonial_qpGpdz": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“My breathing feels noticeably easier at night. The pillow holds my neck in place without collapsing, and I wake up feeling more rested and clear-headed.”",
+            "author": "Phillip Page",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        },
+        "testimonial_D33iiT": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "“My husband and I used to toss all night because we both sleep differently. This mattress supports both of us without sinking or dipping. We wake up at the same time actually feeling good.”",
+            "author": "Chloe",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_PwYfRk",
+        "testimonial_qpGpdz",
+        "testimonial_D33iiT"
+      ],
+      "name": "NW Testimonials",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Join the Recovery Movement",
+        "subheading": "<p>From busy parents to entrepreneurs, athletes, and everyday people, thousands are making sleep one of the healthiest investments they make every day.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_bg_color": "#f4efe8",
+        "card_text_color": "#613916",
+        "card_star_color": "#e57b1e",
+        "card_star_empty_color": "#d1c7ba",
+        "verified_text_color": "#878735",
+        "verified_icon_color": "#878735",
+        "show_arrows": false,
+        "show_pagination": true,
+        "pagination_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "disclosures",
+    "related-products",
+    "nw_mattresses_timeline_KchVjw",
+    "nw_testimonials_BU9rMk"
+  ]
+}

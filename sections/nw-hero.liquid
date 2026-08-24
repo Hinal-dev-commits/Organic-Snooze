@@ -26,11 +26,6 @@
       background-image: none;
     {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
       background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'image' and hero_media_type != 'image' %}
-      {% if section.settings.bg_image != blank %}
-        background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
-      {% endif %}
-    {% elsif section.settings.bg_type == 'image' and hero_media_type == 'image' %}
       background-image: none;
     {% elsif section.settings.bg_type == 'none' %}
       background: transparent;
@@ -41,6 +36,7 @@
   #NwHero-{{ section.id }} .nw-hero__overlay {
     background-color: {{ section.settings.overlay_color }};
     opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    display: block !important;
   }
 
   @media screen and (max-width: 749px) {
@@ -54,8 +50,10 @@
         padding-top: {{ section.settings.padding_top_mobile | default: 43 }}px;
         padding-bottom: {{ section.settings.padding_bottom_mobile | default: 43 }}px;
       {% endif %}
-      {% if section.settings.bg_type == 'image' and hero_media_type != 'image' and section.settings.bg_image_mobile != blank %}
-        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+        background-image: none;
+      {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+        background-image: none;
       {% endif %}
       height: 100vh;
     }
@@ -77,13 +75,38 @@
 >
   {%- if hero_media_type == 'image' -%}
     <div class="nw-hero__bg-video-wrapper">
-      {%- if section.settings.bg_image != blank -%}
-        <picture>
-          {%- if section.settings.bg_image_mobile != blank -%}
-            <source media="(max-width: 749px)" srcset="{{ section.settings.bg_image_mobile | image_url: width: 1200 }}">
-          {%- endif -%}
+      {%- if section.settings.bg_image != blank or section.settings.bg_image_mobile != blank -%}
+        {%- liquid
+          assign hero_desktop_image = section.settings.bg_image
+          assign hero_mobile_image = section.settings.bg_image_mobile
+          assign hero_image_alt = hero_desktop_image.alt | default: hero_mobile_image.alt | default: section.settings.heading | strip_html | escape
+        -%}
+        {%- if hero_mobile_image != blank and hero_desktop_image != blank -%}
           {{
-            section.settings.bg_image
+            hero_mobile_image
+            | image_url: width: 1200
+            | image_tag:
+              class: 'nw-hero__bg-video nw-hero__bg-video--mobile',
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '375, 550, 750, 1200',
+              sizes: '100vw',
+              alt: hero_image_alt
+          }}
+          {{
+            hero_desktop_image
+            | image_url: width: 2880
+            | image_tag:
+              class: 'nw-hero__bg-video nw-hero__bg-video--desktop',
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '750, 1100, 1500, 2000, 2880',
+              sizes: '100vw',
+              alt: hero_image_alt
+          }}
+        {%- elsif hero_desktop_image != blank -%}
+          {{
+            hero_desktop_image
             | image_url: width: 2880
             | image_tag:
               class: 'nw-hero__bg-video',
@@ -91,9 +114,21 @@
               fetchpriority: 'high',
               widths: '750, 1100, 1500, 2000, 2880',
               sizes: '100vw',
-              alt: section.settings.bg_image.alt | default: section.settings.heading | strip_html | escape
+              alt: hero_image_alt
           }}
-        </picture>
+        {%- else -%}
+          {{
+            hero_mobile_image
+            | image_url: width: 1200
+            | image_tag:
+              class: 'nw-hero__bg-video',
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '375, 550, 750, 1200',
+              sizes: '100vw',
+              alt: hero_image_alt
+          }}
+        {%- endif -%}
       {%- else -%}
         {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg nw-hero__bg-video' }}
       {%- endif -%}
@@ -260,7 +295,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Header Integration"
+      "content": "HEADER INTEGRATION"
     },
     {
       "type": "checkbox",
@@ -270,7 +305,7 @@
     },
     {
       "type": "header",
-      "content": "Hero Content Box & Positioning"
+      "content": "HERO CONTENT BOX & POSITIONING"
     },
     {
       "type": "select",
@@ -338,7 +373,7 @@
     },
     {
       "type": "header",
-      "content": "Reviews / Rating"
+      "content": "REVIEWS / RATING"
     },
     {
       "type": "checkbox",
@@ -358,6 +393,7 @@
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "star_color",
       "label": "Star Color",
       "default": "#E57B1E",
@@ -372,7 +408,7 @@
     },
     {
       "type": "header",
-      "content": "Heading"
+      "content": "HEADING"
     },
     {
       "type": "inline_richtext",
@@ -382,7 +418,7 @@
     },
     {
       "type": "header",
-      "content": "Subheading"
+      "content": "SUBHEADING"
     },
     {
       "type": "richtext",
@@ -392,7 +428,7 @@
     },
     {
       "type": "header",
-      "content": "Button"
+      "content": "BUTTON"
     },
     {
       "type": "checkbox",
@@ -436,7 +472,7 @@
     },
     {
       "type": "header",
-      "content": "Background Media"
+      "content": "BACKGROUND MEDIA"
     },
     {
       "type": "select",
@@ -456,7 +492,25 @@
     },
     {
       "type": "header",
-      "content": "Video Settings"
+      "content": "IMAGE SETTINGS",
+      "visible_if": "{{ section.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "VIDEO SETTINGS",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
       "type": "checkbox",
@@ -510,10 +564,11 @@
     },
     {
       "type": "header",
-      "content": "Overlay"
+      "content": "OVERLAY"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "overlay_color",
       "label": "Overlay Color",
       "default": "#000000"
@@ -530,7 +585,7 @@
     },
     {
       "type": "header",
-      "content": "Section Background"
+      "content": "SECTION BACKGROUND"
     },
     {
       "type": "select",
@@ -542,35 +597,19 @@
           "label": "None"
         },
         {
-          "value": "image",
-          "label": "Image"
+          "value": "color",
+          "label": "Color"
         },
         {
           "value": "gradient",
           "label": "Gradient"
-        },
-        {
-          "value": "color",
-          "label": "Color"
         }
       ],
-      "default": "image"
-    },
-    {
-      "type": "image_picker",
-      "id": "bg_image",
-      "label": "Background Image (Desktop)",
-      "info": "Shows a placeholder image when empty.",
-      "visible_if": "{{ section.settings.media_type == 'image' and section.settings.bg_type == 'image' }}"
-    },
-    {
-      "type": "image_picker",
-      "id": "bg_image_mobile",
-      "label": "Background Image (Mobile)",
-      "visible_if": "{{ section.settings.media_type == 'image' and section.settings.bg_type == 'image' }}"
+      "default": "color"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "bg_color",
       "label": "Background Color",
       "default": "#613916",
@@ -584,7 +623,7 @@
     },
     {
       "type": "header",
-      "content": "Section Padding"
+      "content": "SECTION PADDING"
     },
     {
       "type": "range",
@@ -634,6 +673,7 @@
       "settings": [
         {
           "type": "color",
+          "alpha": true,
           "id": "icon_color",
           "label": "Icon Color",
           "default": "#CC926A"
@@ -706,7 +746,7 @@
       "settings": [
         {
           "type": "header",
-          "content": "Icon Settings"
+          "content": "ICON SETTINGS"
         },
         {
           "type": "checkbox",
@@ -743,7 +783,7 @@
         },
         {
           "type": "header",
-          "content": "Text & Countdown"
+          "content": "TEXT & COUNTDOWN"
         },
         {
           "type": "richtext",
@@ -807,7 +847,7 @@
         "video_source": "shopify_hosted",
         "overlay_color": "#000000",
         "overlay_opacity": 30,
-        "bg_type": "image",
+        "bg_type": "color",
         "bg_color": "#613916",
         "padding_top_desktop": 43,
         "padding_bottom_desktop": 43,

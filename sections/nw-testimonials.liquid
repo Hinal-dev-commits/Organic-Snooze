@@ -44,6 +44,7 @@
     --nw-testimonials-star-color: {{ section.settings.card_star_color | default: '#E57B1E' }};
     --nw-testimonials-star-empty-color: {{ section.settings.card_star_empty_color | default: '#D1C7BA' }};
     --nw-testimonials-verified-color: {{ section.settings.verified_icon_color }};
+    --nw-testimonials-verified-textcolor: {{ section.settings.verified_text_color }};
     --nw-swiper-bullet: {{ section.settings.pagination_color }};
   "
 >
@@ -160,6 +161,7 @@
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "star_color",
       "label": "Active Star Color",
       "default": "#E57B1E",
@@ -167,6 +169,7 @@
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "star_color_inactive",
       "label": "Inactive Star Color",
       "default": "#D1D5DB",
@@ -191,57 +194,70 @@
     },
     {
       "type": "header",
-      "content": "Text colors"
+      "content": "TEXT COLORS"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "heading_color",
       "label": "Heading color",
       "default": "#613916"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "description_color",
       "label": "Description color",
       "default": "#613916"
     },
     {
       "type": "header",
-      "content": "Card colors"
+      "content": "CARD COLORS"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "card_bg_color",
       "label": "Card background",
       "default": "#F4EFE8"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "card_text_color",
       "label": "Card text",
       "default": "#613916"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "card_star_color",
       "label": "Card Star color",
       "default": "#E57B1E"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "card_star_empty_color",
       "label": "Card Empty star color",
       "default": "#D1C7BA"
     },
     {
       "type": "color",
+      "alpha": true,
+      "id": "verified_text_color",
+      "label": "Verified textcolor"
+    },
+    {
+      "type": "color",
+      "alpha": true,
       "id": "verified_icon_color",
       "label": "Verified icon color",
       "default": "#878735"
     },
     {
       "type": "header",
-      "content": "Slider settings"
+      "content": "SLIDER SETTINGS"
     },
     {
       "type": "checkbox",
@@ -257,10 +273,11 @@
     },
     {
       "type": "header",
-      "content": "Slider colors"
+      "content": "SLIDER COLORS"
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "pagination_color",
       "label": "Pagination bullet",
       "default": "#613916",
@@ -268,7 +285,7 @@
     },
     {
       "type": "header",
-      "content": "Background"
+      "content": "BACKGROUND"
     },
     {
       "type": "select",
@@ -284,6 +301,7 @@
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "bg_color",
       "label": "Background color",
       "default": "#FFFCF0",
@@ -309,7 +327,7 @@
     },
     {
       "type": "header",
-      "content": "Section spacing"
+      "content": "SECTION SPACING"
     },
     {
       "type": "range",

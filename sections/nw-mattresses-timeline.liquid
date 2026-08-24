@@ -28,6 +28,24 @@
       {% endif %}
     }
   }
+
+  .nw_labor_mattress.section-{{ section.id }} .nw_labor_mattress__card {
+    {% if section.settings.card_wrap_bg != blank %}
+      background-color: {{ section.settings.card_wrap_bg }};
+    {% endif %}
+  }
+
+  .nw_labor_mattress.section-{{ section.id }} .nw_labor_mattress__card-title {
+    {% if section.settings.card_heading_color != blank %}
+      color: {{ section.settings.card_heading_color }};
+    {% endif %}
+  }
+
+  .nw_labor_mattress.section-{{ section.id }} .nw_labor_mattress__card-desc {
+    {% if section.settings.card_desc_color != blank %}
+      color: {{ section.settings.card_desc_color }};
+    {% endif %}
+  }
 </style>
 
 <div class="nw_labor_mattress section-{{ section.id }}">
@@ -182,16 +200,10 @@
                 >
                   <div class="nw_labor_mattress__snooze-logo-wrap">
                     {%- if section.settings.snooze_logo != blank -%}
-                      {{
-                        section.settings.snooze_logo
-                        | image_url: width: 200
-                        | image_tag:
-                          loading: 'lazy',
-                          class: 'nw_labor_mattress__snooze-logo-img',
-                          widths: '120, 160, 200',
-                          sizes: '120px',
-                          alt: section.settings.snooze_brand | default: 'Organic Snooze' | escape
-                      }}
+                        <img src="{{ section.settings.snooze_logo | image_url}}" alt="{{ section.settings.snooze_brand | default: 'Organic Snooze' | escape }}" class="nw_labor_mattress__snooze-logo-img" width="" height=""
+                        loading="lazy"
+                        >
+                     
                     {%- else -%}
                       <span class="nw_labor_mattress__snooze-logo-text">{{ section.settings.snooze_brand | default: 'ORGANIC SNOOZE' }}</span>
                     {%- endif -%}
@@ -221,7 +233,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Section content"
+      "content": "SECTION CONTENT"
     },
     {
       "type": "inline_richtext",
@@ -248,7 +260,29 @@
     },
     {
       "type": "header",
-      "content": "Value comparison"
+      "content": "LAYER CARD COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_wrap_bg",
+      "label": "Card background",
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_heading_color",
+      "label": "Card heading color",
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_desc_color",
+      "label": "Card description color",
+    },
+    {
+      "type": "header",
+      "content": "VALUE COMPARISON"
     },
     {
       "type": "checkbox",
@@ -305,21 +339,22 @@
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "snooze_bg",
       "label": "Snooze card background",
       "default": "#878735",
-      "alpha": true
     },
     {
       "type": "header",
-      "content": "Background"
+      "content": "BACKGROUND"
     },
     {
       "type": "select",
       "id": "bg_type",
       "label": "Background type",
-      "default": "color",
+      "default": "none",
       "options": [
+        { "value": "none", "label": "None" },
         { "value": "color", "label": "Color" },
         { "value": "image", "label": "Image" },
         { "value": "gradient", "label": "Gradient" }
@@ -327,10 +362,10 @@
     },
     {
       "type": "color",
+      "alpha": true,
       "id": "bg_color",
       "label": "Background color",
       "default": "#FFFFFF",
-      "alpha": true,
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {
@@ -353,7 +388,7 @@
     },
     {
       "type": "header",
-      "content": "Section spacing"
+      "content": "SECTION SPACING"
     },
     {
       "type": "range",
@@ -409,6 +444,7 @@
         },
         {
           "type": "color",
+          "alpha": true,
           "id": "tag_bg",
           "label": "Tag background color",
           "default": "#613916"

@@ -46,6 +46,9 @@
 
 .nw-testimonials__swiper .swiper-wrapper {
   align-items: stretch;
+  max-width: 100%;
+  width: max-content;
+  margin: 0 auto;
 }
 
 .nw-testimonials__swiper .swiper-slide {
@@ -160,7 +163,7 @@
   font-style: italic;
   font-weight: 400;
   line-height: 1.4;
-  color: var(--nw-testimonials-card-text, var(--primary-color));
+  color: var(--nw-testimonials-verified-textcolor, var(--primary-color));
 }
 
 @media screen and (max-width: 749px) {

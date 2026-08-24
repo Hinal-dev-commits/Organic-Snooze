@@ -33,7 +33,8 @@
 
 .nw-hero__bg-video,
 .nw-hero__bg-video-wrapper video,
-.nw-hero__bg-video-wrapper iframe {
+.nw-hero__bg-video-wrapper iframe,
+.nw-hero__bg-video-wrapper img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -46,6 +47,20 @@
   display: block;
   border: 0;
   pointer-events: none;
+}
+
+.nw-hero__bg-video--mobile {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .nw-hero__bg-video--desktop {
+    display: none;
+  }
+
+  .nw-hero__bg-video--mobile {
+    display: block;
+  }
 }
 
 .nw-hero__overlay {
