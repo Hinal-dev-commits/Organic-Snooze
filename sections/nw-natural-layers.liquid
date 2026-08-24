@@ -8,19 +8,22 @@
     --nw-nl-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
     --nw-nl-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     position: relative;
-    background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
     padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
     isolation: isolate;
     overflow: hidden;
-    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_color_image != blank %}
+      background-color: {{ section.settings.bg_color_image }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
       background: {{ section.settings.bg_gradient }};
     {% elsif section.settings.bg_type == 'none' %}
       background: transparent;
     {% endif %}
   }
 
-  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
     .nw-natural-layers.section-{{ section.id }}::before {
       content: "";
       position: absolute;
@@ -43,7 +46,7 @@
       padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
     }
 
-    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
       .nw-natural-layers.section-{{ section.id }}::before {
         background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
       }
@@ -402,12 +405,26 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#FFFFFF",
-      "visible_if": "{{ section.settings.bg_type == 'color' or section.settings.bg_type == 'image' }}"
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image",
       "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Background Color (Image)",
+      "default": "#FFFFFF",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
@@ -419,12 +436,6 @@
       "step": 1,
       "unit": "%",
       "default": 16,
-      "visible_if": "{{ section.settings.bg_type == 'image' }}"
-    },
-    {
-      "type": "image_picker",
-      "id": "bg_image_mobile",
-      "label": "Background Image (Mobile Optional)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {

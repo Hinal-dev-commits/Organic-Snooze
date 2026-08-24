@@ -309,6 +309,10 @@
   box-sizing: border-box;
   position: relative;
 }
+.nw-natural-layers__insights .nw-swiper-btn{
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .nw-natural-layers__insights-slider {
   width: 100%;

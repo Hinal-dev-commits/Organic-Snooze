@@ -108,7 +108,8 @@
   color: var(--nw-testimonials-star-empty-color, #d1c7ba);
 }
 
-.nw-testimonials__quote {
+.nw-testimonials__quote,
+.nw-testimonials__quote * {
   margin: 0;
   font-family: var(--font-body-family);
   font-size: 14px;
@@ -116,6 +117,14 @@
   line-height: 1.43;
   color: var(--nw-testimonials-card-text, var(--primary-color));
   width: 100%;
+  text-align: left;
+}
+
+.nw-testimonials__quote > *:first-child {
+  margin-top: 0;
+}
+.nw-testimonials__quote > *:last-child {
+  margin-bottom: 0;
 }
 
 .nw-testimonials__card-bottom {
@@ -154,6 +163,9 @@
   width: 14px;
   height: 14px;
   display: block;
+  fill: var(--nw-testimonials-verified-color, var(--nonary-color));
+}
+.nw-testimonials__verified-icon svg > *{
   fill: var(--nw-testimonials-verified-color, var(--nonary-color));
 }
 

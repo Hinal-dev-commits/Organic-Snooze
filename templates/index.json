@@ -147,7 +147,7 @@
         "enable_transparent_header": true,
         "content_position_h": "space-between",
         "text_alignment": "left",
-        "text_color": "#ffffff",
+        "text_color": "#FFFFFF",
         "show_reviews": true,
         "rating_stars": 5,
         "star_color": "#e57b1e",
@@ -374,7 +374,6 @@
         "products_to_show": 8,
         "show_arrows": true,
         "show_pagination": true,
-        "empty_text": "Select a collection for this tab.",
         "show_rating": true,
         "show_firmness": true,
         "firmness_label_soft": "Soft",
@@ -533,7 +532,7 @@
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "quote": "“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”",
+            "quote": "<p>“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”</p>",
             "author": "Marcello Delle Grotti",
             "verified": true,
             "verified_text": "Verified"
@@ -543,7 +542,7 @@
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "quote": "“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”",
+            "quote": "<p>“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”</p>",
             "author": "Phillip Page",
             "verified": true,
             "verified_text": "Verified"
@@ -553,7 +552,7 @@
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "quote": "“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”",
+            "quote": "<p>“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”</p>",
             "author": "Chloe",
             "verified": true,
             "verified_text": "Verified"
@@ -563,7 +562,7 @@
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "quote": "“Incredible mattress I want to invest in more!”",
+            "quote": "<p>“Incredible mattress I want to invest in more!”</p>",
             "author": "Kristin McGee",
             "verified": true,
             "verified_text": "Verified"
@@ -778,10 +777,11 @@
         "enable_autoplay": true,
         "autoplay_delay": 4,
         "bg_type": "image",
-        "bg_color": "#ffffffcc",
+        "bg_color": "#ffffff",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_image_opacity": 16,
         "bg_image_mobile": "shopify://shop_images/layers-bg-image.png",
+        "bg_color_image": "#ffffffcc",
+        "bg_image_opacity": 16,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,

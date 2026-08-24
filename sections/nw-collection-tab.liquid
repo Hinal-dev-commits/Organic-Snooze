@@ -276,7 +276,7 @@
                       {% render 'nw-swiper-arrows' %}
                     {%- endif -%}
                   {%- else -%}
-                    <div class="nw-collection-tab__empty">{{ section.settings.empty_text }}</div>
+                    <div class="nw-collection-tab__empty">Select a collection for this tab.</div>
                   {%- endif -%}
                 </div>
                 {%- if section.settings.show_pagination and block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
@@ -341,12 +341,6 @@
       "id": "show_pagination",
       "label": "Show Slider Pagination",
       "default": true
-    },
-    {
-      "type": "text",
-      "id": "empty_text",
-      "label": "Empty Collection Message",
-      "default": "Select a collection for this tab."
     },
     {
       "type": "header",

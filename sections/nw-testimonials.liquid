@@ -100,7 +100,7 @@
                       </div>
 
                       {%- if block.settings.quote != blank -%}
-                        <p class="nw-testimonials__quote">{{ block.settings.quote }}</p>
+                        <div class="nw-testimonials__quote rte">{{ block.settings.quote }}</div>
                       {%- endif -%}
                     </div>
 
@@ -375,7 +375,7 @@
   "blocks": [
     {
       "type": "testimonial",
-      "name": "Testimonial card",
+      "name": "Card",
       "settings": [
         {
           "type": "range",
@@ -387,10 +387,10 @@
           "default": 5
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "quote",
           "label": "Quote",
-          "default": "“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”"
+          "default": "<p>“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”</p>"
         },
         {
           "type": "text",
@@ -423,7 +423,7 @@
           "settings": {
             "rating": 5,
             "author": "Marcello Delle Grotti",
-            "quote": "“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”",
+            "quote": "<p>“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”</p>",
             "verified": true
           }
         },
@@ -432,7 +432,7 @@
           "settings": {
             "rating": 5,
             "author": "Phillip Page",
-            "quote": "“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”",
+            "quote": "<p>“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”</p>",
             "verified": true
           }
         },
@@ -441,7 +441,7 @@
           "settings": {
             "rating": 5,
             "author": "Chloe",
-            "quote": "“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”",
+            "quote": "<p>“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”</p>",
             "verified": true
           }
         },
@@ -450,7 +450,7 @@
           "settings": {
             "rating": 5,
             "author": "Kristin McGee",
-            "quote": "“Incredible mattress I want to invest in more!”",
+            "quote": "<p>“Incredible mattress I want to invest in more!”</p>",
             "verified": true
           }
         }
