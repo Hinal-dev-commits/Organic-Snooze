@@ -10,10 +10,8 @@
     --nw-iwt-heading-color: {{ section.settings.heading_color }};
     --nw-iwt-desc-color: {{ section.settings.description_color }};
     --nw-iwt-feature-color: {{ section.settings.feature_text_color }};
-    --nw-iwt-feature-plus-color: {{ section.settings.feature_plus_color }};
     --nw-iwt-promo-bg: {{ section.settings.promo_bg_color }};
     --nw-iwt-promo-text: {{ section.settings.promo_text_color }};
-    --nw-iwt-media-bg: {{ section.settings.media_bg_color }};
     --nw-cta-badge-text: {{ section.settings.badge_text_color }};
     --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
   "
@@ -103,20 +101,14 @@
             </div>
           {%- endif -%}
 
-          {%- if section.blocks.size > 0 -%}
-            <ul class="nw-image-with-text__features" role="list">
-              {%- for block in section.blocks -%}
-                {%- if block.type == 'feature' and block.settings.text != blank -%}
-                  <li class="nw-image-with-text__feature" {{ block.shopify_attributes }}>
-                    <span>{{ block.settings.text }}</span>
-                  </li>
-                {%- endif -%}
-              {%- endfor -%}
-            </ul>
+          {%- if section.settings.features != blank -%}
+            <div class="nw-image-with-text__features-wrap rte">
+              {{ section.settings.features }}
+            </div>
           {%- endif -%}
         </div>
-
-        {% render 'nw-cta-badges', settings: section.settings, class: 'nw-image-with-text__cta' %}
+        {%- assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
+        {% render 'nw-cta-badges', settings: section.settings, blocks: trust_badge_blocks, class: 'nw-image-with-text__cta' %}
 
 
       </div>
@@ -155,13 +147,6 @@
         { "value": "left", "label": "Left" },
         { "value": "right", "label": "Right" }
       ]
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "media_bg_color",
-      "label": "Image Placeholder Background",
-      "default": "#ECE8E0"
     },
     {
       "type": "header",
@@ -215,6 +200,12 @@
       "default": "<p>Bundle your mattress, adjustable base, and organic bedding essentials to save 30% or more on the complete setup.</p>"
     },
     {
+      "type": "richtext",
+      "id": "features",
+      "label": "Features List",
+      "default": "<ul><li>+ Organic Mattress</li><li>+ Adjustable Base</li><li>+ Organic Sheet Set</li><li>+ Organic Pillow Cases</li><li>+ Pillows</li><li>+ Mattress Protector</li></ul>"
+    },
+    {
       "type": "header",
       "content": "TEXT COLORS"
     },
@@ -237,13 +228,6 @@
       "alpha": true,
       "id": "feature_text_color",
       "label": "Feature Text Color",
-      "default": "#613916"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "feature_plus_color",
-      "label": "Feature Plus Color",
       "default": "#613916"
     },
     {
@@ -280,124 +264,6 @@
         { "value": "outline", "label": "Outline" }
       ],
       "visible_if": "{{ section.settings.show_button == true }}"
-    },
-    {
-      "type": "header",
-      "content": "ICON AND TEXT (AFTER BUTTON)"
-    },
-    {
-      "type": "paragraph",
-      "content": "Choose a preset icon or upload a custom icon for each item. Items show when text is filled in."
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "badge_icon_color",
-      "label": "Icon Color",
-      "default": "#CC926A"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "badge_text_color",
-      "label": "Icon Text Color",
-      "default": "#613916"
-    },
-    {
-      "type": "select",
-      "id": "badge_1_icon",
-      "label": "Item 1 Icon",
-      "default": "none",
-      "options": [
-        { "value": "truck", "label": "Free Shipping" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "moneyback", "label": "Moneyback" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "none", "label": "None" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "badge_1_custom_icon",
-      "label": "Item 1 Custom Icon"
-    },
-    {
-      "type": "richtext",
-      "id": "badge_1_text",
-      "label": "Item 1 Text",
-      "default": "<p>Free Shipping & Installation</p>"
-    },
-    {
-      "type": "select",
-      "id": "badge_2_icon",
-      "label": "Item 2 Icon",
-      "default": "none",
-      "options": [
-        { "value": "truck", "label": "Free Shipping" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "moneyback", "label": "Moneyback" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "none", "label": "None" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "badge_2_custom_icon",
-      "label": "Item 2 Custom Icon"
-    },
-    {
-      "type": "richtext",
-      "id": "badge_2_text",
-      "label": "Item 2 Text",
-      "default": "<p>30-Year Warranty</p>"
-    },
-    {
-      "type": "select",
-      "id": "badge_3_icon",
-      "label": "Item 3 Icon",
-      "default": "moneyback",
-      "options": [
-        { "value": "truck", "label": "Free Shipping" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "moneyback", "label": "Moneyback" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "none", "label": "None" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "badge_3_custom_icon",
-      "label": "Item 3 Custom Icon"
-    },
-    {
-      "type": "richtext",
-      "id": "badge_3_text",
-      "label": "Item 3 Text",
-      "default": "<p>100-Night Risk-Free Trial</p>"
-    },
-    {
-      "type": "select",
-      "id": "badge_4_icon",
-      "label": "Item 4 Icon",
-      "default": "financing",
-      "options": [
-        { "value": "truck", "label": "Free Shipping" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "moneyback", "label": "Moneyback" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "none", "label": "None" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "badge_4_custom_icon",
-      "label": "Item 4 Custom Icon"
-    },
-    {
-      "type": "richtext",
-      "id": "badge_4_text",
-      "label": "Item 4 Text",
-      "default": "<p>0% Interest Financing Options</p>"
     },
     {
       "type": "header",
@@ -488,14 +354,39 @@
   ],
   "blocks": [
     {
-      "type": "feature",
-      "name": "Feature item",
+      "type": "trust_badge",
+      "name": "Trust Badge",
       "settings": [
         {
-          "type": "text",
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Free Shipping" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "moneyback", "label": "Moneyback" },
+            { "value": "financing", "label": "Financing" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "star", "label": "Star" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "verified", "label": "Verified" },
+            { "value": "custom", "label": "Custom Image" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
           "id": "text",
-          "label": "Text",
-          "default": "Organic Mattress"
+          "label": "Badge Text",
+          "default": "Free Shipping & Installation"
         }
       ]
     }
@@ -505,12 +396,10 @@
       "name": "t:sections.nw-image-with-text.name",
       "category": "NW Sections",
       "blocks": [
-        { "type": "feature", "settings": { "text": "Organic Mattress" } },
-        { "type": "feature", "settings": { "text": "Adjustable Base" } },
-        { "type": "feature", "settings": { "text": "Organic Sheet Set" } },
-        { "type": "feature", "settings": { "text": "Organic Pillow Cases" } },
-        { "type": "feature", "settings": { "text": "Pillows" } },
-        { "type": "feature", "settings": { "text": "Mattress Protector" } }
+        { "type": "trust_badge", "settings": { "icon": "none", "text": "Free Shipping & Installation" } },
+        { "type": "trust_badge", "settings": { "icon": "none", "text": "30-Year Warranty" } },
+        { "type": "trust_badge", "settings": { "icon": "moneyback", "text": "100-Night Risk-Free Trial" } },
+        { "type": "trust_badge", "settings": { "icon": "financing", "text": "0% Interest Financing Options" } }
       ]
     }
   ],

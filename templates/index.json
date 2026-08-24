@@ -792,35 +792,6 @@
     "nw_trusted_people_H336LH": {
       "type": "nw-trusted-people",
       "blocks": {
-        "trust_badge_wPyGqh": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "moneyback",
-            "text": "100-Night Risk-Free Trial"
-          }
-        },
-        "trust_badge_8xAATp": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "truck",
-            "text": "free shipping"
-          }
-        },
-        "trust_badge_qxzTKB": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "shield",
-            "text": "30-Year Warranty"
-          }
-        },
-        "trust_badge_VrQEwy": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/interest.svg",
-            "text": "0% Interest financing options"
-          }
-        },
         "person_LmWBRV": {
           "type": "person",
           "settings": {
@@ -907,10 +878,6 @@
         }
       },
       "block_order": [
-        "trust_badge_wPyGqh",
-        "trust_badge_8xAATp",
-        "trust_badge_qxzTKB",
-        "trust_badge_VrQEwy",
         "person_LmWBRV",
         "person_LrnyFB",
         "person_D4BpKH",
@@ -1072,50 +1039,32 @@
     "nw_image_with_text_MPQp7m": {
       "type": "nw-image-with-text",
       "blocks": {
-        "feature_jE3PQ7": {
-          "type": "feature",
+        "trust_badge_h3b738": {
+          "type": "trust_badge",
           "settings": {
-            "text": "+ Organic Mattress"
+            "icon": "truck",
+            "text": "Free Shipping & Installation"
           }
         },
-        "feature_qUwzGx": {
-          "type": "feature",
+        "trust_badge_3LbG37": {
+          "type": "trust_badge",
           "settings": {
-            "text": "+ Adjustable Base"
+            "icon": "shield",
+            "text": "30-Year Warranty"
           }
         },
-        "feature_R3t878": {
-          "type": "feature",
+        "trust_badge_TtGEKi": {
+          "type": "trust_badge",
           "settings": {
-            "text": "+ Organic Sheet Set"
-          }
-        },
-        "feature_qKgH3p": {
-          "type": "feature",
-          "settings": {
-            "text": "+ Organic Pillow Cases"
-          }
-        },
-        "feature_6gGTK6": {
-          "type": "feature",
-          "settings": {
-            "text": "+ Pillows"
-          }
-        },
-        "feature_X7iLEt": {
-          "type": "feature",
-          "settings": {
-            "text": "+ Mattress Protector"
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
           }
         }
       },
       "block_order": [
-        "feature_jE3PQ7",
-        "feature_qUwzGx",
-        "feature_R3t878",
-        "feature_qKgH3p",
-        "feature_6gGTK6",
-        "feature_X7iLEt"
+        "trust_badge_h3b738",
+        "trust_badge_3LbG37",
+        "trust_badge_TtGEKi"
       ],
       "name": "NW Image With Text",
       "settings": {
@@ -1130,24 +1079,14 @@
         "promo_text_color": "#ffffff",
         "heading": "Bundle & Save On Your Recovery System",
         "subheading": "<p>Bundle your mattress, adjustable base, and organic bedding essentials to save 30% or more on the complete setup.</p>",
+        "features": "<ul><li>+ Organic Mattress</li><li>+ Adjustable Base</li><li>+ Organic Sheet Set</li><li>+ Organic Pillow Cases</li><li>+ Pillows</li><li>+ Mattress Protector</li></ul>",
         "heading_color": "#613916",
         "description_color": "#613916",
         "feature_text_color": "#613916",
-        "feature_plus_color": "#613916",
         "show_button": true,
         "button_text": "Bundle and save",
         "button_link": "shopify://collections/bundles-ultimate-sleep-optimization-system",
         "button_style": "secondary",
-        "badge_icon_color": "#cc926a",
-        "badge_text_color": "#613916",
-        "badge_1_icon": "truck",
-        "badge_1_text": "<p>Free Shipping & Installation</p>",
-        "badge_2_icon": "warranty",
-        "badge_2_text": "<p>30-Year Warranty</p>",
-        "badge_3_icon": "moneyback",
-        "badge_3_text": "<p>100-Night Risk-Free Trial</p>",
-        "badge_4_icon": "financing",
-        "badge_4_text": "",
         "bg_type": "none",
         "bg_color": "#fffcf0",
         "bg_gradient": "",
@@ -1332,7 +1271,7 @@
         "contact_heading": "Speak With Our Live Sleep Experts.",
         "show_call_btn": true,
         "call_label": "CALL (443) 333-1213",
-        "call_link": "tel: (443) 333-1213",
+        "call_link": "",
         "call_style": "primary",
         "show_text_btn": true,
         "text_label": "TEXT US",
@@ -1356,35 +1295,6 @@
     "nw_collection_list_yeNiLx": {
       "type": "nw-collection-list",
       "blocks": {
-        "trust_badge_y7n3FH": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "trial",
-            "text": "100-Night Risk-Free Trial"
-          }
-        },
-        "trust_badge_CADELD": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "shield",
-            "text": "30-Year Warranty"
-          }
-        },
-        "trust_badge_H8C9yK": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "shipping",
-            "text": "free shipping"
-          }
-        },
-        "trust_badge_mnHWWd": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/interest.svg",
-            "text": "0% Interest financing options"
-          }
-        },
         "collection_XHC9VB": {
           "type": "collection",
           "settings": {
@@ -1441,10 +1351,6 @@
         }
       },
       "block_order": [
-        "trust_badge_y7n3FH",
-        "trust_badge_CADELD",
-        "trust_badge_H8C9yK",
-        "trust_badge_mnHWWd",
         "collection_XHC9VB",
         "collection_qpMhMA",
         "collection_MnEi8L",
