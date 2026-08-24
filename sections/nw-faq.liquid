@@ -1,5 +1,5 @@
 {{ 'nw-faq.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'faq.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-faq.js' | asset_url }}" defer="defer"></script>
 
 <style>
   .nw-faq.section-{{ section.id }} {
@@ -49,7 +49,7 @@
   }
 </style>
 
-<div class="nw-faq section-{{ section.id }}">
+<nw-faq class="nw-faq section-{{ section.id }}">
   <div class="nw page-width">
     <div class="nw-faq__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-faq__main">
@@ -209,7 +209,7 @@
       {%- endif -%}
     </div>
   </div>
-</div>
+</nw-faq>
 
 {% schema %}
 {

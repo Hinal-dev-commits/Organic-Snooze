@@ -1,4 +1,5 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-collection-list.js' | asset_url }}" defer="defer"></script>
 {{ 'nw-collection-list.css' | asset_url | stylesheet_tag }}
 
@@ -109,63 +110,59 @@
 
           <div class="swiper" id="nw-collection-list-{{ section.id }}" data-nw-collection-slider>
             <div class="swiper-wrapper">
-              {%- assign repeat_times = 1 -%}
-              {%- if slide_count > 0 and slide_count < 6 -%}
-                {%- assign repeat_times = 3 -%}
-              {%- elsif slide_count >= 6 and slide_count < 10 -%}
-                {%- assign repeat_times = 2 -%}
-              {%- endif -%}
+              {%- for block in collection_blocks -%}
+                {%- liquid
+                  assign selected_collection = block.settings.collection
+                  assign card_title = block.settings.custom_title
+                  if card_title == blank and selected_collection != blank
+                    assign card_title = selected_collection.title
+                  endif
+                  if card_title == blank
+                    assign card_title = 'Collection'
+                  endif
 
-              {%- for r in (1..repeat_times) -%}
-                {%- for block in collection_blocks -%}
-                  {%- liquid
-                    assign selected_collection = collections[block.settings.collection]
-                    assign card_title = block.settings.custom_title
-                    if card_title == blank and selected_collection != blank
-                      assign card_title = selected_collection.title
-                    endif
-                    if card_title == blank
-                      assign card_title = 'Collection'
-                    endif
+                  assign card_url = block.settings.custom_link
+                  if card_url == blank and selected_collection != blank
+                    assign card_url = selected_collection.url
+                  endif
 
-                    assign card_url = block.settings.custom_link
-                    if card_url == blank and selected_collection != blank
-                      assign card_url = selected_collection.url
-                    endif
-                    if card_url == blank
-                      assign card_url = '#'
-                    endif
+                  assign card_image = block.settings.custom_image
+                  if card_image == blank and selected_collection != blank and selected_collection.image != blank
+                    assign card_image = selected_collection.image
+                  elsif card_image == blank and selected_collection != blank and selected_collection.products.first.featured_media.preview_image != blank
+                    assign card_image = selected_collection.products.first.featured_media.preview_image
+                  endif
+                -%}
 
-                    assign card_image = block.settings.custom_image
-                    if card_image == blank and selected_collection != blank and selected_collection.image != blank
-                      assign card_image = selected_collection.image
-                    elsif card_image == blank and selected_collection != blank and selected_collection.products.first.featured_media.preview_image != blank
-                      assign card_image = selected_collection.products.first.featured_media.preview_image
-                    endif
-                  -%}
-
-                  <div class="swiper-slide"{% if r == 1 %} {{ block.shopify_attributes }}{% endif %}>
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                  {%- if card_url != blank -%}
                     <a href="{{ card_url }}" class="nw-collection-list__card">
-                      {%- if card_image != blank -%}
-                        <img
-                          src="{{ card_image | image_url: width: 800 }}"
-                          alt="{{ card_title | escape }}"
-                          width="282"
-                          height="423"
-                          loading="lazy"
-                          class="nw-collection-list__card-image"
-                        >
-                      {%- else -%}
-                        <div class="nw-collection-list__card-placeholder" aria-hidden="true"></div>
-                      {%- endif -%}
-                      {%- if card_title != blank -%}  
-                      <div class="nw-collection-list__card-label">
-                        <p class="nw-collection-list__card-title">{{ card_title }}</p>
-                      </div>
-                      {%- endif -%}
+                  {%- else -%}
+                    <div class="nw-collection-list__card">
+                  {%- endif -%}
+                    {%- if card_image != blank -%}
+                      <img
+                        src="{{ card_image | image_url: width: 800 }}"
+                        alt="{{ card_title | escape }}"
+                        width="282"
+                        height="423"
+                        loading="lazy"
+                        class="nw-collection-list__card-image"
+                      >
+                    {%- else -%}
+                      <div class="nw-collection-list__card-placeholder" aria-hidden="true"></div>
+                    {%- endif -%}
+                    {%- if card_title != blank -%}
+                    <div class="nw-collection-list__card-label">
+                      <p class="nw-collection-list__card-title">{{ card_title }}</p>
+                    </div>
+                    {%- endif -%}
+                  {%- if card_url != blank -%}
                     </a>
-                  </div>
-                {%- endfor -%}
+                  {%- else -%}
+                    </div>
+                  {%- endif -%}
+                </div>
               {%- endfor -%}
             </div>
           </div>

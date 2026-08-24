@@ -42,7 +42,7 @@
                   assign icon_to_show = section.settings.icon
                 endif
               -%}
-              <div class="nw-marquee__item" {{ block.shopify_attributes }}>
+              <div class="nw-marquee__item"{% if i == 1 and repeat_idx == 1 %} {{ block.shopify_attributes }}{% endif %}>
                 {%- if block.settings.link != blank -%}
                   <a href="{{ block.settings.link }}" class="nw-marquee__link">
                 {%- endif -%}
