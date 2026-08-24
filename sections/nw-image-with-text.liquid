@@ -269,15 +269,23 @@
       "content": "CTA button"
     },
     {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "button_text",
       "label": "Button text",
-      "default": "Bundle and save"
+      "default": "Bundle and save",
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button link"
+      "label": "Button link",
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "select",
@@ -288,7 +296,8 @@
         { "value": "primary", "label": "Primary" },
         { "value": "secondary", "label": "Secondary" },
         { "value": "outline", "label": "Outline" }
-      ]
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "header",

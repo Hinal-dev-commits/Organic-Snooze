@@ -177,6 +177,71 @@
     }
 
 
+    .nw-rating,
+    .nw-review-video__rating,
+    .nw-testimonials__rating,
+    .nw-natural-layers__rating,
+    .nw-trusted-people__rating,
+    .nw-human-biologist__rating {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      gap: 4px;
+      margin-bottom: 14px;
+      width: 100%;
+    }
+
+    .nw-stars,
+    .nw-review-video__stars,
+    .nw-testimonials__header-stars,
+    .nw-natural-layers__stars,
+    .nw-trusted-people__stars,
+    .nw-human-biologist__stars {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0;
+      width: 90px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .nw-star,
+    .nw-review-video__star,
+    .nw-testimonials__header-star,
+    .nw-natural-layers__star,
+    .nw-trusted-people__star,
+    .nw-human-biologist__star {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      color: var(--nw-star-inactive, var(--nw-rv-star-inactive, var(--nw-testimonials-header-star-inactive, var(--nw-nl-star-inactive, var(--nw-tp-star-inactive, var(--nw-hb-star-inactive, #D1D5DB))))));
+    }
+
+    .nw-star--active,
+    .nw-review-video__star--active,
+    .nw-testimonials__header-star--active,
+    .nw-natural-layers__star--active,
+    .nw-trusted-people__star--active,
+    .nw-human-biologist__star--active {
+      color: var(--nw-star-active, var(--nw-rv-star-active, var(--nw-testimonials-header-star-active, var(--nw-nl-star-active, var(--nw-tp-star-active, var(--nw-hb-star-active, #E57B1E))))));
+    }
+
+    .nw-star svg,
+    .nw-review-video__star svg,
+    .nw-testimonials__header-star svg,
+    .nw-natural-layers__star svg,
+    .nw-trusted-people__star svg,
+    .nw-human-biologist__star svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
     .nw-eyebrow {
   font-family: var(--font-body-family);
   font-style: normal;
@@ -319,7 +384,6 @@ h2, .h2 {
   }
     }
 
-    /* Footer */
     .footer {
         border-top: none;
     }

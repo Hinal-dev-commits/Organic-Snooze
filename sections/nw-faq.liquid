@@ -3,6 +3,8 @@
 
 <style>
   .nw-faq.section-{{ section.id }} {
+    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     position: relative;
     background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
     padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
@@ -51,11 +53,37 @@
   <div class="nw page-width">
     <div class="nw-faq__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-faq__main">
-        {%- if section.settings.heading != blank -%}
-          <div class="nw-faq__heading-wrap">
-            {% render 'nw-section-heading', text: section.settings.heading %}
-          </div>
-        {%- endif -%}
+        <div class="nw-faq__header">
+          {%- if section.settings.show_rating -%}
+            {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
+            <div class="nw-rating">
+              <div class="nw-stars" aria-label="{{ active_stars }} out of 5 stars">
+                {%- for i in (1..5) -%}
+                  <span class="nw-star{% if i <= active_stars %} nw-star--active{% endif %}">
+                    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                      <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
+                    </svg>
+                  </span>
+                {%- endfor -%}
+              </div>
+              {%- if section.settings.eyebrow != blank -%}
+                <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
+              {%- endif -%}
+            </div>
+          {%- elsif section.settings.eyebrow != blank -%}
+            <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.heading != blank -%}
+            <div class="nw-faq__heading-wrap">
+              {% render 'nw-section-heading', text: section.settings.heading %}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.subheading != blank -%}
+            {% render 'nw-section-description', text: section.settings.subheading %}
+          {%- endif -%}
+        </div>
 
         {%- if section.settings.show_search -%}
           <div class="nw-faq__search"> 
@@ -108,7 +136,24 @@
         {%- endif -%}
       </div>
 
-      {%- if section.settings.contact_heading != blank or section.settings.call_label != blank or section.settings.text_label != blank or section.settings.quiz_label != blank -%}
+      {%- liquid
+        assign show_call = false
+        if section.settings.show_call_btn and section.settings.call_label != blank
+          assign show_call = true
+        endif
+
+        assign show_text = false
+        if section.settings.show_text_btn and section.settings.text_label != blank
+          assign show_text = true
+        endif
+
+        assign show_quiz = false
+        if section.settings.show_quiz_btn and section.settings.quiz_label != blank
+          assign show_quiz = true
+        endif
+      -%}
+
+      {%- if section.settings.contact_heading != blank or show_call or show_text or show_quiz -%}
         <div class="nw-faq__contact">
           {%- if section.settings.contact_heading != blank -%}
             <div class="nw-faq__contact-heading-wrap" id="faq-heading">
@@ -116,35 +161,37 @@
             </div>
           {%- endif -%}
 
-          <div class="nw-faq__actions">
-            {%- if section.settings.call_label != blank -%}
-              {% render 'nw-button',
-                text: section.settings.call_label,
-                link: section.settings.call_link,
-                style: section.settings.call_style
-              %}
-            {%- endif -%}
+          {%- if show_call or show_text or show_quiz -%}
+            <div class="nw-faq__actions">
+              {%- if show_call -%}
+                {% render 'nw-button',
+                  text: section.settings.call_label,
+                  link: section.settings.call_link,
+                  style: section.settings.call_style
+                %}
+              {%- endif -%}
 
-            {%- if section.settings.text_label != blank or section.settings.quiz_label != blank -%}
-              <div class="nw-faq__btn-row">
-                {%- if section.settings.text_label != blank -%}
-                  {% render 'nw-button',
-                    text: section.settings.text_label,
-                    link: section.settings.text_link,
-                    style: section.settings.text_style
-                  %}
-                {%- endif -%}
+              {%- if show_text or show_quiz -%}
+                <div class="nw-faq__btn-row">
+                  {%- if show_text -%}
+                    {% render 'nw-button',
+                      text: section.settings.text_label,
+                      link: section.settings.text_link,
+                      style: section.settings.text_style
+                    %}
+                  {%- endif -%}
 
-                {%- if section.settings.quiz_label != blank -%}
-                  {% render 'nw-button',
-                    text: section.settings.quiz_label,
-                    link: section.settings.quiz_link,
-                    style: section.settings.quiz_style
-                  %}
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          </div>
+                  {%- if show_quiz -%}
+                    {% render 'nw-button',
+                      text: section.settings.quiz_label,
+                      link: section.settings.quiz_link,
+                      style: section.settings.quiz_style
+                    %}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         </div>
       {%- endif -%}
     </div>
@@ -158,13 +205,58 @@
   "settings": [
     {
       "type": "header",
-      "content": "FAQ SETTINGS"
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating (Active Stars)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Active Star Color",
+      "default": "#E57B1E",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color_inactive",
+      "label": "Inactive Star Color",
+      "default": "#D1D5DB",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Real sleepers, real mornings"
     },
     {
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
       "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "FAQ SETTINGS"
     },
     {
       "type": "checkbox",
@@ -211,16 +303,24 @@
       "default": "Speak with Our Live Sleep Experts."
     },
     {
+      "type": "checkbox",
+      "id": "show_call_btn",
+      "label": "Show Call Button",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "call_label",
       "label": "Call Button Label",
-      "default": "CALL (443) 333-1213"
+      "default": "CALL (443) 333-1213",
+      "visible_if": "{{ section.settings.show_call_btn == true }}"
     },
     {
       "type": "text",
       "id": "call_link",
       "label": "Call Button Link (e.g. tel:+14433331213)",
-      "default": "tel:+14433331213"
+      "default": "tel:+14433331213",
+      "visible_if": "{{ section.settings.show_call_btn == true }}"
     },
     {
       "type": "select",
@@ -231,19 +331,28 @@
         { "value": "primary", "label": "Primary" },
         { "value": "secondary", "label": "Secondary" },
         { "value": "outline", "label": "Outline" }
-      ]
+      ],
+      "visible_if": "{{ section.settings.show_call_btn == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_btn",
+      "label": "Show Text Button",
+      "default": true
     },
     {
       "type": "text",
       "id": "text_label",
       "label": "Text Button Label",
-      "default": "TEXT US"
+      "default": "TEXT US",
+      "visible_if": "{{ section.settings.show_text_btn == true }}"
     },
     {
       "type": "text",
       "id": "text_link",
       "label": "Text Button Link (e.g. sms:+14433331213)",
-      "default": "sms:+14433331213"
+      "default": "sms:+14433331213",
+      "visible_if": "{{ section.settings.show_text_btn == true }}"
     },
     {
       "type": "select",
@@ -254,18 +363,27 @@
         { "value": "primary", "label": "Primary" },
         { "value": "secondary", "label": "Secondary" },
         { "value": "outline", "label": "Outline" }
-      ]
+      ],
+      "visible_if": "{{ section.settings.show_text_btn == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quiz_btn",
+      "label": "Show Quiz Button",
+      "default": true
     },
     {
       "type": "text",
       "id": "quiz_label",
       "label": "Quiz Button Label",
-      "default": "SLEEP QUIZ"
+      "default": "SLEEP QUIZ",
+      "visible_if": "{{ section.settings.show_quiz_btn == true }}"
     },
     {
       "type": "url",
       "id": "quiz_link",
-      "label": "Quiz Button Link"
+      "label": "Quiz Button Link",
+      "visible_if": "{{ section.settings.show_quiz_btn == true }}"
     },
     {
       "type": "select",
@@ -276,7 +394,8 @@
         { "value": "primary", "label": "Primary" },
         { "value": "secondary", "label": "Secondary" },
         { "value": "outline", "label": "Outline" }
-      ]
+      ],
+      "visible_if": "{{ section.settings.show_quiz_btn == true }}"
     },
     {
       "type": "header",

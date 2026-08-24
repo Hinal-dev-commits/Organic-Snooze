@@ -31,6 +31,8 @@
   id="NwTrustedPeople-{{ section.id }}"
   class="nw-trusted-people"
   style="
+    --nw-tp-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+    --nw-tp-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     --nw-tp-heading-color: {{ section.settings.heading_color }};
     --nw-tp-desc-color: {{ section.settings.description_color }};
     --nw-tp-card-bg: {{ section.settings.card_bg_color }};
@@ -45,12 +47,35 @@
   "
 >
   <div class="nw-trusted-people__wrapper{%- render 'nw-scroll-animation' -%}">
-    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-      <div class="nw-trusted-people__header">
+    <div class="nw-trusted-people__header">
+      {%- if section.settings.show_rating -%}
+        {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
+        <div class="nw-trusted-people__rating">
+          <div class="nw-trusted-people__stars" aria-label="{{ active_stars }} out of 5 stars">
+            {%- for i in (1..5) -%}
+              <span class="nw-trusted-people__star{% if i <= active_stars %} nw-trusted-people__star--active{% endif %}">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
+                </svg>
+              </span>
+            {%- endfor -%}
+          </div>
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
+          {%- endif -%}
+        </div>
+      {%- elsif section.settings.eyebrow != blank -%}
+        <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
         {% render 'nw-section-heading', text: section.settings.heading %}
+      {%- endif -%}
+
+      {%- if section.settings.subheading != blank -%}
         {% render 'nw-section-description', text: section.settings.subheading %}
-      </div>
-    {%- endif -%}
+      {%- endif -%}
+    </div>
 
     {%- if section.blocks.size > 0 -%}
       <div class="nw-trusted-people__slider-wrap">
@@ -103,19 +128,8 @@
     if (!sectionEl) return;
 
     var swiperInstance = null;
-
-    /*
-     * Number of REAL Shopify blocks.
-     * Cloned slides are never included in this count.
-     */
     var originalCount = {{ section.blocks.size | default: 0 }};
 
-
-    /*
-     * =========================================================
-     * CARD TOGGLE
-     * =========================================================
-     */
     function setCardsExpanded(slideIndex, isExpanded) {
       var cards;
 
@@ -169,11 +183,6 @@
           return;
         }
 
-        /*
-         * Center-mode clones often get swiper-slide-active but not
-         * swiper-slide-fully-visible (progress rounding / peeking slides).
-         * Blocking on fully-visible made the + button appear dead on copies.
-         */
         var isActive = slide.classList.contains('swiper-slide-active');
         var isFullyVisible = slide.classList.contains('swiper-slide-fully-visible');
 
@@ -198,14 +207,7 @@
       });
     }
 
-
-    /*
-     * =========================================================
-     * CUSTOM PAGINATION
-     * =========================================================
-     */
     function updateCustomPagination() {
-
       if (!swiperInstance || originalCount <= 1) {
         return;
       }
@@ -227,23 +229,14 @@
       );
 
       bullets.forEach(function (bullet, index) {
-
         bullet.classList.toggle(
           'swiper-pagination-bullet-active',
           index === currentIndex
         );
-
       });
     }
 
-
-    /*
-     * =========================================================
-     * CUSTOM DOT CLICK
-     * =========================================================
-     */
     function bindPagination() {
-
       if (!swiperInstance) return;
 
       var paginationEl = sectionEl.querySelector(
@@ -257,17 +250,13 @@
       );
 
       bullets.forEach(function (bullet, index) {
-
-        if (
-          bullet.dataset.nwTpPaginationBound === 'true'
-        ) {
+        if (bullet.dataset.nwTpPaginationBound === 'true') {
           return;
         }
 
         bullet.dataset.nwTpPaginationBound = 'true';
 
         bullet.addEventListener('click', function (event) {
-
           event.preventDefault();
           event.stopPropagation();
 
@@ -277,14 +266,11 @@
           var meta = sliderEl ? getSlideMeta(sliderEl) : { startIndex: 0 };
 
           swiperInstance.slideTo(meta.startIndex + index, 600);
-
         });
-
       });
 
       updateCustomPagination();
     }
-
 
     function cloneSlide(slide) {
       var clone = slide.cloneNode(true);
@@ -421,50 +407,27 @@
       return ((activeIndex % originalCount) + originalCount) % originalCount;
     }
 
-
-    /*
-     * =========================================================
-     * INITIALIZE SWIPER
-     * =========================================================
-     */
     function initSwiper() {
-
-      /*
-       * Wait for Swiper library.
-       */
       if (typeof Swiper === 'undefined') {
-
         window.setTimeout(
           initSwiper,
           50
         );
-
         return;
       }
-
 
       var sliderEl = sectionEl.querySelector(
         '.nw-trusted-people__swiper'
       );
 
-
       if (!sliderEl) return;
 
-
-      /*
-       * Destroy previous Swiper instance.
-       *
-       * Required for Shopify Theme Editor reloads.
-       */
       if (sliderEl.swiper) {
-
         sliderEl.swiper.destroy(
           true,
           true
         );
-
       }
-
 
       swiperInstance = null;
 
@@ -585,78 +548,41 @@
       }, 150);
     }
 
-
-    /*
-     * =========================================================
-     * SECTION INIT
-     * =========================================================
-     */
     function initSection() {
-
       initToggles();
-
       initSwiper();
-
     }
 
-
-    /*
-     * =========================================================
-     * INITIAL PAGE LOAD
-     * =========================================================
-     */
     if (
       document.readyState === 'loading'
     ) {
-
       document.addEventListener(
         'DOMContentLoaded',
         initSection
       );
-
     } else {
-
       initSection();
-
     }
 
-
-    /*
-     * =========================================================
-     * SHOPIFY SECTION LOAD
-     * =========================================================
-     */
     document.addEventListener(
       'shopify:section:load',
       function (event) {
-
         if (
           event.target &&
           event.target.contains(sectionEl)
         ) {
-
           initSection();
-
         }
-
       }
     );
 
-
-    /*
-     * =========================================================
-     * SHOPIFY SECTION SELECT
-     * =========================================================
-     */
     document.addEventListener(
       'shopify:section:select',
       function () {
-
         var sliderEl =
           sectionEl.querySelector(
             '.nw-trusted-people__swiper'
           );
-
 
         if (
           !sliderEl ||
@@ -664,44 +590,28 @@
         ) {
           return;
         }
-
 
         sliderEl.swiper.update();
 
-
         {% if section.settings.show_arrows %}
-
         if (
           sliderEl.swiper.navigation
         ) {
-
           sliderEl.swiper.navigation.update();
-
         }
-
         {% endif %}
 
-
         updateCustomPagination();
-
       }
     );
 
-
-    /*
-     * =========================================================
-     * SHOPIFY BLOCK SELECT
-     * =========================================================
-     */
     document.addEventListener(
       'shopify:block:select',
       function (event) {
-
         var sliderEl =
           sectionEl.querySelector(
             '.nw-trusted-people__swiper'
           );
-
 
         if (
           !sliderEl ||
@@ -710,21 +620,14 @@
           return;
         }
 
-
-        /*
-         * Ignore cloned slides.
-         */
         if (
           event.target &&
           event.target.getAttribute(
             'data-nw-tp-clone'
           ) === 'true'
         ) {
-
           return;
-
         }
-
 
         var slideIndex =
           event.target &&
@@ -732,16 +635,12 @@
             'data-slide-index'
           );
 
-
         if (
           slideIndex === null ||
           slideIndex === undefined
         ) {
-
           return;
-
         }
-
 
         var index =
           parseInt(
@@ -749,67 +648,44 @@
             10
           );
 
-
         if (isNaN(index)) return;
-
 
         if (
           sliderEl.swiper.params.loop
         ) {
-
           sliderEl.swiper.slideToLoop(
             index,
             400
           );
-
         } else {
-
           var meta = getSlideMeta(sliderEl);
-
           sliderEl.swiper.slideTo(
             meta.startIndex + index,
             400
           );
-
         }
-
 
         sliderEl.swiper.update();
 
-
         {% if section.settings.show_arrows %}
-
         if (
           sliderEl.swiper.navigation
         ) {
-
           sliderEl.swiper.navigation.update();
-
         }
-
         {% endif %}
 
-
         updateCustomPagination();
-
       }
     );
 
-
-    /*
-     * =========================================================
-     * SHOPIFY BLOCK DESELECT
-     * =========================================================
-     */
     document.addEventListener(
       'shopify:block:deselect',
       function () {
-
         var sliderEl =
           sectionEl.querySelector(
             '.nw-trusted-people__swiper'
           );
-
 
         if (
           !sliderEl ||
@@ -818,25 +694,17 @@
           return;
         }
 
-
         sliderEl.swiper.update();
 
-
         {% if section.settings.show_arrows %}
-
         if (
           sliderEl.swiper.navigation
         ) {
-
           sliderEl.swiper.navigation.update();
-
         }
-
         {% endif %}
-
       }
     );
-
 
   })();
 </script>
@@ -848,13 +716,49 @@
   "settings": [
     {
       "type": "header",
-      "content": "Section content"
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating (Active Stars)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Active Star Color",
+      "default": "#E57B1E",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color_inactive",
+      "label": "Inactive Star Color",
+      "default": "#D1D5DB",
+      "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
       "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Real sleepers, real mornings"
+    },
+    {
+      "type": "richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Sleep Like The People Who Win"
+      "default": "<h2>Sleep Like The People Who Win</h2>"
     },
     {
       "type": "richtext",
@@ -952,15 +856,23 @@
       "content": "CTA button"
     },
     {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "button_text",
-      "label": "Button text",
-      "default": "Shop the mattress"
+      "label": "Button Label",
+      "default": "Shop the mattress",
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button link"
+      "label": "Button link",
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "select",
@@ -971,7 +883,8 @@
         { "value": "primary", "label": "Primary" },
         { "value": "secondary", "label": "Secondary" },
         { "value": "outline", "label": "Outline" }
-      ]
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "header",

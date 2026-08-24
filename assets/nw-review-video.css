@@ -40,46 +40,6 @@
   box-sizing: border-box;
 }
 
-.nw-review-video__rating {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  gap: 4px;
-  margin-bottom: 14px;
-  width: 100%;
-}
-
-.nw-review-video__stars {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0;
-  width: 90px;
-  height: 18px;
-  flex-shrink: 0;
-}
-
-.nw-review-video__star {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  color: var(--nw-rv-star-inactive, #D1D5DB);
-}
-
-.nw-review-video__star--active {
-  color: var(--nw-rv-star-active, #E57B1E);
-}
-
-.nw-review-video__star svg {
-  width: 18px;
-  height: 18px;
-  display: block;
-}
-
 .nw-review-video__slider-wrap {
   position: relative;
   width: 100%;

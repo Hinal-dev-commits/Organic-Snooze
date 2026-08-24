@@ -8,6 +8,8 @@
 
 <style>
   .nw-collection-list.section-{{ section.id }} {
+    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     position: relative;
     background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
     padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
@@ -62,16 +64,35 @@
 <section class="nw-collection-list nw-main-section section-{{ section.id }}">
   <div class="nw-collection-list__container">
     <div class="nw-collection-list__inner{%- render 'nw-scroll-animation' -%}">
-      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-        <div class="nw-collection-list__header">
-          {%- if section.settings.heading != blank -%}
-            {% render 'nw-section-heading', text: section.settings.heading %}
-          {%- endif -%}
-          {%- if section.settings.subheading != blank -%}
-            <p class="nw-collection-list__subheading">{{ section.settings.subheading }}</p>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
+      <div class="nw-collection-list__header">
+        {%- if section.settings.show_rating -%}
+          {%- assign active_stars = section.settings.star_rating | default: 5 | plus: 0 -%}
+          <div class="nw-rating">
+            <div class="nw-stars" aria-label="{{ active_stars }} out of 5 stars">
+              {%- for i in (1..5) -%}
+                <span class="nw-star{% if i <= active_stars %} nw-star--active{% endif %}">
+                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
+                  </svg>
+                </span>
+              {%- endfor -%}
+            </div>
+            {%- if section.settings.eyebrow != blank -%}
+              <span class="nw-eyebrow">{{ section.settings.eyebrow }}</span>
+            {%- endif -%}
+          </div>
+        {%- elsif section.settings.eyebrow != blank -%}
+          <p class="nw-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          {% render 'nw-section-heading', text: section.settings.heading %}
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          {% render 'nw-section-description', text: section.settings.subheading %}
+        {%- endif -%}
+      </div>
 
       {%- if slide_count > 0 -%}
         <div class="nw-collection-list__slider-wrap">
@@ -170,61 +191,7 @@
         {%- endif -%}
       {%- endif -%}
 
-      <div class="nw-collection-list__actions">
-        {%- if section.settings.button_label != blank -%}
-          {% render 'nw-button',
-            text: section.settings.button_label,
-            link: section.settings.button_link,
-            style: section.settings.button_style
-          %}
-        {%- endif -%}
-
-        {%- if section.settings.show_features -%}
-          <div class="nw-collection-list__features">
-            {%- for i in (1..4) -%}
-              {%- liquid
-                case i
-                  when 1
-                    assign feature_icon = section.settings.feature_1_icon
-                    assign feature_custom_icon = section.settings.feature_1_custom_icon
-                    assign feature_text = section.settings.feature_1_text
-                  when 2
-                    assign feature_icon = section.settings.feature_2_icon
-                    assign feature_custom_icon = section.settings.feature_2_custom_icon
-                    assign feature_text = section.settings.feature_2_text
-                  when 3
-                    assign feature_icon = section.settings.feature_3_icon
-                    assign feature_custom_icon = section.settings.feature_3_custom_icon
-                    assign feature_text = section.settings.feature_3_text
-                  when 4
-                    assign feature_icon = section.settings.feature_4_icon
-                    assign feature_custom_icon = section.settings.feature_4_custom_icon
-                    assign feature_text = section.settings.feature_4_text
-                endcase
-              -%}
-
-              {%- if feature_text != blank -%}
-                <div class="nw-collection-list__feature">
-                  <span class="nw-collection-list__feature-icon" aria-hidden="true">
-                    {%- if feature_icon == 'custom' and feature_custom_icon != blank -%}
-                      <img
-                        src="{{ feature_custom_icon | image_url: width: 40 }}"
-                        alt=""
-                        width="20"
-                        height="20"
-                        loading="lazy"
-                      >
-                    {%- else -%}
-                      {%- render 'nw-collection-list-icon', icon: feature_icon -%}
-                    {%- endif -%}
-                  </span>
-                  <span class="nw-collection-list__feature-text">{{ feature_text }}</span>
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-      </div>
+      {% render 'nw-cta-badges', settings: section.settings, class: 'nw-collection-list__actions' %}
     </div>
   </div>
 </section>
@@ -343,7 +310,43 @@
   "settings": [
     {
       "type": "header",
-      "content": "SECTION HEADING"
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating (Active Stars)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Active Star Color",
+      "default": "#E57B1E",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color_inactive",
+      "label": "Inactive Star Color",
+      "default": "#D1D5DB",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Real sleepers, real mornings"
     },
     {
       "type": "inline_richtext",
@@ -352,10 +355,10 @@
       "default": "Explore Our Collections"
     },
     {
-      "type": "inline_richtext",
+      "type": "richtext",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Find the right organic sleep essentials for every stage of your recovery."
+      "default": "<p>Find the right organic sleep essentials for every stage of your recovery.</p>"
     },
     {
       "type": "header",
@@ -401,15 +404,23 @@
       "content": "BUTTON"
     },
     {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "button_label",
       "label": "Button Label",
-      "default": "SHOP ALL"
+      "default": "SHOP ALL",
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button Link"
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "select",
@@ -420,7 +431,8 @@
         { "value": "primary", "label": "Primary" },
         { "value": "secondary", "label": "Secondary" },
         { "value": "outline", "label": "Outline" }
-      ]
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "header",

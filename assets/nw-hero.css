@@ -199,6 +199,8 @@
   align-items: center;
 }
 
+.nw-hero .nw-section-heading,
+.nw-hero .nw-section-heading *,
 .nw-heading,
 .nw-heading * {
   font-family: var(--font-heading-family);
@@ -212,10 +214,14 @@
   margin: 0;
 }
 
+.nw-hero .nw-section-heading h1,
+.nw-hero .nw-section-heading h2,
 .nw-heading h1 {
   margin-bottom: 16px;
 }
 
+.nw-hero .nw-section-description,
+.nw-hero .nw-section-description *,
 .nw-hero__subheading,
 .nw-hero__subheading * {
   font-family: var(--font-body-family);
@@ -225,10 +231,19 @@
   line-height: 150%;
   color: #FFFFFF;
   margin: 0;
+  text-align: left;
+  margin-bottom: 24px;
 }
 
+.nw-hero .nw-section-description p,
 .nw-hero__subheading p {
   margin-bottom: 24px;
+}
+
+.nw-hero__cta {
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: 40px;
 }
 
 .nw-hero__button-wrap {
@@ -237,6 +252,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.nw-hero__wrapper .nw-cta-badges,
+.nw-hero .nw-cta-badges,
+.nw-hero__cta {
+  --nw-cta-badge-text: #FFFFFF;
+}
+
+.nw-hero__wrapper .nw-cta-badges__text,
+.nw-hero__wrapper .nw-cta-badges__text *,
+.nw-hero .nw-cta-badges__text,
+.nw-hero .nw-cta-badges__text * {
+  color: #FFFFFF !important;
 }
 
 .nw-hero__trust-badges {
@@ -615,7 +643,6 @@
   .nw-hero__subheading * {
     font-size: 16px;
     line-height: 150%;
-    text-align: center;
   }
 
   .nw-hero__subheading p {
