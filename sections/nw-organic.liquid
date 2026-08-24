@@ -1,0 +1,669 @@
+{{ 'nw-organic.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwOrganic-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% else %}
+      background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwOrganic-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<div id="NwOrganic-{{ section.id }}" class="nw-organic section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-organic__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-organic__header">
+        {%- if section.settings.heading != blank -%}
+          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          {% render 'nw-section-description', text: section.settings.description %}
+        {%- endif -%}
+      </div>
+
+      <div class="nw-organic__main{% if section.settings.image_position == 'left' %} nw-organic__main--image-left{% endif %}">
+        <div class="nw-organic__table-col">
+          <div class="nw-organic__table">
+            <div class="nw-organic__table-row nw-organic__table-row--head">
+              <div class="nw-organic__cell nw-organic__cell--feature"></div>
+              
+              <div class="nw-organic__cell nw-organic__cell--head-brand">
+                {%- if section.settings.col1_head_image != blank -%}
+                  <img
+                    src="{{ section.settings.col1_head_image | image_url: width: 300 }}"
+                    alt="{{ section.settings.col1_head_title | default: 'Organic Snooze' | escape }}"
+                    width="120"
+                    height="80"
+                    loading="lazy"
+                    class="nw-organic__head-floating-img"
+                  >
+                {%- endif -%}
+
+                {%- if section.settings.col1_head_logo != blank -%}
+                  <img
+                    src="{{ section.settings.col1_head_logo | image_url: width: 240 }}"
+                    alt="{{ section.settings.col1_head_title | default: 'Organic Snooze' | escape }}"
+                    width="120"
+                    height="20"
+                    loading="lazy"
+                    class="nw-organic__brand-logo"
+                  >
+                {%- elsif section.settings.col1_head_title != blank -%}
+                  <span class="nw-organic__brand-text">{{ section.settings.col1_head_title }}</span>
+                {%- endif -%}
+              </div>
+
+              <div class="nw-organic__cell nw-organic__cell--head-other">
+                {%- if section.settings.col2_head_image != blank -%}
+                  <img
+                    src="{{ section.settings.col2_head_image | image_url: width: 300 }}"
+                    alt="{{ section.settings.col2_head_title | default: 'Typical Bedroom Setup' | escape }}"
+                    width="127"
+                    height="75"
+                    loading="lazy"
+                    class="nw-organic__head-floating-img nw-organic__head-floating-img--other"
+                  >
+                {%- endif -%}
+
+                {%- if section.settings.col2_head_title != blank -%}
+                  <span class="nw-organic__other-title">{{ section.settings.col2_head_title }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+
+            {%- assign row_blocks = section.blocks | where: 'type', 'table_row' -%}
+            {%- for block in row_blocks -%}
+              <div class="nw-organic__table-row" {{ block.shopify_attributes }}>
+                <div class="nw-organic__cell nw-organic__cell--feature">
+                  <span>{{ block.settings.feature_name }}</span>
+                </div>
+
+                <div class="nw-organic__cell nw-organic__cell--brand">
+                  {%- if block.settings.col1_icon != 'none' -%}
+                    <span class="nw-organic__icon">
+                      {% render 'nw-icon',
+                        icon: block.settings.col1_icon,
+                        custom_icon: block.settings.col1_custom_icon,
+                        img_class: 'nw-organic__icon-img'
+                      %}
+                    </span>
+                  {%- endif -%}
+                  {%- if block.settings.col1_text != blank -%}
+                    <span class="nw-organic__cell-text">{{ block.settings.col1_text }}</span>
+                  {%- endif -%}
+                </div>
+
+                <div class="nw-organic__cell nw-organic__cell--other">
+                  {%- if block.settings.col2_icon != 'none' -%}
+                    <span class="nw-organic__icon{% if block.settings.col2_icon == 'cross' or block.settings.col2_icon == 'red-cross' %} nw-organic__icon--cross{% endif %}">
+                      {% render 'nw-icon',
+                        icon: block.settings.col2_icon,
+                        custom_icon: block.settings.col2_custom_icon,
+                        img_class: 'nw-organic__icon-img'
+                      %}
+                    </span>
+                  {%- endif -%}
+                  {%- if block.settings.col2_text != blank -%}
+                    <span class="nw-organic__cell-text">{{ block.settings.col2_text }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="nw-organic__image-col">
+          {%- liquid
+            assign img_dt = section.settings.image_desktop
+            assign img_mb = section.settings.image_mobile
+          -%}
+          {%- if img_dt != blank or img_mb != blank -%}
+            <picture>
+              {%- if img_mb != blank -%}
+                <source media="(max-width: 749px)" srcset="{{ img_mb | image_url: width: 750 }}">
+              {%- endif -%}
+              <img
+                src="{{ img_dt | default: img_mb | image_url: width: 1200 }}"
+                alt="{{ section.settings.heading | default: 'Organic Snooze Recovery System' | escape }}"
+                width="616"
+                height="606"
+                loading="lazy"
+                class="nw-organic__img"
+              >
+            </picture>
+          {%- else -%}
+            <div class="nw-organic__placeholder"></div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
+      <div class="nw-organic__footer">
+        {% render 'nw-cta-badges',
+          settings: section.settings,
+          blocks: trust_badge_blocks,
+          class: 'nw-organic__cta'
+        %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Organic",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "HEADER CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "An Organic Sleep Recovery System Working Together"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>With this bundle you will have a complete organic recovery sleep system including everything you need and nothing you don't.</p>"
+    },
+    {
+      "type": "header",
+      "content": "PRODUCT IMAGE & LAYOUT"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position (Desktop)",
+      "options": [
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Product Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Product Image (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "TABLE HEADERS"
+    },
+    {
+      "type": "image_picker",
+      "id": "col1_head_image",
+      "label": "Brand Column Floating Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "col1_head_logo",
+      "label": "Brand Logo Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "col1_head_title",
+      "label": "Brand Column Fallback Text",
+      "default": "Organic Snooze"
+    },
+    {
+      "type": "image_picker",
+      "id": "col2_head_image",
+      "label": "Competitor Column Floating Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "col2_head_title",
+      "label": "Competitor Column Title",
+      "default": "Typical Bedroom Setup"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON & CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "CHOOSE BETTER SLEEP"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "table_row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "feature_name",
+          "label": "Feature Name",
+          "default": "Mattress"
+        },
+        {
+          "type": "select",
+          "id": "col1_icon",
+          "label": "Brand Column Icon",
+          "options": [
+            {
+              "value": "check-solar",
+              "label": "Solar Check Seal"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "cross",
+              "label": "Cross"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Image"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "default": "check-solar"
+        },
+        {
+          "type": "image_picker",
+          "id": "col1_custom_icon",
+          "label": "Brand Custom Icon",
+          "visible_if": "{{ block.settings.col1_icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "col1_text",
+          "label": "Brand Column Text",
+          "default": "Organic mattress"
+        },
+        {
+          "type": "select",
+          "id": "col2_icon",
+          "label": "Competitor Column Icon",
+          "options": [
+            {
+              "value": "cross",
+              "label": "Cross"
+            },
+            {
+              "value": "check-solar",
+              "label": "Solar Check Seal"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Image"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "default": "cross"
+        },
+        {
+          "type": "image_picker",
+          "id": "col2_custom_icon",
+          "label": "Competitor Custom Icon",
+          "visible_if": "{{ block.settings.col2_icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "col2_text",
+          "label": "Competitor Column Text",
+          "default": "Foam mattress"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "options": [
+            {
+              "value": "money",
+              "label": "Moneyback / Trial"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "truck",
+              "label": "Truck / Shipping"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "verified",
+              "label": "Verified"
+            },
+            {
+              "value": "usamap",
+              "label": "USA Map"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Image"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "default": "money"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Organic",
+      "blocks": [
+        {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Mattress",
+            "col1_icon": "check-solar",
+            "col1_text": "Organic mattress",
+            "col2_icon": "cross",
+            "col2_text": "Foam mattress"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Sheets",
+            "col1_icon": "check-solar",
+            "col1_text": "Organic sheets",
+            "col2_icon": "cross",
+            "col2_text": "Polyester sheets"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Pillows",
+            "col1_icon": "check-solar",
+            "col1_text": "Organic pillows",
+            "col2_icon": "cross",
+            "col2_text": "Foam/polyfill pillows"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Protector",
+            "col1_icon": "check-solar",
+            "col1_text": "Organic protector",
+            "col2_icon": "cross",
+            "col2_text": "Vinyl/PVC protector"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Toxicity",
+            "col1_icon": "check-solar",
+            "col1_text": "Lower-tox sleep environment",
+            "col2_icon": "cross",
+            "col2_text": "Mixed synthetic materials"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Temperature",
+            "col1_icon": "check-solar",
+            "col1_text": "Natural temperature regulation",
+            "col2_icon": "cross",
+            "col2_text": "Heat-trapping synthetics"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "System",
+            "col1_icon": "check-solar",
+            "col1_text": "Designed to work together",
+            "col2_icon": "cross",
+            "col2_text": "Products chosen independently"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "100-Night Risk-Free Trial",
+            "icon": "money"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "30-Year Warranty",
+            "icon": "warranty"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

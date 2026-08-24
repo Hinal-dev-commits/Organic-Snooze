@@ -1,12 +1,14 @@
 {% doc %}
-Renders an SVG icon from a preset name or custom upload.
-@param {string} icon - Preset icon name
-@param {image} [custom_icon] - Optional custom icon image
-@param {string} [class] - Optional CSS class on SVG element
-@param {string} [img_class] - CSS class for custom icon image
-@param {number} [img_width] - Custom icon image width (default 40)
-@example
-{% render 'nw-icon', icon: 'truck' %}
+  Renders an SVG icon from a preset name or custom upload.
+
+  @param {string} icon - Preset icon name
+  @param {image} [custom_icon] - Optional custom icon image
+  @param {string} [class] - Optional CSS class on SVG element
+  @param {string} [img_class] - CSS class for custom icon image
+  @param {number} [img_width] - Custom icon image width (default 40)
+
+  @example
+  {% render 'nw-icon', icon: 'truck' %}
 {% render 'nw-icon', icon: 'verified', custom_icon: block.settings.custom_icon, img_class: 'nw-cta-badges__icon-img' %}
 {% enddoc %}
 
@@ -70,6 +72,16 @@ Renders an SVG icon from a preset name or custom upload.
       assign icon_asset = 'insta-color.svg'
     when 'search'
       assign icon_asset = 'icon-search.svg'
+    when 'usamap'
+      assign icon_asset = 'Usa-map.svg'
+    when 'moon'
+      assign icon_asset = 'moon-icon.svg'
+    when 'verified'
+      assign icon_asset = 'certified.svg'
+    when 'warranty'
+      assign icon_asset = 'warrenty-icon.svg'
+    when 'leaf'
+      assign icon_asset = 'leaf-icon.svg'
   endcase
 -%}
 
@@ -80,64 +92,248 @@ Renders an SVG icon from a preset name or custom upload.
 {%- else -%}
   {%- case icon_name -%}
     {%- when 'trial' -%}
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M10.2169 0.627497C9.94062 0.620622 9.66437 0.627497 9.38937 0.645622C7.60562 0.762497 5.92187 1.33875 4.43812 2.455V1.8725C4.43812 1.70674 4.37228 1.54777 4.25507 1.43055C4.13786 1.31334 3.97888 1.2475 3.81312 1.2475C3.64736 1.2475 3.48839 1.31334 3.37118 1.43055C3.25397 1.54777 3.18812 1.70674 3.18812 1.8725V3.81C3.18812 4.36687 3.85937 4.645 4.25375 4.25312C7.14062 1.36687 11.71 1.0675 14.9481 3.5525C18.1862 6.0375 19.0787 10.5275 17.0387 14.0625C14.9975 17.5975 10.665 19.0662 6.89375 17.5037C3.1225 15.9412 1.09937 11.8406 2.15625 7.89812C2.17758 7.81875 2.18303 7.73595 2.17229 7.65447C2.16155 7.57299 2.13483 7.49443 2.09366 7.4233C2.05249 7.35217 1.99769 7.28986 1.93238 7.23996C1.86708 7.19006 1.79257 7.15354 1.71312 7.1325C1.55333 7.08903 1.38283 7.11076 1.23905 7.19291C1.09526 7.27505 0.989956 7.4109 0.946249 7.57062C-0.270001 12.1106 2.07187 16.8625 6.41375 18.6619C10.7556 20.4606 15.7694 18.7537 18.1194 14.685C20.4694 10.6162 19.4394 5.42062 15.7106 2.56C14.1319 1.34718 12.2072 0.670129 10.2169 0.627497ZM10.0025 3.60375C6.47687 3.60375 3.6025 6.47375 3.6025 9.99875C3.6025 13.5237 6.4775 16.3975 10.0025 16.3975C13.5275 16.3975 16.3962 13.5231 16.3962 9.99875C16.3962 6.47437 13.5275 3.60375 10.0025 3.60375ZM10.0025 6.07187C10.0846 6.0722 10.1658 6.08869 10.2415 6.1204C10.3172 6.15211 10.3859 6.19843 10.4437 6.2567C10.5015 6.31496 10.5473 6.38405 10.5784 6.46C10.6095 6.53596 10.6253 6.6173 10.625 6.69937V6.79562C11.25 6.88062 11.7856 7.26812 12.07 7.8075C12.1471 7.95444 12.1626 8.12599 12.1132 8.2844C12.0638 8.44281 11.9535 8.57511 11.8066 8.65218C11.6596 8.72926 11.4881 8.74481 11.3297 8.69541C11.1712 8.646 11.039 8.53569 10.9619 8.38875C10.9057 8.27944 10.8203 8.1879 10.7151 8.12433C10.6099 8.06076 10.4891 8.02767 10.3662 8.02875H9.785C9.40125 8.02875 9.11125 8.31875 9.11125 8.7025C9.11125 9.08625 9.40125 9.37625 9.785 9.37625H10.2187C11.2737 9.37625 12.1375 10.2456 12.1375 11.3C12.1357 11.7381 11.9851 12.1626 11.7102 12.5038C11.4354 12.8449 11.0527 13.0825 10.625 13.1775V13.3019C10.625 13.4678 10.5591 13.6269 10.4418 13.7443C10.3244 13.8616 10.1653 13.9275 9.99937 13.9275C9.83345 13.9275 9.67432 13.8616 9.55699 13.7443C9.43966 13.6269 9.37375 13.4678 9.37375 13.3019V13.2044C9.07051 13.1623 8.78157 13.0488 8.5307 12.8734C8.27983 12.6979 8.07417 12.4654 7.93062 12.195C7.88971 12.1221 7.86383 12.0417 7.85452 11.9586C7.84522 11.8754 7.85266 11.7913 7.87643 11.7111C7.90019 11.631 7.93979 11.5564 7.99288 11.4917C8.04597 11.4271 8.11147 11.3738 8.18552 11.3349C8.25957 11.2961 8.34066 11.2725 8.424 11.2655C8.50733 11.2585 8.59122 11.2683 8.67071 11.2943C8.75019 11.3203 8.82366 11.3619 8.88677 11.4168C8.94988 11.4717 9.00134 11.5386 9.03812 11.6137C9.15 11.8269 9.37062 11.9725 9.6375 11.9725H10.2187C10.6031 11.9725 10.8875 11.6837 10.8875 11.3C10.8875 10.9162 10.6031 10.6262 10.2187 10.6262H9.785C9.2756 10.6236 8.78781 10.4201 8.42761 10.0599C8.0674 9.69968 7.86388 9.2119 7.86125 8.7025C7.86125 7.78937 8.51375 7.0175 9.37375 6.82625V6.69937C9.37342 6.61677 9.38946 6.53492 9.42096 6.45856C9.45245 6.38219 9.49877 6.31283 9.55724 6.25448C9.61571 6.19613 9.68516 6.14995 9.76159 6.1186C9.83802 6.08726 9.9199 6.07138 10.0025 6.07187Z" fill="currentColor"/>
       </svg>
     {%- when 'shipping' -%}
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M10.9 3C11.1387 3 11.3676 3.09219 11.5364 3.25629C11.7052 3.42039 11.8 3.64295 11.8 3.87502H15.4C15.5355 3.87502 15.6692 3.90477 15.7913 3.96204C15.9133 4.01931 16.0204 4.10263 16.1047 4.20578L16.1713 4.30028L18.8713 8.67538L18.9208 8.76551L18.9568 8.85914L18.9829 8.95452L18.9973 9.05077L19 9.12514V14.3753C19 14.6073 18.9052 14.8299 18.7364 14.994C18.5676 15.1581 18.3387 15.2503 18.1 15.2503H17.0461C16.8598 15.762 16.5149 16.2051 16.059 16.5184C15.603 16.8318 15.0584 17 14.5 17C13.9416 17 13.397 16.8318 12.941 16.5184C12.4851 16.2051 12.1402 15.762 11.9539 15.2503H8.0461C7.85979 15.762 7.51492 16.2051 7.05896 16.5184C6.603 16.8318 6.05836 17 5.5 17C4.94164 17 4.397 16.8318 3.94104 16.5184C3.48508 16.2051 3.14021 15.762 2.9539 15.2503H1.9C1.66131 15.2503 1.43239 15.1581 1.2636 14.994C1.09482 14.8299 1 14.6073 1 14.3753V4.75004C1 4.2859 1.18964 3.84077 1.52721 3.51258C1.86477 3.18438 2.32261 3 2.8 3H10.9ZM5.5 13.5002C5.2613 13.5002 5.03239 13.5924 4.8636 13.7565C4.69482 13.9206 4.6 14.1432 4.6 14.3753C4.6 14.6073 4.69482 14.8299 4.8636 14.994C5.03239 15.1581 5.2613 15.2503 5.5 15.2503C5.73869 15.2503 5.96761 15.1581 6.1364 14.994C6.30518 14.8299 6.4 14.6073 6.4 14.3753C6.4 14.1432 6.30518 13.9206 6.1364 13.7565C5.96761 13.5924 5.73869 13.5002 5.5 13.5002ZM14.5 13.5002C14.2613 13.5002 14.0324 13.5924 13.8636 13.7565C13.6948 13.9206 13.6 14.1432 13.6 14.3753C13.6 14.6073 13.6948 14.8299 13.8636 14.994C14.0324 15.1581 14.2613 15.2503 14.5 15.2503C14.7387 15.2503 14.9676 15.1581 15.1364 14.994C15.3052 14.8299 15.4 14.6073 15.4 14.3753C15.4 14.1432 15.3052 13.9206 15.1364 13.7565C14.9676 13.5924 14.7387 13.5002 14.5 13.5002ZM14.8906 5.62506H11.8V8.25012H16.5106L14.8906 5.62506Z" fill="currentColor"/>
       </svg>
     {%- when 'warranty-check' -%}
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M10 0.781435L2.34375 3.96022V7.82448C2.34375 12.8254 5.36988 17.3291 10 19.2189C14.6301 17.3291 17.6562 12.8254 17.6562 7.82448V3.96022L10 0.781435Z" fill="currentColor" stroke="currentColor" stroke-width="0.833333" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M6.95312 9.37938L9.13648 11.5627L13.0469 7.65239" stroke="#ffffff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     {%- when 'financing-badge' -%}
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M14.5 2.20589C15.8682 2.99581 17.0043 4.13195 17.7942 5.50012C18.5842 6.8683 19 8.42029 19 10.0001C19 11.58 18.5841 13.1319 17.7942 14.5001C17.0043 15.8683 15.8681 17.0044 14.4999 17.7943C13.1317 18.5842 11.5797 19 9.99986 19C8.42002 19 6.86802 18.5841 5.49985 17.7942C4.13169 17.0042 2.99556 15.868 2.20567 14.4999C1.41578 13.1317 0.99996 11.5797 1 9.99984L1.0045 9.70824C1.0549 8.15394 1.50719 6.63923 2.31728 5.31177C3.12736 3.9843 4.26759 2.8894 5.6268 2.13379C6.98602 1.37818 8.51783 0.98766 10.0729 1.0003C11.628 1.01293 13.1532 1.4283 14.5 2.20589ZM12.25 10.8998C11.892 10.8998 11.5486 11.0421 11.2954 11.2952C11.0422 11.5484 10.9 11.8918 10.9 12.2498C10.9 12.6079 11.0422 12.9512 11.2954 13.2044C11.5486 13.4576 11.892 13.5998 12.25 13.5998C12.608 13.5998 12.9514 13.4576 13.2046 13.2044C13.4578 12.9512 13.6 12.6079 13.6 12.2498C13.6 11.8918 13.4578 11.5484 13.2046 11.2952C12.9514 11.0421 12.608 10.8998 12.25 10.8998ZM13.3363 6.66356C13.1675 6.49484 12.9386 6.40006 12.7 6.40006C12.4614 6.40006 12.2325 6.49484 12.0637 6.66356L6.6637 12.0635C6.49976 12.2333 6.40904 12.4606 6.41109 12.6966C6.41314 12.9326 6.5078 13.1583 6.67466 13.3251C6.84153 13.492 7.06726 13.5867 7.30324 13.5887C7.53922 13.5908 7.76656 13.5001 7.9363 13.3361L13.3363 7.93615C13.505 7.76738 13.5998 7.5385 13.5998 7.29986C13.5998 7.06121 13.505 6.83234 13.3363 6.66356ZM7.75 6.39986C7.39196 6.39986 7.04858 6.54209 6.79541 6.79527C6.54223 7.04844 6.4 7.39181 6.4 7.74985C6.4 8.10789 6.54223 8.45127 6.79541 8.70444C7.04858 8.95761 7.39196 9.09984 7.75 9.09984C8.10804 9.09984 8.45142 8.95761 8.70459 8.70444C8.95777 8.45127 9.1 8.10789 9.1 7.74985C9.1 7.39181 8.95777 7.04844 8.70459 6.79527C8.45142 6.54209 8.10804 6.39986 7.75 6.39986Z" fill="currentColor"/>
       </svg>
     {%- when 'check-circle' -%}
-      <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        width="20"
+        height="22"
+        viewBox="0 0 20 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <rect y="2" width="20" height="20" rx="10" fill="#878735"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.18 6.70721C17.5299 7.01339 17.5616 7.5468 17.2504 7.89224L8.48879 17.6171C8.17592 17.9643 7.63874 17.9864 7.29843 17.6661L2.22841 12.8931C1.91222 12.5954 1.88196 12.0994 2.15323 11.7603C2.45257 11.3862 3.00999 11.3347 3.36623 11.6551L7.29989 15.1933C7.64174 15.5008 8.16805 15.4733 8.47604 15.1319L16.0123 6.77614C16.3172 6.43801 16.8373 6.40736 17.18 6.70721Z" fill="#FEFEFE"/>
       </svg>
     {%- when 'cross-circle' -%}
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M11.9994 23.0139C18.0828 23.0139 23.0144 18.0823 23.0144 11.9989C23.0144 5.91548 18.0828 0.983887 11.9994 0.983887C5.91597 0.983887 0.984375 5.91548 0.984375 11.9989C0.984375 18.0823 5.91597 23.0139 11.9994 23.0139Z" fill="#B61919"/>
         <path d="M15.3082 8.69482L8.69922 15.3038" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M8.69922 8.69482L15.3082 15.3038" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     {%- when 'verified-lg' -%}
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M13.9498 3.21788C13.9795 3.19627 14.0198 3.19627 14.0495 3.21788L16.8434 5.24774H20.2968C20.3336 5.24774 20.3662 5.27141 20.3775 5.30637L21.4447 8.59073L24.2386 10.6206C24.2683 10.6422 24.2807 10.6805 24.2694 10.7155L23.2022 13.9998L24.2694 17.2842C24.2807 17.3191 24.2683 17.3574 24.2386 17.379L21.4447 19.4089L20.3775 22.6933C20.3662 22.7282 20.3336 22.7519 20.2968 22.7519H16.8434L14.0495 24.7818C14.0198 24.8034 13.9795 24.8034 13.9498 24.7818L11.1559 22.7519H7.70253C7.66578 22.7519 7.6332 22.7282 7.62184 22.6933L6.55469 19.4089L3.76081 17.379C3.73107 17.3574 3.71863 17.3191 3.72999 17.2842L4.79713 13.9998L3.72999 10.7155C3.71863 10.6805 3.73107 10.6422 3.76081 10.6206L6.55469 8.59073L7.62184 5.30637C7.6332 5.27141 7.66578 5.24774 7.70253 5.24774H11.156L13.9498 3.21788Z" fill="#70804A" stroke="#70804A" stroke-width="0.848485" stroke-miterlimit="10" stroke-linecap="round"/>
         <path d="M9.3125 13.6263L12.6286 16.9424C12.6617 16.9756 12.7155 16.9756 12.7486 16.9424L18.6905 11.0005" fill="#70804A"/>
         <path d="M9.3125 13.6263L12.6286 16.9424C12.6617 16.9756 12.7155 16.9756 12.7486 16.9424L18.6905 11.0005" stroke="white" stroke-width="1.27273" stroke-miterlimit="10" stroke-linecap="round"/>
       </svg>
     {%- when 'star-rating' -%}
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
       </svg>
     {%- when 'star-rating-sm' -%}
-      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        viewBox="0 0 16 16"
+        fill="currentColor"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M8 0.5L10.247 5.053L15.266 5.783L11.633 9.324L12.49 14.317L8 11.956L3.51 14.317L4.367 9.324L0.734 5.783L5.753 5.053L8 0.5Z"/>
       </svg>
     {%- when 'play-hero' -%}
-      <svg class="nw-hero__play-icon{% if svg_class != blank %} {{ svg_class }}{% endif %}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <svg
+        class="nw-hero__play-icon{% if svg_class != blank %} {{ svg_class }}{% endif %}"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
         <path d="M8 5v14l11-7z"/>
       </svg>
     {%- when 'pause-hero' -%}
-      <svg class="nw-hero__pause-icon{% if svg_class != blank %} {{ svg_class }}{% endif %}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <svg
+        class="nw-hero__pause-icon{% if svg_class != blank %} {{ svg_class }}{% endif %}"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
         <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
       </svg>
     {%- when 'search-sm' -%}
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/>
         <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
     {%- when 'default-check' -%}
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"{% if svg_class != blank %} class="{{ svg_class }}"{% endif %}>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
         <path d="M10 2C5.58 2 2 5.58 2 10C2 14.42 5.58 18 10 18C14.42 18 18 14.42 18 10C18 5.58 14.42 2 10 2ZM10 16.5C6.41 16.5 3.5 13.59 3.5 10C3.5 6.41 6.41 3.5 10 3.5C13.59 3.5 16.5 6.41 16.5 10C16.5 13.59 13.59 16.5 10 16.5Z" fill="currentColor"/>
         <path d="M8.5 12.5L5.5 9.5L6.6 8.4L8.5 10.3L13.4 5.4L14.5 6.5L8.5 12.5Z" fill="currentColor"/>
+      </svg>
+    {%- when 'bed', 'adjust' -%}
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
+        <path d="M3 19V9M3 15H25M25 9V19M3 15L7.5 10.5H12L15 15M7 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    {%- when 'motor', 'quiet' -%}
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
+        <path d="M4 14H6M22 14H24M8 10V18M12 6V22M16 8V20M20 11V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    {%- when 'weight', 'capacity' -%}
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
+        <path d="M7 8.5L19.5 21M4.5 11L17 23.5M11 4.5L23.5 17M8.5 7L21 19.5M4 13L6.5 15.5M12.5 21.5L15 24M13 4L15.5 6.5M21.5 12.5L24 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    {%- when 'cross', 'red-cross', 'x' -%}
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
+        <path d="M5 5L15 15M15 5L5 15" stroke="#B61919" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    {%- when 'solar-check', 'check-solar', 'check-badge' -%}
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
+        <path d="M12 2L14.4 3.8L17.3 3.6L18.8 6.1L21.6 7.2L21.7 10.2L23.6 12.6L22.2 15.3L22.8 18.2L20.2 19.6L19.4 22.5L16.5 22.4L14.4 24.5L12 23L9.6 24.5L7.5 22.4L4.6 22.5L3.8 19.6L1.2 18.2L1.8 15.3L0.4 12.6L2.3 10.2L2.4 7.2L5.2 6.1L6.7 3.6L9.6 3.8L12 2Z" fill="#7F7F29"/>
+        <path d="M8 12.5L10.5 15L16 9" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
   {%- endcase -%}
 {%- endif -%}
