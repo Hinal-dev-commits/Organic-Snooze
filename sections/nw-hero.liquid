@@ -35,7 +35,6 @@
 
   #NwHero-{{ section.id }} .nw-hero__overlay {
     background-color: {{ section.settings.overlay_color }};
-    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
     display: block !important;
   }
 
@@ -71,6 +70,7 @@
     --nw-hero-pb-dt: {{ section.settings.padding_bottom_desktop }}px;
     --nw-hero-pt-mb: {{ section.settings.padding_top_mobile }}px;
     --nw-hero-pb-mb: {{ section.settings.padding_bottom_mobile }}px;
+    --nw-hero-text-color: {{ section.settings.text_color }};
   "
 >
   {%- if hero_media_type == 'image' -%}
@@ -313,10 +313,6 @@
       "label": "Horizontal Positioning",
       "options": [
         {
-          "value": "space-between",
-          "label": "Space Between (Content Left & Video Right)"
-        },
-        {
           "value": "left",
           "label": "Left"
         },
@@ -329,27 +325,7 @@
           "label": "Right"
         }
       ],
-      "default": "space-between"
-    },
-    {
-      "type": "select",
-      "id": "content_position_v",
-      "label": "Vertical Positioning",
-      "options": [
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "top",
-          "label": "Top"
-        },
-        {
-          "value": "bottom",
-          "label": "Bottom"
-        }
-      ],
-      "default": "center"
+      "default": "left"
     },
     {
       "type": "select",
@@ -370,6 +346,12 @@
         }
       ],
       "default": "left"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Text Color"
     },
     {
       "type": "header",
@@ -570,18 +552,7 @@
       "type": "color",
       "alpha": true,
       "id": "overlay_color",
-      "label": "Overlay Color",
-      "default": "#000000"
-    },
-    {
-      "type": "range",
-      "id": "overlay_opacity",
-      "label": "Overlay Opacity",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 30
+      "label": "Overlay Color"
     },
     {
       "type": "header",
@@ -679,9 +650,16 @@
           "default": "#CC926A"
         },
         {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
           "type": "select",
           "id": "icon",
           "label": "Badge Icon",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
           "options": [
             {
               "value": "moneyback",
@@ -729,7 +707,8 @@
         {
           "type": "image_picker",
           "id": "custom_icon",
-          "label": "Custom Icon Image"
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
         },
         {
           "type": "richtext",
@@ -829,8 +808,7 @@
       "name": "NW Hero",
       "settings": {
         "enable_transparent_header": true,
-        "content_position_h": "space-between",
-        "content_position_v": "center",
+        "content_position_h": "left",
         "text_alignment": "left",
         "show_reviews": true,
         "rating_stars": 5,
@@ -846,7 +824,6 @@
         "video_autoplay": true,
         "video_source": "shopify_hosted",
         "overlay_color": "#000000",
-        "overlay_opacity": 30,
         "bg_type": "color",
         "bg_color": "#613916",
         "padding_top_desktop": 43,

@@ -6,6 +6,8 @@ Renders a trust badge icon from a preset or custom upload.
 {% render 'nw-trust-badge-icon', icon: 'truck', custom_icon: block.settings.custom_icon %}
 {% enddoc %}
 
-{%- unless icon == blank or icon == 'none' -%}
-  {% render 'nw-icon', icon: icon, custom_icon: custom_icon, img_class: 'nw-cta-badges__icon-img' %}
-{%- endunless -%}
+{%- if custom_icon != blank -%}
+  {% render 'nw-icon', icon: icon, custom_icon: custom_icon, img_class: 'nw-cta-badges__icon-img', img_width: 80 %}
+{%- elsif icon != blank and icon != 'none' -%}
+  {% render 'nw-icon', icon: icon, img_class: 'nw-cta-badges__icon-img' %}
+{%- endif -%}

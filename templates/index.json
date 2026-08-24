@@ -85,6 +85,7 @@
           "type": "trust_badge",
           "settings": {
             "icon_color": "#cc926a",
+            "use_custom_icon": false,
             "icon": "moneyback",
             "custom_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
             "text": "<p>100-Night Risk-Free Trial</p>"
@@ -94,6 +95,7 @@
           "type": "trust_badge",
           "settings": {
             "icon_color": "#cc926a",
+            "use_custom_icon": false,
             "icon": "moneyback",
             "custom_icon": "shopify://shop_images/truck.svg",
             "text": "<p>free shipping</p>"
@@ -103,6 +105,7 @@
           "type": "trust_badge",
           "settings": {
             "icon_color": "#cc926a",
+            "use_custom_icon": false,
             "icon": "moneyback",
             "custom_icon": "shopify://shop_images/svgviewer-output_42.svg",
             "text": "<p>30-Year Warranty</p>"
@@ -112,6 +115,7 @@
           "type": "trust_badge",
           "settings": {
             "icon_color": "#cc926a",
+            "use_custom_icon": false,
             "icon": "moneyback",
             "custom_icon": "shopify://shop_images/interest.svg",
             "text": "<p>0% Interest financing options</p>"
@@ -142,8 +146,8 @@
       "settings": {
         "enable_transparent_header": true,
         "content_position_h": "space-between",
-        "content_position_v": "center",
         "text_alignment": "left",
+        "text_color": "#FFFFFF",
         "show_reviews": true,
         "rating_stars": 5,
         "star_color": "#e57b1e",
@@ -155,16 +159,15 @@
         "btn_link": "shopify://collections/mattress",
         "btn_style": "primary",
         "media_type": "video",
+        "bg_image": "shopify://shop_images/image_2_1.png",
         "enable_video_button": false,
         "video_autoplay": true,
         "video_source": "shopify_hosted",
         "shopify_video": "shopify://files/videos/SNO_3_WIDE_FINAL_NOCTA.mp4",
         "video_url": "",
         "custom_video_url": "",
-        "overlay_color": "#000000",
-        "overlay_opacity": 80,
+        "overlay_color": "#00000000",
         "bg_type": "none",
-        "bg_image": "shopify://shop_images/image_2_1.png",
         "bg_color": "#613916",
         "bg_gradient": "linear-gradient(228deg, rgba(21, 209, 252, 1) 14%, rgba(187, 48, 254, 1) 83%)",
         "padding_top_desktop": 44,
@@ -258,7 +261,7 @@
         "icon_size_mobile": 16,
         "font_size_desktop": 18,
         "font_size_mobile": 12,
-        "font_weight": "500",
+        "font_weight": 500,
         "text_transform": "uppercase",
         "letter_spacing": 0,
         "gap_icon_text_desktop": 18,
@@ -595,6 +598,7 @@
         "card_text_color": "#613916",
         "card_star_color": "#e57b1e",
         "card_star_empty_color": "#d1c7ba",
+        "verified_text_color": "",
         "verified_icon_color": "#878735",
         "show_arrows": false,
         "show_pagination": true,

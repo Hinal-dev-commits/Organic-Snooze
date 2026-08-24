@@ -47,10 +47,12 @@
                   <a href="{{ block.settings.link }}" class="nw-marquee__link">
                 {%- endif -%}
 
-                {%- if block.settings.image_icon != blank -%}
-                  <span class="nw-marquee__icon nw-marquee__icon--image">
-                    {{ block.settings.image_icon | image_url: width: 100 | image_tag: loading: 'lazy', class: 'nw-marquee__custom-img', alt: block.settings.text }}
-                  </span>
+                {%- if block.settings.use_custom_icon -%}
+                  {%- if block.settings.image_icon != blank -%}
+                    <span class="nw-marquee__icon nw-marquee__icon--image">
+                      {{ block.settings.image_icon | image_url: width: 100 | image_tag: loading: 'lazy', class: 'nw-marquee__custom-img', alt: block.settings.text }}
+                    </span>
+                  {%- endif -%}
                 {%- elsif section.settings.custom_icon_image != blank and icon_to_show != 'none' and block.settings.icon_override == 'inherit' -%}
                   <span class="nw-marquee__icon nw-marquee__icon--image">
                     {{ section.settings.custom_icon_image | image_url: width: 100 | image_tag: loading: 'lazy', class: 'nw-marquee__custom-img', alt: block.settings.text }}
@@ -271,28 +273,13 @@
       "default": 12
     },
     {
-      "type": "select",
+      "type": "range",
       "id": "font_weight",
       "label": "Font Weight",
-      "options": [
-        {
-          "value": "400",
-          "label": "Regular (400)"
-        },
-        {
-          "value": "500",
-          "label": "Medium (500)"
-        },
-        {
-          "value": "600",
-          "label": "Semi Bold (600)"
-        },
-        {
-          "value": "700",
-          "label": "Bold (700)"
-        }
-      ],
-      "default": "500"
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500
     },
     {
       "type": "select",
@@ -454,14 +441,17 @@
           "label": "Link"
         },
         {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
           "type": "select",
           "id": "icon_override",
           "label": "Icon Override",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
           "options": [
-            {
-              "value": "inherit",
-              "label": "Use Section Icon"
-            },
             {
               "value": "verified",
               "label": "Verified Badge"
@@ -511,12 +501,13 @@
               "label": "No Icon"
             }
           ],
-          "default": "inherit"
+          "default": "verified"
         },
         {
           "type": "image_picker",
           "id": "image_icon",
-          "label": "Custom Image Icon"
+          "label": "Custom Image Icon",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
         }
       ]
     }

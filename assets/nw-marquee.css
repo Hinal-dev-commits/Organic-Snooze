@@ -1,5 +1,5 @@
 .nw-marquee-section {
-  display: block;
+  display: flex;
   width: 100%;
   overflow: hidden;
   background-color: var(--nw-marquee-bg, var(--primary-color));

@@ -63,9 +63,23 @@
         {%- if blocks != blank and blocks.size > 0 -%}
           {%- for block in blocks -%}
             {%- if block.settings.text != blank -%}
+              {%- liquid
+                assign badge_icon = block.settings.icon
+                assign badge_custom_icon = blank
+
+                if block.settings.use_custom_icon
+                  assign badge_custom_icon = block.settings.custom_icon
+                  assign badge_icon = blank
+                endif
+              -%}
               <div class="nw-cta-badges__item" {{ block.shopify_attributes }}>
-                <span class="nw-cta-badges__icon">
-                  {% render 'nw-trust-badge-icon', icon: block.settings.icon, custom_icon: block.settings.custom_icon %}
+                <span
+                  class="nw-cta-badges__icon"
+                  {% if block.settings.icon_color != blank %}
+                    style="--nw-cta-badge-icon: {{ block.settings.icon_color }}; color: {{ block.settings.icon_color }};"
+                  {% endif %}
+                >
+                  {% render 'nw-trust-badge-icon', icon: badge_icon, custom_icon: badge_custom_icon %}
                 </span>
                 <div class="nw-cta-badges__text">{{ block.settings.text }}</div>
               </div>
