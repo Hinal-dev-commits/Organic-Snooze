@@ -362,7 +362,7 @@
         <small class="copyright__content"
           >&copy; {{ 'now' | date: '%Y' }} 
           {%- if section.settings.copyright_name != blank -%}
-            <a href="{{ routes.root_url }}">{{ section.settings.copyright_name | escape }}</a>
+            <a href="{{ routes.root_url }}">{{ section.settings.copyright_name }}</a>
           {%- else -%}
             {{ shop.name | link_to: routes.root_url }}
           {%- endif -%}
@@ -572,12 +572,12 @@
     },
     {
       "type": "header",
-      "content": "Copyright"
+      "content": "COPYRIGHT"
     },
     {
-      "type": "text",
+      "type": "inline_richtext",
       "id": "copyright_name",
-      "label": "Copyright business name",
+      "label": "Copyright Business Name",
       "info": "Leave blank to use the store name."
     },
     {

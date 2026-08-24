@@ -5,6 +5,7 @@
 
 {%- liquid
   assign collection_blocks = section.blocks | where: 'type', 'collection'
+  assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
   assign slide_count = collection_blocks.size
 -%}
 
@@ -12,6 +13,7 @@
   .nw-collection-list.section-{{ section.id }} {
     --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
     --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+    --nw-collection-fade-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
     position: relative;
     background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
     padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
@@ -43,8 +45,8 @@
   {%- endif -%}
 
   {%- unless section.settings.show_fade -%}
-    .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap .swiper::before,
-    .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap .swiper::after {
+    .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap::before,
+    .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap::after {
       display: none !important;
     }
   {%- endunless -%}
@@ -173,9 +175,9 @@
           <div class="nw-collection-list__pagination swiper-pagination" id="nw-collection-list-pagination-{{ section.id }}" data-nw-collection-pagination></div>
         {%- endif -%}
       {%- endif -%}
-      {% if section.settings.button_label != blank or section.settings.show_features %}
+      {% if section.settings.button_label != blank or trust_badge_blocks.size > 0 %}
         <div class="nw-collection-list__actions">
-          {% render 'nw-cta-badges', settings: section.settings, class: 'nw-collection-list__actions' %}
+          {% render 'nw-cta-badges', settings: section.settings, blocks: trust_badge_blocks, class: 'nw-collection-list__actions' %}
         </div>
       {% endif %}
     </div>
@@ -317,116 +319,6 @@
     },
     {
       "type": "header",
-      "content": "FEATURES / BADGES"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_features",
-      "label": "Show Features Row",
-      "default": true
-    },
-    {
-      "type": "select",
-      "id": "feature_1_icon",
-      "label": "Feature 1 Icon",
-      "default": "trial",
-      "options": [
-        { "value": "trial", "label": "100-Night Trial" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "shipping", "label": "Shipping" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "custom", "label": "Custom Icon" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "feature_1_custom_icon",
-      "label": "Feature 1 Custom Icon",
-      "visible_if": "{{ section.settings.feature_1_icon == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "feature_1_text",
-      "label": "Feature 1 Text",
-      "default": "100-Night Risk-Free Trial"
-    },
-    {
-      "type": "select",
-      "id": "feature_2_icon",
-      "label": "Feature 2 Icon",
-      "default": "warranty",
-      "options": [
-        { "value": "trial", "label": "100-Night Trial" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "shipping", "label": "Shipping" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "custom", "label": "Custom Icon" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "feature_2_custom_icon",
-      "label": "Feature 2 Custom Icon",
-      "visible_if": "{{ section.settings.feature_2_icon == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "feature_2_text",
-      "label": "Feature 2 Text",
-      "default": "30-Year Warranty"
-    },
-    {
-      "type": "select",
-      "id": "feature_3_icon",
-      "label": "Feature 3 Icon",
-      "default": "shipping",
-      "options": [
-        { "value": "trial", "label": "100-Night Trial" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "shipping", "label": "Shipping" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "custom", "label": "Custom Icon" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "feature_3_custom_icon",
-      "label": "Feature 3 Custom Icon",
-      "visible_if": "{{ section.settings.feature_3_icon == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "feature_3_text",
-      "label": "Feature 3 Text",
-      "default": "Free Shipping"
-    },
-    {
-      "type": "select",
-      "id": "feature_4_icon",
-      "label": "Feature 4 Icon",
-      "default": "financing",
-      "options": [
-        { "value": "trial", "label": "100-Night Trial" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "shipping", "label": "Shipping" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "custom", "label": "Custom Icon" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "feature_4_custom_icon",
-      "label": "Feature 4 Custom Icon",
-      "visible_if": "{{ section.settings.feature_4_icon == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "feature_4_text",
-      "label": "Feature 4 Text",
-      "default": "0% Interest Financing Options"
-    },
-    {
-      "type": "header",
       "content": "BACKGROUND"
     },
     {
@@ -549,6 +441,43 @@
           "label": "Custom Link (Optional)"
         }
       ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "trial", "label": "100-Night Trial" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "financing", "label": "Financing" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "star", "label": "Star" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "verified", "label": "Verified" },
+            { "value": "custom", "label": "Custom Image" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "trial"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
     }
   ],
   "presets": [
@@ -584,6 +513,34 @@
           "type": "collection",
           "settings": {
             "custom_title": "Bundle & Save"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "trial",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "warranty",
+            "text": "30-Year Warranty"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shipping",
+            "text": "Free Shipping"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "financing",
+            "text": "0% Interest financing options"
           }
         }
       ]

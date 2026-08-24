@@ -147,7 +147,7 @@
         "enable_transparent_header": true,
         "content_position_h": "space-between",
         "text_alignment": "left",
-        "text_color": "#FFFFFF",
+        "text_color": "#ffffff",
         "show_reviews": true,
         "rating_stars": 5,
         "star_color": "#e57b1e",
@@ -166,7 +166,7 @@
         "shopify_video": "shopify://files/videos/SNO_3_WIDE_FINAL_NOCTA.mp4",
         "video_url": "",
         "custom_video_url": "",
-        "overlay_color": "#00000000",
+        "overlay_color": "rgba(0,0,0,0)",
         "bg_type": "none",
         "bg_color": "#613916",
         "bg_gradient": "linear-gradient(228deg, rgba(21, 209, 252, 1) 14%, rgba(187, 48, 254, 1) 83%)",
@@ -184,6 +184,7 @@
           "settings": {
             "text": "100% ORGANIC MATERIALS",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -192,6 +193,7 @@
           "settings": {
             "text": "MADE IN THE USA",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -200,6 +202,7 @@
           "settings": {
             "text": "100% ORGANIC MATERIALS",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -208,6 +211,7 @@
           "settings": {
             "text": "NO CHEMICAL FOAMS",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -216,6 +220,7 @@
           "settings": {
             "text": "30-YEAR WARRANTY",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -224,6 +229,7 @@
           "settings": {
             "text": "100-NIGHT TRIAL",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -232,6 +238,7 @@
           "settings": {
             "text": "FREE WHITE-GLOVE DELIVERY",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         }
@@ -785,6 +792,35 @@
     "nw_trusted_people_H336LH": {
       "type": "nw-trusted-people",
       "blocks": {
+        "trust_badge_wPyGqh": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_8xAATp": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "truck",
+            "text": "free shipping"
+          }
+        },
+        "trust_badge_qxzTKB": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        },
+        "trust_badge_VrQEwy": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/interest.svg",
+            "text": "0% Interest financing options"
+          }
+        },
         "person_LmWBRV": {
           "type": "person",
           "settings": {
@@ -871,6 +907,10 @@
         }
       },
       "block_order": [
+        "trust_badge_wPyGqh",
+        "trust_badge_8xAATp",
+        "trust_badge_qxzTKB",
+        "trust_badge_VrQEwy",
         "person_LmWBRV",
         "person_LrnyFB",
         "person_D4BpKH",
@@ -898,18 +938,6 @@
         "button_style": "primary",
         "badge_icon_color": "#cc926a",
         "badge_text_color": "#613916",
-        "badge_1_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
-        "badge_1_custom_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
-        "badge_1_text": "<p>100-Night Risk-Free Trial</p>",
-        "badge_2_icon": "shopify://shop_images/truck.svg",
-        "badge_2_custom_icon": "shopify://shop_images/truck.svg",
-        "badge_2_text": "<p>Free Shipping</p>",
-        "badge_3_icon": "shopify://shop_images/svgviewer-output_42.svg",
-        "badge_3_custom_icon": "shopify://shop_images/svgviewer-output_42.svg",
-        "badge_3_text": "<p>30-Year Warranty</p>",
-        "badge_4_icon": "shopify://shop_images/interest.svg",
-        "badge_4_custom_icon": "shopify://shop_images/interest.svg",
-        "badge_4_text": "<p>0% Interest financing options</p>",
         "bg_type": "none",
         "bg_color": "#fffcf0",
         "bg_gradient": "",
@@ -1304,7 +1332,7 @@
         "contact_heading": "Speak With Our Live Sleep Experts.",
         "show_call_btn": true,
         "call_label": "CALL (443) 333-1213",
-        "call_link": "",
+        "call_link": "tel: (443) 333-1213",
         "call_style": "primary",
         "show_text_btn": true,
         "text_label": "TEXT US",
@@ -1328,6 +1356,35 @@
     "nw_collection_list_yeNiLx": {
       "type": "nw-collection-list",
       "blocks": {
+        "trust_badge_y7n3FH": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "trial",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_CADELD": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        },
+        "trust_badge_H8C9yK": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shipping",
+            "text": "free shipping"
+          }
+        },
+        "trust_badge_mnHWWd": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/interest.svg",
+            "text": "0% Interest financing options"
+          }
+        },
         "collection_XHC9VB": {
           "type": "collection",
           "settings": {
@@ -1384,6 +1441,10 @@
         }
       },
       "block_order": [
+        "trust_badge_y7n3FH",
+        "trust_badge_CADELD",
+        "trust_badge_H8C9yK",
+        "trust_badge_mnHWWd",
         "collection_XHC9VB",
         "collection_qpMhMA",
         "collection_MnEi8L",
@@ -1409,15 +1470,6 @@
         "button_label": "Shop All",
         "button_link": "",
         "button_style": "primary",
-        "show_features": true,
-        "feature_1_icon": "trial",
-        "feature_1_text": "100-Night Risk-Free Trial",
-        "feature_2_icon": "warranty",
-        "feature_2_text": "30-Year Warranty",
-        "feature_3_icon": "shipping",
-        "feature_3_text": "Free Shipping",
-        "feature_4_icon": "financing",
-        "feature_4_text": "0% Interest financing options",
         "bg_type": "color",
         "bg_color": "#ffffff",
         "bg_image_opacity": 100,
