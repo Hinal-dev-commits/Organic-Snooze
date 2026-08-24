@@ -1,5 +1,4 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-insights-slider.js' | asset_url }}" defer="defer"></script>
 {{ 'nw-natural-layers.css' | asset_url | stylesheet_tag }}
 
@@ -60,17 +59,22 @@
                   {%- if block.settings.feature_text != blank -%}
                     <div class="nw-natural-layers__card-feature">
                       {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
-                        <img
-                          src="{{ block.settings.custom_icon | image_url: width: 40 }}"
-                          alt="{{ block.settings.feature_text | escape }}"
-                          width="20"
-                          height="20"
-                          loading="lazy"
-                        >
-                      {%- elsif block.settings.icon == 'cross' -%}
-                        {% render 'nw-icon', icon: 'cross-circle' %}
+                        <span class="nw-natural-layers__feature-icon" aria-hidden="true">
+                          {% render 'nw-icon',
+                            icon: 'none',
+                            custom_icon: block.settings.custom_icon,
+                            img_class: 'nw-natural-layers__feature-icon-img',
+                            img_width: 40
+                          %}
+                        </span>
                       {%- elsif block.settings.icon != 'none' -%}
-                        {% render 'nw-icon', icon: 'check-circle' %}
+                        <span class="nw-natural-layers__feature-icon" aria-hidden="true">
+                          {%- if block.settings.icon == 'cross' -%}
+                            {% render 'nw-icon', icon: 'cross-circle' %}
+                          {%- else -%}
+                            {% render 'nw-icon', icon: 'check-circle' %}
+                          {%- endif -%}
+                        </span>
                       {%- endif -%}
                       <span class="nw-natural-layers__card-feature-text">{{ block.settings.feature_text }}</span>
                     </div>
@@ -92,17 +96,22 @@
                 {%- for block in leave_out_items -%}
                   <div class="nw-natural-layers__leave-out-item" {{ block.shopify_attributes }}>
                     {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
-                      <img
-                        src="{{ block.settings.custom_icon | image_url: width: 48 }}"
-                        alt="{{ block.settings.text | escape }}"
-                        width="24"
-                        height="24"
-                        loading="lazy"
-                      >
-                    {%- elsif block.settings.icon == 'check' -%}
-                      {% render 'nw-icon', icon: 'check-circle' %}
+                      <span class="nw-natural-layers__feature-icon" aria-hidden="true">
+                        {% render 'nw-icon',
+                          icon: 'none',
+                          custom_icon: block.settings.custom_icon,
+                          img_class: 'nw-natural-layers__feature-icon-img',
+                          img_width: 48
+                        %}
+                      </span>
                     {%- elsif block.settings.icon != 'none' -%}
-                      {% render 'nw-icon', icon: 'cross-circle' %}
+                      <span class="nw-natural-layers__feature-icon" aria-hidden="true">
+                        {%- if block.settings.icon == 'check' -%}
+                          {% render 'nw-icon', icon: 'check-circle' %}
+                        {%- else -%}
+                          {% render 'nw-icon', icon: 'cross-circle' %}
+                        {%- endif -%}
+                      </span>
                     {%- endif -%}
                     <span class="nw-natural-layers__leave-out-text">{{ block.settings.text }}</span>
                   </div>
@@ -140,14 +149,13 @@
                     <div class="nw-natural-layers__insights-slide">
                       {%- if block.settings.icon != 'none' or block.settings.custom_icon != blank -%}
                         <div class="nw-natural-layers__insight-icon-wrap">
-                          {%- if block.settings.custom_icon != blank -%}
-                            <img
-                              src="{{ block.settings.custom_icon | image_url: width: 48 }}"
-                              alt="{{ block.settings.tag | escape }}"
-                              width="24"
-                              height="24"
-                              loading="lazy"
-                            >
+                          {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+                            {% render 'nw-icon',
+                              icon: 'none',
+                              custom_icon: block.settings.custom_icon,
+                              img_class: 'nw-natural-layers__insight-icon-img',
+                              img_width: 48
+                            %}
                           {%- elsif block.settings.icon == 'moon' or block.settings.icon == 'thermometer' or block.settings.icon == 'wind' -%}
                             {% render 'nw-icon', icon: block.settings.icon %}
                           {%- endif -%}

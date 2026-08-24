@@ -35,6 +35,7 @@ Renders the NW product card used across collection sliders and grids.
   assign firmness_label_firm = firmness_label_firm | default: 'Firm'
   assign button_text = button_text | default: 'Shop Now'
   assign button_style = button_style | default: 'primary'
+  assign lazy_load = lazy_load | default: true
 
   assign card_price = card_product.price_min
   assign card_compare_at = card_product.compare_at_price_min
@@ -72,23 +73,12 @@ Renders the NW product card used across collection sliders and grids.
   <div class="nw-product-card__media">
     <a href="{{ card_product.url }}" class="nw-product-card__media-link" aria-label="{{ card_product.title | escape }}">
       {%- if card_product.featured_media -%}
-        {%- liquid
-          assign image_loading = 'lazy'
-          if lazy_load == false
-            assign image_loading = 'eager'
-          endif
-          assign image_alt = card_product.featured_media.alt | default: card_product.title
-        -%}
-        {{
-          card_product.featured_media
-          | image_url: width: 800
-          | image_tag:
-            class: 'nw-product-card__image',
-            loading: image_loading,
-            widths: '260, 400, 520, 800',
-            sizes: '(min-width: 990px) 260px, (min-width: 750px) 33vw, 45vw',
-            alt: image_alt
-        }}
+        {%- assign image_loading = 'eager' -%}
+        {%- if lazy_load -%}
+          {%- assign image_loading = 'lazy' -%}
+        {%- endif -%}
+        <img src="{{ card_product.featured_media | image_url }}" alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}" width="" height="">
+        
       {%- else -%}
         {{ 'product-apparel-2' | placeholder_svg_tag: 'nw-product-card__image nw-product-card__image--placeholder' }}
       {%- endif -%}

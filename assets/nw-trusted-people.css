@@ -337,13 +337,19 @@
 .nw-trusted-people__quote {
   margin: 0;
   padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
+  text-align: left;
+}
+
+.nw-trusted-people__quote,
+.nw-trusted-people__quote * {
   font-family: var(--font-body-family);
   font-size: 13px;
   font-weight: 400;
   line-height: 1.5;
   color: var(--nw-tp-card-text, var(--primary-color));
-  border-top: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
 }
+
 .nw-trusted-people.nw-section-description {
   width: 100%;
   max-width: 700px;

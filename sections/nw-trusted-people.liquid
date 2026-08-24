@@ -1,20 +1,13 @@
-{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
 {{ 'nw-trusted-people.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-trusted-people.js' | asset_url }}" defer="defer"></script>
 
 {%- assign nw_shell_selector = '#NwTrustedPeople-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
-{%- liquid
-  assign person_blocks = section.blocks | where: 'type', 'person'
-  assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
--%}
-
 <nw-trusted-people
   id="NwTrustedPeople-{{ section.id }}"
   class="nw-trusted-people"
-  data-block-count="{{ person_blocks.size | default: 0 }}"
+  data-block-count="{{ section.blocks.size | default: 0 }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
   style="
     --nw-tp-heading-color: {{ section.settings.heading_color }};
@@ -41,11 +34,11 @@
       </div>
     {%- endif -%}
 
-    {%- if person_blocks.size > 0 -%}
+    {%- if section.blocks.size > 0 -%}
       <div class="nw-trusted-people__slider-wrap">
         <div class="swiper nw-trusted-people__swiper" id="NwTrustedPeopleSwiper-{{ section.id }}">
           <div class="swiper-wrapper">
-            {%- for block in person_blocks -%}
+            {%- for block in section.blocks -%}
               <div
                 class="swiper-slide"
                 {{ block.shopify_attributes }}
@@ -61,9 +54,9 @@
           {% render 'nw-swiper-arrows' %}
         {%- endif -%}
 
-        {%- if section.settings.show_pagination and person_blocks.size > 1 -%}
+        {%- if section.settings.show_pagination and section.blocks.size > 1 -%}
             <div class="nw-swiper-pagination" id="NwTrustedPeoplePagination-{{ section.id }}" data-nw-tp-pagination>
-            {%- for block in person_blocks -%}
+            {%- for block in section.blocks -%}
               <span
                 class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
                 data-bullet-index="{{ forloop.index0 }}"
@@ -74,7 +67,7 @@
       </div>
     {%- endif -%}
 
-    {% render 'nw-cta-badges', settings: section.settings, blocks: trust_badge_blocks, class: 'nw-trusted-people__footer' %}
+    {% render 'nw-cta-badges', settings: section.settings, class: 'nw-trusted-people__footer' %}
   </div>
 </nw-trusted-people>
 
@@ -237,6 +230,102 @@
       "default": "#613916"
     },
     {
+      "type": "select",
+      "id": "badge_1_icon",
+      "label": "Item 1 Icon",
+      "default": "moneyback",
+      "options": [
+        { "value": "truck", "label": "Free Shipping" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "moneyback", "label": "Moneyback" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_1_custom_icon",
+      "label": "Item 1 Custom Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_1_text",
+      "label": "Item 1 Text",
+      "default": "<p>100-Night Risk-Free Trial</p>"
+    },
+    {
+      "type": "select",
+      "id": "badge_2_icon",
+      "label": "Item 2 Icon",
+      "default": "truck",
+      "options": [
+        { "value": "truck", "label": "Free Shipping" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "moneyback", "label": "Moneyback" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_2_custom_icon",
+      "label": "Item 2 Custom Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_2_text",
+      "label": "Item 2 Text",
+      "default": "<p>Free Shipping</p>"
+    },
+    {
+      "type": "select",
+      "id": "badge_3_icon",
+      "label": "Item 3 Icon",
+      "default": "warranty",
+      "options": [
+        { "value": "truck", "label": "Free Shipping" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "moneyback", "label": "Moneyback" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_3_custom_icon",
+      "label": "Item 3 Custom Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_3_text",
+      "label": "Item 3 Text",
+      "default": "<p>30-Year Warranty</p>"
+    },
+    {
+      "type": "select",
+      "id": "badge_4_icon",
+      "label": "Item 4 Icon",
+      "default": "financing",
+      "options": [
+        { "value": "truck", "label": "Free Shipping" },
+        { "value": "warranty", "label": "Warranty" },
+        { "value": "moneyback", "label": "Moneyback" },
+        { "value": "financing", "label": "Financing" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_4_custom_icon",
+      "label": "Item 4 Custom Icon"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_4_text",
+      "label": "Item 4 Text",
+      "default": "<p>0% Interest financing options</p>"
+    },
+    {
       "type": "header",
       "content": "BACKGROUND"
     },
@@ -346,10 +435,10 @@
           "default": "Entrepreneur, author, endurance athlete"
         },
         {
-          "type": "inline_richtext",
+          "type": "richtext",
           "id": "quote",
           "label": "Quote (Shown On Plus Click)",
-          "default": "“I'm obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”"
+          "default": "<p>“I'm obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”</p>"
         },
         {
           "type": "text",
@@ -378,43 +467,6 @@
           "id": "show_instagram",
           "label": "Show Instagram Icon",
           "default": true
-        }
-      ]
-    },
-    {
-      "type": "trust_badge",
-      "name": "Trust Badge",
-      "settings": [
-        {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "options": [
-            { "value": "moneyback", "label": "100-Night Trial / Moneyback" },
-            { "value": "truck", "label": "Free Shipping" },
-            { "value": "warranty", "label": "Warranty" },
-            { "value": "financing", "label": "Financing" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "moon", "label": "Moon" },
-            { "value": "star", "label": "Star" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "verified", "label": "Verified" },
-            { "value": "custom", "label": "Custom Image" },
-            { "value": "none", "label": "None" }
-          ],
-          "default": "moneyback"
-        },
-        {
-          "type": "image_picker",
-          "id": "custom_icon",
-          "label": "Custom Icon Image",
-          "visible_if": "{{ block.settings.icon == 'custom' }}"
-        },
-        {
-          "type": "inline_richtext",
-          "id": "text",
-          "label": "Badge Text",
-          "default": "100-Night Risk-Free Trial"
         }
       ]
     }
@@ -449,34 +501,6 @@
             "role": "NASCAR driver",
             "social_handle": "@chaseelliott",
             "follower_count": "1.2M followers"
-          }
-        },
-        {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "moneyback",
-            "text": "100-Night Risk-Free Trial"
-          }
-        },
-        {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "truck",
-            "text": "Free Shipping"
-          }
-        },
-        {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "warranty",
-            "text": "30-Year Warranty"
-          }
-        },
-        {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "financing",
-            "text": "0% Interest financing options"
           }
         }
       ]

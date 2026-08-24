@@ -1,5 +1,4 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-insights-slider.js' | asset_url }}" defer="defer"></script>
 {{ 'nw-human-biologist.css' | asset_url | stylesheet_tag }}
 
@@ -238,7 +237,7 @@
                         <span class="nw-human-biologist__insight-tag">{{ block.settings.tag }}</span>
                       {%- endif -%}
                       {%- if block.settings.quote != blank -%}
-                        <div class="nw-human-biologist__insight-quote{% if block.settings.is_italic %} is-italic{% endif %}">
+                        <div class="nw-human-biologist__insight-quote">
                           {{ block.settings.quote }}
                         </div>
                       {%- endif -%}
@@ -632,12 +631,6 @@
           "default": "<p>You spend nearly 23 years in bed. Your mattress is one of the most-used surfaces your body touches every night.</p>"
         },
         {
-          "type": "checkbox",
-          "id": "is_italic",
-          "label": "Italicize Text",
-          "default": false
-        },
-        {
           "type": "select",
           "id": "icon",
           "label": "Slide Icon",
@@ -669,7 +662,6 @@
           "settings": {
             "tag": "Recovery Insight #1",
             "quote": "<p>You spend nearly 23 years in bed. Your mattress is one of the most-used surfaces your body touches every night.</p>",
-            "is_italic": false,
             "icon": "none"
           }
         },
@@ -678,7 +670,6 @@
           "settings": {
             "tag": "SLEEP FACT · 02",
             "quote": "<p>Deep sleep is when your body repairs and recovers.</p>",
-            "is_italic": true,
             "icon": "moon"
           }
         },
@@ -687,7 +678,6 @@
           "settings": {
             "tag": "SLEEP FACT · 03",
             "quote": "<p>A cooler bed supports deeper, less interrupted sleep.</p>",
-            "is_italic": true,
             "icon": "thermometer"
           }
         },
@@ -696,7 +686,6 @@
           "settings": {
             "tag": "SLEEP FACT · 04",
             "quote": "<p>What you breathe at night is as important as your sleep duration.</p>",
-            "is_italic": true,
             "icon": "wind"
           }
         }

@@ -74,12 +74,12 @@ Renders a CTA button plus optional trust badges from section or block settings.
             {%- if block.settings.text != blank -%}
               {%- liquid
                 assign badge_icon = block.settings.icon
-                assign badge_custom_icon = block.settings.custom_icon
+                assign badge_custom_icon = blank
 
-                if block.settings.icon == 'custom' or block.settings.use_custom_icon
+                if block.settings.use_custom_icon and block.settings.custom_icon != blank
                   assign badge_custom_icon = block.settings.custom_icon
                   assign badge_icon = blank
-                elsif block.settings.custom_icon != blank and block.settings.icon == blank
+                elsif block.settings.icon == 'custom' and block.settings.custom_icon != blank
                   assign badge_custom_icon = block.settings.custom_icon
                   assign badge_icon = blank
                 endif

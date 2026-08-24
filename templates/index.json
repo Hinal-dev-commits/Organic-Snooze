@@ -166,7 +166,7 @@
         "shopify_video": "shopify://files/videos/SNO_3_WIDE_FINAL_NOCTA.mp4",
         "video_url": "",
         "custom_video_url": "",
-        "overlay_color": "rgba(0,0,0,0)",
+        "overlay_color": "#00000000",
         "bg_type": "none",
         "bg_color": "#613916",
         "bg_gradient": "linear-gradient(228deg, rgba(21, 209, 252, 1) 14%, rgba(187, 48, 254, 1) 83%)",
@@ -184,7 +184,6 @@
           "settings": {
             "text": "100% ORGANIC MATERIALS",
             "link": "",
-            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -193,7 +192,6 @@
           "settings": {
             "text": "MADE IN THE USA",
             "link": "",
-            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -202,7 +200,6 @@
           "settings": {
             "text": "100% ORGANIC MATERIALS",
             "link": "",
-            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -211,7 +208,6 @@
           "settings": {
             "text": "NO CHEMICAL FOAMS",
             "link": "",
-            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -220,7 +216,6 @@
           "settings": {
             "text": "30-YEAR WARRANTY",
             "link": "",
-            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -229,7 +224,6 @@
           "settings": {
             "text": "100-NIGHT TRIAL",
             "link": "",
-            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -238,7 +232,6 @@
           "settings": {
             "text": "FREE WHITE-GLOVE DELIVERY",
             "link": "",
-            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         }
@@ -777,10 +770,9 @@
         "enable_autoplay": true,
         "autoplay_delay": 4,
         "bg_type": "image",
-        "bg_color": "#ffffff",
+        "bg_color": "#ffffffcc",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
         "bg_image_mobile": "shopify://shop_images/layers-bg-image.png",
-        "bg_color_image": "#ffffffcc",
         "bg_image_opacity": 16,
         "bg_gradient": "",
         "padding_top_desktop": 80,
@@ -798,7 +790,7 @@
             "image": "shopify://shop_images/people-3_4f3d6278-f5f8-485e-ba32-86954f4b7323.png",
             "name": "Jesse Itzler",
             "role": "Entrepreneur, author, endurance athlete",
-            "quote": "\"Im obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”",
+            "quote": "<p>\"Im obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”</p>",
             "social_handle": "@jesseitzler",
             "follower_count": "1.4M followers",
             "social_avatar": "shopify://shop_images/image_1251.png",
@@ -812,7 +804,7 @@
             "image": "shopify://shop_images/people-2_0db591a5-30e4-4401-b4f0-1f73ac07c298.png",
             "name": "Durana Elmi",
             "role": "Co-Founder Cymbiotika",
-            "quote": "\"Sleep is one of the most important investments you can make in your health. The Ultimate Snooze has become an essential part of my nightly routine—thoughtfully designed, incredibly comfortable, and made with materials I feel good about bringing into my home.\"",
+            "quote": "<p>\"Sleep is one of the most important investments you can make in your health. The Ultimate Snooze has become an essential part of my nightly routine—thoughtfully designed, incredibly comfortable, and made with materials I feel good about bringing into my home.\"</p>",
             "social_handle": "@duranaelmi",
             "follower_count": "1M followers",
             "social_avatar": "shopify://shop_images/image_1251-1.png",
@@ -826,7 +818,7 @@
             "image": "shopify://shop_images/people-1_66939faf-1038-4c3e-9df2-e60f3d70b38f.png",
             "name": "Chase Elliott",
             "role": "NASCAR driver",
-            "quote": "“If you know me, you know I’ve been focused on optimizing my sleep and recovery—and it’s made a huge difference. After adding the Ultimate Snooze pillow to my routine, this has been another great piece of the puzzle. As a driver, performance starts with recovery—and recovery starts with sleep.”",
+            "quote": "<p>“If you know me, you know I’ve been focused on optimizing my sleep and recovery—and it’s made a huge difference. After adding the Ultimate Snooze pillow to my routine, this has been another great piece of the puzzle. As a driver, performance starts with recovery—and recovery starts with sleep.”</p>",
             "social_handle": "@chaseelliott",
             "follower_count": "1.2M followers",
             "social_avatar": "shopify://shop_images/image_1251-2.png",
@@ -840,7 +832,7 @@
             "image": "shopify://shop_images/people-3_4f3d6278-f5f8-485e-ba32-86954f4b7323.png",
             "name": "Jesse Itzler",
             "role": "Entrepreneur, author, endurance athlete",
-            "quote": "\"Im obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”",
+            "quote": "<p>\"Im obsessed with the Ultimate Snooze Mattress, Gary and Matt hit it OUT OF THE PARK!! It is 100% organic with none of the crazy sprays they put on other beds, and it is so comfortable! I don't think there is anything more important than the air you breathe, starting with your sleep setup.”</p>",
             "social_handle": "@jesseitzler",
             "follower_count": "1.4M followers",
             "social_avatar": "shopify://shop_images/image_1251.png",
@@ -854,7 +846,7 @@
             "image": "shopify://shop_images/people-2_0db591a5-30e4-4401-b4f0-1f73ac07c298.png",
             "name": "Durana Elmi",
             "role": "Co-Founder Cymbiotika",
-            "quote": "\"Sleep is one of the most important investments you can make in your health. The Ultimate Snooze has become an essential part of my nightly routine—thoughtfully designed, incredibly comfortable, and made with materials I feel good about bringing into my home.\"",
+            "quote": "<p>\"Sleep is one of the most important investments you can make in your health. The Ultimate Snooze has become an essential part of my nightly routine—thoughtfully designed, incredibly comfortable, and made with materials I feel good about bringing into my home.\"</p>",
             "social_handle": "@duranaelmi",
             "follower_count": "1M followers",
             "social_avatar": "shopify://shop_images/image_1251-1.png",
@@ -868,7 +860,7 @@
             "image": "shopify://shop_images/people-1_66939faf-1038-4c3e-9df2-e60f3d70b38f.png",
             "name": "Chase Elliott",
             "role": "NASCAR driver",
-            "quote": "“If you know me, you know I’ve been focused on optimizing my sleep and recovery—and it’s made a huge difference. After adding the Ultimate Snooze pillow to my routine, this has been another great piece of the puzzle. As a driver, performance starts with recovery—and recovery starts with sleep.”",
+            "quote": "<p>“If you know me, you know I’ve been focused on optimizing my sleep and recovery—and it’s made a huge difference. After adding the Ultimate Snooze pillow to my routine, this has been another great piece of the puzzle. As a driver, performance starts with recovery—and recovery starts with sleep.”</p>",
             "social_handle": "@chaseelliott",
             "follower_count": "1.2M followers",
             "social_avatar": "shopify://shop_images/image_1251-2.png",
@@ -905,6 +897,18 @@
         "button_style": "primary",
         "badge_icon_color": "#cc926a",
         "badge_text_color": "#613916",
+        "badge_1_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
+        "badge_1_custom_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
+        "badge_1_text": "<p>100-Night Risk-Free Trial</p>",
+        "badge_2_icon": "shopify://shop_images/truck.svg",
+        "badge_2_custom_icon": "shopify://shop_images/truck.svg",
+        "badge_2_text": "<p>Free Shipping</p>",
+        "badge_3_icon": "shopify://shop_images/svgviewer-output_42.svg",
+        "badge_3_custom_icon": "shopify://shop_images/svgviewer-output_42.svg",
+        "badge_3_text": "<p>30-Year Warranty</p>",
+        "badge_4_icon": "shopify://shop_images/interest.svg",
+        "badge_4_custom_icon": "shopify://shop_images/interest.svg",
+        "badge_4_text": "<p>0% Interest financing options</p>",
         "bg_type": "none",
         "bg_color": "#fffcf0",
         "bg_gradient": "",
@@ -954,7 +958,6 @@
           "settings": {
             "tag": "Recovery Insight #1",
             "quote": "<p>You spend nearly 23 years in bed. Your mattress is one of the most-used surfaces your body touches every night.</p>",
-            "is_italic": false,
             "icon": "none"
           }
         },
@@ -963,7 +966,6 @@
           "settings": {
             "tag": "Recovery Insight #1",
             "quote": "<p>You spend nearly 23 years in bed. Your mattress is one of the most-used surfaces your body touches every night.</p>",
-            "is_italic": false,
             "icon": "none"
           }
         },
@@ -972,7 +974,6 @@
           "settings": {
             "tag": "Recovery Insight #1",
             "quote": "<p>You spend nearly 23 years in bed. Your mattress is one of the most-used surfaces your body touches every night.</p>",
-            "is_italic": false,
             "icon": "none"
           }
         },
@@ -981,7 +982,6 @@
           "settings": {
             "tag": "Recovery Insight #1",
             "quote": "<p>You spend nearly 23 years in bed. Your mattress is one of the most-used surfaces your body touches every night.</p>",
-            "is_italic": false,
             "icon": "none"
           }
         }
@@ -1294,35 +1294,6 @@
     "nw_collection_list_yeNiLx": {
       "type": "nw-collection-list",
       "blocks": {
-        "trust_badge_qqNQ8q": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "trial",
-            "text": "100-Night Risk-Free Trial"
-          }
-        },
-        "trust_badge_jc7xEe": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "shield",
-            "text": "30-Year Warranty"
-          }
-        },
-        "trust_badge_bX3Vmn": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "shipping",
-            "text": "free shipping"
-          }
-        },
-        "trust_badge_d9URPq": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/interest.svg",
-            "text": "0% Interest financing options"
-          }
-        },
         "collection_XHC9VB": {
           "type": "collection",
           "settings": {
@@ -1379,10 +1350,6 @@
         }
       },
       "block_order": [
-        "trust_badge_qqNQ8q",
-        "trust_badge_jc7xEe",
-        "trust_badge_bX3Vmn",
-        "trust_badge_d9URPq",
         "collection_XHC9VB",
         "collection_qpMhMA",
         "collection_MnEi8L",
@@ -1408,6 +1375,16 @@
         "button_label": "Shop All",
         "button_link": "",
         "button_style": "primary",
+        "show_features": true,
+        "feature_1_icon": "trial",
+        "feature_1_text": "100-Night Risk-Free Trial",
+        "feature_2_icon": "warranty",
+        "feature_2_text": "30-Year Warranty",
+        "feature_3_icon": "shipping",
+        "feature_3_text": "free shipping",
+        "feature_4_icon": "custom",
+        "feature_4_custom_icon": "shopify://shop_images/interest.svg",
+        "feature_4_text": "0% Interest financing options",
         "bg_type": "color",
         "bg_color": "#ffffff",
         "bg_image_opacity": 100,

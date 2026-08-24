@@ -3,7 +3,53 @@
 
 {%- assign nw_shell_selector = '.nw-faq.section-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector %}
+<style>
+  .nw-faq.section-{{ section.id }} {
+    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+    position: relative;
+    background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    isolation: isolate;
+    overflow: hidden;
+    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% endif %}
+  }
 
+  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
+    .nw-faq.section-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: calc({{ section.settings.bg_image_opacity | default: 100 }} / 100);
+      z-index: -1;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  @media screen and (max-width: 749px) {
+    .nw-faq.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    }
+
+    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
+      .nw-faq.section-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
 <nw-faq
   class="nw-faq section-{{ section.id }}"
   style="
@@ -150,7 +196,7 @@
       {%- endif -%}
     </div>
   </div>
-</nw-faq>
+</div>
 
 {% schema %}
 {
@@ -272,9 +318,10 @@
       "visible_if": "{{ section.settings.show_call_btn == true }}"
     },
     {
-      "type": "url",
+      "type": "text",
       "id": "call_link",
-      "label": "Call Button Link",
+      "label": "Call Button Link (E.g. Tel:+14433331213)",
+      "default": "tel:+14433331213",
       "visible_if": "{{ section.settings.show_call_btn == true }}"
     },
     {
@@ -303,9 +350,10 @@
       "visible_if": "{{ section.settings.show_text_btn == true }}"
     },
     {
-      "type": "url",
+      "type": "text",
       "id": "text_link",
-      "label": "Text Button Link",
+      "label": "Text Button Link (E.g. Sms:+14433331213)",
+      "default": "sms:+14433331213",
       "visible_if": "{{ section.settings.show_text_btn == true }}"
     },
     {
