@@ -1,15 +1,15 @@
-.header-wrapper.nw-header-transprant,
-.header-wrapper:has(.header.nw-header-transprant) {
+.header-wrapper.nw-header-transparent,
+.header-wrapper:has(.header.nw-header-transparent) {
     background: transparent;
     background-color: transparent;
 }
 
-.header.nw-header-transprant {
+.header.nw-header-transparent {
     background: transparent;
     background-color: transparent;
 }
 
-.section-header:has(.header.nw-header-transprant) {
+.section-header:has(.header.nw-header-transparent) {
     margin-bottom: 0;
 }
 
@@ -17,35 +17,35 @@
     display: none;
 }
 
-.header.nw-header-transprant .header__heading-logo--default {
+.header.nw-header-transparent .header__heading-logo--default {
     display: none;
 }
 
-.header.nw-header-transprant .header__heading-logo--transparent {
+.header.nw-header-transparent .header__heading-logo--transparent {
     display: block;
 }
 
-.header.nw-header-transprant:not(:has(.header__heading-logo--transparent)) .header__heading-logo--default {
+.header.nw-header-transparent:not(:has(.header__heading-logo--transparent)) .header__heading-logo--default {
     display: block;
 }
 
-.header.nw-header-transprant .header__menu-item,
-.header.nw-header-transprant .header__menu-item span,
-.header.nw-header-transprant summary.list-menu__item,
-.header.nw-header-transprant .header__heading-link,
-.header.nw-header-transprant .header__active-menu-item {
+.header.nw-header-transparent .header__menu-item,
+.header.nw-header-transparent .header__menu-item span,
+.header.nw-header-transparent summary.list-menu__item,
+.header.nw-header-transparent .header__heading-link,
+.header.nw-header-transparent .header__active-menu-item {
     color: rgb(var(--nw-header-transparent-text, var(--color-foreground)));
 }
 
-.header.nw-header-transprant .header__icon,
-.header.nw-header-transprant header-drawer .header__icon,
-.header.nw-header-transprant .localization-form__select,
-.header.nw-header-transprant .disclosure__button {
+.header.nw-header-transparent .header__icon,
+.header.nw-header-transparent header-drawer .header__icon,
+.header.nw-header-transparent .localization-form__select,
+.header.nw-header-transparent .disclosure__button {
     color: rgb(var(--nw-header-transparent-icon, var(--color-foreground)));
 }
 
-.header-wrapper.nw-header-transprant.header-wrapper--border-bottom,
-.header-wrapper:has(.header.nw-header-transprant).header-wrapper--border-bottom {
+.header-wrapper.nw-header-transparent.header-wrapper--border-bottom,
+.header-wrapper:has(.header.nw-header-transparent).header-wrapper--border-bottom {
     border-bottom-color: rgba(var(--nw-header-transparent-icon, var(--color-foreground)), 0.2);
 }
 .shopify-section-group-header-group{

@@ -1,33 +1,33 @@
-{{ 'nw-mattress.css' | asset_url | stylesheet_tag }}
-{% comment %} Shared padding/background styles come from nw-section-shell. {% endcomment %}
+{{ 'nw-mattresses-timeline.css' | asset_url | stylesheet_tag }}
+{% comment %} Shared padding and background styles come from nw-section-shell. {% endcomment %}
 
-{%- assign nw_shell_selector = '.nw_labor_mattress.section-' | append: section.id -%}
+{%- assign nw_shell_selector = '.nw-mattresses-timeline.section-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 <style>
-  .nw_labor_mattress.section-{{ section.id }} .nw_labor_mattress__card {
+  .nw-mattresses-timeline.section-{{ section.id }} .nw-mattresses-timeline__card {
     {% if section.settings.card_wrap_bg != blank %}
       background-color: {{ section.settings.card_wrap_bg }};
     {% endif %}
   }
 
-  .nw_labor_mattress.section-{{ section.id }} .nw_labor_mattress__card-title {
+  .nw-mattresses-timeline.section-{{ section.id }} .nw-mattresses-timeline__card-title {
     {% if section.settings.card_heading_color != blank %}
       color: {{ section.settings.card_heading_color }};
     {% endif %}
   }
 
-  .nw_labor_mattress.section-{{ section.id }} .nw_labor_mattress__card-desc {
+  .nw-mattresses-timeline.section-{{ section.id }} .nw-mattresses-timeline__card-desc {
     {% if section.settings.card_desc_color != blank %}
       color: {{ section.settings.card_desc_color }};
     {% endif %}
   }
 </style>
 
-<div class="nw_labor_mattress section-{{ section.id }}">
-    <div class="nw_labor_mattress__wrapper{%- render 'nw-scroll-animation' -%}">
-      <div class="nw_labor_mattress__grid">
-        <div class="nw_labor_mattress__media-col">
-          <div class="nw_labor_mattress__main-media">
+<div class="nw-mattresses-timeline section-{{ section.id }}">
+    <div class="nw-mattresses-timeline__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-mattresses-timeline__grid">
+        <div class="nw-mattresses-timeline__media-col">
+          <div class="nw-mattresses-timeline__main-media">
             {%- if section.settings.main_image != blank or section.settings.main_image_mobile != blank -%}
               {%- if section.settings.main_image != blank and section.settings.main_image_mobile != blank -%}
                 {{
@@ -35,7 +35,7 @@
                   | image_url: width: 800
                   | image_tag:
                     loading: 'lazy',
-                    class: 'nw_labor_mattress__main-img nw_labor_mattress__main-img--mobile',
+                    class: 'nw-mattresses-timeline__main-img nw-mattresses-timeline__main-img--mobile',
                     widths: '375, 550, 750, 800',
                     sizes: '100vw',
                     alt: section.settings.main_image_mobile.alt | default: section.settings.heading
@@ -45,7 +45,7 @@
                   | image_url: width: 1200
                   | image_tag:
                     loading: 'lazy',
-                    class: 'nw_labor_mattress__main-img nw_labor_mattress__main-img--desktop',
+                    class: 'nw-mattresses-timeline__main-img nw-mattresses-timeline__main-img--desktop',
                     widths: '550, 750, 900, 1100, 1200',
                     sizes: '(min-width: 990px) 802px, 50vw',
                     alt: section.settings.main_image.alt | default: section.settings.heading
@@ -56,7 +56,7 @@
                   | image_url: width: 1200
                   | image_tag:
                     loading: 'lazy',
-                    class: 'nw_labor_mattress__main-img',
+                    class: 'nw-mattresses-timeline__main-img',
                     widths: '550, 750, 900, 1100, 1200',
                     sizes: '(min-width: 990px) 802px, 100vw',
                     alt: section.settings.main_image.alt | default: section.settings.heading
@@ -67,74 +67,74 @@
                   | image_url: width: 800
                   | image_tag:
                     loading: 'lazy',
-                    class: 'nw_labor_mattress__main-img',
+                    class: 'nw-mattresses-timeline__main-img',
                     widths: '375, 550, 750, 800',
                     sizes: '100vw',
                     alt: section.settings.main_image_mobile.alt | default: section.settings.heading
                 }}
               {%- endif -%}
             {%- else -%}
-              <div class="nw_labor_mattress__main-placeholder" aria-hidden="true">
+              <div class="nw-mattresses-timeline__main-placeholder" aria-hidden="true">
                 {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
               </div>
             {%- endif -%}
           </div>
         </div>
 
-        <div class="nw_labor_mattress__content-col">
+        <div class="nw-mattresses-timeline__content-col">
           {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-            <div class="nw_labor_mattress__header">
+            <div class="nw-mattresses-timeline__header">
               {%- if section.settings.heading != blank -%}
-                {% render 'nw-section-heading', text: section.settings.heading, class: 'nw_labor_mattress__heading' %}
+                {% render 'nw-section-heading', text: section.settings.heading, class: 'nw-mattresses-timeline__heading' %}
               {%- endif -%}
               {%- if section.settings.subheading != blank -%}
-                {% render 'nw-section-description', text: section.settings.subheading, class: 'nw_labor_mattress__subheading' %}
+                {% render 'nw-section-description', text: section.settings.subheading, class: 'nw-mattresses-timeline__subheading' %}
               {%- endif -%}
             </div>
           {%- endif -%}
 
           {%- if section.blocks.size > 0 -%}
-            <div class="nw_labor_mattress__timeline">
+            <div class="nw-mattresses-timeline__timeline">
               {%- for block in section.blocks -%}
-                <div class="nw_labor_mattress__layer-item" {{ block.shopify_attributes }}>
-                  <div class="nw_labor_mattress__stepper" aria-hidden="true">
+                <div class="nw-mattresses-timeline__layer-item" {{ block.shopify_attributes }}>
+                  <div class="nw-mattresses-timeline__stepper" aria-hidden="true">
                     {%- unless forloop.first -%}
-                      <div class="nw_labor_mattress__line-top"></div>
+                      <div class="nw-mattresses-timeline__line-top"></div>
                     {%- endunless -%}
-                    <div class="nw_labor_mattress__dot"></div>
+                    <div class="nw-mattresses-timeline__dot"></div>
                     {%- unless forloop.last -%}
-                      <div class="nw_labor_mattress__line-bottom"></div>
+                      <div class="nw-mattresses-timeline__line-bottom"></div>
                     {%- endunless -%}
                   </div>
 
-                  <div class="nw_labor_mattress__card-wrap">
-                    <div class="nw_labor_mattress__card">
+                  <div class="nw-mattresses-timeline__card-wrap">
+                    <div class="nw-mattresses-timeline__card">
                       {%- if block.settings.tag != blank -%}
                         <span
-                          class="nw_labor_mattress__tag"
+                          class="nw-mattresses-timeline__tag"
                           style="{% if block.settings.tag_bg != blank %}background-color: {{ block.settings.tag_bg }};{% endif %}"
                         >
                           {{ block.settings.tag }}
                         </span>
                       {%- endif -%}
 
-                      <div class="nw_labor_mattress__card-content">
+                      <div class="nw-mattresses-timeline__card-content">
                         {%- if block.settings.title != blank -%}
-                          <h3 class="nw_labor_mattress__card-title">{{ block.settings.title }}</h3>
+                          <h3 class="nw-mattresses-timeline__card-title">{{ block.settings.title }}</h3>
                         {%- endif -%}
                         {%- if block.settings.subtitle != blank -%}
-                          <p class="nw_labor_mattress__card-desc">{{ block.settings.subtitle }}</p>
+                          <p class="nw-mattresses-timeline__card-desc">{{ block.settings.subtitle }}</p>
                         {%- endif -%}
                       </div>
 
                       {%- if block.settings.image != blank -%}
-                        <div class="nw_labor_mattress__card-cutout{% if forloop.first %} nw_labor_mattress__card-cutout--first{% endif %}">
+                        <div class="nw-mattresses-timeline__card-cutout{% if forloop.first %} nw-mattresses-timeline__card-cutout--first{% endif %}">
                           {{
                             block.settings.image
                             | image_url: width: 444
                             | image_tag:
                               loading: 'lazy',
-                              class: 'nw_labor_mattress__cutout-img',
+                              class: 'nw-mattresses-timeline__cutout-img',
                               widths: '160, 222, 320, 444',
                               sizes: '(max-width: 749px) 222px, 160px',
                               alt: block.settings.title | escape
@@ -149,47 +149,47 @@
           {%- endif -%}
 
           {%- if section.settings.show_comparison -%}
-            <div class="nw_labor_mattress__comparison">
+            <div class="nw-mattresses-timeline__comparison">
               {%- if section.settings.comparison_title != blank -%}
-                <h3 class="nw_labor_mattress__comparison-title">{{ section.settings.comparison_title }}</h3>
+                <h3 class="nw-mattresses-timeline__comparison-title">{{ section.settings.comparison_title }}</h3>
               {%- endif -%}
 
-              <div class="nw_labor_mattress__comparison-grid">
-                <div class="nw_labor_mattress__compare-card nw_labor_mattress__compare-card--foam">
+              <div class="nw-mattresses-timeline__comparison-grid">
+                <div class="nw-mattresses-timeline__compare-card nw-mattresses-timeline__compare-card--foam">
                   {%- if section.settings.foam_brand != blank -%}
-                    <p class="nw_labor_mattress__foam-brand">{{ section.settings.foam_brand }}</p>
+                    <p class="nw-mattresses-timeline__foam-brand">{{ section.settings.foam_brand }}</p>
                   {%- endif -%}
-                  <div class="nw_labor_mattress__compare-price-group">
+                  <div class="nw-mattresses-timeline__compare-price-group">
                     {%- if section.settings.foam_price != blank -%}
-                      <p class="nw_labor_mattress__foam-price">{{ section.settings.foam_price }}</p>
+                      <p class="nw-mattresses-timeline__foam-price">{{ section.settings.foam_price }}</p>
                     {%- endif -%}
                     {%- if section.settings.foam_note != blank -%}
-                      <p class="nw_labor_mattress__foam-note">{{ section.settings.foam_note }}</p>
+                      <p class="nw-mattresses-timeline__foam-note">{{ section.settings.foam_note }}</p>
                     {%- endif -%}
                   </div>
                 </div>
 
                 <div
-                  class="nw_labor_mattress__compare-card nw_labor_mattress__compare-card--snooze"
+                  class="nw-mattresses-timeline__compare-card nw-mattresses-timeline__compare-card--snooze"
                   style="{% if section.settings.snooze_bg != blank %}background-color: {{ section.settings.snooze_bg }};{% endif %}"
                 >
-                  <div class="nw_labor_mattress__snooze-logo-wrap">
+                  <div class="nw-mattresses-timeline__snooze-logo-wrap">
                     {%- if section.settings.snooze_logo != blank -%}
-                        <img src="{{ section.settings.snooze_logo | image_url}}" alt="{{ section.settings.snooze_brand | default: 'Organic Snooze' | escape }}" class="nw_labor_mattress__snooze-logo-img" width="" height=""
+                        <img src="{{ section.settings.snooze_logo | image_url}}" alt="{{ section.settings.snooze_brand | default: 'Organic Snooze' | escape }}" class="nw-mattresses-timeline__snooze-logo-img" width="" height=""
                         loading="lazy"
                         >
                      
                     {%- else -%}
-                      <span class="nw_labor_mattress__snooze-logo-text">{{ section.settings.snooze_brand | default: 'ORGANIC SNOOZE' }}</span>
+                      <span class="nw-mattresses-timeline__snooze-logo-text">{{ section.settings.snooze_brand | default: 'ORGANIC SNOOZE' }}</span>
                     {%- endif -%}
                   </div>
 
-                  <div class="nw_labor_mattress__compare-price-group">
+                  <div class="nw-mattresses-timeline__compare-price-group">
                     {%- if section.settings.snooze_price != blank -%}
-                      <p class="nw_labor_mattress__snooze-price">{{ section.settings.snooze_price }}</p>
+                      <p class="nw-mattresses-timeline__snooze-price">{{ section.settings.snooze_price }}</p>
                     {%- endif -%}
                     {%- if section.settings.snooze_note != blank -%}
-                      <p class="nw_labor_mattress__snooze-note">{{ section.settings.snooze_note }}</p>
+                      <p class="nw-mattresses-timeline__snooze-note">{{ section.settings.snooze_note }}</p>
                     {%- endif -%}
                   </div>
                 </div>

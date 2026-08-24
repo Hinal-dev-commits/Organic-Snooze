@@ -1,7 +1,7 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
-{{ 'nw-collection-tab.css' | asset_url | stylesheet_tag }}
+{{ 'nw-collection-tabs.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
-<script src="{{ 'nw-collection-tab.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-collection-tabs.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign sidebar_block = nil
@@ -13,65 +13,65 @@
   endfor
 -%}
 
-{%- assign nw_shell_selector = '#NwCollectionTab-' | append: section.id -%}
+{%- assign nw_shell_selector = '#NwCollectionTabs-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
-<nw-collection-tab
-  id="NwCollectionTab-{{ section.id }}"
-  class="nw-collection-tab"
+<nw-collection-tabs
+  id="NwCollectionTabs-{{ section.id }}"
+  class="nw-collection-tabs"
   data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
   style="
-    --nw-collection-tab-tab-bg: {{ section.settings.tab_bg }};
-    --nw-collection-tab-tab-text: {{ section.settings.tab_text }};
-    --nw-collection-tab-tab-border: {{ section.settings.tab_border }};
-    --nw-collection-tab-tab-active-bg: {{ section.settings.tab_active_bg }};
-    --nw-collection-tab-tab-active-text: {{ section.settings.tab_active_text }};
-    --nw-collection-tab-sidebar-bg: {{ section.settings.sidebar_bg }};
-    --nw-collection-tab-sidebar-text: {{ section.settings.sidebar_text }};
-    --nw-collection-tab-quote-bg: {{ section.settings.quote_bg }};
-    --nw-collection-tab-quote-border: {{ section.settings.quote_border }};
-    --nw-collection-tab-quote-icon: {{ section.settings.quote_icon_color }};
-    --nw-collection-tab-verified-color: {{ section.settings.verified_color }};
-    --nw-collection-tab-trust-icon: {{ section.settings.trust_icon_color }};
-    --nw-collection-tab-fade-color: {{ section.settings.slider_fade_color }};
+    --nw-collection-tabs-tab-bg: {{ section.settings.tab_bg }};
+    --nw-collection-tabs-tab-text: {{ section.settings.tab_text }};
+    --nw-collection-tabs-tab-border: {{ section.settings.tab_border }};
+    --nw-collection-tabs-tab-active-bg: {{ section.settings.tab_active_bg }};
+    --nw-collection-tabs-tab-active-text: {{ section.settings.tab_active_text }};
+    --nw-collection-tabs-sidebar-bg: {{ section.settings.sidebar_bg }};
+    --nw-collection-tabs-sidebar-text: {{ section.settings.sidebar_text }};
+    --nw-collection-tabs-quote-bg: {{ section.settings.quote_bg }};
+    --nw-collection-tabs-quote-border: {{ section.settings.quote_border }};
+    --nw-collection-tabs-quote-icon: {{ section.settings.quote_icon_color }};
+    --nw-collection-tabs-verified-color: {{ section.settings.verified_color }};
+    --nw-collection-tabs-trust-icon: {{ section.settings.trust_icon_color }};
+    --nw-collection-tabs-fade-color: {{ section.settings.slider_fade_color }};
     --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
     --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
     --nw-swiper-bullet: {{ section.settings.swiper_bullet_color }};
-    --nw-collection-tab-promo-bg: {{ section.settings.promo_bg }};
-    --nw-collection-tab-promo-border: {{ section.settings.promo_border }};
-    --nw-collection-tab-promo-status-bg: {{ section.settings.promo_status_bg }};
-    --nw-collection-tab-promo-timer-bg: {{ section.settings.promo_timer_bg }};
-    --nw-collection-tab-promo-sep: {{ section.settings.promo_sep_color }};
+    --nw-collection-tabs-promo-bg: {{ section.settings.promo_bg }};
+    --nw-collection-tabs-promo-border: {{ section.settings.promo_border }};
+    --nw-collection-tabs-promo-status-bg: {{ section.settings.promo_status_bg }};
+    --nw-collection-tabs-promo-timer-bg: {{ section.settings.promo_timer_bg }};
+    --nw-collection-tabs-promo-sep: {{ section.settings.promo_sep_color }};
   "
   data-products-limit="{{ section.settings.products_to_show }}"
 >
   <div class="page-width">
-    <div class="nw-collection-tab__inner">
+    <div class="nw-collection-tabs__inner">
       {%- if sidebar_block -%}
-        <div class="nw-collection-tab__mobile-heading">
+        <div class="nw-collection-tabs__mobile-heading">
           {%- if sidebar_block.settings.heading != blank -%}
             <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
           {%- endif -%}
           {%- if sidebar_block.settings.subheading != blank -%}
-            <div class="nw-collection-tab__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
+            <div class="nw-collection-tabs__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
           {%- endif -%}
         </div>
       {%- endif -%}
 
       {%- if tab_blocks.size > 0 -%}
-        <div class="nw-collection-tab__tabs-wrap">
-          <div class="nw-collection-tab__tabs" role="tablist" aria-label="Collection categories">
+        <div class="nw-collection-tabs__tabs-wrap">
+          <div class="nw-collection-tabs__tabs" role="tablist" aria-label="Collection categories">
             {%- assign tab_index = 0 -%}
             {%- for block in section.blocks -%}
               {%- if block.type == 'tab' -%}
                 <button
                   type="button"
-                  class="nw-collection-tab__tab{% if tab_index == 0 %} is-active{% endif %}"
-                  id="NwCollectionTabBtn-{{ section.id }}-{{ tab_index }}"
+                  class="nw-collection-tabs__tab{% if tab_index == 0 %} is-active{% endif %}"
+                  id="NwCollectionTabsBtn-{{ section.id }}-{{ tab_index }}"
                   role="tab"
                   aria-selected="{% if tab_index == 0 %}true{% else %}false{% endif %}"
-                  aria-controls="NwCollectionTabPanel-{{ section.id }}-{{ tab_index }}"
+                  aria-controls="NwCollectionTabsPanel-{{ section.id }}-{{ tab_index }}"
                   tabindex="{% if tab_index == 0 %}0{% else %}-1{% endif %}"
                   data-nw-tab="{{ tab_index }}"
                   data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}"
@@ -86,44 +86,44 @@
         </div>
       {%- endif -%}
 
-      <div class="nw-collection-tab__main">
+      <div class="nw-collection-tabs__main">
         {%- if sidebar_block -%}
-          <aside class="nw-collection-tab__sidebar" {{ sidebar_block.shopify_attributes }}>
-            <div class="nw-collection-tab__sidebar-heading">
+          <aside class="nw-collection-tabs__sidebar" {{ sidebar_block.shopify_attributes }}>
+            <div class="nw-collection-tabs__sidebar-heading">
               {%- if sidebar_block.settings.heading != blank -%}
                 <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
               {%- endif -%}
               {%- if sidebar_block.settings.subheading != blank -%}
-                <div class="nw-collection-tab__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
+                <div class="nw-collection-tabs__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
               {%- endif -%}
             </div>
 
             {%- if sidebar_block.settings.quote != blank or sidebar_block.settings.author_name != blank -%}
-              <div class="nw-collection-tab__quote">
-                <span class="nw-collection-tab__quote-mark" aria-hidden="true">
+              <div class="nw-collection-tabs__quote">
+                <span class="nw-collection-tabs__quote-mark" aria-hidden="true">
                   {% render 'nw-icon', icon: 'quote' %}
                 </span>
                 {%- if sidebar_block.settings.quote != blank -%}
-                  <div class="nw-collection-tab__quote-text">{{ sidebar_block.settings.quote }}</div>
+                  <div class="nw-collection-tabs__quote-text">{{ sidebar_block.settings.quote }}</div>
                 {%- endif -%}
-                <div class="nw-collection-tab__quote-author-wrap">
-                  <div class="nw-collection-tab__quote-author">
+                <div class="nw-collection-tabs__quote-author-wrap">
+                  <div class="nw-collection-tabs__quote-author">
                     {%- if sidebar_block.settings.author_name != blank -%}
-                      <div class="nw-collection-tab__quote-name-row">
-                        <div class="nw-collection-tab__quote-name">{{ sidebar_block.settings.author_name }}</div>
+                      <div class="nw-collection-tabs__quote-name-row">
+                        <div class="nw-collection-tabs__quote-name">{{ sidebar_block.settings.author_name }}</div>
                         {%- if sidebar_block.settings.show_verified -%}
-                          <span class="nw-collection-tab__quote-verified" aria-hidden="true">
+                          <span class="nw-collection-tabs__quote-verified" aria-hidden="true">
                             {% render 'nw-icon', icon: 'verified' %}
                           </span>
                         {%- endif -%}
                       </div>
                     {%- endif -%}
                     {%- if sidebar_block.settings.author_title != blank -%}
-                      <div class="nw-collection-tab__quote-title">{{ sidebar_block.settings.author_title }}</div>
+                      <div class="nw-collection-tabs__quote-title">{{ sidebar_block.settings.author_title }}</div>
                     {%- endif -%}
                   </div>
                   {%- if sidebar_block.settings.author_image != blank -%}
-                    <div class="nw-collection-tab__quote-image">
+                    <div class="nw-collection-tabs__quote-image">
                       {{
                         sidebar_block.settings.author_image
                         | image_url: width: 360
@@ -137,51 +137,51 @@
 
             {%- if sidebar_block.settings.show_promo -%}
               <div
-                class="nw-collection-tab__promo"
+                class="nw-collection-tabs__promo"
                 data-countdown-date="{{ sidebar_block.settings.countdown_end_date }}"
                 data-hide-on-end="{{ sidebar_block.settings.hide_after_timer_end }}"
               >
-                <div class="nw-collection-tab__promo-content">
-                  <div class="nw-collection-tab__promo-header">
+                <div class="nw-collection-tabs__promo-content">
+                  <div class="nw-collection-tabs__promo-header">
                     {%- if sidebar_block.settings.promo_title != blank -%}
-                      <div class="nw-collection-tab__promo-title">{{ sidebar_block.settings.promo_title }}</div>
+                      <div class="nw-collection-tabs__promo-title">{{ sidebar_block.settings.promo_title }}</div>
                     {%- endif -%}
                     {%- if sidebar_block.settings.status_text != blank -%}
-                      <div class="nw-collection-tab__promo-status">
-                        <span class="nw-collection-tab__promo-status-dot"></span>
-                        <div class="nw-collection-tab__promo-status-text">{{ sidebar_block.settings.status_text }}</div>
+                      <div class="nw-collection-tabs__promo-status">
+                        <span class="nw-collection-tabs__promo-status-dot"></span>
+                        <div class="nw-collection-tabs__promo-status-text">{{ sidebar_block.settings.status_text }}</div>
                       </div>
                     {%- endif -%}
                   </div>
                   {%- if sidebar_block.settings.promo_subtext != blank -%}
-                    <div class="nw-collection-tab__promo-subtext">{{ sidebar_block.settings.promo_subtext }}</div>
+                    <div class="nw-collection-tabs__promo-subtext">{{ sidebar_block.settings.promo_subtext }}</div>
                   {%- endif -%}
                 </div>
-                <div class="nw-collection-tab__promo-countdown">
+                <div class="nw-collection-tabs__promo-countdown">
                   {%- if sidebar_block.settings.countdown_label != blank -%}
-                    <div class="nw-collection-tab__promo-countdown-label">{{ sidebar_block.settings.countdown_label }}</div>
+                    <div class="nw-collection-tabs__promo-countdown-label">{{ sidebar_block.settings.countdown_label }}</div>
                   {%- endif -%}
-                  <div class="nw-collection-tab__promo-timer">
-                    <div class="nw-collection-tab__promo-timer-unit">
-                      <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-days">00</span>
-                      <span class="nw-collection-tab__promo-timer-txt">{{ 'nw.countdown.days' | t }}</span>
+                  <div class="nw-collection-tabs__promo-timer">
+                    <div class="nw-collection-tabs__promo-timer-unit">
+                      <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-days">00</span>
+                      <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.days' | t }}</span>
                     </div>
-                    <span class="nw-collection-tab__promo-timer-sep">:</span>
-                    <div class="nw-collection-tab__promo-timer-unit">
-                      <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-hours">00</span>
-                      <span class="nw-collection-tab__promo-timer-txt">{{ 'nw.countdown.hours' | t }}</span>
+                    <span class="nw-collection-tabs__promo-timer-sep">:</span>
+                    <div class="nw-collection-tabs__promo-timer-unit">
+                      <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-hours">00</span>
+                      <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.hours' | t }}</span>
                     </div>
-                    <span class="nw-collection-tab__promo-timer-sep">:</span>
-                    <div class="nw-collection-tab__promo-timer-unit">
-                      <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-mins">00</span>
-                      <span class="nw-collection-tab__promo-timer-txt">{{ 'nw.countdown.minutes' | t }}</span>
+                    <span class="nw-collection-tabs__promo-timer-sep">:</span>
+                    <div class="nw-collection-tabs__promo-timer-unit">
+                      <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-mins">00</span>
+                      <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.minutes' | t }}</span>
                     </div>
                   </div>
                 </div>
               </div>
             {%- endif -%}
 
-            <div class="nw-collection-tab__trust-badges">
+            <div class="nw-collection-tabs__trust-badges">
               {%- for i in (1..4) -%}
                 {%- liquid
                   case i
@@ -204,15 +204,15 @@
                   endcase
                 -%}
                 {%- if badge_text != blank -%}
-                  <div class="nw-collection-tab__trust-item">
-                    <span class="nw-collection-tab__trust-icon">
+                  <div class="nw-collection-tabs__trust-item">
+                    <span class="nw-collection-tabs__trust-icon">
                       {%- if badge_custom_icon != blank -%}
-                        {% render 'nw-icon', icon: badge_icon, custom_icon: badge_custom_icon, img_class: 'nw-collection-tab__trust-img' %}
+                        {% render 'nw-icon', icon: badge_icon, custom_icon: badge_custom_icon, img_class: 'nw-collection-tabs__trust-img' %}
                       {%- elsif badge_icon != blank and badge_icon != 'none' -%}
                         {% render 'nw-icon', icon: badge_icon %}
                       {%- endif -%}
                     </span>
-                    <div class="nw-collection-tab__trust-text">{{ badge_text }}</div>
+                    <div class="nw-collection-tabs__trust-text">{{ badge_text }}</div>
                   </div>
                 {%- endif -%}
               {%- endfor -%}
@@ -220,21 +220,21 @@
           </aside>
         {%- endif -%}
 
-        <div class="nw-collection-tab__slider-col">
+        <div class="nw-collection-tabs__slider-col">
           {%- assign panel_index = 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'tab' -%}
               <div
-                class="nw-collection-tab__panel"
-                id="NwCollectionTabPanel-{{ section.id }}-{{ panel_index }}"
+                class="nw-collection-tabs__panel"
+                id="NwCollectionTabsPanel-{{ section.id }}-{{ panel_index }}"
                 data-nw-panel="{{ panel_index }}"
                 role="tabpanel"
-                aria-labelledby="NwCollectionTabBtn-{{ section.id }}-{{ panel_index }}"
+                aria-labelledby="NwCollectionTabsBtn-{{ section.id }}-{{ panel_index }}"
                 {% unless panel_index == 0 %}hidden{% endunless %}
               >
-                <div class="nw-collection-tab__slider-wrap">
+                <div class="nw-collection-tabs__slider-wrap">
                   {%- if block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
-                    <div class="swiper nw-collection-tab__swiper" id="NwCollectionSwiper-{{ section.id }}-{{ panel_index }}">
+                    <div class="swiper nw-collection-tabs__swiper" id="NwCollectionSwiper-{{ section.id }}-{{ panel_index }}">
                       <div class="swiper-wrapper">
                         {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
                           <div class="swiper-slide">
@@ -256,7 +256,7 @@
                       {% render 'nw-swiper-arrows' %}
                     {%- endif -%}
                   {%- else -%}
-                    <div class="nw-collection-tab__empty">Select a collection for this tab.</div>
+                    <div class="nw-collection-tabs__empty">Select a collection for this tab.</div>
                   {%- endif -%}
                 </div>
                 {%- if section.settings.show_pagination and block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
@@ -270,7 +270,7 @@
       </div>
 
       {%- if section.settings.show_shop_all and section.settings.shop_all_text != blank -%}
-        <div class="nw-collection-tab__footer nw-collection-tab__shop-all">
+        <div class="nw-collection-tabs__footer nw-collection-tabs__shop-all">
           {%- liquid
             assign shop_all_link = section.settings.shop_all_link
             if shop_all_link == blank and tab_blocks.size > 0
@@ -289,13 +289,13 @@
       {%- endif -%}
     </div>
   </div>
-</nw-collection-tab>
+</nw-collection-tabs>
 
 {% schema %}
 {
-  "name": "t:sections.nw-collection-tab.name",
+  "name": "t:sections.nw-collection-tabs.name",
   "tag": "section",
-  "class": "section-nw-collection-tab",
+  "class": "section-nw-collection-tabs",
   "settings": [
     {
       "type": "header",
@@ -883,7 +883,7 @@
   ],
   "presets": [
     {
-      "name": "t:sections.nw-collection-tab.name",
+      "name": "t:sections.nw-collection-tabs.name",
       "category": "NW Sections",
       "blocks": [
         {

@@ -1,5 +1,5 @@
-if (!customElements.get('nw-collection-v2')) {
-  class NwCollectionV2 extends HTMLElement {
+if (!customElements.get('nw-collection-tabs')) {
+  class NwCollectionTabs extends HTMLElement {
     connectedCallback() {
       this._bindTabs();
       this._initCountdown();
@@ -11,6 +11,17 @@ if (!customElements.get('nw-collection-v2')) {
         clearInterval(this._countdownInterval);
         this._countdownInterval = null;
       }
+
+      if (this._onTabClick) {
+        this.removeEventListener('click', this._onTabClick);
+      }
+
+      if (this._tablist && this._onTabKeydown) {
+        this._tablist.removeEventListener('keydown', this._onTabKeydown);
+      }
+
+      this._tabsBound = false;
+      this._tablist = null;
     }
 
     _whenSwiperReady(callback) {
@@ -19,7 +30,7 @@ if (!customElements.get('nw-collection-v2')) {
 
     _initPanelSwiper(panel) {
       if (!panel || panel.hidden) return;
-      var swiperEl = panel.querySelector('.nw-collection-v2__swiper');
+      var swiperEl = panel.querySelector('.nw-collection-tabs__swiper');
       if (!swiperEl || swiperEl.dataset.initialized === 'true') return;
 
       var panelIndex = panel.getAttribute('data-nw-panel');
@@ -56,16 +67,18 @@ if (!customElements.get('nw-collection-v2')) {
       swiperEl.dataset.initialized = 'true';
     }
 
-    _setActiveTab(index) {
+    _setActiveTab(index, options) {
       var tabs = this.querySelectorAll('[data-nw-tab]');
       var panels = this.querySelectorAll('[data-nw-panel]');
-      var shopAllBtn = this.querySelector('.nw-collection-v2__shop-all-btn');
+      var shopAllBtn = this.querySelector('.nw-collection-tabs__shop-all-btn');
       var activeTab = null;
+      var focusTab = options && options.focus;
 
       tabs.forEach(function (tab) {
         var isActive = tab.getAttribute('data-nw-tab') === String(index);
         tab.classList.toggle('is-active', isActive);
         tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        tab.setAttribute('tabindex', isActive ? '0' : '-1');
         if (isActive) activeTab = tab;
       });
 
@@ -79,23 +92,69 @@ if (!customElements.get('nw-collection-v2')) {
         var collectionUrl = activeTab.getAttribute('data-collection-url');
         if (collectionUrl) shopAllBtn.setAttribute('href', collectionUrl);
       }
+
+      if (focusTab && activeTab) activeTab.focus();
+    }
+
+    _handleTabKeydown(event) {
+      var tabs = Array.from(this.querySelectorAll('[data-nw-tab]'));
+      if (!tabs.length) return;
+
+      var current = event.target.closest('[data-nw-tab]');
+      if (!current || !this.contains(current)) return;
+
+      var currentIndex = tabs.indexOf(current);
+      var nextIndex = -1;
+
+      switch (event.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+          nextIndex = (currentIndex + 1) % tabs.length;
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+          break;
+        case 'Home':
+          nextIndex = 0;
+          break;
+        case 'End':
+          nextIndex = tabs.length - 1;
+          break;
+        default:
+          return;
+      }
+
+      event.preventDefault();
+      this._setActiveTab(tabs[nextIndex].getAttribute('data-nw-tab'), { focus: true });
     }
 
     _bindTabs() {
-      this.querySelectorAll('[data-nw-tab]').forEach((tab) => {
-        tab.addEventListener('click', () => {
-          this._setActiveTab(tab.getAttribute('data-nw-tab'));
-        });
-      });
+      if (this._tabsBound) return;
+      this._tabsBound = true;
+
+      this._onTabClick = (event) => {
+        var tab = event.target.closest('[data-nw-tab]');
+        if (!tab || !this.contains(tab)) return;
+        this._setActiveTab(tab.getAttribute('data-nw-tab'));
+      };
+
+      this._onTabKeydown = (event) => this._handleTabKeydown(event);
+      this._tablist = this.querySelector('[role="tablist"]');
+
+      this.addEventListener('click', this._onTabClick);
+      if (this._tablist) {
+        this._tablist.addEventListener('keydown', this._onTabKeydown);
+      }
     }
 
     _initCountdown() {
-      var countdownEl = this.querySelector('.nw-collection-v2__promo[data-countdown-date]');
+      var countdownEl = this.querySelector('.nw-collection-tabs__promo[data-countdown-date]');
       if (!countdownEl || typeof window.nwStartCountdown !== 'function') return;
       this._countdownInterval = window.nwStartCountdown(countdownEl, {
-        days: '.nw-colv2-countdown-days',
-        hours: '.nw-colv2-countdown-hours',
-        mins: '.nw-colv2-countdown-mins'
+        days: '.nw-collection-tabs-countdown-days',
+        hours: '.nw-collection-tabs-countdown-hours',
+        mins: '.nw-collection-tabs-countdown-mins'
       });
     }
 
@@ -107,5 +166,5 @@ if (!customElements.get('nw-collection-v2')) {
     }
   }
 
-  customElements.define('nw-collection-v2', NwCollectionV2);
+  customElements.define('nw-collection-tabs', NwCollectionTabs);
 }

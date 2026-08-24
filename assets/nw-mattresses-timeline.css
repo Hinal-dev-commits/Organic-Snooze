@@ -1,4 +1,4 @@
-.nw_labor_mattress {
+.nw-mattresses-timeline {
   position: relative;
   width: 100%;
   box-sizing: border-box;
@@ -7,18 +7,18 @@
   margin: 0 auto
 }
 
-.nw_labor_mattress__wrapper {
+.nw-mattresses-timeline__wrapper {
   width: 100%;
 }
 
-.nw_labor_mattress__grid {
+.nw-mattresses-timeline__grid {
   display: flex;
   gap: 0;
   width: 100%;
   align-items: center;
 }
 
-.nw_labor_mattress__media-col {
+.nw-mattresses-timeline__media-col {
   top: 100px;
   width: 100%;
   display: flex;
@@ -26,7 +26,7 @@
   justify-content: center;
 }
 
-.nw_labor_mattress__main-media {
+.nw-mattresses-timeline__main-media {
   width: 100%;
   height: 100%;
   display: flex;
@@ -35,7 +35,7 @@
   overflow: hidden;
 }
 
-.nw_labor_mattress__main-img {
+.nw-mattresses-timeline__main-img {
   width: 100%;
   max-width: none;
   height: auto;
@@ -44,11 +44,11 @@
   display: block;
 }
 
-.nw_labor_mattress__main-img--mobile {
+.nw-mattresses-timeline__main-img--mobile {
   display: none;
 }
 
-.nw_labor_mattress__main-placeholder {
+.nw-mattresses-timeline__main-placeholder {
   width: 100%;
   min-height: 420px;
   background: #fbf9f6;
@@ -59,13 +59,13 @@
   color: #613916;
 }
 
-.nw_labor_mattress__main-placeholder .placeholder-svg {
+.nw-mattresses-timeline__main-placeholder .placeholder-svg {
   width: 64px;
   height: 64px;
   opacity: 0.35;
 }
 
-.nw_labor_mattress__content-col {
+.nw-mattresses-timeline__content-col {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -75,7 +75,7 @@
   max-width: 638px;
 }
 
-.nw_labor_mattress__header {
+.nw-mattresses-timeline__header {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -84,28 +84,28 @@
   max-width: 450px;
   margin: 0 auto;
 }
-.nw_labor_mattress__heading h2{
+.nw-mattresses-timeline__heading h2{
     text-transform: unset;
 }
 
-.nw_labor_mattress__timeline {
+.nw-mattresses-timeline__timeline {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.nw_labor_mattress__layer-item {
+.nw-mattresses-timeline__layer-item {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
 }
 
-.nw_labor_mattress__layer-item:not(:first-child) {
+.nw-mattresses-timeline__layer-item:not(:first-child) {
   align-items: flex-end;
 }
 
-.nw_labor_mattress__stepper {
+.nw-mattresses-timeline__stepper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,7 +115,7 @@
 }
 
 
-.nw_labor_mattress__dot {
+.nw-mattresses-timeline__dot {
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -126,13 +126,13 @@
   display: block !important;
 }
 
-.nw_labor_mattress__layer-item:not(:first-child) .nw_labor_mattress__dot {
+.nw-mattresses-timeline__layer-item:not(:first-child) .nw-mattresses-timeline__dot {
   background: #ffffff;
   border-color: rgba(97, 57, 22, 0.35);
 }
 
-.nw_labor_mattress__line-top,
-.nw_labor_mattress__line-bottom {
+.nw-mattresses-timeline__line-top,
+.nw-mattresses-timeline__line-bottom {
   width: 0;
   border-left: 2px dashed rgba(97, 57, 22, 0.35);
   flex: 1 1 auto;
@@ -140,26 +140,26 @@
   display: block !important;
 }
 
-.nw_labor_mattress__line-top {
+.nw-mattresses-timeline__line-top {
   flex: 0 0 12px;
   min-height: 12px;
 }
 
-.nw_labor_mattress__layer-item:first-child .nw_labor_mattress__line-bottom {
+.nw-mattresses-timeline__layer-item:first-child .nw-mattresses-timeline__line-bottom {
   border-left-color: #613916;
 }
 
-.nw_labor_mattress__card-wrap {
+.nw-mattresses-timeline__card-wrap {
   flex: 1 1 auto;
   min-width: 0;
   padding-bottom: 28px;
 }
 
-.nw_labor_mattress__layer-item:last-child .nw_labor_mattress__card-wrap {
+.nw-mattresses-timeline__layer-item:last-child .nw-mattresses-timeline__card-wrap {
   padding-bottom: 0;
 }
 
-.nw_labor_mattress__card {
+.nw-mattresses-timeline__card {
   position: relative;
   overflow: hidden;
   display: flex;
@@ -175,7 +175,7 @@
   box-sizing: border-box;
 }
 
-.nw_labor_mattress__tag {
+.nw-mattresses-timeline__tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -191,7 +191,7 @@
   z-index: 1;
 }
 
-.nw_labor_mattress__card-content {
+.nw-mattresses-timeline__card-content {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -200,7 +200,7 @@
   z-index: 1;
 }
 
-.nw_labor_mattress__card-title {
+.nw-mattresses-timeline__card-title {
   margin: 0;
   font-family: var(--font-heading-family);
   font-size: 20px;
@@ -209,7 +209,7 @@
   color: #613916;
 }
 
-.nw_labor_mattress__card-desc {
+.nw-mattresses-timeline__card-desc {
   margin: 0;
   font-family: var(--font-body-family);
   font-size: 16px;
@@ -217,7 +217,7 @@
   color: #cc926a;
 }
 
-.nw_labor_mattress__card-cutout {
+.nw-mattresses-timeline__card-cutout {
   position: absolute;
   right: -1px;
   top: -46px;
@@ -228,7 +228,7 @@
 }
 
 
-.nw_labor_mattress__cutout-img {
+.nw-mattresses-timeline__cutout-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -236,14 +236,14 @@
   display: block;
 }
 
-.nw_labor_mattress__comparison {
+.nw-mattresses-timeline__comparison {
   display: flex;
   flex-direction: column;
   gap: 12px;
   width: 100%;
 }
 
-.nw_labor_mattress__comparison-title {
+.nw-mattresses-timeline__comparison-title {
   margin: 0;
   font-family: var(--font-body-family);
   font-size: 18px;
@@ -252,14 +252,14 @@
   color: #613916;
 }
 
-.nw_labor_mattress__comparison-grid {
+.nw-mattresses-timeline__comparison-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   width: 100%;
 }
 
-.nw_labor_mattress__compare-card {
+.nw-mattresses-timeline__compare-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -270,12 +270,12 @@
   box-sizing: border-box;
 }
 
-.nw_labor_mattress__compare-card--foam {
+.nw-mattresses-timeline__compare-card--foam {
   background: #ffffff;
   border: 1px solid #e5e5e5;
 }
 
-.nw_labor_mattress__foam-brand {
+.nw-mattresses-timeline__foam-brand {
   margin: 0;
   font-family: var(--font-body-family);
   font-size: 14px;
@@ -284,13 +284,13 @@
   color: #666666;
 }
 
-.nw_labor_mattress__compare-price-group {
+.nw-mattresses-timeline__compare-price-group {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.nw_labor_mattress__foam-price {
+.nw-mattresses-timeline__foam-price {
   margin: 0;
   font-family: var(--font-body-family);
   font-size: 18px;
@@ -299,7 +299,7 @@
   color: #1a1a1a;
 }
 
-.nw_labor_mattress__foam-note {
+.nw-mattresses-timeline__foam-note {
   margin: 0;
   font-family: var(--font-body-family);
   font-size: 14px;
@@ -308,17 +308,17 @@
   color: rgba(97, 57, 22, 0.5);
 }
 
-.nw_labor_mattress__compare-card--snooze {
+.nw-mattresses-timeline__compare-card--snooze {
   background: #878735;
 }
 
-.nw_labor_mattress__snooze-logo-wrap {
+.nw-mattresses-timeline__snooze-logo-wrap {
   min-height: 24px;
   display: flex;
   align-items: center;
 }
 
-.nw_labor_mattress__snooze-logo-img {
+.nw-mattresses-timeline__snooze-logo-img {
   height: 24px;
   width: auto;
   max-width: 100%;
@@ -326,7 +326,7 @@
   filter: brightness(0) invert(1);
 }
 
-.nw_labor_mattress__snooze-logo-text {
+.nw-mattresses-timeline__snooze-logo-text {
   font-family: var(--font-body-family);
   font-size: 12px;
   font-weight: 700;
@@ -335,7 +335,7 @@
   color: #ffffff;
 }
 
-.nw_labor_mattress__snooze-price {
+.nw-mattresses-timeline__snooze-price {
   margin: 0;
   font-family: var(--font-body-family);
   font-size: 18px;
@@ -344,7 +344,7 @@
   color: #ffffff;
 }
 
-.nw_labor_mattress__snooze-note {
+.nw-mattresses-timeline__snooze-note {
   margin: 0;
   font-family: var(--font-body-family);
   font-size: 14px;
@@ -352,103 +352,103 @@
   line-height: 1.4;
   color: #ffffff;
 }
-.nw_labor_mattress__header .rte{
+.nw-mattresses-timeline__header .rte{
     margin-top: 12px;
     line-height: 110%;
 }
 
 @media screen and (max-width: 1199px) {
-    .nw_labor_mattress__content-col{
+    .nw-mattresses-timeline__content-col{
         padding: 50px 50px 50px 24px;
     }
 }
 @media screen and (max-width: 1023px) {
-    .nw_labor_mattress__header{
+    .nw-mattresses-timeline__header{
         max-width: 400px;
     }
 }
 @media screen and (max-width: 989px) {
-  .nw_labor_mattress__grid {
+  .nw-mattresses-timeline__grid {
     flex-direction: column;
   }
 
-  .nw_labor_mattress__media-col {
+  .nw-mattresses-timeline__media-col {
     position: relative;
     top: 0;
     min-height: auto;
     order: 1;
   }
 
-  .nw_labor_mattress__content-col {
+  .nw-mattresses-timeline__content-col {
     order: 2;
     padding: 0;
   }
 
-  .nw_labor_mattress__main-img {
+  .nw-mattresses-timeline__main-img {
     width: 100%;
     margin-left: 0;
   }
 }
 
 @media screen and (max-width: 749px) {
-    .nw_labor_mattress .nw.page-width {
+    .nw-mattresses-timeline .page-width {
         padding-left: 16px;
         padding-right: 16px;
     }
     
-    .nw_labor_mattress__grid {
+    .nw-mattresses-timeline__grid {
         display: flex;
         flex-direction: column;
         gap: 24px;
     }
     
-    .nw_labor_mattress__header{
+    .nw-mattresses-timeline__header{
         max-width: 400px;
     }
     
-    .nw_labor_mattress__main-img--desktop {
+    .nw-mattresses-timeline__main-img--desktop {
         display: none;
     }
     
-    .nw_labor_mattress__main-img--mobile {
+    .nw-mattresses-timeline__main-img--mobile {
         display: block;
         width: 100%;
         margin-left: 0;
     }
     
-    .nw_labor_mattress__main-img--desktop {
+    .nw-mattresses-timeline__main-img--desktop {
         display: none;
     }
     
-    .nw_labor_mattress__content-col {
+    .nw-mattresses-timeline__content-col {
         gap: 24px;
         padding: 0 16px;
     }
     
-    .nw_labor_mattress__card-content {
+    .nw-mattresses-timeline__card-content {
         max-width: calc(100% - 70px);
     }
     
     
-    .nw_labor_mattress__compare-card {
+    .nw-mattresses-timeline__compare-card {
         min-height: 100px;
         padding: 12px 16px;
     }
     
-    .nw_labor_mattress__foam-price,
-    .nw_labor_mattress__snooze-price {
+    .nw-mattresses-timeline__foam-price,
+    .nw-mattresses-timeline__snooze-price {
         font-size: 16px;
     }
     
-    .nw_labor_mattress__foam-brand,
-    .nw_labor_mattress__foam-note,
-    .nw_labor_mattress__snooze-note {
+    .nw-mattresses-timeline__foam-brand,
+    .nw-mattresses-timeline__foam-note,
+    .nw-mattresses-timeline__snooze-note {
         font-size: 12px;
     }
 }
 
 @media screen and (max-width: 575px) {
-    .nw_labor_mattress__heading{
+    .nw-mattresses-timeline__heading{
         max-width: 240px;
     }
 }
