@@ -1,0 +1,653 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-layer-product.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-layer-product.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  #NwLayerProduct-{{ section.id }} {
+    --nw-lp-hotspot-active: {{ section.settings.hotspot_active_color | default: '#613916' }};
+    --nw-lp-hotspot-inactive: {{ section.settings.hotspot_inactive_color | default: '#BB967C' }};
+    --nw-lp-hotspot-text: {{ section.settings.hotspot_text_color | default: '#FFFFFF' }};
+    --nw-lp-card-bg: {{ section.settings.card_bg_color | default: '#FFFFFF' }};
+    --nw-lp-card-border: {{ section.settings.card_border_color | default: 'rgba(97, 57, 22, 0.15)' }};
+    --nw-lp-card-title: {{ section.settings.card_title_color | default: '#613916' }};
+    --nw-lp-card-subtitle: {{ section.settings.card_subtitle_color | default: '#CC926A' }};
+    --nw-lp-card-desc: {{ section.settings.card_desc_color | default: '#613916' }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color | default: '#613916' }};
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% else %}
+      background-color: {{ section.settings.bg_color | default: '#FFFAF3' }};
+    {% endif %}
+  }
+
+  {%- for block in section.blocks -%}
+    #NwLayerProduct-{{ section.id }}
+    [data-hotspot-index="{{ forloop.index0 }}"] {
+      left: {{ block.settings.pos_x_desktop | default: 50 }}%;
+      top: {{ block.settings.pos_y_desktop | default: 50 }}%;
+    }
+  {%- endfor -%}
+
+  @media screen and (max-width: 749px) {
+    #NwLayerProduct-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+    {%- for block in section.blocks -%}
+      #NwLayerProduct-{{ section.id }}
+      [data-hotspot-index="{{ forloop.index0 }}"] {
+        left: {{ block.settings.pos_x_mobile | default: block.settings.pos_x_desktop | default: 50 }}%;
+        top: {{ block.settings.pos_y_mobile | default: block.settings.pos_y_desktop | default: 50 }}%;
+      }
+    {%- endfor -%}
+  }
+</style>
+
+<div
+  id="NwLayerProduct-{{ section.id }}"
+  class="nw-layer-product section-{{ section.id }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | default: 5 }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-dots="{{ section.settings.show_dots }}"
+>
+  <div class="page-width">
+    <div class="nw-layer-product__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="nw-layer-product__header">
+          {%- if section.settings.heading != blank -%}
+            {% render 'nw-section-heading', text: section.settings.heading %}
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            {% render 'nw-section-description', text: section.settings.subheading %}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="nw-layer-product__main">
+        <div class="nw-layer-product__media-col">
+          <div class="nw-layer-product__media-wrap">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign main_img = block.settings.image
+                if main_img == blank and block.settings.product != blank and block.settings.product.featured_image != blank
+                  assign main_img = block.settings.product.featured_image
+                endif
+                assign main_img_mobile = block.settings.image_mobile
+              -%}
+              <div
+                class="nw-layer-product__media-slide{% if forloop.first %} is-active{% endif %}"
+                data-media-index="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if main_img != blank -%}
+                  <picture>
+                    {%- if main_img_mobile != blank -%}
+                      <source media="(max-width: 749px)" srcset="{{ main_img_mobile | image_url: width: 750 }}">
+                    {%- endif -%}
+                    <img
+                      src="{{ main_img | image_url: width: 1100 }}"
+                      alt="{{ block.settings.title | default: forloop.index | escape }}"
+                      width="536"
+                      height="502"
+                      loading="lazy"
+                      class="nw-layer-product__img"
+                    >
+                  </picture>
+                {%- else -%}
+                  <div class="nw-layer-product__placeholder"></div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+
+            {%- for block in section.blocks -%}
+              <button
+                type="button"
+                class="nw-layer-product__hotspot{% if forloop.first %} is-active{% endif %}"
+                data-hotspot-index="{{ forloop.index0 }}"
+                aria-label="{{ block.settings.title | default: forloop.index | escape }}"
+              >
+                {{ block.settings.pin_label | default: forloop.index }}
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="nw-layer-product__content-col">
+            <div class="nw-layer-product__swiper-wrap">
+              <div class="swiper nw-layer-product__swiper" id="NwLayerProductSwiper-{{ section.id }}">
+                <div class="swiper-wrapper">
+                  {%- for block in section.blocks -%}
+                    {%- liquid
+                      assign card_title = block.settings.title
+                      assign card_desc = block.settings.description
+                      assign card_icon = block.settings.icon
+                      assign card_product = block.settings.product
+                      if card_product != blank
+                        if card_title == blank
+                          assign card_title = card_product.title
+                        endif
+                        if card_icon == blank and card_product.featured_image != blank
+                          assign card_icon = card_product.featured_image
+                        endif
+                      endif
+
+                      assign price_prefix = ''
+                      if block.settings.price_prefix != blank
+                        assign price_prefix = block.settings.price_prefix
+                      elsif section.settings.price_prefix != blank
+                        assign price_prefix = section.settings.price_prefix
+                      endif
+
+                      assign price_val = ''
+                      if card_product != blank and card_product.price != blank
+                        assign price_val = card_product.price | money_without_trailing_zeros
+                      elsif block.settings.custom_price != blank
+                        assign price_val = block.settings.custom_price
+                      endif
+                    -%}
+                    <div
+                      class="swiper-slide"
+                      {{ block.shopify_attributes }}
+                      data-slide-index="{{ forloop.index0 }}"
+                    >
+                      <article class="nw-layer-product__card">
+                        <div class="nw-layer-product__card-header">
+                          {%- if card_title != blank -%}
+                            <h3 class="nw-layer-product__card-title">{{ card_title }}</h3>
+                          {%- endif -%}
+                          {%- if card_icon != blank -%}
+                            <img
+                              src="{{ card_icon | image_url: width: 120 }}"
+                              alt="{{ card_title | escape }}"
+                              width="50"
+                              height="50"
+                              loading="lazy"
+                              class="nw-layer-product__card-icon"
+                            >
+                          {%- endif -%}
+                        </div>
+                        <div class="nw-layer-product__card-body">
+                          {%- if price_val != blank -%}
+                            <div class="nw-layer-product__card-subtitle">
+                              {%- if price_prefix != blank -%}
+                                <span class="nw-layer-product__card-price-prefix">{{ price_prefix }}</span>
+                              {%- endif -%}
+                              <span class="nw-layer-product__card-price-value">{{ price_val }}</span>
+                            </div>
+                          {%- elsif price_prefix != blank -%}
+                            <div class="nw-layer-product__card-subtitle">
+                              <span class="nw-layer-product__card-price-prefix">{{ price_prefix }}</span>
+                            </div>
+                          {%- endif -%}
+                          {%- if card_desc != blank -%}
+                            <div class="nw-layer-product__card-desc">{{ card_desc }}</div>
+                          {%- endif -%}
+                        </div>
+                      </article>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+
+              {%- if section.settings.show_arrows -%}
+                <button
+                  type="button"
+                  class="nw-swiper-btn nw-swiper-btn--prev"
+                  aria-label="Previous slide"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 18L9 12L15 6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  class="nw-swiper-btn nw-swiper-btn--next"
+                  aria-label="Next slide"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 18L15 12L9 6"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+              {%- endif -%}
+
+              {%- if section.settings.show_dots and section.blocks.size > 1 -%}
+                <div class="nw-swiper-pagination" id="NwLayerProductPagination-{{ section.id }}"></div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Layer Product",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "HEADER CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Complete Sleep System, Layer by Layer"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Five pieces, matched and sized to work as one. Tap each to see its role.</p>"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "price_prefix",
+      "label": "Price Prefix"
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Pagination Dots",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination Dot Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_dots == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Navigation Arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay Speed (seconds)",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFAF3",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "CARD & HOTSPOT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_active_color",
+      "label": "Hotspot Active Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_inactive_color",
+      "label": "Hotspot Inactive Color",
+      "default": "#BB967C"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_text_color",
+      "label": "Hotspot Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "rgba(97, 57, 22, 0.15)"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card Title Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "card_subtitle_color",
+      "label": "Card Subtitle / Price Color",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card Description Color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "layer",
+      "name": "Layer Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Main Layer Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Main Layer Image (Mobile - Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Card Thumbnail / Icon"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product (Dynamic Price & Title)"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Layer Name / Title",
+          "default": "SnoozeLift 5.0 Adjustable Base"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "price_prefix",
+          "label": "Price Prefix (Optional Override)"
+        },
+        {
+          "type": "text",
+          "id": "custom_price",
+          "label": "Custom Price (If No Product Selected)",
+          "default": "$1,299"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "Firm support that takes pressure off aging joints and resists flattening, unlike foam that sags."
+        },
+        {
+          "type": "text",
+          "id": "pin_label",
+          "label": "Hotspot Pin Number / Label",
+          "info": "Leave blank to use block order number automatically"
+        },
+        {
+          "type": "header",
+          "content": "HOTSPOT POSITION (DESKTOP)"
+        },
+        {
+          "type": "range",
+          "id": "pos_x_desktop",
+          "label": "Horizontal Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y_desktop",
+          "label": "Vertical Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "HOTSPOT POSITION (MOBILE)"
+        },
+        {
+          "type": "range",
+          "id": "pos_x_mobile",
+          "label": "Horizontal Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y_mobile",
+          "label": "Vertical Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Layer Product",
+      "blocks": [
+        {
+          "type": "layer",
+          "settings": {
+            "title": "Organic Latex Pillows",
+            "custom_price": "$199",
+            "description": "Gently supports the head and neck while keeping you cool all night.",
+            "pos_x_desktop": 24,
+            "pos_y_desktop": 22,
+            "pos_x_mobile": 16,
+            "pos_y_mobile": 22
+          }
+        },
+        {
+          "type": "layer",
+          "settings": {
+            "title": "Organic Cotton Protector",
+            "custom_price": "$149",
+            "description": "Breathable, moisture-wicking barrier that preserves mattress freshness.",
+            "pos_x_desktop": 40,
+            "pos_y_desktop": 38,
+            "pos_x_mobile": 41,
+            "pos_y_mobile": 38
+          }
+        },
+        {
+          "type": "layer",
+          "settings": {
+            "title": "Natural Latex Comfort Topper",
+            "custom_price": "$399",
+            "description": "Pressure-relieving organic latex contours to your body for cloud-like comfort.",
+            "pos_x_desktop": 52,
+            "pos_y_desktop": 48,
+            "pos_x_mobile": 55,
+            "pos_y_mobile": 48
+          }
+        },
+        {
+          "type": "layer",
+          "settings": {
+            "title": "Pocket Spring Hybrid Mattress",
+            "custom_price": "$1,499",
+            "description": "Targeted lumbar support and motion isolation for undisturbed sleep.",
+            "pos_x_desktop": 34,
+            "pos_y_desktop": 68,
+            "pos_x_mobile": 30,
+            "pos_y_mobile": 68
+          }
+        },
+        {
+          "type": "layer",
+          "settings": {
+            "title": "SnoozeLift 5.0 Adjustable Base",
+            "custom_price": "$1,299",
+            "description": "Firm support that takes pressure off aging joints and resists flattening, unlike foam that sags.",
+            "pos_x_desktop": 58,
+            "pos_y_desktop": 86,
+            "pos_x_mobile": 61,
+            "pos_y_mobile": 86
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

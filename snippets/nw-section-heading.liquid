@@ -20,6 +20,10 @@ Uses h1 when section_index is 1, otherwise h2.
     endif
   -%}
   <div class="nw-section-heading{% if class != blank %} {{ class }}{% endif %}">
-    <{{ heading_tag }} class="{{ heading_tag }}">{{ text }}</{{ heading_tag }}>
+    {%- if text contains '<p>' or text contains '<p ' or text contains '<h1' or text contains '<h2' or text contains '<h3' -%}
+      {{ text }}
+    {%- else -%}
+      <{{ heading_tag }} class="{{ heading_tag }}">{{ text }}</{{ heading_tag }}>
+    {%- endif -%}
   </div>
 {%- endif -%}

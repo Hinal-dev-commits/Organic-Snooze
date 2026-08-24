@@ -1,0 +1,364 @@
+{{ 'nw-marquee-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-marquee-v2.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  #NwMarquee-{{ section.id }} {
+    --nw-mq-bg: {{ section.settings.bg_color | default: '#F4EFE8' }};
+    --nw-mq-text: {{ section.settings.text_color | default: '#432818' }};
+    --nw-mq-icon-color: {{ section.settings.icon_color | default: '#432818' }};
+    --nw-mq-speed: {{ section.settings.speed | default: 25 }}s;
+    --nw-mq-gap-dt: {{ section.settings.gap_desktop | default: 28 }}px;
+    --nw-mq-gap-mb: {{ section.settings.gap_mobile | default: 12 }}px;
+    --nw-mq-icon-size-dt: {{ section.settings.icon_size_desktop | default: 28 }}px;
+    --nw-mq-icon-size-mb: {{ section.settings.icon_size_mobile | default: 20 }}px;
+    --nw-mq-icon-gap-dt: {{ section.settings.gap_icon_text | default: 4 }}px;
+    --nw-mq-icon-gap-mb: {{ section.settings.gap_icon_text | default: 4 }}px;
+    --nw-mq-pad-dt: {{ section.settings.padding_desktop | default: 16 }}px;
+    --nw-mq-pad-mb: {{ section.settings.padding_mobile | default: 12 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% else %}
+      background-color: {{ section.settings.bg_color | default: '#F4EFE8' }};
+    {% endif %}
+  }
+</style>
+
+<div
+  id="NwMarquee-{{ section.id }}"
+  class="nw-marquee-v2 nw-marquee-v2--direction-{{ section.settings.direction }}{% if section.settings.pause_on_hover %} nw-marquee-v2--pause-hover{% endif %}{% unless section.settings.enable_desktop_marquee %} nw-marquee-v2--static-desktop{% endunless %}"
+>
+  <div class="nw-marquee-v2__wrapper">
+    <div class="nw-marquee-v2__track">
+      {%- for i in (1..4) -%}
+        <div
+          class="nw-marquee-v2__group{% if forloop.index > 1 %} nw-marquee-v2__group--clone{% endif %}"
+          aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+        >
+          {%- for block in section.blocks -%}
+            <div class="nw-marquee-v2__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="nw-marquee-v2__link">
+              {%- endif -%}
+
+              {%- if block.settings.icon != 'none' -%}
+                <span class="nw-marquee-v2__icon">
+                  {% render 'nw-icon',
+                    icon: block.settings.icon,
+                    custom_icon: block.settings.custom_icon,
+                    img_class: 'nw-marquee-v2__icon-img'
+                  %}
+                </span>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank -%}
+                <span class="nw-marquee-v2__text">{{ block.settings.text }}</span>
+              {%- endif -%}
+
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Marquee V2",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "DISPLAY & BEHAVIOR"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_desktop_marquee",
+      "label": "Enable Marquee Animation on Desktop",
+      "info": "When disabled, items appear as a centered row on desktop and as a marquee on mobile.",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Marquee Direction",
+      "options": [
+        {
+          "value": "right_to_left",
+          "label": "Right to Left"
+        },
+        {
+          "value": "left_to_right",
+          "label": "Left to Right"
+        }
+      ],
+      "default": "right_to_left"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Marquee Speed (seconds)",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "default": 25
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on Hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "SPACING & SIZING"
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Item Gap (Desktop)",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Item Gap (Mobile)",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "label": "Icon Size (Desktop)",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Icon Size (Mobile)",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_icon_text",
+      "label": "Gap Between Icon & Text",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Padding Top/Bottom (Desktop)",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Padding Top/Bottom (Mobile)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND & COLORS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F4EFE8",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#432818"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#432818"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Marquee Item",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "ORGANIC LATEX"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "usamap",
+              "label": "USA Map"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "verified",
+              "label": "Verified"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Image"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Marquee V2",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "text": "ORGANIC LATEX",
+            "icon": "leaf"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "100-NIGHT TRIAL",
+            "icon": "moon"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "MADE IN USA",
+            "icon": "usamap"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "10-YEAR WARRANTY",
+            "icon": "warranty"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "text": "CERTIFIED COMFORT",
+            "icon": "verified"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

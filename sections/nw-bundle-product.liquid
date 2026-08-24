@@ -1,0 +1,578 @@
+{{ 'nw-bundle-product.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwBundleProduct-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% elsif section.settings.bg_type == 'none' %}
+      background: transparent;
+    {% else %}
+      background-color: {{ section.settings.bg_color | default: '#FFFAF3' }};
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwBundleProduct-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<div id="NwBundleProduct-{{ section.id }}" class="nw-bundle-product section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-bundle-product__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-bundle-product__header">
+        {%- if section.settings.badge_text != blank -%}
+          <div class="nw-bundle-product__tag">{{ section.settings.badge_text }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
+        {%- endif -%}
+
+        {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
+        {%- if feature_blocks.size > 0 -%}
+          <div class="nw-bundle-product__features">
+            {%- for block in feature_blocks -%}
+              <div class="nw-bundle-product__feature-item" {{ block.shopify_attributes }}>
+                {%- if block.settings.icon != 'none' -%}
+                  <span class="nw-bundle-product__feature-icon">
+                    {% render 'nw-icon',
+                      icon: block.settings.icon,
+                      custom_icon: block.settings.custom_icon,
+                      img_class: 'nw-bundle-product__feature-img'
+                    %}
+                  </span>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <span class="nw-bundle-product__feature-text">{{ block.settings.text }}</span>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="nw-bundle-product__main{% if section.settings.image_position == 'right' %} nw-bundle-product__main--image-right{% endif %}">
+        <div class="nw-bundle-product__image-col">
+          {%- liquid
+            assign prod_img = section.settings.image_desktop
+            if prod_img == blank and section.settings.product != blank and section.settings.product.featured_image != blank
+              assign prod_img = section.settings.product.featured_image
+            endif
+            assign prod_img_mobile = section.settings.image_mobile
+          -%}
+          {%- if prod_img != blank -%}
+            <picture>
+              {%- if prod_img_mobile != blank -%}
+                <source media="(max-width: 749px)" srcset="{{ prod_img_mobile | image_url: width: 750 }}">
+              {%- endif -%}
+              <img
+                src="{{ prod_img | image_url: width: 1100 }}"
+                alt="{{ section.settings.heading | default: 'Product' | escape }}"
+                width="520"
+                height="436"
+                loading="lazy"
+                class="nw-bundle-product__img"
+              >
+            </picture>
+          {%- else -%}
+            <div class="nw-bundle-product__placeholder"></div>
+          {%- endif -%}
+        </div>
+
+        <div class="nw-bundle-product__content-col">
+          {%- assign accordion_blocks = section.blocks | where: 'type', 'accordion' -%}
+          {%- if accordion_blocks.size > 0 -%}
+            <div class="nw-bundle-product__accordion-list">
+              {%- for block in accordion_blocks -%}
+                <details
+                  class="nw-bundle-product__accordion-item"
+                  {% if block.settings.open_by_default %}open{% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  <summary class="nw-bundle-product__accordion-summary">
+                    <span class="nw-bundle-product__accordion-title">{{ block.settings.title }}</span>
+                    <span class="nw-bundle-product__accordion-toggle" aria-hidden="true">
+                      <span class="nw-bundle-product__toggle-icon">
+                        <span class="nw-bundle-product__toggle-line nw-bundle-product__toggle-line--h"></span>
+                        <span class="nw-bundle-product__toggle-line nw-bundle-product__toggle-line--v"></span>
+                      </span>
+                    </span>
+                  </summary>
+                  <div class="nw-bundle-product__accordion-content">
+                    <div class="nw-bundle-product__accordion-body">
+                      {{ block.settings.content }}
+                    </div>
+                  </div>
+                </details>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
+          {% render 'nw-cta-badges',
+            settings: section.settings,
+            blocks: trust_badge_blocks,
+            class: 'nw-bundle-product__cta-wrap'
+          %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Bundle Product",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "HEADER CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "badge_text",
+      "label": "Badge / Savings Tag",
+      "default": "INCLUDED IN BUNDLE"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "SnoozeLift 5.0 BT Adjustable Base"
+    },
+    {
+      "type": "header",
+      "content": "PRODUCT & MEDIA LAYOUT"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product (Optional Dynamic Image Source)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position (Desktop)",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Product Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Product Image (Mobile - Optional)"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON & CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "CHOOSE BETTER SLEEP"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFAF3",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Highlight",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Feature Text",
+          "default": "Independent head & foot adjustment"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "bed",
+              "label": "Head & Foot Adjustment / Bed"
+            },
+            {
+              "value": "motor",
+              "label": "Quiet Motor / Wave"
+            },
+            {
+              "value": "weight",
+              "label": "Weight Capacity / Dumbbell"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty / Shield"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Image"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "default": "bed"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Accordion Title",
+          "default": "Health Benefits"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Accordion Content",
+          "default": "<p>Elevate your head to reduce snoring, improve circulation, and ease acid reflux. Zero-gravity positioning relieves lower back pressure instantly.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by Default",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "options": [
+            {
+              "value": "money",
+              "label": "Moneyback / Trial"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "truck",
+              "label": "Truck / Shipping"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "verified",
+              "label": "Verified"
+            },
+            {
+              "value": "usamap",
+              "label": "USA Map"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "custom",
+              "label": "Custom Image"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "default": "money"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Bundle Product",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Independent head & foot adjustment",
+            "icon": "bed"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Low-EMF quiet motors",
+            "icon": "motor"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "850 lb weight capacity",
+            "icon": "weight"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "20-year warranty",
+            "icon": "warranty"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Health Benefits",
+            "content": "<p>Elevate your head to reduce snoring, improve circulation, and ease acid reflux. Zero-gravity positioning relieves lower back pressure instantly.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Specs",
+            "content": "<p>Quiet dual-motor system, wireless remote with memory presets, zero-clearance design fits inside any standard bed frame. 850 lb total capacity.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Why You'll love it",
+            "content": "<p>Custom comfort at the touch of a button. Seamless Bluetooth connectivity and ultra-quiet motor technology ensure undisturbed rest for both partners.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Setup and Delivery",
+            "content": "<p>Simple tool-free assembly in under 15 minutes. White glove in-home setup and old mattress removal available at checkout.</p>"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "100-Night Risk-Free Trial",
+            "icon": "money"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "text": "30-Year Warranty",
+            "icon": "warranty"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
