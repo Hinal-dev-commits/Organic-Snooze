@@ -1,0 +1,477 @@
+{{ 'nw-mattress.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .nw_labor_mattress.section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+      background-color: {{ section.settings.bg_color }};
+    {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
+      background: {{ section.settings.bg_gradient }};
+    {% elsif section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+  }
+
+  @media screen and (max-width: 749px) {
+    .nw_labor_mattress.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+<div class="nw_labor_mattress section-{{ section.id }}">
+    <div class="nw_labor_mattress__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw_labor_mattress__grid">
+        <div class="nw_labor_mattress__media-col">
+          <div class="nw_labor_mattress__main-media">
+            {%- if section.settings.main_image != blank or section.settings.main_image_mobile != blank -%}
+              {%- if section.settings.main_image != blank and section.settings.main_image_mobile != blank -%}
+                {{
+                  section.settings.main_image_mobile
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'nw_labor_mattress__main-img nw_labor_mattress__main-img--mobile',
+                    widths: '375, 550, 750, 800',
+                    sizes: '100vw',
+                    alt: section.settings.main_image_mobile.alt | default: section.settings.heading
+                }}
+                {{
+                  section.settings.main_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'nw_labor_mattress__main-img nw_labor_mattress__main-img--desktop',
+                    widths: '550, 750, 900, 1100, 1200',
+                    sizes: '(min-width: 990px) 802px, 50vw',
+                    alt: section.settings.main_image.alt | default: section.settings.heading
+                }}
+              {%- elsif section.settings.main_image != blank -%}
+                {{
+                  section.settings.main_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'nw_labor_mattress__main-img',
+                    widths: '550, 750, 900, 1100, 1200',
+                    sizes: '(min-width: 990px) 802px, 100vw',
+                    alt: section.settings.main_image.alt | default: section.settings.heading
+                }}
+              {%- else -%}
+                {{
+                  section.settings.main_image_mobile
+                  | image_url: width: 800
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'nw_labor_mattress__main-img',
+                    widths: '375, 550, 750, 800',
+                    sizes: '100vw',
+                    alt: section.settings.main_image_mobile.alt | default: section.settings.heading
+                }}
+              {%- endif -%}
+            {%- else -%}
+              <div class="nw_labor_mattress__main-placeholder" aria-hidden="true">
+                {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="nw_labor_mattress__content-col">
+          {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+            <div class="nw_labor_mattress__header">
+              {%- if section.settings.heading != blank -%}
+                {% render 'nw-section-heading', text: section.settings.heading, class: 'nw_labor_mattress__heading' %}
+              {%- endif -%}
+              {%- if section.settings.subheading != blank -%}
+                {% render 'nw-section-description', text: section.settings.subheading, class: 'nw_labor_mattress__subheading' %}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.blocks.size > 0 -%}
+            <div class="nw_labor_mattress__timeline">
+              {%- for block in section.blocks -%}
+                <div class="nw_labor_mattress__layer-item" {{ block.shopify_attributes }}>
+                  <div class="nw_labor_mattress__stepper" aria-hidden="true">
+                    {%- unless forloop.first -%}
+                      <div class="nw_labor_mattress__line-top"></div>
+                    {%- endunless -%}
+                    <div class="nw_labor_mattress__dot"></div>
+                    {%- unless forloop.last -%}
+                      <div class="nw_labor_mattress__line-bottom"></div>
+                    {%- endunless -%}
+                  </div>
+
+                  <div class="nw_labor_mattress__card-wrap">
+                    <div class="nw_labor_mattress__card">
+                      {%- if block.settings.tag != blank -%}
+                        <span
+                          class="nw_labor_mattress__tag"
+                          style="{% if block.settings.tag_bg != blank %}background-color: {{ block.settings.tag_bg }};{% endif %}"
+                        >
+                          {{ block.settings.tag }}
+                        </span>
+                      {%- endif -%}
+
+                      <div class="nw_labor_mattress__card-content">
+                        {%- if block.settings.title != blank -%}
+                          <h3 class="nw_labor_mattress__card-title">{{ block.settings.title }}</h3>
+                        {%- endif -%}
+                        {%- if block.settings.subtitle != blank -%}
+                          <p class="nw_labor_mattress__card-desc">{{ block.settings.subtitle }}</p>
+                        {%- endif -%}
+                      </div>
+
+                      {%- if block.settings.image != blank -%}
+                        <div class="nw_labor_mattress__card-cutout{% if forloop.first %} nw_labor_mattress__card-cutout--first{% endif %}">
+                          {{
+                            block.settings.image
+                            | image_url: width: 444
+                            | image_tag:
+                              loading: 'lazy',
+                              class: 'nw_labor_mattress__cutout-img',
+                              widths: '160, 222, 320, 444',
+                              sizes: '(max-width: 749px) 222px, 160px',
+                              alt: block.settings.title | escape
+                          }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_comparison -%}
+            <div class="nw_labor_mattress__comparison">
+              {%- if section.settings.comparison_title != blank -%}
+                <h3 class="nw_labor_mattress__comparison-title">{{ section.settings.comparison_title }}</h3>
+              {%- endif -%}
+
+              <div class="nw_labor_mattress__comparison-grid">
+                <div class="nw_labor_mattress__compare-card nw_labor_mattress__compare-card--foam">
+                  {%- if section.settings.foam_brand != blank -%}
+                    <p class="nw_labor_mattress__foam-brand">{{ section.settings.foam_brand }}</p>
+                  {%- endif -%}
+                  <div class="nw_labor_mattress__compare-price-group">
+                    {%- if section.settings.foam_price != blank -%}
+                      <p class="nw_labor_mattress__foam-price">{{ section.settings.foam_price }}</p>
+                    {%- endif -%}
+                    {%- if section.settings.foam_note != blank -%}
+                      <p class="nw_labor_mattress__foam-note">{{ section.settings.foam_note }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div
+                  class="nw_labor_mattress__compare-card nw_labor_mattress__compare-card--snooze"
+                  style="{% if section.settings.snooze_bg != blank %}background-color: {{ section.settings.snooze_bg }};{% endif %}"
+                >
+                  <div class="nw_labor_mattress__snooze-logo-wrap">
+                    {%- if section.settings.snooze_logo != blank -%}
+                      {{
+                        section.settings.snooze_logo
+                        | image_url: width: 200
+                        | image_tag:
+                          loading: 'lazy',
+                          class: 'nw_labor_mattress__snooze-logo-img',
+                          widths: '120, 160, 200',
+                          sizes: '120px',
+                          alt: section.settings.snooze_brand | default: 'Organic Snooze' | escape
+                      }}
+                    {%- else -%}
+                      <span class="nw_labor_mattress__snooze-logo-text">{{ section.settings.snooze_brand | default: 'ORGANIC SNOOZE' }}</span>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="nw_labor_mattress__compare-price-group">
+                    {%- if section.settings.snooze_price != blank -%}
+                      <p class="nw_labor_mattress__snooze-price">{{ section.settings.snooze_price }}</p>
+                    {%- endif -%}
+                    {%- if section.settings.snooze_note != blank -%}
+                      <p class="nw_labor_mattress__snooze-note">{{ section.settings.snooze_note }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Mattress Timeline",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Every Layer Has a Purpose"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Four layers, zero compromises. See exactly what you're sleeping on."
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Mattress render (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image_mobile",
+      "label": "Mattress render (mobile)",
+      "info": "Optional. Uses desktop image when empty."
+    },
+    {
+      "type": "header",
+      "content": "Value comparison"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comparison",
+      "label": "Show comparison module",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "comparison_title",
+      "label": "Comparison title",
+      "default": "Long-Term Value Comparison"
+    },
+    {
+      "type": "text",
+      "id": "foam_brand",
+      "label": "Competitor brand name",
+      "default": "Popular Foam Brands"
+    },
+    {
+      "type": "text",
+      "id": "foam_price",
+      "label": "Competitor price per night",
+      "default": "$1.02 / night"
+    },
+    {
+      "type": "text",
+      "id": "foam_note",
+      "label": "Competitor note",
+      "default": "Replaced every 10 years"
+    },
+    {
+      "type": "image_picker",
+      "id": "snooze_logo",
+      "label": "Snooze logo (optional image)"
+    },
+    {
+      "type": "text",
+      "id": "snooze_brand",
+      "label": "Snooze brand name",
+      "default": "ORGANIC SNOOZE"
+    },
+    {
+      "type": "text",
+      "id": "snooze_price",
+      "label": "Snooze price per night",
+      "default": "$0.16 / night"
+    },
+    {
+      "type": "text",
+      "id": "snooze_note",
+      "label": "Snooze note",
+      "default": "Built to last 30 years"
+    },
+    {
+      "type": "color",
+      "id": "snooze_bg",
+      "label": "Snooze card background",
+      "default": "#878735",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "layer",
+      "name": "Mattress layer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Layer tag",
+          "default": "LAYER 1"
+        },
+        {
+          "type": "color",
+          "id": "tag_bg",
+          "label": "Tag background color",
+          "default": "#613916"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Layer title",
+          "default": "Organic Cover"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Layer description",
+          "default": "Breathable GOTS cotton"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Layer image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Mattress Timeline",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "layer",
+          "settings": {
+            "tag": "LAYER 1",
+            "title": "Organic Cover",
+            "subtitle": "Breathable GOTS cotton"
+          }
+        },
+        {
+          "type": "layer",
+          "settings": {
+            "tag": "LAYER 2",
+            "title": "CloudWool",
+            "subtitle": "Temperature Regulating Fire Barrier"
+          }
+        },
+        {
+          "type": "layer",
+          "settings": {
+            "tag": "LAYER 3",
+            "title": "Perforated Latex",
+            "subtitle": "Perforated breathable design for max airflow"
+          }
+        },
+        {
+          "type": "layer",
+          "settings": {
+            "tag": "LAYER 4",
+            "title": "Steel Coils",
+            "subtitle": "Provide stable support and limits motion transfer"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

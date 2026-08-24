@@ -13,6 +13,24 @@
         --white: #ffffff;
         --octonary-color: #e0e0e0;
         --nonary-color: #878735;
+        --scrollbar-width: 0px;
+    }
+
+    #scrollbar-measure {
+        position: absolute;
+        visibility: hidden;
+        overflow: scroll;
+        width: 100px;
+        height: 100px;
+        top: -9999px;
+        left: -9999px;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    #scrollbar-measure .scrollbar-measure-inner {
+        width: 200px;
+        height: 200px;
     }
 
     nw-hero,
@@ -1240,7 +1258,7 @@ h2, .h2 {
             letter-spacing: -1%;
         }
         .rte{
-            font-size: 12px;
+            font-size: 16px;
         }
 
         .nw-cta-badges__list {

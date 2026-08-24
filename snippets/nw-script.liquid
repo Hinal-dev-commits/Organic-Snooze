@@ -3,76 +3,47 @@
 document.addEventListener('DOMContentLoaded', () => {
     /////////////// Scrollbar Width Measurement //////////////
     function calculateScrollbarWidth() {
-        // Use the measurement div from theme.liquid or create one dynamically
+        const measureStyles =
+            'position:absolute;visibility:hidden;overflow:scroll;width:100px;height:100px;top:-9999px;left:-9999px;pointer-events:none;z-index:-1;';
+
         let measureDiv = document.getElementById('scrollbar-measure');
-        
-        // Create measurement div if it doesn't exist
+
         if (!measureDiv) {
             measureDiv = document.createElement('div');
             measureDiv.id = 'scrollbar-measure';
-            measureDiv.style.cssText = 'position: absolute; visibility: hidden; overflow: scroll; width: 100px; height: 100px; top: -9999px; left: -9999px;';
             document.body.appendChild(measureDiv);
         }
-        
-        // Ensure the div has content larger than its container to force scrollbar
+
+        measureDiv.style.cssText = measureStyles;
+
         let innerDiv = measureDiv.querySelector('.scrollbar-measure-inner');
         if (!innerDiv) {
             innerDiv = document.createElement('div');
             innerDiv.className = 'scrollbar-measure-inner';
-            innerDiv.style.cssText = 'width: 200px; height: 200px;';
             measureDiv.appendChild(innerDiv);
         }
-        
-        // Force reflow to ensure measurements are accurate
+        innerDiv.style.width = '200px';
+        innerDiv.style.height = '200px';
+
         void measureDiv.offsetWidth;
-        
-        // Calculate scrollbar width using the measurement div
+
         let scrollbarWidth = measureDiv.offsetWidth - measureDiv.clientWidth;
-        
-        // Fallback method if measurement div returns 0
-        if (scrollbarWidth === 0 || isNaN(scrollbarWidth)) {
-            // Method 1: Compare window dimensions
-            const windowWidth = window.innerWidth;
-            const documentClientWidth = document.documentElement.clientWidth;
-            
-            if (windowWidth !== documentClientWidth) {
-                scrollbarWidth = windowWidth - documentClientWidth;
-            } else {
-                // Method 2: Temporarily force scrollbar on body to measure
-                const originalOverflow = document.body.style.overflow;
-                const originalOverflowY = document.body.style.overflowY;
-                const originalHeight = document.body.style.height;
-                
-                document.body.style.overflow = 'scroll';
-                document.body.style.overflowY = 'scroll';
-                document.body.style.height = '100%';
-                
-                // Force reflow
-                void document.body.offsetHeight;
-                
-                const bodyScrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-                
-                // Restore original styles
-                document.body.style.overflow = originalOverflow;
-                document.body.style.overflowY = originalOverflowY;
-                document.body.style.height = originalHeight;
-                
-                scrollbarWidth = bodyScrollbarWidth;
-            }
+
+        if (!scrollbarWidth) {
+            scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
         }
-        
-        // Ensure we have a valid value (at least 0)
+
         scrollbarWidth = Math.max(0, scrollbarWidth || 0);
-        
-        // Set CSS variable on HTML element
+
         document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
-        
+
         return scrollbarWidth;
     }
 
-    setTimeout(function() {
-        calculateScrollbarWidth();
-    }, 0);
+    calculateScrollbarWidth();
+
+    setTimeout(calculateScrollbarWidth, 0);
+    window.addEventListener('load', calculateScrollbarWidth);
 
     let resizeTimeout;
     function handleResize() {
@@ -340,5 +311,91 @@ document.addEventListener('DOMContentLoaded', () => {
     new AccordionGroup().init();
     
 });
+(function () {
+        const TRANSPARENT_HEADER_SELECTOR = '[data-nw-transparent-header]';
+        const TRANSPARENT_HEADER_CLASS = 'nw-header-transprant';
 
+        let scrollTicking = false;
+
+        function isFirstMainSection(element) {
+          const main = document.getElementById('MainContent');
+          if (!main || !element) return false;
+
+          const section = element.closest('.shopify-section') || element;
+          return main.firstElementChild === section;
+        }
+
+        function getHeaderElements() {
+          return {
+            header: document.querySelector('.header'),
+            headerWrapper: document.querySelector('.header-wrapper')
+          };
+        }
+
+        function getAnnouncementBarHeight() {
+          const announcementBar = document.querySelector('.announcement-bar-section');
+          return announcementBar ? announcementBar.offsetHeight : 0;
+        }
+
+        function setTransparentHeader(enabled) {
+          const { header, headerWrapper } = getHeaderElements();
+
+          if (header) {
+            header.classList.toggle(TRANSPARENT_HEADER_CLASS, enabled);
+          }
+
+          if (headerWrapper) {
+            headerWrapper.classList.toggle(TRANSPARENT_HEADER_CLASS, enabled);
+          }
+        }
+
+        function updateTransparentHeader() {
+          const trigger = document.querySelector(TRANSPARENT_HEADER_SELECTOR);
+          const isEligible = Boolean(trigger && isFirstMainSection(trigger));
+
+          if (!isEligible) {
+            setTransparentHeader(false);
+            return;
+          }
+
+          const section = trigger.closest('.shopify-section') || trigger;
+          const { header } = getHeaderElements();
+          const headerHeight = header ? header.offsetHeight : 0;
+          if (headerHeight > 0) {
+            document.documentElement.style.setProperty('--header-height', headerHeight + 'px');
+          }
+          const sectionBottom = section.getBoundingClientRect().bottom;
+          const announcementBarHeight = getAnnouncementBarHeight();
+          const scrollThreshold = headerHeight + announcementBarHeight;
+          const isWithinThreshold = window.scrollY <= scrollThreshold;
+          const shouldEnable = isWithinThreshold && sectionBottom > headerHeight;
+
+          setTransparentHeader(shouldEnable);
+        }
+
+        function onScrollOrResize() {
+          if (scrollTicking) return;
+          scrollTicking = true;
+
+          window.requestAnimationFrame(function () {
+            updateTransparentHeader();
+            scrollTicking = false;
+          });
+        }
+
+        function initTransparentHeader() {
+          updateTransparentHeader();
+          window.addEventListener('scroll', onScrollOrResize, { passive: true });
+          window.addEventListener('resize', onScrollOrResize, { passive: true });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initTransparentHeader);
+        } else {
+          initTransparentHeader();
+        }
+
+        document.addEventListener('shopify:section:load', updateTransparentHeader);
+        document.addEventListener('shopify:section:unload', updateTransparentHeader);
+      })();
 </script>

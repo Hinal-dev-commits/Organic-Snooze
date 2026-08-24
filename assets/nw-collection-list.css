@@ -20,19 +20,16 @@
 
 .nw-collection-list__header {
   width: 100%;
-  max-width: 600px;
   margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
   padding: 0 20px;
   box-sizing: border-box;
 }
 
 .nw-collection-list__subheading {
-  margin: 0;
   font-family: var(--font-body-family);
   font-weight: 400;
   font-size: 18px;
@@ -291,7 +288,6 @@
   }
 
   .nw-collection-list__header {
-    gap: 12px;
     padding: 0 16px;
   }
 

@@ -331,8 +331,8 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
-    <div id="scrollbar-measure" >
-      <div class="scrollbar-measure-inner" style="width: 200px; height: 200px;"></div>
+    <div id="scrollbar-measure">
+      <div class="scrollbar-measure-inner"></div>
     </div>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
@@ -414,94 +414,5 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    <script>
-      (function () {
-        const TRANSPARENT_HEADER_SELECTOR = '[data-nw-transparent-header]';
-        const TRANSPARENT_HEADER_CLASS = 'nw-header-transprant';
-
-        let scrollTicking = false;
-
-        function isFirstMainSection(element) {
-          const main = document.getElementById('MainContent');
-          if (!main || !element) return false;
-
-          const section = element.closest('.shopify-section') || element;
-          return main.firstElementChild === section;
-        }
-
-        function getHeaderElements() {
-          return {
-            header: document.querySelector('.header'),
-            headerWrapper: document.querySelector('.header-wrapper')
-          };
-        }
-
-        function getAnnouncementBarHeight() {
-          const announcementBar = document.querySelector('.announcement-bar-section');
-          return announcementBar ? announcementBar.offsetHeight : 0;
-        }
-
-        function setTransparentHeader(enabled) {
-          const { header, headerWrapper } = getHeaderElements();
-
-          if (header) {
-            header.classList.toggle(TRANSPARENT_HEADER_CLASS, enabled);
-          }
-
-          if (headerWrapper) {
-            headerWrapper.classList.toggle(TRANSPARENT_HEADER_CLASS, enabled);
-          }
-        }
-
-        function updateTransparentHeader() {
-          const trigger = document.querySelector(TRANSPARENT_HEADER_SELECTOR);
-          const isEligible = Boolean(trigger && isFirstMainSection(trigger));
-
-          if (!isEligible) {
-            setTransparentHeader(false);
-            return;
-          }
-
-          const section = trigger.closest('.shopify-section') || trigger;
-          const { header } = getHeaderElements();
-          const headerHeight = header ? header.offsetHeight : 0;
-          if (headerHeight > 0) {
-            document.documentElement.style.setProperty('--header-height', headerHeight + 'px');
-          }
-          const sectionBottom = section.getBoundingClientRect().bottom;
-          const announcementBarHeight = getAnnouncementBarHeight();
-          const scrollThreshold = headerHeight + announcementBarHeight;
-          const isWithinThreshold = window.scrollY <= scrollThreshold;
-          const shouldEnable = isWithinThreshold && sectionBottom > headerHeight;
-
-          setTransparentHeader(shouldEnable);
-        }
-
-        function onScrollOrResize() {
-          if (scrollTicking) return;
-          scrollTicking = true;
-
-          window.requestAnimationFrame(function () {
-            updateTransparentHeader();
-            scrollTicking = false;
-          });
-        }
-
-        function initTransparentHeader() {
-          updateTransparentHeader();
-          window.addEventListener('scroll', onScrollOrResize, { passive: true });
-          window.addEventListener('resize', onScrollOrResize, { passive: true });
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initTransparentHeader);
-        } else {
-          initTransparentHeader();
-        }
-
-        document.addEventListener('shopify:section:load', updateTransparentHeader);
-        document.addEventListener('shopify:section:unload', updateTransparentHeader);
-      })();
-    </script>
   </body>
 </html>
