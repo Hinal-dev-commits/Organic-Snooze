@@ -37,16 +37,6 @@
     --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     --nw-pl-heading-color: {{ section.settings.heading_color }};
     --nw-pl-desc-color: {{ section.settings.description_color }};
-    --nw-pcard-text: {{ section.settings.pcard_text }};
-    --nw-pcard-star: {{ section.settings.pcard_star_color }};
-    --nw-pcard-star-empty: {{ section.settings.pcard_star_empty_color }};
-    --nw-pcard-save-bg: {{ section.settings.pcard_save_bg }};
-    --nw-pcard-save-text: {{ section.settings.pcard_save_text }};
-    --nw-pcard-seller-bg: {{ section.settings.pcard_seller_bg }};
-    --nw-pcard-seller-text: {{ section.settings.pcard_seller_text }};
-    --nw-pcard-btn-bg: {{ section.settings.pcard_btn_bg }};
-    --nw-pcard-btn-bg-hover: {{ section.settings.pcard_btn_bg_hover }};
-    --nw-pcard-btn-text: {{ section.settings.pcard_btn_text }};
     --nw-swiper-bullet: {{ section.settings.pagination_color }};
     --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
     --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
@@ -233,12 +223,12 @@
     {
       "type": "select",
       "id": "product_source",
-      "label": "Product source",
+      "label": "Product Source",
       "default": "product_list",
       "options": [
         {
           "value": "product_list",
-          "label": "Product list"
+          "label": "Product List"
         },
         {
           "value": "collection",
@@ -260,7 +250,7 @@
     {
       "type": "range",
       "id": "products_to_show",
-      "label": "Products to show",
+      "label": "Products To Show",
       "min": 1,
       "max": 50,
       "step": 1,
@@ -269,7 +259,7 @@
     {
       "type": "text",
       "id": "empty_text",
-      "label": "Empty message",
+      "label": "Empty Message",
       "default": "Select products or a collection to display."
     },
     {
@@ -280,14 +270,14 @@
       "type": "color",
       "alpha": true,
       "id": "heading_color",
-      "label": "Heading color",
+      "label": "Heading Color",
       "default": "#613916"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "description_color",
-      "label": "Description color",
+      "label": "Description Color",
       "default": "#613916"
     },
     {
@@ -297,31 +287,31 @@
     {
       "type": "checkbox",
       "id": "show_rating",
-      "label": "Show rating",
+      "label": "Show Rating",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_firmness",
-      "label": "Show firmness bar",
+      "label": "Show Firmness Bar",
       "default": false
     },
     {
       "type": "checkbox",
       "id": "show_seller_tag",
-      "label": "Show seller tag",
+      "label": "Show Seller Tag",
       "default": true
     },
     {
       "type": "text",
       "id": "button_text",
-      "label": "Button text",
+      "label": "Button Text",
       "default": "Shop Now"
     },
     {
       "type": "select",
       "id": "button_style",
-      "label": "Button style",
+      "label": "Button Style",
       "default": "primary",
       "options": [
         { "value": "primary", "label": "Primary" },
@@ -332,90 +322,16 @@
     {
       "type": "text",
       "id": "firmness_label_soft",
-      "label": "Firmness label (soft)",
+      "label": "Firmness Label (Soft)",
       "default": "Soft",
       "visible_if": "{{ section.settings.show_firmness == true }}"
     },
     {
       "type": "text",
       "id": "firmness_label_firm",
-      "label": "Firmness label (firm)",
+      "label": "Firmness Label (Firm)",
       "default": "Firm",
       "visible_if": "{{ section.settings.show_firmness == true }}"
-    },
-    {
-      "type": "header",
-      "content": "PRODUCT CARD COLORS"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_text",
-      "label": "Text color",
-      "default": "#613916"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_star_color",
-      "label": "Star color",
-      "default": "#E57B1E"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_star_empty_color",
-      "label": "Empty star color",
-      "default": "#D9CFC4"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_save_bg",
-      "label": "Save tag background",
-      "default": "#FFFCF0"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_save_text",
-      "label": "Save tag text",
-      "default": "#613916"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_seller_bg",
-      "label": "Seller tag background",
-      "default": "#70804A"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_seller_text",
-      "label": "Seller tag text",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_btn_bg",
-      "label": "Button background",
-      "default": "#CC926A"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_btn_bg_hover",
-      "label": "Button background hover",
-      "default": "#B57D57"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_btn_text",
-      "label": "Button text",
-      "default": "#FFFFFF"
     },
     {
       "type": "header",
@@ -424,28 +340,28 @@
     {
       "type": "checkbox",
       "id": "show_arrows",
-      "label": "Show slider arrows",
+      "label": "Show Slider Arrows",
       "info": "Arrows are always hidden on mobile.",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_pagination",
-      "label": "Show slider pagination",
+      "label": "Show Slider Pagination",
       "default": true
     },
     {
       "type": "color",
       "alpha": true,
       "id": "overlay_color",
-      "label": "Side fade background (desktop)",
+      "label": "Side Fade Background (Desktop)",
       "default": "#FFFFFF"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "swiper_arrow_bg",
-      "label": "Arrow background",
+      "label": "Arrow Background",
       "default": "#613916",
       "visible_if": "{{ section.settings.show_arrows == true }}"
     },
@@ -453,7 +369,7 @@
       "type": "color",
       "alpha": true,
       "id": "swiper_arrow_color",
-      "label": "Arrow icon color",
+      "label": "Arrow Icon Color",
       "default": "#FFFFFF",
       "visible_if": "{{ section.settings.show_arrows == true }}"
     },
@@ -461,7 +377,7 @@
       "type": "color",
       "alpha": true,
       "id": "pagination_color",
-      "label": "Pagination bullet",
+      "label": "Pagination Bullet",
       "default": "#613916",
       "visible_if": "{{ section.settings.show_pagination == true }}"
     },
@@ -472,7 +388,7 @@
     {
       "type": "select",
       "id": "bg_type",
-      "label": "Background type",
+      "label": "Background Type",
       "default": "none",
       "options": [
         { "value": "none", "label": "None" },
@@ -485,26 +401,26 @@
       "type": "color",
       "alpha": true,
       "id": "bg_color",
-      "label": "Background color",
+      "label": "Background Color",
       "default": "#FFFCF0",
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background image (desktop)",
+      "label": "Background Image (Desktop)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image_mobile",
-      "label": "Background image (mobile)",
+      "label": "Background Image (Mobile)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "color_background",
       "id": "bg_gradient",
-      "label": "Background gradient",
+      "label": "Background Gradient",
       "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
     },
     {
@@ -514,7 +430,7 @@
     {
       "type": "range",
       "id": "padding_top_desktop",
-      "label": "Padding top (desktop)",
+      "label": "Padding Top (Desktop)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -524,7 +440,7 @@
     {
       "type": "range",
       "id": "padding_bottom_desktop",
-      "label": "Padding bottom (desktop)",
+      "label": "Padding Bottom (Desktop)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -534,7 +450,7 @@
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "Padding top (mobile)",
+      "label": "Padding Top (Mobile)",
       "min": 0,
       "max": 100,
       "step": 4,
@@ -544,7 +460,7 @@
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "Padding bottom (mobile)",
+      "label": "Padding Bottom (Mobile)",
       "min": 0,
       "max": 100,
       "step": 4,

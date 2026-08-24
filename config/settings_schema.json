@@ -8,6 +8,125 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "NW Product Card",
+    "settings": [
+      {
+        "type": "header",
+        "content": "TEXT & RATING"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_text",
+        "label": "Text color",
+        "default": "#613916"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_star_color",
+        "label": "Star color",
+        "default": "#E57B1E"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_star_empty_color",
+        "label": "Empty star color",
+        "default": "#D9CFC4"
+      },
+      {
+        "type": "header",
+        "content": "TAGS"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_save_bg",
+        "label": "Save tag background",
+        "default": "#FFFCF0"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_save_text",
+        "label": "Save tag text",
+        "default": "#613916"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_seller_bg",
+        "label": "Seller tag background",
+        "default": "#70804A"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_seller_text",
+        "label": "Seller tag text",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "FIRMNESS SCALE"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_firmness_bg",
+        "label": "Firmness bar background",
+        "default": "#F4EFE8"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_firmness_dot",
+        "label": "Firmness dot",
+        "default": "#C9B9A8"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_firmness_dot_active",
+        "label": "Active firmness dot",
+        "default": "#613916"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_firmness_line",
+        "label": "Firmness line",
+        "default": "#D9CFC4"
+      },
+      {
+        "type": "header",
+        "content": "BUTTON"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_btn_bg",
+        "label": "Button background",
+        "default": "#CC926A"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_btn_bg_hover",
+        "label": "Button hover background",
+        "default": "#B57D57"
+      },
+      {
+        "type": "color",
+        "alpha": true,
+        "id": "nw_pcard_btn_text",
+        "label": "Button text",
+        "default": "#FFFFFF"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.logo.name",
     "settings": [
       {

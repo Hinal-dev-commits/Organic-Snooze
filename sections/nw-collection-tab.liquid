@@ -1,5 +1,5 @@
-{{ 'nw-collection-v2.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'nw-collection-v2.js' | asset_url }}" defer="defer"></script>
+{{ 'nw-collection-tab.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-collection-tab.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign sidebar_block = nil
@@ -12,7 +12,7 @@
 -%}
 
 <style>
-  #NwCollectionV2-{{ section.id }} {
+  #NwCollectionTab-{{ section.id }} {
     padding-top: {{ section.settings.padding_top_desktop }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
     {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
@@ -29,7 +29,7 @@
   }
 
   @media screen and (max-width: 749px) {
-    #NwCollectionV2-{{ section.id }} {
+    #NwCollectionTab-{{ section.id }} {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
       {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
@@ -39,72 +39,58 @@
   }
 </style>
 
-<nw-collection-v2
-  id="NwCollectionV2-{{ section.id }}"
-  class="nw-collection-v2"
+<nw-collection-tab
+  id="NwCollectionTab-{{ section.id }}"
+  class="nw-collection-tab"
   data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
   style="
-    --nw-colv2-tab-bg: {{ section.settings.tab_bg }};
-    --nw-colv2-tab-text: {{ section.settings.tab_text }};
-    --nw-colv2-tab-border: {{ section.settings.tab_border }};
-    --nw-colv2-tab-active-bg: {{ section.settings.tab_active_bg }};
-    --nw-colv2-tab-active-text: {{ section.settings.tab_active_text }};
-    --nw-colv2-sidebar-bg: {{ section.settings.sidebar_bg }};
-    --nw-colv2-sidebar-text: {{ section.settings.sidebar_text }};
-    --nw-colv2-quote-bg: {{ section.settings.quote_bg }};
-    --nw-colv2-quote-border: {{ section.settings.quote_border }};
-    --nw-colv2-quote-icon: {{ section.settings.quote_icon_color }};
-    --nw-colv2-verified-color: {{ section.settings.verified_color }};
-    --nw-colv2-trust-icon: {{ section.settings.trust_icon_color }};
-    --nw-colv2-fade-color: {{ section.settings.slider_fade_color }};
-    --nw-pcard-text: {{ section.settings.pcard_text }};
-    --nw-pcard-star: {{ section.settings.pcard_star_color }};
-    --nw-pcard-star-empty: {{ section.settings.pcard_star_empty_color }};
-    --nw-pcard-save-bg: {{ section.settings.pcard_save_bg }};
-    --nw-pcard-save-text: {{ section.settings.pcard_save_text }};
-    --nw-pcard-seller-bg: {{ section.settings.pcard_seller_bg }};
-    --nw-pcard-seller-text: {{ section.settings.pcard_seller_text }};
-    --nw-pcard-firmness-bg: {{ section.settings.pcard_firmness_bg }};
-    --nw-pcard-firmness-dot: {{ section.settings.pcard_firmness_dot }};
-    --nw-pcard-firmness-dot-active: {{ section.settings.pcard_firmness_dot_active }};
-    --nw-pcard-firmness-line: {{ section.settings.pcard_firmness_line }};
-    --nw-pcard-btn-bg: {{ section.settings.pcard_btn_bg }};
-    --nw-pcard-btn-bg-hover: {{ section.settings.pcard_btn_bg_hover }};
-    --nw-pcard-btn-text: {{ section.settings.pcard_btn_text }};
+    --nw-collection-tab-tab-bg: {{ section.settings.tab_bg }};
+    --nw-collection-tab-tab-text: {{ section.settings.tab_text }};
+    --nw-collection-tab-tab-border: {{ section.settings.tab_border }};
+    --nw-collection-tab-tab-active-bg: {{ section.settings.tab_active_bg }};
+    --nw-collection-tab-tab-active-text: {{ section.settings.tab_active_text }};
+    --nw-collection-tab-sidebar-bg: {{ section.settings.sidebar_bg }};
+    --nw-collection-tab-sidebar-text: {{ section.settings.sidebar_text }};
+    --nw-collection-tab-quote-bg: {{ section.settings.quote_bg }};
+    --nw-collection-tab-quote-border: {{ section.settings.quote_border }};
+    --nw-collection-tab-quote-icon: {{ section.settings.quote_icon_color }};
+    --nw-collection-tab-verified-color: {{ section.settings.verified_color }};
+    --nw-collection-tab-trust-icon: {{ section.settings.trust_icon_color }};
+    --nw-collection-tab-fade-color: {{ section.settings.slider_fade_color }};
     --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
     --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
     --nw-swiper-bullet: {{ section.settings.swiper_bullet_color }};
-    --nw-colv2-promo-bg: {{ section.settings.promo_bg }};
-    --nw-colv2-promo-border: {{ section.settings.promo_border }};
-    --nw-colv2-promo-status-bg: {{ section.settings.promo_status_bg }};
-    --nw-colv2-promo-timer-bg: {{ section.settings.promo_timer_bg }};
-    --nw-colv2-promo-sep: {{ section.settings.promo_sep_color }};
+    --nw-collection-tab-promo-bg: {{ section.settings.promo_bg }};
+    --nw-collection-tab-promo-border: {{ section.settings.promo_border }};
+    --nw-collection-tab-promo-status-bg: {{ section.settings.promo_status_bg }};
+    --nw-collection-tab-promo-timer-bg: {{ section.settings.promo_timer_bg }};
+    --nw-collection-tab-promo-sep: {{ section.settings.promo_sep_color }};
   "
   data-products-limit="{{ section.settings.products_to_show }}"
 >
   <div class="page-width">
-    <div class="nw-collection-v2__inner">
+    <div class="nw-collection-tab__inner">
       {%- if sidebar_block -%}
-        <div class="nw-collection-v2__mobile-heading">
+        <div class="nw-collection-tab__mobile-heading">
           {%- if sidebar_block.settings.heading != blank -%}
             <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
           {%- endif -%}
           {%- if sidebar_block.settings.subheading != blank -%}
-            <div class="nw-collection-v2__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
+            <div class="nw-collection-tab__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
           {%- endif -%}
         </div>
       {%- endif -%}
 
       {%- if tab_blocks.size > 0 -%}
-        <div class="nw-collection-v2__tabs-wrap">
-          <div class="nw-collection-v2__tabs" role="tablist" aria-label="Collection categories">
+        <div class="nw-collection-tab__tabs-wrap">
+          <div class="nw-collection-tab__tabs" role="tablist" aria-label="Collection categories">
             {%- assign tab_index = 0 -%}
             {%- for block in section.blocks -%}
               {%- if block.type == 'tab' -%}
                 <button
                   type="button"
-                  class="nw-collection-v2__tab{% if tab_index == 0 %} is-active{% endif %}"
+                  class="nw-collection-tab__tab{% if tab_index == 0 %} is-active{% endif %}"
                   role="tab"
                   aria-selected="{% if tab_index == 0 %}true{% else %}false{% endif %}"
                   data-nw-tab="{{ tab_index }}"
@@ -120,44 +106,44 @@
         </div>
       {%- endif -%}
 
-      <div class="nw-collection-v2__main">
+      <div class="nw-collection-tab__main">
         {%- if sidebar_block -%}
-          <aside class="nw-collection-v2__sidebar" {{ sidebar_block.shopify_attributes }}>
-            <div class="nw-collection-v2__sidebar-heading">
+          <aside class="nw-collection-tab__sidebar" {{ sidebar_block.shopify_attributes }}>
+            <div class="nw-collection-tab__sidebar-heading">
               {%- if sidebar_block.settings.heading != blank -%}
                 <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
               {%- endif -%}
               {%- if sidebar_block.settings.subheading != blank -%}
-                <div class="nw-collection-v2__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
+                <div class="nw-collection-tab__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
               {%- endif -%}
             </div>
 
             {%- if sidebar_block.settings.quote != blank or sidebar_block.settings.author_name != blank -%}
-              <div class="nw-collection-v2__quote">
-                <span class="nw-collection-v2__quote-mark" aria-hidden="true">
+              <div class="nw-collection-tab__quote">
+                <span class="nw-collection-tab__quote-mark" aria-hidden="true">
                   {% render 'nw-icon', icon: 'quote' %}
                 </span>
                 {%- if sidebar_block.settings.quote != blank -%}
-                  <div class="nw-collection-v2__quote-text">{{ sidebar_block.settings.quote }}</div>
+                  <div class="nw-collection-tab__quote-text">{{ sidebar_block.settings.quote }}</div>
                 {%- endif -%}
-                <div class="nw-collection-v2__quote-author-wrap">
-                  <div class="nw-collection-v2__quote-author">
+                <div class="nw-collection-tab__quote-author-wrap">
+                  <div class="nw-collection-tab__quote-author">
                     {%- if sidebar_block.settings.author_name != blank -%}
-                      <div class="nw-collection-v2__quote-name-row">
-                        <div class="nw-collection-v2__quote-name">{{ sidebar_block.settings.author_name }}</div>
+                      <div class="nw-collection-tab__quote-name-row">
+                        <div class="nw-collection-tab__quote-name">{{ sidebar_block.settings.author_name }}</div>
                         {%- if sidebar_block.settings.show_verified -%}
-                          <span class="nw-collection-v2__quote-verified" aria-hidden="true">
+                          <span class="nw-collection-tab__quote-verified" aria-hidden="true">
                             {% render 'nw-icon', icon: 'verified' %}
                           </span>
                         {%- endif -%}
                       </div>
                     {%- endif -%}
                     {%- if sidebar_block.settings.author_title != blank -%}
-                      <div class="nw-collection-v2__quote-title">{{ sidebar_block.settings.author_title }}</div>
+                      <div class="nw-collection-tab__quote-title">{{ sidebar_block.settings.author_title }}</div>
                     {%- endif -%}
                   </div>
                   {%- if sidebar_block.settings.author_image != blank -%}
-                    <div class="nw-collection-v2__quote-image">
+                    <div class="nw-collection-tab__quote-image">
                       {{
                         sidebar_block.settings.author_image
                         | image_url: width: 360
@@ -171,51 +157,51 @@
 
             {%- if sidebar_block.settings.show_promo -%}
               <div
-                class="nw-collection-v2__promo"
+                class="nw-collection-tab__promo"
                 data-countdown-date="{{ sidebar_block.settings.countdown_end_date }}"
                 data-hide-on-end="{{ sidebar_block.settings.hide_after_timer_end }}"
               >
-                <div class="nw-collection-v2__promo-content">
-                  <div class="nw-collection-v2__promo-header">
+                <div class="nw-collection-tab__promo-content">
+                  <div class="nw-collection-tab__promo-header">
                     {%- if sidebar_block.settings.promo_title != blank -%}
-                      <div class="nw-collection-v2__promo-title">{{ sidebar_block.settings.promo_title }}</div>
+                      <div class="nw-collection-tab__promo-title">{{ sidebar_block.settings.promo_title }}</div>
                     {%- endif -%}
                     {%- if sidebar_block.settings.status_text != blank -%}
-                      <div class="nw-collection-v2__promo-status">
-                        <span class="nw-collection-v2__promo-status-dot"></span>
-                        <div class="nw-collection-v2__promo-status-text">{{ sidebar_block.settings.status_text }}</div>
+                      <div class="nw-collection-tab__promo-status">
+                        <span class="nw-collection-tab__promo-status-dot"></span>
+                        <div class="nw-collection-tab__promo-status-text">{{ sidebar_block.settings.status_text }}</div>
                       </div>
                     {%- endif -%}
                   </div>
                   {%- if sidebar_block.settings.promo_subtext != blank -%}
-                    <div class="nw-collection-v2__promo-subtext">{{ sidebar_block.settings.promo_subtext }}</div>
+                    <div class="nw-collection-tab__promo-subtext">{{ sidebar_block.settings.promo_subtext }}</div>
                   {%- endif -%}
                 </div>
-                <div class="nw-collection-v2__promo-countdown">
+                <div class="nw-collection-tab__promo-countdown">
                   {%- if sidebar_block.settings.countdown_label != blank -%}
-                    <div class="nw-collection-v2__promo-countdown-label">{{ sidebar_block.settings.countdown_label }}</div>
+                    <div class="nw-collection-tab__promo-countdown-label">{{ sidebar_block.settings.countdown_label }}</div>
                   {%- endif -%}
-                  <div class="nw-collection-v2__promo-timer">
-                    <div class="nw-collection-v2__promo-timer-unit">
-                      <span class="nw-collection-v2__promo-timer-num nw-colv2-countdown-days">00</span>
-                      <span class="nw-collection-v2__promo-timer-txt">Days</span>
+                  <div class="nw-collection-tab__promo-timer">
+                    <div class="nw-collection-tab__promo-timer-unit">
+                      <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-days">00</span>
+                      <span class="nw-collection-tab__promo-timer-txt">Days</span>
                     </div>
-                    <span class="nw-collection-v2__promo-timer-sep">:</span>
-                    <div class="nw-collection-v2__promo-timer-unit">
-                      <span class="nw-collection-v2__promo-timer-num nw-colv2-countdown-hours">00</span>
-                      <span class="nw-collection-v2__promo-timer-txt">Hrs</span>
+                    <span class="nw-collection-tab__promo-timer-sep">:</span>
+                    <div class="nw-collection-tab__promo-timer-unit">
+                      <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-hours">00</span>
+                      <span class="nw-collection-tab__promo-timer-txt">Hrs</span>
                     </div>
-                    <span class="nw-collection-v2__promo-timer-sep">:</span>
-                    <div class="nw-collection-v2__promo-timer-unit">
-                      <span class="nw-collection-v2__promo-timer-num nw-colv2-countdown-mins">00</span>
-                      <span class="nw-collection-v2__promo-timer-txt">Mins</span>
+                    <span class="nw-collection-tab__promo-timer-sep">:</span>
+                    <div class="nw-collection-tab__promo-timer-unit">
+                      <span class="nw-collection-tab__promo-timer-num nw-collection-tab-countdown-mins">00</span>
+                      <span class="nw-collection-tab__promo-timer-txt">Mins</span>
                     </div>
                   </div>
                 </div>
               </div>
             {%- endif -%}
 
-            <div class="nw-collection-v2__trust-badges">
+            <div class="nw-collection-tab__trust-badges">
               {%- for i in (1..4) -%}
                 {%- liquid
                   case i
@@ -238,15 +224,15 @@
                   endcase
                 -%}
                 {%- if badge_text != blank -%}
-                  <div class="nw-collection-v2__trust-item">
-                    <span class="nw-collection-v2__trust-icon">
+                  <div class="nw-collection-tab__trust-item">
+                    <span class="nw-collection-tab__trust-icon">
                       {%- if badge_custom_icon != blank -%}
-                        {% render 'nw-icon', icon: badge_icon, custom_icon: badge_custom_icon, img_class: 'nw-collection-v2__trust-img' %}
+                        {% render 'nw-icon', icon: badge_icon, custom_icon: badge_custom_icon, img_class: 'nw-collection-tab__trust-img' %}
                       {%- elsif badge_icon != blank and badge_icon != 'none' -%}
                         {% render 'nw-icon', icon: badge_icon %}
                       {%- endif -%}
                     </span>
-                    <div class="nw-collection-v2__trust-text">{{ badge_text }}</div>
+                    <div class="nw-collection-tab__trust-text">{{ badge_text }}</div>
                   </div>
                 {%- endif -%}
               {%- endfor -%}
@@ -254,19 +240,19 @@
           </aside>
         {%- endif -%}
 
-        <div class="nw-collection-v2__slider-col">
+        <div class="nw-collection-tab__slider-col">
           {%- assign panel_index = 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'tab' -%}
               <div
-                class="nw-collection-v2__panel"
+                class="nw-collection-tab__panel"
                 data-nw-panel="{{ panel_index }}"
                 role="tabpanel"
                 {% unless panel_index == 0 %}hidden{% endunless %}
               >
-                <div class="nw-collection-v2__slider-wrap">
+                <div class="nw-collection-tab__slider-wrap">
                   {%- if block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
-                    <div class="swiper nw-collection-v2__swiper" id="NwCollectionSwiper-{{ section.id }}-{{ panel_index }}">
+                    <div class="swiper nw-collection-tab__swiper" id="NwCollectionSwiper-{{ section.id }}-{{ panel_index }}">
                       <div class="swiper-wrapper">
                         {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
                           <div class="swiper-slide">
@@ -288,7 +274,7 @@
                       {% render 'nw-swiper-arrows' %}
                     {%- endif -%}
                   {%- else -%}
-                    <div class="nw-collection-v2__empty">{{ section.settings.empty_text }}</div>
+                    <div class="nw-collection-tab__empty">{{ section.settings.empty_text }}</div>
                   {%- endif -%}
                 </div>
                 {%- if section.settings.show_pagination and block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
@@ -302,7 +288,7 @@
       </div>
 
       {%- if section.settings.show_shop_all and section.settings.shop_all_text != blank -%}
-        <div class="nw-collection-v2__footer nw-collection-v2__shop-all">
+        <div class="nw-collection-tab__footer nw-collection-tab__shop-all">
           {%- liquid
             assign shop_all_link = section.settings.shop_all_link
             if shop_all_link == blank and tab_blocks.size > 0
@@ -321,14 +307,13 @@
       {%- endif -%}
     </div>
   </div>
-  </div>
-</nw-collection-v2>
+</nw-collection-tab>
 
 {% schema %}
 {
-  "name": "NW Collection V2",
+  "name": "NW Collection Tab",
   "tag": "section",
-  "class": "section-nw-collection-v2",
+  "class": "section-nw-collection-tab",
   "settings": [
     {
       "type": "header",
@@ -340,25 +325,25 @@
       "min": 2,
       "max": 24,
       "step": 1,
-      "label": "Products to show per tab",
+      "label": "Products To Show Per Tab",
       "default": 8
     },
     {
       "type": "checkbox",
       "id": "show_arrows",
-      "label": "Show slider arrows",
+      "label": "Show Slider Arrows",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_pagination",
-      "label": "Show slider pagination",
+      "label": "Show Slider Pagination",
       "default": true
     },
     {
       "type": "text",
       "id": "empty_text",
-      "label": "Empty collection message",
+      "label": "Empty Collection Message",
       "default": "Select a collection for this tab."
     },
     {
@@ -368,35 +353,35 @@
     {
       "type": "checkbox",
       "id": "show_rating",
-      "label": "Show product rating",
+      "label": "Show Product Rating",
       "default": true,
       "info": "Requires a product reviews app."
     },
     {
       "type": "checkbox",
       "id": "show_firmness",
-      "label": "Show firmness scale",
+      "label": "Show Firmness Scale",
       "default": false,
       "info": "Only displays when the product custom.firmness metafield is set."
     },
     {
       "type": "text",
       "id": "firmness_label_soft",
-      "label": "Firmness left label",
+      "label": "Firmness Left Label",
       "default": "Soft",
       "visible_if": "{{ section.settings.show_firmness == true }}"
     },
     {
       "type": "text",
       "id": "firmness_label_firm",
-      "label": "Firmness right label",
+      "label": "Firmness Right Label",
       "default": "Firm",
       "visible_if": "{{ section.settings.show_firmness == true }}"
     },
     {
       "type": "text",
       "id": "pcard_button_text",
-      "label": "Product card button text",
+      "label": "Product Card Button Text",
       "default": "Shop Now"
     },
     {
@@ -406,7 +391,7 @@
     {
       "type": "checkbox",
       "id": "show_shop_all",
-      "label": "Show button",
+      "label": "Show Button",
       "default": true
     },
     {
@@ -419,14 +404,14 @@
     {
       "type": "url",
       "id": "shop_all_link",
-      "label": "Button link",
+      "label": "Button Link",
       "info": "Defaults to the active tab collection when empty.",
       "visible_if": "{{ section.settings.show_shop_all == true }}"
     },
     {
       "type": "select",
       "id": "shop_all_style",
-      "label": "Button style",
+      "label": "Button Style",
       "options": [
         { "value": "primary", "label": "Primary" },
         { "value": "secondary", "label": "Secondary" },
@@ -443,35 +428,35 @@
       "type": "color",
       "alpha": true,
       "id": "tab_bg",
-      "label": "Tab background",
+      "label": "Tab Background",
       "default": "#FFFCF0"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "tab_text",
-      "label": "Tab text",
+      "label": "Tab Text",
       "default": "#613916"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "tab_border",
-      "label": "Tab border",
+      "label": "Tab Border",
       "default": "#E8DDD4"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "tab_active_bg",
-      "label": "Active tab background",
+      "label": "Active Tab Background",
       "default": "#CC926A"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "tab_active_text",
-      "label": "Active tab text",
+      "label": "Active Tab Text",
       "default": "#FFFFFF"
     },
     {
@@ -482,152 +467,50 @@
       "type": "color",
       "alpha": true,
       "id": "sidebar_bg",
-      "label": "Sidebar background",
+      "label": "Sidebar Background",
       "default": "#F4EFE8"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "sidebar_text",
-      "label": "Sidebar text",
+      "label": "Sidebar Text",
       "default": "#613916"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "quote_bg",
-      "label": "Quote card background",
+      "label": "Quote Card Background",
       "default": "#FFFCF0"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "quote_border",
-      "label": "Quote card border",
+      "label": "Quote Card Border",
       "default": "#F0EBE3"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "quote_icon_color",
-      "label": "Quote icon color",
+      "label": "Quote Icon Color",
       "default": "#878735"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "verified_color",
-      "label": "Verified badge color",
+      "label": "Verified Badge Color",
       "default": "#878735"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "trust_icon_color",
-      "label": "Trust badge icon color",
+      "label": "Trust Badge Icon Color",
       "default": "#613916"
-    },
-    {
-      "type": "header",
-      "content": "PRODUCT CARD COLORS"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_text",
-      "label": "Text color",
-      "default": "#613916"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_star_color",
-      "label": "Star color",
-      "default": "#E57B1E"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_star_empty_color",
-      "label": "Empty star color",
-      "default": "#D9CFC4"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_save_bg",
-      "label": "Save tag background",
-      "default": "#FFFCF0"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_save_text",
-      "label": "Save tag text",
-      "default": "#613916"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_seller_bg",
-      "label": "Seller tag background",
-      "default": "#70804A"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_seller_text",
-      "label": "Seller tag text",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_firmness_bg",
-      "label": "Firmness bar background",
-      "default": "#F4EFE8"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_firmness_dot",
-      "label": "Firmness dot",
-      "default": "#C9B9A8"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_firmness_dot_active",
-      "label": "Active firmness dot",
-      "default": "#613916"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_firmness_line",
-      "label": "Firmness line",
-      "default": "#D9CFC4"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_btn_bg",
-      "label": "Button background",
-      "default": "#CC926A"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_btn_bg_hover",
-      "label": "Button hover background",
-      "default": "#B57D57"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pcard_btn_text",
-      "label": "Button text",
-      "default": "#FFFFFF"
     },
     {
       "type": "header",
@@ -637,28 +520,28 @@
       "type": "color",
       "alpha": true,
       "id": "slider_fade_color",
-      "label": "Slider edge fade",
+      "label": "Slider Edge Fade",
       "default": "#FFFFFF"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "swiper_arrow_bg",
-      "label": "Arrow background",
+      "label": "Arrow Background",
       "default": "#613916"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "swiper_arrow_color",
-      "label": "Arrow icon",
+      "label": "Arrow Icon",
       "default": "#FFFFFF"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "swiper_bullet_color",
-      "label": "Pagination bullet",
+      "label": "Pagination Bullet",
       "default": "#613916"
     },
     {
@@ -669,35 +552,35 @@
       "type": "color",
       "alpha": true,
       "id": "promo_bg",
-      "label": "Promo background",
+      "label": "Promo Background",
       "default": "#613916"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "promo_border",
-      "label": "Promo border",
+      "label": "Promo Border",
       "default": "#CC926A"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "promo_status_bg",
-      "label": "Status badge background",
+      "label": "Status Badge Background",
       "default": "#CC926A"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "promo_timer_bg",
-      "label": "Timer unit background",
+      "label": "Timer Unit Background",
       "default": "#CC926A"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "promo_sep_color",
-      "label": "Timer separator",
+      "label": "Timer Separator",
       "default": "#CC926A"
     },
     {
@@ -707,7 +590,7 @@
     {
       "type": "select",
       "id": "bg_type",
-      "label": "Background type",
+      "label": "Background Type",
       "options": [
         { "value": "none", "label": "None" },
         { "value": "color", "label": "Color" },
@@ -720,26 +603,26 @@
       "type": "color",
       "alpha": true,
       "id": "bg_color",
-      "label": "Background color",
+      "label": "Background Color",
       "default": "#FFFFFF",
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {
       "type": "color_background",
       "id": "bg_gradient",
-      "label": "Background gradient",
+      "label": "Background Gradient",
       "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background image (desktop)",
+      "label": "Background Image (Desktop)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image_mobile",
-      "label": "Background image (mobile)",
+      "label": "Background Image (Mobile)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
@@ -753,7 +636,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "label": "Top padding (desktop)",
+      "label": "Top Padding (Desktop)",
       "default": 80
     },
     {
@@ -763,7 +646,7 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "label": "Bottom padding (desktop)",
+      "label": "Bottom Padding (Desktop)",
       "default": 80
     },
     {
@@ -773,7 +656,7 @@
       "max": 80,
       "step": 4,
       "unit": "px",
-      "label": "Top padding (mobile)",
+      "label": "Top Padding (Mobile)",
       "default": 40
     },
     {
@@ -783,7 +666,7 @@
       "max": 80,
       "step": 4,
       "unit": "px",
-      "label": "Bottom padding (mobile)",
+      "label": "Bottom Padding (Mobile)",
       "default": 40
     }
   ],
@@ -795,7 +678,7 @@
         {
           "type": "text",
           "id": "label",
-          "label": "Tab label",
+          "label": "Tab Label",
           "default": "Mattress"
         },
         {
@@ -835,25 +718,25 @@
         {
           "type": "richtext",
           "id": "author_name",
-          "label": "Author name",
+          "label": "Author Name",
           "default": "<p>Gary Brecka</p>"
         },
         {
           "type": "checkbox",
           "id": "show_verified",
-          "label": "Show verified badge",
+          "label": "Show Verified Badge",
           "default": true
         },
         {
           "type": "richtext",
           "id": "author_title",
-          "label": "Author title",
+          "label": "Author Title",
           "default": "<p>Longevity Expert & Co-founder of The Ultimate Human</p>"
         },
         {
           "type": "image_picker",
           "id": "author_image",
-          "label": "Author image"
+          "label": "Author Image"
         },
         {
           "type": "header",
@@ -862,48 +745,48 @@
         {
           "type": "checkbox",
           "id": "show_promo",
-          "label": "Show promo module",
+          "label": "Show Promo Module",
           "default": true
         },
         {
           "type": "richtext",
           "id": "promo_title",
-          "label": "Offer title",
+          "label": "Offer Title",
           "default": "<p>🇺🇸 Fourth of July Celebration</p>",
           "visible_if": "{{ block.settings.show_promo == true }}"
         },
         {
           "type": "richtext",
           "id": "status_text",
-          "label": "Status badge text",
+          "label": "Status Badge Text",
           "default": "<p>Live</p>",
           "visible_if": "{{ block.settings.show_promo == true }}"
         },
         {
           "type": "richtext",
           "id": "promo_subtext",
-          "label": "Offer subtext / coupon",
+          "label": "Offer Subtext / Coupon",
           "default": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>",
           "visible_if": "{{ block.settings.show_promo == true }}"
         },
         {
           "type": "richtext",
           "id": "countdown_label",
-          "label": "Countdown label",
+          "label": "Countdown Label",
           "default": "<p>Event Ending In</p>",
           "visible_if": "{{ block.settings.show_promo == true }}"
         },
         {
           "type": "text",
           "id": "countdown_end_date",
-          "label": "Countdown target date (YYYY-MM-DD HH:MM:SS)",
+          "label": "Countdown Target Date (YYYY-MM-DD HH:MM:SS)",
           "default": "2026-12-31 23:59:59",
           "visible_if": "{{ block.settings.show_promo == true }}"
         },
         {
           "type": "checkbox",
           "id": "hide_after_timer_end",
-          "label": "Hide promo after timer ends",
+          "label": "Hide Promo After Timer Ends",
           "default": false,
           "visible_if": "{{ block.settings.show_promo == true }}"
         },
@@ -927,7 +810,7 @@
         {
           "type": "image_picker",
           "id": "badge_1_custom_icon",
-          "label": "Custom icon"
+          "label": "Custom Icon"
         },
         {
           "type": "richtext",
@@ -955,7 +838,7 @@
         {
           "type": "image_picker",
           "id": "badge_2_custom_icon",
-          "label": "Custom icon"
+          "label": "Custom Icon"
         },
         {
           "type": "richtext",
@@ -983,7 +866,7 @@
         {
           "type": "image_picker",
           "id": "badge_3_custom_icon",
-          "label": "Custom icon"
+          "label": "Custom Icon"
         },
         {
           "type": "richtext",
@@ -1011,7 +894,7 @@
         {
           "type": "image_picker",
           "id": "badge_4_custom_icon",
-          "label": "Custom icon"
+          "label": "Custom Icon"
         },
         {
           "type": "richtext",
@@ -1024,7 +907,7 @@
   ],
   "presets": [
     {
-      "name": "NW Collection V2",
+      "name": "NW Collection Tab",
       "category": "NW Sections",
       "blocks": [
         {

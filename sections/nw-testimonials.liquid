@@ -200,14 +200,14 @@
       "type": "color",
       "alpha": true,
       "id": "heading_color",
-      "label": "Heading color",
+      "label": "Heading Color",
       "default": "#613916"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "description_color",
-      "label": "Description color",
+      "label": "Description Color",
       "default": "#613916"
     },
     {
@@ -218,41 +218,41 @@
       "type": "color",
       "alpha": true,
       "id": "card_bg_color",
-      "label": "Card background",
+      "label": "Card Background",
       "default": "#F4EFE8"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_text_color",
-      "label": "Card text",
+      "label": "Card Text",
       "default": "#613916"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_star_color",
-      "label": "Card Star color",
+      "label": "Card Star Color",
       "default": "#E57B1E"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_star_empty_color",
-      "label": "Card Empty star color",
+      "label": "Card Empty Star Color",
       "default": "#D1C7BA"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "verified_text_color",
-      "label": "Verified textcolor"
+      "label": "Verified Textcolor"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "verified_icon_color",
-      "label": "Verified icon color",
+      "label": "Verified Icon Color",
       "default": "#878735"
     },
     {
@@ -262,13 +262,13 @@
     {
       "type": "checkbox",
       "id": "show_arrows",
-      "label": "Show slider arrows",
+      "label": "Show Slider Arrows",
       "default": false
     },
     {
       "type": "checkbox",
       "id": "show_pagination",
-      "label": "Show slider pagination",
+      "label": "Show Slider Pagination",
       "default": true
     },
     {
@@ -279,7 +279,7 @@
       "type": "color",
       "alpha": true,
       "id": "pagination_color",
-      "label": "Pagination bullet",
+      "label": "Pagination Bullet",
       "default": "#613916",
       "visible_if": "{{ section.settings.show_pagination == true }}"
     },
@@ -290,7 +290,7 @@
     {
       "type": "select",
       "id": "bg_type",
-      "label": "Background type",
+      "label": "Background Type",
       "default": "color",
       "options": [
         { "value": "none", "label": "None" },
@@ -303,26 +303,26 @@
       "type": "color",
       "alpha": true,
       "id": "bg_color",
-      "label": "Background color",
+      "label": "Background Color",
       "default": "#FFFCF0",
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background image (desktop)",
+      "label": "Background Image (Desktop)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image_mobile",
-      "label": "Background image (mobile)",
+      "label": "Background Image (Mobile)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "color_background",
       "id": "bg_gradient",
-      "label": "Background gradient",
+      "label": "Background Gradient",
       "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
     },
     {
@@ -332,7 +332,7 @@
     {
       "type": "range",
       "id": "padding_top_desktop",
-      "label": "Padding top (desktop)",
+      "label": "Padding Top (Desktop)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -342,7 +342,7 @@
     {
       "type": "range",
       "id": "padding_bottom_desktop",
-      "label": "Padding bottom (desktop)",
+      "label": "Padding Bottom (Desktop)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -352,7 +352,7 @@
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "Padding top (mobile)",
+      "label": "Padding Top (Mobile)",
       "min": 0,
       "max": 100,
       "step": 4,
@@ -362,7 +362,7 @@
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "Padding bottom (mobile)",
+      "label": "Padding Bottom (Mobile)",
       "min": 0,
       "max": 100,
       "step": 4,
@@ -378,7 +378,7 @@
         {
           "type": "range",
           "id": "rating",
-          "label": "Star rating",
+          "label": "Star Rating",
           "min": 1,
           "max": 5,
           "step": 1,
@@ -393,19 +393,19 @@
         {
           "type": "text",
           "id": "author",
-          "label": "Author name",
+          "label": "Author Name",
           "default": "Chloe"
         },
         {
           "type": "checkbox",
           "id": "verified",
-          "label": "Show verified badge",
+          "label": "Show Verified Badge",
           "default": true
         },
         {
           "type": "text",
           "id": "verified_text",
-          "label": "Verified text",
+          "label": "Verified Text",
           "default": "Verified"
         }
       ]
