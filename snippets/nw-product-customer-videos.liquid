@@ -1,0 +1,88 @@
+{% doc %}
+  Customer video carousel for main product blocks.
+  @param {object} block - Block settings with video slots
+{% enddoc %}
+
+{%- liquid
+  assign video_count = 0
+  for i in (1..6)
+    assign video_key = 'video_' | append: i
+    if block.settings[video_key] != blank
+      assign video_count = video_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if video_count > 0 -%}
+  <nw-product-videos
+    class="nw-product-videos"
+    data-block-id="{{ block.id }}"
+    data-show-pagination="{{ block.settings.show_pagination }}"
+    data-pagination-id="NwProductVideosPagination-{{ block.id }}"
+  >
+    {%- if block.settings.heading != blank -%}
+      <h2 class="nw-product-videos__heading">{{ block.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="nw-product-videos__slider-wrap">
+      <div class="swiper nw-product-videos__swiper" id="NwProductVideosSwiper-{{ block.id }}">
+        <div class="swiper-wrapper">
+          {%- for i in (1..6) -%}
+            {%- liquid
+              assign video_key = 'video_' | append: i
+              assign poster_key = 'poster_' | append: i
+              assign caption_key = 'caption_' | append: i
+              assign slot_video = block.settings[video_key]
+              assign slot_poster = block.settings[poster_key]
+              assign slot_caption = block.settings[caption_key]
+              if slot_poster == blank and slot_video != blank and slot_video.preview_image != blank
+                assign slot_poster = slot_video.preview_image
+              endif
+            -%}
+            {%- if slot_video != blank -%}
+              <div class="swiper-slide">
+                <article class="nw-product-videos__card">
+                  <div class="nw-product-videos__media" data-nw-product-video-media>
+                    {{
+                      slot_video
+                      | video_tag:
+                        autoplay: false,
+                        loop: false,
+                        muted: false,
+                        controls: true,
+                        playsinline: true,
+                        preload: 'none',
+                        class: 'nw-product-videos__video',
+                        image_size: '600x'
+                    }}
+                    {%- if slot_poster != blank -%}
+                      <img
+                        src="{{ slot_poster | image_url: width: 600 }}"
+                        alt="{{ slot_caption | default: 'Customer video' | escape }}"
+                        width="300"
+                        height="400"
+                        loading="lazy"
+                        class="nw-product-videos__poster"
+                      >
+                    {%- endif -%}
+                    <button type="button" class="nw-product-videos__play" data-nw-product-video-play aria-label="Play video">
+                      <span class="nw-product-videos__play-icon" aria-hidden="true">
+                        {% render 'nw-icon', icon: 'play' %}
+                      </span>
+                    </button>
+                  </div>
+                  {%- if slot_caption != blank -%}
+                    <p class="nw-product-videos__caption">{{ slot_caption }}</p>
+                  {%- endif -%}
+                </article>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- if block.settings.show_pagination -%}
+        <div class="nw-swiper-pagination nw-product-videos__pagination" id="NwProductVideosPagination-{{ block.id }}"></div>
+      {%- endif -%}
+    </div>
+  </nw-product-videos>
+{%- endif -%}

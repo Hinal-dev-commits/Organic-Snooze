@@ -12,58 +12,327 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "rating_erHRUK": {
+          "type": "rating",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "margin_top": 0,
+            "margin_bottom": 12,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 4
           }
         },
         "title": {
           "type": "title",
-          "settings": {}
-        },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
-        "variant_picker": {
-          "type": "variant_picker",
           "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
-        },
-        "quantity_selector": {
-          "type": "quantity_selector",
-          "settings": {}
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "custom_title": "Pure Organic Latex Mattress",
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 16
           }
         },
         "description": {
           "type": "description",
-          "settings": {}
+          "settings": {
+            "custom_description": "<p>Minimalist comfort meets organic performance. Breathable latex and coils for naturally cool, responsive support.</p>",
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_affirm": true,
+            "show_sale_badge": true,
+            "margin_top": 0,
+            "margin_bottom": 24,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 16
+          }
+        },
+        "icon_text_KzjrVr": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Breathable Latex and Wool Material",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/image_1256_Vectorized_1_ea96148e-6ba6-41d6-821a-7e14774caa5e.svg",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_ykzhxB": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Naturally Flame Resistant without chemicals",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/image_1256_Vectorized_b600b181-eafe-42f3-835d-805ad38b3db9.svg",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_tRPNk9": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Deep Sleep Cycles",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/image_1256_Vectorized_2_41c1f7e2-93d5-4a58-b48f-f725df3d954b.svg",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_cKXLDG": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Naturally disperses heat for cool sleep",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/image_1256_Vectorized_3.svg",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_3FhWzM": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Handcrafted in the USA",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/image_1256_Vectorized_4.svg",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "disabled": true,
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle",
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false,
+            "show_affirm_button": true,
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "shipping_tag_Agd7QN": {
+          "type": "shipping_tag",
+          "settings": {
+            "text": "Ships from USA • Est. delivery July 2, 2026",
+            "use_product_metafield": false,
+            "use_custom_icon": true,
+            "icon": "truck",
+            "custom_icon": "shopify://shop_images/Frame_2_ae1d68d4-b232-404a-9611-30258c776f81.svg",
+            "bg_color": "#e8f0e0",
+            "text_color": "#613916",
+            "icon_color": "#613916",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 12,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "collapsible_tab_W7etYx": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Product Specifications",
+            "icon": "none",
+            "content": "<p><strong>Origin:</strong> USA</p><p><strong>Main Color:</strong> White</p><p><strong>Material:</strong> Made with Certified Organic Cotton, Made with Certified Organic Wool,  Certified Organic Latex, Steel Coils, Always Toxin-FREE</p><p><strong>Mattress Depth:</strong> 13\" Depth</p><h3>Top Comfort Layer</h3><ul><li>Cotton Cover and Wool Base Layer</li><li><strong>Made with Certified</strong> <strong>Cotton</strong> Cover - Soft, breathable, and familiar against the skin (Cotton)</li><li><strong>Made with Certified Wool </strong>Base layer naturally disperses heat and moisture to regulate temperature (Wool)</li><li>Naturally flame-resistant without toxic chemicals (Wool)</li></ul><h3>Second Performance Layer</h3><ul><li><strong>4” Organic certified Latex </strong>Comfort</li><li>Soft, responsive comfort that gently contours to your body</li><li>Designed with breathable pinhole perforations to promote airflow</li><li>Does not sink and compress like foam</li></ul><h3>Foundation Support Layer</h3><ul><li>1100-Count 5-Zone Pocketed Steel Coil System<br/></li><li>Provides balanced, medium support to help maintain healthy alignment</li><li>Reinforced edge support for stability and full use of the mattress</li></ul><h3>Construction & Durability</h3><ul><li>Tufted construction to secure layers and maintain long-term performance without glues</li><li>Designed to hold shape and comfort over time</li><li><strong>30-Year Warranty (On craftsmanship and structural integrity)</strong></li><li><strong>100-Night Risk-Free Trial </strong><em>(30-day grace period)</em></li></ul>",
+            "page": "",
+            "margin_top": 48,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "collapsible_tab_THr6Kx": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Warranty",
+            "icon": "none",
+            "content": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London</p>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "collapsible_tab_wP3yAA": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Why you'll love it",
+            "icon": "none",
+            "content": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London</p>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_v2_JFUz9t": {
+          "type": "icon_text_v2",
+          "settings": {
+            "item_1_text": "Made in USA",
+            "item_1_icon": "usamap",
+            "item_1_use_custom_icon": true,
+            "item_1_custom_icon": "shopify://shop_images/image_1254_Vectorized.svg",
+            "item_2_text": "100-Night Trial",
+            "item_2_icon": "moon",
+            "item_2_use_custom_icon": true,
+            "item_2_custom_icon": "shopify://shop_images/image_1254_Vectorized_1.svg",
+            "item_3_text": "GOLS/GOTS",
+            "item_3_icon": "award",
+            "item_3_use_custom_icon": true,
+            "item_3_custom_icon": "shopify://shop_images/image_1254_Vectorized_2.svg",
+            "item_4_text": "30-Year Warranty",
+            "item_4_icon": "warranty-check",
+            "item_4_use_custom_icon": true,
+            "item_4_custom_icon": "shopify://shop_images/image_1254_Vectorized_3.svg",
+            "icon_bg_color": "#f7f0ec",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "margin_top": 48,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "founder_i4r3qP": {
+          "type": "founder",
+          "settings": {
+            "quote": "<p>Your body is trying to heal you. It just needs the environment.</p>",
+            "avatar": "shopify://shop_images/auth-2.png",
+            "name": "Gary Brecka",
+            "role": "Longevity Expert & Founder of The Ultimate Human",
+            "show_verified": true,
+            "quote_color": "#613916",
+            "name_color": "#613916",
+            "role_color": "#613916",
+            "margin_top": 48,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "quiz_button_LNxxjE": {
+          "type": "quiz_button",
+          "settings": {
+            "heading": "Not sure which mattress?",
+            "text": "Answer 5 questions—we'll match you.",
+            "button_label": "Take Quiz",
+            "button_link": "",
+            "use_custom_icon": true,
+            "icon": "bed",
+            "custom_icon": "shopify://shop_images/image_1257_Vectorized.svg",
+            "bg_color": "#f7f0ec",
+            "border_color": "#61391626",
+            "button_bg_color": "#878735",
+            "margin_top": 40,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
         },
         "share": {
           "type": "share",
+          "disabled": true,
           "settings": {
-            "share_label": "Share"
+            "share_label": "Share",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
           }
         }
       },
       "block_order": [
-        "vendor",
+        "rating_erHRUK",
         "title",
+        "description",
         "price",
+        "icon_text_KzjrVr",
+        "icon_text_ykzhxB",
+        "icon_text_tRPNk9",
+        "icon_text_cKXLDG",
+        "icon_text_3FhWzM",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
-        "description",
+        "shipping_tag_Agd7QN",
+        "collapsible_tab_W7etYx",
+        "collapsible_tab_THr6Kx",
+        "collapsible_tab_wP3yAA",
+        "icon_text_v2_JFUz9t",
+        "founder_i4r3qP",
+        "quiz_button_LNxxjE",
         "share"
       ],
       "settings": {
@@ -72,14 +341,22 @@
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
-        "gallery_layout": "stacked",
-        "mobile_thumbnails": "hide",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
         "media_position": "left",
         "image_zoom": "lightbox",
-        "hide_variants": true,
+        "hide_variants": false,
         "enable_video_looping": false,
+        "show_media_arrows": true,
+        "show_media_dots": true,
+        "media_padding_top": 0,
+        "media_padding_bottom": 0,
+        "media_padding_top_mobile": 0,
+        "media_padding_bottom_mobile": 0,
         "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": 80,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
       }
     },
     "disclosures": {
@@ -315,6 +592,9 @@
         "card_star_empty_color": "#d1c7ba",
         "verified_text_color": "#878735",
         "verified_icon_color": "#878735",
+        "full_width": false,
+        "enable_loop": false,
+        "enable_edge_shadow": false,
         "show_arrows": false,
         "show_pagination": true,
         "pagination_color": "#613916",
@@ -564,83 +844,6 @@
         "button_style": "primary",
         "bg_type": "color",
         "bg_color": "#ffffff",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_benefits_dBg9gE": {
-      "type": "nw-benefits",
-      "blocks": {
-        "benefit_AYYmbp": {
-          "type": "benefit",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/4153241-uhd_2160_4096_25fps.mp4",
-            "title": "Zero Airborne VOCs",
-            "description": "<p>Sleep in a room that smells like nothing at all.</p>"
-          }
-        },
-        "benefit_JzDzhb": {
-          "type": "benefit",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/7234147-uhd_2160_3840_30fps.mp4",
-            "title": "Sleeps Cooler",
-            "description": "<p>Wool naturally regulates temperature. Perforated latex never traps heat.</p>"
-          }
-        },
-        "benefit_CrdXYJ": {
-          "type": "benefit",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/6195937-uhd_2160_3840_25fps.mp4",
-            "title": "Real Pressure Relief",
-            "description": "<p>Latex lifts and contours so hips and shoulders stop aching.</p>"
-          }
-        },
-        "benefit_7bPGkh": {
-          "type": "benefit",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/6195941-uhd_2160_3840_25fps.mp4",
-            "title": "Outlasts Foam",
-            "description": "<p>Add superior support and limited motion shift from coils</p>"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_AYYmbp",
-        "benefit_JzDzhb",
-        "benefit_CrdXYJ",
-        "benefit_7bPGkh"
-      ],
-      "name": "t:sections.nw-benefits.name",
-      "settings": {
-        "heading": "Benefits That Matter",
-        "description": "<p>Four reasons our customers say they're never going back to foam.</p>",
-        "heading_color": "#613916",
-        "description_color": "#613916",
-        "card_bg_color": "#fbf9f6",
-        "card_border_color": "#61391633",
-        "card_title_color": "#613916",
-        "card_desc_color": "#613916",
-        "show_arrows": false,
-        "show_pagination": true,
-        "pagination_color": "#613916",
-        "show_button": false,
-        "button_text": "SHOP THE MATTRESS",
-        "button_link": "",
-        "button_style": "primary",
-        "badge_icon_color": "#cc926a",
-        "badge_text_color": "#613916",
-        "bg_type": "image",
-        "bg_color": "#ffffff",
-        "bg_image": "shopify://shop_images/benifit-desktop.png",
-        "bg_image_mobile": "shopify://shop_images/benifit-mobile.png",
-        "bg_image_opacity": 21,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -917,7 +1120,6 @@
     "nw_testimonials_BU9rMk",
     "nw_recovery_yYVmK7",
     "nw_organic_gcGNTr",
-    "nw_benefits_dBg9gE",
     "nw_founder_story_RhHRer",
     "nw_guarantee_v2_KGGbhN",
     "nw_product_list_Ej8ReJ",

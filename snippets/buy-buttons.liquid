@@ -93,6 +93,15 @@
             </span>
             {%- render 'loading-spinner' -%}
           </button>
+          {%- liquid
+            assign show_affirm_button = block.settings.show_affirm_button
+            if show_affirm_button == nil
+              assign show_affirm_button = true
+            endif
+          -%}
+          {%- if show_affirm_button -%}
+            {%- render 'nw-product-affirm-button', form: form -%}
+          {%- endif -%}
           {%- if show_dynamic_checkout -%}
             {{ form | payment_button }}
           {%- endif -%}

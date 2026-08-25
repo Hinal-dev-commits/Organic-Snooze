@@ -1,0 +1,56 @@
+{% doc %}
+  Single-line icon + text row for main product blocks.
+  @param {object} block - Block with icon/text settings
+{% enddoc %}
+
+{%- if block.settings.text != blank -%}
+  {%- liquid
+    assign icon_style = block.settings.style | default: 'checklist'
+    assign use_custom_icon = block.settings.use_custom_icon
+    if use_custom_icon == nil and block.settings.icon == 'custom'
+      assign use_custom_icon = true
+    endif
+    if icon_style == 'checklist' and use_custom_icon == false
+      assign display_icon = 'check-circle'
+    else
+      assign display_icon = block.settings.icon
+    endif
+  -%}
+  <div
+    class="nw-product-icon-text nw-product-icon-text--{{ icon_style }}"
+    style="
+      --nw-pit-icon-color: {{ block.settings.icon_color | default: '#878735' }};
+      --nw-pit-text-color: {{ block.settings.text_color | default: '#613916' }};
+      --nw-pit-icon-size: {{ block.settings.icon_size | default: 20 }}px;
+      --nw-pit-gap: {{ block.settings.icon_gap | default: 8 }}px;
+    "
+  >
+    {%- if block.settings.link != blank -%}
+      <a href="{{ block.settings.link }}" class="nw-product-icon-text__link">
+    {%- else -%}
+      <div class="nw-product-icon-text__inner">
+    {%- endif -%}
+
+    {%- if use_custom_icon and block.settings.custom_icon != blank -%}
+      <span class="nw-product-icon-text__icon" aria-hidden="true">
+        {%- render 'nw-icon',
+          icon: 'custom',
+          custom_icon: block.settings.custom_icon,
+          img_class: 'nw-product-icon-text__icon-img'
+        -%}
+      </span>
+    {%- elsif use_custom_icon == false and display_icon != blank and display_icon != 'none' -%}
+      <span class="nw-product-icon-text__icon" aria-hidden="true">
+        {%- render 'nw-icon', icon: display_icon -%}
+      </span>
+    {%- endif -%}
+
+    <span class="nw-product-icon-text__text">{{ block.settings.text }}</span>
+
+    {%- if block.settings.link != blank -%}
+      </a>
+    {%- else -%}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

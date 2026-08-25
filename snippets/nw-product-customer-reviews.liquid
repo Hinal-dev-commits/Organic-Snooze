@@ -1,0 +1,79 @@
+{% doc %}
+  Customer review carousel for main product blocks.
+  @param {object} block - Block settings with review slots
+  @param {string} section_id - Section id
+{% enddoc %}
+
+{%- liquid
+  assign review_count = 0
+  for i in (1..5)
+    assign quote_key = 'review_' | append: i | append: '_quote'
+    if block.settings[quote_key] != blank
+      assign review_count = review_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if review_count > 0 -%}
+  <nw-product-reviews
+    class="nw-product-reviews"
+    data-section-id="{{ section_id }}"
+    data-block-id="{{ block.id }}"
+    data-show-pagination="{{ block.settings.show_pagination }}"
+    data-pagination-id="NwProductReviewsPagination-{{ block.id }}"
+  >
+    {%- if block.settings.heading != blank -%}
+      <h2 class="nw-product-reviews__heading">{{ block.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="nw-product-reviews__slider-wrap">
+      <div class="swiper nw-product-reviews__swiper" id="NwProductReviewsSwiper-{{ block.id }}">
+        <div class="swiper-wrapper">
+          {%- for i in (1..5) -%}
+            {%- liquid
+              assign quote_key = 'review_' | append: i | append: '_quote'
+              assign author_key = 'review_' | append: i | append: '_author'
+              assign rating_key = 'review_' | append: i | append: '_rating'
+              assign verified_key = 'review_' | append: i | append: '_verified'
+              assign review_quote = block.settings[quote_key]
+              assign review_author = block.settings[author_key]
+              assign review_rating = block.settings[rating_key] | default: 5
+              assign review_verified = block.settings[verified_key]
+            -%}
+            {%- if review_quote != blank -%}
+              <div class="swiper-slide">
+                <article class="nw-product-reviews__card">
+                  <div class="nw-product-reviews__card-top">
+                    {% render 'nw-stars',
+                      rating: review_rating,
+                      class: 'nw-product-reviews__stars',
+                      star_class: 'nw-product-reviews__star',
+                      icon: 'star'
+                    %}
+                    <div class="nw-product-reviews__quote rte">{{ review_quote }}</div>
+                  </div>
+                  <div class="nw-product-reviews__card-bottom">
+                    {%- if review_author != blank -%}
+                      <span class="nw-product-reviews__author">{{ review_author }}</span>
+                    {%- endif -%}
+                    {%- if review_verified -%}
+                      <div class="nw-product-reviews__verified">
+                        <span class="nw-product-reviews__verified-icon" aria-hidden="true">
+                          {% render 'nw-icon', icon: 'verified' %}
+                        </span>
+                        <span class="nw-product-reviews__verified-text">{{ block.settings.verified_text | default: 'Verified Customer' }}</span>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </article>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- if block.settings.show_pagination -%}
+        <div class="nw-swiper-pagination nw-product-reviews__pagination" id="NwProductReviewsPagination-{{ block.id }}"></div>
+      {%- endif -%}
+    </div>
+  </nw-product-reviews>
+{%- endif -%}

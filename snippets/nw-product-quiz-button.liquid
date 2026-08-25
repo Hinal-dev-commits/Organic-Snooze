@@ -1,0 +1,45 @@
+{% doc %}
+  Quiz CTA block for main product.
+  @param {object} block - Block settings
+{% enddoc %}
+
+{%- if block.settings.heading != blank or block.settings.button_label != blank -%}
+  <div
+    class="nw-product-quiz"
+    style="
+      --nw-pq-bg: {{ block.settings.bg_color | default: '#FFFCF0' }};
+      --nw-pq-border: {{ block.settings.border_color | default: '#F4EFE8' }};
+      --nw-pq-heading-color: {{ block.settings.heading_color | default: '#613916' }};
+      --nw-pq-text-color: {{ block.settings.text_color | default: '#613916' }};
+      --nw-pq-btn-bg: {{ block.settings.button_bg_color | default: '#878735' }};
+      --nw-pq-btn-text: {{ block.settings.button_text_color | default: '#FFFFFF' }};
+    "
+  >
+    <div class="nw-product-quiz__content">
+      <span class="nw-product-quiz__icon" aria-hidden="true">
+        {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
+          {%- render 'nw-icon', icon: 'custom', custom_icon: block.settings.custom_icon, img_class: 'nw-product-quiz__icon-img' -%}
+        {%- else -%}
+          {%- render 'nw-icon', icon: block.settings.icon | default: 'moon' -%}
+        {%- endif -%}
+      </span>
+      <div class="nw-product-quiz__copy">
+        {%- if block.settings.heading != blank -%}
+          <p class="nw-product-quiz__heading">{{ block.settings.heading }}</p>
+        {%- endif -%}
+        {%- if block.settings.text != blank -%}
+          <p class="nw-product-quiz__text">{{ block.settings.text }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if block.settings.button_label != blank -%}
+      {%- if block.settings.button_link != blank -%}
+        <a href="{{ block.settings.button_link }}" class="nw-product-quiz__btn">
+          {{ block.settings.button_label }}
+        </a>
+      {%- else -%}
+        <button type="button" class="nw-product-quiz__btn">{{ block.settings.button_label }}</button>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+{%- endif -%}

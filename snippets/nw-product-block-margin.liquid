@@ -1,0 +1,20 @@
+{% doc %}
+  Outputs margin CSS for main product blocks.
+  @param {object} section - The main product section object
+{% enddoc %}
+
+{%- for block in section.blocks -%}
+  #ProductBlock-{{ block.id }} {
+    margin-top: {{ block.settings.margin_top | default: 0 }}px;
+    margin-bottom: {{ block.settings.margin_bottom | default: 0 }}px;
+  }
+{%- endfor -%}
+
+@media screen and (max-width: 749px) {
+  {%- for block in section.blocks -%}
+    #ProductBlock-{{ block.id }} {
+      margin-top: {{ block.settings.margin_top_mobile | default: 0 }}px;
+      margin-bottom: {{ block.settings.margin_bottom_mobile | default: 0 }}px;
+    }
+  {%- endfor -%}
+}

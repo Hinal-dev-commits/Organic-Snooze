@@ -1,0 +1,52 @@
+{% doc %}
+  Founder quote block for main product.
+  @param {object} block - Block settings
+{% enddoc %}
+
+{%- if block.settings.quote != blank or block.settings.name != blank -%}
+  <div
+    class="nw-product-founder"
+    style="
+      --nw-pf-quote-color: {{ block.settings.quote_color | default: '#613916' }};
+      --nw-pf-name-color: {{ block.settings.name_color | default: '#613916' }};
+      --nw-pf-role-color: {{ block.settings.role_color | default: '#613916' }};
+      --nw-pf-bg: {{ block.settings.bg_color | default: 'transparent' }};
+    "
+  >
+    {%- if block.settings.quote != blank -%}
+      <div class="nw-product-founder__quote rte">{{ block.settings.quote }}</div>
+    {%- endif -%}
+
+    {%- if block.settings.avatar != blank or block.settings.name != blank or block.settings.role != blank -%}
+      <div class="nw-product-founder__author">
+        {%- if block.settings.avatar != blank -%}
+          <div class="nw-product-founder__avatar">
+            <img
+              src="{{ block.settings.avatar | image_url: width: 120 }}"
+              alt="{{ block.settings.name | escape }}"
+              width="48"
+              height="48"
+              loading="lazy"
+              class="nw-product-founder__avatar-img"
+            >
+          </div>
+        {%- endif -%}
+        <div class="nw-product-founder__meta">
+          {%- if block.settings.name != blank -%}
+            <div class="nw-product-founder__name-row">
+              <span class="nw-product-founder__name">{{ block.settings.name }}</span>
+              {%- if block.settings.show_verified -%}
+                <span class="nw-product-founder__verified" aria-label="Verified">
+                  {% render 'nw-icon', icon: 'verified-3' %}
+                </span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          {%- if block.settings.role != blank -%}
+            <p class="nw-product-founder__role">{{ block.settings.role }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
