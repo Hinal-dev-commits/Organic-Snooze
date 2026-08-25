@@ -1,0 +1,444 @@
+{{ 'nw-benefits-v2.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwBenefitsV2-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    position: relative;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: 'var(--tertiary-color, #F4EFE8)' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        isolation: isolate;
+        overflow: hidden;
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  {% if section.settings.bg_type == 'image' and section.settings.bg_image != blank %}
+    #NwBenefitsV2-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    {% if section.settings.bg_overlay_color != blank %}
+      #NwBenefitsV2-{{ section.id }}::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-color: {{ section.settings.bg_overlay_color }};
+        z-index: -1;
+        pointer-events: none;
+      }
+    {% endif %}
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    #NwBenefitsV2-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+      #NwBenefitsV2-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {% endif %}
+  }
+</style>
+
+<div
+  id="NwBenefitsV2-{{ section.id }}"
+  class="nw-benefits-v2 section-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="nw-benefits-v2__container">
+      {%- assign benefit_blocks = section.blocks | where: 'type', 'benefit' -%}
+      {%- assign logo_blocks = section.blocks | where: 'type', 'logo' -%}
+
+      {%- if benefit_blocks.size > 0 -%}
+        <div class="nw-benefits-v2__grid">
+          {%- for block in benefit_blocks -%}
+            <div class="nw-benefits-v2__item" {{ block.shopify_attributes }}>
+              <div class="nw-benefits-v2__icon-wrap">
+                {%- if block.settings.use_custom_image and block.settings.custom_image != blank -%}
+                  <img
+                    src="{{ block.settings.custom_image | image_url: width: 120 }}"
+                    alt="{{ block.settings.text | strip_html | escape }}"
+                    width="32"
+                    height="32"
+                    loading="lazy"
+                    class="nw-benefits-v2__icon-img"
+                  >
+                {%- else -%}
+                  {% render 'nw-icon', icon: block.settings.icon %}
+                {%- endif -%}
+              </div>
+              {%- if block.settings.text != blank -%}
+                <div class="nw-benefits-v2__text">
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if logo_blocks.size > 0 -%}
+        <div class="nw-benefits-v2__logos">
+          {%- for block in logo_blocks -%}
+            {%- unless forloop.first -%}
+              <span class="nw-benefits-v2__divider" aria-hidden="true"></span>
+            {%- endunless -%}
+            <{% if block.settings.link != blank %}a href="{{ block.settings.link }}"{% else %}div{% endif %}
+              class="nw-benefits-v2__logo-box"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.use_custom_image and block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 320 }}"
+                  alt="{{ block.settings.text | escape }}"
+                  loading="lazy"
+                  class="nw-benefits-v2__logo-img"
+                  height=""
+                  width=""
+                >
+              {%- elsif block.settings.logo_type == 'hsa_fsa' -%}
+                <svg
+                  class="nw-benefits-v2__partner-svg"
+                  viewBox="0 0 149 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-label="HSA / FSA Eligible"
+                >
+                  <rect x="14" y="8" width="52" height="32" rx="4" fill="#000000"/>
+                  <text x="40" y="30" font-family="'DM Sans', sans-serif" font-weight="700" font-size="16" fill="#FFFFFF" text-anchor="middle">HSA</text>
+                  <rect x="74" y="8" width="52" height="32" rx="4" fill="#000000"/>
+                  <text x="100" y="30" font-family="'DM Sans', sans-serif" font-weight="700" font-size="16" fill="#FFFFFF" text-anchor="middle">FSA</text>
+                </svg>
+              {%- else -%}
+                <svg
+                  class="nw-benefits-v2__partner-svg"
+                  viewBox="0 0 117 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-label="Affirm"
+                >
+                  <path d="M72.4 12.2c-5.8-3.6-13.8-4-20.4-2.1" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
+                  <text x="58.5" y="36" font-family="'DM Sans', sans-serif" font-weight="700" font-size="28" fill="#111111" text-anchor="middle">affirm</text>
+                </svg>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank -%}
+                <span class="nw-benefits-v2__logo-sub">{{ block.settings.text }}</span>
+              {%- endif -%}
+            </{% if block.settings.link != blank %}a href="{{ block.settings.link }}"{% else %}div{% endif %}>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Benefits V2",
+  "tag": "section",
+  "class": "section-nw-benefits-v2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F4EFE8",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "id": "bg_overlay_color",
+      "label": "Background Overlay Color",
+      "default": "rgba(244, 239, 232, 0.84)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "moneyback",
+              "label": "Money Back"
+            },
+            {
+              "value": "financing",
+              "label": "Financing / Percent"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "shield",
+              "label": "shield"
+            },
+            {
+              "value": "truck",
+              "label": "Free Shipping"
+            },
+            {
+              "value": "trial",
+              "label": "Trial"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "verified",
+              "label": "Verified"
+            }
+          ],
+          "default": "moneyback"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_image",
+          "label": "Use Custom Image",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image",
+          "visible_if": "{{ block.settings.use_custom_image == true }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Benefit Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    },
+    {
+      "type": "logo",
+      "name": "Partner Logo",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_image",
+          "label": "Use Custom Image",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo Image",
+          "visible_if": "{{ block.settings.use_custom_image == true }}"
+        },
+        {
+          "type": "select",
+          "id": "logo_type",
+          "label": "Logo Preset",
+          "options": [
+            {
+              "value": "affirm",
+              "label": "Affirm"
+            },
+            {
+              "value": "hsa_fsa",
+              "label": "HSA / FSA"
+            }
+          ],
+          "default": "affirm",
+          "visible_if": "{{ block.settings.use_custom_image == false }}"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Subtitle",
+          "default": "Pay over time"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Benefits V2",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "financing",
+            "text": "0% Interest financing options"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "warranty",
+            "text": "30-Year Warranty"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "text": "Free Shipping"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "logo_type": "affirm",
+            "text": "Pay over time"
+          }
+        },
+        {
+          "type": "logo",
+          "settings": {
+            "logo_type": "hsa_fsa",
+            "text": "Use your benefits"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

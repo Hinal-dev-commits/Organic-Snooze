@@ -1,0 +1,429 @@
+{{ 'nw-product-card.css' | asset_url | stylesheet_tag }}
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-collections.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-collections.js' | asset_url }}" defer="defer"></script>
+
+{%- assign nw_shell_selector = '#NwCollections-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+
+<nw-collections
+  id="NwCollections-{{ section.id }}"
+  class="nw-collections section-{{ section.id }}"
+>
+  <div class="nw-collections__container">
+    {%- if section.settings.heading != blank
+      or section.settings.description != blank
+      or section.settings.eyebrow != blank
+    -%}
+      <div class="nw-collections__header">
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.description,
+          section_index: section.index
+        %}
+      </div>
+    {%- endif -%}
+
+    {%- assign collection_blocks = section.blocks | where: 'type', 'collection' -%}
+
+    {%- if collection_blocks.size > 0 -%}
+      <div class="nw-collections__tabs-wrap">
+        <div class="nw-collections__tabs" role="tablist" aria-label="Collections">
+          {%- for block in collection_blocks -%}
+            {%- liquid
+              assign tab_title = block.settings.label
+              if tab_title == blank and block.settings.collection != blank
+                assign tab_title = block.settings.collection.title
+              endif
+              if tab_title == blank
+                assign tab_title = 'Collection ' | append: forloop.index
+              endif
+            -%}
+            <button
+              type="button"
+              class="nw-collections__tab{% if forloop.first %} is-active{% endif %}"
+              id="NwCollectionTabBtn-{{ section.id }}-{{ forloop.index0 }}"
+              role="tab"
+              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-controls="NwCollectionTabPanel-{{ section.id }}-{{ forloop.index0 }}"
+              tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+              data-nw-collection-tab="{{ forloop.index0 }}"
+              data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              {{ tab_title }}
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="nw-collections__panels">
+        {%- for block in collection_blocks -%}
+          {%- liquid
+            assign current_collection = block.settings.collection
+            assign prod_limit = section.settings.products_to_show | default: 8
+          -%}
+          <div
+            class="nw-collections__panel"
+            id="NwCollectionTabPanel-{{ section.id }}-{{ forloop.index0 }}"
+            data-nw-collection-panel="{{ forloop.index0 }}"
+            role="tabpanel"
+            aria-labelledby="NwCollectionTabBtn-{{ section.id }}-{{ forloop.index0 }}"
+            {% unless forloop.first %}
+              hidden
+            {% endunless %}
+          >
+            {%- if current_collection != blank and current_collection.products_count > 0 -%}
+              {%- if section.settings.show_product_count -%}
+                <div class="nw-collections__count-bar">
+                  <span>
+                    {{- current_collection.products_count }}
+                    {{ current_collection.products_count | pluralize: 'Product', 'Products' -}}
+                  </span>
+                </div>
+              {%- endif -%}
+
+              <div class="nw-collections__grid">
+                {%- for product in current_collection.products limit: prod_limit -%}
+                  {% render 'nw-product-card',
+                    product: product,
+                    section_id: section.id,
+                    show_rating: section.settings.show_rating_on_card,
+                    show_firmness: section.settings.show_firmness,
+                    show_seller_tag: section.settings.show_seller_tag,
+                    button_text: section.settings.pcard_button_text,
+                    button_style: section.settings.pcard_button_style,
+                    lazy_load: true
+                  %}
+                {%- endfor -%}
+              </div>
+            {%- elsif current_collection != blank -%}
+              <div class="nw-collections__empty">No products found in this collection.</div>
+            {%- else -%}
+              <div class="nw-collections__empty">Select a collection to display products.</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_button and section.settings.button_label != blank -%}
+      {%- liquid
+        assign action_btn_link = section.settings.button_link
+        if action_btn_link == blank and collection_blocks.size > 0
+          assign first_block = collection_blocks | first
+          if first_block.settings.collection != blank
+            assign action_btn_link = first_block.settings.collection.url
+          endif
+        endif
+      -%}
+      <div class="nw-collections__footer">
+        <a
+          href="{{ action_btn_link | default: '#' }}"
+          class="nw-btn nw-btn--{{ section.settings.button_style | default: 'primary' }}"
+          data-nw-collection-action-btn
+        >
+          <span class="nw-btn__text">{{ section.settings.button_label }}</span>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</nw-collections>
+
+{% schema %}
+{
+  "name": "NW Collections",
+  "tag": "section",
+  "class": "section-nw-collections",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "PRODUCT SETTINGS"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products To Show Per Tab",
+      "min": 2,
+      "max": 24,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show Product Count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_on_card",
+      "label": "Show Card Rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_firmness",
+      "label": "Show Firmness Bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_seller_tag",
+      "label": "Show Seller Tag",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "pcard_button_text",
+      "label": "Card Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "select",
+      "id": "pcard_button_style",
+      "label": "Card Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Tab",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tab Label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Collections",
+      "blocks": [
+        {
+          "type": "collection",
+          "settings": {
+            "label": "Bestsellers"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "label": "All"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "label": "Mattress"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "label": "Bedding"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

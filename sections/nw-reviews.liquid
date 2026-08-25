@@ -1,0 +1,515 @@
+{{ 'nw-reviews.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-reviews.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  #NwReviews-{{ section.id }} {
+    display: block;
+    width: 100%;
+    position: relative;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    --nw-reviews-insight-bg: {{ section.settings.insight_bg_color | default: 'rgba(97, 57, 22, 0.6)' }};
+    --nw-swiper-arrow-bg: {{ section.settings.arrow_bg_color | default: '#CC926A' }};
+    --nw-swiper-arrow-color: {{ section.settings.arrow_color | default: '#FFFFFF' }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color | default: '#FFFFFF' }};
+    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+    --nw-reviews-play-color: {{ section.settings.play_icon_color | default: '#613916' }};
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#201309' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        {% if section.settings.bg_image != blank %}
+          background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+          background-size: cover;
+          background-position: 20% 15%;
+          background-repeat: no-repeat;
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwReviews-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+        background-size: cover;
+        background-position: 10% 10%;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+<nw-reviews
+  id="NwReviews-{{ section.id }}"
+  class="nw-reviews section-{{ section.id }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-dots="{{ section.settings.show_dots }}"
+  data-autoplay="{{ section.settings.enable_autoplay }}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
+>
+  <div class="nw-reviews__container">
+    <div class="nw-reviews__left">
+      {%- if section.settings.heading != blank
+        or section.settings.subheading != blank
+        or section.settings.eyebrow != blank
+      -%}
+        <div class="nw-reviews__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index,
+            heading_class: 'nw-reviews__heading-wrap'
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_insight_card and section.blocks.size > 0 -%}
+        <div class="nw-reviews__insight-card">
+          <div class="swiper nw-reviews__insight-slider" data-nw-insight-slider>
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                  <div class="nw-reviews__insight-slide">
+                    {%- if block.settings.insight_icon != 'none' and block.settings.insight_icon != blank -%}
+                      <div class="nw-reviews__insight-icon-wrap">
+                        {% render 'nw-icon', icon: block.settings.insight_icon %}
+                      </div>
+                    {%- endif -%}
+                    <div class="nw-reviews__insight-content">
+                      {%- if block.settings.insight_tag != blank -%}
+                        <p class="nw-reviews__insight-tag">{{ block.settings.insight_tag }}</p>
+                      {%- endif -%}
+                      {%- if block.settings.insight_text != blank -%}
+                        <div class="nw-reviews__insight-text">{{ block.settings.insight_text }}</div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+          {%- if section.blocks.size > 1 -%}
+            <div class="nw-reviews__insight-pagination" data-nw-insight-pagination></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="nw-reviews__right">
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-reviews__slider-wrap">
+          {%- if section.settings.show_arrows -%}
+            {% render 'nw-swiper-arrows', prev_label: 'Previous review', next_label: 'Next review' %}
+          {%- endif -%}
+
+          <div class="swiper nw-reviews__swiper" data-nw-review-slider>
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                  <article class="nw-reviews__card">
+                    <div class="nw-reviews__media">
+                      {%- if block.settings.video != blank -%}
+                        {{
+                          block.settings.video
+                          | video_tag:
+                            autoplay: false,
+                            loop: true,
+                            muted: false,
+                            controls: false,
+                            playsinline: true,
+                            preload: 'none',
+                            class: 'nw-reviews__video',
+                            image_size: '800x'
+                        }}
+                      {%- endif -%}
+                      {%- if block.settings.poster != blank -%}
+                        <img
+                          src="{{ block.settings.poster | image_url: width: 700 }}"
+                          alt="Customer review video"
+                          loading="lazy"
+                          class="nw-reviews__poster"
+                          width="343"
+                          height="578"
+                        >
+                      {%- elsif block.settings.image != blank -%}
+                        <img
+                          src="{{ block.settings.image | image_url: width: 700 }}"
+                          alt="Customer review"
+                          loading="lazy"
+                          class="nw-reviews__poster"
+                          width="343"
+                          height="578"
+                        >
+                      {%- endif -%}
+                      {%- if block.settings.video != blank -%}
+                        <button type="button" class="nw-reviews__play-btn" aria-label="Toggle video playback">
+                          <span class="nw-reviews__play-icon">
+                            {% render 'nw-icon', icon: 'play' %}
+                          </span>
+                          <span class="nw-reviews__pause-icon">
+                            {% render 'nw-icon', icon: 'pause' %}
+                          </span>
+                        </button>
+                      {%- endif -%}
+                    </div>
+                  </article>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.settings.show_dots -%}
+            <div class="nw-swiper-pagination" data-nw-review-pagination></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-reviews>
+
+{% schema %}
+{
+  "name": "NW Reviews",
+  "tag": "section",
+  "class": "section-nw-reviews",
+  "settings": [
+    {
+      "type": "header",
+      "content": "HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#E57B1E",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color_inactive",
+      "label": "Inactive Star Color",
+      "default": "#D1D5DB",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Real sleepers, real mornings"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sleep Is Where Recovery Happens"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Human biologist Gary Brecka helped design the Ultimate Snooze around one idea: your body recovers while you sleep. Clean, organic materials help it happen.</p>"
+    },
+    {
+      "type": "header",
+      "content": "INSIGHT CARD"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_insight_card",
+      "label": "Show Insight Card",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "insight_bg_color",
+      "label": "Insight Card Background",
+      "default": "rgba(97, 57, 22, 0.6)",
+      "visible_if": "{{ section.settings.show_insight_card == true }}"
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (Seconds)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "color",
+      "id": "arrow_bg_color",
+      "label": "Arrow Background Color",
+      "default": "#CC926A",
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow Icon Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_dots == true }}"
+    },
+    {
+      "type": "color",
+      "id": "play_icon_color",
+      "label": "Play Icon Color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#201309",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review Card",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Video Poster Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Fallback Card Image"
+        },
+        {
+          "type": "text",
+          "id": "insight_tag",
+          "label": "Insight Tag",
+          "default": "Recovery Insight #1"
+        },
+        {
+          "type": "richtext",
+          "id": "insight_text",
+          "label": "Insight Text",
+          "default": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>"
+        },
+        {
+          "type": "select",
+          "id": "insight_icon",
+          "label": "Insight Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "wind",
+              "label": "Wind"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "thermometer",
+              "label": "Thermometer"
+            }
+          ],
+          "default": "none"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "insight_tag": "Recovery Insight #1",
+            "insight_text": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>",
+            "insight_icon": "none"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "insight_tag": "SLEEP FACT · 02",
+            "insight_text": "<p>Deep sleep is when your body repairs and recovers.</p>",
+            "insight_icon": "moon"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "insight_tag": "SLEEP FACT · 03",
+            "insight_text": "<p>A cooler bed supports deeper, less interrupted sleep.</p>",
+            "insight_icon": "thermometer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "insight_tag": "SLEEP FACT · 04",
+            "insight_text": "<p>What you breathe at night is as important as your sleep duration.</p>",
+            "insight_icon": "wind"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

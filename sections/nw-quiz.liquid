@@ -1,0 +1,336 @@
+{{ 'nw-quiz.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwQuiz-{{ section.id }} {
+    display: block;
+    width: 100%;
+    position: relative;
+    isolation: isolate;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFCF0' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        {% if section.settings.bg_image != blank %}
+          background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  {% if section.settings.bg_type == 'image' and section.settings.bg_overlay_color != blank %}
+    #NwQuiz-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_overlay_color }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    #NwQuiz-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+    {% if section.settings.image_mobile != blank %}
+      #NwQuiz-{{ section.id }} .nw-quiz__image--desktop {
+        display: none !important;
+      }
+      #NwQuiz-{{ section.id }} .nw-quiz__image--mobile {
+        display: block !important;
+      }
+    {% endif %}
+  }
+</style>
+
+<section
+  id="NwQuiz-{{ section.id }}"
+  class="nw-quiz section-{{ section.id }}"
+>
+  <div class="nw-quiz__container">
+    <div class="nw-quiz__card nw-quiz__card--image-{{ section.settings.image_position }}">
+      <div class="nw-quiz__media">
+        {%- if section.settings.image != blank -%}
+          {%- if section.settings.image_mobile != blank -%}
+            <img
+              src="{{ section.settings.image_mobile | image_url: width: 800 }}"
+              alt="{{ section.settings.image_mobile.alt | default: section.settings.heading | escape }}"
+              loading="lazy"
+              class="nw-quiz__image nw-quiz__image--mobile"
+              width="{{ section.settings.image_mobile.width | default: 307 }}"
+              height="{{ section.settings.image_mobile.height | default: 205 }}"
+            >
+          {%- endif -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 1200 }}"
+            alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+            loading="lazy"
+            class="nw-quiz__image{% if section.settings.image_mobile != blank %} nw-quiz__image--desktop{% endif %}"
+            width="{{ section.settings.image.width | default: 568 }}"
+            height="{{ section.settings.image.height | default: 347 }}"
+          >
+        {%- else -%}
+          <div class="nw-quiz__image-placeholder">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="nw-quiz__content">
+        <div class="nw-quiz__text-wrap">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index,
+            heading_class: 'nw-quiz__heading'
+          %}
+        </div>
+
+        {%- if section.settings.show_button and section.settings.button_label != blank -%}
+          {% render 'nw-button',
+            text: section.settings.button_label,
+            link: section.settings.button_link,
+            style: section.settings.button_style,
+            btn_class: 'nw-quiz__button'
+          %}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW Quiz",
+  "tag": "section",
+  "class": "section-nw-quiz",
+  "settings": [
+    {
+      "type": "header",
+      "content": "IMAGE SETTINGS"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Not sure which mattress to pick?"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Answer a few quick questions and we'll match you to your feel.</p>"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "TAKE THE 60-SECOND QUIZ",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "id": "bg_overlay_color",
+      "label": "Background Overlay Color",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Quiz",
+      "settings": {
+        "heading": "Not sure which mattress to pick?",
+        "subheading": "<p>Answer a few quick questions and we'll match you to your feel.</p>",
+        "show_button": true,
+        "button_label": "TAKE THE 60-SECOND QUIZ",
+        "button_style": "primary",
+        "image_position": "left",
+        "bg_type": "color",
+        "bg_color": "#FFFCF0"
+      }
+    }
+  ]
+}
+{% endschema %}

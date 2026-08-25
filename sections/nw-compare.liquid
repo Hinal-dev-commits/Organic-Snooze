@@ -1,0 +1,594 @@
+{{ 'nw-compare.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwCompare-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    --nw-compare-p1-bg: {{ section.settings.product_1_bg_color | default: 'var(--quinary-color, #FFFCF0)' }};
+    --nw-compare-p2-bg: {{ section.settings.product_2_bg_color | default: 'var(--tertiary-color, #F4EFE8)' }};
+    position: relative;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        {% if section.settings.bg_image != blank %}
+          background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwCompare-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<div
+  id="NwCompare-{{ section.id }}"
+  class="nw-compare section-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="nw-compare__container">
+      {%- if section.settings.heading != blank or section.settings.description != blank -%}
+        <div class="nw-compare__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.description,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      <div class="nw-compare__table-wrap">
+        <div class="nw-compare__table">
+          <div class="nw-compare__row nw-compare__row--head">
+            <div class="nw-compare__cell nw-compare__cell--p1 nw-compare__cell--head nw-compare__cell--p1-head">
+              {%- if section.settings.product_1_image != blank -%}
+                <div class="nw-compare__head-img-wrap">
+                  <img
+                    src="{{ section.settings.product_1_image | image_url: width: 320 }}"
+                    alt="{{ section.settings.product_1_title | strip_html | escape }}"
+                    loading="lazy"
+                    class="nw-compare__head-img"
+                    width="151"
+                    height="113"
+                  >
+                </div>
+              {%- endif -%}
+              {%- if section.settings.product_1_title != blank -%}
+                <span class="nw-compare__head-title">{{ section.settings.product_1_title }}</span>
+              {%- endif -%}
+            </div>
+
+            <div class="nw-compare__cell nw-compare__cell--p2 nw-compare__cell--head nw-compare__cell--p2-head">
+              {%- if section.settings.product_2_tag != blank -%}
+                <span class="nw-compare__tag">{{ section.settings.product_2_tag }}</span>
+              {%- endif -%}
+              {%- if section.settings.product_2_image != blank -%}
+                <div class="nw-compare__head-img-wrap">
+                  <img
+                    src="{{ section.settings.product_2_image | image_url: width: 320 }}"
+                    alt="{{ section.settings.product_2_title | strip_html | escape }}"
+                    loading="lazy"
+                    class="nw-compare__head-img"
+                    width="151"
+                    height="113"
+                  >
+                </div>
+              {%- endif -%}
+              {%- if section.settings.product_2_title != blank -%}
+                <span class="nw-compare__head-title">{{ section.settings.product_2_title }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- for block in section.blocks -%}
+            <div class="nw-compare__row" {{ block.shopify_attributes }}>
+              <div class="nw-compare__cell nw-compare__cell--feature">
+                {%- if block.settings.feature_name != blank -%}
+                  <span class="nw-compare__feature-name">{{ block.settings.feature_name }}</span>
+                {%- endif -%}
+                {%- if block.settings.show_info_icon -%}
+                  <span class="nw-compare__info-btn" tabindex="0" role="button" aria-label="More information">
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      role="img"
+                      aria-hidden="true"
+                    >
+                      <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/>
+                      <path d="M8 7V11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                      <circle cx="8" cy="5" r="0.75" fill="currentColor"/>
+                    </svg>
+                    {%- if block.settings.info_tooltip != blank -%}
+                      <span class="nw-compare__info-tooltip">{{ block.settings.info_tooltip }}</span>
+                    {%- endif -%}
+                  </span>
+                {%- endif -%}
+              </div>
+
+              <div class="nw-compare__cell nw-compare__cell--p1">
+                {%- if block.settings.product_1_type == 'check' -%}
+                  <span class="nw-compare__check-icon">
+                    {{ 'verified-check.svg' | inline_asset_content }}
+                  </span>
+                {%- elsif block.settings.product_1_type == 'cross' -%}
+                  <span class="nw-compare__cross-icon">
+                    {{ 'cross-circle.svg' | inline_asset_content }}
+                  </span>
+                {%- elsif block.settings.product_1_text != blank -%}
+                  <span class="nw-compare__cell-text">{{ block.settings.product_1_text }}</span>
+                {%- endif -%}
+              </div>
+
+              <div class="nw-compare__cell nw-compare__cell--p2">
+                {%- if block.settings.product_2_type == 'check' -%}
+                  <span class="nw-compare__check-icon">
+                    {{ 'verified-check.svg' | inline_asset_content }}
+                  </span>
+                {%- elsif block.settings.product_2_type == 'cross' -%}
+                  <span class="nw-compare__cross-icon">
+                    {{ 'cross-circle.svg' | inline_asset_content }}
+                  </span>
+                {%- elsif block.settings.product_2_text != blank -%}
+                  <span class="nw-compare__cell-text">{{ block.settings.product_2_text }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+
+          {%- if section.settings.product_1_show_btn or section.settings.product_2_show_btn -%}
+            <div class="nw-compare__row nw-compare__row--action">
+              <div class="nw-compare__cell nw-compare__cell--p1 nw-compare__cell--action">
+                {%- if section.settings.product_1_show_btn and section.settings.product_1_btn_text != blank -%}
+                  {% render 'nw-button',
+                    text: section.settings.product_1_btn_text,
+                    link: section.settings.product_1_btn_link,
+                    style: section.settings.product_1_btn_style
+                  %}
+                {%- endif -%}
+              </div>
+
+              <div class="nw-compare__cell nw-compare__cell--p2 nw-compare__cell--action">
+                {%- if section.settings.product_2_show_btn and section.settings.product_2_btn_text != blank -%}
+                  {% render 'nw-button',
+                    text: section.settings.product_2_btn_text,
+                    link: section.settings.product_2_btn_link,
+                    style: section.settings.product_2_btn_style
+                  %}
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Compare",
+  "tag": "section",
+  "class": "section-nw-compare",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Which Snooze Is Right for You?"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Same clean organic build. Two feels. Pick the support your body wants.</p>"
+    },
+    {
+      "type": "header",
+      "content": "PRODUCT 1 (LEFT COLUMN)"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_1_image",
+      "label": "Product Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "product_1_title",
+      "label": "Product Title",
+      "default": "Pure Mattress"
+    },
+    {
+      "type": "color",
+      "id": "product_1_bg_color",
+      "label": "Column Background Color",
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_1_show_btn",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product_1_btn_text",
+      "label": "Button Label",
+      "default": "SHOP NOW",
+      "visible_if": "{{ section.settings.product_1_show_btn == true }}"
+    },
+    {
+      "type": "url",
+      "id": "product_1_btn_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.product_1_show_btn == true }}"
+    },
+    {
+      "type": "select",
+      "id": "product_1_btn_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary",
+      "visible_if": "{{ section.settings.product_1_show_btn == true }}"
+    },
+    {
+      "type": "header",
+      "content": "PRODUCT 2 (RIGHT COLUMN)"
+    },
+    {
+      "type": "text",
+      "id": "product_2_tag",
+      "label": "Top Badge Tag",
+      "default": "Gary Brecka Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_2_image",
+      "label": "Product Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "product_2_title",
+      "label": "Product Title",
+      "default": "Pillowtop Mattress"
+    },
+    {
+      "type": "color",
+      "id": "product_2_bg_color",
+      "label": "Column Background Color",
+      "default": "#F4EFE8"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_2_show_btn",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "product_2_btn_text",
+      "label": "Button Label",
+      "default": "SHOP NOW",
+      "visible_if": "{{ section.settings.product_2_show_btn == true }}"
+    },
+    {
+      "type": "url",
+      "id": "product_2_btn_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.product_2_show_btn == true }}"
+    },
+    {
+      "type": "select",
+      "id": "product_2_btn_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "default": "primary",
+      "visible_if": "{{ section.settings.product_2_show_btn == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "feature_name",
+          "label": "Feature Name",
+          "default": "Feel"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_info_icon",
+          "label": "Show Info Icon",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "info_tooltip",
+          "label": "Info Tooltip Text",
+          "visible_if": "{{ block.settings.show_info_icon == true }}"
+        },
+        {
+          "type": "select",
+          "id": "product_1_type",
+          "label": "Product 1 Content Type",
+          "options": [
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "check",
+              "label": "Checkmark"
+            },
+            {
+              "value": "cross",
+              "label": "Cross"
+            }
+          ],
+          "default": "text"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "product_1_text",
+          "label": "Product 1 Text",
+          "default": "Firm",
+          "visible_if": "{{ block.settings.product_1_type == 'text' }}"
+        },
+        {
+          "type": "select",
+          "id": "product_2_type",
+          "label": "Product 2 Content Type",
+          "options": [
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "check",
+              "label": "Checkmark"
+            },
+            {
+              "value": "cross",
+              "label": "Cross"
+            }
+          ],
+          "default": "text"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "product_2_text",
+          "label": "Product 2 Text",
+          "default": "Medium Plush",
+          "visible_if": "{{ block.settings.product_2_type == 'text' }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Compare",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "Feel",
+            "product_1_type": "text",
+            "product_1_text": "Firm",
+            "product_2_type": "text",
+            "product_2_text": "Medium Plush"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "Sleep Position",
+            "product_1_type": "text",
+            "product_1_text": "Back and Stomach",
+            "product_2_type": "text",
+            "product_2_text": "Side and Combination"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "Comfort layer",
+            "product_1_type": "text",
+            "product_1_text": "Organic Latex",
+            "product_2_type": "text",
+            "product_2_text": "4\" organic latex"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "Coil support",
+            "product_1_type": "text",
+            "product_1_text": "800 Pocketed Steel Coil, Support System",
+            "product_2_type": "text",
+            "product_2_text": "1,100 Pocketed Steel Coil, Zoned System"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "100% Organic Build",
+            "show_info_icon": true,
+            "info_tooltip": "GOTS and GOLS certified organic materials",
+            "product_1_type": "check",
+            "product_2_type": "check"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "30-yr warranty",
+            "product_1_type": "check",
+            "product_2_type": "check"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "100-night trial",
+            "product_1_type": "check",
+            "product_2_type": "check"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "feature_name": "From /mo (Affirm)",
+            "product_1_type": "text",
+            "product_1_text": "$80/mo",
+            "product_2_type": "text",
+            "product_2_text": "$100/mo"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

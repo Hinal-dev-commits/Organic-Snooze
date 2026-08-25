@@ -1,0 +1,344 @@
+{{ 'nw-featured-marquee.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-featured-marquee.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  #NwFeaturedMarquee-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    position: relative;
+    --nw-fm-speed: {{ section.settings.speed }}s;
+    --nw-fm-gap-dt: {{ section.settings.gap_desktop }}px;
+    --nw-fm-gap-mb: {{ section.settings.gap_mobile }}px;
+    --nw-fm-height-dt: {{ section.settings.logo_height_desktop }}px;
+    --nw-fm-height-mb: {{ section.settings.logo_height_mobile }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: 'var(--quinary-color, #FFFCF0)' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        {% if section.settings.bg_image != blank %}
+          background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwFeaturedMarquee-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      {% endif %}
+    }
+  }
+</style>
+
+<nw-featured-marquee
+  id="NwFeaturedMarquee-{{ section.id }}"
+  class="nw-featured-marquee nw-featured-marquee--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} nw-featured-marquee--pause{% endif %}{% if section.settings.show_edge_fade %} nw-featured-marquee--edge-fade{% endif %} section-{{ section.id }}"
+  data-direction="{{ section.settings.direction }}"
+  data-speed="{{ section.settings.speed }}"
+  data-pause-hover="{{ section.settings.pause_on_hover }}"
+>
+  <div class="nw-featured-marquee__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="nw-featured-marquee__heading">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="nw-featured-marquee__wrapper">
+        <div class="nw-featured-marquee__track">
+          {%- for i in (1..2) -%}
+            <div
+              class="nw-featured-marquee__group"
+              aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+            >
+              {%- for block in section.blocks -%}
+                <div class="nw-featured-marquee__item" {{ block.shopify_attributes }}>
+                  {%- if block.settings.link != blank -%}
+                    <a href="{{ block.settings.link }}" class="nw-featured-marquee__link" aria-label="{{ block.settings.image.alt | default: 'Partner' | escape }}">
+                  {%- endif -%}
+
+                  {%- if block.settings.svg_code != blank -%}
+                    <span class="nw-featured-marquee__svg-wrap">
+                      {{ block.settings.svg_code }}
+                    </span>
+                  {%- elsif block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 400 }}"
+                      alt="{{ block.settings.image.alt | default: 'Partner logo' | escape }}"
+                      loading="lazy"
+                      class="nw-featured-marquee__img"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                    >
+                  {%- else -%}
+                    <span class="nw-featured-marquee__svg-wrap">
+                      {{ 'image' | placeholder_svg_tag: 'nw-featured-marquee__img' }}
+                    </span>
+                  {%- endif -%}
+
+                  {%- if block.settings.link != blank -%}
+                    </a>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</nw-featured-marquee>
+
+{% schema %}
+{
+  "name": "NW Featured Marquee",
+  "tag": "section",
+  "class": "section-nw-featured-marquee",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FEATURED ON"
+    },
+    {
+      "type": "header",
+      "content": "MARQUEE SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "options": [
+        {
+          "value": "rtl",
+          "label": "Right To Left"
+        },
+        {
+          "value": "ltr",
+          "label": "Left To Right"
+        }
+      ],
+      "default": "rtl"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Speed",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "unit": "s",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause On Hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_edge_fade",
+      "label": "Show Edge Gradient / Shadow",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "label": "Gap (Desktop)",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Gap (Mobile)",
+      "min": 10,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "logo_height_desktop",
+      "label": "Logo Height (Desktop)",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "label": "Logo Height (Mobile)",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Partner Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo Image"
+        },
+        {
+          "type": "html",
+          "id": "svg_code",
+          "label": "SVG Code (Optional)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Featured Marquee",
+      "blocks": [
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        },
+        {
+          "type": "logo"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
