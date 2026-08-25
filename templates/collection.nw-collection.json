@@ -148,10 +148,10 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_benefits_cHV6Kc": {
-      "type": "nw-benefits",
+    "nw_benefits_v2_LCKAka": {
+      "type": "nw-benefits-v2",
       "blocks": {
-        "benefit_kRwYcq": {
+        "benefit_FERej7": {
           "type": "benefit",
           "settings": {
             "icon": "moneyback",
@@ -159,7 +159,7 @@
             "text": "100-Night Risk-Free Trial"
           }
         },
-        "benefit_K6FmHr": {
+        "benefit_fCkEyf": {
           "type": "benefit",
           "settings": {
             "icon": "shield",
@@ -167,7 +167,7 @@
             "text": "30-Year Warranty"
           }
         },
-        "benefit_CepMkC": {
+        "benefit_xrerXA": {
           "type": "benefit",
           "settings": {
             "icon": "financing",
@@ -175,7 +175,7 @@
             "text": "0% Interest financing options"
           }
         },
-        "benefit_UgUNf6": {
+        "benefit_XkPUEw": {
           "type": "benefit",
           "settings": {
             "icon": "truck",
@@ -183,7 +183,7 @@
             "text": "Free Shipping"
           }
         },
-        "logo_jTpYYn": {
+        "logo_NVwYWR": {
           "type": "logo",
           "settings": {
             "use_custom_image": true,
@@ -193,7 +193,7 @@
             "link": ""
           }
         },
-        "logo_zCfyji": {
+        "logo_7PtUNj": {
           "type": "logo",
           "settings": {
             "use_custom_image": true,
@@ -205,20 +205,19 @@
         }
       },
       "block_order": [
-        "benefit_kRwYcq",
-        "benefit_K6FmHr",
-        "benefit_CepMkC",
-        "benefit_UgUNf6",
-        "logo_jTpYYn",
-        "logo_zCfyji"
+        "benefit_FERej7",
+        "benefit_fCkEyf",
+        "benefit_xrerXA",
+        "benefit_XkPUEw",
+        "logo_NVwYWR",
+        "logo_7PtUNj"
       ],
-      "name": "NW Benefits",
+      "name": "NW Benefits V2",
       "settings": {
-        "bg_type": "image",
-        "bg_color": "#f4efe8",
+        "bg_type": "color",
+        "bg_color": "#F4EFE8",
         "bg_gradient": "",
-        "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_overlay_color": "#f4efe8d6",
+        "bg_overlay_color": "rgba(244, 239, 232, 0.84)",
         "padding_top_desktop": 40,
         "padding_bottom_desktop": 40,
         "padding_top_mobile": 40,
@@ -509,19 +508,15 @@
         "image_position": "left",
         "heading": "Not sure which mattress to pick?",
         "subheading": "<p>Answer a few quick questions and we'll match you to your feel.</p>",
-        "heading_color": "#613916",
-        "text_color": "#613916",
+        "show_button": true,
         "button_label": "TAKE THE 60-SECOND QUIZ",
         "button_link": "",
-        "button_bg_color": "#CC926A",
-        "button_text_color": "#FFFFFF",
-        "card_bg_color": "#FFFFFF",
-        "card_blur": 3,
+        "button_style": "primary",
         "bg_type": "image",
         "bg_color": "#fffcf0",
         "bg_gradient": "",
         "bg_image": "shopify://shop_images/benifit-mobile.png",
-        "bg_overlay_color": "#FFFCF059",
+        "bg_overlay_color": "#fffcf059",
         "padding_top_desktop": 48,
         "padding_bottom_desktop": 48,
         "padding_top_mobile": 48,
@@ -534,7 +529,7 @@
     "product-grid",
     "nw_collection_hero_VWXgHj",
     "nw_collections_CdUFHw",
-    "nw_benefits_cHV6Kc",
+    "nw_benefits_v2_LCKAka",
     "nw_featured_marquee_LEteBQ",
     "nw_compare_KpbLdt",
     "nw_reviews_kAHARa",
