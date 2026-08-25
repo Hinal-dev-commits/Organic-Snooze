@@ -133,6 +133,7 @@
     box-sizing: border-box;
     overflow: hidden;
     transition: all 0.2s ease;
+    border-top: none;
 }
 
 .nw-faq__item.is-hidden-by-limit {

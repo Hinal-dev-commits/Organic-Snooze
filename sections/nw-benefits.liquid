@@ -1,0 +1,476 @@
+{{ 'nw-benefits.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-benefits.js' | asset_url }}" defer="defer"></script>
+
+{%- assign nw_shell_selector = '#NwBenefits-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFFFF' %}
+
+<nw-benefits
+  id="NwBenefits-{{ section.id }}"
+  class="nw-benefits"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
+  data-pagination-id="NwBenefitsPagination-{{ section.id }}"
+  style="
+    --nw-benefits-heading-color: {{ section.settings.heading_color }};
+    --nw-benefits-desc-color: {{ section.settings.description_color }};
+    --nw-benefits-card-bg: {{ section.settings.card_bg_color }};
+    --nw-benefits-card-border: {{ section.settings.card_border_color }};
+    --nw-benefits-card-title-color: {{ section.settings.card_title_color }};
+    --nw-benefits-card-desc-color: {{ section.settings.card_desc_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+    --nw-cta-badge-text: {{ section.settings.badge_text_color }};
+    --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-benefits__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-benefits__header">
+        {% render 'nw-section-header',
+          heading: section.settings.heading,
+          description: section.settings.description,
+          section_index: section.index
+        %}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-benefits__slider-wrap">
+          <div class="swiper nw-benefits__swiper" id="NwBenefitsSwiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'benefit' -%}
+                  <div class="swiper-slide" {{ block.shopify_attributes }}>
+                    <article class="nw-benefits__card">
+                      <div class="nw-benefits__card-media">
+                        {%- if block.settings.media_type == 'video' and block.settings.video != blank -%}
+                          {{
+                            block.settings.video
+                            | video_tag:
+                              autoplay: true,
+                              loop: true,
+                              muted: true,
+                              controls: false,
+                              playsinline: true,
+                              class: 'nw-benefits__card-video',
+                              image_size: '800x'
+                          }}
+                        {%- elsif block.settings.image != blank -%}
+                          <img
+                            src="{{ block.settings.image | image_url }}"
+                            alt="{{ block.settings.title | escape }}"
+                            class="nw-benefits__card-img"
+                            width=""
+                            height=""
+                            loading="lazy"
+                          >
+                        {%- else -%}
+                          <div class="nw-benefits__card-placeholder" aria-hidden="true">
+                            {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+
+                      <div class="nw-benefits__card-body">
+                        {%- if block.settings.title != blank -%}
+                          <h3 class="nw-benefits__card-title">{{ block.settings.title }}</h3>
+                        {%- endif -%}
+                        {%- if block.settings.description != blank -%}
+                          <div class="nw-benefits__card-desc rte">{{ block.settings.description }}</div>
+                        {%- endif -%}
+                      </div>
+                    </article>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.settings.show_arrows -%}
+            {% render 'nw-swiper-arrows' %}
+          {%- endif -%}
+
+          {%- if section.settings.show_pagination -%}
+            <div class="nw-swiper-pagination" id="NwBenefitsPagination-{{ section.id }}"></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_button == true -%}
+      {%- assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
+        <div class="nw-benefits__footer">
+          {% render 'nw-cta-badges',
+            settings: section.settings,
+            blocks: trust_badge_blocks,
+            class: 'nw-benefits__cta'
+          %}
+          </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-benefits>
+
+{% schema %}
+{
+  "name": "t:sections.nw-benefits.name",
+  "tag": "section",
+  "class": "section-nw-benefits",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Benefits That Matter"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Four reasons our customers say they're never going back to foam.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Card colors"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#FBF9F6",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "rgba(97, 57, 22, 0.2)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card description color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show slider arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show slider pagination",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Footer CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button label",
+      "default": "SHOP THE MATTRESS",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Badge icon color",
+      "default": "#CC926A",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 21,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "media_type",
+          "label": "Media type",
+          "default": "image",
+          "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Video" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.media_type == 'image' }}"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "visible_if": "{{ block.settings.media_type == 'video' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "Zero Airborne VOCs"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Sleep in a room that smells like nothing at all.</p>"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust badge",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use custom icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge icon",
+          "default": "money",
+          "options": [
+            { "value": "money", "label": "Moneyback / Trial" },
+            { "value": "warranty-2", "label": "Warranty" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Truck / Shipping" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "star", "label": "Star" },
+            { "value": "verified-3", "label": "Verified" },
+            { "value": "none", "label": "None" }
+          ],
+          "visible_if": "{{ block.settings.use_custom_icon == false }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon",
+          "visible_if": "{{ block.settings.use_custom_icon }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-benefits.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Zero Airborne VOCs",
+            "description": "<p>Sleep in a room that smells like nothing at all.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Sleeps Cooler",
+            "description": "<p>Wool naturally regulates temperature. Perforated latex never traps heat.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Real Pressure Relief",
+            "description": "<p>Latex lifts and contours so hips and shoulders stop aching.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Outlasts Foam",
+            "description": "<p>Add superior support and limited motion shift from coils</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -112,7 +112,7 @@
                       {%- if block.settings.tag != blank -%}
                         <span
                           class="nw-mattresses-timeline__tag"
-                          style="{% if block.settings.tag_bg != blank %}background-color: {{ block.settings.tag_bg }};{% endif %}"
+                          style="{% if section.settings.tag_bg != blank %}background-color: {{ section.settings.tag_bg }};{% endif %}"
                         >
                           {{ block.settings.tag }}
                         </span>
@@ -236,6 +236,13 @@
     {
       "type": "header",
       "content": "LAYER CARD COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tag_bg",
+      "label": "Tag Background Color",
+      "default": "#613916"
     },
     {
       "type": "color",
@@ -418,13 +425,6 @@
           "default": "LAYER 1"
         },
         {
-          "type": "color",
-          "alpha": true,
-          "id": "tag_bg",
-          "label": "Tag Background Color",
-          "default": "#613916"
-        },
-        {
           "type": "text",
           "id": "title",
           "label": "Layer Title",
@@ -483,9 +483,6 @@
         }
       ]
     }
-  ],
-  "enabled_on": {
-    "templates": ["product"]
-  }
+  ]
 }
 {% endschema %}

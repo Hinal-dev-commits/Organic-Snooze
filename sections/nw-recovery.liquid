@@ -81,7 +81,7 @@
             {%- for block in section.blocks -%}
               <article class="nw-recovery__box" {{ block.shopify_attributes }}>
                 <div class="nw-recovery__box-media">
-                  {%- if block.settings.custom_icon != blank -%}
+                  {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
                     {{
                       block.settings.custom_icon
                       | image_url: width: 80
@@ -92,7 +92,7 @@
                         sizes: '40px',
                         alt: ''
                     }}
-                  {%- elsif block.settings.icon != blank and block.settings.icon != 'none' -%}
+                  {%- elsif block.settings.use_custom_icon == false and block.settings.icon != blank and block.settings.icon != 'none' -%}
                     <span class="nw-recovery__box-icon" aria-hidden="true">
                       {% render 'nw-icon', icon: block.settings.icon, class: 'nw-recovery__box-icon-svg' %}
                     </span>
@@ -319,6 +319,12 @@
       "name": "Recovery box",
       "settings": [
         {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use custom icon",
+          "default": false
+        },
+        {
           "type": "select",
           "id": "icon",
           "label": "Icon",
@@ -334,12 +340,14 @@
             { "value": "sparkle", "label": "Sparkle" },
             { "value": "checkmark", "label": "Checkmark" },
             { "value": "none", "label": "None" }
-          ]
+          ],
+          "visible_if": "{{ block.settings.use_custom_icon == false }}"
         },
         {
           "type": "image_picker",
           "id": "custom_icon",
-          "label": "Custom Icon"
+          "label": "Custom Icon",
+          "visible_if": "{{ block.settings.use_custom_icon }}"
         },
         {
           "type": "text",
@@ -395,9 +403,6 @@
         }
       ]
     }
-  ],
-  "enabled_on": {
-    "templates": ["index", "page", "product"]
-  }
+  ]
 }
 {% endschema %}

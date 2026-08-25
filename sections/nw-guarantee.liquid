@@ -45,7 +45,6 @@
           section_index: section.index
         %}
       </div>
-      </div>
 
       {%- if section.blocks.size > 0 -%}
         <div class="nw-guarantee__grid">
@@ -68,18 +67,12 @@
                     assign seal_label = block.settings.seal_label | default: 'NIGHTS'
                     assign seal_id = section.id | append: '-' | append: block.id
                   -%}
-                  <svg class="nw-guarantee__seal" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="{{ seal_number }} {{ seal_label }} {{ seal_ring | escape }}">
-                    <circle cx="70" cy="70" r="70" fill="#878735"/>
-                    <circle cx="70" cy="70" r="58" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.35"/>
-                    <defs>
-                      <path id="nw-guarantee-seal-{{ seal_id }}" d="M 70,18 A 52,52 0 1,1 69.99,18"/>
-                    </defs>
-                    <text class="nw-guarantee__seal-ring" fill="#ffffff">
-                      <textPath href="#nw-guarantee-seal-{{ seal_id }}" xlink:href="#nw-guarantee-seal-{{ seal_id }}" startOffset="0%" text-anchor="middle">{{ seal_ring | escape }}</textPath>
-                    </text>
-                    <text class="nw-guarantee__seal-number" x="70" y="78" text-anchor="middle" fill="#ffffff">{{ seal_number | escape }}</text>
-                    <text class="nw-guarantee__seal-label" x="70" y="96" text-anchor="middle" fill="#ffffff">{{ seal_label | escape }}</text>
-                  </svg>
+                  {% render 'nw-guarantee-seal',
+                    seal_ring: seal_ring,
+                    seal_number: seal_number,
+                    seal_label: seal_label,
+                    seal_id: seal_id
+                  %}
                 {%- else -%}
                   <svg class="nw-guarantee__affirm" viewBox="0 0 168 44" role="img" aria-label="Affirm">
                     <path d="M104.2 6.4c10.8-3.2 23.4-2.6 32.6 3.4" fill="none" stroke="#0FA0EA" stroke-width="4.2" stroke-linecap="round"/>
@@ -408,9 +401,6 @@
         }
       ]
     }
-  ],
-  "enabled_on": {
-    "templates": ["index", "page"]
-  }
+  ]
 }
 {% endschema %}

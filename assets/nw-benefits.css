@@ -1,0 +1,227 @@
+.nw-benefits {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.nw-benefits__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.nw-benefits__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.nw-benefits .nw-section-heading,
+.nw-benefits .nw-section-heading .h1,
+.nw-benefits .nw-section-heading .h2,
+.nw-benefits .nw-section-heading .h1 *,
+.nw-benefits .nw-section-heading .h2 * {
+  color: var(--nw-benefits-heading-color, var(--primary-color, #613916));
+}
+
+.nw-benefits .nw-section-description,
+.nw-benefits .nw-section-description * {
+  color: var(--nw-benefits-desc-color, var(--primary-color, #613916));
+}
+
+.nw-benefits .nw-section-description {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nw-benefits__slider-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+}
+
+.nw-benefits__swiper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.nw-benefits__swiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+.nw-benefits__swiper .swiper-slide {
+  width: calc((100% - 36px) / 4);
+  height: auto;
+  display: flex;
+}
+
+.nw-benefits__card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  border: 1px solid var(--nw-benefits-card-border, rgba(97, 57, 22, 0.2));
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--nw-benefits-card-bg, #fbf9f6);
+  box-sizing: border-box;
+}
+
+.nw-benefits__card-media {
+  width: 100%;
+  height: 180px;
+  max-height: 180px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.nw-benefits__card-img,
+.nw-benefits__card-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.nw-benefits__card-video{
+  aspect-ratio: 3/2;
+}
+
+.nw-benefits__card-video {
+  background: var(--tertiary-color, #f4efe8);
+}
+
+.nw-benefits__card-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--tertiary-color, #f4efe8);
+}
+
+.nw-benefits__card-placeholder .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nw-benefits__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  flex: 1 1 auto;
+}
+
+.nw-benefits__card-title {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--nw-benefits-card-title-color, #613916);
+}
+
+.nw-benefits__card-desc,
+.nw-benefits__card-desc * {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--nw-benefits-card-desc-color, #613916);
+  text-align: left;
+}
+
+.nw-benefits__footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.nw-benefits .nw-cta-badges {
+  width: 100%;
+  max-width: 510px;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nw-benefits .nw-cta-badges__button {
+  width: 100%;
+}
+
+.nw-benefits .nw-cta-badges__button .button {
+  width: 100%;
+  min-height: 56px;
+}
+
+.nw-benefits .nw-cta-badges__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+}
+
+@media screen and (max-width: 989px) {
+  .nw-benefits__swiper .swiper-slide {
+    width: calc((100% - 12px) / 2);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-benefits__wrapper {
+    gap: 28px;
+  }
+
+
+  .nw-benefits__slider-wrap {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    box-sizing: border-box;
+  }
+
+  .nw-benefits__swiper .swiper-slide {
+    width: calc(100% - 108px);
+    max-width: 311px;
+  }
+  .nw-benefits__swiper {
+    padding: 0 16px;
+  }
+
+  .nw-benefits__card-title {
+    font-size: 20px;
+  }
+
+  .nw-benefits__card-desc,
+  .nw-benefits__card-desc * {
+    font-size: 14px;
+  }
+
+  .nw-swiper-pagination .swiper-pagination-bullet{
+    width: 5px;
+    height: 5px;
+  }
+  .nw-swiper-pagination .swiper-pagination-bullet-active{
+    width: 30px;
+  }
+
+  .nw-benefits__slider-wrap .nw-swiper-pagination {
+    margin-top: 16px;
+  }
+  .nw-benefits .page-width{
+    padding: 0;
+  }
+  .nw-benefits__header{
+    padding: 0 16px;
+  }
+}

@@ -1,0 +1,375 @@
+{{ 'nw-guarantee-v2.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '.nw-guarantee-v2.section-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFCF0' %}
+
+<section
+  class="nw-guarantee-v2 section-{{ section.id }}"
+  style="
+    --nw-gv2-card-bg: {{ section.settings.card_bg_color }};
+    --nw-gv2-heading-color: {{ section.settings.heading_color }};
+    --nw-gv2-text-color: {{ section.settings.text_color }};
+    --nw-gv2-cta-heading-color: {{ section.settings.cta_heading_color }};
+    --nw-gv2-primary-btn-bg: {{ section.settings.primary_btn_bg_color }};
+    --nw-gv2-primary-btn-text: {{ section.settings.primary_btn_text_color }};
+    --nw-gv2-outline-btn-border: {{ section.settings.outline_btn_border_color }};
+    --nw-gv2-outline-btn-text: {{ section.settings.outline_btn_text_color }};
+    --nw-gv2-divider-color: {{ section.settings.divider_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-guarantee-v2__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-guarantee-v2__card">
+        <div class="nw-guarantee-v2__main">
+          {%- if section.settings.badge_image != blank -%}
+            <div class="nw-guarantee-v2__badge">
+              <img
+                src="{{ section.settings.badge_image | image_url }}"
+                alt="{{ section.settings.heading | strip_html | escape }}"
+                class="nw-guarantee-v2__badge-img"
+                width=""
+                height=""
+                loading="lazy"
+              >
+            </div>
+          {%- endif -%}
+
+          <div class="nw-guarantee-v2__copy">
+            {%- if section.settings.heading != blank -%}
+              <h2 class="nw-guarantee-v2__heading">{{ section.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if section.settings.description != blank -%}
+              <div class="nw-guarantee-v2__description rte">{{ section.settings.description }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="nw-guarantee-v2__cta">
+          {%- if section.settings.cta_heading != blank -%}
+            <h3 class="nw-guarantee-v2__cta-heading">{{ section.settings.cta_heading }}</h3>
+          {%- endif -%}
+
+          <div class="nw-guarantee-v2__actions">
+            {%- if section.settings.show_primary_button and section.settings.primary_button_text != blank -%}
+              {%- if section.settings.primary_button_link != blank -%}
+                <a
+                  href="{{ section.settings.primary_button_link }}"
+                  class="nw-btn nw-btn--secondary nw-guarantee-v2__btn nw-guarantee-v2__btn--primary"
+                >
+                  <span class="nw-btn__text">{{ section.settings.primary_button_text }}</span>
+                </a>
+              {%- else -%}
+                <button type="button" class="nw-btn nw-btn--secondary nw-guarantee-v2__btn nw-guarantee-v2__btn--primary">
+                  <span class="nw-btn__text">{{ section.settings.primary_button_text }}</span>
+                </button>
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- liquid
+              assign show_secondary_row = false
+              if section.settings.show_text_button and section.settings.text_button_label != blank
+                assign show_secondary_row = true
+              endif
+              if section.settings.show_quiz_button and section.settings.quiz_button_label != blank
+                assign show_secondary_row = true
+              endif
+            -%}
+
+            {%- if show_secondary_row -%}
+              <div class="nw-guarantee-v2__actions-row">
+                {%- if section.settings.show_text_button and section.settings.text_button_label != blank -%}
+                  {% render 'nw-button',
+                    text: section.settings.text_button_label,
+                    link: section.settings.text_button_link,
+                    style: 'outline',
+                    btn_class: 'nw-guarantee-v2__btn nw-guarantee-v2__btn--outline'
+                  %}
+                {%- endif -%}
+
+                {%- if section.settings.show_quiz_button and section.settings.quiz_button_label != blank -%}
+                  {% render 'nw-button',
+                    text: section.settings.quiz_button_label,
+                    link: section.settings.quiz_button_link,
+                    style: 'outline',
+                    btn_class: 'nw-guarantee-v2__btn nw-guarantee-v2__btn--outline'
+                  %}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.nw-guarantee-v2.name",
+  "tag": "section",
+  "class": "section-nw-guarantee-v2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Guarantee content"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Try It for 100 Nights. Keep It for 30 Years"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>We know buying a mattress online is a big decision. That's why we give you over 3 months to decide if it's the right fit for your body. If not, we'll pick it up for a full refund.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "cta_heading",
+      "label": "CTA heading",
+      "default": "Still Deciding? Talk to a Sleep Expert"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_primary_button",
+      "label": "Show primary button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "primary_button_text",
+      "label": "Primary button label",
+      "default": "Call (443) 333-1213",
+      "visible_if": "{{ section.settings.show_primary_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary button link",
+      "visible_if": "{{ section.settings.show_primary_button == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_button",
+      "label": "Show text button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_button_label",
+      "label": "Text button label",
+      "default": "Text Us",
+      "visible_if": "{{ section.settings.show_text_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "text_button_link",
+      "label": "Text button link",
+      "visible_if": "{{ section.settings.show_text_button == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quiz_button",
+      "label": "Show quiz button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quiz_button_label",
+      "label": "Quiz button label",
+      "default": "Sleep Quiz",
+      "visible_if": "{{ section.settings.show_quiz_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "quiz_button_link",
+      "label": "Quiz button link",
+      "visible_if": "{{ section.settings.show_quiz_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "cta_heading_color",
+      "label": "CTA heading color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_bg_color",
+      "label": "Primary button background",
+      "default": "#878735",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_text_color",
+      "label": "Primary button text",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "outline_btn_border_color",
+      "label": "Outline button border",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "outline_btn_text_color",
+      "label": "Outline button text",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Mobile divider color",
+      "default": "rgba(97, 57, 22, 0.2)",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFCF0",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 35,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-guarantee-v2.name",
+      "category": "NW Sections",
+      "settings": {
+        "primary_button_link": "tel:+14433331213"
+      }
+    }
+  ]
+}
+{% endschema %}

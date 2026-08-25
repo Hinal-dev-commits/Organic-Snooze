@@ -15,6 +15,9 @@
   height: 200px;
 }
 
+body.overflow-hidden, body.overflow-hidden-desktop {
+    padding-right: var(--scrollbar-width);
+}
 
 body{
     letter-spacing: 0;
@@ -415,7 +418,7 @@ width: 100%;
     }
 
     .nw-section-description {
-        margin-top: 16px;
+        margin-top: 12px;
     }
 }
 
@@ -434,6 +437,8 @@ nw-hero,
 nw-marquee,
 nw-testimonials,
 nw-trusted-people,
+nw-benefits,
+nw-founder-story,
 nw-product-list,
 nw-collection-tabs,
 nw-review-video,

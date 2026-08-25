@@ -102,6 +102,9 @@
   height: 100%;
   display: block;
 }
+.nw-marquee-v2__icon svg > *{
+  fill: var(--nw-mq-icon-color, #432818);
+}
 
 .nw-marquee-v2__icon-img {
   width: 100%;

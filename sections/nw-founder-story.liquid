@@ -1,0 +1,538 @@
+{{ 'nw-founder-story.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-founder-story.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwFounderStory-' | append: section.id
+
+  assign media_poster = section.settings.poster
+  if media_poster == blank and section.settings.video != blank and section.settings.video.preview_image != blank
+    assign media_poster = section.settings.video.preview_image
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+
+<nw-founder-story
+  id="NwFounderStory-{{ section.id }}"
+  class="nw-founder-story section-{{ section.id }}"
+  style="
+    --nw-fs-heading-color: {{ section.settings.heading_color }};
+    --nw-fs-card-border: {{ section.settings.card_border_color }};
+    --nw-fs-card-bg: {{ section.settings.card_bg_color }};
+    --nw-fs-quote-color: {{ section.settings.quote_color }};
+    --nw-fs-name-color: {{ section.settings.name_color }};
+    --nw-fs-role-color: {{ section.settings.role_color }};
+    --nw-fs-stat-border: {{ section.settings.stat_border_color }};
+    --nw-fs-stat-value-color: {{ section.settings.stat_value_color }};
+    --nw-fs-stat-desc-color: {{ section.settings.stat_desc_color }};
+    --nw-fs-disclaimer-color: {{ section.settings.disclaimer_color }};
+    --nw-star-active: {{ section.settings.star_color }};
+    --nw-star-inactive: {{ section.settings.star_color_inactive }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-founder-story__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-founder-story__header">
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          section_index: section.index
+        %}
+      </div>
+
+      <div class="nw-founder-story__body">
+        <div class="nw-founder-story__card">
+          <div
+            class="nw-founder-story__media{% if section.settings.media_type == 'video' and section.settings.video_autoplay %} is-autoplay{% endif %}{% if section.settings.media_type == 'image' %} nw-founder-story__media--image{% endif %}"
+            data-nw-founder-media
+            data-autoplay="{{ section.settings.video_autoplay }}"
+          >
+            {%- if section.settings.media_type == 'video' and section.settings.video != blank -%}
+              {{
+                section.settings.video
+                | video_tag:
+                  autoplay: section.settings.video_autoplay,
+                  loop: section.settings.video_autoplay,
+                  muted: section.settings.video_autoplay,
+                  controls: false,
+                  playsinline: true,
+                  preload: 'metadata',
+                  tabindex: -1,
+                  class: 'nw-founder-story__media-video',
+                  image_size: '1200x'
+              }}
+
+              {%- if media_poster != blank -%}
+                <img
+                  src="{{ media_poster | image_url }}"
+                  alt="{{ section.settings.name | escape }}"
+                  class="nw-founder-story__media-poster"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+              {%- endif -%}
+
+              {%- if section.settings.show_play_icon and section.settings.video_autoplay == false -%}
+                <div class="nw-founder-story__controls">
+                  <button type="button" class="nw-founder-story__play" data-nw-founder-play aria-label="Play video">
+                    <span class="nw-founder-story__control-icon" aria-hidden="true">
+                      {{ 'play-v2.svg' | inline_asset_content }}
+                    </span>
+                  </button>
+                  <button type="button" class="nw-founder-story__pause" data-nw-founder-pause aria-label="Pause video" hidden>
+                    <span class="nw-founder-story__control-icon" aria-hidden="true">
+                      {{ 'icon-pause.svg' | inline_asset_content }}
+                    </span>
+                  </button>
+                </div>
+              {%- endif -%}
+            {%- elsif section.settings.image != blank -%}
+              <img
+                src="{{ section.settings.image | image_url }}"
+                alt="{{ section.settings.image.alt | default: section.settings.name | escape }}"
+                class="nw-founder-story__media-image"
+                width=""
+                height=""
+                loading="lazy"
+              >
+            {%- else -%}
+              <div class="nw-founder-story__media-placeholder" aria-hidden="true">
+                {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.overlay_text != blank -%}
+              <span class="nw-founder-story__overlay-text">{{ section.settings.overlay_text }}</span>
+            {%- endif -%}
+          </div>
+
+          <div class="nw-founder-story__content">
+            {%- if section.settings.avatar != blank or section.settings.quote != blank -%}
+              <div class="nw-founder-story__quote-row">
+                {%- if section.settings.avatar != blank -%}
+                  <div class="nw-founder-story__avatar">
+                    <img
+                      src="{{ section.settings.avatar | image_url }}"
+                      alt="{{ section.settings.name | escape }}"
+                      class="nw-founder-story__avatar-img"
+                      width=""
+                      height=""
+                      loading="lazy"
+                    >
+                  </div>
+                {%- endif -%}
+
+                {%- if section.settings.quote != blank -%}
+                  <div class="nw-founder-story__quote rte">{{ section.settings.quote }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.name != blank or section.settings.role != blank -%}
+              <div class="nw-founder-story__author">
+                {%- if section.settings.name != blank -%}
+                  <div class="nw-founder-story__name-row">
+                    <h3 class="nw-founder-story__name">{{ section.settings.name }}</h3>
+                    {%- if section.settings.show_verified -%}
+                      <span class="nw-founder-story__verified" aria-label="Verified">
+                        {% render 'nw-icon', icon: 'verified-3' %}
+                      </span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if section.settings.role != blank -%}
+                  <p class="nw-founder-story__role">{{ section.settings.role }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class="nw-founder-story__stats-wrapper">
+          {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+          {%- if stat_blocks.size > 0 -%}
+            <div class="nw-founder-story__stats">
+              {%- for block in stat_blocks -%}
+                <div class="nw-founder-story__stat" {{ block.shopify_attributes }}>
+                  {%- if block.settings.value != blank -%}
+                    <p class="nw-founder-story__stat-value">{{ block.settings.value }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.description != blank -%}
+                    <div class="nw-founder-story__stat-desc rte">{{ block.settings.description }}</div>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.disclaimer != blank -%}
+            <div class="nw-founder-story__disclaimer rte">{{ section.settings.disclaimer }}</div>
+        {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</nw-founder-story>
+
+{% schema %}
+{
+  "name": "t:sections.nw-founder-story.name",
+  "tag": "section",
+  "class": "section-nw-founder-story",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star rating",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Real sleepers, real mornings"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Gary Brecka Created a Sleep Company"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media type",
+      "default": "video",
+      "options": [
+        { "value": "video", "label": "Video" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay video",
+      "default": false,
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_play_icon",
+      "label": "Show play/pause controls",
+      "default": true,
+      "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_autoplay == false }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Video poster image",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "visible_if": "{{ section.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "text",
+      "id": "overlay_text",
+      "label": "Media overlay text",
+      "default": "Ultimate Snooze Mattress"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "Avatar image"
+    },
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "Quote",
+      "default": "<p>\"If deep sleep and true recovery matter to you, this is the only mattress I'd put my body on in my own home. Nothing else even comes close.\"</p>"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name",
+      "default": "Gary Brecka"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_verified",
+      "label": "Show verified badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Role / title",
+      "default": "Longevity Expert & Founder of The Ultimate Human"
+    },
+    {
+      "type": "header",
+      "content": "Disclaimer"
+    },
+    {
+      "type": "richtext",
+      "id": "disclaimer",
+      "label": "Disclaimer",
+      "default": "<p><em>Results vary by individual. General sleep trends, not guarantees.</em></p>"
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#E57B1E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "star_color_inactive",
+      "label": "Star inactive color",
+      "default": "#D1D5DB",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "rgba(97, 57, 22, 0.2)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#FBF9F6",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "role_color",
+      "label": "Role color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "stat_border_color",
+      "label": "Stat divider color",
+      "default": "rgba(97, 57, 22, 0.2)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "stat_value_color",
+      "label": "Stat value color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "stat_desc_color",
+      "label": "Stat description color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Disclaimer color",
+      "default": "rgba(97, 57, 22, 0.8)",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "26"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p><strong>Years</strong> Average lifetime spent in bed.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-founder-story.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "value": "26",
+            "description": "<p><strong>Years</strong> Average lifetime spent in bed.</p>"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "68°F",
+            "description": "<p>Ideal temperature for deep sleep.</p>"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "1/3",
+            "description": "<p><strong>of Your Life</strong> Spent on your mattress.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

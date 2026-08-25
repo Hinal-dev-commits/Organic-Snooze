@@ -1,0 +1,22 @@
+{% doc %}
+Renders the NW money-back guarantee seal badge SVG.
+@param {string} seal_ring - Curved ring text
+@param {string} seal_number - Center number
+@param {string} seal_label - Label below number
+@param {string} seal_id - Unique id for the textPath reference
+@example
+{% render 'nw-guarantee-seal', seal_ring: 'MONEY BACK GUARANTEE', seal_number: '100', seal_label: 'NIGHTS', seal_id: section.id %}
+{% enddoc %}
+
+<svg class="nw-guarantee__seal" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="{{ seal_number }} {{ seal_label }} {{ seal_ring | escape }}">
+  <circle cx="70" cy="70" r="70" fill="#878735"/>
+  <circle cx="70" cy="70" r="58" fill="none" stroke="#ffffff" stroke-width="1.2" opacity="0.35"/>
+  <defs>
+    <path id="nw-guarantee-seal-{{ seal_id }}" d="M 70,18 A 52,52 0 1,1 69.99,18"/>
+  </defs>
+  <text class="nw-guarantee__seal-ring" fill="#ffffff">
+    <textPath href="#nw-guarantee-seal-{{ seal_id }}" xlink:href="#nw-guarantee-seal-{{ seal_id }}" startOffset="0%" text-anchor="middle">{{ seal_ring | escape }}</textPath>
+  </text>
+  <text class="nw-guarantee__seal-number" x="70" y="78" text-anchor="middle" fill="#ffffff">{{ seal_number | escape }}</text>
+  <text class="nw-guarantee__seal-label" x="70" y="96" text-anchor="middle" fill="#ffffff">{{ seal_label | escape }}</text>
+</svg>
