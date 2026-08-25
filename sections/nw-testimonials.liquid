@@ -6,10 +6,12 @@
 
 <nw-testimonials
   id="NwTestimonials-{{ section.id }}"
-  class="nw-testimonials"
+  class="nw-testimonials{% if section.settings.full_width %} nw-testimonials--full-width{% endif %}{% if section.settings.enable_edge_shadow %} nw-testimonials--edge-shadow{% endif %}"
   data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
   data-pagination-id="NwTestimonialsPagination-{{ section.id }}"
+  data-full-width="{{ section.settings.full_width }}"
+  data-loop="{{ section.settings.enable_loop }}"
   style="
     --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
     --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
@@ -216,6 +218,24 @@
     {
       "type": "header",
       "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width Slider",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "label": "Enable Loop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_edge_shadow",
+      "label": "Add Shadow on Edges",
+      "default": false
     },
     {
       "type": "checkbox",

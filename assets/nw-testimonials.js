@@ -23,32 +23,44 @@ if (!customElements.get('nw-testimonials')) {
 
         var showArrows = this.dataset.showArrows === 'true';
         var showPagination = this.dataset.showPagination === 'true';
-        var paginationId = this.dataset.paginationId;
+        var isFullWidth = this.dataset.fullWidth === 'true';
+        var enableLoop = this.dataset.loop === 'true';
+
+        var prevBtn = this.querySelector('.nw-swiper-btn--prev');
+        var nextBtn = this.querySelector('.nw-swiper-btn--next');
+        var paginationEl = this.querySelector('.nw-swiper-pagination');
 
         var options = {
           slidesPerView: 'auto',
           spaceBetween: 12,
-          centeredSlides: true,
+          centeredSlides: isFullWidth,
           grabCursor: true,
-          watchOverflow: true,
+          simulateTouch: true,
+          allowTouchMove: true,
+          watchOverflow: false,
+          observer: true,
+          observeParents: true,
+          resizeObserver: true,
+          loop: enableLoop,
+          loopPreventsSliding: false,
           breakpoints: {
             750: {
-              centeredSlides: false,
+              centeredSlides: isFullWidth,
               spaceBetween: 20
             }
           }
         };
 
-        if (showArrows) {
+        if (showArrows && prevBtn && nextBtn) {
           options.navigation = {
-            nextEl: this.querySelector('.nw-swiper-btn--next'),
-            prevEl: this.querySelector('.nw-swiper-btn--prev')
+            prevEl: prevBtn,
+            nextEl: nextBtn
           };
         }
 
-        if (showPagination && paginationId) {
+        if (showPagination && paginationEl) {
           options.pagination = {
-            el: '#' + paginationId,
+            el: paginationEl,
             clickable: true
           };
         }

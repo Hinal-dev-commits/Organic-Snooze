@@ -23,7 +23,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   padding: clamp(24px, 2.5vw, 32px);
   gap: clamp(32px, 5vw, 80px);
   width: 100%;
@@ -112,7 +111,7 @@
   font-weight: 400;
   font-size: 36px;
   line-height: 115%;
-  letter-spacing: -0.01em;
+  letter-spacing: -4%;
   text-transform: capitalize;
   font-feature-settings: 'pnum' on, 'lnum' on;
   color: #613916;
@@ -259,7 +258,6 @@
   .nw-quiz__card {
     padding: 18px 18px 24px;
     gap: 24px;
-    max-width: 343px;
     border-radius: 14px;
   }
 
@@ -267,48 +265,4 @@
     padding: 18px 18px 24px;
   }
 
-  .nw-quiz__media {
-    width: 100%;
-    aspect-ratio: 307 / 204.69;
-  }
-
-  .nw-quiz__content {
-    width: 100%;
-    gap: 24px;
-  }
-
-  .nw-quiz__text-wrap {
-    gap: 12px;
-  }
-
-  .nw-quiz__text-wrap .nw-section-heading,
-  .nw-quiz__text-wrap .nw-section-heading h1,
-  .nw-quiz__text-wrap .nw-section-heading h2,
-  .nw-quiz__text-wrap .nw-section-heading h3,
-  .nw-quiz__text-wrap .nw-section-heading p,
-  .nw-quiz__heading {
-    font-size: 32px;
-    line-height: 115%;
-    letter-spacing: -0.01em;
-    text-align: center;
-  }
-
-  .nw-quiz__text-wrap .nw-section-description,
-  .nw-quiz__text-wrap .nw-section-description p,
-  .nw-quiz__text-wrap .rte,
-  .nw-quiz__text-wrap .rte p,
-  .nw-quiz__description,
-  .nw-quiz__description p {
-    font-size: 16px;
-    line-height: 140%;
-    text-align: center;
-  }
-
-  .nw-btn.nw-quiz__button,
-  .nw-quiz__button {
-    width: 100%;
-    height: 56px;
-    padding: 18px 32px;
-    font-size: 16px;
-  }
 }

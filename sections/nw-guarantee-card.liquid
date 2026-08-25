@@ -1,0 +1,416 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-guarantee-card.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwGuaranteeCard-{{ section.id }} {
+    display: block;
+    width: 100%;
+    position: relative;
+    isolation: isolate;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFAF3' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        {% if section.settings.bg_image != blank %}
+          background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  {% if section.settings.card_bg_color != blank or section.settings.card_border_color != blank %}
+    #NwGuaranteeCard-{{ section.id }} .nw-guarantee-card__card {
+      {% if section.settings.card_bg_color != blank %}
+        background-color: {{ section.settings.card_bg_color }};
+      {% endif %}
+      {% if section.settings.card_border_color != blank %}
+        border-color: {{ section.settings.card_border_color }};
+      {% endif %}
+    }
+  {% endif %}
+
+  {% if section.settings.bg_type == 'image' and section.settings.bg_overlay_color != blank %}
+    #NwGuaranteeCard-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_overlay_color }};
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #NwGuaranteeCard-{{ section.id }} > * {
+      position: relative;
+      z-index: 2;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    #NwGuaranteeCard-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' %}
+        {% if section.settings.bg_image_mobile != blank %}
+          background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+        {% elsif section.settings.bg_image != blank %}
+          background-image: url('{{ section.settings.bg_image | image_url: width: 1200 }}');
+        {% endif %}
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+<div
+  id="NwGuaranteeCard-{{ section.id }}"
+  class="nw-guarantee-card{% if section.settings.image_position == 'right' %} nw-guarantee-card--image-right{% endif %}"
+>
+  <div class="page-width">
+    <div class="nw-guarantee-card__card">
+      <div class="nw-guarantee-card__media-wrap">
+        {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
+          {%- if section.settings.image_mobile != blank -%}
+            <picture>
+              <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | image_url: width: 800 }}">
+              <img
+                src="{{ section.settings.image | default: section.settings.image_mobile | image_url: width: 800 }}"
+                alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+                width="360"
+                height="360"
+                loading="lazy"
+                class="nw-guarantee-card__img"
+              >
+            </picture>
+          {%- else -%}
+            <img
+              src="{{ section.settings.image | image_url: width: 800 }}"
+              alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+              width="360"
+              height="360"
+              loading="lazy"
+              class="nw-guarantee-card__img"
+            >
+          {%- endif -%}
+        {%- else -%}
+          <div class="nw-guarantee-card__img-placeholder"></div>
+        {%- endif -%}
+
+        {%- if section.settings.show_badge -%}
+          <div class="nw-guarantee-card__badge" aria-hidden="true">
+            {%- if section.settings.badge_image != blank -%}
+              <img
+                src="{{ section.settings.badge_image | image_url: width: 200 }}"
+                alt="{{ section.settings.badge_image.alt | default: 'Guarantee Badge' | escape }}"
+                width="99"
+                height="99"
+                loading="lazy"
+              >
+            {%- else -%}
+              {% render 'nw-guarantee-seal',
+                seal_ring: section.settings.seal_ring,
+                seal_number: section.settings.seal_number,
+                seal_label: section.settings.seal_label,
+                seal_id: section.id
+              %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="nw-guarantee-card__content">
+        <div class="nw-guarantee-card__text-wrap">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.description,
+            section_index: section.index
+          %}
+        </div>
+
+        {%- if section.settings.show_button and section.settings.btn_text != blank -%}
+          <div class="nw-guarantee-card__btn-wrap">
+            {% render 'nw-button',
+              text: section.settings.btn_text,
+              link: section.settings.btn_link,
+              style: section.settings.btn_style,
+              btn_class: 'nw-guarantee-card__btn'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Guarantee Card",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sleep On It For 100 Nights. Risk-Free."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a <strong>30-year warranty</strong> because it’s built to last.</p>"
+    },
+    {
+      "type": "header",
+      "content": "MEDIA & LAYOUT"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile Optional)"
+    },
+    {
+      "type": "header",
+      "content": "GUARANTEE BADGE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show Badge",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Custom Badge Image",
+      "visible_if": "{{ section.settings.show_badge == true }}"
+    },
+    {
+      "type": "text",
+      "id": "seal_number",
+      "label": "Seal Number (Fallback)",
+      "default": "100",
+      "visible_if": "{{ section.settings.show_badge == true }}"
+    },
+    {
+      "type": "text",
+      "id": "seal_label",
+      "label": "Seal Sub-label (Fallback)",
+      "default": "NIGHTS",
+      "visible_if": "{{ section.settings.show_badge == true }}"
+    },
+    {
+      "type": "text",
+      "id": "seal_ring",
+      "label": "Seal Ring Text (Fallback)",
+      "default": "MONEY BACK GUARANTEE",
+      "visible_if": "{{ section.settings.show_badge == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "SHOP ORGANIC MATTRESSES",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "CARD STYLING"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "rgba(97, 57, 22, 0.2)"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFAF3",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_overlay_color",
+      "label": "Background Overlay Color",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Guarantee Card",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

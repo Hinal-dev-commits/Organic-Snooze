@@ -1,0 +1,357 @@
+{{ 'nw-understand-mattress.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwUnderstandMattress-{{ section.id }} {
+    display: block;
+    width: 100%;
+    position: relative;
+    isolation: isolate;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        {% if section.settings.bg_image != blank %}
+          background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  {% if section.settings.bg_type == 'image' and section.settings.bg_overlay_color != blank %}
+    #NwUnderstandMattress-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_overlay_color }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    #NwUnderstandMattress-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' %}
+        {% if section.settings.bg_image_mobile != blank %}
+          background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+        {% elsif section.settings.bg_image != blank %}
+          background-image: url('{{ section.settings.bg_image | image_url: width: 1200 }}');
+        {% endif %}
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+<div
+  id="NwUnderstandMattress-{{ section.id }}"
+  class="nw-understand-mattress{% if section.settings.image_position == 'right' %} nw-understand-mattress--image-right{% endif %}"
+>
+  <div class="page-width">
+    <div class="nw-understand-mattress__wrapper">
+      {%- if section.settings.heading != blank
+        or section.settings.eyebrow != blank
+        or section.settings.subheading != blank
+      -%}
+        <div class="nw-understand-mattress__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      <div class="nw-understand-mattress__main">
+        <div class="nw-understand-mattress__media">
+          {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
+            {%- if section.settings.image_mobile != blank -%}
+              <picture class="nw-understand-mattress__picture">
+                <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | image_url: width: 800 }}">
+                <img
+                  src="{{ section.settings.image | default: section.settings.image_mobile | image_url: width: 1400 }}"
+                  alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+                  width="620"
+                  height="420"
+                  loading="lazy"
+                  class="nw-understand-mattress__img"
+                >
+              </picture>
+            {%- else -%}
+              <img
+                src="{{ section.settings.image | image_url: width: 1400 }}"
+                alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+                width="620"
+                height="420"
+                loading="lazy"
+                class="nw-understand-mattress__img"
+              >
+            {%- endif -%}
+          {%- else -%}
+            <div class="nw-understand-mattress__img-placeholder"></div>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="nw-understand-mattress__accordion">
+            {%- for block in section.blocks -%}
+              <details
+                class="nw-understand-mattress__item"
+                {{ block.shopify_attributes }}
+                {% if block.settings.open_by_default or forloop.first and block.settings.open_by_default != false %}
+                  open
+                {% endif %}
+              >
+                <summary class="nw-understand-mattress__summary">
+                  <span class="nw-understand-mattress__question">{{ block.settings.question }}</span>
+                  <span class="nw-understand-mattress__toggle-icon" aria-hidden="true">
+                    <span class="nw-understand-mattress__toggle-plus"></span>
+                  </span>
+                </summary>
+                <div class="nw-understand-mattress__answer rte">
+                  {{ block.settings.answer }}
+                </div>
+              </details>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Understand Mattress",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Understanding Organic Mattresses"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "LAYOUT & MEDIA"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile Optional)"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_overlay_color",
+      "label": "Background Overlay Color",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "question",
+          "label": "Question",
+          "default": "What is an organic latex mattress?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>An organic latex mattress uses latex tapped from rubber trees instead of petroleum-based foam, paired with organic cotton and wool. The result is a surface that breathes, responds to your body, and lasts for years without the chemical foams in most conventional mattresses. Ours are built with certified organic latex, wool, and cotton, with no polyurethane foam, fiberglass, or VOCs.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by Default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Understand Mattress",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is an organic latex mattress?",
+            "answer": "<p>An organic latex mattress uses latex tapped from rubber trees instead of petroleum-based foam, paired with organic cotton and wool. The result is a surface that breathes, responds to your body, and lasts for years without the chemical foams in most conventional mattresses. Ours are built with certified organic latex, wool, and cotton, with no polyurethane foam, fiberglass, or VOCs.</p>",
+            "open_by_default": true
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Organic latex vs. memory foam",
+            "answer": "<p>Memory foam is petroleum-based and softens with body heat, which traps warmth and creates that sinking feel. Natural latex lifts and contours, springs back when you move, and sleeps cooler because it breathes. Latex also skips the off-gassing new foam is known for. Contouring comfort, without the heat or the chemical smell.</p>",
+            "open_by_default": false
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I choose the right firmness?",
+            "answer": "<p>Your ideal firmness depends on your primary sleeping position and personal preference. Side sleepers usually prefer a plush to medium feel to cushion pressure points, while back and stomach sleepers benefit from firmer support to maintain spinal alignment.</p>",
+            "open_by_default": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

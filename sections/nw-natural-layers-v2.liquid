@@ -1,0 +1,741 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-insights-slider.js' | asset_url }}" defer="defer"></script>
+{{ 'nw-natural-layers-v2.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '.nw-natural-layers-v2.section-' | append: section.id -%}
+{% capture nw_shell_extra %}
+  --nw-nl-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+  --nw-nl-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+  --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+  --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, extra: nw_shell_extra %}
+{%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+  <style>
+    .nw-natural-layers-v2.section-{{ section.id }} {
+      background-color: {{ section.settings.bg_color_image }};
+    }
+  </style>
+{%- endif -%}
+
+<div class="nw-natural-layers-v2 section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-natural-layers-v2__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-natural-layers-v2__header">
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
+      </div>
+
+      <div class="nw-natural-layers-v2__main">
+        {%- assign layer_cards = section.blocks | where: 'type', 'layer_card' -%}
+        {%- if layer_cards.size > 0 -%}
+          <div class="nw-natural-layers-v2__cards">
+            {%- for block in layer_cards -%}
+              <div class="nw-natural-layers-v2__card" {{ block.shopify_attributes }}>
+                <div class="nw-natural-layers-v2__card-media">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 600 }}"
+                      alt="{{ block.settings.title | escape }}"
+                      width="305"
+                      height="239"
+                      loading="lazy"
+                      class="nw-natural-layers-v2__card-img"
+                    >
+                  {%- else -%}
+                    <span class="nw-natural-layers-v2__card-placeholder" aria-hidden="true"></span>
+                  {%- endif -%}
+                </div>
+                <div class="nw-natural-layers-v2__card-body">
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="nw-natural-layers-v2__card-title">{{ block.settings.title }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.feature_text != blank -%}
+                    <div class="nw-natural-layers-v2__card-feature">
+                      {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+                        <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                          {% render 'nw-icon',
+                            icon: 'none',
+                            custom_icon: block.settings.custom_icon,
+                            img_class: 'nw-natural-layers-v2__feature-icon-img',
+                            img_width: 40
+                          %}
+                        </span>
+                      {%- elsif block.settings.icon == 'cross' -%}
+                        <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                          {% render 'nw-icon', icon: 'cross-circle' %}
+                        </span>
+                      {%- elsif block.settings.icon == 'check' -%}
+                        <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                          {% render 'nw-icon', icon: 'check-circle' %}
+                        </span>
+                      {%- endif -%}
+                      <div class="nw-natural-layers-v2__card-feature-text">{{ block.settings.feature_text }}</div>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign leave_out_items = section.blocks | where: 'type', 'leave_out_item' -%}
+        {%- if section.settings.show_leave_out_box
+          and leave_out_items.size > 0
+          or section.settings.leave_out_title != blank
+        -%}
+          <div class="nw-natural-layers-v2__leave-out">
+            {%- if section.settings.leave_out_title != blank -%}
+              <h3 class="nw-natural-layers-v2__leave-out-title">{{ section.settings.leave_out_title }}</h3>
+            {%- endif -%}
+            {%- if leave_out_items.size > 0 -%}
+              <div class="nw-natural-layers-v2__leave-out-grid">
+                {%- for block in leave_out_items -%}
+                  <div class="nw-natural-layers-v2__leave-out-item" {{ block.shopify_attributes }}>
+                    {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+                      <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                        {% render 'nw-icon',
+                          icon: 'none',
+                          custom_icon: block.settings.custom_icon,
+                          img_class: 'nw-natural-layers-v2__feature-icon-img',
+                          img_width: 48
+                        %}
+                      </span>
+                    {%- elsif block.settings.icon != 'none' -%}
+                      <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                        {%- if block.settings.icon == 'check' -%}
+                          {% render 'nw-icon', icon: 'check-circle' %}
+                        {%- else -%}
+                          {% render 'nw-icon', icon: 'cross-circle' %}
+                        {%- endif -%}
+                      </span>
+                    {%- endif -%}
+                    <span class="nw-natural-layers-v2__leave-out-text">{{ block.settings.text }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign trust_badges = section.blocks | where: 'type', 'trust_badge' -%}
+        {% render 'nw-cta-badges',
+          settings: section.settings,
+          blocks: trust_badges,
+          class: 'nw-natural-layers-v2__cta-wrap'
+        %}
+
+        {%- assign insight_slides = section.blocks | where: 'type', 'insight_slide' -%}
+        {%- if section.settings.show_insights_slider and insight_slides.size > 0 -%}
+          <nw-insights-slider
+            class="nw-natural-layers-v2__insights"
+            data-enable-autoplay="{{ section.settings.enable_autoplay }}"
+            data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
+            data-show-arrows="{{ section.settings.show_arrows }}"
+            data-show-dots="{{ section.settings.show_dots }}"
+          >
+            {%- if section.settings.show_arrows and insight_slides.size > 1 -%}
+              {%- assign prev_insight_label = 'nw.accessibility.previous_insight' | t -%}
+              {%- assign next_insight_label = 'nw.accessibility.next_insight' | t -%}
+              {% render 'nw-swiper-arrows', prev_label: prev_insight_label, next_label: next_insight_label %}
+            {%- endif -%}
+            <div
+              class="swiper nw-natural-layers-v2__insights-slider"
+              id="nw-natural-layers-v2-insights-{{ section.id }}"
+              data-nw-insights-slider
+            >
+              <div class="swiper-wrapper">
+                {%- for block in insight_slides -%}
+                  <div class="swiper-slide" {{ block.shopify_attributes }}>
+                    <div class="nw-natural-layers-v2__insights-slide">
+                      {%- if block.settings.icon != 'none' or block.settings.custom_icon != blank -%}
+                        <div class="nw-natural-layers-v2__insight-icon-wrap">
+                          {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+                            {% render 'nw-icon',
+                              icon: 'none',
+                              custom_icon: block.settings.custom_icon,
+                              img_class: 'nw-natural-layers-v2__insight-icon-img',
+                              img_width: 48
+                            %}
+                          {%- elsif block.settings.icon == 'moon'
+                            or block.settings.icon == 'thermometer'
+                            or block.settings.icon == 'wind'
+                          -%}
+                            {% render 'nw-icon', icon: block.settings.icon %}
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                      <div class="nw-natural-layers-v2__insight-content">
+                        {%- if block.settings.tag != blank -%}
+                          <span class="nw-natural-layers-v2__insight-tag">{{ block.settings.tag }}</span>
+                        {%- endif -%}
+                        {%- if block.settings.quote != blank -%}
+                          <div class="nw-natural-layers-v2__insight-quote{% if block.settings.is_italic %} is-italic{% endif %}">
+                            {{ block.settings.quote }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+
+            {%- if section.settings.show_dots and insight_slides.size > 1 -%}
+              <div
+                class="nw-natural-layers-v2__insights-pagination swiper-pagination"
+                id="nw-natural-layers-v2-pagination-{{ section.id }}"
+                data-nw-insights-pagination
+              ></div>
+            {%- endif -%}
+          </nw-insights-slider>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Natural Layers V2",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating (Active Stars)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color",
+      "label": "Active Star Color",
+      "default": "#E57B1E",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color_inactive",
+      "label": "Inactive Star Color",
+      "default": "#D1D5DB",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Real sleepers, real mornings"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Natural Layers Behind Better Rest"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "LEAVE OUT BOX"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_leave_out_box",
+      "label": "Show Leave Out Box",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "leave_out_title",
+      "label": "Leave Out Title",
+      "default": "What We Leave Out Matters Too",
+      "visible_if": "{{ section.settings.show_leave_out_box == true }}"
+    },
+    {
+      "type": "header",
+      "content": "CTA BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "SHOP MATTRESSES",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "INSIGHTS SLIDER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_insights_slider",
+      "label": "Show Insights Box & Slider",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Slider Arrows",
+      "default": false,
+      "visible_if": "{{ section.settings.show_insights_slider == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Pagination Dots",
+      "default": true,
+      "visible_if": "{{ section.settings.show_insights_slider == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": true,
+      "visible_if": "{{ section.settings.show_insights_slider == true }}"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (Seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.show_insights_slider == true and section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Background Color (Image)",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "layer_card",
+      "name": "Natural Layer Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Layer Image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Layer Title",
+          "default": "Organic Cotton"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Feature Icon",
+          "default": "check",
+          "options": [
+            { "value": "check", "label": "Checkmark (Green Default)" },
+            { "value": "cross", "label": "Cross (Red)" },
+            { "value": "custom", "label": "Custom Icon Image" },
+            { "value": "none", "label": "None" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "feature_text",
+          "label": "Feature / Benefit Text",
+          "default": "soft, breathable surface"
+        }
+      ]
+    },
+    {
+      "type": "leave_out_item",
+      "name": "Leave Out Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Item Icon",
+          "default": "cross",
+          "options": [
+            { "value": "cross", "label": "Cross (Red Default)" },
+            { "value": "check", "label": "Checkmark (Green)" },
+            { "value": "custom", "label": "Custom Icon Image" },
+            { "value": "none", "label": "None" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Item Text",
+          "default": "No Fiberglass"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "default": "moneyback",
+          "options": [
+            { "value": "moneyback", "label": "Moneyback Shield" },
+            { "value": "truck", "label": "Truck Shipping" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "custom", "label": "Custom Icon Image" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    },
+    {
+      "type": "insight_slide",
+      "name": "Insight Slide",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "tag",
+          "label": "Insight Tag / Eyebrow",
+          "default": "Recovery Insight #1"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote / Insight Text",
+          "default": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_italic",
+          "label": "Italicize Text",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Slide Icon",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "moon", "label": "Moon / Night" },
+            { "value": "thermometer", "label": "Thermometer / Cooler" },
+            { "value": "wind", "label": "Wind / Breath" },
+            { "value": "custom", "label": "Custom Icon Image" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.icon == 'custom' }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Natural Layers V2",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "layer_card",
+          "settings": {
+            "title": "Organic Cotton",
+            "feature_text": "Breathable, soft against the skin, and grown without pesticides or harsh chemicals. Forms the cover that lets your body breathe all night.",
+            "icon": "none"
+          }
+        },
+        {
+          "type": "layer_card",
+          "settings": {
+            "title": "New Zealand Wool",
+            "feature_text": "A natural temperature regulator that wicks moisture and keeps you cool. Naturally flame-resistant, so there's no need for chemical fire retardants.",
+            "icon": "none"
+          }
+        },
+        {
+          "type": "layer_card",
+          "settings": {
+            "title": "Natural Talalay Latex",
+            "feature_text": "4\" of 100% natural latex sourced from Sri Lanka. Responsive, breathable, and durable, it lifts and contours without the heat-trapping sink of memory foam.",
+            "icon": "none"
+          }
+        },
+        {
+          "type": "layer_card",
+          "settings": {
+            "title": "Steel Coil System",
+            "feature_text": "An 8\", 5-zone pocketed coil core with AdvantEdge support. Adapts to movement, reduces motion transfer, and gives targeted support where your body needs it.",
+            "icon": "none"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Fiberglass",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Plastic Fibers",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Polyurethane",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Formaldehyde",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Toxic Glues",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "leave_out_item",
+          "settings": {
+            "text": "No Off-Gassing",
+            "icon": "cross"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "warranty",
+            "text": "30-Year Warranty"
+          }
+        },
+        {
+          "type": "insight_slide",
+          "settings": {
+            "tag": "Recovery Insight #1",
+            "quote": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>",
+            "is_italic": false,
+            "icon": "none"
+          }
+        },
+        {
+          "type": "insight_slide",
+          "settings": {
+            "tag": "SLEEP FACT · 02",
+            "quote": "<p>Deep sleep is when your body repairs and recovers.</p>",
+            "is_italic": true,
+            "icon": "moon"
+          }
+        },
+        {
+          "type": "insight_slide",
+          "settings": {
+            "tag": "SLEEP FACT · 03",
+            "quote": "<p>A cooler bed supports deeper, less interrupted sleep.</p>",
+            "is_italic": true,
+            "icon": "thermometer"
+          }
+        },
+        {
+          "type": "insight_slide",
+          "settings": {
+            "tag": "SLEEP FACT · 04",
+            "quote": "<p>What you breathe at night is as important as your sleep duration.</p>",
+            "is_italic": true,
+            "icon": "wind"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

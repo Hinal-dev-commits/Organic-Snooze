@@ -215,13 +215,117 @@
       "name": "NW Benefits V2",
       "settings": {
         "bg_type": "color",
-        "bg_color": "#F4EFE8",
+        "bg_color": "#f4efe8",
         "bg_gradient": "",
-        "bg_overlay_color": "rgba(244, 239, 232, 0.84)",
+        "bg_overlay_color": "#f4efe8d6",
         "padding_top_desktop": 40,
         "padding_bottom_desktop": 40,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
+      }
+    },
+    "nw_testimonials_PFYhEM": {
+      "type": "nw-testimonials",
+      "blocks": {
+        "testimonial_whaNdV": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”</p>",
+            "author": "Phillip Page",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        },
+        "testimonial_zP9p76": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”</p>",
+            "author": "Chloe",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        },
+        "testimonial_rzGM9i": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“Incredible mattress I want to invest in more!”</p>",
+            "author": "Kristin McGee",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        },
+        "testimonial_PRtKG3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”</p>",
+            "author": "Chloe",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        },
+        "testimonial_pDNhmz": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”</p>",
+            "author": "Chloe",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        },
+        "testimonial_Jg7cQd": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”</p>",
+            "author": "Marcello Delle Grotti",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_whaNdV",
+        "testimonial_zP9p76",
+        "testimonial_rzGM9i",
+        "testimonial_PRtKG3",
+        "testimonial_pDNhmz",
+        "testimonial_Jg7cQd"
+      ],
+      "name": "t:sections.nw-testimonials.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Straight from our sleepers",
+        "subheading": "",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_bg_color": "#f4efe8",
+        "card_text_color": "#613916",
+        "card_star_color": "#e57b1e",
+        "card_star_empty_color": "#d1c7ba",
+        "verified_text_color": "",
+        "verified_icon_color": "#878735",
+        "full_width": false,
+        "enable_loop": false,
+        "enable_edge_shadow": false,
+        "show_arrows": true,
+        "show_pagination": true,
+        "pagination_color": "#613916",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
       }
     },
     "nw_featured_marquee_LEteBQ": {
@@ -515,10 +619,617 @@
         "bg_type": "image",
         "bg_color": "#fffcf0",
         "bg_gradient": "",
-        "bg_image": "shopify://shop_images/benifit-mobile.png",
+        "bg_image": "shopify://shop_images/benifit-desktop.png",
         "bg_overlay_color": "#fffcf059",
         "padding_top_desktop": 48,
         "padding_bottom_desktop": 48,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_natural_layers_v2_rApkFF": {
+      "type": "nw-natural-layers-v2",
+      "blocks": {
+        "layer_card_byzhHY": {
+          "type": "layer_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_310045_1.png",
+            "title": "Organic Cotton",
+            "icon": "none",
+            "feature_text": "Breathable, soft against the skin, and grown without pesticides or harsh chemicals. Forms the cover that lets your body breathe all night."
+          }
+        },
+        "layer_card_QUYxw7": {
+          "type": "layer_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_310045_2_1.png",
+            "title": "New Zealand Wool",
+            "icon": "none",
+            "feature_text": "A natural temperature regulator that wicks moisture and keeps you cool. Naturally flame-resistant, so there's no need for chemical fire retardants."
+          }
+        },
+        "layer_card_LFRRWU": {
+          "type": "layer_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_310046_1.png",
+            "title": "Natural Talalay Latex",
+            "icon": "none",
+            "feature_text": "4\" of 100% natural latex sourced from Sri Lanka. Responsive, breathable, and durable, it lifts and contours without the heat-trapping sink of memory foam."
+          }
+        },
+        "layer_card_LcxnLh": {
+          "type": "layer_card",
+          "settings": {
+            "image": "shopify://shop_images/coils-in-mattress_1_1.png",
+            "title": "Steel Coil System",
+            "icon": "none",
+            "feature_text": "An 8\", 5-zone pocketed coil core with AdvantEdge support. Adapts to movement, reduces motion transfer, and gives targeted support where your body needs it."
+          }
+        },
+        "leave_out_item_3zJxFF": {
+          "type": "leave_out_item",
+          "settings": {
+            "icon": "cross",
+            "text": "No Fiberglass"
+          }
+        },
+        "leave_out_item_ETyJFz": {
+          "type": "leave_out_item",
+          "settings": {
+            "icon": "cross",
+            "text": "No Plastic Fibers"
+          }
+        },
+        "leave_out_item_UmErhb": {
+          "type": "leave_out_item",
+          "settings": {
+            "icon": "cross",
+            "text": "No Polyurethane"
+          }
+        },
+        "leave_out_item_AjUyNc": {
+          "type": "leave_out_item",
+          "settings": {
+            "icon": "cross",
+            "text": "No Formaldehyde"
+          }
+        },
+        "leave_out_item_e36K7j": {
+          "type": "leave_out_item",
+          "settings": {
+            "icon": "cross",
+            "text": "No Toxic Glues"
+          }
+        },
+        "leave_out_item_iewYwT": {
+          "type": "leave_out_item",
+          "settings": {
+            "icon": "cross",
+            "text": "No Off-Gassing"
+          }
+        },
+        "trust_badge_g3cfYe": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_txVbcw": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        }
+      },
+      "block_order": [
+        "layer_card_byzhHY",
+        "layer_card_QUYxw7",
+        "layer_card_LFRRWU",
+        "layer_card_LcxnLh",
+        "leave_out_item_3zJxFF",
+        "leave_out_item_ETyJFz",
+        "leave_out_item_UmErhb",
+        "leave_out_item_AjUyNc",
+        "leave_out_item_e36K7j",
+        "leave_out_item_iewYwT",
+        "trust_badge_g3cfYe",
+        "trust_badge_txVbcw"
+      ],
+      "name": "NW Natural Layers V2",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "The Natural Layers Behind Better Rest",
+        "subheading": "",
+        "show_leave_out_box": true,
+        "leave_out_title": "What We Leave Out Matters Too",
+        "show_button": true,
+        "btn_text": "Shop Clean Sleep",
+        "btn_link": "",
+        "btn_style": "primary",
+        "show_insights_slider": false,
+        "show_arrows": false,
+        "show_dots": true,
+        "enable_autoplay": true,
+        "autoplay_delay": 4,
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_color_image": "#ffffff",
+        "bg_image_opacity": 16,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_understand_mattress_Yat4zp": {
+      "type": "nw-understand-mattress",
+      "blocks": {
+        "faq_item_iGBNx8": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is an organic latex mattress?",
+            "answer": "<p>An organic latex mattress uses latex tapped from rubber trees instead of petroleum-based foam, paired with organic cotton and wool. The result is a surface that breathes, responds to your body, and lasts for years without the chemical foams in most conventional mattresses. Ours are built with certified organic latex, wool, and cotton, with no polyurethane foam, fiberglass, or VOCs.</p>",
+            "open_by_default": true
+          }
+        },
+        "faq_item_NeJr9k": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Organic latex vs. memory foam",
+            "answer": "<p>Memory foam is petroleum-based and softens with body heat, which traps warmth and creates that sinking feel. Natural latex lifts and contours, springs back when you move, and sleeps cooler because it breathes. Latex also skips the off-gassing new foam is known for. Contouring comfort, without the heat or the chemical smell.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_item_ykd3mQ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I choose the right firmness?",
+            "answer": "<p>Go Medium Firm (Pure) if you sleep on your back or stomach and want firmer, grounded support. Go Medium Plush (Pillow Top) if you sleep on your side or want softer pressure relief with support underneath. Both work for combination sleepers. Still unsure? The 60-second quiz matches you to your feel.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_iGBNx8",
+        "faq_item_NeJr9k",
+        "faq_item_ykd3mQ"
+      ],
+      "name": "NW Understand Mattress",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Understanding Organic Mattresses",
+        "subheading": "",
+        "image_position": "left",
+        "image": "shopify://shop_images/mattress-desktop.png",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_overlay_color": "",
+        "bg_gradient": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_organic_standards_cGL9Tn": {
+      "type": "nw-organic-standards",
+      "blocks": {
+        "standard_card_UnBhrz": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/gots.svg",
+            "title": "GOTS",
+            "description": "<p>Verifies our organic cotton and wool, from harvest to finished textile.</p>"
+          }
+        },
+        "standard_card_QHkUHG": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/gols.svg",
+            "title": "GOLS",
+            "description": "<p>Verifies our natural latex as genuinely organic, traced from tree to mattress.</p>"
+          }
+        },
+        "standard_card_3eDHed": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/oeko.svg",
+            "title": "OEKO-TEX",
+            "description": "<p>Independently tests the latex for harmful substances and emissions.</p>"
+          }
+        },
+        "standard_card_FRCaqX": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/eco.svg",
+            "title": "ECO-INSTITUT",
+            "description": "<p>Verifies the latex for low emissions and freedom from pollutants.</p>"
+          }
+        },
+        "standard_card_ARJCqd": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/fsc.svg",
+            "title": "FSC",
+            "description": "<p>Confirms the latex is sourced from responsibly managed forests.</p>"
+          }
+        },
+        "standard_card_fibKEf": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/made-in-usa.svg",
+            "title": "MADE IN THE USA",
+            "description": "<p>Every mattress is built and hand-tufted in our USA facility.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "standard_card_UnBhrz",
+        "standard_card_QHkUHG",
+        "standard_card_3eDHed",
+        "standard_card_FRCaqX",
+        "standard_card_ARJCqd",
+        "standard_card_fibKEf"
+      ],
+      "name": "NW Organic Standards",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "\"Organic\" Only Counts When It's Verified",
+        "subheading": "<p>We support \"organic\" with GOTS for textiles and GOLS for latex — third-party proof separates real organic from marketing.</p>",
+        "featured_image": "shopify://shop_images/Standards_-_Mobile.png",
+        "stat_number": "96–98%",
+        "stat_text": "of U.S. mattresses use petroleum foam. We're in the 2% that doesn't.",
+        "stat_bg_color": "#61391699",
+        "stat_text_color": "#ffffff",
+        "show_button": true,
+        "btn_text": "VIEW OUR CERTIFICATIONS",
+        "btn_link": "",
+        "btn_style": "primary",
+        "bg_type": "image",
+        "bg_color": "#ffffffd6",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_overlay_color": "#ffffffd6",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_review_video_Vn3h38": {
+      "type": "nw-review-video",
+      "blocks": {
+        "review_LxWLHJ": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/6195937-uhd_2160_3840_25fps.mp4",
+            "overlay_text": "",
+            "author": "Katherine",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "product": "3554-medium-ept-gary-brecka",
+            "custom_title": "",
+            "custom_link": ""
+          }
+        },
+        "review_3NmP4J": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/4153241-uhd_2160_4096_25fps.mp4",
+            "overlay_text": "",
+            "author": "Courtney",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "product": "3556-eco-pure",
+            "custom_title": "",
+            "custom_link": ""
+          }
+        },
+        "review_dDHBCG": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/7234147-uhd_2160_3840_30fps.mp4",
+            "overlay_text": "",
+            "author": "Rivera",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "product": "3557-topper-2-organic-latex",
+            "custom_title": "",
+            "custom_link": ""
+          }
+        },
+        "review_8wM69j": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/instagram-video-aafb2799-a059-45f5-9429-fa45e96250dc.mp4",
+            "overlay_text": "",
+            "author": "Gary Brecka",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "product": "3556-eco-pure",
+            "custom_title": "",
+            "custom_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_LxWLHJ",
+        "review_3NmP4J",
+        "review_dDHBCG",
+        "review_8wM69j"
+      ],
+      "name": "t:sections.nw-review-video.name",
+      "settings": {
+        "show_rating": true,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "Real sleepers, real mornings",
+        "heading": "Hear It From People Who Sleep On It",
+        "subheading": "<p>Real customers, real results in their own words</p>",
+        "show_arrows": true,
+        "show_dots": true,
+        "enable_autoplay": false,
+        "autoplay_delay": 3,
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_guarantee_card_Uy9UGj": {
+      "type": "nw-guarantee-card",
+      "name": "NW Guarantee Card",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Sleep On It For 100 Nights. Risk-Free.",
+        "description": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a <strong>30-year warranty</strong> because it’s built to last.</p>",
+        "image_position": "left",
+        "image": "shopify://shop_images/guarantee-matress.png",
+        "show_badge": true,
+        "badge_image": "shopify://shop_images/Vector_3.svg",
+        "seal_number": "100",
+        "seal_label": "NIGHTS",
+        "seal_ring": "MONEY BACK GUARANTEE",
+        "show_button": true,
+        "btn_text": "SHOP ORGANIC MATTRESSES",
+        "btn_link": "",
+        "btn_style": "primary",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#61391633",
+        "bg_type": "color",
+        "bg_color": "#fffaf3",
+        "bg_image": "shopify://shop_images/collection-hero.png",
+        "bg_overlay_color": "",
+        "bg_gradient": "linear-gradient(180deg, rgba(196, 102, 238, 1), rgba(82, 218, 236, 1) 100%)",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_faq_CfP8mf": {
+      "type": "nw-faq",
+      "blocks": {
+        "faq_item_pw6gT9": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What makes the Ultimate Snooze different from other organic mattresses?",
+            "answer": "<p>Ultimate Snooze combines certified organic latex, organic wool, and pocket coils with zero toxic chemicals, glues, or fiberglass for restorative, clean sleep.</p>"
+          }
+        },
+        "faq_item_9GEpDA": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What materials are used?",
+            "answer": "<p>We use 100% GOLS certified organic latex, GOTS certified organic wool, and GOTS certified organic cotton with recycled steel pocket coils.</p>"
+          }
+        },
+        "faq_item_RmCAXi": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does it contain flame retardants or fiberglass?",
+            "answer": "<p>No. We never use chemical flame retardants or fiberglass. We use natural organic wool as our flame barrier.</p>"
+          }
+        },
+        "faq_item_3DPYpN": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will I sleep hot?",
+            "answer": "<p>Organic latex and wool are naturally temperature regulating and breathable, keeping you cool all night long.</p>"
+          }
+        },
+        "faq_item_dijNXX": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What if I don’t like it?",
+            "answer": "<p>We offer a 100-night risk-free trial. If it's not the right fit, you can return it hassle-free.</p>"
+          }
+        },
+        "faq_item_gPzEDh": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I finance it or use HSA/FSA?",
+            "answer": "<p>Yes, we offer financing through Affirm, ShopPay, and Acima, as well as TrueMed HSA/FSA eligibility at checkout.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_pw6gT9",
+        "faq_item_9GEpDA",
+        "faq_item_RmCAXi",
+        "faq_item_3DPYpN",
+        "faq_item_dijNXX",
+        "faq_item_gPzEDh"
+      ],
+      "name": "t:sections.nw-faq.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Frequently Asked Questions",
+        "subheading": "",
+        "show_search": true,
+        "search_placeholder": "What can we help with?",
+        "open_first_faq": false,
+        "initial_faq_count": 6,
+        "more_label": "SEE MORE FAQ’S",
+        "contact_heading": "Speak with Our Live Sleep Experts.",
+        "show_call_btn": true,
+        "call_label": "CALL (443) 333-1213",
+        "call_link": "tel:+14433331213",
+        "call_style": "primary",
+        "show_text_btn": true,
+        "text_label": "TEXT US",
+        "text_link": "sms:+14433331213",
+        "text_style": "outline",
+        "show_quiz_btn": true,
+        "quiz_label": "SLEEP QUIZ",
+        "quiz_link": "",
+        "quiz_style": "outline",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_opacity": 16,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_collection_list_fmeerp": {
+      "type": "nw-collection-list",
+      "blocks": {
+        "trust_badge_YEcQTi": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_mTTemP": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        },
+        "trust_badge_r8xKRc": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shipping",
+            "text": "free shipping"
+          }
+        },
+        "trust_badge_7agfqt": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "financing",
+            "text": "0% Interest financing options"
+          }
+        },
+        "collection_CP8Vz3": {
+          "type": "collection",
+          "settings": {
+            "collection": "mattress",
+            "custom_title": "Bedding",
+            "custom_image": "shopify://shop_images/SnapInsta.to_670318428_17874444948586195_2339425393624769511_n_1_1_2.png",
+            "custom_link": ""
+          }
+        },
+        "collection_8RJeKY": {
+          "type": "collection",
+          "settings": {
+            "collection": "family-organic-mattress-and-bedding-for-kids",
+            "custom_title": "Kids",
+            "custom_image": "shopify://shop_images/CRIB_0753_1280_1_1.png",
+            "custom_link": ""
+          }
+        },
+        "collection_tpNTdA": {
+          "type": "collection",
+          "settings": {
+            "collection": "adjustable-bases-1",
+            "custom_title": "Bases",
+            "custom_image": "shopify://shop_images/category-3_1.png",
+            "custom_link": ""
+          }
+        },
+        "collection_eBgAFr": {
+          "type": "collection",
+          "settings": {
+            "collection": "bundles-ultimate-sleep-optimization-system",
+            "custom_title": "Bundle & Save",
+            "custom_image": "shopify://shop_images/category-4_1.png",
+            "custom_link": ""
+          }
+        },
+        "collection_rVcnjL": {
+          "type": "collection",
+          "settings": {
+            "collection": "family-organic-mattress-and-bedding-for-kids",
+            "custom_title": "Kids",
+            "custom_image": "shopify://shop_images/CRIB_0753_1280_1_1.png",
+            "custom_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_YEcQTi",
+        "trust_badge_mTTemP",
+        "trust_badge_r8xKRc",
+        "trust_badge_7agfqt",
+        "collection_CP8Vz3",
+        "collection_8RJeKY",
+        "collection_tpNTdA",
+        "collection_eBgAFr",
+        "collection_rVcnjL"
+      ],
+      "name": "t:sections.nw-collection-list.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Explore also",
+        "subheading": "",
+        "show_arrows": false,
+        "show_dots": true,
+        "show_fade": false,
+        "enable_autoplay": false,
+        "autoplay_delay": 4,
+        "show_button": true,
+        "button_label": "SHOP ALL",
+        "button_link": "",
+        "button_style": "primary",
+        "show_features": true,
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
@@ -530,9 +1241,17 @@
     "nw_collection_hero_VWXgHj",
     "nw_collections_CdUFHw",
     "nw_benefits_v2_LCKAka",
+    "nw_testimonials_PFYhEM",
     "nw_featured_marquee_LEteBQ",
     "nw_compare_KpbLdt",
     "nw_reviews_kAHARa",
-    "nw_quiz_TCEHL9"
+    "nw_quiz_TCEHL9",
+    "nw_natural_layers_v2_rApkFF",
+    "nw_understand_mattress_Yat4zp",
+    "nw_organic_standards_cGL9Tn",
+    "nw_review_video_Vn3h38",
+    "nw_guarantee_card_Uy9UGj",
+    "nw_faq_CfP8mf",
+    "nw_collection_list_fmeerp"
   ]
 }

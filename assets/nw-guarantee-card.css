@@ -1,0 +1,207 @@
+.nw-guarantee-card {
+  display: block;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.nw-guarantee-card__card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  max-width: 922px;
+  min-height: 392px;
+  margin: 0 auto;
+  padding: 16px 48px 16px 16px;
+  background: #FFFFFF;
+  border: 1px solid rgba(97, 57, 22, 0.2);
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+
+.nw-guarantee-card--image-right .nw-guarantee-card__card {
+  flex-direction: row-reverse;
+  padding: 16px 16px 16px 48px;
+}
+
+.nw-guarantee-card__media-wrap {
+  width: 360px;
+  height: auto;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.nw-guarantee-card__media-wrap picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nw-guarantee-card__media-wrap picture img,
+.nw-guarantee-card__img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 4px;
+}
+
+.nw-guarantee-card__img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--octonary-color, #EAE3D9);
+  border-radius: 4px;
+  display: block;
+}
+
+.nw-guarantee-card__badge {
+  position: absolute;
+  top: -24px;
+  left: 20px;
+  width: 99px;
+  height: 99px;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nw-guarantee-card--image-right .nw-guarantee-card__badge {
+  left: auto;
+  right: 20px;
+}
+
+.nw-guarantee-card__badge img,
+.nw-guarantee-card__badge svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.nw-guarantee-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
+}
+
+.nw-guarantee-card__text-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-guarantee-card__text-wrap .nw-section-heading,
+.nw-guarantee-card__text-wrap .nw-section-heading h1,
+.nw-guarantee-card__text-wrap .nw-section-heading h2,
+.nw-guarantee-card__text-wrap .nw-section-heading .h2,
+.nw-guarantee-card__text-wrap .nw-section-heading * {
+  text-align: left;
+}
+
+.nw-guarantee-card__text-wrap .nw-section-description,
+.nw-guarantee-card__text-wrap .nw-section-description p,
+.nw-guarantee-card__text-wrap .nw-section-description * {
+  text-align: left;
+}
+
+.nw-guarantee-card__text-wrap .nw-section-description strong {
+  font-weight: 700;
+}
+
+.nw-guarantee-card__btn-wrap {
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
+}
+
+.nw-guarantee-card__btn-wrap .nw-btn {
+  width: 100%;
+  min-height: 56px;
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .nw-guarantee-card__card {
+    max-width: 720px;
+    padding: 20px 24px;
+    gap: 28px;
+  }
+
+  .nw-guarantee-card--image-right .nw-guarantee-card__card {
+    padding: 20px 24px;
+  }
+
+  .nw-guarantee-card__media-wrap {
+    width: 280px;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-guarantee-card__card {
+    flex-direction: column !important;
+    align-items: center;
+    padding: 18px;
+    gap: 24px;
+  }
+
+  .nw-guarantee-card__media-wrap {
+    width: 100%;
+    height: 222px;
+  }
+
+  .nw-guarantee-card__badge {
+    top: -20px;
+    left: 16px;
+    width: 81px;
+    height: 81px;
+  }
+
+  .nw-guarantee-card--image-right .nw-guarantee-card__badge {
+    left: 16px;
+    right: auto;
+  }
+
+  .nw-guarantee-card__content {
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+    max-width: 100%;
+  }
+
+  .nw-guarantee-card__text-wrap {
+    align-items: center;
+    text-align: center;
+  }
+
+  .nw-guarantee-card__text-wrap .nw-section-heading,
+  .nw-guarantee-card__text-wrap .nw-section-heading h1,
+  .nw-guarantee-card__text-wrap .nw-section-heading h2,
+  .nw-guarantee-card__text-wrap .nw-section-heading .h2,
+  .nw-guarantee-card__text-wrap .nw-section-heading * {
+    text-align: center;
+  }
+
+  .nw-guarantee-card__text-wrap .nw-section-description,
+  .nw-guarantee-card__text-wrap .nw-section-description p,
+  .nw-guarantee-card__text-wrap .nw-section-description * {
+    text-align: center;
+  }
+
+  .nw-guarantee-card__btn-wrap {
+    max-width: 100%;
+  }
+}

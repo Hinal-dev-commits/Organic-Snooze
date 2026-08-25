@@ -1,0 +1,267 @@
+.nw-understand-mattress {
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  isolation: isolate;
+}
+
+.nw-understand-mattress__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.nw-understand-mattress__header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.nw-understand-mattress__header .nw-section-heading .h2,
+.nw-understand-mattress__header .nw-section-heading .h2 * {
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 115%;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: var(--primary-color, #613916);
+  text-align: center;
+}
+
+.nw-understand-mattress__main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+  gap: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-understand-mattress--image-right .nw-understand-mattress__main {
+  flex-direction: row-reverse;
+}
+
+.nw-understand-mattress__media {
+  width: 620px;
+  height: 420px;
+  aspect-ratio: 620 / 420;
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--tertiary-color, #F4EFE8);
+}
+
+.nw-understand-mattress__media picture,
+.nw-understand-mattress__picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nw-understand-mattress__media picture img,
+.nw-understand-mattress__media img,
+.nw-understand-mattress__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 14px;
+}
+
+.nw-understand-mattress__img-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: var(--octonary-color, #EAE3D9);
+  border-radius: 14px;
+  display: block;
+}
+
+.nw-understand-mattress__accordion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 12px;
+  width: 620px;
+  flex: 1 1 0;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.nw-understand-mattress__item {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  width: 100%;
+  background: #F7F5F3;
+  border: 1px solid rgba(97, 57, 22, 0.1);
+  border-radius: 10px;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.nw-understand-mattress__summary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.nw-understand-mattress__summary::-webkit-details-marker {
+  display: none;
+}
+
+.nw-understand-mattress__question {
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 115%;
+  color: var(--primary-color, #613916);
+  flex-grow: 1;
+  text-align: left;
+}
+
+.nw-understand-mattress__toggle-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--primary-color, #613916);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.nw-understand-mattress__toggle-plus {
+  position: relative;
+  width: 14px;
+  height: 1.5px;
+  background-color: var(--primary-color, #613916);
+  display: block;
+}
+
+.nw-understand-mattress__toggle-plus::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 17.5px;
+  background-color: var(--primary-color, #613916);
+  transform: translate(-50%, -50%);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.nw-understand-mattress__item[open] .nw-understand-mattress__toggle-plus::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+
+.nw-understand-mattress__answer {
+  width: 100%;
+  margin-top: 12px;
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--primary-color, #613916);
+  text-align: left;
+}
+
+.nw-understand-mattress__answer p {
+  margin: 0;
+  color: var(--primary-color, #613916);
+}
+
+.nw-understand-mattress__answer p+p {
+  margin-top: 8px;
+}
+
+@media screen and (max-width: 749px) {
+  .nw-understand-mattress__wrapper {
+    gap: 32px;
+  }
+
+  .nw-understand-mattress__header .nw-section-heading .h2,
+  .nw-understand-mattress__header .nw-section-heading .h2 * {
+    font-size: 32px;
+    line-height: 115%;
+  }
+
+  .nw-understand-mattress__main {
+    flex-direction: column !important;
+    gap: 32px;
+  }
+
+  .nw-understand-mattress__media {
+    width: 100%;
+    height: 243px;
+    aspect-ratio: 343 / 243;
+    flex: none;
+    border-radius: 10px;
+  }
+
+  .nw-understand-mattress__media picture,
+  .nw-understand-mattress__picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .nw-understand-mattress__media picture img,
+  .nw-understand-mattress__media img,
+  .nw-understand-mattress__img,
+  .nw-understand-mattress__img-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+  }
+
+  .nw-understand-mattress__accordion {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .nw-understand-mattress__item {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .nw-understand-mattress__question {
+    font-size: 22px;
+    line-height: 115%;
+  }
+
+  .nw-understand-mattress__answer {
+    font-size: 14px;
+    line-height: 140%;
+  }
+}

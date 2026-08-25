@@ -5,6 +5,7 @@
 {%- liquid
   assign collection_blocks = section.blocks | where: 'type', 'collection'
   assign slide_count = collection_blocks.size
+  assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
 -%}
 
 {%- assign nw_shell_selector = '.nw-collection-list.section-' | append: section.id -%}
@@ -135,11 +136,16 @@
           <div class="nw-collection-list__pagination swiper-pagination" id="nw-collection-list-pagination-{{ section.id }}" data-nw-collection-pagination></div>
         {%- endif -%}
       {%- endif -%}
-      {% if section.settings.button_label != blank or section.settings.show_features %}
+
+      {%- if section.settings.show_button or trust_badge_blocks.size > 0 or section.settings.show_features -%}
         <div class="nw-collection-list__actions">
-          {% render 'nw-cta-badges', settings: section.settings, class: 'nw-collection-list__actions' %}
+          {% render 'nw-cta-badges',
+            settings: section.settings,
+            blocks: trust_badge_blocks,
+            class: 'nw-collection-list__actions'
+          %}
         </div>
-      {% endif %}
+      {%- endif -%}
     </div>
   </div>
 </nw-collection-list>
@@ -222,7 +228,7 @@
     {
       "type": "checkbox",
       "id": "show_fade",
-      "label": "Show Left/Right Fade Shadows",
+      "label": "Show Side Fade Overlays",
       "default": true
     },
     {
@@ -235,7 +241,7 @@
       "type": "range",
       "id": "autoplay_delay",
       "label": "Autoplay Delay (Seconds)",
-      "min": 1,
+      "min": 2,
       "max": 10,
       "step": 1,
       "unit": "s",
@@ -284,108 +290,8 @@
     {
       "type": "checkbox",
       "id": "show_features",
-      "label": "Show Features Row",
+      "label": "Show Features / Badges Row",
       "default": true
-    },
-    {
-      "type": "select",
-      "id": "feature_1_icon",
-      "label": "Feature 1 Icon",
-      "default": "trial",
-      "options": [
-        { "value": "trial", "label": "100-Night Trial" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "shipping", "label": "Shipping" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "custom", "label": "Custom Icon" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "feature_1_custom_icon",
-      "label": "Feature 1 Custom Icon",
-      "visible_if": "{{ section.settings.feature_1_icon == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "feature_1_text",
-      "label": "Feature 1 Text",
-      "default": "100-Night Risk-Free Trial"
-    },
-    {
-      "type": "select",
-      "id": "feature_2_icon",
-      "label": "Feature 2 Icon",
-      "default": "warranty",
-      "options": [
-        { "value": "trial", "label": "100-Night Trial" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "shipping", "label": "Shipping" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "custom", "label": "Custom Icon" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "feature_2_custom_icon",
-      "label": "Feature 2 Custom Icon",
-      "visible_if": "{{ section.settings.feature_2_icon == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "feature_2_text",
-      "label": "Feature 2 Text",
-      "default": "30-Year Warranty"
-    },
-    {
-      "type": "select",
-      "id": "feature_3_icon",
-      "label": "Feature 3 Icon",
-      "default": "shipping",
-      "options": [
-        { "value": "trial", "label": "100-Night Trial" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "shipping", "label": "Shipping" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "custom", "label": "Custom Icon" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "feature_3_custom_icon",
-      "label": "Feature 3 Custom Icon",
-      "visible_if": "{{ section.settings.feature_3_icon == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "feature_3_text",
-      "label": "Feature 3 Text",
-      "default": "Free Shipping"
-    },
-    {
-      "type": "select",
-      "id": "feature_4_icon",
-      "label": "Feature 4 Icon",
-      "default": "financing",
-      "options": [
-        { "value": "trial", "label": "100-Night Trial" },
-        { "value": "warranty", "label": "Warranty" },
-        { "value": "shipping", "label": "Shipping" },
-        { "value": "financing", "label": "Financing" },
-        { "value": "custom", "label": "Custom Icon" }
-      ]
-    },
-    {
-      "type": "image_picker",
-      "id": "feature_4_custom_icon",
-      "label": "Feature 4 Custom Icon",
-      "visible_if": "{{ section.settings.feature_4_icon == 'custom' }}"
-    },
-    {
-      "type": "text",
-      "id": "feature_4_text",
-      "label": "Feature 4 Text",
-      "default": "0% Interest Financing Options"
     },
     {
       "type": "header",
@@ -511,6 +417,45 @@
           "label": "Custom Link (Optional)"
         }
       ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "default": "moneyback",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
+          "options": [
+            { "value": "moneyback", "label": "100-Night Trial / Moneyback" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "shipping", "label": "Shipping / Truck" },
+            { "value": "financing", "label": "Financing / Offer" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "none", "label": "None" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
     }
   ],
   "presets": [
@@ -546,6 +491,34 @@
           "type": "collection",
           "settings": {
             "custom_title": "Bundle & Save"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "warranty",
+            "text": "30-Year Warranty"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shipping",
+            "text": "Free Shipping"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "financing",
+            "text": "0% Interest Financing Options"
           }
         }
       ]
