@@ -34,10 +34,13 @@
   animation: nwMarqueeRight var(--nw-mq-speed, 25s) linear infinite;
 }
 
+.nw-marquee-v2--pause-hover:hover .nw-marquee-v2__track {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nw-marquee-v2--direction-right_to_left .nw-marquee-v2__track,
-  .nw-marquee-v2--direction-left_to_right .nw-marquee-v2__track,
-  .nw-marquee-v2--pause-hover:hover .nw-marquee-v2__track {
+  .nw-marquee-v2--direction-left_to_right .nw-marquee-v2__track {
     animation: none;
   }
 }
