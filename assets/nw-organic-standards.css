@@ -31,25 +31,12 @@
 
 .nw-organic-standards__header .nw-section-heading .h2,
 .nw-organic-standards__header .nw-section-heading .h2 * {
-  font-family: var(--font-heading-family);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 115%;
-  letter-spacing: -0.01em;
-  text-transform: capitalize;
-  font-feature-settings: 'pnum' on, 'lnum' on;
   color: var(--primary-color, #613916);
   text-align: center;
 }
 
 .nw-organic-standards__header .nw-section-description,
 .nw-organic-standards__header .nw-section-description p {
-  font-family: var(--font-body-family);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 140%;
   color: var(--primary-color, #613916);
   text-align: center;
   margin: 0;
@@ -279,17 +266,17 @@
   .nw-organic-standards__main {
     gap: 24px;
     align-items: flex-end;
+    flex-direction: column;
   }
 
   .nw-organic-standards__featured-col {
-    width: 320px;
-    max-width: 40%;
+    width: 100%;
+    max-width: 100%;
     gap: 20px;
   }
 
-  .nw-organic-standards__media {
-    height: auto;
-    aspect-ratio: 524 / 400;
+  .nw-organic-standards__cards-col {
+    width: 100%;
   }
 
   .nw-organic-standards__swiper {
@@ -332,18 +319,6 @@
     gap: 32px;
   }
 
-  .nw-organic-standards__header .nw-section-heading .h2,
-  .nw-organic-standards__header .nw-section-heading .h2 * {
-    font-size: 32px;
-    line-height: 115%;
-  }
-
-  .nw-organic-standards__header .nw-section-description,
-  .nw-organic-standards__header .nw-section-description p {
-    font-size: 16px;
-    line-height: 140%;
-  }
-
   .nw-organic-standards__main {
     display: flex !important;
     flex-direction: column !important;
@@ -358,6 +333,10 @@
     max-width: 100% !important;
     overflow: visible !important;
     display: block !important;
+  }
+
+  .nw-organic-standards__header .nw-section-description p {
+    max-width: 343px;
   }
 
   .nw-organic-standards__featured-col {
@@ -391,6 +370,7 @@
   .nw-organic-standards__overlay-text,
   .nw-organic-standards__overlay-text p {
     font-size: 16px;
+    max-width: 311px;
   }
 
   .nw-organic-standards__btn-wrap {

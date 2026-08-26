@@ -166,7 +166,7 @@
         "shopify_video": "shopify://files/videos/SNO_3_WIDE_FINAL_NOCTA.mp4",
         "video_url": "",
         "custom_video_url": "",
-        "overlay_color": "#00000000",
+        "overlay_color": "rgba(0,0,0,0)",
         "bg_type": "none",
         "bg_color": "#613916",
         "bg_gradient": "linear-gradient(228deg, rgba(21, 209, 252, 1) 14%, rgba(187, 48, 254, 1) 83%)",
@@ -184,6 +184,7 @@
           "settings": {
             "text": "100% ORGANIC MATERIALS",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -192,6 +193,7 @@
           "settings": {
             "text": "MADE IN THE USA",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -200,6 +202,7 @@
           "settings": {
             "text": "100% ORGANIC MATERIALS",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -208,6 +211,7 @@
           "settings": {
             "text": "NO CHEMICAL FOAMS",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -216,6 +220,7 @@
           "settings": {
             "text": "30-YEAR WARRANTY",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -224,6 +229,7 @@
           "settings": {
             "text": "100-NIGHT TRIAL",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         },
@@ -232,6 +238,7 @@
           "settings": {
             "text": "FREE WHITE-GLOVE DELIVERY",
             "link": "",
+            "use_custom_icon": false,
             "icon_override": "inherit"
           }
         }
@@ -577,17 +584,17 @@
         "eyebrow": "",
         "heading": "In Their Own Words",
         "subheading": "",
-        "heading_color": "#613916",
-        "description_color": "#613916",
         "card_bg_color": "#f4efe8",
         "card_text_color": "#613916",
         "card_star_color": "#e57b1e",
         "card_star_empty_color": "#d1c7ba",
         "verified_text_color": "",
         "verified_icon_color": "#878735",
+        "full_width": false,
+        "enable_loop": false,
+        "enable_edge_shadow": false,
         "show_arrows": false,
-        "show_pagination": true,
-        "pagination_color": "#613916",
+        "show_pagination": false,
         "bg_type": "color",
         "bg_color": "#fffcf0",
         "bg_gradient": "",
@@ -773,6 +780,7 @@
         "bg_color": "#ffffffcc",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
         "bg_image_mobile": "shopify://shop_images/layers-bg-image.png",
+        "bg_color_image": "#ffffff",
         "bg_image_opacity": 16,
         "bg_gradient": "",
         "padding_top_desktop": 80,
@@ -1283,7 +1291,7 @@
         "bg_type": "image",
         "bg_color": "#ffffff",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_image_opacity": 16,
+        "bg_color_image": "#ffffffd6",
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -1294,6 +1302,38 @@
     "nw_collection_list_yeNiLx": {
       "type": "nw-collection-list",
       "blocks": {
+        "trust_badge_kztRhQ": {
+          "type": "trust_badge",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_awtFpj": {
+          "type": "trust_badge",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        },
+        "trust_badge_KGhijE": {
+          "type": "trust_badge",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "shipping",
+            "text": "free shipping"
+          }
+        },
+        "trust_badge_NFF37X": {
+          "type": "trust_badge",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "financing",
+            "text": "0% Interest financing options"
+          }
+        },
         "collection_XHC9VB": {
           "type": "collection",
           "settings": {
@@ -1350,6 +1390,10 @@
         }
       },
       "block_order": [
+        "trust_badge_kztRhQ",
+        "trust_badge_awtFpj",
+        "trust_badge_KGhijE",
+        "trust_badge_NFF37X",
         "collection_XHC9VB",
         "collection_qpMhMA",
         "collection_MnEi8L",
@@ -1376,15 +1420,6 @@
         "button_link": "",
         "button_style": "primary",
         "show_features": true,
-        "feature_1_icon": "trial",
-        "feature_1_text": "100-Night Risk-Free Trial",
-        "feature_2_icon": "warranty",
-        "feature_2_text": "30-Year Warranty",
-        "feature_3_icon": "shipping",
-        "feature_3_text": "free shipping",
-        "feature_4_icon": "custom",
-        "feature_4_custom_icon": "shopify://shop_images/interest.svg",
-        "feature_4_text": "0% Interest financing options",
         "bg_type": "color",
         "bg_color": "#ffffff",
         "bg_image_opacity": 100,

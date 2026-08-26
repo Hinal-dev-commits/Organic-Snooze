@@ -40,7 +40,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 12px;
   width: 100%;
 }
 
@@ -74,7 +74,7 @@
   color: var(--primary-color, var(--nw-brown));
   margin: 0;
   width: 100%;
-  letter-spacing: 0%;
+  letter-spacing: -3%;
 }
 
 .nw-collection-hero__description {
@@ -113,6 +113,12 @@
   align-self: stretch;
 }
 
+.nw-collection-hero__media-wrap picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .nw-collection-hero__image {
   width: 100%;
   height: 100%;
@@ -137,9 +143,34 @@
 }
 
 @media screen and (max-width: 1024px) and (min-width: 750px) {
+  .nw-collection-hero__container {
+    gap: 32px;
+    padding-left: clamp(24px, 4vw, 40px);
+    min-height: 340px;
+  }
+
+  .nw-collection-hero__container--image-left {
+    padding-left: 0;
+    padding-right: clamp(24px, 4vw, 40px);
+  }
+
   .nw-collection-hero__media-wrap {
-    flex: 0 0 45%;
-    max-width: 45%;
+    flex: 0 0 48%;
+    max-width: 48%;
+    align-self: stretch;
+    height: auto;
+  }
+
+  .nw-collection-hero__content-wrap {
+    max-width: 52%;
+  }
+
+  .nw-collection-hero__heading {
+    font-size: 30px;
+  }
+
+  .nw-collection-hero__description {
+    font-size: 16px;
   }
 }
 
@@ -172,10 +203,6 @@
     width: 100%;
   }
 
-  .nw-collection-hero__text-group {
-    gap: 8px;
-  }
-
   .nw-collection-hero__tag {
     font-size: 12px;
     line-height: 130%;
@@ -190,5 +217,46 @@
   .nw-collection-hero__description {
     font-size: 16px;
     line-height: 150%;
+  }
+}
+
+@media screen and (min-width: 1441px) {
+  .nw-collection-hero__container {
+    max-width: 1920px;
+    min-height: 480px;
+    padding-left: clamp(80px, 6.25vw, 120px);
+    gap: 64px;
+  }
+
+  .nw-collection-hero__container--image-left {
+    padding-left: 0;
+    padding-right: clamp(80px, 6.25vw, 120px);
+  }
+
+  .nw-collection-hero__content-wrap {
+    max-width: 760px;
+    gap: 16px;
+  }
+
+  .nw-collection-hero__heading {
+    font-size: 44px;
+    line-height: 110%;
+  }
+
+  .nw-collection-hero__description {
+    font-size: 19px;
+    line-height: 145%;
+  }
+
+  .nw-collection-hero__media-wrap {
+    flex: 0 0 calc(50% - 32px);
+    max-width: calc(50% - 32px);
+    min-height: 480px;
+  }
+
+  .nw-collection-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }

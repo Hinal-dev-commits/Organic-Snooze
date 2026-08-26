@@ -1,11 +1,13 @@
 {% doc %}
-Outputs padding and background CSS from the current section settings.
-@param {string} selector - CSS selector for the section root
-@param {string} [mode] - overlay uses a ::before image layer; direct paints the background on the element. Default: overlay
-@param {string} [extra] - Extra CSS declarations inside the selector
-@param {string} [default_bg] - Fallback background color. Default: #FFFFFF
-@example
-Render with selector set to the section root, for example .nw-faq.section- plus section.id
+  Outputs padding and background CSS from the current section settings.
+
+  @param {string} selector - CSS selector for the section root
+  @param {string} [mode] - overlay uses a ::before image layer; direct paints the background on the element. Default: overlay
+  @param {string} [extra] - Extra CSS declarations inside the selector
+  @param {string} [default_bg] - Fallback background color. Default: #FFFFFF
+
+  @example
+  Render with selector set to the section root, for example .nw-faq.section- plus section.id
 {% enddoc %}
 
 {%- liquid

@@ -214,14 +214,37 @@
 .nw-product-card .nw-btn--primary {
     background: var(--nw-pcard-btn-bg, var(--nw-tan));
     color: var(--nw-pcard-btn-text, var(--nw-white));
-    border-color: var(--nw-pcard-btn-bg, var(--nw-tan));
-
+    border: 1px solid var(--nw-pcard-btn-bg, var(--nw-tan));
 }
 
 .nw-product-card .nw-btn--primary:hover {
     background: var(--nw-pcard-btn-bg-hover, #b57d57);
     border-color: var(--nw-pcard-btn-bg-hover, #b57d57);
     color: var(--nw-pcard-btn-text, var(--nw-white));
+}
+
+.nw-product-card .nw-btn--secondary {
+    background: var(--nw-moss, #878735);
+    color: var(--nw-white, #FFFFFF);
+    border: 1px solid var(--nw-moss, #878735);
+}
+
+.nw-product-card .nw-btn--secondary:hover {
+    background: #73732d;
+    border-color: #73732d;
+    color: var(--nw-white, #FFFFFF);
+}
+
+.nw-product-card .nw-btn--outline {
+    background: transparent;
+    color: var(--nw-brown, #613916);
+    border: 1px solid var(--nw-brown, #613916);
+}
+
+.nw-product-card .nw-btn--outline:hover {
+    background: var(--nw-brown, #613916);
+    border-color: var(--nw-brown, #613916);
+    color: var(--nw-white, #FFFFFF);
 }
 
 

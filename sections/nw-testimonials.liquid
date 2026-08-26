@@ -17,15 +17,12 @@
     --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     --nw-testimonials-header-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
     --nw-testimonials-header-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-    --nw-testimonials-heading-color: {{ section.settings.heading_color }};
-    --nw-testimonials-desc-color: {{ section.settings.description_color }};
     --nw-testimonials-card-bg: {{ section.settings.card_bg_color }};
     --nw-testimonials-card-text: {{ section.settings.card_text_color }};
     --nw-testimonials-star-color: {{ section.settings.card_star_color | default: '#E57B1E' }};
     --nw-testimonials-star-empty-color: {{ section.settings.card_star_empty_color | default: '#D1C7BA' }};
     --nw-testimonials-verified-color: {{ section.settings.verified_icon_color }};
     --nw-testimonials-verified-textcolor: {{ section.settings.verified_text_color }};
-    --nw-swiper-bullet: {{ section.settings.pagination_color }};
   "
 >
   <div class="page-width">
@@ -84,8 +81,15 @@
           {%- if section.settings.show_arrows -%}
             {% render 'nw-swiper-arrows' %}
           {%- endif -%}
-          {%- if section.settings.show_pagination -%}
-            <div class="nw-swiper-pagination" id="NwTestimonialsPagination-{{ section.id }}"></div>
+          {%- if section.settings.show_pagination and section.blocks.size > 1 -%}
+            <div class="nw-swiper-pagination" id="NwTestimonialsPagination-{{ section.id }}" data-nw-testimonial-pagination>
+              {%- for block in section.blocks -%}
+                <span
+                  class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+                  data-bullet-index="{{ forloop.index0 }}"
+                ></span>
+              {%- endfor -%}
+            </div>
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -154,24 +158,6 @@
     },
     {
       "type": "header",
-      "content": "TEXT COLORS"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "heading_color",
-      "label": "Heading Color",
-      "default": "#613916"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "description_color",
-      "label": "Description Color",
-      "default": "#613916"
-    },
-    {
-      "type": "header",
       "content": "CARD COLORS"
     },
     {
@@ -223,13 +209,13 @@
       "type": "checkbox",
       "id": "full_width",
       "label": "Full Width Slider",
-      "default": false
+      "default": true
     },
     {
       "type": "checkbox",
       "id": "enable_loop",
       "label": "Enable Loop",
-      "default": false
+      "default": true
     },
     {
       "type": "checkbox",
@@ -248,18 +234,6 @@
       "id": "show_pagination",
       "label": "Show Slider Pagination",
       "default": true
-    },
-    {
-      "type": "header",
-      "content": "SLIDER COLORS"
-    },
-    {
-      "type": "color",
-      "alpha": true,
-      "id": "pagination_color",
-      "label": "Pagination Bullet",
-      "default": "#613916",
-      "visible_if": "{{ section.settings.show_pagination == true }}"
     },
     {
       "type": "header",

@@ -1,28 +1,32 @@
 {{ 'nw-faq.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'nw-faq.js' | asset_url }}" defer="defer"></script>
 
-{%- assign nw_shell_selector = '.nw-faq.section-' | append: section.id -%}
-{% render 'nw-section-shell', selector: nw_shell_selector %}
 <style>
   .nw-faq.section-{{ section.id }} {
     --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
     --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     position: relative;
-    background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
-    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
-    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
     isolation: isolate;
     overflow: hidden;
-    {% if section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
-      background: {{ section.settings.bg_gradient }};
-    {% elsif section.settings.bg_type == 'none' %}
-      background: transparent;
-    {% endif %}
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    {% endcase %}
   }
 
-  {%- if section.settings.bg_image != blank and section.settings.bg_type != 'none' -%}
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
     .nw-faq.section-{{ section.id }}::before {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       width: 100%;
@@ -31,11 +35,28 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      opacity: calc({{ section.settings.bg_image_opacity | default: 100 }} / 100);
-      z-index: -1;
+      z-index: 0;
       pointer-events: none;
     }
   {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    .nw-faq.section-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFFD6' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  .nw-faq.section-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
 
   @media screen and (max-width: 749px) {
     .nw-faq.section-{{ section.id }} {
@@ -43,19 +64,16 @@
       padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
     }
 
-    {%- if section.settings.bg_image_mobile != blank and section.settings.bg_type != 'none' -%}
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
       .nw-faq.section-{{ section.id }}::before {
         background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
       }
     {%- endif -%}
   }
 </style>
+
 <nw-faq
   class="nw-faq section-{{ section.id }}"
-  style="
-    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-  "
 >
   <div class="page-width">
     <div class="nw-faq__wrapper{%- render 'nw-scroll-animation' -%}">
@@ -421,7 +439,7 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#FFFFFF",
-      "visible_if": "{{ section.settings.bg_type == 'color' or section.settings.bg_type == 'image' }}"
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {
       "type": "image_picker",
@@ -430,20 +448,17 @@
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
-      "type": "range",
-      "id": "bg_image_opacity",
-      "label": "Background Image Opacity",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-      "default": 100,
-      "visible_if": "{{ section.settings.bg_type == 'image' }}"
-    },
-    {
       "type": "image_picker",
       "id": "bg_image_mobile",
       "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFFD6",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {

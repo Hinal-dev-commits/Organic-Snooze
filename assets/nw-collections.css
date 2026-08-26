@@ -113,9 +113,8 @@ nw-collections {
 }
 
 .nw-collections__grid {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
   padding: 0;
   gap: 24px;
@@ -126,12 +125,11 @@ nw-collections {
 .nw-collections .nw-product-card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   padding: 0;
   gap: 12px;
-  width: 302px;
-  max-width: 302px;
-  flex: 0 0 302px;
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   color: var(--primary-color, var(--nw-brown));
   height: 100%;
@@ -147,19 +145,29 @@ nw-collections {
   aspect-ratio: auto;
   box-sizing: border-box;
   flex-shrink: 0;
+  transform: translateZ(0);
 }
 
 .nw-collections .nw-product-card__media-link {
   display: block;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
+.nw-collections .nw-product-card__media-link img,
 .nw-collections .nw-product-card__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.nw-collections .nw-product-card:hover .nw-product-card__media-link img,
+.nw-collections .nw-product-card:hover .nw-product-card__image {
+  transform: scale(1.08);
 }
 
 .nw-collections .nw-product-card__tag {
@@ -197,13 +205,12 @@ nw-collections {
 .nw-collections .nw-product-card__body {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   padding: 0;
   gap: 12px;
   width: 100%;
   box-sizing: border-box;
   flex: 1 1 auto;
-  height: 100%;
 }
 
 .nw-collections .nw-product-card__rating {
@@ -332,11 +339,12 @@ nw-collections {
 .nw-collections .nw-product-card__footer {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   padding: 0;
   gap: 12px;
   width: 100%;
   margin-top: auto;
+  flex-shrink: 0;
 }
 
 .nw-collections .nw-product-card__price {
@@ -386,7 +394,6 @@ nw-collections {
 
 .nw-collections .nw-product-card .nw-btn {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 12px 18px;
@@ -394,7 +401,6 @@ nw-collections {
   width: 100%;
   height: 49px;
   min-height: 49px;
-  background: var(--secondary-color, #CC926A);
   border-radius: 24px;
   box-sizing: border-box;
   font-family: var(--font-body-family);
@@ -402,18 +408,45 @@ nw-collections {
   font-weight: 600;
   font-size: 18px;
   line-height: 140%;
-  display: flex;
-  align-items: center;
   text-transform: uppercase;
-  color: var(--white, #FFFFFF);
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.25s ease;
-  border: none;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
-.nw-collections .nw-product-card .nw-btn:hover {
+.nw-collections .nw-product-card .nw-btn--primary {
+  background: var(--secondary-color, #CC926A);
+  color: var(--white, #FFFFFF);
+  border: 1px solid var(--secondary-color, #CC926A);
+}
+
+.nw-collections .nw-product-card .nw-btn--primary:hover {
   background: var(--nw-pcard-btn-bg-hover, #b57d57);
+  border-color: var(--nw-pcard-btn-bg-hover, #b57d57);
+  color: var(--white, #FFFFFF);
+}
+
+.nw-collections .nw-product-card .nw-btn--secondary {
+  background: var(--nonary-color, #878735);
+  color: var(--white, #FFFFFF);
+  border: 1px solid var(--nonary-color, #878735);
+}
+
+.nw-collections .nw-product-card .nw-btn--secondary:hover {
+  background: #73732d;
+  border-color: #73732d;
+  color: var(--white, #FFFFFF);
+}
+
+.nw-collections .nw-product-card .nw-btn--outline {
+  background: transparent;
+  color: var(--primary-color, #613916);
+  border: 1px solid var(--primary-color, #613916);
+}
+
+.nw-collections .nw-product-card .nw-btn--outline:hover {
+  background: var(--primary-color, #613916);
+  border-color: var(--primary-color, #613916);
   color: var(--white, #FFFFFF);
 }
 
@@ -436,6 +469,13 @@ nw-collections {
 
 .nw-collections__footer .nw-btn {
   max-width: 302px;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 750px) {
+  .nw-collections__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
 }
 
 @media screen and (max-width: 749px) {
@@ -484,8 +524,9 @@ nw-collections {
   }
 
   .nw-collections__grid {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 32px;
     width: 100%;
   }
@@ -493,7 +534,6 @@ nw-collections {
   .nw-collections .nw-product-card {
     width: 100%;
     max-width: 100%;
-    flex: 1 1 100%;
     height: auto;
   }
 

@@ -45,7 +45,6 @@
       {% if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank %}
         background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
         background-size: cover;
-        background-position: center;
         background-repeat: no-repeat;
       {% endif %}
     }

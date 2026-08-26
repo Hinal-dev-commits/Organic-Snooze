@@ -40,16 +40,8 @@ nw-reviews {
   justify-content: center;
   align-items: flex-start;
   text-align: left;
-  gap: 12px;
   width: 100%;
   box-sizing: border-box;
-}
-
-.nw-reviews__header .nw-rating {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4px;
 }
 
 .nw-reviews__header .nw-eyebrow {
@@ -66,17 +58,8 @@ nw-reviews {
 .nw-reviews__header .nw-heading,
 .nw-reviews__heading-wrap,
 .nw-reviews__heading-wrap * {
-  font-family: var(--font-heading-family);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 115%;
-  letter-spacing: -0.01em;
-  text-transform: capitalize;
-  font-feature-settings: 'pnum' on, 'lnum' on;
   color: #FFFFFF !important;
   text-align: left !important;
-  margin: 0;
 }
 
 .nw-reviews__header .nw-section-description,
@@ -85,14 +68,8 @@ nw-reviews {
 .nw-reviews__header .nw-description p,
 .nw-reviews__header .rte,
 .nw-reviews__header .rte p {
-  font-family: var(--font-body-family);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 140%;
   color: #FFFFFF !important;
   text-align: left !important;
-  margin: 0;
 }
 
 .nw-reviews__insight-card {
@@ -424,7 +401,6 @@ nw-reviews {
     margin: 0 auto;
     align-items: center;
     text-align: center;
-    gap: 12px;
     box-sizing: border-box;
   }
 

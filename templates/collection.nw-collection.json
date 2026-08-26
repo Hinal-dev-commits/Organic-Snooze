@@ -214,9 +214,10 @@
       ],
       "name": "NW Benefits V2",
       "settings": {
-        "bg_type": "color",
+        "bg_type": "image",
         "bg_color": "#f4efe8",
         "bg_gradient": "",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
         "bg_overlay_color": "#f4efe8d6",
         "padding_top_desktop": 40,
         "padding_bottom_desktop": 40,
@@ -305,20 +306,17 @@
         "eyebrow": "",
         "heading": "Straight from our sleepers",
         "subheading": "",
-        "heading_color": "#613916",
-        "description_color": "#613916",
         "card_bg_color": "#f4efe8",
         "card_text_color": "#613916",
         "card_star_color": "#e57b1e",
         "card_star_empty_color": "#d1c7ba",
         "verified_text_color": "",
         "verified_icon_color": "#878735",
-        "full_width": false,
-        "enable_loop": false,
-        "enable_edge_shadow": false,
+        "full_width": true,
+        "enable_loop": true,
+        "enable_edge_shadow": true,
         "show_arrows": true,
         "show_pagination": true,
-        "pagination_color": "#613916",
         "bg_type": "color",
         "bg_color": "#ffffff",
         "bg_gradient": "",
@@ -620,7 +618,7 @@
         "bg_color": "#fffcf0",
         "bg_gradient": "",
         "bg_image": "shopify://shop_images/benifit-desktop.png",
-        "bg_overlay_color": "#fffcf059",
+        "bg_overlay_color": "#FFFCF0A6",
         "padding_top_desktop": 48,
         "padding_bottom_desktop": 48,
         "padding_top_mobile": 48,
@@ -633,7 +631,7 @@
         "layer_card_byzhHY": {
           "type": "layer_card",
           "settings": {
-            "image": "shopify://shop_images/Rectangle_310045_1.png",
+            "image": "shopify://shop_images/organic_cotton.png",
             "title": "Organic Cotton",
             "icon": "none",
             "feature_text": "Breathable, soft against the skin, and grown without pesticides or harsh chemicals. Forms the cover that lets your body breathe all night."
@@ -642,7 +640,7 @@
         "layer_card_QUYxw7": {
           "type": "layer_card",
           "settings": {
-            "image": "shopify://shop_images/Rectangle_310045_2_1.png",
+            "image": "shopify://shop_images/New_Zealand_Wool.png",
             "title": "New Zealand Wool",
             "icon": "none",
             "feature_text": "A natural temperature regulator that wicks moisture and keeps you cool. Naturally flame-resistant, so there's no need for chemical fire retardants."
@@ -651,7 +649,7 @@
         "layer_card_LFRRWU": {
           "type": "layer_card",
           "settings": {
-            "image": "shopify://shop_images/Rectangle_310046_1.png",
+            "image": "shopify://shop_images/Natural_Talalay_Latex.png",
             "title": "Natural Talalay Latex",
             "icon": "none",
             "feature_text": "4\" of 100% natural latex sourced from Sri Lanka. Responsive, breathable, and durable, it lifts and contours without the heat-trapping sink of memory foam."
@@ -660,7 +658,7 @@
         "layer_card_LcxnLh": {
           "type": "layer_card",
           "settings": {
-            "image": "shopify://shop_images/coils-in-mattress_1_1.png",
+            "image": "shopify://shop_images/Steel_Coil_System.png",
             "title": "Steel Coil System",
             "icon": "none",
             "feature_text": "An 8\", 5-zone pocketed coil core with AdvantEdge support. Adapts to movement, reduces motion transfer, and gives targeted support where your body needs it."
@@ -752,16 +750,10 @@
         "btn_text": "Shop Clean Sleep",
         "btn_link": "",
         "btn_style": "primary",
-        "show_insights_slider": false,
-        "show_arrows": false,
-        "show_dots": true,
-        "enable_autoplay": true,
-        "autoplay_delay": 4,
         "bg_type": "image",
         "bg_color": "#ffffff",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_color_image": "#ffffff",
-        "bg_image_opacity": 16,
+        "bg_color_image": "#ffffffd6",
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -1091,7 +1083,7 @@
         "show_search": true,
         "search_placeholder": "What can we help with?",
         "open_first_faq": false,
-        "initial_faq_count": 6,
+        "initial_faq_count": 4,
         "more_label": "SEE MORE FAQ’S",
         "contact_heading": "Speak with Our Live Sleep Experts.",
         "show_call_btn": true,
@@ -1109,7 +1101,7 @@
         "bg_type": "image",
         "bg_color": "#ffffff",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_image_opacity": 16,
+        "bg_color_image": "#ffffffd6",
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -1123,6 +1115,7 @@
         "trust_badge_YEcQTi": {
           "type": "trust_badge",
           "settings": {
+            "use_custom_icon": false,
             "icon": "moneyback",
             "text": "100-Night Risk-Free Trial"
           }
@@ -1130,6 +1123,7 @@
         "trust_badge_mTTemP": {
           "type": "trust_badge",
           "settings": {
+            "use_custom_icon": false,
             "icon": "shield",
             "text": "30-Year Warranty"
           }
@@ -1137,6 +1131,7 @@
         "trust_badge_r8xKRc": {
           "type": "trust_badge",
           "settings": {
+            "use_custom_icon": false,
             "icon": "shipping",
             "text": "free shipping"
           }
@@ -1144,6 +1139,7 @@
         "trust_badge_7agfqt": {
           "type": "trust_badge",
           "settings": {
+            "use_custom_icon": false,
             "icon": "financing",
             "text": "0% Interest financing options"
           }
