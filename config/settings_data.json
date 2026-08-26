@@ -9,8 +9,6 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/logo_upscaled.png",
-    "logo_width": 240,
     "nw_pcard_text": "#613916",
     "nw_pcard_star_color": "#e57b1e",
     "nw_pcard_star_empty_color": "#d9cfc4",
@@ -25,6 +23,8 @@
     "nw_pcard_btn_bg": "#cc926a",
     "nw_pcard_btn_bg_hover": "#b57d57",
     "nw_pcard_btn_text": "#ffffff",
+    "logo": "shopify://shop_images/logo_upscaled.png",
+    "logo_width": 240,
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
     "type_body_font": "assistant_n4",
@@ -157,6 +157,58 @@
       }
     },
     "content_for_index": [],
+    "blocks": {
+      "1530068250781986104": {
+        "type": "shopify://apps/fbp-fast-bundle/blocks/fast_bundle/9e87fbe2-9041-4c23-acf5-322413994cef",
+        "disabled": false,
+        "settings": {
+          "home": false,
+          "collection": false
+        }
+      },
+      "10840395464443086010": {
+        "type": "shopify://apps/alia/blocks/customer-app-frame/51f1d398-3e41-44da-b81e-defd5804b292",
+        "disabled": false,
+        "settings": {}
+      },
+      "15683396631634586217": {
+        "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+        "disabled": false,
+        "settings": {
+          "greeting_message": "",
+          "show_featured_products": true,
+          "featured_products": [],
+          "background_color": "#FFFFFF",
+          "font_color": "#000000",
+          "agent_invert_activator_colors": false,
+          "button_color": "#000000",
+          "button_icon": "chat_bubble",
+          "button_text": "chat_with_us",
+          "button_horizontal_position": "bottom_right",
+          "button_vertical_position": "lowest",
+          "agent_inherit_fonts": true,
+          "agent_font": "system_ui_n4",
+          "agent_font_size": 14,
+          "agent_activator_font_size": 13,
+          "agent_border_radius": 16
+        }
+      },
+      "6174324309569838175": {
+        "type": "shopify://apps/smile-io/blocks/smile-shopify-app/2fae4e25-1841-4ea2-bc02-bd548478c4f6",
+        "disabled": false,
+        "settings": {}
+      },
+      "2200952712151285029": {
+        "type": "shopify://apps/microsoft-clarity/blocks/brandAgents_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
+      }
+    },
     "color_schemes": {
       "scheme-1": {
         "settings": {
