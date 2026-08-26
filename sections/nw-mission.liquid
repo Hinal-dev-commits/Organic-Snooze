@@ -1,0 +1,360 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-mission.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwMission-{{ section.id }} {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    #NwMission-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    #NwMission-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFF29' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  #NwMission-{{ section.id }} .nw-mission__quote-box {
+    {% if section.settings.quote_bg_gradient != blank %}
+      background: {{ section.settings.quote_bg_gradient }};
+    {% elsif section.settings.quote_bg_color != blank %}
+      background-color: {{ section.settings.quote_bg_color }};
+    {% else %}
+      background: linear-gradient(90deg, rgba(97, 57, 22, 0.88) 0%, rgba(139, 94, 60, 0.88) 100%);
+    {% endif %}
+  }
+
+  #NwMission-{{ section.id }} .nw-mission__quote-text {
+    color: {{ section.settings.quote_color | default: '#FFFFFF' }};
+  }
+
+  #NwMission-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwMission-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      #NwMission-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<div
+  id="NwMission-{{ section.id }}"
+  class="nw-mission section-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="nw-mission__wrapper">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="nw-mission__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      <div class="nw-mission__card{% if section.settings.image_position == 'right' %} nw-mission__card--image-right{% endif %}">
+        <div class="nw-mission__media">
+          {%- liquid
+            assign desktop_img = section.settings.image
+            assign mobile_img = section.settings.image_mobile
+            if desktop_img == blank and mobile_img != blank
+              assign desktop_img = mobile_img
+            endif
+          -%}
+          {%- if desktop_img != blank -%}
+            <picture>
+              {%- if mobile_img != blank -%}
+                <source
+                  media="(max-width: 749px)"
+                  srcset="{{ mobile_img | image_url: width: 750 }}"
+                >
+              {%- endif -%}
+              <img
+                src="{{ desktop_img | image_url: width: 800 }}"
+                alt="{{ desktop_img.alt | default: section.settings.heading | strip_html | escape }}"
+                width="360"
+                height="277"
+                loading="lazy"
+                class="nw-mission__img"
+              >
+            </picture>
+          {%- else -%}
+            <div class="nw-mission__placeholder">
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.quote_text != blank -%}
+          <div class="nw-mission__quote-box">
+            <div class="nw-mission__quote-text">
+              {{ section.settings.quote_text }}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_button and section.settings.button_text != blank -%}
+        <div class="nw-mission__footer">
+          {% render 'nw-button',
+            text: section.settings.button_text,
+            link: section.settings.button_link,
+            style: section.settings.button_style,
+            btn_class: 'nw-mission__btn'
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Mission",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Gary Brecka's Mission for Cleaner Sleep"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Co-created with human biologist Gary Brecka, mattress veteran Matt Smith, and entrepreneur Ajay Nwosu. It started with a discovery: Gary traced toxins in his bloodstream back to his old mattress. That was the problem worth solving.</p>"
+    },
+    {
+      "type": "header",
+      "content": "CARD CONTENT"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Card Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Card Image (Mobile Optional)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position (Desktop)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "quote_text",
+      "label": "Card Quote Text",
+      "default": "<p>Gary and The Ultimate Human optimize the body. We optimize the environment you recover in. When the two align, better sleep follows. More than a mattress, it's a simple philosophy: sleep non-toxic, perform better.</p>"
+    },
+    {
+      "type": "color_background",
+      "id": "quote_bg_gradient",
+      "label": "Quote Box Gradient",
+      "default": "linear-gradient(90deg, rgba(97, 57, 22, 0.88) 0%, rgba(139, 94, 60, 0.88) 100%)"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "LEARN MORE",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFF29",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Mission",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

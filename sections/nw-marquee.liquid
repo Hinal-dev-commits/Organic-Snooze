@@ -37,9 +37,9 @@
           {%- for repeat_idx in (1..section.settings.repeat_count) -%}
             {%- for block in section.blocks -%}
               {%- liquid
-                assign icon_to_show = block.settings.icon_override
-                if icon_to_show == 'inherit'
-                  assign icon_to_show = section.settings.icon
+                assign block_icon = block.settings.icon | default: block.settings.icon_override
+                if block_icon == blank or block_icon == 'inherit'
+                  assign block_icon = 'verified'
                 endif
               -%}
               <div class="nw-marquee__item" {{ block.shopify_attributes }}>
@@ -47,22 +47,16 @@
                   <a href="{{ block.settings.link }}" class="nw-marquee__link">
                 {%- endif -%}
 
-                {%- if block.settings.use_custom_icon -%}
-                  {%- if block.settings.image_icon != blank -%}
-                    <span class="nw-marquee__icon nw-marquee__icon--image">
-                      {{ block.settings.image_icon | image_url: width: 100 | image_tag: loading: 'lazy', class: 'nw-marquee__custom-img', alt: block.settings.text }}
-                    </span>
-                  {%- endif -%}
-                {%- elsif section.settings.custom_icon_image != blank and icon_to_show != 'none' and block.settings.icon_override == 'inherit' -%}
+                {%- if block.settings.use_custom_icon and block.settings.image_icon != blank -%}
                   <span class="nw-marquee__icon nw-marquee__icon--image">
-                    {{ section.settings.custom_icon_image | image_url: width: 100 | image_tag: loading: 'lazy', class: 'nw-marquee__custom-img', alt: block.settings.text }}
+                    {{ block.settings.image_icon | image_url: width: 100 | image_tag: loading: 'lazy', class: 'nw-marquee__custom-img', alt: block.settings.text }}
                   </span>
-                {%- elsif icon_to_show != 'none' -%}
+                {%- elsif block_icon != 'none' and block_icon != blank -%}
                   <span class="nw-marquee__icon">
-                    {%- if icon_to_show == 'verified' -%}
+                    {%- if block_icon == 'verified' -%}
                       {% render 'nw-icon', icon: 'verified-2' %}
                     {%- else -%}
-                      {% render 'nw-icon', icon: icon_to_show %}
+                      {% render 'nw-icon', icon: block_icon %}
                     {%- endif -%}
                   </span>
                 {%- endif -%}
@@ -165,68 +159,7 @@
     },
     {
       "type": "header",
-      "content": "ICON SETTINGS"
-    },
-    {
-      "type": "select",
-      "id": "icon",
-      "label": "Default Icon",
-      "options": [
-        {
-          "value": "verified",
-          "label": "Verified Badge"
-        },
-        {
-          "value": "star",
-          "label": "Star"
-        },
-        {
-          "value": "checkmark",
-          "label": "Checkmark"
-        },
-        {
-          "value": "leaf",
-          "label": "Leaf"
-        },
-        {
-          "value": "shield",
-          "label": "Shield"
-        },
-        {
-          "value": "heart",
-          "label": "Heart"
-        },
-        {
-          "value": "truck",
-          "label": "Truck"
-        },
-        {
-          "value": "award",
-          "label": "Award"
-        },
-        {
-          "value": "sparkle",
-          "label": "Sparkle"
-        },
-        {
-          "value": "moon",
-          "label": "Moon"
-        },
-        {
-          "value": "sun",
-          "label": "Sun"
-        },
-        {
-          "value": "none",
-          "label": "None"
-        }
-      ],
-      "default": "verified"
-    },
-    {
-      "type": "image_picker",
-      "id": "custom_icon_image",
-      "label": "Default Custom Icon Image"
+      "content": "ICON SIZING"
     },
     {
       "type": "range",
@@ -448,8 +381,8 @@
         },
         {
           "type": "select",
-          "id": "icon_override",
-          "label": "Icon Override",
+          "id": "icon",
+          "label": "Icon",
           "visible_if": "{{ block.settings.use_custom_icon == false }}",
           "options": [
             {
@@ -520,37 +453,43 @@
         {
           "type": "item",
           "settings": {
-            "text": "100% ORGANIC MATERIALS"
+            "text": "100% ORGANIC MATERIALS",
+            "icon": "verified"
           }
         },
         {
           "type": "item",
           "settings": {
-            "text": "MADE IN THE USA"
+            "text": "MADE IN THE USA",
+            "icon": "verified"
           }
         },
         {
           "type": "item",
           "settings": {
-            "text": "NO CHEMICAL FOAMS"
+            "text": "NO CHEMICAL FOAMS",
+            "icon": "verified"
           }
         },
         {
           "type": "item",
           "settings": {
-            "text": "30-YEAR WARRANTY"
+            "text": "30-YEAR WARRANTY",
+            "icon": "verified"
           }
         },
         {
           "type": "item",
           "settings": {
-            "text": "100-NIGHT TRIAL"
+            "text": "100-NIGHT TRIAL",
+            "icon": "verified"
           }
         },
         {
           "type": "item",
           "settings": {
-            "text": "FREE WHITE-GLOVE DELIVERY"
+            "text": "FREE WHITE-GLOVE DELIVERY",
+            "icon": "verified"
           }
         }
       ]

@@ -1,0 +1,424 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-steps.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-steps.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  .nw-steps.section-{{ section.id }},
+  #NwSteps-{{ section.id }} {
+    display: block;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#F7F5F3' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#F7F5F3' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#F7F5F3' }};
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    .nw-steps.section-{{ section.id }}::before,
+    #NwSteps-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    .nw-steps.section-{{ section.id }}::after,
+    #NwSteps-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFF29' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  .nw-steps.section-{{ section.id }} > *,
+  #NwSteps-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .nw-steps.section-{{ section.id }},
+    #NwSteps-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      .nw-steps.section-{{ section.id }}::before,
+      #NwSteps-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<nw-steps
+  id="NwSteps-{{ section.id }}"
+  class="nw-steps section-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="nw-steps__wrapper">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.eyebrow != blank -%}
+        <div class="nw-steps__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-steps__container">
+          <div class="nw-steps__track">
+            {%- for block in section.blocks -%}
+              {%- assign default_badge = 'STEP ' | append: forloop.index -%}
+              {%- assign badge_text = block.settings.step_badge | default: default_badge -%}
+              <div class="nw-steps__track-item">
+                <span class="nw-steps__badge">{{ badge_text }}</span>
+                <span class="nw-steps__line"></span>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <div class="nw-steps__slider-wrap">
+            <div class="swiper nw-steps__swiper">
+              <div class="swiper-wrapper nw-steps__grid">
+                {%- for block in section.blocks -%}
+                  <div class="swiper-slide nw-steps__card" {{ block.shopify_attributes }}>
+                    <div class="nw-steps__card-media">
+                      {%- liquid
+                        assign card_img = block.settings.image
+                        assign card_img_mb = block.settings.image_mobile
+                        if card_img == blank and card_img_mb != blank
+                          assign card_img = card_img_mb
+                        endif
+                      -%}
+                      {%- if card_img != blank -%}
+                        <picture>
+                          {%- if card_img_mb != blank -%}
+                            <source
+                              media="(max-width: 749px)"
+                              srcset="{{ card_img_mb | image_url: width: 500 }}"
+                            >
+                          {%- endif -%}
+                          <img
+                            src="{{ card_img | image_url: width: 800 }}"
+                            alt="{{ card_img.alt | default: block.settings.title | strip_html | escape }}"
+                            width="370"
+                            height="220"
+                            loading="lazy"
+                            class="nw-steps__card-img"
+                          >
+                        </picture>
+                      {%- else -%}
+                        <div class="nw-steps__placeholder">
+                          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                    <div class="nw-steps__card-content">
+                      {%- if block.settings.title != blank -%}
+                        <h3 class="nw-steps__card-title">{{ block.settings.title }}</h3>
+                      {%- endif -%}
+                      {%- if block.settings.text != blank -%}
+                        <div class="nw-steps__card-text">
+                          {{ block.settings.text }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+            <div class="nw-steps__pagination"></div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_button and section.settings.button_text != blank -%}
+        <div class="nw-steps__footer">
+          {% render 'nw-button',
+            text: section.settings.button_text,
+            link: section.settings.button_link,
+            style: section.settings.button_style,
+            btn_class: 'nw-steps__btn'
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-steps>
+
+{% schema %}
+{
+  "name": "NW Steps",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Three steps. No catch, no countdown pressure"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Real customers, real results in their own words</p>"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow / Rating Text"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "START MY 100-NIGHT TRIAL",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F7F5F3",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFF29",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_badge",
+          "label": "Step Badge Label",
+          "default": "STEP 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Card Image (Mobile Optional)"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "Sleep On It"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Your 100-night trial starts the day your mattress is delivered. Set it up, settle in, and make yourself at home.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Steps",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 1",
+            "title": "Sleep On It",
+            "text": "<p>Your 100-night trial starts the day your mattress is delivered. Set it up, settle in, and make yourself at home.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 2",
+            "title": "Give It 30 Nights",
+            "text": "<p>Organic latex and wool need time to soften and break in, and your body needs time to adjust to real support.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 3",
+            "title": "Love It, Or Let Us Help",
+            "text": "<p>Still not the fit between night 31 and night 100? Request a free exchange or a return, and we'll coordinate the pickup.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

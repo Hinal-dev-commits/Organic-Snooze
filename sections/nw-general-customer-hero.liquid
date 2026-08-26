@@ -1,0 +1,456 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-general-customer-hero.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwGeneralCustomerHero-{{ section.id }} {
+    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
+    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+    --nw-gch-star-color: {{ section.settings.star_color | default: '#E57B1E' }};
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop | default: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 0 }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFCF0' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFCF0' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#FFFCF0' }};
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    #NwGeneralCustomerHero-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    #NwGeneralCustomerHero-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFF29' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  #NwGeneralCustomerHero-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwGeneralCustomerHero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 0 }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      #NwGeneralCustomerHero-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<div
+  id="NwGeneralCustomerHero-{{ section.id }}"
+  class="nw-general-customer-hero section-{{ section.id }}"
+>
+  <div class="nw-general-customer-hero__container{% if section.settings.image_position == 'left' %} nw-general-customer-hero__container--image-left{% endif %}">
+    <div class="nw-general-customer-hero__content-col">
+      <div class="nw-general-customer-hero__content-wrap">
+        <div class="nw-general-customer-hero__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="nw-general-customer-hero__pills">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.text != blank -%}
+                {%- liquid
+                  assign pill_icon = block.settings.icon
+                  assign pill_custom = blank
+                  if block.settings.use_custom_icon and block.settings.custom_icon != blank
+                    assign pill_custom = block.settings.custom_icon
+                    assign pill_icon = blank
+                  endif
+                -%}
+                <div class="nw-general-customer-hero__pill" {{ block.shopify_attributes }}>
+                  {%- if pill_custom != blank or pill_icon != 'none' and pill_icon != blank -%}
+                    <span class="nw-general-customer-hero__pill-icon">
+                      {% render 'nw-icon', icon: pill_icon, custom_icon: pill_custom, img_class: 'nw-general-customer-hero__pill-img' %}
+                    </span>
+                  {%- endif -%}
+                  <span class="nw-general-customer-hero__pill-text">{{ block.settings.text }}</span>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_button and section.settings.button_text != blank -%}
+          <div class="nw-general-customer-hero__btn-wrap">
+            {% render 'nw-button',
+              text: section.settings.button_text,
+              link: section.settings.button_link,
+              style: section.settings.button_style,
+              btn_class: 'nw-general-customer-hero__btn'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="nw-general-customer-hero__media-col">
+      {%- liquid
+        assign desktop_img = section.settings.image_desktop
+        assign mobile_img = section.settings.image_mobile
+        if desktop_img == blank and mobile_img != blank
+          assign desktop_img = mobile_img
+        endif
+      -%}
+      {%- if desktop_img != blank -%}
+        <picture>
+          {%- if mobile_img != blank -%}
+            <source
+              media="(max-width: 749px)"
+              srcset="{{ mobile_img | image_url: width: 750 }}"
+            >
+          {%- endif -%}
+          <img
+            src="{{ desktop_img | image_url: width: 1440 }}"
+            alt="{{ desktop_img.alt | default: section.settings.heading | strip_html | escape }}"
+            width="720"
+            height="583"
+            loading="eager"
+            fetchpriority="high"
+            class="nw-general-customer-hero__img"
+          >
+        </picture>
+      {%- else -%}
+        <div class="nw-general-customer-hero__placeholder">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Customer Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "IMAGE & LAYOUT"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile Optional)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position (Desktop)",
+      "default": "right",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Rating Text / Eyebrow",
+      "default": "Trusted by 100s+ of happy Customers"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#E57B1E",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "100 Nights to Try It. 30 Years to Love It."
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Try your mattress at home for 100 nights. A showroom can't tell you how you'll sleep, your own bedroom can. Not the right fit? We'll make it right.</p>"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "VIEW OUR GUARANTEE",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFF29",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Trust Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Pill Text",
+          "default": "30-Night Break-In Period"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "checkmark",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "star", "label": "Star" },
+            { "value": "verified", "label": "Verified" },
+            { "value": "warranty-2", "label": "Warranty" },
+            { "value": "money", "label": "Money Back" },
+            { "value": "offer", "label": "Offer" }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Customer Hero",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "pill",
+          "settings": {
+            "text": "30-Night Break-In Period",
+            "icon": "checkmark"
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "text": "100-Night Sleep Trial",
+            "icon": "checkmark"
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "text": "30-Year Warranty",
+            "icon": "checkmark"
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "text": "Free Mattress Exchanges",
+            "icon": "checkmark"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

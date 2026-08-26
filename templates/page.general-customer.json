@@ -1,0 +1,271 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "nw_general_customer_hero_XWRymr": {
+      "type": "nw-general-customer-hero",
+      "blocks": {
+        "pill_DDRMPC": {
+          "type": "pill",
+          "settings": {
+            "text": "30-Night Break-In Period",
+            "icon": "checkmark",
+            "use_custom_icon": false
+          }
+        },
+        "pill_n8hjgw": {
+          "type": "pill",
+          "settings": {
+            "text": "100-Night Sleep Trial",
+            "icon": "checkmark",
+            "use_custom_icon": false
+          }
+        },
+        "pill_iGWzTP": {
+          "type": "pill",
+          "settings": {
+            "text": "30-Year Warranty",
+            "icon": "checkmark",
+            "use_custom_icon": false
+          }
+        },
+        "pill_LtHpQE": {
+          "type": "pill",
+          "settings": {
+            "text": "Free Mattress Exchanges",
+            "icon": "checkmark",
+            "use_custom_icon": false
+          }
+        }
+      },
+      "block_order": [
+        "pill_DDRMPC",
+        "pill_n8hjgw",
+        "pill_iGWzTP",
+        "pill_LtHpQE"
+      ],
+      "name": "NW Customer Hero",
+      "settings": {
+        "image_desktop": "shopify://shop_images/customer-hero-image.png",
+        "image_position": "right",
+        "show_rating": true,
+        "star_rating": 5,
+        "eyebrow": "Trusted by 100s+ of happy Customers",
+        "star_color": "#e57b1e",
+        "heading": "100 Nights to Try It. 30 Years to Love It.",
+        "subheading": "<p>Try your mattress at home for 100 nights. A showroom can't tell you how you'll sleep, your own bedroom can. Not the right fit? We'll make it right.</p>",
+        "show_button": true,
+        "button_text": "Start My 100-Night Trial",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#fffcf0",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_marquee_8tb6jN": {
+      "type": "nw-marquee",
+      "blocks": {
+        "item_XzETfT": {
+          "type": "item",
+          "settings": {
+            "text": "100% ORGANIC MATERIALS",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_nwGWaf": {
+          "type": "item",
+          "settings": {
+            "text": "MADE IN THE USA",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_mmFYcH": {
+          "type": "item",
+          "settings": {
+            "text": "NO CHEMICAL FOAMS",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_CMhPje": {
+          "type": "item",
+          "settings": {
+            "text": "30-YEAR WARRANTY",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_W6eYh4": {
+          "type": "item",
+          "settings": {
+            "text": "100-NIGHT TRIAL",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_LFmL6R": {
+          "type": "item",
+          "settings": {
+            "text": "FREE WHITE-GLOVE DELIVERY",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        }
+      },
+      "block_order": [
+        "item_XzETfT",
+        "item_nwGWaf",
+        "item_mmFYcH",
+        "item_CMhPje",
+        "item_W6eYh4",
+        "item_LFmL6R"
+      ],
+      "name": "t:sections.nw-marquee.name",
+      "settings": {
+        "direction": "right_to_left",
+        "speed": 35,
+        "pause_on_hover": true,
+        "enable_parallax": false,
+        "repeat_count": 3,
+        "bg_color": "#613916",
+        "text_color": "#ffffff",
+        "icon_color": "#f4efe8",
+        "icon_size_desktop": 24,
+        "icon_size_mobile": 16,
+        "font_size_desktop": 18,
+        "font_size_mobile": 12,
+        "font_weight": 500,
+        "text_transform": "uppercase",
+        "letter_spacing": 0,
+        "gap_icon_text_desktop": 10,
+        "gap_icon_text_mobile": 10,
+        "gap_items_desktop": 18,
+        "gap_items_mobile": 10,
+        "section_height_desktop": 56,
+        "section_height_mobile": 44,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_top_mobile": 14,
+        "padding_bottom_mobile": 14
+      }
+    },
+    "nw_mission_D74amU": {
+      "type": "nw-mission",
+      "name": "NW Mission",
+      "settings": {
+        "heading": "Gary Brecka's Mission for Cleaner Sleep",
+        "subheading": "<p>Co-created with human biologist Gary Brecka, mattress veteran Matt Smith, and entrepreneur Ajay Nwosu. It started with a discovery: Gary traced toxins in his bloodstream back to his old mattress. That was the problem worth solving.</p>",
+        "image": "shopify://shop_images/Standards_-_Mobile_1.png",
+        "image_position": "left",
+        "quote_text": "<p>Gary and The Ultimate Human optimize the body. We optimize the environment you recover in. When the two align, better sleep follows. More than a mattress, it's a simple philosophy: sleep non-toxic, perform better.</p>",
+        "quote_bg_gradient": "linear-gradient(90deg, rgba(97, 57, 22, 0.88), rgba(139, 94, 60, 0.88) 100%)",
+        "quote_color": "#ffffff",
+        "show_button": true,
+        "button_text": "Explore the Story",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_steps_RNAkXE": {
+      "type": "nw-steps",
+      "blocks": {
+        "step_mD8wPC": {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 1",
+            "image": "shopify://shop_images/image-1.png",
+            "title": "Sleep On It",
+            "text": "<p>Your 100-night trial starts the day your mattress is delivered. Set it up, settle in, and make yourself at home.</p>"
+          }
+        },
+        "step_BeRAVc": {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 2",
+            "image": "shopify://shop_images/image-2.png",
+            "title": "Give It 30 Nights",
+            "text": "<p>Organic latex and wool need time to soften and break in, and your body needs time to adjust to real support.</p>"
+          }
+        },
+        "step_9Pge3w": {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 3",
+            "image": "shopify://shop_images/image-3.png",
+            "title": "Love It, Or Let Us Help",
+            "text": "<p>Still not the fit between night 31 and night 100? Request a free exchange or a return, and we'll coordinate the pickup.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_mD8wPC",
+        "step_BeRAVc",
+        "step_9Pge3w"
+      ],
+      "name": "NW Steps",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "heading": "Three steps. No catch, no countdown pressure",
+        "subheading": "<p>Real customers, real results in their own words</p>",
+        "eyebrow": "",
+        "show_button": true,
+        "button_text": "START MY 100-NIGHT TRIAL",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#f7f5f3",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "nw_general_customer_hero_XWRymr",
+    "nw_marquee_8tb6jN",
+    "nw_mission_D74amU",
+    "nw_steps_RNAkXE"
+  ]
+}
