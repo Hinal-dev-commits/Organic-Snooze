@@ -15,12 +15,21 @@
 -%}
 
 {%- if review_count > 0 -%}
+  {% capture nw_product_reviews_style %}
+    {% render 'nw-section-color-var', name: '--nw-product-reviews-card-bg', value: block.settings.card_bg_color %}
+    {% render 'nw-section-color-var', name: '--nw-product-reviews-card-text', value: block.settings.card_text_color %}
+    {% render 'nw-section-color-var', name: '--nw-product-reviews-star-color', value: block.settings.card_star_color %}
+    {% render 'nw-section-color-var', name: '--nw-product-reviews-star-empty-color', value: block.settings.card_star_empty_color %}
+    {% render 'nw-section-color-var', name: '--nw-product-reviews-verified-icon-color', value: block.settings.verified_icon_color %}
+    {% render 'nw-section-color-var', name: '--nw-product-reviews-verified-text-color', value: block.settings.verified_text_color %}
+  {% endcapture %}
   <nw-product-reviews
     class="nw-product-reviews"
     data-section-id="{{ section_id }}"
     data-block-id="{{ block.id }}"
     data-show-pagination="{{ block.settings.show_pagination }}"
     data-pagination-id="NwProductReviewsPagination-{{ block.id }}"
+    {% if nw_product_reviews_style != blank %}style="{{ nw_product_reviews_style | strip }}"{% endif %}
   >
     {%- if block.settings.heading != blank -%}
       <h2 class="nw-product-reviews__heading">{{ block.settings.heading }}</h2>
@@ -71,8 +80,8 @@
           {%- endfor -%}
         </div>
       </div>
-      {%- if block.settings.show_pagination -%}
-        <div class="nw-swiper-pagination nw-product-reviews__pagination" id="NwProductReviewsPagination-{{ block.id }}"></div>
+      {%- if block.settings.show_pagination and review_count > 1 -%}
+        <div class="nw-swiper-pagination nw-product-reviews__pagination" data-nw-product-reviews-pagination></div>
       {%- endif -%}
     </div>
   </nw-product-reviews>

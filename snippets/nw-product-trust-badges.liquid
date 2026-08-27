@@ -1,0 +1,50 @@
+{% doc %}
+  Inline trust badge row for main product blocks.
+  @param {object} block - Block with up to 2 icon/text slots
+{% enddoc %}
+
+{%- liquid
+  assign has_items = false
+  for i in (1..2)
+    assign text_key = 'item_' | append: i | append: '_text'
+    if block.settings[text_key] != blank
+      assign has_items = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_items -%}
+  <div
+    class="nw-product-trust-badges"
+    style="
+      --nw-ptb-icon-color: {{ block.settings.icon_color | default: '#CC926A' }};
+      --nw-ptb-text-color: {{ block.settings.text_color | default: '#CC926A' }};
+    "
+  >
+    {%- for i in (1..2) -%}
+      {%- liquid
+        assign text_key = 'item_' | append: i | append: '_text'
+        assign icon_key = 'item_' | append: i | append: '_icon'
+        assign custom_key = 'item_' | append: i | append: '_use_custom_icon'
+        assign custom_icon_key = 'item_' | append: i | append: '_custom_icon'
+        assign item_text = block.settings[text_key]
+        assign item_icon = block.settings[icon_key]
+        assign item_use_custom = block.settings[custom_key]
+        assign item_custom_icon = block.settings[custom_icon_key]
+      -%}
+      {%- if item_text != blank -%}
+        <div class="nw-product-trust-badges__item">
+          <span class="nw-product-trust-badges__icon" aria-hidden="true">
+            {%- if item_use_custom and item_custom_icon != blank -%}
+              {%- render 'nw-icon', icon: 'custom', custom_icon: item_custom_icon, img_class: 'nw-product-trust-badges__icon-img' -%}
+            {%- elsif item_icon != blank and item_icon != 'none' -%}
+              {%- render 'nw-icon', icon: item_icon -%}
+            {%- endif -%}
+          </span>
+          <span class="nw-product-trust-badges__label">{{ item_text }}</span>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

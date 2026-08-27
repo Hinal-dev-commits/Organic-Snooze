@@ -10,6 +10,14 @@
   }
 {%- endfor -%}
 
+@media screen and (max-width: 890px) {
+  {%- for block in section.blocks -%}
+    #ProductBlock-{{ block.id }} {
+      margin-top: {{ block.settings.margin_top | default: 0 | times: 0.6 }}px;
+      margin-bottom: {{ block.settings.margin_bottom | default: 0 | times: 0.6 }}px;
+    }
+  {%- endfor -%}
+}
 @media screen and (max-width: 749px) {
   {%- for block in section.blocks -%}
     #ProductBlock-{{ block.id }} {
