@@ -88,4 +88,14 @@
     .nw-swiper-pagination{
         margin-top: 32px;
     }
+    .nw-swiper-pagination .swiper-pagination-bullet{
+        width: 5px;
+        height: 5px;
+    }
+    .nw-swiper-pagination .swiper-pagination-bullet-active{
+        width: 30px;
+    }
+    .nw-swiper-pagination{
+        min-height: 5px;
+    }
 }

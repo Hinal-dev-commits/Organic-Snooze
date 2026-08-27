@@ -178,11 +178,11 @@
       </div>
 
       {%- if section.settings.show_dots and section.blocks.size > 1 -%}
-        <div class="nw-review-video__pagination" id="nw-review-videos-pagination-{{ section.id }}" data-nw-review-pagination>
+        <div class="nw-swiper-pagination" id="nw-review-videos-pagination-{{ section.id }}" data-nw-review-pagination>
           {%- for block in section.blocks -%}
             <button
               type="button"
-              class="nw-review-video__bullet{% if forloop.first %} nw-review-video__bullet--active{% endif %}"
+              class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
               data-bullet-index="{{ forloop.index0 }}"
               aria-label="Go to slide {{ forloop.index }}"
             ></button>

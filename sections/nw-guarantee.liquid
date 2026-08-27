@@ -40,6 +40,7 @@
 <div class="nw-guarantee section-{{ section.id }}">
   <div class="page-width">
     <div class="nw-guarantee__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.show_rating or section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.subheading != blank -%}
       <div class="nw-guarantee__header">
         {% render 'nw-section-header',
           show_rating: section.settings.show_rating,
@@ -50,6 +51,7 @@
           section_index: section.index
         %}
       </div>
+      {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
         <div class="nw-guarantee__grid">
