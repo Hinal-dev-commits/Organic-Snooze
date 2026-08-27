@@ -32,9 +32,9 @@ Renders the NW product card used across collection sliders and grids.
     assign display_seller_tag = false
   endif
 
-  assign show_best_for_enabled = true
-  if show_best_for == false
-    assign show_best_for_enabled = false
+  assign show_best_for_enabled = false
+  if show_best_for
+    assign show_best_for_enabled = true
   endif
 
   assign firmness_label_soft = firmness_label_soft | default: 'Soft'

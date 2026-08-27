@@ -149,13 +149,12 @@
         },
         "variant_picker": {
           "type": "variant_picker",
-          "disabled": true,
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle",
             "margin_top": 32,
             "margin_bottom": 32,
-            "margin_top_mobile": 0,
+            "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
         },
@@ -1190,7 +1189,7 @@
         "bg_type": "image",
         "bg_color": "#ffffff",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_color_image": "",
+        "bg_image_opacity": 16,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,

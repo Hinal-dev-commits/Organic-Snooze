@@ -9,6 +9,11 @@
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
 {%- unless product.has_only_default_variant -%}
+  {%- liquid
+    assign selected_variant = product.selected_or_first_available_variant
+    assign select_size_text = selected_variant.metafields.custom.select_size.value | default: selected_variant.metafields.custom.select_size
+    assign variant_tag_text = selected_variant.metafields.custom.variant_tag.value | default: selected_variant.metafields.custom.variant_tag
+  -%}
   <variant-selects
     id="variant-selects-{{ section.id }}"
     data-section="{{ section.id }}"
@@ -50,14 +55,25 @@
           %}
         </fieldset>
       {%- elsif picker_type == 'button' -%}
-        <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
-          %}
+        <fieldset class="js product-form__input product-form__input--pill nw-variant-picker">
+          <legend class="visually-hidden">{{ option.name }}</legend>
+          <div class="nw-variant-picker__header">
+            <span class="nw-variant-picker__label">{{ option.name }}:</span>
+            {%- if select_size_text != blank -%}
+              <span class="nw-variant-picker__size-desc">{{ select_size_text }}</span>
+            {%- endif -%}
+          </div>
+          <div class="nw-variant-picker__options">
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+          </div>
+          {%- if variant_tag_text != blank -%}
+            <p class="nw-variant-picker__tag">{{ variant_tag_text }}</p>
+          {%- endif -%}
         </fieldset>
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">

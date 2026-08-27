@@ -5,6 +5,20 @@
 
 {%- assign tab_blocks = section.blocks | where: 'type', 'tab' -%}
 
+{%- liquid
+  assign default_tab_index = 0
+  assign tab_index_scan = 0
+  for block in section.blocks
+    if block.type == 'tab'
+      if block.settings.default_selected
+        assign default_tab_index = tab_index_scan
+        break
+      endif
+      assign tab_index_scan = tab_index_scan | plus: 1
+    endif
+  endfor
+-%}
+
 {%- assign nw_shell_selector = '#NwCollectionTabs-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 <style>
@@ -50,12 +64,12 @@
               {%- if block.type == 'tab' -%}
                 <button
                   type="button"
-                  class="nw-collection-tabs__tab{% if tab_index == 0 %} is-active{% endif %}"
+                  class="nw-collection-tabs__tab{% if tab_index == default_tab_index %} is-active{% endif %}"
                   id="NwCollectionTabsBtn-{{ section.id }}-{{ tab_index }}"
                   role="tab"
-                  aria-selected="{% if tab_index == 0 %}true{% else %}false{% endif %}"
+                  aria-selected="{% if tab_index == default_tab_index %}true{% else %}false{% endif %}"
                   aria-controls="NwCollectionTabsPanel-{{ section.id }}-{{ tab_index }}"
-                  tabindex="{% if tab_index == 0 %}0{% else %}-1{% endif %}"
+                  tabindex="{% if tab_index == default_tab_index %}0{% else %}-1{% endif %}"
                   data-nw-tab="{{ tab_index }}"
                   data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}"
                   {{ block.shopify_attributes }}
@@ -98,7 +112,7 @@
                 data-show-sidebar="{% if block.settings.show_sidebar %}true{% else %}false{% endif %}"
                 role="tabpanel"
                 aria-labelledby="NwCollectionTabsBtn-{{ section.id }}-{{ panel_index }}"
-                {% unless panel_index == 0 %}hidden{% endunless %}
+                {% unless panel_index == default_tab_index %}hidden{% endunless %}
               >
                 {%- if block.settings.heading != blank or block.settings.subheading != blank -%}
                   <div class="nw-collection-tabs__mobile-heading">
@@ -128,6 +142,7 @@
                               section_id: section.id,
                               show_rating: section.settings.show_rating,
                               show_firmness: section.settings.show_firmness,
+                              show_best_for: section.settings.show_best_for,
                               firmness_label_soft: section.settings.firmness_label_soft,
                               firmness_label_firm: section.settings.firmness_label_firm,
                               button_text: section.settings.pcard_button_text,
@@ -159,9 +174,22 @@
           {%- liquid
             assign shop_all_link = section.settings.shop_all_link
             if shop_all_link == blank and tab_blocks.size > 0
-              assign first_tab = tab_blocks | first
-              if first_tab.settings.collection != blank
-                assign shop_all_link = first_tab.settings.collection.url
+              assign default_tab_block = nil
+              assign shop_all_tab_scan = 0
+              for block in section.blocks
+                if block.type == 'tab'
+                  if shop_all_tab_scan == default_tab_index
+                    assign default_tab_block = block
+                    break
+                  endif
+                  assign shop_all_tab_scan = shop_all_tab_scan | plus: 1
+                endif
+              endfor
+              if default_tab_block == nil
+                assign default_tab_block = tab_blocks | first
+              endif
+              if default_tab_block.settings.collection != blank
+                assign shop_all_link = default_tab_block.settings.collection.url
               endif
             endif
           -%}
@@ -223,6 +251,13 @@
       "label": "Show Firmness Scale",
       "default": false,
       "info": "Only displays when the product custom.firmness metafield is set."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_best_for",
+      "label": "Show Best For",
+      "default": false,
+      "info": "Only displays when the product custom.best_for metafield is set."
     },
     {
       "type": "text",
@@ -545,6 +580,13 @@
           "type": "collection",
           "id": "collection",
           "label": "Collection"
+        },
+        {
+          "type": "checkbox",
+          "id": "default_selected",
+          "label": "Default selected tab",
+          "default": false,
+          "info": "If no tab is selected, the first tab opens by default."
         },
         {
           "type": "checkbox",
