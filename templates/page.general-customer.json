@@ -259,6 +259,532 @@
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
+    },
+    "nw_warranty_9nxVnN": {
+      "type": "nw-warranty",
+      "blocks": {
+        "row_C78UDQ": {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Sagging over 1.5 inches",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Natural softening of latex or wool"
+          }
+        },
+        "row_gzgxqn": {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Manufacturing defects",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Misuse or abuse"
+          }
+        },
+        "row_6cHnFr": {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Broken or loose coils",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Stains or spills"
+          }
+        },
+        "row_N6NTWq": {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Faulty tufting or stitching",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Mold or mildew from moisture"
+          }
+        },
+        "row_xd7XFd": {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Premature material breakdown",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Improper foundation support"
+          }
+        },
+        "row_x8ytQT": {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Cover seam or zipper failure",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Normal wear"
+          }
+        }
+      },
+      "block_order": [
+        "row_C78UDQ",
+        "row_gzgxqn",
+        "row_6cHnFr",
+        "row_N6NTWq",
+        "row_xd7XFd",
+        "row_x8ytQT"
+      ],
+      "name": "NW Warranty",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Your Sleep Is Protected For 30 Years",
+        "subheading": "<p>Real materials earn a warranty this long. Organic, traceable, and built to last, which is why ours outlasts most other organic mattress brands</p>",
+        "covered_heading": "Covered",
+        "not_covered_heading": "Not covered",
+        "image": "shopify://shop_images/warrenty-desktop.png",
+        "image_mobile": "shopify://shop_images/warranty-mobile.png",
+        "image_position": "left",
+        "show_button": true,
+        "button_text": "SEE WHAT'S COVERED",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_warranty_coverage_thPEtc": {
+      "type": "nw-warranty-coverage",
+      "blocks": {
+        "box_K6tYLE": {
+          "type": "box",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/mattress-image-1.png",
+            "autoplay_video": true,
+            "loop_video": true,
+            "badge_text": "Years 1–20",
+            "title": "Non-prorated coverage",
+            "description": "<p>If there's a qualifying defect, we repair or replace the mattress at no cost to you.</p>"
+          }
+        },
+        "box_ttzc6p": {
+          "type": "box",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/matress-image-2.png",
+            "autoplay_video": true,
+            "loop_video": true,
+            "badge_text": "Years 21–30",
+            "title": "Prorated coverage",
+            "description": "<p>If a defect occurs, you're still covered, just on a prorated basis. You receive a percentage credit toward a replacement, based on how many years remain. The older the mattress, the smaller that credit, but you always walk away with real value toward a new one.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "box_K6tYLE",
+        "box_ttzc6p"
+      ],
+      "name": "NW Warranty Coverage",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "How Long Your Coverage Really Lasts",
+        "subheading": "",
+        "show_button": true,
+        "button_text": "Read the Full Warranty",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_color_image": "#ffffffc4",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_guarantee_offer_xp6LVr": {
+      "type": "nw-guarantee-offer",
+      "blocks": {
+        "feature_LD7Eqr": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Breathable mattress protection",
+            "icon": "breathable",
+            "use_custom_icon": false
+          }
+        },
+        "feature_epYNh4": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Silent, flexible barrier",
+            "icon": "silent",
+            "use_custom_icon": false
+          }
+        },
+        "feature_H3dLCg": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Guards against spills & sweat",
+            "icon": "guards",
+            "use_custom_icon": false
+          }
+        },
+        "feature_AJepKP": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Preserves mattress performance",
+            "icon": "preserve",
+            "use_custom_icon": false
+          }
+        },
+        "feature_RmrVWB": {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Handcrafted in the USA",
+            "icon": "handcrafted",
+            "use_custom_icon": false
+          }
+        }
+      },
+      "block_order": [
+        "feature_LD7Eqr",
+        "feature_epYNh4",
+        "feature_H3dLCg",
+        "feature_AJepKP",
+        "feature_RmrVWB"
+      ],
+      "name": "NW Guarantee Offer",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Protect Your Investment for 30 Years",
+        "subheading": "<p>Stains and spills aren't covered by the warranty. One simple layer keeps your mattress protected and your coverage intact.</p>",
+        "product": "organic-waterproof-mattress-protector",
+        "show_card_rating": true,
+        "show_button": true,
+        "button_text": "SHOP NOW",
+        "button_style": "primary",
+        "bg_type": "none",
+        "bg_color": "#ffffffc4",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_materials_dHzFLr": {
+      "type": "nw-materials",
+      "blocks": {
+        "material_fGECcV": {
+          "type": "material",
+          "settings": {
+            "image": "shopify://shop_images/fiber.png",
+            "title": "Fibers that last",
+            "description": "Wool and cotton last decades. Synthetics thin and flatten"
+          }
+        },
+        "material_YdDJVP": {
+          "type": "material",
+          "settings": {
+            "image": "shopify://shop_images/latex.png",
+            "title": "Latex outlasts foam",
+            "description": "Stays supportive 15–20+ years. Memory foam sags in 7–10"
+          }
+        },
+        "material_9eMKDE": {
+          "type": "material",
+          "settings": {
+            "image": "shopify://shop_images/steel-coils.png",
+            "title": "Steel coils",
+            "description": "Pocketed coils hold their shape. Glued foam does not"
+          }
+        }
+      },
+      "block_order": [
+        "material_fGECcV",
+        "material_YdDJVP",
+        "material_9eMKDE"
+      ],
+      "name": "NW Materials",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Materials Built To Last",
+        "subheading": "<p>Most brands offer 10–15 years. Leading organic competitors offer 25. We offer 30 years, because:</p>",
+        "show_highlight": true,
+        "highlight_title": "Why It Matters",
+        "highlight_text": "<p>This isn't a marketing stunt. It's a reflection of materials proven to age gracefully. We'd rather build a mattress that lasts decades, and stand behind it, than replace a cheap one every 7–8 years</p>",
+        "show_button": true,
+        "button_text": "Explore Our Materials",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#f7f5f3",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_guarantee_card_ayPURn": {
+      "type": "nw-guarantee-card",
+      "name": "NW Guarantee Card",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Sleep On It For 100 Nights. Risk-Free.",
+        "description": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a <strong>30-year warranty</strong> because it’s built to last.</p>",
+        "image_position": "left",
+        "image": "shopify://shop_images/mattress-images.png",
+        "image_width": 540,
+        "show_badge": false,
+        "badge_image": "shopify://shop_images/money-back-icon.svg",
+        "seal_number": "100",
+        "seal_label": "NIGHTS",
+        "seal_ring": "MONEY BACK GUARANTEE",
+        "show_button": true,
+        "btn_text": "SHOP ORGANIC MATTRESSES",
+        "btn_link": "",
+        "btn_style": "primary",
+        "card_max_width": 1070,
+        "card_bg_color": "#f7f5f3",
+        "card_border_color": "#6139161a",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_overlay_color": "",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_marquee_zQYCFb": {
+      "type": "nw-marquee",
+      "blocks": {
+        "item_JHRy7y": {
+          "type": "item",
+          "settings": {
+            "text": "100% ORGANIC MATERIALS",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_qgnbMy": {
+          "type": "item",
+          "settings": {
+            "text": "MADE IN THE USA",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_GRUmA3": {
+          "type": "item",
+          "settings": {
+            "text": "NO CHEMICAL FOAMS",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_ntKQ6c": {
+          "type": "item",
+          "settings": {
+            "text": "30-YEAR WARRANTY",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_dPzbHk": {
+          "type": "item",
+          "settings": {
+            "text": "100-NIGHT TRIAL",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_xA4i7q": {
+          "type": "item",
+          "settings": {
+            "text": "FREE WHITE-GLOVE DELIVERY",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        }
+      },
+      "block_order": [
+        "item_JHRy7y",
+        "item_qgnbMy",
+        "item_GRUmA3",
+        "item_ntKQ6c",
+        "item_dPzbHk",
+        "item_xA4i7q"
+      ],
+      "name": "t:sections.nw-marquee.name",
+      "settings": {
+        "direction": "right_to_left",
+        "speed": 35,
+        "pause_on_hover": true,
+        "enable_parallax": false,
+        "repeat_count": 3,
+        "bg_color": "#613916",
+        "text_color": "#ffffff",
+        "icon_color": "#f4efe8",
+        "icon_size_desktop": 24,
+        "icon_size_mobile": 16,
+        "font_size_desktop": 18,
+        "font_size_mobile": 12,
+        "font_weight": 500,
+        "text_transform": "uppercase",
+        "letter_spacing": 0,
+        "gap_icon_text_desktop": 10,
+        "gap_icon_text_mobile": 10,
+        "gap_items_desktop": 18,
+        "gap_items_mobile": 10,
+        "section_height_desktop": 56,
+        "section_height_mobile": 44,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_top_mobile": 14,
+        "padding_bottom_mobile": 14
+      }
+    },
+    "nw_return_policy_DqJQYt": {
+      "type": "nw-return-policy",
+      "blocks": {
+        "accordion_item_Kc6tDL": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Return window",
+            "content": "<p>Any time between night 31 and night 100, after the break-in period</p>",
+            "icon": "offer",
+            "use_custom_image": false,
+            "open_by_default": true
+          }
+        },
+        "accordion_item_iMiHTP": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Store credit",
+            "content": "<p>Waives the $199 fee, valid for 12 months, redeemable store-wide</p>",
+            "icon": "offer",
+            "use_custom_image": false,
+            "open_by_default": true
+          }
+        },
+        "accordion_item_9NrXt8": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Free exchanges",
+            "content": "<p>Swap size or firmness free. Upgrades cost the price difference; downgrades return it as store credit</p>",
+            "icon": "money",
+            "use_custom_image": false,
+            "open_by_default": true
+          }
+        },
+        "accordion_item_mQB8Fq": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Condition",
+            "content": "<p>Must be clean and sanitary, free of stains, odors, pet damage or burns, with the law tag attached</p>",
+            "icon": "money",
+            "use_custom_image": false,
+            "open_by_default": true
+          }
+        },
+        "accordion_item_KGFPzM": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Return fee",
+            "content": "<p>One flat $199 for freight, handling, and removal. Choose store credit and we waive it</p>",
+            "icon": "offer",
+            "use_custom_image": false,
+            "open_by_default": true
+          }
+        },
+        "accordion_item_q4QVTe": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "No reboxing",
+            "content": "<p>Approved returns go through local pickup or donation where available, never landfilled</p>",
+            "icon": "shield",
+            "use_custom_image": false,
+            "open_by_default": true
+          }
+        },
+        "accordion_item_aUxqJD": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Your refund",
+            "content": "<p>Purchase price minus the fee, back to you in 3–5 business days. Shipping isn't refundable</p>",
+            "icon": "truck",
+            "use_custom_image": false,
+            "open_by_default": true
+          }
+        },
+        "accordion_item_KELn6w": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "One per order",
+            "content": "<p>One return or exchange per mattress. An exchange keeps your original 100 nights</p>",
+            "icon": "verified",
+            "use_custom_image": false,
+            "open_by_default": true
+          }
+        }
+      },
+      "block_order": [
+        "accordion_item_Kc6tDL",
+        "accordion_item_iMiHTP",
+        "accordion_item_9NrXt8",
+        "accordion_item_mQB8Fq",
+        "accordion_item_KGFPzM",
+        "accordion_item_q4QVTe",
+        "accordion_item_aUxqJD",
+        "accordion_item_KELn6w"
+      ],
+      "name": "NW Return Policy",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Everything You Need To Know Before You Return",
+        "subheading": "",
+        "image": "shopify://shop_images/mattresses-desktop.png",
+        "image_position": "left",
+        "image_position_mobile": "top",
+        "show_highlight": true,
+        "highlight_title": "Toppers, Bedding & Bases",
+        "highlight_text": "<p>Mattress toppers follow the same trial as mattresses. Sheets, pillows, and protectors are returnable within 30 days, free if unopened, or with a 20% restocking fee if opened. Adjustable bases and frames are final sale (non-returnable), but they're backed by a 20-year warranty.</p>",
+        "show_button": true,
+        "button_text": "START A RETURN OR EXCHANGE",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "gradient",
+        "bg_color": "#ffffff",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
     }
   },
   "order": [
@@ -266,6 +792,13 @@
     "nw_general_customer_hero_XWRymr",
     "nw_marquee_8tb6jN",
     "nw_mission_D74amU",
-    "nw_steps_RNAkXE"
+    "nw_steps_RNAkXE",
+    "nw_warranty_9nxVnN",
+    "nw_warranty_coverage_thPEtc",
+    "nw_guarantee_offer_xp6LVr",
+    "nw_materials_dHzFLr",
+    "nw_guarantee_card_ayPURn",
+    "nw_marquee_zQYCFb",
+    "nw_return_policy_DqJQYt"
   ]
 }

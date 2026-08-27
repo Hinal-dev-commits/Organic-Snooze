@@ -38,25 +38,17 @@
 >
   <div class="nw-collection-hero__container nw-collection-hero__container--image-{{ section.settings.image_position }}">
     <div class="nw-collection-hero__content-wrap">
-      <div class="nw-collection-hero__text-group">
-        {%- if section.settings.tag_text != blank -%}
-          <div class="nw-collection-hero__tag">
-            {{ section.settings.tag_text }}
-          </div>
-        {%- endif -%}
-
-        {%- if section.settings.heading != blank -%}
-          <h1 class="nw-collection-hero__heading">
-            {{ section.settings.heading }}
-          </h1>
-        {%- endif -%}
-      </div>
-
-      {%- if section.settings.description != blank -%}
-        <div class="nw-collection-hero__description rte">
-          {{ section.settings.description }}
+      {%- if section.settings.tag_text != blank -%}
+        <div class="nw-collection-hero__tag">
+          {{ section.settings.tag_text }}
         </div>
       {%- endif -%}
+
+      {% render 'nw-section-header',
+        heading: section.settings.heading,
+        description: section.settings.description,
+        section_index: section.index
+      %}
     </div>
 
     <div class="nw-collection-hero__media-wrap">

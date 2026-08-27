@@ -75,6 +75,7 @@
 
 .nw-testimonials .nw-swiper-pagination {
   display: flex !important;
+  cursor: pointer;
 }
 
 .nw-testimonials .nw-swiper-pagination.swiper-pagination-lock {
@@ -322,14 +323,15 @@
   }
 
   .nw-testimonials__swiper .swiper-slide {
-  width: calc(100% - 26px);
+    width: calc(100% - 26px);
     /* max-width: 311px; */
   }
 
   .nw-testimonials__slider-wrap .nw-swiper-pagination {
     padding: 0 16px;
   }
-  .nw-testimonials__swiper{
+
+  .nw-testimonials__swiper {
     padding: 0 16px !important;
   }
 }

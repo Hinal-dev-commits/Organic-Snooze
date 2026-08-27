@@ -43,6 +43,7 @@ if (!customElements.get('nw-reviews')) {
           speed: 500,
           grabCursor: true,
           watchSlidesProgress: true,
+          slidesOffsetAfter: 20,
           breakpoints: {
             320: {
               slidesPerView: 1.2,
@@ -69,7 +70,7 @@ if (!customElements.get('nw-reviews')) {
               slidesPerView: 2.2,
               spaceBetween: 20,
               slidesOffsetBefore: 0,
-              slidesOffsetAfter: 0,
+              slidesOffsetAfter: 20,
               centeredSlides: false
             }
           }
