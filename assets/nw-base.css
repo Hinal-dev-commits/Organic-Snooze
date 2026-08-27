@@ -132,17 +132,23 @@ h2, .h2{
     letter-spacing: 0%;
     text-align: center;
     text-transform: capitalize;
-    padding: 14px 11px;
+    padding: 26px 8px;
+}
+
+.header__inline-menu .list-menu--inline > li > .header__menu-item,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item,
+.header__inline-menu .list-menu--inline > li .nw-mega-menu__trigger {
+    font-size: 14px;
+}
+
+.header__inline-menu .list-menu--inline > li > .header__menu-item span,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item span,
+.header__inline-menu .list-menu--inline > li .nw-mega-menu__trigger span {
+    font-size: 14px;
 }
 .header--middle-left{
     gap: 53px;
     margin-top: -2px
-}
-.list-menu li:first-child a{
-    padding-left: 0;
-}
-.list-menu li:last-child a{
-    padding-right: 0;
 }
 .header__icon .svg-wrapper{
     width: unset;

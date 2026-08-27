@@ -10,6 +10,8 @@ Renders the NW product card used across collection sliders and grids.
 @param {string} [button_text] - CTA button label
 @param {string} [button_style] - Button style: primary, secondary, outline
 @param {boolean} [lazy_load] - Lazy load product image
+@param {boolean} [show_description] - Show card description metafield (megamenu only)
+@param {boolean} [show_card_button] - Show card CTA button
 @example
 {% render 'nw-product-card', product: product, section_id: section.id %}
 {% enddoc %}
@@ -36,6 +38,16 @@ Renders the NW product card used across collection sliders and grids.
   assign button_text = button_text | default: 'Shop Now'
   assign button_style = button_style | default: 'primary'
   assign lazy_load = lazy_load | default: true
+  assign display_description = false
+  if show_description == true
+    assign display_description = true
+  endif
+  assign display_card_button = true
+  if show_card_button == false
+    assign display_card_button = false
+  endif
+
+  assign card_description = card_product.metafields.custom.card_description.value | default: card_product.metafields.custom.card_description
 
   assign card_price = card_product.price_min
   assign card_compare_at = card_product.compare_at_price_min
@@ -147,6 +159,10 @@ Renders the NW product card used across collection sliders and grids.
       <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
     </h3>
 
+    {%- if display_description and card_description != blank -%}
+      <p class="nw-product-card__description">{{ card_description | escape }}</p>
+    {%- endif -%}
+
     {%- if show_firmness_bar -%}
       <div class="nw-product-card__firmness">
         <span class="nw-product-card__firmness-label">{{ firmness_label_soft }}</span>
@@ -171,11 +187,13 @@ Renders the NW product card used across collection sliders and grids.
         {%- endif -%}
       </div>
 
-      {% render 'nw-button',
-        text: button_text,
-        link: card_product.url,
-        style: button_style
-      %}
+      {%- if display_card_button -%}
+        {% render 'nw-button',
+          text: button_text,
+          link: card_product.url,
+          style: button_style
+        %}
+      {%- endif -%}
     </div>
   </div>
 </article>

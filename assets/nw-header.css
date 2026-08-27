@@ -37,6 +37,14 @@
     color: rgb(var(--nw-header-transparent-text, var(--color-foreground)));
 }
 
+.header:not(.nw-header-transparent) .header__inline-menu .header__menu-item,
+.header:not(.nw-header-transparent) .header__inline-menu .header__menu-item span,
+.header:not(.nw-header-transparent) .header__inline-menu summary.list-menu__item,
+.header:not(.nw-header-transparent) .header__inline-menu .nw-mega-menu__trigger,
+.header:not(.nw-header-transparent) .header__inline-menu .header__active-menu-item {
+    color: #613916;
+}
+
 .header.nw-header-transparent .header__icon,
 .header.nw-header-transparent header-drawer .header__icon,
 .header.nw-header-transparent .localization-form__select,
@@ -50,6 +58,126 @@
 }
 .shopify-section-group-header-group{
     z-index: 100 !important;
+}
+
+.header.nw-header-transparent .nw-mega-menu-item.is-open .nw-mega-menu__trigger span,
+.header.nw-header-transparent .nw-mega-menu-item:hover .nw-mega-menu__trigger span {
+    color: rgb(var(--color-foreground));
+}
+
+@media screen and (min-width: 990px) {
+    .header-wrapper.nw-header-transparent:hover,
+    .header-wrapper:has(.header.nw-header-transparent):hover,
+    .header-wrapper.nw-header-mega-open,
+    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open),
+    .header-wrapper:has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+    }
+
+    .header-wrapper.nw-header-transparent:hover .header,
+    .header-wrapper:has(.header.nw-header-transparent):hover .header,
+    .header-wrapper.nw-header-mega-open .header,
+    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header,
+    .header-wrapper:has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+    }
+
+    .header-wrapper.nw-header-transparent:hover .header__heading-logo--default,
+    .header-wrapper:has(.header.nw-header-transparent):hover .header__heading-logo--default,
+    .header-wrapper.nw-header-mega-open .header__heading-logo--default,
+    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__heading-logo--default,
+    .header-wrapper:has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header__heading-logo--default {
+        display: block;
+    }
+
+    .header-wrapper.nw-header-transparent:hover .header__heading-logo--transparent,
+    .header-wrapper:has(.header.nw-header-transparent):hover .header__heading-logo--transparent,
+    .header-wrapper.nw-header-mega-open .header__heading-logo--transparent,
+    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__heading-logo--transparent,
+    .header-wrapper:has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header__heading-logo--transparent {
+        display: none;
+    }
+
+    .header-wrapper.nw-header-transparent:hover .header__menu-item,
+    .header-wrapper.nw-header-transparent:hover .header__menu-item span,
+    .header-wrapper.nw-header-transparent:hover summary.list-menu__item,
+    .header-wrapper.nw-header-transparent:hover .header__icon,
+    .header-wrapper:has(.header.nw-header-transparent):hover .header__menu-item,
+    .header-wrapper:has(.header.nw-header-transparent):hover .header__menu-item span,
+    .header-wrapper:has(.header.nw-header-transparent):hover summary.list-menu__item,
+    .header-wrapper:has(.header.nw-header-transparent):hover .header__icon,
+    .header-wrapper.nw-header-mega-open .header.nw-header-transparent .header__menu-item,
+    .header-wrapper.nw-header-mega-open .header.nw-header-transparent .header__menu-item span,
+    .header-wrapper.nw-header-mega-open .header.nw-header-transparent .header__icon,
+    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__menu-item,
+    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__menu-item span,
+    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__icon {
+        color: #613916;
+    }
+
+    .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item,
+    .header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item.list-menu__item,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item > .nw-mega-menu__trigger.header__menu-item.list-menu__item {
+        border-bottom: 2px solid transparent;
+        box-sizing: border-box;
+    }
+
+    .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item:hover,
+    .header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item.list-menu__item:hover,
+    .header__inline-menu .list-menu--inline > li > header-menu.is-open > details > summary.header__menu-item.list-menu__item,
+    .header__inline-menu .list-menu--inline > li > header-menu:hover > details > summary.header__menu-item.list-menu__item,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item > .nw-mega-menu__trigger.header__menu-item.list-menu__item:hover,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item.is-open > .nw-mega-menu__trigger.header__menu-item.list-menu__item,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item:hover > .nw-mega-menu__trigger.header__menu-item.list-menu__item {
+        background: #F4EFE8;
+        border-bottom: 2px solid #613916;
+        border-radius: 0;
+        text-decoration: none;
+    }
+
+    .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item:hover span,
+    .header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item.list-menu__item:hover span,
+    .header__inline-menu .list-menu--inline > li > header-menu.is-open > details > summary.header__menu-item.list-menu__item span,
+    .header__inline-menu .list-menu--inline > li > header-menu:hover > details > summary.header__menu-item.list-menu__item span,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item > .nw-mega-menu__trigger.header__menu-item.list-menu__item:hover span,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item.is-open > .nw-mega-menu__trigger.header__menu-item.list-menu__item span,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item:hover > .nw-mega-menu__trigger.header__menu-item.list-menu__item span {
+        text-decoration: none;
+        color: #613916;
+    }
+
+    .header__inline-menu .list-menu--inline > li > header-menu.is-open > details > summary.header__menu-item .icon-caret,
+    .header__inline-menu .list-menu--inline > li > header-menu:hover > details > summary.header__menu-item .icon-caret {
+        transform: rotate(180deg);
+    }
+
+    .header__inline-menu details[open] > .header__menu-item,
+    .header__inline-menu details[open]:hover > .header__menu-item {
+        text-decoration: none;
+    }
+
+    .header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item,
+    .header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item span,
+    .header-wrapper.nw-header-mega-open:not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item,
+    .header-wrapper.nw-header-mega-open:not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item span {
+        color: #613916;
+        text-decoration: none;
+    }
+
+    .header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover,
+    .header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover span,
+    .header-wrapper.nw-header-mega-open:not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item:hover,
+    .header-wrapper.nw-header-mega-open:not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item:hover span {
+        color: #613916;
+        text-decoration: none;
+    }
+
+    .nw-mega-menu-item.is-open .nw-mega-menu__trigger span,
+    .nw-mega-menu-item:hover .nw-mega-menu__trigger span {
+        text-decoration: none;
+    }
 }
 .announcement-bar__message p {
     margin: 0px;
@@ -96,12 +224,6 @@
     }
     .menu-drawer__menu-item{
         padding: 14px 22px !important;
-    }
-    .list-menu li:first-child a{
-        padding-left: 11px;
-    }
-    .list-menu li:last-child a{
-        padding-right: 11px;
     }
 
 

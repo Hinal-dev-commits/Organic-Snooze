@@ -12,6 +12,21 @@
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
 
+{%- liquid
+  assign has_mega_menu_blocks = false
+  for block in section.blocks
+    if block.type == 'mega_menu'
+      assign has_mega_menu_blocks = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_mega_menu_blocks -%}
+  {{ 'nw-mega-menu.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'nw-mega-menu.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
 {%- if section.settings.menu_type_desktop == 'mega' -%}
   <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -219,10 +234,8 @@
 
     {%- liquid
       if section.settings.menu != blank
-        if section.settings.menu_type_desktop == 'dropdown'
-          render 'header-dropdown-menu'
-        elsif section.settings.menu_type_desktop != 'drawer'
-          render 'header-mega-menu'
+        if section.settings.menu_type_desktop != 'drawer'
+          render 'header-hybrid-menu'
         endif
       endif
     %}
@@ -429,6 +442,9 @@
     closeMenuDisclosure() {
       this.disclosures = this.disclosures || this.header.querySelectorAll('header-menu');
       this.disclosures.forEach((disclosure) => disclosure.close());
+      this.header.querySelectorAll('nw-mega-menu-item.is-open').forEach((item) => {
+        if (typeof item.close === 'function') item.close();
+      });
     }
 
     closeSearchModal() {
@@ -499,7 +515,6 @@
 {
   "name": "t:sections.header.name",
   "class": "section-header",
-  "max_blocks": 3,
   "settings": [
     {
       "type": "select",
@@ -616,7 +631,7 @@
     },
     {
       "type": "header",
-      "content": "Transparent header"
+      "content": "TRANSPARENT HEADER"
     },
     {
       "type": "paragraph",
@@ -625,7 +640,7 @@
     {
       "type": "image_picker",
       "id": "transparent_logo",
-      "label": "Transparent header logo"
+      "label": "Transparent Header Logo"
     },
     {
       "type": "range",
@@ -635,26 +650,26 @@
       "step": 5,
       "default": 200,
       "unit": "px",
-      "label": "Transparent header logo width"
+      "label": "Transparent Header Logo Width"
     },
     {
       "type": "color",
       "id": "transparent_text_color",
-      "label": "Transparent header text color",
+      "label": "Transparent Header Text Color",
       "alpha": true,
       "default": "#FFFFFF"
     },
     {
       "type": "color",
       "id": "transparent_icon_color",
-      "label": "Transparent header icon color",
+      "label": "Transparent Header Icon Color",
       "alpha": true,
       "default": "#FFFFFF"
     },
     {
       "type": "color",
       "id": "transparent_border_color",
-      "label": "Transparent header border color",
+      "label": "Transparent Header Border Color",
       "alpha": true,
       "default": "#FFFFFF"
     },
@@ -665,7 +680,7 @@
     {
       "type": "text",
       "id": "contact_number",
-      "label": "Contact phone number",
+      "label": "Contact Phone Number",
       "info": "Used for the call icon link in the header. Example: +1 (888) 555-1234"
     },
     {
@@ -711,7 +726,7 @@
       "max": 50,
       "step": 1,
       "unit": "px",
-      "label": "Desktop top padding",
+      "label": "Desktop Top Padding",
       "default": 20
     },
     {
@@ -721,7 +736,7 @@
       "max": 50,
       "step": 1,
       "unit": "px",
-      "label": "Desktop bottom padding",
+      "label": "Desktop Bottom Padding",
       "default": 20
     },
     {
@@ -731,7 +746,7 @@
       "max": 50,
       "step": 1,
       "unit": "px",
-      "label": "Mobile top padding",
+      "label": "Mobile Top Padding",
       "default": 20
     },
     {
@@ -741,13 +756,391 @@
       "max": 50,
       "step": 1,
       "unit": "px",
-      "label": "Mobile bottom padding",
+      "label": "Mobile Bottom Padding",
       "default": 20
     }
   ],
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "mega_menu",
+      "name": "Mega Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Must exactly match a first-level navigation item title."
+        },
+        {
+          "type": "header",
+          "content": "COLORS"
+        },
+        {
+          "type": "color",
+          "id": "sidebar_bg_color",
+          "label": "Sidebar Background",
+          "alpha": true,
+          "default": "#F4EFE8"
+        },
+        {
+          "type": "color",
+          "id": "content_bg_color",
+          "label": "Content Background",
+          "alpha": true,
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "tab_active_color",
+          "label": "Active Tab Underline",
+          "alpha": true,
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "tab_text_color",
+          "label": "Tab Text Color",
+          "alpha": true,
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "swiper_arrow_bg",
+          "label": "Slider Arrow Background",
+          "alpha": true,
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "swiper_arrow_color",
+          "label": "Slider Arrow Icon Color",
+          "alpha": true,
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "pagination_color",
+          "label": "Slider Pagination Color",
+          "alpha": true,
+          "default": "#613916"
+        },
+        {
+          "type": "header",
+          "content": "CATEGORY 1"
+        },
+        {
+          "type": "text",
+          "id": "category_1_title",
+          "label": "Title"
+        },
+        {
+          "type": "select",
+          "id": "category_1_product_source",
+          "label": "Product Source",
+          "default": "product_list",
+          "options": [
+            { "value": "product_list", "label": "Product List" },
+            { "value": "collection", "label": "Collection" }
+          ]
+        },
+        {
+          "type": "collection",
+          "id": "category_1_collection",
+          "label": "Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "category_1_product_list",
+          "label": "Products",
+          "limit": 50
+        },
+        {
+          "type": "range",
+          "id": "category_1_products_limit",
+          "label": "Products To Show",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "default": 8,
+          "visible_if": "{{ block.settings.category_1_product_source == 'collection' }}"
+        },
+        {
+          "type": "header",
+          "content": "CATEGORY 2"
+        },
+        {
+          "type": "text",
+          "id": "category_2_title",
+          "label": "Title"
+        },
+        {
+          "type": "select",
+          "id": "category_2_product_source",
+          "label": "Product Source",
+          "default": "product_list",
+          "options": [
+            { "value": "product_list", "label": "Product List" },
+            { "value": "collection", "label": "Collection" }
+          ]
+        },
+        {
+          "type": "collection",
+          "id": "category_2_collection",
+          "label": "Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "category_2_product_list",
+          "label": "Products",
+          "limit": 50
+        },
+        {
+          "type": "range",
+          "id": "category_2_products_limit",
+          "label": "Products To Show",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "default": 8,
+          "visible_if": "{{ block.settings.category_2_product_source == 'collection' }}"
+        },
+        {
+          "type": "header",
+          "content": "CATEGORY 3"
+        },
+        {
+          "type": "text",
+          "id": "category_3_title",
+          "label": "Title"
+        },
+        {
+          "type": "select",
+          "id": "category_3_product_source",
+          "label": "Product Source",
+          "default": "product_list",
+          "options": [
+            { "value": "product_list", "label": "Product List" },
+            { "value": "collection", "label": "Collection" }
+          ]
+        },
+        {
+          "type": "collection",
+          "id": "category_3_collection",
+          "label": "Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "category_3_product_list",
+          "label": "Products",
+          "limit": 50
+        },
+        {
+          "type": "range",
+          "id": "category_3_products_limit",
+          "label": "Products To Show",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "default": 8,
+          "visible_if": "{{ block.settings.category_3_product_source == 'collection' }}"
+        },
+        {
+          "type": "header",
+          "content": "CATEGORY 4"
+        },
+        {
+          "type": "text",
+          "id": "category_4_title",
+          "label": "Title"
+        },
+        {
+          "type": "select",
+          "id": "category_4_product_source",
+          "label": "Product Source",
+          "default": "product_list",
+          "options": [
+            { "value": "product_list", "label": "Product List" },
+            { "value": "collection", "label": "Collection" }
+          ]
+        },
+        {
+          "type": "collection",
+          "id": "category_4_collection",
+          "label": "Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "category_4_product_list",
+          "label": "Products",
+          "limit": 50
+        },
+        {
+          "type": "range",
+          "id": "category_4_products_limit",
+          "label": "Products To Show",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "default": 8,
+          "visible_if": "{{ block.settings.category_4_product_source == 'collection' }}"
+        },
+        {
+          "type": "header",
+          "content": "CATEGORY 5"
+        },
+        {
+          "type": "text",
+          "id": "category_5_title",
+          "label": "Title"
+        },
+        {
+          "type": "select",
+          "id": "category_5_product_source",
+          "label": "Product Source",
+          "default": "product_list",
+          "options": [
+            { "value": "product_list", "label": "Product List" },
+            { "value": "collection", "label": "Collection" }
+          ]
+        },
+        {
+          "type": "collection",
+          "id": "category_5_collection",
+          "label": "Collection"
+        },
+        {
+          "type": "product_list",
+          "id": "category_5_product_list",
+          "label": "Products",
+          "limit": 50
+        },
+        {
+          "type": "range",
+          "id": "category_5_products_limit",
+          "label": "Products To Show",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "default": 8,
+          "visible_if": "{{ block.settings.category_5_product_source == 'collection' }}"
+        },
+        {
+          "type": "header",
+          "content": "BUTTON 1"
+        },
+        {
+          "type": "text",
+          "id": "button_1_label",
+          "label": "Label",
+          "default": "Shop All"
+        },
+        {
+          "type": "url",
+          "id": "button_1_link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "button_1_style",
+          "label": "Button Style",
+          "default": "primary",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "BUTTON 2"
+        },
+        {
+          "type": "text",
+          "id": "button_2_label",
+          "label": "Label",
+          "default": "Take A Quiz"
+        },
+        {
+          "type": "url",
+          "id": "button_2_link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "button_2_style",
+          "label": "Button Style",
+          "default": "outline",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "PRODUCT CARD"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating",
+          "label": "Show Rating",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_firmness",
+          "label": "Show Firmness Bar",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_seller_tag",
+          "label": "Show Seller Tag",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_card_button",
+          "label": "Show Card Button",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "card_button_text",
+          "label": "Card Button Text",
+          "default": "Shop Now",
+          "visible_if": "{{ block.settings.show_card_button == true }}"
+        },
+        {
+          "type": "select",
+          "id": "card_button_style",
+          "label": "Card Button Style",
+          "default": "primary",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "visible_if": "{{ block.settings.show_card_button == true }}"
+        },
+        {
+          "type": "text",
+          "id": "firmness_label_soft",
+          "label": "Firmness Label (Soft)",
+          "default": "Soft",
+          "visible_if": "{{ block.settings.show_firmness == true }}"
+        },
+        {
+          "type": "text",
+          "id": "firmness_label_firm",
+          "label": "Firmness Label (Firm)",
+          "default": "Firm",
+          "visible_if": "{{ block.settings.show_firmness == true }}"
+        }
+      ]
     }
   ]
 }
