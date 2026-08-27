@@ -47,6 +47,7 @@
         "heading": "The Organic Mattress Designed Around Human Biology",
         "description": "<p>Certified organic latex, wool, and cotton. No polyurethane foam, no fiberglass, no VOCs. Engineered for cooler, deeper, more restorative sleep.</p>",
         "image_desktop": "shopify://shop_images/collection-hero.png",
+        "image_mobile": "shopify://shop_images/collection-hero-mobile.png",
         "image_position": "right",
         "bg_type": "color",
         "bg_color": "#f4efe8",
@@ -78,15 +79,22 @@
         "collection_6M9hdC": {
           "type": "collection",
           "settings": {
-            "collection": "mattress",
+            "collection": "baby-snooze-nest",
             "label": "Ultimate Snooze"
+          }
+        },
+        "collection_NWGL9w": {
+          "type": "collection",
+          "settings": {
+            "collection": "mattress",
+            "label": "Matress"
           }
         },
         "collection_nXw8Q3": {
           "type": "collection",
           "settings": {
             "collection": "accessories",
-            "label": "Accessories"
+            "label": "Bedding"
           }
         },
         "collection_BH7My6": {
@@ -115,6 +123,7 @@
         "collection_tHJdeT",
         "collection_TpBRwr",
         "collection_6M9hdC",
+        "collection_NWGL9w",
         "collection_nXw8Q3",
         "collection_BH7My6",
         "collection_RVVUf3",
@@ -127,10 +136,11 @@
         "eyebrow": "",
         "heading": "",
         "description": "",
-        "products_to_show": 4,
+        "products_to_show": 0,
         "show_product_count": true,
         "show_rating_on_card": true,
         "show_firmness": true,
+        "show_best_for": true,
         "show_seller_tag": true,
         "pcard_button_text": "Shop Now",
         "pcard_button_style": "primary",
@@ -287,6 +297,16 @@
             "verified": true,
             "verified_text": "Verified"
           }
+        },
+        "testimonial_HEBHJG": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”</p>",
+            "author": "Chloe",
+            "verified": true,
+            "verified_text": "Verified"
+          }
         }
       },
       "block_order": [
@@ -295,7 +315,8 @@
         "testimonial_rzGM9i",
         "testimonial_PRtKG3",
         "testimonial_pDNhmz",
-        "testimonial_Jg7cQd"
+        "testimonial_Jg7cQd",
+        "testimonial_HEBHJG"
       ],
       "name": "t:sections.nw-testimonials.name",
       "settings": {
@@ -348,7 +369,7 @@
         "logo_DjHUH8": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/new-york-logo.png",
+            "image": "shopify://shop_images/new-york-logo_2.png",
             "svg_code": "",
             "link": ""
           }
@@ -356,7 +377,7 @@
         "logo_BFabGA": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/DOAC-logo.png",
+            "image": "shopify://shop_images/image_1248_1.png",
             "svg_code": "",
             "link": ""
           }
@@ -618,7 +639,7 @@
         "bg_color": "#fffcf0",
         "bg_gradient": "",
         "bg_image": "shopify://shop_images/benifit-desktop.png",
-        "bg_overlay_color": "#FFFCF0A6",
+        "bg_overlay_color": "#fffcf0a6",
         "padding_top_desktop": 48,
         "padding_bottom_desktop": 48,
         "padding_top_mobile": 48,

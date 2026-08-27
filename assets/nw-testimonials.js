@@ -135,10 +135,13 @@ if (!customElements.get('nw-testimonials')) {
       var spaceBetween = window.innerWidth >= 750 ? 20 : 12;
       var visibleSlides = Math.ceil(sliderWidth / (slideWidth + spaceBetween)) || 4;
 
-      var setsNeeded = Math.max(3, Math.ceil((visibleSlides * 2 + count) / count) + 1);
-      var extraSets = setsNeeded - 1;
-      var prependSets = Math.ceil(extraSets / 2);
-      var appendSets = extraSets - prependSets;
+      var isFullWidth = this.dataset.fullWidth === 'true';
+      var setsPerSide = isFullWidth
+        ? Math.max(3, Math.ceil((visibleSlides * 2) / count) + 1)
+        : Math.max(2, Math.ceil(visibleSlides / count));
+
+      var prependSets = setsPerSide;
+      var appendSets = setsPerSide;
       var p;
       var a;
       var fragment;
@@ -179,9 +182,11 @@ if (!customElements.get('nw-testimonials')) {
       var activeIndex = swiper.activeIndex;
 
       if (activeIndex >= meta.middleEnd) {
-        swiper.slideTo(activeIndex - meta.copyCount, 0);
+        var offset = (activeIndex - meta.startIndex) % meta.copyCount;
+        swiper.slideTo(meta.startIndex + offset, 0);
       } else if (activeIndex < meta.startIndex) {
-        swiper.slideTo(activeIndex + meta.copyCount, 0);
+        var offset = (((activeIndex - meta.startIndex) % meta.copyCount) + meta.copyCount) % meta.copyCount;
+        swiper.slideTo(meta.startIndex + offset, 0);
       }
     }
 

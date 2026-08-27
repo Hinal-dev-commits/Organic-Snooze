@@ -45,6 +45,8 @@ if (!customElements.get('nw-organic-standards')) {
         self._swiperInstance = new Swiper(sliderEl, {
           slidesPerView: 'auto',
           spaceBetween: 12,
+          slidesOffsetBefore: 16,
+          slidesOffsetAfter: 16,
           grabCursor: true,
           freeMode: false,
           watchOverflow: true
