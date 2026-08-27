@@ -1,0 +1,119 @@
+{% comment %}
+  Renders one product variant option picker.
+
+  Accepts:
+  - product: {Object}
+  - option: {Object}
+  - block: {Object}
+  - product_form_id: {String}
+  - firmness_option_name: {String}
+  - select_size_text: {String}
+  - variant_tag_text: {String}
+  - firmness_tag_text: {String}
+  - values_order: {String}
+{% endcomment %}
+{%- liquid
+  assign swatch_count = option.values | map: 'swatch' | compact | size
+  assign picker_type = block.settings.picker_type
+
+  if swatch_count > 0 and block.settings.swatch_shape != 'none'
+    if block.settings.picker_type == 'dropdown'
+      assign picker_type = 'swatch_dropdown'
+    else
+      assign picker_type = 'swatch'
+    endif
+  endif
+
+  assign current_option_name = option.name | strip | downcase
+  assign is_firmness_option = false
+  if firmness_option_name != blank and current_option_name == firmness_option_name
+    assign is_firmness_option = true
+  endif
+-%}
+{%- if picker_type == 'swatch' -%}
+  <fieldset class="js product-form__input product-form__input--swatch">
+    <legend class="form__label">
+      {{ option.name }}:
+      <span data-selected-value>
+        {{- option.selected_value -}}
+      </span>
+    </legend>
+    {% render 'product-variant-options',
+      product: product,
+      option: option,
+      block: block,
+      picker_type: picker_type,
+      values_order: values_order
+    %}
+  </fieldset>
+{%- elsif picker_type == 'button' -%}
+  <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness{% endif %}">
+    <legend class="visually-hidden">{{ option.name }}</legend>
+    <div class="nw-variant-picker__header">
+      <span class="nw-variant-picker__label">{{ option.name }}:</span>
+      {%- if is_firmness_option -%}
+        {%- if firmness_tag_text != blank -%}
+          <span class="nw-variant-picker__firmness-tag">{{ firmness_tag_text }}</span>
+        {%- endif -%}
+      {%- elsif select_size_text != blank -%}
+        <span class="nw-variant-picker__size-desc">{{ select_size_text }}</span>
+      {%- endif -%}
+    </div>
+    <div class="nw-variant-picker__options">
+      {%- if is_firmness_option -%}
+        {% render 'nw-product-variant-options-firmness',
+          product: product,
+          option: option,
+          block: block,
+          values_order: values_order
+        %}
+      {%- else -%}
+        {% render 'product-variant-options',
+          product: product,
+          option: option,
+          block: block,
+          picker_type: picker_type,
+          values_order: values_order
+        %}
+      {%- endif -%}
+    </div>
+    {%- unless is_firmness_option -%}
+      {%- if variant_tag_text != blank -%}
+        <p class="nw-variant-picker__tag">{{ variant_tag_text }}</p>
+      {%- endif -%}
+    {%- endunless -%}
+  </fieldset>
+{%- else -%}
+  <div class="product-form__input product-form__input--dropdown">
+    <label class="form__label" for="Option-{{ section.id }}-{{ option.position | minus: 1 }}">
+      {{ option.name }}
+    </label>
+    <div class="select">
+      {%- if picker_type == 'swatch_dropdown' -%}
+        <span
+          data-selected-value
+          class="dropdown-swatch"
+        >
+          {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
+        </span>
+      {%- endif -%}
+      <select
+        id="Option-{{ section.id }}-{{ option.position | minus: 1 }}"
+        class="select__select"
+        name="options[{{ option.name | escape }}]"
+        form="{{ product_form_id }}"
+      >
+        {% render 'product-variant-options',
+          product: product,
+          option: option,
+          block: block,
+          picker_type: picker_type,
+          values_order: values_order
+        %}
+      </select>
+      <span class="svg-wrapper">
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </span>
+    </div>
+  </div>
+{%- endif -%}

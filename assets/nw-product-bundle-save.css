@@ -314,11 +314,21 @@
 
   .nw-bundle-save__media,
   .nw-bundle-save__image {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
   }
 
   .nw-bundle-save__select-wrap {
     max-width: 100%;
   }
+  
+  .nw-bundle-save__compare{
+    font-size: 12px;
+}
+.nw-bundle-save__price{
+    font-size: 12px;
+}
+.nw-bundle-save__price{
+    font-size: 10px;
+}
 }

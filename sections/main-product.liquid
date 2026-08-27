@@ -147,7 +147,7 @@
                       </span>
                     {%- endif -%}
                   </div>
-                  {%- if show_affirm -%}
+                  {% comment %} {%- if show_affirm -%}
                     <div class="nw-product-price__affirm">
                       {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
                       {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large nw-product-price__installment' -%}
@@ -155,7 +155,7 @@
                         {{ form | payment_terms }}
                       {%- endform -%}
                     </div>
-                  {%- endif -%}
+                  {%- endif -%} {% endcomment %}
                   {%- if product.quantity_price_breaks_configured? -%}
                     <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                       <span>{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -541,6 +541,8 @@
                   {%- render 'nw-product-payment-logos', block: block -%}
                 {%- when 'trust_badges' -%}
                   {%- render 'nw-product-trust-badges', block: block -%}
+                {%- when 'sleepers' -%}
+                  {%- render 'nw-product-sleepers', block: block, product: product -%}
                 {%- when 'customer_reviews' -%}
                   {%- render 'nw-product-customer-reviews', block: block, section_id: section.id -%}
                 {%- when 'customer_videos' -%}
@@ -864,7 +866,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -874,7 +876,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -884,7 +886,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -894,7 +896,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -920,7 +922,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -930,7 +932,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -940,7 +942,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -950,7 +952,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -988,7 +990,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -998,7 +1000,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1008,7 +1010,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1018,7 +1020,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1059,7 +1061,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1069,7 +1071,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1079,7 +1081,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1089,7 +1091,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1145,7 +1147,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1155,7 +1157,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1165,7 +1167,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1175,7 +1177,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1196,7 +1198,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1206,7 +1208,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1216,7 +1218,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1226,7 +1228,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1276,6 +1278,51 @@
           "default": "circle"
         },
         {
+          "type": "text",
+          "id": "firmness_option_name",
+          "label": "Firmness option name",
+          "default": "Firmness",
+          "info": "Enter the variant option name (e.g. Firmness) to use the firmness card design for that option."
+        },
+        {
+          "type": "range",
+          "id": "picker_gap",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Gap between variant pickers",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "picker_gap_mobile",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Gap between variant pickers (mobile)",
+          "default": 24
+        },
+        {
+          "type": "textarea",
+          "id": "option_position_order",
+          "label": "Option position order",
+          "info": "Comma-separated option names to control display order (e.g. Size, Firmness). Leave blank for default order."
+        },
+        {
+          "type": "textarea",
+          "id": "option_1_values_order",
+          "label": "Option 1 value order",
+          "info": "Comma-separated values for the first product option (e.g. Twin, Twin XL, Full, Queen, King, Cal King). Leave blank for default order."
+        },
+        {
+          "type": "textarea",
+          "id": "option_2_values_order",
+          "label": "Option 2 value order",
+          "info": "Comma-separated values for the second product option (e.g. Firm, Medium, Plush). Leave blank for default order."
+        },
+        {
           "type": "header",
           "content": "Block spacing"
         },
@@ -1284,7 +1331,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1294,7 +1341,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1304,7 +1351,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1314,7 +1361,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1355,7 +1402,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1365,7 +1412,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1375,7 +1422,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1385,7 +1432,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1411,7 +1458,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1421,7 +1468,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1431,7 +1478,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1441,7 +1488,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1468,7 +1515,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1478,7 +1525,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1488,7 +1535,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1498,7 +1545,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1524,7 +1571,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1534,7 +1581,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1544,7 +1591,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1554,7 +1601,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1611,7 +1658,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1621,7 +1668,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1631,7 +1678,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1641,7 +1688,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1861,7 +1908,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1871,7 +1918,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1881,7 +1928,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1891,7 +1938,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1922,7 +1969,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1932,7 +1979,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1942,7 +1989,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1952,7 +1999,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1977,7 +2024,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1987,7 +2034,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1997,7 +2044,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2007,7 +2054,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2293,7 +2340,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2303,7 +2350,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2313,7 +2360,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2323,7 +2370,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2468,7 +2515,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2478,7 +2525,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2488,7 +2535,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2498,7 +2545,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2575,7 +2622,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2585,7 +2632,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2595,7 +2642,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2605,7 +2652,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2798,7 +2845,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2808,7 +2855,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2818,7 +2865,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2828,7 +2875,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2966,7 +3013,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2976,7 +3023,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2986,7 +3033,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2996,7 +3043,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3122,7 +3169,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3132,7 +3179,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3142,7 +3189,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3152,7 +3199,99 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "sleepers",
+      "name": "Best for sleepers",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Displays chips from the product custom.sleepers list metafield."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Best for:"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "label_color",
+          "label": "Label color",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "chip_bg_color",
+          "label": "Chip background",
+          "default": "#F4EFE8",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "chip_text_color",
+          "label": "Chip text color",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "chip_icon_color",
+          "label": "Chip icon color",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3377,7 +3516,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3387,7 +3526,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3397,7 +3536,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3407,7 +3546,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3553,7 +3692,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3563,7 +3702,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3573,7 +3712,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3583,7 +3722,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3653,7 +3792,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3663,7 +3802,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3673,7 +3812,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3683,7 +3822,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3772,7 +3911,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3782,7 +3921,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3792,7 +3931,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3802,7 +3941,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3857,7 +3996,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 32
@@ -3867,7 +4006,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3877,7 +4016,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 24
@@ -3887,7 +4026,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -4524,7 +4663,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -4534,7 +4673,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -4544,7 +4683,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -4554,7 +4693,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -4738,7 +4877,7 @@
       "id": "media_padding_top",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
       "label": "Top padding (desktop)",
       "default": 0
@@ -4748,7 +4887,7 @@
       "id": "media_padding_bottom",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
       "label": "Bottom padding (desktop)",
       "default": 0
@@ -4758,7 +4897,7 @@
       "id": "media_padding_top_mobile",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
       "label": "Top padding (mobile)",
       "default": 0
@@ -4768,7 +4907,7 @@
       "id": "media_padding_bottom_mobile",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
       "label": "Bottom padding (mobile)",
       "default": 0

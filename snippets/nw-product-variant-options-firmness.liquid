@@ -1,0 +1,63 @@
+{% comment %}
+  Renders firmness variant option cards.
+
+  Accepts:
+  - product: {Object} product object.
+  - option: {Object} current product_option object.
+  - block: {Object} block object.
+  - values_order: {String} optional comma-separated value order
+{% endcomment %}
+{%- liquid
+  assign values_order = values_order | default: '' | strip
+-%}
+
+{%- if values_order != blank -%}
+  {%- assign ordered_value_names = values_order | split: ',' -%}
+  {%- for order_value in ordered_value_names -%}
+    {%- assign order_value_clean = order_value | strip | downcase -%}
+    {%- if order_value_clean == blank -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- for value in option.values -%}
+      {%- assign value_name_clean = value | strip | downcase -%}
+      {%- if value_name_clean == order_value_clean -%}
+        {% render 'nw-product-variant-firmness-value',
+          product: product,
+          option: option,
+          value: value,
+          value_index: forloop.index0
+        %}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endfor -%}
+
+  {%- for value in option.values -%}
+    {%- assign value_in_order = false -%}
+    {%- assign value_name_clean = value | strip | downcase -%}
+    {%- for order_value in ordered_value_names -%}
+      {%- assign order_value_clean = order_value | strip | downcase -%}
+      {%- if value_name_clean == order_value_clean -%}
+        {%- assign value_in_order = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- unless value_in_order -%}
+      {% render 'nw-product-variant-firmness-value',
+        product: product,
+        option: option,
+        value: value,
+        value_index: forloop.index0
+      %}
+    {%- endunless -%}
+  {%- endfor -%}
+{%- else -%}
+  {%- for value in option.values -%}
+    {% render 'nw-product-variant-firmness-value',
+      product: product,
+      option: option,
+      value: value,
+      value_index: forloop.index0
+    %}
+  {%- endfor -%}
+{%- endif -%}
