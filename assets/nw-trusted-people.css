@@ -321,13 +321,8 @@
 }
 
 .nw-trusted-people__expand {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.36s ease-out;
-}
-
-.nw-trusted-people__card.is-expanded .nw-trusted-people__expand {
-  grid-template-rows: 1fr;
+  height: 0;
+  overflow: hidden;
 }
 
 .nw-trusted-people__header{
@@ -337,8 +332,6 @@
 .nw-trusted-people__expand-inner {
   overflow: hidden;
   min-height: 0;
-}
-.nw-trusted-people__card.is-expanded .nw-trusted-people__expand-inner {
   padding-bottom: 8px;
 }
 
@@ -347,6 +340,21 @@
   padding-top: 10px;
   border-top: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
   text-align: left;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.22s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nw-trusted-people__card.is-expanded .nw-trusted-people__quote {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nw-trusted-people__quote,
+  .nw-trusted-people__toggle-icon::after {
+    transition: none;
+  }
 }
 
 .nw-trusted-people__quote,
