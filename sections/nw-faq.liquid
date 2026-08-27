@@ -1,10 +1,11 @@
 {{ 'nw-faq.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'nw-faq.js' | asset_url }}" defer="defer"></script>
 
+{%- assign nw_faq_selector = '.nw-faq.section-' | append: section.id -%}
 <style>
   .nw-faq.section-{{ section.id }} {
-    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+    {% render 'nw-section-color-var', name: '--nw-star-active', value: section.settings.star_color %}
+    {% render 'nw-section-color-var', name: '--nw-star-inactive', value: section.settings.star_color_inactive %}
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -12,15 +13,19 @@
     padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
     {% case section.settings.bg_type %}
       {% when 'color' %}
-        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+        {% if section.settings.bg_color != blank %}
+          background-color: {{ section.settings.bg_color }};
+        {% endif %}
       {% when 'gradient' %}
-        background: {{ section.settings.bg_gradient }};
+        {% if section.settings.bg_gradient != blank %}
+          background: {{ section.settings.bg_gradient }};
+        {% endif %}
       {% when 'image' %}
-        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+        {% if section.settings.bg_color != blank %}
+          background-color: {{ section.settings.bg_color }};
+        {% endif %}
       {% when 'none' %}
         background: transparent;
-      {% else %}
-        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
     {% endcase %}
   }
 
@@ -47,7 +52,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      background-color: {{ section.settings.bg_color_image | default: '#FFFFFFD6' }};
+      background-color: {{ section.settings.bg_color_image }};
       z-index: 0;
       pointer-events: none;
     }
@@ -71,6 +76,7 @@
     {%- endif -%}
   }
 </style>
+{% render 'nw-section-text-colors', selector: nw_faq_selector %}
 
 <nw-faq
   class="nw-faq section-{{ section.id }}"
@@ -246,7 +252,6 @@
       "alpha": true,
       "id": "star_color",
       "label": "Active Star Color",
-      "default": "#E57B1E",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -254,7 +259,6 @@
       "alpha": true,
       "id": "star_color_inactive",
       "label": "Inactive Star Color",
-      "default": "#D1D5DB",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -273,6 +277,34 @@
       "type": "richtext",
       "id": "subheading",
       "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Body Text Color"
     },
     {
       "type": "header",
@@ -438,7 +470,6 @@
       "alpha": true,
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#FFFFFF",
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {
@@ -458,7 +489,6 @@
       "alpha": true,
       "id": "bg_color_image",
       "label": "Overlay Color",
-      "default": "#FFFFFFD6",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {

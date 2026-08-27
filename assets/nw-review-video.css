@@ -271,6 +271,9 @@
   height: 18px;
   flex-shrink: 0;
 }
+.nw-review-video__verified svg >*{
+  fill: var(--nonary-color);
+}
 
 .nw-review-video__divider {
   width: 100%;

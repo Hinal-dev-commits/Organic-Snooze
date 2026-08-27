@@ -32,6 +32,18 @@ h6, .h6{
     font-weight: 400;
     color: var(--nw-brown);
 }
+h1, .h1{
+    font-family: var(--font-heading-family);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 115%;
+    letter-spacing: -.01em;
+    text-transform: capitalize;
+    color: var(--nw-brown);
+    margin: 0;
+    width: 100%;
+}
 h3, .h3{
     font-family: var(--font-heading-family);
     font-weight: 400;
@@ -44,18 +56,18 @@ h3, .h3{
 }
 h2, .h2{
     font-family: var(--font-heading-family);
-    font-weight:400;
+    font-style: normal;
+    font-weight: 400;
     font-size: 36px;
     line-height: 115%;
+    text-align: center;
     letter-spacing: -0.01em;
     text-transform: capitalize;
-}
-.nw-section-heading,
-.nw-section-heading .h1,
-.nw-section-heading .h2 {
+    color: var(--nw-brown);
     margin: 0;
     width: 100%;
 }
+
 .nw-section-description{
     margin-top: 14px;
 }
@@ -213,6 +225,11 @@ header-drawer{
     color: rgba(97, 57, 22, 0.6);
     font-family: var(--font-body-family, 'DM Sans');
     font-size: 14px;
+    top: unset;
+}
+.search-modal .field__button > .svg-wrapper{
+    height: 28px;
+    width: 28px;
 }
 .search-modal .search__input.field__input:focus ~ .field__label,
 .search-modal .search__input.field__input:not(:placeholder-shown) ~ .field__label {
@@ -237,8 +254,8 @@ header-drawer{
 }
 .search-modal .search__button.field__button .icon,
 .search-modal .search__button.field__button .svg-wrapper svg {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     stroke: currentColor;
 }
 .search-modal .reset__button.field__button {
@@ -384,30 +401,27 @@ display: inline-flex;
 align-items: center;
   }
 
-  .nw-section-heading h2,
-  .nw-section-heading .h2 {
-font-family: var(--font-heading-family);
-font-style: normal;
-font-weight: 400;
-font-size: 36px;
-line-height: 115%;
-text-align: center;
-letter-spacing: -0.01em;
-text-transform: capitalize;
-color: var(--nw-brown);
-margin: 0;
-width: 100%;
-  }
-
-
+.header__search details[open] .header__icon-close{
+    display: none;
+}
+.header__heading-logo-wrapper{
+    max-width: 200px;
+}
 @media screen and (max-width: 749px) {
     .nw-eyebrow {
         font-size: 12px;
         line-height: 150%;
     }
 
-    .nw-section-heading h2,
-    .nw-section-heading .h2 {
+    h1, .h1{
+        font-size: 36px;
+        line-height: 115%;
+        text-align: center;
+        letter-spacing: -0.01em;
+    }
+
+    h2,
+    .h2 {
         font-size: 32px;
         line-height: 115%;
         letter-spacing: -0.01em;
@@ -423,8 +437,8 @@ width: 100%;
 }
 
 @media screen and (max-width: 1023px) {
-    .nw-section-heading h2,
-    .nw-section-heading .h2 {
+    h2,
+    .h2 {
         font-size: 32px;
     }
 

@@ -70,7 +70,23 @@
     {% render 'nw-cta-badges', settings: section.settings, class: 'nw-trusted-people__footer' %}
   </div>
 </nw-trusted-people>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const roles = document.querySelectorAll('.nw-trusted-people__role');
 
+    if (!roles.length) return;
+
+    let maxHeight = 0;
+
+    roles.forEach((role) => {
+      maxHeight = Math.max(maxHeight, role.offsetHeight);
+    });
+
+    roles.forEach((role) => {
+      role.style.setProperty('--nw-trusted-people-role', `${maxHeight}px`);
+    });
+  });
+</script>
 {% schema %}
 {
   "name": "t:sections.nw-trusted-people.name",

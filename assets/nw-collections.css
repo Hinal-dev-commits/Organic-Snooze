@@ -471,6 +471,10 @@ nw-collections {
   max-width: 302px;
 }
 
+.nw-collection-tabs__swiper .swiper-button-next.swiper-button-disabled ~ .nw-collection-tabs__slider-wrap::after {
+  display: none;
+}
+
 @media screen and (max-width: 1024px) and (min-width: 750px) {
   .nw-collections__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

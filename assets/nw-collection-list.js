@@ -15,6 +15,41 @@ if (!customElements.get('nw-collection-list')) {
       window.nwWhenSwiperReady(callback);
     }
 
+    _getSlideCount() {
+      return parseInt(this.dataset.slideCount, 10) || 1;
+    }
+
+    _updateCustomPagination(swiper) {
+      var totalSlides = this._getSlideCount();
+      if (totalSlides <= 1) return;
+
+      var currentRealIndex = swiper.realIndex % totalSlides;
+      var bullets = this.querySelectorAll('[data-nw-collection-pagination] .swiper-pagination-bullet');
+      bullets.forEach(function (bullet, idx) {
+        bullet.classList.toggle('swiper-pagination-bullet-active', idx === currentRealIndex);
+      });
+    }
+
+    _bindCustomPagination(sliderEl) {
+      var paginationEl = this.querySelector('[data-nw-collection-pagination]');
+      if (!paginationEl || paginationEl._bound) return;
+
+      paginationEl._bound = true;
+      paginationEl.addEventListener('click', (e) => {
+        var bullet = e.target.closest('.swiper-pagination-bullet');
+        if (!bullet || !sliderEl.swiper) return;
+
+        var targetIndex = parseInt(bullet.getAttribute('data-bullet-index'), 10);
+        if (isNaN(targetIndex)) return;
+
+        if (sliderEl.swiper.params.loop) {
+          sliderEl.swiper.slideToLoop(targetIndex, 600);
+        } else {
+          sliderEl.swiper.slideTo(targetIndex, 600);
+        }
+      });
+    }
+
     _initSlider() {
       this._whenSwiperReady(() => {
         var sliderEl = this.querySelector('[data-nw-collection-slider]');
@@ -71,14 +106,18 @@ if (!customElements.get('nw-collection-list')) {
           };
         }
 
-        if (showDots) {
-          swiperOptions.pagination = {
-            el: this.querySelector('[data-nw-collection-pagination]'),
-            clickable: true
-          };
-        }
+        var swiperInstance = new Swiper(sliderEl, swiperOptions);
 
-        new Swiper(sliderEl, swiperOptions);
+        if (showDots && this._getSlideCount() > 1) {
+          swiperInstance.on('slideChange', () => {
+            this._updateCustomPagination(swiperInstance);
+          });
+          swiperInstance.on('init', () => {
+            this._updateCustomPagination(swiperInstance);
+          });
+          this._updateCustomPagination(swiperInstance);
+          this._bindCustomPagination(sliderEl);
+        }
       });
     }
   }

@@ -7,7 +7,12 @@ if (!customElements.get('nw-collection-tabs')) {
     }
 
     disconnectedCallback() {
-      if (this._countdownInterval) {
+      if (this._countdownIntervals) {
+        this._countdownIntervals.forEach(function (id) {
+          clearInterval(id);
+        });
+        this._countdownIntervals = null;
+      } else if (this._countdownInterval) {
         clearInterval(this._countdownInterval);
         this._countdownInterval = null;
       }
@@ -67,6 +72,14 @@ if (!customElements.get('nw-collection-tabs')) {
       swiperEl.dataset.initialized = 'true';
     }
 
+    _updateSliderColMargin(activePanel) {
+      var sliderCol = this.querySelector('.nw-collection-tabs__slider-col');
+      if (!sliderCol) return;
+
+      var hideSidebar = activePanel && activePanel.getAttribute('data-show-sidebar') === 'false';
+      sliderCol.classList.toggle('ml-0', hideSidebar);
+    }
+
     _setActiveTab(index, options) {
       var tabs = this.querySelectorAll('[data-nw-tab]');
       var panels = this.querySelectorAll('[data-nw-panel]');
@@ -85,7 +98,10 @@ if (!customElements.get('nw-collection-tabs')) {
       panels.forEach((panel) => {
         var isActive = panel.getAttribute('data-nw-panel') === String(index);
         panel.hidden = !isActive;
-        if (isActive) this._initPanelSwiper(panel);
+        if (isActive) {
+          this._initPanelSwiper(panel);
+          this._updateSliderColMargin(panel);
+        }
       });
 
       if (shopAllBtn && activeTab) {
@@ -149,12 +165,20 @@ if (!customElements.get('nw-collection-tabs')) {
     }
 
     _initCountdown() {
-      var countdownEl = this.querySelector('.nw-collection-tabs__promo[data-countdown-date]');
-      if (!countdownEl || typeof window.nwStartCountdown !== 'function') return;
-      this._countdownInterval = window.nwStartCountdown(countdownEl, {
-        days: '.nw-collection-tabs-countdown-days',
-        hours: '.nw-collection-tabs-countdown-hours',
-        mins: '.nw-collection-tabs-countdown-mins'
+      if (typeof window.nwStartCountdown !== 'function') return;
+
+      this._countdownIntervals = [];
+      var promos = this.querySelectorAll('.nw-collection-tabs__promo[data-countdown-date]');
+      var self = this;
+
+      promos.forEach(function (promo) {
+        var intervalId = window.nwStartCountdown(promo, {
+          days: '.nw-collection-tabs-countdown-days',
+          hours: '.nw-collection-tabs-countdown-hours',
+          mins: '.nw-collection-tabs-countdown-mins'
+        });
+
+        if (intervalId) self._countdownIntervals.push(intervalId);
       });
     }
 
@@ -162,9 +186,11 @@ if (!customElements.get('nw-collection-tabs')) {
       this._whenSwiperReady(() => {
         var firstPanel = this.querySelector('[data-nw-panel]:not([hidden])');
         this._initPanelSwiper(firstPanel);
+        this._updateSliderColMargin(firstPanel);
       });
     }
   }
 
   customElements.define('nw-collection-tabs', NwCollectionTabs);
+  
 }

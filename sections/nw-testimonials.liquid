@@ -3,6 +3,19 @@
 
 {%- assign nw_shell_selector = '#NwTestimonials-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+{% capture nw_testimonials_style %}
+  {% render 'nw-section-color-var', name: '--nw-star-active', value: section.settings.star_color %}
+  {% render 'nw-section-color-var', name: '--nw-star-inactive', value: section.settings.star_color_inactive %}
+  {% render 'nw-section-color-var', name: '--nw-testimonials-header-star-active', value: section.settings.star_color %}
+  {% render 'nw-section-color-var', name: '--nw-testimonials-header-star-inactive', value: section.settings.star_color_inactive %}
+  {% render 'nw-section-color-var', name: '--nw-testimonials-card-bg', value: section.settings.card_bg_color %}
+  {% render 'nw-section-color-var', name: '--nw-testimonials-card-text', value: section.settings.card_text_color %}
+  {% render 'nw-section-color-var', name: '--nw-testimonials-star-color', value: section.settings.card_star_color %}
+  {% render 'nw-section-color-var', name: '--nw-testimonials-star-empty-color', value: section.settings.card_star_empty_color %}
+  {% render 'nw-section-color-var', name: '--nw-testimonials-verified-color', value: section.settings.verified_icon_color %}
+  {% render 'nw-section-color-var', name: '--nw-testimonials-verified-textcolor', value: section.settings.verified_text_color %}
+{% endcapture %}
 
 <nw-testimonials
   id="NwTestimonials-{{ section.id }}"
@@ -12,18 +25,7 @@
   data-pagination-id="NwTestimonialsPagination-{{ section.id }}"
   data-full-width="{{ section.settings.full_width }}"
   data-loop="{{ section.settings.enable_loop }}"
-  style="
-    --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-    --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-    --nw-testimonials-header-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-    --nw-testimonials-header-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-    --nw-testimonials-card-bg: {{ section.settings.card_bg_color }};
-    --nw-testimonials-card-text: {{ section.settings.card_text_color }};
-    --nw-testimonials-star-color: {{ section.settings.card_star_color | default: '#E57B1E' }};
-    --nw-testimonials-star-empty-color: {{ section.settings.card_star_empty_color | default: '#D1C7BA' }};
-    --nw-testimonials-verified-color: {{ section.settings.verified_icon_color }};
-    --nw-testimonials-verified-textcolor: {{ section.settings.verified_text_color }};
-  "
+  {% if nw_testimonials_style != blank %}style="{{ nw_testimonials_style | strip }}"{% endif %}
 >
   <div class="page-width">
     <div class="nw-testimonials__wrapper{%- render 'nw-scroll-animation' -%}">
@@ -128,7 +130,6 @@
       "alpha": true,
       "id": "star_color",
       "label": "Active Star Color",
-      "default": "#E57B1E",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -136,7 +137,6 @@
       "alpha": true,
       "id": "star_color_inactive",
       "label": "Inactive Star Color",
-      "default": "#D1D5DB",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -158,48 +158,71 @@
     },
     {
       "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Body Text Color"
+    },
+    {
+      "type": "header",
       "content": "CARD COLORS"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_bg_color",
-      "label": "Card Background",
-      "default": "#F4EFE8"
+      "label": "Card Background"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_text_color",
-      "label": "Card Text",
-      "default": "#613916"
+      "label": "Card Text"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_star_color",
-      "label": "Card Star Color",
-      "default": "#E57B1E"
+      "label": "Card Star Color"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "card_star_empty_color",
-      "label": "Card Empty Star Color",
-      "default": "#D1C7BA"
+      "label": "Card Empty Star Color"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "verified_text_color",
-      "label": "Verified Textcolor"
+      "label": "Verified Text Color"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "verified_icon_color",
-      "label": "Verified Icon Color",
-      "default": "#878735"
+      "label": "Verified Icon Color"
     },
     {
       "type": "header",
@@ -256,7 +279,6 @@
       "alpha": true,
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#FFFCF0",
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {

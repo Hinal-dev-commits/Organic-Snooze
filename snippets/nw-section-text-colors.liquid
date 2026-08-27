@@ -1,0 +1,53 @@
+{% doc %}
+  Section-scoped text color overrides (liquid only; no CSS asset changes).
+
+  @param {string} selector - Section root CSS selector
+
+  @example
+  {% render 'nw-section-text-colors', selector: '.nw-faq.section-' | append: section.id %}
+{% enddoc %}
+{%- liquid
+  assign has_heading = false
+  assign has_description = false
+  assign has_eyebrow = false
+  assign has_text = false
+  if section.settings.heading_color != blank
+    assign has_heading = true
+  endif
+  if section.settings.description_color != blank
+    assign has_description = true
+  endif
+  if section.settings.eyebrow_color != blank
+    assign has_eyebrow = true
+  endif
+  if section.settings.text_color != blank
+    assign has_text = true
+  endif
+-%}
+{%- if has_heading or has_description or has_eyebrow or has_text -%}
+<style>
+  {%- if has_text -%}
+  {{ selector }} {
+    --primary-color: {{ section.settings.text_color }};
+  }
+  {%- endif -%}
+  {%- if has_heading -%}
+  {{ selector }} .nw-section-heading,
+  {{ selector }} .nw-section-heading .h1,
+  {{ selector }} .nw-section-heading .h2 {
+    color: {{ section.settings.heading_color }};
+  }
+  {%- endif -%}
+  {%- if has_description -%}
+  {{ selector }} .nw-section-description,
+  {{ selector }} .nw-section-description .rte {
+    color: {{ section.settings.description_color }};
+  }
+  {%- endif -%}
+  {%- if has_eyebrow -%}
+  {{ selector }} .nw-eyebrow {
+    color: {{ section.settings.eyebrow_color }};
+  }
+  {%- endif -%}
+</style>
+{%- endif -%}

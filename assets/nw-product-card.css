@@ -17,7 +17,7 @@
     position: relative;
     border-radius: 10px;
     overflow: hidden;
-    aspect-ratio: 260 / 330;
+    aspect-ratio: 1/1;
     background: var(--nw-gray);
 }
 
@@ -247,6 +247,13 @@
     color: var(--nw-white, #FFFFFF);
 }
 
+.nw-product-card .nw-product-card__media-link img{
+    transition: transform 0.3s ease;
+}
+
+.nw-product-card:hover .nw-product-card__media-link img{
+transform: scale(1.05);
+}
 
 @media screen and (max-width: 749px) {
     .nw-product-card__title{

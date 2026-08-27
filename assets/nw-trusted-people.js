@@ -21,6 +21,15 @@ if (!customElements.get('nw-trusted-people')) {
       window.nwWhenSwiperReady(callback);
     }
 
+    _refreshSwiperLayout() {
+      var self = this;
+
+      window.clearTimeout(this._swiperLayoutTimer);
+      this._swiperLayoutTimer = window.setTimeout(function () {
+        if (self.swiperInstance) self.swiperInstance.update();
+      }, 380);
+    }
+
     _setCardsExpanded(slideIndex, isExpanded) {
       var cards;
 
@@ -43,9 +52,7 @@ if (!customElements.get('nw-trusted-people')) {
         }
       });
 
-      if (this.swiperInstance) {
-        this.swiperInstance.update();
-      }
+      this._refreshSwiperLayout();
     }
 
     _initToggles() {
@@ -82,9 +89,7 @@ if (!customElements.get('nw-trusted-people')) {
         card.classList.toggle('is-expanded', isExpanded);
         btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
 
-        if (this.swiperInstance) {
-          this.swiperInstance.update();
-        }
+        this._refreshSwiperLayout();
       });
     }
 

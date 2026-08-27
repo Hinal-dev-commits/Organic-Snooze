@@ -159,7 +159,7 @@
   border-radius: 12px;
   padding: 20px 20px 12px;
   background: var(--nw-tp-card-bg, var(--tertiary-color));
-  flex: 1;
+  /* flex: 1; */
   border: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
 }
 
@@ -236,6 +236,7 @@
 
 .nw-trusted-people__role {
   display: inline-flex;
+  min-height: var(--nw-trusted-people-role);
   gap: 6px;
 }
 .nw-trusted-people__card-head-inner{
@@ -253,12 +254,16 @@
   justify-content: center;
   color: var(--nw-tp-verified-color, var(--nonary-color));
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .nw-trusted-people__role-icon svg {
   width: 14px;
   height: 14px;
   display: block;
+  fill: var(--nw-tp-verified-color, var(--nonary-color));
+}
+.nw-trusted-people__role-icon svg >* {
   fill: var(--nw-tp-verified-color, var(--nonary-color));
 }
 
@@ -318,13 +323,13 @@
 .nw-trusted-people__expand {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
+  transition: grid-template-rows 0.36s ease-out;
 }
 
 .nw-trusted-people__card.is-expanded .nw-trusted-people__expand {
   grid-template-rows: 1fr;
-  padding-bottom: 8px;
 }
+
 .nw-trusted-people__header{
   max-width: 600px;
 }
@@ -332,6 +337,9 @@
 .nw-trusted-people__expand-inner {
   overflow: hidden;
   min-height: 0;
+}
+.nw-trusted-people__card.is-expanded .nw-trusted-people__expand-inner {
+  padding-bottom: 8px;
 }
 
 .nw-trusted-people__quote {

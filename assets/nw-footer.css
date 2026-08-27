@@ -458,4 +458,10 @@
     .footer .copyright__content{
         font-size: 12px !important;
     }
+    .footer-block--menu .footer-block__heading .footer-menu-accordion__chevron{
+        transition: all 0.3s ease-in-out;
+    }
+    .footer-block--menu .footer-block__heading.is-open .footer-menu-accordion__chevron{
+        transform: rotate(180deg);
+    }
 }

@@ -7,14 +7,6 @@
   overflow: hidden;
 }
 
-.nw-human-biologist .page-width {
-  position: relative;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 80px;
-  box-sizing: border-box;
-}
 
 .nw-human-biologist__wrapper {
   display: flex;
@@ -433,13 +425,16 @@
     flex: 0 0 50%;
   }
 
-  .nw-human-biologist .page-width{
-    padding: 5rem;
-  }
 }
 
 @media screen and (max-width: 749px) {
   .nw-human-biologist .page-width {
+    padding: 0 0px;
+  }
+  .nw-human-biologist__header{
+    padding: 0 16px;
+  }
+  .nw-human-biologist__image-wrap{
     padding: 0 16px;
   }
 
@@ -483,6 +478,7 @@
 
   .nw-human-biologist__bio-wrap {
     width: 100%;
+    padding: 0 16px;
   }
 
   .nw-human-biologist__author-info {
@@ -526,6 +522,7 @@
   .nw-human-biologist__buttons {
     gap: 12px;
     width: 100%;
+    padding: 0 16px;
   }
 
   .nw-human-biologist__featured {
@@ -562,6 +559,7 @@
     gap: 16px;
     width: 100%;
     margin-top: 14px;
+    max-width: calc(100% - 32px);
   }
 
   .nw-human-biologist__insights-pagination,

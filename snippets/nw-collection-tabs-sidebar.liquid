@@ -1,0 +1,163 @@
+{%- comment -%}
+  Sidebar content for a collection tab panel.
+  Accepts:
+  - block: {Object} tab block with sidebar settings
+  - show_heading: {Boolean} optional, default true
+{%- endcomment -%}
+
+{%- liquid
+  assign show_heading = show_heading | default: true
+  assign has_sidebar_heading = false
+  if block.settings.heading != blank or block.settings.subheading != blank
+    assign has_sidebar_heading = true
+  endif
+-%}
+
+{%- if show_heading and has_sidebar_heading -%}
+  <div class="nw-collection-tabs__sidebar-heading">
+    {%- if block.settings.heading != blank -%}
+      <div class="nw-heading">{{ block.settings.heading }}</div>
+    {%- endif -%}
+    {%- if block.settings.subheading != blank -%}
+      <div class="nw-collection-tabs__sidebar-subheading rte">{{ block.settings.subheading }}</div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{%- if block.settings.quote != blank or block.settings.author_name != blank -%}
+  <div class="nw-collection-tabs__quote">
+    <span class="nw-collection-tabs__quote-mark" aria-hidden="true">
+      {% render 'nw-icon', icon: 'quote' %}
+    </span>
+    {%- if block.settings.quote != blank -%}
+      <div class="nw-collection-tabs__quote-text">{{ block.settings.quote }}</div>
+    {%- endif -%}
+    <div class="nw-collection-tabs__quote-author-wrap">
+      <div class="nw-collection-tabs__quote-author">
+        {%- if block.settings.author_name != blank -%}
+          <div class="nw-collection-tabs__quote-name-row">
+            <div class="nw-collection-tabs__quote-name">{{ block.settings.author_name }}</div>
+            {%- if block.settings.show_verified -%}
+              <span class="nw-collection-tabs__quote-verified" aria-hidden="true">
+                {% render 'nw-icon', icon: 'verified' %}
+              </span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if block.settings.author_title != blank -%}
+          <div class="nw-collection-tabs__quote-title">{{ block.settings.author_title }}</div>
+        {%- endif -%}
+      </div>
+      {%- if block.settings.author_image != blank -%}
+        <div class="nw-collection-tabs__quote-image">
+          {{
+            block.settings.author_image
+            | image_url: width: 360
+            | image_tag: loading: 'lazy', alt: block.settings.author_name | escape
+          }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if block.settings.show_promo -%}
+  {%- liquid
+    assign has_promo_content = false
+    if block.settings.promo_title != blank or block.settings.status_text != blank or block.settings.promo_subtext != blank or block.settings.countdown_label != blank
+      assign has_promo_content = true
+    endif
+  -%}
+  {%- if has_promo_content -%}
+  <div
+    class="nw-collection-tabs__promo"
+    data-countdown-date="{{ block.settings.countdown_end_date }}"
+    data-hide-on-end="{{ block.settings.hide_after_timer_end }}"
+  >
+    <div class="nw-collection-tabs__promo-content">
+      <div class="nw-collection-tabs__promo-header">
+        {%- if block.settings.promo_title != blank -%}
+          <div class="nw-collection-tabs__promo-title">{{ block.settings.promo_title }}</div>
+        {%- endif -%}
+        {%- if block.settings.status_text != blank -%}
+          <div class="nw-collection-tabs__promo-status">
+            <span class="nw-collection-tabs__promo-status-dot"></span>
+            <div class="nw-collection-tabs__promo-status-text">{{ block.settings.status_text }}</div>
+          </div>
+        {%- endif -%}
+      </div>
+      {%- if block.settings.promo_subtext != blank -%}
+        <div class="nw-collection-tabs__promo-subtext">{{ block.settings.promo_subtext }}</div>
+      {%- endif -%}
+    </div>
+    <div class="nw-collection-tabs__promo-countdown">
+      {%- if block.settings.countdown_label != blank -%}
+        <div class="nw-collection-tabs__promo-countdown-label">{{ block.settings.countdown_label }}</div>
+      {%- endif -%}
+      <div class="nw-collection-tabs__promo-timer">
+        <div class="nw-collection-tabs__promo-timer-unit">
+          <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-days">00</span>
+          <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.days' | t }}</span>
+        </div>
+        <span class="nw-collection-tabs__promo-timer-sep">:</span>
+        <div class="nw-collection-tabs__promo-timer-unit">
+          <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-hours">00</span>
+          <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.hours' | t }}</span>
+        </div>
+        <span class="nw-collection-tabs__promo-timer-sep">:</span>
+        <div class="nw-collection-tabs__promo-timer-unit">
+          <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-mins">00</span>
+          <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.minutes' | t }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+{%- endif -%}
+
+{%- liquid
+  assign has_trust_badges = false
+  if block.settings.badge_1_text != blank or block.settings.badge_2_text != blank or block.settings.badge_3_text != blank or block.settings.badge_4_text != blank
+    assign has_trust_badges = true
+  endif
+-%}
+
+{%- if has_trust_badges -%}
+<div class="nw-collection-tabs__trust-badges">
+  {%- for i in (1..4) -%}
+    {%- liquid
+      case i
+        when 1
+          assign badge_text = block.settings.badge_1_text
+          assign badge_icon = block.settings.badge_1_icon
+          assign badge_custom_icon = block.settings.badge_1_custom_icon
+        when 2
+          assign badge_text = block.settings.badge_2_text
+          assign badge_icon = block.settings.badge_2_icon
+          assign badge_custom_icon = block.settings.badge_2_custom_icon
+        when 3
+          assign badge_text = block.settings.badge_3_text
+          assign badge_icon = block.settings.badge_3_icon
+          assign badge_custom_icon = block.settings.badge_3_custom_icon
+        when 4
+          assign badge_text = block.settings.badge_4_text
+          assign badge_icon = block.settings.badge_4_icon
+          assign badge_custom_icon = block.settings.badge_4_custom_icon
+      endcase
+    -%}
+    {%- if badge_text != blank -%}
+      <div class="nw-collection-tabs__trust-item">
+        <span class="nw-collection-tabs__trust-icon">
+          {%- if badge_custom_icon != blank -%}
+            {% render 'nw-icon', icon: badge_icon, custom_icon: badge_custom_icon, img_class: 'nw-collection-tabs__trust-img' %}
+          {%- elsif badge_icon != blank and badge_icon != 'none' -%}
+            {% render 'nw-icon', icon: badge_icon %}
+          {%- endif -%}
+        </span>
+        <div class="nw-collection-tabs__trust-text">{{ badge_text }}</div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+{%- endif -%}
+ 

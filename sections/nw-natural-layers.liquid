@@ -4,12 +4,13 @@
 
 {%- assign nw_shell_selector = '.nw-natural-layers.section-' | append: section.id -%}
 {% capture nw_shell_extra %}
-  --nw-nl-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-  --nw-nl-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-  --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-  --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+  {% render 'nw-section-color-var', name: '--nw-nl-star-active', value: section.settings.star_color %}
+  {% render 'nw-section-color-var', name: '--nw-nl-star-inactive', value: section.settings.star_color_inactive %}
+  {% render 'nw-section-color-var', name: '--nw-star-active', value: section.settings.star_color %}
+  {% render 'nw-section-color-var', name: '--nw-star-inactive', value: section.settings.star_color_inactive %}
 {% endcapture %}
 {% render 'nw-section-shell', selector: nw_shell_selector, extra: nw_shell_extra %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
 {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
   <style>
     .nw-natural-layers.section-{{ section.id }} {
@@ -217,7 +218,6 @@
       "alpha": true,
       "id": "star_color",
       "label": "Active Star Color",
-      "default": "#E57B1E",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -225,7 +225,6 @@
       "alpha": true,
       "id": "star_color_inactive",
       "label": "Inactive Star Color",
-      "default": "#D1D5DB",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -244,6 +243,34 @@
       "type": "richtext",
       "id": "subheading",
       "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Body Text Color"
     },
     {
       "type": "header",
@@ -360,7 +387,6 @@
       "alpha": true,
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#FFFFFF",
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {
@@ -380,7 +406,6 @@
       "alpha": true,
       "id": "bg_color_image",
       "label": "Background Color (Image)",
-      "default": "#FFFFFF",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {

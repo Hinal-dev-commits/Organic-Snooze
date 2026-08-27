@@ -3,19 +3,13 @@
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-collection-tabs.js' | asset_url }}" defer="defer"></script>
 
-{%- liquid
-  assign sidebar_block = nil
-  assign tab_blocks = section.blocks | where: 'type', 'tab'
-  for block in section.blocks
-    if block.type == 'sidebar'
-      assign sidebar_block = block
-    endif
-  endfor
--%}
+{%- assign tab_blocks = section.blocks | where: 'type', 'tab' -%}
 
 {%- assign nw_shell_selector = '#NwCollectionTabs-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
-
+<style>
+  
+</style>
 <nw-collection-tabs
   id="NwCollectionTabs-{{ section.id }}"
   class="nw-collection-tabs"
@@ -48,17 +42,6 @@
 >
   <div class="page-width">
     <div class="nw-collection-tabs__inner">
-      {%- if sidebar_block -%}
-        <div class="nw-collection-tabs__mobile-heading">
-          {%- if sidebar_block.settings.heading != blank -%}
-            <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
-          {%- endif -%}
-          {%- if sidebar_block.settings.subheading != blank -%}
-            <div class="nw-collection-tabs__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-
       {%- if tab_blocks.size > 0 -%}
         <div class="nw-collection-tabs__tabs-wrap">
           <div class="nw-collection-tabs__tabs" role="tablist" aria-label="Collection categories">
@@ -87,151 +70,53 @@
       {%- endif -%}
 
       <div class="nw-collection-tabs__main">
-        {%- if sidebar_block -%}
-          <aside class="nw-collection-tabs__sidebar" {{ sidebar_block.shopify_attributes }}>
-            <div class="nw-collection-tabs__sidebar-heading">
-              {%- if sidebar_block.settings.heading != blank -%}
-                <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
-              {%- endif -%}
-              {%- if sidebar_block.settings.subheading != blank -%}
-                <div class="nw-collection-tabs__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
-              {%- endif -%}
-            </div>
-
-            {%- if sidebar_block.settings.quote != blank or sidebar_block.settings.author_name != blank -%}
-              <div class="nw-collection-tabs__quote">
-                <span class="nw-collection-tabs__quote-mark" aria-hidden="true">
-                  {% render 'nw-icon', icon: 'quote' %}
-                </span>
-                {%- if sidebar_block.settings.quote != blank -%}
-                  <div class="nw-collection-tabs__quote-text">{{ sidebar_block.settings.quote }}</div>
-                {%- endif -%}
-                <div class="nw-collection-tabs__quote-author-wrap">
-                  <div class="nw-collection-tabs__quote-author">
-                    {%- if sidebar_block.settings.author_name != blank -%}
-                      <div class="nw-collection-tabs__quote-name-row">
-                        <div class="nw-collection-tabs__quote-name">{{ sidebar_block.settings.author_name }}</div>
-                        {%- if sidebar_block.settings.show_verified -%}
-                          <span class="nw-collection-tabs__quote-verified" aria-hidden="true">
-                            {% render 'nw-icon', icon: 'verified' %}
-                          </span>
-                        {%- endif -%}
-                      </div>
-                    {%- endif -%}
-                    {%- if sidebar_block.settings.author_title != blank -%}
-                      <div class="nw-collection-tabs__quote-title">{{ sidebar_block.settings.author_title }}</div>
-                    {%- endif -%}
-                  </div>
-                  {%- if sidebar_block.settings.author_image != blank -%}
-                    <div class="nw-collection-tabs__quote-image">
-                      {{
-                        sidebar_block.settings.author_image
-                        | image_url: width: 360
-                        | image_tag: loading: 'lazy', alt: sidebar_block.settings.author_name | escape
-                      }}
-                    </div>
-                  {%- endif -%}
-                </div>
-              </div>
-            {%- endif -%}
-
-            {%- if sidebar_block.settings.show_promo -%}
-              <div
-                class="nw-collection-tabs__promo"
-                data-countdown-date="{{ sidebar_block.settings.countdown_end_date }}"
-                data-hide-on-end="{{ sidebar_block.settings.hide_after_timer_end }}"
-              >
-                <div class="nw-collection-tabs__promo-content">
-                  <div class="nw-collection-tabs__promo-header">
-                    {%- if sidebar_block.settings.promo_title != blank -%}
-                      <div class="nw-collection-tabs__promo-title">{{ sidebar_block.settings.promo_title }}</div>
-                    {%- endif -%}
-                    {%- if sidebar_block.settings.status_text != blank -%}
-                      <div class="nw-collection-tabs__promo-status">
-                        <span class="nw-collection-tabs__promo-status-dot"></span>
-                        <div class="nw-collection-tabs__promo-status-text">{{ sidebar_block.settings.status_text }}</div>
-                      </div>
-                    {%- endif -%}
-                  </div>
-                  {%- if sidebar_block.settings.promo_subtext != blank -%}
-                    <div class="nw-collection-tabs__promo-subtext">{{ sidebar_block.settings.promo_subtext }}</div>
-                  {%- endif -%}
-                </div>
-                <div class="nw-collection-tabs__promo-countdown">
-                  {%- if sidebar_block.settings.countdown_label != blank -%}
-                    <div class="nw-collection-tabs__promo-countdown-label">{{ sidebar_block.settings.countdown_label }}</div>
-                  {%- endif -%}
-                  <div class="nw-collection-tabs__promo-timer">
-                    <div class="nw-collection-tabs__promo-timer-unit">
-                      <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-days">00</span>
-                      <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.days' | t }}</span>
-                    </div>
-                    <span class="nw-collection-tabs__promo-timer-sep">:</span>
-                    <div class="nw-collection-tabs__promo-timer-unit">
-                      <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-hours">00</span>
-                      <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.hours' | t }}</span>
-                    </div>
-                    <span class="nw-collection-tabs__promo-timer-sep">:</span>
-                    <div class="nw-collection-tabs__promo-timer-unit">
-                      <span class="nw-collection-tabs__promo-timer-num nw-collection-tabs-countdown-mins">00</span>
-                      <span class="nw-collection-tabs__promo-timer-txt">{{ 'nw.countdown.minutes' | t }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {%- endif -%}
-
-            <div class="nw-collection-tabs__trust-badges">
-              {%- for i in (1..4) -%}
-                {%- liquid
-                  case i
-                    when 1
-                      assign badge_text = sidebar_block.settings.badge_1_text
-                      assign badge_icon = sidebar_block.settings.badge_1_icon
-                      assign badge_custom_icon = sidebar_block.settings.badge_1_custom_icon
-                    when 2
-                      assign badge_text = sidebar_block.settings.badge_2_text
-                      assign badge_icon = sidebar_block.settings.badge_2_icon
-                      assign badge_custom_icon = sidebar_block.settings.badge_2_custom_icon
-                    when 3
-                      assign badge_text = sidebar_block.settings.badge_3_text
-                      assign badge_icon = sidebar_block.settings.badge_3_icon
-                      assign badge_custom_icon = sidebar_block.settings.badge_3_custom_icon
-                    when 4
-                      assign badge_text = sidebar_block.settings.badge_4_text
-                      assign badge_icon = sidebar_block.settings.badge_4_icon
-                      assign badge_custom_icon = sidebar_block.settings.badge_4_custom_icon
-                  endcase
-                -%}
-                {%- if badge_text != blank -%}
-                  <div class="nw-collection-tabs__trust-item">
-                    <span class="nw-collection-tabs__trust-icon">
-                      {%- if badge_custom_icon != blank -%}
-                        {% render 'nw-icon', icon: badge_icon, custom_icon: badge_custom_icon, img_class: 'nw-collection-tabs__trust-img' %}
-                      {%- elsif badge_icon != blank and badge_icon != 'none' -%}
-                        {% render 'nw-icon', icon: badge_icon %}
-                      {%- endif -%}
-                    </span>
-                    <div class="nw-collection-tabs__trust-text">{{ badge_text }}</div>
-                  </div>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-          </aside>
-        {%- endif -%}
-
         <div class="nw-collection-tabs__slider-col">
           {%- assign panel_index = 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'tab' -%}
+              {%- liquid
+                assign has_sidebar = false
+                if block.settings.heading != blank or block.settings.subheading != blank
+                  assign has_sidebar = true
+                endif
+                if block.settings.quote != blank or block.settings.author_name != blank or block.settings.author_title != blank or block.settings.author_image != blank
+                  assign has_sidebar = true
+                endif
+                if block.settings.show_promo
+                  if block.settings.promo_title != blank or block.settings.status_text != blank or block.settings.promo_subtext != blank or block.settings.countdown_label != blank
+                    assign has_sidebar = true
+                  endif
+                endif
+                if block.settings.badge_1_text != blank or block.settings.badge_2_text != blank or block.settings.badge_3_text != blank or block.settings.badge_4_text != blank
+                  assign has_sidebar = true
+                endif
+              -%}
               <div
-                class="nw-collection-tabs__panel"
+                class="nw-collection-tabs__panel{% unless has_sidebar %} nw-collection-tabs__panel--no-sidebar{% endunless %}{% if block.settings.show_sidebar == false %} nw-collection-tabs__panel--with-sidebar{% endif %}"
                 id="NwCollectionTabsPanel-{{ section.id }}-{{ panel_index }}"
                 data-nw-panel="{{ panel_index }}"
+                data-show-sidebar="{% if block.settings.show_sidebar %}true{% else %}false{% endif %}"
                 role="tabpanel"
                 aria-labelledby="NwCollectionTabsBtn-{{ section.id }}-{{ panel_index }}"
                 {% unless panel_index == 0 %}hidden{% endunless %}
               >
+                {%- if block.settings.heading != blank or block.settings.subheading != blank -%}
+                  <div class="nw-collection-tabs__mobile-heading">
+                    {%- if block.settings.heading != blank -%}
+                      <div class="nw-heading">{{ block.settings.heading }}</div>
+                    {%- endif -%}
+                    {%- if block.settings.subheading != blank -%}
+                      <div class="nw-collection-tabs__sidebar-subheading rte">{{ block.settings.subheading }}</div>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.show_sidebar -%}
+                  {%- if has_sidebar -%}
+                    <aside class="nw-collection-tabs__sidebar">
+                      {% render 'nw-collection-tabs-sidebar', block: block %}
+                    </aside>
+                  {%- endif -%}
+                {%- endif -%}
                 <div class="nw-collection-tabs__slider-wrap">
                   {%- if block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
                     <div class="swiper nw-collection-tabs__swiper" id="NwCollectionSwiper-{{ section.id }}-{{ panel_index }}">
@@ -290,7 +175,6 @@
     </div>
   </div>
 </nw-collection-tabs>
-
 {% schema %}
 {
   "name": "t:sections.nw-collection-tabs.name",
@@ -661,14 +545,17 @@
           "type": "collection",
           "id": "collection",
           "label": "Collection"
-        }
-      ]
-    },
-    {
-      "type": "sidebar",
-      "name": "Sidebar Content",
-      "limit": 1,
-      "settings": [
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sidebar",
+          "label": "Show Sidebar",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "SIDEBAR"
+        },
         {
           "type": "inline_richtext",
           "id": "heading",
@@ -909,9 +796,6 @@
         {
           "type": "tab",
           "settings": { "label": "Kids" }
-        },
-        {
-          "type": "sidebar"
         }
       ]
     }

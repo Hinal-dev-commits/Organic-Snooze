@@ -10,11 +10,14 @@
 
 {%- assign nw_shell_selector = '.nw-collection-list.section-' | append: section.id -%}
 {% capture nw_shell_extra %}
-  --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-  --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-  --nw-collection-fade-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+  {% render 'nw-section-color-var', name: '--nw-star-active', value: section.settings.star_color %}
+  {% render 'nw-section-color-var', name: '--nw-star-inactive', value: section.settings.star_color_inactive %}
+  {%- if section.settings.bg_color != blank -%}
+    --nw-collection-fade-color: {{ section.settings.bg_color }};
+  {%- endif -%}
 {% endcapture %}
 {% render 'nw-section-shell', selector: nw_shell_selector, extra: nw_shell_extra %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
 {%- unless section.settings.show_fade -%}
   <style>
     .nw-collection-list.section-{{ section.id }} .nw-collection-list__slider-wrap::before,
@@ -34,6 +37,7 @@
 
 <nw-collection-list
   class="nw-collection-list nw-main-section section-{{ section.id }}"
+  data-slide-count="{{ slide_count }}"
   data-enable-autoplay="{{ section.settings.enable_autoplay }}"
   data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
@@ -133,7 +137,16 @@
         </div>
 
         {%- if section.settings.show_dots and slide_count > 1 -%}
-          <div class="nw-collection-list__pagination swiper-pagination" id="nw-collection-list-pagination-{{ section.id }}" data-nw-collection-pagination></div>
+          <div class="nw-collection-list__pagination" id="nw-collection-list-pagination-{{ section.id }}" data-nw-collection-pagination>
+            {%- for block in collection_blocks -%}
+              <button
+                type="button"
+                class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+                data-bullet-index="{{ forloop.index0 }}"
+                aria-label="Go to collection {{ forloop.index }}"
+              ></button>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
       {%- endif -%}
 
@@ -180,7 +193,6 @@
       "alpha": true,
       "id": "star_color",
       "label": "Active Star Color",
-      "default": "#E57B1E",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -188,7 +200,6 @@
       "alpha": true,
       "id": "star_color_inactive",
       "label": "Inactive Star Color",
-      "default": "#D1D5DB",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -208,6 +219,34 @@
       "id": "subheading",
       "label": "Subheading",
       "default": "<p>Find the right organic sleep essentials for every stage of your recovery.</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Body Text Color"
     },
     {
       "type": "header",
@@ -314,7 +353,6 @@
       "alpha": true,
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#FFFFFF",
       "visible_if": "{{ section.settings.bg_type == 'color' or section.settings.bg_type == 'image' }}"
     },
     {

@@ -4,13 +4,16 @@
 
 {%- assign nw_shell_selector = '.nw-review-video.section-' | append: section.id -%}
 {% capture nw_shell_extra %}
-  --nw-rv-bg-color: {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}{{ section.settings.bg_color }}{% else %}#FFFFFF{% endif %};
-  --nw-rv-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-  --nw-rv-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
-  --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
-  --nw-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
+  {% if section.settings.bg_type == 'color' and section.settings.bg_color != blank %}
+    --nw-rv-bg-color: {{ section.settings.bg_color }};
+  {% endif %}
+  {% render 'nw-section-color-var', name: '--nw-rv-star-active', value: section.settings.star_color %}
+  {% render 'nw-section-color-var', name: '--nw-rv-star-inactive', value: section.settings.star_color_inactive %}
+  {% render 'nw-section-color-var', name: '--nw-star-active', value: section.settings.star_color %}
+  {% render 'nw-section-color-var', name: '--nw-star-inactive', value: section.settings.star_color_inactive %}
 {% endcapture %}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', extra: nw_shell_extra %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
 
 <nw-review-video
   class="nw-review-video section-{{ section.id }}{%- render 'nw-scroll-animation' -%}"
@@ -220,7 +223,6 @@
       "alpha": true,
       "id": "star_color",
       "label": "Active Star Color",
-      "default": "#E57B1E",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -228,7 +230,6 @@
       "alpha": true,
       "id": "star_color_inactive",
       "label": "Inactive Star Color",
-      "default": "#D1D5DB",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
@@ -247,7 +248,35 @@
       "type": "richtext",
       "id": "subheading",
       "label": "Subheading",
-      "default": "<p>Real customers, real results in their own words</p>"
+      "default": "<p>Real customers. Real sleep. See what changed when they switched to organic.</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Body Text Color"
     },
     {
       "type": "header",
@@ -303,7 +332,6 @@
       "alpha": true,
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#FFFFFF",
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
     },
     {

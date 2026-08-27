@@ -1,0 +1,12 @@
+{% doc %}
+  Outputs a CSS custom property only when the value is not blank.
+
+  @param {string} name - CSS variable name including --
+  @param {string} value - Color value from section settings
+
+  @example
+  {% render 'nw-section-color-var', name: '--nw-star-active', value: section.settings.star_color %}
+{% enddoc %}
+{%- if value != blank -%}
+  {{ name }}: {{ value }};
+{%- endif -%}
