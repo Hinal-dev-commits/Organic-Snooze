@@ -95,7 +95,7 @@ Renders a trusted people slider card.
     {%- endif -%}
 
     {%- if block.settings.quote != blank -%}
-      <div class="nw-trusted-people__expand" data-nw-tp-expand>
+      <div class="nw-trusted-people__expand" data-nw-tp-expand aria-hidden="true">
         <div class="nw-trusted-people__expand-inner">
           <div class="nw-trusted-people__quote rte">{{ block.settings.quote }}</div>
         </div>

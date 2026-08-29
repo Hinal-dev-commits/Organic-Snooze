@@ -174,7 +174,7 @@
   height: 17.5px;
   background-color: var(--primary-color, #613916);
   transform: translate(-50%, -50%);
-  transition: transform 0.25s ease, opacity 0.25s ease;
+  transition: transform 0.35s ease-out, opacity 0.35s ease;
 }
 
 .nw-understand-mattress__item[open] .nw-understand-mattress__toggle-plus::after {

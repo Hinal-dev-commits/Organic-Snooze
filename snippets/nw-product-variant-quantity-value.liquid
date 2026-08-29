@@ -1,0 +1,86 @@
+{% comment %}
+  Renders a single quantity variant option with optional save tag.
+
+  Accepts:
+  - product: {Object}
+  - option: {Object}
+  - value: {Object}
+  - value_index: {Number}
+{% endcomment %}
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+  assign option_index = option.position | minus: 1
+
+  assign option_disabled = true
+  if value.available
+    assign option_disabled = false
+  endif
+
+  assign value_variant = null
+  for variant in product.variants
+    if variant.options[option_index] == value
+      assign matches_other_options = true
+      for other_option in product.options_with_values
+        if other_option.position != option.position
+          assign other_index = other_option.position | minus: 1
+          if variant.options[other_index] != other_option.selected_value
+            assign matches_other_options = false
+          endif
+        endif
+      endfor
+      if matches_other_options
+        assign value_variant = variant
+        break
+      endif
+    endif
+  endfor
+
+  assign saving_text = null
+  if value_variant
+    assign saving_text = value_variant.metafields.custom.saving.value | default: value_variant.metafields.custom.saving
+  endif
+-%}
+
+{%- capture input_id -%}
+  {{ section.id }}-{{ option.position }}-{{ value_index -}}
+{%- endcapture -%}
+
+{%- capture input_name -%}
+  {{ option.name }}-{{ option.position }}
+{%- endcapture -%}
+
+{%- capture input_dataset -%}
+  data-product-url="{{ value.product_url }}"
+  data-option-value-id="{{ value.id }}"
+  data-option-name="{{ option.name | escape }}"
+{%- endcapture -%}
+
+{%- capture label_unavailable -%}
+  <span class="visually-hidden label-unavailable">
+    {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
+  </span>
+{%- endcapture -%}
+
+{% assign escaped_value = value | escape %}
+
+<input
+  type="radio"
+  id="{{ input_id }}"
+  name="{{ input_name | escape }}"
+  value="{{ escaped_value }}"
+  form="{{ product_form_id }}"
+  {% if value.selected %}
+    checked
+  {% endif %}
+  {% if option_disabled %}
+    class="disabled"
+  {% endif %}
+  {{ input_dataset }}
+>
+<label for="{{ input_id }}" class="{% if saving_text != blank %} nw-variant-picker__quantity-label--has-tag{% endif %}">
+  {%- if saving_text != blank -%}
+    <span class="nw-variant-picker__save-tag">{{ saving_text }}</span>
+  {%- endif -%}
+  <span class="nw-variant-picker__quantity-name">{{ value }}</span>
+  {{ label_unavailable }}
+</label>

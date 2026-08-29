@@ -1,0 +1,108 @@
+{% comment %}
+  Renders a single firmness variant option card.
+
+  Accepts:
+  - product: {Object}
+  - option: {Object}
+  - value: {Object}
+  - value_index: {Number}
+{% endcomment %}
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+  assign option_index = option.position | minus: 1
+
+  assign option_disabled = true
+  if value.available
+    assign option_disabled = false
+  endif
+
+  assign value_variant = null
+  for variant in product.variants
+    if variant.options[option_index] == value
+      assign matches_other_options = true
+      for other_option in product.options_with_values
+        if other_option.position != option.position
+          assign other_index = other_option.position | minus: 1
+          if variant.options[other_index] != other_option.selected_value
+            assign matches_other_options = false
+          endif
+        endif
+      endfor
+      if matches_other_options
+        assign value_variant = variant
+        break
+      endif
+    endif
+  endfor
+
+  assign firmness_inch = null
+  assign firmness_plus = null
+  if value_variant
+    assign firmness_inch = value_variant.metafields.custom.firmness_inch.value | default: value_variant.metafields.custom.firmness_inch
+    assign firmness_plus = value_variant.metafields.custom.firmness_plus.value | default: value_variant.metafields.custom.firmness_plus
+  endif
+-%}
+
+{%- capture input_id -%}
+  {{ section.id }}-{{ option.position }}-{{ value_index -}}
+{%- endcapture -%}
+
+{%- capture input_name -%}
+  {{ option.name }}-{{ option.position }}
+{%- endcapture -%}
+
+{%- capture input_dataset -%}
+  data-product-url="{{ value.product_url }}"
+  data-option-value-id="{{ value.id }}"
+  data-option-name="{{ option.name | escape }}"
+{%- endcapture -%}
+
+{%- capture label_unavailable -%}
+  <span class="visually-hidden label-unavailable">
+    {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
+  </span>
+{%- endcapture -%}
+
+{% assign escaped_value = value | escape %}
+
+<input
+  type="radio"
+  id="{{ input_id }}"
+  name="{{ input_name | escape }}"
+  value="{{ escaped_value }}"
+  form="{{ product_form_id }}"
+  {% if value.selected %}
+    checked
+  {% endif %}
+  {% if option_disabled %}
+    class="disabled"
+  {% endif %}
+  {{ input_dataset }}
+>
+<label for="{{ input_id }}" class="nw-variant-picker__firmness-card">
+  <span class="nw-variant-picker__firmness-row">
+    <span class="nw-variant-picker__firmness-main">
+      <span class="nw-variant-picker__firmness-radio" aria-hidden="true"></span>
+      <span class="nw-variant-picker__firmness-name">{{ value }}</span>
+    </span>
+    {%- if firmness_inch != blank -%}
+      {%- liquid
+        assign inch_display = firmness_inch | strip
+        unless inch_display contains '"'
+          assign inch_display = inch_display | append: '"'
+        endunless
+      -%}
+      <span class="nw-variant-picker__firmness-inch">{{ inch_display }}</span>
+    {%- endif -%}
+  </span>
+  {%- if firmness_plus != blank -%}
+    {%- liquid
+      assign plus_display = firmness_plus | strip
+      unless plus_display contains '+'
+        assign plus_display = plus_display | prepend: '+'
+      endunless
+    -%}
+    <span class="nw-variant-picker__firmness-plus">{{ plus_display }}</span>
+  {%- endif -%}
+  {{ label_unavailable }}
+</label>

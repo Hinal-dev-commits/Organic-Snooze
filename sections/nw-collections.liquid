@@ -64,7 +64,10 @@
         {%- for block in collection_blocks -%}
           {%- liquid
             assign current_collection = block.settings.collection
-            assign prod_limit = section.settings.products_to_show | default: 8
+            assign prod_limit = section.settings.products_to_show
+            if prod_limit == blank
+              assign prod_limit = 8
+            endif
           -%}
           <div
             class="nw-collections__panel"
@@ -87,18 +90,35 @@
               {%- endif -%}
 
               <div class="nw-collections__grid">
-                {%- for product in current_collection.products limit: prod_limit -%}
-                  {% render 'nw-product-card',
-                    product: product,
-                    section_id: section.id,
-                    show_rating: section.settings.show_rating_on_card,
-                    show_firmness: section.settings.show_firmness,
-                    show_seller_tag: section.settings.show_seller_tag,
-                    button_text: section.settings.pcard_button_text,
-                    button_style: section.settings.pcard_button_style,
-                    lazy_load: true
-                  %}
-                {%- endfor -%}
+                {%- if prod_limit == 0 -%}
+                  {%- for product in current_collection.products -%}
+                    {% render 'nw-product-card',
+                      product: product,
+                      section_id: section.id,
+                      show_rating: section.settings.show_rating_on_card,
+                      show_firmness: section.settings.show_firmness,
+                      show_seller_tag: section.settings.show_seller_tag,
+                      show_best_for: section.settings.show_best_for,
+                      button_text: section.settings.pcard_button_text,
+                      button_style: section.settings.pcard_button_style,
+                      lazy_load: true
+                    %}
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- for product in current_collection.products limit: prod_limit -%}
+                    {% render 'nw-product-card',
+                      product: product,
+                      section_id: section.id,
+                      show_rating: section.settings.show_rating_on_card,
+                      show_firmness: section.settings.show_firmness,
+                      show_seller_tag: section.settings.show_seller_tag,
+                      show_best_for: section.settings.show_best_for,
+                      button_text: section.settings.pcard_button_text,
+                      button_style: section.settings.pcard_button_style,
+                      lazy_load: true
+                    %}
+                  {%- endfor -%}
+                {%- endif -%}
               </div>
             {%- elsif current_collection != blank -%}
               <div class="nw-collections__empty">No products found in this collection.</div>
@@ -182,10 +202,11 @@
       "type": "range",
       "id": "products_to_show",
       "label": "Products To Show Per Tab",
-      "min": 2,
+      "min": 0,
       "max": 24,
       "step": 1,
-      "default": 8
+      "default": 8,
+      "info": "0 = Show all products"
     },
     {
       "type": "checkbox",
@@ -204,6 +225,13 @@
       "id": "show_firmness",
       "label": "Show Firmness Bar",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_best_for",
+      "label": "Show Best For",
+      "default": false,
+      "info": "Only displays when the product custom.best_for metafield is set."
     },
     {
       "type": "checkbox",

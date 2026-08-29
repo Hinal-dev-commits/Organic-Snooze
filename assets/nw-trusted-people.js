@@ -22,12 +22,65 @@ if (!customElements.get('nw-trusted-people')) {
     }
 
     _refreshSwiperLayout() {
-      var self = this;
+      if (this.swiperInstance) this.swiperInstance.update();
+    }
 
-      window.clearTimeout(this._swiperLayoutTimer);
-      this._swiperLayoutTimer = window.setTimeout(function () {
-        if (self.swiperInstance) self.swiperInstance.update();
-      }, 380);
+    _cancelExpandAnimations(expandEl) {
+      if (!expandEl || typeof expandEl.getAnimations !== 'function') return;
+
+      expandEl.getAnimations().forEach(function (anim) {
+        anim.cancel();
+      });
+    }
+
+    _animateExpand(expandEl, isExpanded) {
+      if (!expandEl) return;
+
+      var self = this;
+      var start = expandEl.getBoundingClientRect().height;
+      var inner = expandEl.querySelector('.nw-trusted-people__expand-inner');
+      var end = isExpanded ? (inner ? inner.scrollHeight : expandEl.scrollHeight) : 0;
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      this._cancelExpandAnimations(expandEl);
+
+      expandEl.style.overflow = 'hidden';
+      expandEl.style.height = start + 'px';
+      expandEl.getBoundingClientRect();
+
+      if (reduceMotion || typeof expandEl.animate !== 'function' || Math.abs(start - end) < 1) {
+        expandEl.style.height = isExpanded ? 'auto' : '0px';
+        this._refreshSwiperLayout();
+        return;
+      }
+
+      var anim = expandEl.animate(
+        [{ height: start + 'px' }, { height: end + 'px' }],
+        { duration: 300, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' }
+      );
+
+      anim.onfinish = function () {
+        expandEl.style.height = isExpanded ? 'auto' : '0px';
+        anim.cancel();
+        self._refreshSwiperLayout();
+      };
+    }
+
+    _applyCardExpanded(card, isExpanded) {
+      if (!card) return;
+
+      card.classList.toggle('is-expanded', isExpanded);
+
+      var toggle = card.querySelector('[data-nw-tp-toggle]');
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      }
+
+      var expand = card.querySelector('[data-nw-tp-expand]');
+      if (expand) {
+        expand.setAttribute('aria-hidden', isExpanded ? 'false' : 'true');
+        this._animateExpand(expand, isExpanded);
+      }
     }
 
     _setCardsExpanded(slideIndex, isExpanded) {
@@ -43,16 +96,7 @@ if (!customElements.get('nw-trusted-people')) {
 
       if (!cards.length) return;
 
-      cards.forEach(function (card) {
-        card.classList.toggle('is-expanded', isExpanded);
-
-        var toggle = card.querySelector('[data-nw-tp-toggle]');
-        if (toggle) {
-          toggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-        }
-      });
-
-      this._refreshSwiperLayout();
+      cards.forEach((card) => this._applyCardExpanded(card, isExpanded));
     }
 
     _initToggles() {
@@ -86,10 +130,7 @@ if (!customElements.get('nw-trusted-people')) {
           return;
         }
 
-        card.classList.toggle('is-expanded', isExpanded);
-        btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-
-        this._refreshSwiperLayout();
+        this._applyCardExpanded(card, isExpanded);
       });
     }
 
@@ -159,6 +200,8 @@ if (!customElements.get('nw-trusted-people')) {
 
       clone.querySelectorAll('[data-nw-tp-expand]').forEach(function (expand) {
         expand.removeAttribute('hidden');
+        expand.setAttribute('aria-hidden', sourceExpanded ? 'false' : 'true');
+        expand.style.height = sourceExpanded ? 'auto' : '0px';
       });
 
       return clone;

@@ -1,0 +1,416 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-materials.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwMaterials-{{ section.id }} {
+    display: block;
+    position: relative;
+    isolation: isolate;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#F7F5F3' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#F7F5F3' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#F7F5F3' }};
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    #NwMaterials-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    #NwMaterials-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFF29' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  #NwMaterials-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwMaterials-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      #NwMaterials-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+
+    {%- if section.settings.bg_type == 'color' -%}
+      #NwMaterials-{{ section.id }} {
+        background-color: #fff;
+      }
+    {%- endif -%}
+  }
+</style>
+
+<div id="NwMaterials-{{ section.id }}" class="nw-materials section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-materials__wrapper scroll-trigger animate--slide-in">
+      {%- if section.settings.heading != blank
+        or section.settings.subheading != blank
+        or section.settings.eyebrow != blank
+      -%}
+        <div class="nw-materials__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      <div class="nw-materials__body">
+        {%- if section.blocks.size > 0 -%}
+          <div class="nw-materials__cards">
+            {%- for block in section.blocks -%}
+              <div class="nw-materials__card" {{ block.shopify_attributes }}>
+                <div class="nw-materials__card-media">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 400 }}"
+                      alt="{{ block.settings.image.alt | default: block.settings.title | strip_html | escape }}"
+                      width="186"
+                      height="167"
+                      loading="lazy"
+                      class="nw-materials__card-img"
+                    >
+                  {%- else -%}
+                    <div class="nw-materials__card-placeholder">
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <div class="nw-materials__card-content">
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="nw-materials__card-title">{{ block.settings.title }}</h3>
+                  {%- endif -%}
+
+                  {%- if block.settings.description != blank -%}
+                    <div class="nw-materials__card-desc">{{ block.settings.description }}</div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_highlight
+          and section.settings.highlight_title != blank
+          or section.settings.highlight_text != blank
+        -%}
+          <div class="nw-materials__highlight-box">
+            {%- if section.settings.highlight_title != blank -%}
+              <h4 class="nw-materials__highlight-title">{{ section.settings.highlight_title }}</h4>
+            {%- endif -%}
+
+            {%- if section.settings.highlight_text != blank -%}
+              <div class="nw-materials__highlight-desc">{{ section.settings.highlight_text }}</div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_button and section.settings.button_text != blank -%}
+          <div class="nw-materials__btn-wrap">
+            {% render 'nw-button',
+              text: section.settings.button_text,
+              link: section.settings.button_link,
+              style: section.settings.button_style,
+              btn_class: 'nw-btn'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Materials",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars in Header",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow / Rating Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Materials Built To Last"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Most brands offer 10–15 years. Leading organic competitors offer 25. We offer 30 years, because:</p>"
+    },
+    {
+      "type": "header",
+      "content": "HIGHLIGHT BOX"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_highlight",
+      "label": "Show Highlight Box",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "highlight_title",
+      "label": "Highlight Title",
+      "default": "Why It Matters",
+      "visible_if": "{{ section.settings.show_highlight == true }}"
+    },
+    {
+      "type": "richtext",
+      "id": "highlight_text",
+      "label": "Highlight Text",
+      "default": "<p>This isn't a marketing stunt. It's a reflection of materials proven to age gracefully. We'd rather build a mattress that lasts decades, and stand behind it, than replace a cheap one every 7–8 years</p>",
+      "visible_if": "{{ section.settings.show_highlight == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "SHOP ORGANIC MATTRESSES",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F7F5F3",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFF29",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "material",
+      "name": "Material Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Material Image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "Fibers that last"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "Wool and cotton last decades. Synthetics thin and flatten"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Materials",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "material",
+          "settings": {
+            "title": "Fibers that last",
+            "description": "Wool and cotton last decades. Synthetics thin and flatten"
+          }
+        },
+        {
+          "type": "material",
+          "settings": {
+            "title": "Latex outlasts foam",
+            "description": "Stays supportive 15–20+ years. Memory foam sags in 7–10"
+          }
+        },
+        {
+          "type": "material",
+          "settings": {
+            "title": "Steel coils",
+            "description": "Pocketed coils hold their shape. Glued foam does not"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

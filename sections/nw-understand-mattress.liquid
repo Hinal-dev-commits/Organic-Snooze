@@ -1,4 +1,5 @@
 {{ 'nw-understand-mattress.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-understand-mattress.js' | asset_url }}" defer="defer"></script>
 
 <style>
   #NwUnderstandMattress-{{ section.id }} {
@@ -56,7 +57,7 @@
   }
 </style>
 
-<div
+<nw-understand-mattress
   id="NwUnderstandMattress-{{ section.id }}"
   class="nw-understand-mattress{% if section.settings.image_position == 'right' %} nw-understand-mattress--image-right{% endif %}"
 >
@@ -112,7 +113,7 @@
           <div class="nw-understand-mattress__accordion">
             {%- for block in section.blocks -%}
               <details
-                class="nw-understand-mattress__item"
+                class="nw-understand-mattress__item accordion smooth"
                 {{ block.shopify_attributes }}
                 {% if block.settings.open_by_default or forloop.first and block.settings.open_by_default != false %}
                   open
@@ -124,7 +125,7 @@
                     <span class="nw-understand-mattress__toggle-plus"></span>
                   </span>
                 </summary>
-                <div class="nw-understand-mattress__answer rte">
+                <div class="nw-understand-mattress__answer accordion__content rte">
                   {{ block.settings.answer }}
                 </div>
               </details>
@@ -134,7 +135,7 @@
       </div>
     </div>
   </div>
-</div>
+</nw-understand-mattress>
 
 {% schema %}
 {

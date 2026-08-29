@@ -98,9 +98,28 @@
             <div class="nw-compare__row" {{ block.shopify_attributes }}>
               <div class="nw-compare__cell nw-compare__cell--feature">
                 {%- if block.settings.feature_name != blank -%}
-                  <span class="nw-compare__feature-name">{{ block.settings.feature_name }}</span>
-                {%- endif -%}
-                {%- if block.settings.show_info_icon -%}
+                  <span class="nw-compare__feature-name">
+                    {{- block.settings.feature_name -}}
+                    {%- if block.settings.show_info_icon -%}
+                      <span class="nw-compare__info-btn" tabindex="0" role="button" aria-label="More information">
+                        <svg
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          role="img"
+                          aria-hidden="true"
+                        >
+                          <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/>
+                          <path d="M8 7V11" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                          <circle cx="8" cy="5" r="0.75" fill="currentColor"/>
+                        </svg>
+                        {%- if block.settings.info_tooltip != blank -%}
+                          <span class="nw-compare__info-tooltip">{{ block.settings.info_tooltip }}</span>
+                        {%- endif -%}
+                      </span>
+                    {%- endif -%}
+                  </span>
+                {%- elsif block.settings.show_info_icon -%}
                   <span class="nw-compare__info-btn" tabindex="0" role="button" aria-label="More information">
                     <svg
                       viewBox="0 0 16 16"

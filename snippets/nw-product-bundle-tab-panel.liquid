@@ -1,0 +1,120 @@
+{% comment %}
+  Renders one bundle tab panel.
+
+  Accepts:
+  - tab_block: {Object} nested block
+  - block: {Object} parent block
+  - tab_index: {Number}
+  - is_active: {Boolean}
+{% endcomment %}
+{%- liquid
+  assign tab_product = tab_block.settings.product
+  assign panel_id = 'NwBundleTabsPanel-' | append: block.id | append: '-' | append: tab_index
+
+  if tab_product == blank
+    assign has_product = false
+  else
+    assign has_product = true
+    assign tab_variant = tab_product.selected_or_first_available_variant
+
+    assign display_title = tab_block.settings.custom_title | strip
+    if display_title == blank
+      assign display_title = tab_product.metafields.custom.product_title.value | default: tab_product.metafields.custom.product_title
+    endif
+    if display_title == blank
+      assign display_title = tab_product.title
+    endif
+
+    assign display_subtitle = tab_block.settings.custom_subtitle | strip
+
+    assign display_image = tab_block.settings.custom_image
+    if display_image == blank and tab_product.featured_media
+      assign display_image = tab_product.featured_media.preview_image
+    endif
+
+    assign compare_price = tab_variant.compare_at_price
+    assign sale_price = tab_variant.price
+    assign save_cents = 0
+    assign save_money = ''
+    if compare_price > sale_price
+      assign save_cents = compare_price | minus: sale_price
+      assign save_money = save_cents | money_without_trailing_zeros
+    endif
+
+    assign learn_more_label = tab_block.settings.learn_more_label | strip
+    if learn_more_label == blank
+      assign learn_more_label = 'Learn More'
+    endif
+  endif
+-%}
+
+<div
+  class="nw-bundle-tabs__panel{% if is_active %} is-active{% endif %}"
+  id="{{ panel_id }}"
+  role="tabpanel"
+  aria-labelledby="NwBundleTabsBtn-{{ block.id }}-{{ tab_index }}"
+  tabindex="0"
+  data-bundle-panel
+  {% unless is_active %}
+    hidden
+  {% endunless %}
+  {{ tab_block.shopify_attributes }}
+>
+  {%- if has_product -%}
+    <div class="nw-bundle-tabs__panel-inner">
+      <div class="nw-bundle-tabs__head">
+        <div class="nw-bundle-tabs__copy">
+          <h3 class="nw-bundle-tabs__title">{{ display_title | escape }}</h3>
+          {%- if display_subtitle != blank -%}
+            <p class="nw-bundle-tabs__subtitle">{{ display_subtitle | escape }}</p>
+          {%- endif -%}
+        </div>
+        <div class="nw-bundle-tabs__pricing">
+          {%- if save_cents > 0 -%}
+            <span class="nw-bundle-tabs__save">Save {{ save_money }}</span>
+          {%- endif -%}
+          <span class="nw-bundle-tabs__price">{{ sale_price | money_without_trailing_zeros }}</span>
+        </div>
+      </div>
+
+      {%- assign features_raw = tab_block.settings.features | strip -%}
+      {%- if features_raw != blank -%}
+        {%- assign feature_lines = features_raw | newline_to_br | split: '<br />' -%}
+        <ul class="nw-bundle-tabs__features" role="list">
+          {%- for feature_text in feature_lines -%}
+            {%- assign feature_text = feature_text | strip -%}
+            {%- if feature_text != blank -%}
+              <li class="nw-bundle-tabs__feature">
+                <span class="nw-bundle-tabs__feature-icon" aria-hidden="true">
+                  {% render 'nw-icon', icon: 'check' %}
+                </span>
+                <span class="nw-bundle-tabs__feature-text">{{ feature_text | escape }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if tab_block.settings.extra_description != blank -%}
+        <div class="nw-bundle-tabs__description inline-richtext">{{ tab_block.settings.extra_description }}</div>
+      {%- endif -%}
+
+      <a class="nw-bundle-tabs__link" href="{{ tab_product.url }}">{{ learn_more_label | escape }}</a>
+
+      {%- if display_image != blank -%}
+        <div class="nw-bundle-tabs__media">
+          <img
+            src="{{ display_image | image_url: width: 1200 }}"
+            alt="{{ display_title | escape }}"
+            width="{{ display_image.width }}"
+            height="{{ display_image.height }}"
+            loading="lazy"
+            class="nw-bundle-tabs__image"
+          >
+        </div>
+      {%- endif -%}
+    </div>
+  {%- elsif request.design_mode -%}
+    <p class="nw-bundle-tabs__empty">{{ 'products.bundle_tabs.empty_tab' | t }}</p>
+  {%- endif -%}
+</div>

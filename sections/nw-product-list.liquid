@@ -63,6 +63,7 @@
                       show_rating: section.settings.show_rating,
                       show_firmness: section.settings.show_firmness,
                       show_seller_tag: section.settings.show_seller_tag,
+                      show_best_for: section.settings.show_best_for,
                       firmness_label_soft: section.settings.firmness_label_soft,
                       firmness_label_firm: section.settings.firmness_label_firm,
                       button_text: section.settings.button_text,
@@ -80,6 +81,7 @@
                       show_rating: section.settings.show_rating,
                       show_firmness: section.settings.show_firmness,
                       show_seller_tag: section.settings.show_seller_tag,
+                      show_best_for: section.settings.show_best_for,
                       firmness_label_soft: section.settings.firmness_label_soft,
                       firmness_label_firm: section.settings.firmness_label_firm,
                       button_text: section.settings.button_text,
@@ -259,6 +261,13 @@
       "id": "show_seller_tag",
       "label": "Show Seller Tag",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_best_for",
+      "label": "Show Best For",
+      "default": false,
+      "info": "Only displays when the product custom.best_for metafield is set."
     },
     {
       "type": "text",

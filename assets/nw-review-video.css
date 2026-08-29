@@ -97,7 +97,6 @@
   align-items: flex-start;
   padding: 0;
   width: 305px;
-  min-height: 531.75px;
   border-radius: 14px;
   overflow: hidden;
   box-sizing: border-box;
@@ -107,8 +106,8 @@
 
 .nw-review-video__media {
   position: relative;
-  width: 305px;
-  height: 426.75px;
+  width: 100%;
+  aspect-ratio: 2/3;
   border-radius: 12px 12px 0 0;
   overflow: hidden;
   background-color: #1A1A1A;
@@ -267,8 +266,8 @@
 }
 
 .nw-review-video__verified svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
 .nw-review-video__verified svg >*{
@@ -374,37 +373,8 @@
   pointer-events: none;
 }
 
-.nw-review-video__pagination {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  gap: 6.4px;
-  width: 100%;
-  margin-top: 40px;
-}
-
-.nw-review-video__bullet {
-  width: 8px;
-  height: 8px;
-  background: var(--primary-color);
-  opacity: 0.3;
-  border-radius: 8px;
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  transition: width 0.3s ease, opacity 0.3s ease, border-radius 0.3s ease, background-color 0.3s ease;
-  outline: none;
-}
-
-.nw-review-video__bullet--active {
-  width: 48px;
-  height: 8px;
-  background: var(--primary-color);
-  opacity: 1;
-  border-radius: 9.6px;
+.nw-review-video__slider-wrap > .nw-swiper-pagination {
+  --nw-swiper-bullet: var(--primary-color);
 }
 
 @media screen and (max-width: 749px) {
@@ -457,13 +427,11 @@
 
   .nw-review-video__card {
     width: 280px;
-    min-height: 517.72px;
     border-radius: 10px;
   }
 
   .nw-review-video__media {
     width: 280px;
-    height: 414.72px;
     border-radius: 2px 2px 0 0;
   }
 
@@ -496,8 +464,8 @@
   }
 
   .nw-review-video__verified svg {
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
   }
 
   .nw-review-video__product-title {
@@ -522,20 +490,4 @@
     display: none;
   }
 
-  .nw-review-video__pagination {
-    gap: 4px;
-    margin-top: 20px;
-  }
-
-  .nw-review-video__bullet {
-    width: 5px;
-    height: 5px;
-    border-radius: 5px;
-  }
-
-  .nw-review-video__bullet--active {
-    width: 30px;
-    height: 5px;
-    border-radius: 6px;
-  }
 }

@@ -1,0 +1,509 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-guarantee-offer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-guarantee-offer.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  #NwGuaranteeOffer-{{ section.id }} {
+    display: block;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    #NwGuaranteeOffer-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    #NwGuaranteeOffer-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFF29' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  #NwGuaranteeOffer-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwGuaranteeOffer-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      border-bottom: 1px solid #4E2F1466;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      #NwGuaranteeOffer-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+{%- liquid
+  assign product = section.settings.product
+  assign card_title = product.title | default: 'Organic Waterproof Mattress Protector'
+  assign product_url = product.url | default: '#'
+  assign current_price = product.price_min | default: product.price | default: 17600
+  assign compare_price = product.compare_at_price_min | default: product.compare_at_price | default: 29999
+
+  assign save_amount = 0
+  assign save_percent = 0
+  if compare_price > current_price
+    assign save_amount = compare_price | minus: current_price
+    assign save_percent = save_amount | times: 100.0 | divided_by: compare_price | round
+  endif
+
+  assign rating_val = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value | default: product.metafields.custom.rating.value | default: product.metafields.custom.rating
+  assign rating_count = product.metafields.reviews.rating_count | default: product.metafields.custom.rating_count.value | default: product.metafields.custom.rating_count
+
+  assign rating_score_display = '4.5/5'
+  assign rating_count_display = '(130 Reviews)'
+
+  if rating_val != blank
+    assign rating_score_display = rating_val | round: 1 | append: '/5'
+  endif
+  if rating_count != blank
+    assign rating_count_display = '(' | append: rating_count | append: ' Reviews)'
+  endif
+-%}
+
+<div id="NwGuaranteeOffer-{{ section.id }}" class="nw-guarantee-offer section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-guarantee-offer__wrapper scroll-trigger animate--slide-in">
+      {%- if section.settings.heading != blank
+        or section.settings.subheading != blank
+        or section.settings.eyebrow != blank
+      -%}
+        <div class="nw-guarantee-offer__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      <nw-guarantee-offer class="nw-guarantee-offer__card">
+        <div class="nw-guarantee-offer__media-wrap">
+          {%- if save_percent > 0 -%}
+            <span class="nw-guarantee-offer__tag">SAVE {{ save_percent }}%</span>
+          {%- endif -%}
+
+          {%- if product != blank and product.images.size > 0 -%}
+            <div class="swiper nw-guarantee-offer__swiper">
+              <div class="swiper-wrapper">
+                {%- for img in product.images -%}
+                  <div class="swiper-slide">
+                    <img
+                      src="{{ img | image_url: width: 1100 }}"
+                      alt="{{ img.alt | default: card_title | strip_html | escape }}"
+                      width="537"
+                      height="383"
+                      loading="lazy"
+                      class="nw-guarantee-offer__image"
+                    >
+                  </div>
+                {%- endfor -%}
+              </div>
+              {%- if product.images.size > 1 -%}
+                <div class="nw-guarantee-offer__pagination swiper-pagination"></div>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'nw-guarantee-offer__image placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        <div class="nw-guarantee-offer__content">
+          {%- if section.settings.show_card_rating -%}
+            <div class="nw-guarantee-offer__rating-row">
+              <div class="nw-guarantee-offer__stars" aria-hidden="true">
+                {%- for i in (1..5) -%}
+                  <span class="nw-guarantee-offer__star-icon">
+                    <svg viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 1L12.7 6.8L19 7.7L14.5 12.1L15.6 18.3L10 15.3L4.4 18.3L5.5 12.1L1 7.7L7.3 6.8L10 1Z" />
+                    </svg>
+                  </span>
+                {%- endfor -%}
+              </div>
+              <span class="nw-guarantee-offer__rating-text">{{ rating_score_display }}</span>
+              <span class="nw-guarantee-offer__reviews-text">{{ rating_count_display }}</span>
+            </div>
+          {%- endif -%}
+
+          {%- if card_title != blank -%}
+            <h3 class="nw-guarantee-offer__title">
+              <a href="{{ product_url }}">{{ card_title }}</a>
+            </h3>
+          {%- endif -%}
+
+          <div class="nw-guarantee-offer__price-wrap">
+            <div class="nw-guarantee-offer__price-row">
+              <div class="nw-guarantee-offer__price-box">
+                <span class="nw-guarantee-offer__price-prefix">from</span>
+                <span class="nw-guarantee-offer__price">{{ current_price | money }}</span>
+              </div>
+
+              {%- if compare_price > current_price -%}
+                <span class="nw-guarantee-offer__compare-price">{{ compare_price | money }}</span>
+                <span class="nw-guarantee-offer__save-badge">SAVE {{ save_amount | money }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- if section.blocks.size > 0 -%}
+            <div class="nw-guarantee-offer__features">
+              {%- for block in section.blocks -%}
+                <div class="nw-guarantee-offer__feature-item" {{ block.shopify_attributes }}>
+                  <span class="nw-guarantee-offer__feature-icon">
+                    {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
+                      <img
+                        src="{{ block.settings.custom_icon | image_url: width: 48 }}"
+                        alt="{{ block.settings.feature_text | strip_html | escape }}"
+                        width="24"
+                        height="24"
+                        loading="lazy"
+                      >
+                    {%- else -%}
+                      {% render 'nw-icon', icon: block.settings.icon %}
+                    {%- endif -%}
+                  </span>
+                  {%- if block.settings.feature_text != blank -%}
+                    <span class="nw-guarantee-offer__feature-text">{{ block.settings.feature_text }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_button -%}
+            <div class="nw-guarantee-offer__desktop-btn">
+              {% render 'nw-button',
+                text: section.settings.button_text,
+                link: product_url,
+                style: section.settings.button_style,
+                btn_class: 'nw-btn'
+              %}
+            </div>
+          {%- endif -%}
+        </div>
+      </nw-guarantee-offer>
+
+      {%- if section.settings.show_button -%}
+        <div class="nw-guarantee-offer__mobile-btn">
+          {% render 'nw-button',
+            text: section.settings.button_text,
+            link: product_url,
+            style: section.settings.button_style,
+            btn_class: 'nw-btn'
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Guarantee Offer",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars in Header",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow / Rating Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Protect Your Investment for 30 Years"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Stains and spills aren't covered by the warranty. One simple layer keeps your mattress protected and your coverage intact.</p>"
+    },
+    {
+      "type": "header",
+      "content": "PRODUCT SETTINGS"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_rating",
+      "label": "Show Card Rating",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "SHOP NOW",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFF29",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "feature_text",
+          "label": "Feature Text",
+          "default": "Breathable mattress protection"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "breathable",
+          "options": [
+            { "value": "breathable", "label": "Breathable" },
+            { "value": "silent", "label": "Silent" },
+            { "value": "guards", "label": "Guards" },
+            { "value": "preserve", "label": "Preserve" },
+            { "value": "handcrafted", "label": "Handcrafted" }
+          ],
+          "visible_if": "{{ block.settings.use_custom_icon == false }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Guarantee Offer",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Breathable mattress protection",
+            "icon": "breathable"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Silent, flexible barrier",
+            "icon": "silent"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Guards against spills & sweat",
+            "icon": "guards"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Preserves mattress performance",
+            "icon": "preserve"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "feature_text": "Handcrafted in the USA",
+            "icon": "handcrafted"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

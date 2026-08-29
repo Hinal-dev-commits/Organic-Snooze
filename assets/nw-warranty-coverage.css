@@ -1,0 +1,266 @@
+.nw-warranty-coverage {
+  display: block;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.nw-warranty-coverage__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  gap: 48px;
+  box-sizing: border-box;
+}
+
+.nw-warranty-coverage__header {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.nw-warranty-coverage__header .nw-section-heading h2,
+.nw-warranty-coverage__header .nw-section-heading .h2 {
+  letter-spacing: -2%;
+}
+
+.nw-warranty-coverage__grid {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.nw-warranty-coverage__card {
+  flex: 1 1 calc(50% - 12px);
+  max-width: 628px;
+  min-height: 306px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background: #FFFFFF;
+  border: 1px solid rgba(97, 57, 22, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.nw-warranty-coverage__media-wrap {
+  flex: 1 1 50%;
+  width: 50%;
+  min-width: 50%;
+  min-height: 100%;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  background: var(--tertiary-color, #F4EFE8);
+  box-sizing: border-box;
+}
+
+.nw-warranty-coverage__media-wrap picture,
+.nw-warranty-coverage__image,
+.nw-warranty-coverage__video-wrap,
+.nw-warranty-coverage__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nw-warranty-coverage__video-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.nw-warranty-coverage__video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nw-warranty-coverage__placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tertiary-color, #F4EFE8);
+}
+
+.nw-warranty-coverage__placeholder svg {
+  width: 100%;
+  height: 100%;
+  max-height: 160px;
+  opacity: 0.4;
+}
+
+.nw-warranty-coverage__content {
+  flex: 1 1 50%;
+  width: 50%;
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 16px;
+  gap: 16px;
+  box-sizing: border-box;
+  background: #FFFFFF;
+}
+
+.nw-warranty-coverage__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 16px;
+  height: 27px;
+  background: #613916;
+  border-radius: 100px;
+  font-family: var(--font-body-family, 'DM Sans');
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: 0.04em;
+  color: #FFFFFF;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.nw-warranty-coverage__title {
+  font-family: var(--font-body-family, 'DM Sans');
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 120%;
+  color: #613916;
+  margin: 0;
+  width: 100%;
+}
+
+.nw-warranty-coverage__desc {
+  font-family: var(--font-body-family, 'DM Sans');
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  color: #613916;
+  margin: 0;
+  width: 100%;
+}
+
+.nw-warranty-coverage__desc p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.nw-warranty-coverage__footer {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.nw-warranty-coverage__btn {
+  width: 100%;
+}
+
+@media screen and (max-width: 989px) {
+  .nw-warranty-coverage__grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nw-warranty-coverage__card {
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-warranty-coverage__wrapper {
+    padding: 0;
+    gap: 32px;
+  }
+
+  .nw-warranty-coverage__header {
+    max-width: 100%;
+  }
+
+  .nw-warranty-coverage__header .nw-section-heading h2,
+  .nw-warranty-coverage__header .nw-section-heading .h2 {
+    letter-spacing: -5%;
+  }
+
+  .nw-warranty-coverage__grid {
+    gap: 16px;
+    max-width: 100%;
+  }
+
+  .nw-warranty-coverage__card {
+    flex-direction: column;
+    max-width: 100%;
+    min-height: auto;
+  }
+
+  .nw-warranty-coverage__media-wrap {
+    width: 100%;
+    min-width: 100%;
+    height: 200px;
+    min-height: 200px;
+    flex: 0 0 200px;
+  }
+
+  .nw-warranty-coverage__content {
+    width: 100%;
+    min-width: 100%;
+    flex: 1 1 auto;
+    padding: 16px 12px 24px;
+    gap: 0px;
+  }
+
+  .nw-warranty-coverage__badge {
+    padding: 4px 8px;
+    height: 28px;
+    border-radius: 72px;
+    font-size: 14px;
+    line-height: 140%;
+    text-transform: uppercase;
+  }
+
+  .nw-warranty-coverage__title {
+    font-size: 20px;
+    line-height: 140%;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-bottom: 12px;
+  }
+
+  .nw-warranty-coverage__desc {
+    font-size: 14px;
+    line-height: 150%;
+  }
+
+  .nw-warranty-coverage__footer {
+    max-width: 343px;
+  }
+}

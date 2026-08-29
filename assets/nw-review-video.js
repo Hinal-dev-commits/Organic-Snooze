@@ -83,9 +83,9 @@ if (!customElements.get('nw-review-video')) {
       var totalBlocks = this._getBlockCount();
       if (totalBlocks <= 1) return;
       var currentRealIndex = swiper.realIndex % totalBlocks;
-      var bullets = this.querySelectorAll('[data-nw-review-pagination] .nw-review-video__bullet');
+      var bullets = this.querySelectorAll('[data-nw-review-pagination] .swiper-pagination-bullet');
       bullets.forEach(function (bullet, idx) {
-        bullet.classList.toggle('nw-review-video__bullet--active', idx === currentRealIndex);
+        bullet.classList.toggle('swiper-pagination-bullet-active', idx === currentRealIndex);
       });
     }
 
@@ -144,7 +144,7 @@ if (!customElements.get('nw-review-video')) {
       if (paginationEl && !paginationEl._bound) {
         paginationEl._bound = true;
         paginationEl.addEventListener('click', (e) => {
-          var bullet = e.target.closest('.nw-review-video__bullet');
+          var bullet = e.target.closest('.swiper-pagination-bullet');
           if (!bullet) return;
           var targetIndex = parseInt(bullet.getAttribute('data-bullet-index'), 10);
           if (!isNaN(targetIndex) && sliderEl.swiper) {

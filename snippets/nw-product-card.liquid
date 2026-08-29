@@ -7,6 +7,7 @@ Renders the NW product card used across collection sliders and grids.
 @param {string} [firmness_label_soft] - Left firmness label
 @param {string} [firmness_label_firm] - Right firmness label
 @param {boolean} [show_seller_tag] - Show seller tag from product metafield
+@param {boolean} [show_best_for] - Show best for details from product metafield
 @param {string} [button_text] - CTA button label
 @param {string} [button_style] - Button style: primary, secondary, outline
 @param {boolean} [lazy_load] - Lazy load product image
@@ -31,6 +32,11 @@ Renders the NW product card used across collection sliders and grids.
   assign display_seller_tag = true
   if show_seller_tag == false
     assign display_seller_tag = false
+  endif
+
+  assign show_best_for_enabled = false
+  if show_best_for
+    assign show_best_for_enabled = true
   endif
 
   assign firmness_label_soft = firmness_label_soft | default: 'Soft'
@@ -78,6 +84,14 @@ Renders the NW product card used across collection sliders and grids.
   assign show_firmness_bar = false
   if show_firmness_enabled and firmness_index > 0
     assign show_firmness_bar = true
+  endif
+
+  assign best_for_raw = card_product.metafields.custom.best_for.value | default: card_product.metafields.custom.best_for
+  assign best_for_value = ''
+  if best_for_raw.first
+    assign best_for_value = best_for_raw | join: ', '
+  else
+    assign best_for_value = best_for_raw
   endif
 -%}
 
@@ -161,6 +175,24 @@ Renders the NW product card used across collection sliders and grids.
 
     {%- if display_description and card_description != blank -%}
       <p class="nw-product-card__description">{{ card_description | escape }}</p>
+    {% endif %}
+    {%- if show_best_for_enabled and card_product.metafields.custom.best_for != blank -%}
+      <div class="nw-product-card__best-for">
+        {%- if card_product.metafields.custom.best_for.type == 'rich_text_field' -%}
+          {{ card_product.metafields.custom.best_for | metafield_tag }}
+        {%- elsif best_for_value != blank -%}
+          {%- liquid
+            assign best_for_text = best_for_value | strip
+            assign best_for_lower = best_for_text | downcase
+          -%}
+          {%- unless best_for_lower contains 'best for' -%}
+            <span class="nw-product-card__best-for-label">Best for:</span>
+          {%- endunless -%}
+          <span class="nw-product-card__best-for-value">{{ best_for_text }}</span>
+        {%- else -%}
+          {{ card_product.metafields.custom.best_for | metafield_tag }}
+        {%- endif -%}
+      </div>
     {%- endif -%}
 
     {%- if show_firmness_bar -%}

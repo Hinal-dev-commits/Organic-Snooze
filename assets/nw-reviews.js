@@ -36,28 +36,41 @@ if (!customElements.get('nw-reviews')) {
         var showDots = this.dataset.showDots === 'true';
 
         var reviewSwiperOptions = {
-          slidesPerView: 'auto',
+          slidesPerView: 2.2,
           spaceBetween: 20,
-          centeredSlides: true,
-          loop: slideCount > 1,
-          loopedSlides: slideCount > 1 ? slideCount : undefined,
+          centeredSlides: false,
+          loop: false,
           speed: 500,
           grabCursor: true,
           watchSlidesProgress: true,
+          slidesOffsetAfter: 20,
           breakpoints: {
             320: {
-              slidesPerView: 'auto',
+              slidesPerView: 1.2,
               spaceBetween: 12,
-              centeredSlides: true
+              slidesOffsetBefore: 16,
+              slidesOffsetAfter: 16,
+              centeredSlides: false
+            },
+            500: {
+              slidesPerView: 1.5,
+              spaceBetween: 14,
+              slidesOffsetBefore: 16,
+              slidesOffsetAfter: 16,
+              centeredSlides: false
             },
             750: {
-              slidesPerView: 'auto',
+              slidesPerView: 1.8,
               spaceBetween: 16,
-              centeredSlides: true
+              slidesOffsetBefore: 20,
+              slidesOffsetAfter: 20,
+              centeredSlides: false
             },
             990: {
-              slidesPerView: 'auto',
+              slidesPerView: 2.2,
               spaceBetween: 20,
+              slidesOffsetBefore: 0,
+              slidesOffsetAfter: 20,
               centeredSlides: false
             }
           }
@@ -92,16 +105,13 @@ if (!customElements.get('nw-reviews')) {
           }
         }
 
-        var reviewSwiper = new Swiper(reviewSliderEl, reviewSwiperOptions);
-        var insightSwiper = null;
+        new Swiper(reviewSliderEl, reviewSwiperOptions);
 
         if (insightSliderEl) {
-          var insightSlideCount = insightSliderEl.querySelectorAll('.swiper-slide').length;
           var insightSwiperOptions = {
             slidesPerView: 1,
             spaceBetween: 0,
-            loop: insightSlideCount > 1,
-            loopedSlides: insightSlideCount > 1 ? insightSlideCount : undefined,
+            loop: false,
             speed: 500,
             grabCursor: true,
             watchSlidesProgress: true,
@@ -111,31 +121,7 @@ if (!customElements.get('nw-reviews')) {
             }
           };
 
-          insightSwiper = new Swiper(insightSliderEl, insightSwiperOptions);
-        }
-
-        if (reviewSwiper && insightSwiper && slideCount > 1) {
-          reviewSwiper.on('slideChangeTransitionStart', () => {
-            if (this._isSyncing) return;
-            if (insightSwiper.realIndex !== reviewSwiper.realIndex) {
-              this._isSyncing = true;
-              insightSwiper.slideToLoop(reviewSwiper.realIndex, 500);
-              setTimeout(() => {
-                this._isSyncing = false;
-              }, 520);
-            }
-          });
-
-          insightSwiper.on('slideChangeTransitionStart', () => {
-            if (this._isSyncing) return;
-            if (reviewSwiper.realIndex !== insightSwiper.realIndex) {
-              this._isSyncing = true;
-              reviewSwiper.slideToLoop(insightSwiper.realIndex, 500);
-              setTimeout(() => {
-                this._isSyncing = false;
-              }, 520);
-            }
-          });
+          new Swiper(insightSliderEl, insightSwiperOptions);
         }
       });
     }

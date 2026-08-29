@@ -1,0 +1,72 @@
+{% doc %}
+  Best for sleeper chips from product custom.sleepers list metafield.
+  @param {object} block - Block settings
+  @param {object} product - Current product
+{% enddoc %}
+
+{%- liquid
+  assign sleepers = product.metafields.custom.sleepers.value | default: product.metafields.custom.sleepers
+  assign sleepers_count = 0
+
+  if sleepers != blank
+    if sleepers.first
+      assign sleepers_count = sleepers.size
+    else
+      assign sleepers_count = 1
+    endif
+  endif
+
+  assign label_text = block.settings.label | default: 'Best for:'
+-%}
+
+{%- if sleepers_count > 0 -%}
+  <div
+    class="nw-product-sleepers"
+    style="
+      --nw-ps-label-color: {{ block.settings.label_color | default: '#613916' }};
+      --nw-ps-chip-bg: {{ block.settings.chip_bg_color | default: '#F4EFE8' }};
+      --nw-ps-chip-text: {{ block.settings.chip_text_color | default: '#613916' }};
+      --nw-ps-chip-icon: {{ block.settings.chip_icon_color | default: '#613916' }};
+    "
+  >
+    {%- if label_text != blank -%}
+      <span class="nw-product-sleepers__label">{{ label_text }}</span>
+    {%- endif -%}
+
+    <ul class="nw-product-sleepers__list" role="list">
+      {%- if sleepers.first -%}
+        {%- for sleeper in sleepers -%}
+          {%- assign sleeper_text = sleeper | strip -%}
+          {%- if sleeper_text != blank -%}
+            <li class="nw-product-sleepers__item">
+              <span class="nw-product-sleepers__chip">
+                <span class="nw-product-sleepers__icon" aria-hidden="true">
+                  {%- render 'nw-icon', icon: 'check-v2', class: 'nw-product-sleepers__icon-svg' -%}
+                </span>
+                <span class="nw-product-sleepers__text">{{ sleeper_text }}</span>
+              </span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign sleeper_text = sleepers | strip -%}
+        {%- if sleeper_text != blank -%}
+          <li class="nw-product-sleepers__item">
+            <span class="nw-product-sleepers__chip">
+              <span class="nw-product-sleepers__icon" aria-hidden="true">
+                {%- render 'nw-icon', icon: 'check-circle', class: 'nw-product-sleepers__icon-svg' -%}
+              </span>
+              <span class="nw-product-sleepers__text">{{ sleeper_text }}</span>
+            </span>
+          </li>
+        {%- endif -%}
+      {%- endif -%}
+    </ul>
+  </div>
+{%- elsif request.design_mode -%}
+  {%- if label_text != blank -%}
+    <div class="nw-product-sleepers nw-product-sleepers--empty">
+      <span class="nw-product-sleepers__label">{{ label_text }}</span>
+    </div>
+  {%- endif -%}
+{%- endif -%}

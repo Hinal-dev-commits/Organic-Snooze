@@ -1,0 +1,487 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-warranty.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #NwWarranty-{{ section.id }} {
+    display: block;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    #NwWarranty-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    #NwWarranty-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFF29' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  #NwWarranty-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwWarranty-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      #NwWarranty-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<div id="NwWarranty-{{ section.id }}" class="nw-warranty section-{{ section.id }} scroll-trigger animate--slide-in">
+  <div class="nw-warranty__container{% if section.settings.image_position == 'right' %} nw-warranty__container--image-right{% endif %}">
+    <div class="nw-warranty__media-wrap">
+      <div class="nw-warranty__media">
+        {%- liquid
+          assign desktop_img = section.settings.image
+          assign mobile_img = section.settings.image_mobile
+          if desktop_img == blank and mobile_img != blank
+            assign desktop_img = mobile_img
+          endif
+        -%}
+        {%- if desktop_img != blank -%}
+          <picture>
+            {%- if mobile_img != blank -%}
+              <source media="(max-width: 749px)" srcset="{{ mobile_img | image_url: width: 750 }}">
+            {%- endif -%}
+            <img
+              src="{{ desktop_img | image_url: width: 1920 }}"
+              alt="{{ desktop_img.alt | default: section.settings.heading | strip_html | escape }}"
+              width="960"
+              height="768"
+              loading="lazy"
+              class="nw-warranty__image"
+            >
+          </picture>
+        {%- else -%}
+          <div class="nw-warranty__placeholder">
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="nw-warranty__content-wrap">
+      {%- if section.settings.heading != blank
+        or section.settings.subheading != blank
+        or section.settings.eyebrow != blank
+      -%}
+        <div class="nw-warranty__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-warranty__table">
+          <div class="nw-warranty__table-head">
+            <div class="nw-warranty__col-head nw-warranty__col-head--covered">
+              <span>{{ section.settings.covered_heading | default: 'Covered' }}</span>
+            </div>
+            <div class="nw-warranty__col-head nw-warranty__col-head--not-covered">
+              <span>{{ section.settings.not_covered_heading | default: 'Not covered' }}</span>
+            </div>
+          </div>
+
+          <div class="nw-warranty__table-body">
+            {%- for block in section.blocks -%}
+              <div class="nw-warranty__table-row" {{ block.shopify_attributes }}>
+                <div class="nw-warranty__cell nw-warranty__cell--covered">
+                  {%- if block.settings.show_covered_icon -%}
+                    <span class="nw-warranty__icon nw-warranty__icon--check" aria-hidden="true">
+                      {{ 'warranty-check.svg' | inline_asset_content }}
+                    </span>
+                  {%- endif -%}
+                  {%- if block.settings.covered_text != blank -%}
+                    <span class="nw-warranty__cell-text">{{ block.settings.covered_text }}</span>
+                  {%- endif -%}
+                </div>
+
+                <div class="nw-warranty__cell nw-warranty__cell--not-covered">
+                  {%- if block.settings.show_not_covered_icon -%}
+                    <span class="nw-warranty__icon nw-warranty__icon--cross" aria-hidden="true">
+                      {{ 'warranty-cross.svg' | inline_asset_content }}
+                    </span>
+                  {%- endif -%}
+                  {%- if block.settings.not_covered_text != blank -%}
+                    <span class="nw-warranty__cell-text">{{ block.settings.not_covered_text }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_button and section.settings.button_text != blank -%}
+        <div class="nw-warranty__footer">
+          {% render 'nw-button',
+            text: section.settings.button_text,
+            link: section.settings.button_link,
+            style: section.settings.button_style,
+            btn_class: 'nw-warranty__btn'
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Warranty",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow / Rating Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Sleep Is Protected For 30 Years"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Real materials earn a warranty this long. Organic, traceable, and built to last, which is why ours outlasts most other organic mattress brands</p>"
+    },
+    {
+      "type": "header",
+      "content": "TABLE HEADERS"
+    },
+    {
+      "type": "text",
+      "id": "covered_heading",
+      "label": "Left Column Header",
+      "default": "Covered"
+    },
+    {
+      "type": "text",
+      "id": "not_covered_heading",
+      "label": "Right Column Header",
+      "default": "Not covered"
+    },
+    {
+      "type": "header",
+      "content": "IMAGE SETTINGS"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Image (Optional)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "SEE WHAT'S COVERED",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFF29",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison Row",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_covered_icon",
+          "label": "Show Check Icon (Covered)",
+          "default": true
+        },
+        {
+          "type": "inline_richtext",
+          "id": "covered_text",
+          "label": "Covered Text",
+          "default": "Sagging over 1.5 inches"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_not_covered_icon",
+          "label": "Show Cross Icon (Not Covered)",
+          "default": true
+        },
+        {
+          "type": "inline_richtext",
+          "id": "not_covered_text",
+          "label": "Not Covered Text",
+          "default": "Natural softening of latex or wool"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Warranty",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Sagging over 1.5 inches",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Natural softening of latex or wool"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Manufacturing defects",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Misuse or abuse"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Broken or loose coils",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Stains or spills"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Faulty tufting or stitching",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Mold or mildew from moisture"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Premature material breakdown",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Improper foundation support"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "show_covered_icon": true,
+            "covered_text": "Cover seam or zipper failure",
+            "show_not_covered_icon": true,
+            "not_covered_text": "Normal wear"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

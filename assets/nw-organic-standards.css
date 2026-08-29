@@ -386,12 +386,9 @@
     width: calc(100% + 32px) !important;
     margin-left: -16px !important;
     margin-right: -16px !important;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow: hidden !important;
     box-sizing: border-box !important;
     display: block !important;
   }
@@ -400,16 +397,10 @@
     display: none;
   }
 
-  .nw-organic-standards__swiper.swiper-initialized {
-    overflow: hidden !important;
-  }
-
   .nw-organic-standards__swiper .swiper-wrapper {
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: nowrap !important;
-    width: auto !important;
-    gap: 0 !important;
     box-sizing: border-box !important;
   }
 
@@ -419,7 +410,6 @@
     max-width: 200px !important;
     flex: 0 0 200px !important;
     height: auto !important;
-    margin-right: 12px !important;
     display: block !important;
     box-sizing: border-box !important;
   }

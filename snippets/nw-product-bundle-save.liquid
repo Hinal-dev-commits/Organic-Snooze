@@ -1,0 +1,94 @@
+{% doc %}
+  Bundle & Save add-on picker for main product blocks.
+  Products load from custom.bundle metafield or a theme editor product list.
+  @param {object} block - Block settings
+  @param {object} product - Current product
+{% enddoc %}
+
+{%- liquid
+  assign product_source = block.settings.product_source | default: 'metafield'
+  assign bundle_products = blank
+  assign bundle_count = 0
+
+  if product_source == 'product_list'
+    if block.settings.product_list != blank and block.settings.product_list.size > 0
+      assign bundle_products = block.settings.product_list
+      assign bundle_count = block.settings.product_list.size
+    endif
+  else
+    assign bundle_products = product.metafields.custom.bundle.value
+    if bundle_products != blank
+      if bundle_products.id != blank
+        assign bundle_count = 1
+      else
+        assign bundle_count = bundle_products.size
+      endif
+    endif
+  endif
+-%}
+
+{%- if bundle_count == 0 -%}
+  {%- if request.design_mode -%}
+    <div class="nw-bundle-save nw-bundle-save--empty">
+      {%- if block.settings.heading != blank -%}
+        <div class="nw-bundle-save__heading inline-richtext">{{ block.settings.heading }}</div>
+      {%- endif -%}
+      {%- if product_source == 'product_list' -%}
+        <p class="nw-bundle-save__empty">{{ 'products.bundle_save.empty_product_list' | t }}</p>
+      {%- else -%}
+        <p class="nw-bundle-save__empty">{{ 'products.bundle_save.empty' | t }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- else -%}
+  {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+  {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+  {{ 'nw-product-bundle-save.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'nw-product-bundle-save.js' | asset_url }}" defer="defer"></script>
+
+  <nw-bundle-save
+    class="nw-bundle-save"
+    data-select-error="{{ 'products.bundle_save.select_one' | t | escape }}"
+    data-unavailable-error="{{ 'products.bundle_save.unavailable' | t | escape }}"
+  >
+    {%- if block.settings.heading != blank -%}
+      <div class="nw-bundle-save__heading inline-richtext">{{ block.settings.heading }}</div>
+    {%- endif -%}
+
+    <ul class="nw-bundle-save__list" role="list">
+      {%- if bundle_products.id != blank -%}
+        {%- render 'nw-product-bundle-save-item',
+          bundle_product: bundle_products,
+          block: block
+        -%}
+      {%- else -%}
+        {%- for bundle_product in bundle_products -%}
+          {%- unless bundle_product == blank or bundle_product.id == blank or bundle_product.id == product.id -%}
+            {%- render 'nw-product-bundle-save-item',
+              bundle_product: bundle_product,
+              block: block
+            -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+
+    <p class="nw-bundle-save__error" data-bundle-error role="alert" hidden></p>
+
+    <button
+      type="button"
+      class="nw-bundle-save__submit product-form__submit button button--full-width button--primary"
+      data-bundle-submit
+      disabled
+    >
+      <span>
+        {%- if block.settings.button_label != blank -%}
+          {{ block.settings.button_label }}
+        {%- else -%}
+          {{ 'products.product.add_to_cart' | t }}
+        {%- endif -%}
+      </span>
+      {%- render 'loading-spinner' -%}
+    </button>
+  </nw-bundle-save>
+{%- endif -%}

@@ -1,0 +1,444 @@
+{{ 'nw-materials-matter.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.mobile_slider -%}
+  {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+<script src="{{ 'nw-materials-matter.js' | asset_url }}" defer="defer"></script>
+
+{%- assign nw_shell_selector = '#NwMaterialsMatter-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFFFF' %}
+
+<nw-materials-matter
+  id="NwMaterialsMatter-{{ section.id }}"
+  class="nw-materials-matter{% if section.settings.mobile_slider %} nw-materials-matter--mobile-slider{% endif %}"
+  data-mobile-slider="{{ section.settings.mobile_slider }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
+  style="
+    --nw-mm-heading-color: {{ section.settings.heading_color }};
+    --nw-mm-desc-color: {{ section.settings.description_color }};
+    --nw-mm-card-bg: {{ section.settings.card_bg_color }};
+    --nw-mm-card-title-color: {{ section.settings.card_title_color }};
+    --nw-mm-card-desc-color: {{ section.settings.card_desc_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+    --nw-cta-badge-text: {{ section.settings.badge_text_color }};
+    --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-materials-matter__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.heading != blank or section.settings.description != blank -%}
+        <div class="nw-materials-matter__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.description,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
+      {%- if feature_blocks.size > 0 -%}
+        <div class="nw-materials-matter__cards">
+          <div class="swiper nw-materials-matter__swiper" id="NwMaterialsMatterSwiper-{{ section.id }}">
+            <div class="swiper-wrapper nw-materials-matter__grid">
+              {%- for block in feature_blocks -%}
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                  <article class="nw-materials-matter__card">
+                    {%- if block.settings.icon != blank -%}
+                      <div class="nw-materials-matter__icon">
+                        {{
+                          block.settings.icon
+                          | image_url: width: 120
+                          | image_tag:
+                            loading: 'lazy',
+                            class: 'nw-materials-matter__icon-img',
+                            alt: block.settings.title | escape
+                        }}
+                      </div>
+                    {%- endif -%}
+
+                    <div class="nw-materials-matter__card-content">
+                      {%- if block.settings.title != blank -%}
+                        <h3 class="nw-materials-matter__title">{{ block.settings.title }}</h3>
+                      {%- endif -%}
+                      {%- if block.settings.description != blank -%}
+                        <div class="nw-materials-matter__desc rte">{{ block.settings.description }}</div>
+                      {%- endif -%}
+                    </div>
+                  </article>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.settings.mobile_slider and section.settings.show_pagination -%}
+            <div class="nw-swiper-pagination nw-materials-matter__pagination" id="NwMaterialsMatterPagination-{{ section.id }}"></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_button == true -%}
+        {%- assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
+        <div class="nw-materials-matter__footer">
+          {% render 'nw-cta-badges',
+            settings: section.settings,
+            blocks: trust_badge_blocks,
+            class: 'nw-materials-matter__cta'
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-materials-matter>
+
+{% schema %}
+{
+  "name": "t:sections.nw-materials-matter.name",
+  "tag": "section",
+  "class": "section-nw-materials-matter",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Materials Matter"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Your pillow touches your face, hair, eyes, and skin for hours. We believe the surface closest to your face should be soft, supportive, and made without unnecessary synthetic foam, mystery fills, or irritating chemical smells.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Text colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Card colors"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card description color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Mobile layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_slider",
+      "label": "Use slider on mobile",
+      "default": false,
+      "info": "When unchecked, cards stack vertically on mobile."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show slider pagination on mobile",
+      "default": true,
+      "visible_if": "{{ section.settings.mobile_slider == true }}"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.mobile_slider == true and section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Footer CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button label",
+      "default": "SHOP THE MATTRESS",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Badge icon color",
+      "default": "#CC926A",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "No Harsh Chemical Off-Gassing"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Your pillow sits inches from your nose and mouth all night. We use breathable organic materials instead of synthetic foam fills with harsh chemical odors.</p>"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust badge",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use custom icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge icon",
+          "default": "money",
+          "options": [
+            { "value": "money", "label": "Moneyback / Trial" },
+            { "value": "warranty-2", "label": "Warranty" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Truck / Shipping" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "star", "label": "Star" },
+            { "value": "verified-3", "label": "Verified" },
+            { "value": "none", "label": "None" }
+          ],
+          "visible_if": "{{ block.settings.use_custom_icon == false }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon",
+          "visible_if": "{{ block.settings.use_custom_icon }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-materials-matter.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "No Harsh Chemical Off-Gassing",
+            "description": "<p>Your pillow sits inches from your nose and mouth all night. We use breathable organic materials instead of synthetic foam fills with harsh chemical odors.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Adjust It to You",
+            "description": "<p>Add or remove fill until the loft fits your neck exactly.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Naturally Cool",
+            "description": "<p>Breathable organic materials help release heat and moisture, supporting a cooler sleep environment as your body moves into recovery.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Doesn't Collapse",
+            "description": "<p>Built to maintain loft instead of flattening out, so your neck stays supported while your body rests, repairs, and resets.</p>"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Superior Comfort",
+            "description": "<p>Soft, breathable fill creates a cleaner, more supportive sleep surface without sacrificing the comfort you expect from a premium pillow.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

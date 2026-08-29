@@ -5,7 +5,7 @@
   box-sizing: border-box;
   isolation: isolate;
   overflow: hidden;
-  border-bottom: 1px solid var(--septenary-color, rgba(97, 57, 22, 0.4));
+  border-bottom: 1px solid #61391666;
 }
 
 .nw-steps__wrapper {
@@ -30,35 +30,6 @@
 
 .nw-steps__header .nw-section-heading {
   width: 100%;
-}
-
-.nw-steps__header .nw-section-heading h1,
-.nw-steps__header .nw-section-heading h2,
-.nw-steps__header .nw-section-heading .h1,
-.nw-steps__header .nw-section-heading .h2 {
-  font-family: var(--font-heading-family, 'Optima');
-  font-style: normal;
-  font-weight: 400;
-  font-size: 36px;
-  line-height: 115%;
-  letter-spacing: -0.01em;
-  text-transform: capitalize;
-  font-feature-settings: 'pnum' on, 'lnum' on;
-  color: var(--primary-color, #613916);
-  text-align: center;
-  margin: 0;
-}
-
-.nw-steps__header .nw-section-description,
-.nw-steps__header .nw-section-description p {
-  font-family: var(--font-body-family, 'DM Sans');
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 140%;
-  color: var(--primary-color, #613916);
-  text-align: center;
-  margin: 0;
 }
 
 .nw-steps__container {
@@ -86,8 +57,10 @@
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  flex: 1 1 0;
+  width: calc((100% - 48px) / 3);
+  flex: 0 0 calc((100% - 48px) / 3);
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .nw-steps__badge {
@@ -122,22 +95,29 @@
 
 .nw-steps__swiper {
   width: 100%;
+  overflow: visible;
 }
 
+.nw-steps__swiper .swiper-wrapper,
 .nw-steps__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
   gap: 24px;
   width: 100%;
   box-sizing: border-box;
 }
 
+.nw-steps__swiper .swiper-slide,
 .nw-steps__card {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
+  width: calc((100% - 48px) / 3);
+  min-width: 0;
+  max-width: calc((100% - 48px) / 3);
+  flex: 0 0 calc((100% - 48px) / 3);
   min-height: 370px;
   background: #FFFFFF;
   border: 0.5px solid rgba(97, 57, 22, 0.1);
@@ -148,7 +128,6 @@
 .nw-steps__card-media {
   position: relative;
   width: 100%;
-  height: 220px;
   background: var(--tertiary-color, #F4EFE8);
   overflow: hidden;
   flex-shrink: 0;
@@ -239,11 +218,6 @@
 
 .nw-steps__footer .nw-btn {
   max-width: 520px;
-  width: 100%;
-  min-height: 56px;
-  font-size: 18px;
-  text-transform: uppercase;
-  border-radius: 1000px;
 }
 
 @media screen and (max-width: 989px) and (min-width: 750px) {
@@ -251,16 +225,33 @@
     gap: 36px;
   }
 
+  .nw-steps__swiper .swiper-wrapper,
   .nw-steps__grid {
-    gap: 16px;
+    gap: 16px !important;
+  }
+
+  .nw-steps__swiper .swiper-slide,
+  .nw-steps__card {
+    width: calc((100% - 32px) / 3) !important;
+    max-width: calc((100% - 32px) / 3) !important;
+    flex: 0 0 calc((100% - 32px) / 3) !important;
+  }
+
+  .nw-steps__track {
+    gap: 16px !important;
+  }
+
+  .nw-steps__track-item {
+    width: calc((100% - 32px) / 3) !important;
+    flex: 0 0 calc((100% - 32px) / 3) !important;
   }
 
   .nw-steps__card-media {
-    height: 180px;
+    flex: 0 0 180px !important;
   }
 
   .nw-steps__card-content {
-    padding: 16px;
+    padding: 16px !important;
   }
 
   .nw-steps__card-title {
@@ -272,8 +263,8 @@
   }
 
   .nw-steps__badge {
-    padding: 4px 10px;
-    font-size: 12px;
+    padding: 4px 10px !important;
+    font-size: 12px !important;
   }
 }
 
@@ -282,51 +273,74 @@
     gap: 32px;
   }
 
-  .nw-steps__header .nw-section-heading h1,
-  .nw-steps__header .nw-section-heading h2,
-  .nw-steps__header .nw-section-heading .h1,
-  .nw-steps__header .nw-section-heading .h2 {
-    font-size: 32px;
-    line-height: 115%;
+  .nw-steps__grid {
+    gap: 0px;
   }
 
-  .nw-steps__header .nw-section-description,
-  .nw-steps__header .nw-section-description p {
-    font-size: 14px;
-    line-height: 140%;
+  .nw-steps__swiper .swiper-wrapper,
+  .nw-steps__grid {
+    gap: 0px;
   }
 
   .nw-steps__container {
     gap: 25px;
     width: 100%;
+    max-width: 100%;
     overflow: hidden;
   }
 
   .nw-steps__track {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 12px;
-    width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .nw-steps__track::-webkit-scrollbar {
-    display: none;
+    width: max-content;
+    box-sizing: border-box;
+    will-change: transform;
+    transition-property: transform;
+    overflow: visible;
   }
 
   .nw-steps__track-item {
-    flex: 1 0 auto;
-    min-width: 140px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 230px;
+    min-width: 230px;
+    max-width: 230px;
+    flex: 0 0 230px;
+    height: 18px;
+    box-sizing: border-box;
   }
 
   .nw-steps__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 2px 8px;
-    font-size: 12px;
     min-height: 18px;
+    height: 18px;
+    background: #613916;
+    border-radius: 100px;
+    font-family: var(--font-body-family, 'DM Sans');
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 120%;
+    letter-spacing: 0.04em;
+    color: #FFFFFF;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-sizing: border-box;
   }
 
   .nw-steps__line {
-    min-width: 60px;
+    flex: 1 1 auto;
+    width: 100%;
+    height: 0;
+    border-top: 1px dashed #613916;
+    min-width: 20px;
   }
 
   .nw-steps__slider-wrap {
@@ -346,37 +360,97 @@
   }
 
   .nw-steps__swiper .swiper-slide {
-    width: 230px;
-    height: auto;
-    min-height: 309px;
-    flex-shrink: 0;
+    width: 230px !important;
+    min-width: 230px !important;
+    max-width: 230px !important;
+    height: 309px !important;
+    min-height: 309px !important;
+    max-height: 309px !important;
+    flex: 0 0 230px !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .nw-steps__card {
-    width: 230px;
-    height: 100%;
-    min-height: 309px;
+    width: 230px !important;
+    height: 309px !important;
+    min-height: 309px !important;
+    max-height: 309px !important;
     border-radius: 10px;
     border: 1px solid rgba(97, 57, 22, 0.1);
+    background: #FFFFFF;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
   }
 
   .nw-steps__card-media {
-    height: 180px;
+    width: 230px;
+    flex: 0 0 180px !important;
+    background: var(--tertiary-color, #F4EFE8);
+    overflow: hidden;
+    margin-top: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .nw-steps__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .nw-steps__card-content {
+    width: 230px;
+    height: 129px !important;
+    min-height: 129px !important;
+    max-height: 129px !important;
+    flex: 0 0 129px !important;
     padding: 12px;
     gap: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: #FFFFFF;
   }
 
   .nw-steps__card-title {
+    font-family: var(--font-heading-family, 'Optima');
+    font-style: normal;
+    font-weight: 400;
     font-size: 20px;
     line-height: 115%;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #613916;
+    margin: 0;
+    width: 100%;
+    text-align: left;
   }
 
   .nw-steps__card-text {
+    font-family: var(--font-body-family, 'DM Sans');
+    font-style: normal;
+    font-weight: 400;
     font-size: 12px;
     line-height: 150%;
+    color: #613916;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nw-steps__card-text p {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
   }
 
   .nw-steps__pagination {
@@ -384,16 +458,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 4px;
     width: 100%;
-    margin-top: 4px;
+    height: 5px;
+    margin-top: 32px;
   }
 
   .nw-steps__pagination .swiper-pagination-bullet {
     display: inline-block;
     width: 5px;
     height: 5px;
-    background: var(--primary-color, #613916);
+    background: #613916;
     opacity: 0.3;
     border-radius: 5px;
     margin: 0;
@@ -404,13 +478,10 @@
   .nw-steps__pagination .swiper-pagination-bullet-active {
     width: 30px;
     height: 5px;
-    background: var(--primary-color, #613916);
+    background: #613916;
     opacity: 1;
     border-radius: 6px;
+    margin: 0;
   }
 
-  .nw-steps__footer .nw-btn {
-    max-width: 343px;
-    font-size: 16px;
-  }
 }

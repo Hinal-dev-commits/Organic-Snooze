@@ -1,0 +1,460 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-warranty-timeline.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-warranty-timeline.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  #NwWarrantyTimeline-{{ section.id }} {
+    display: block;
+    position: relative;
+    isolation: isolate;
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    #NwWarrantyTimeline-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    #NwWarrantyTimeline-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFF29' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  #NwWarrantyTimeline-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwWarrantyTimeline-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      #NwWarrantyTimeline-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<div
+  id="NwWarrantyTimeline-{{ section.id }}"
+  class="nw-warranty-timeline section-{{ section.id }}{% if section.settings.image_position == 'right' %} nw-warranty-timeline--image-right{% endif %}"
+>
+  <div class="page-width">
+    <div class="nw-warranty-timeline__wrapper scroll-trigger animate--slide-in">
+      {%- if section.settings.heading != blank
+        or section.settings.subheading != blank
+        or section.settings.eyebrow != blank
+      -%}
+        <div class="nw-warranty-timeline__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      <nw-warranty-timeline class="nw-warranty-timeline__main">
+        <div class="nw-warranty-timeline__media-col">
+          {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
+            {%- if section.settings.image_mobile != blank -%}
+              <picture class="nw-warranty-timeline__picture">
+                <source
+                  media="(max-width: 749px)"
+                  srcset="{{ section.settings.image_mobile | image_url: width: 800 }}"
+                >
+                <img
+                  src="{{ section.settings.image | default: section.settings.image_mobile | image_url: width: 1400 }}"
+                  alt="{{ section.settings.image.alt | default: section.settings.heading | strip_html | escape }}"
+                  loading="lazy"
+                  class="nw-warranty-timeline__img"
+                  height=""
+                  width=""
+                >
+              </picture>
+            {%- else -%}
+              <img
+                src="{{ section.settings.image | image_url: width: 1400 }}"
+                alt="{{ section.settings.image.alt | default: section.settings.heading | strip_html | escape }}"
+                loading="lazy"
+                class="nw-warranty-timeline__img"
+                height=""
+                width=""
+              >
+            {%- endif -%}
+          {%- else -%}
+            <div class="nw-warranty-timeline__img-placeholder">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="nw-warranty-timeline__content-col">
+          {%- if section.settings.timeline_heading != blank -%}
+            <h3 class="nw-warranty-timeline__timeline-heading">{{ section.settings.timeline_heading }}</h3>
+          {%- endif -%}
+
+          {%- if section.blocks.size > 0 -%}
+            <div class="nw-warranty-timeline__steps">
+              {%- for block in section.blocks -%}
+                <div
+                  class="nw-warranty-timeline__step{% if forloop.first %} is-active{% endif %}"
+                  {{ block.shopify_attributes }}
+                  data-step-index="{{ forloop.index0 }}"
+                >
+                  <div class="nw-warranty-timeline__indicator" aria-hidden="true">
+                    <span class="nw-warranty-timeline__dot"></span>
+                    {%- unless forloop.last -%}
+                      <span class="nw-warranty-timeline__line">
+                        <span class="nw-warranty-timeline__line-fill"></span>
+                      </span>
+                    {%- endunless -%}
+                  </div>
+
+                  <div class="nw-warranty-timeline__card">
+                    {%- if block.settings.step_badge != blank -%}
+                      <span class="nw-warranty-timeline__badge">{{ block.settings.step_badge }}</span>
+                    {%- endif -%}
+
+                    {%- if block.settings.title != blank -%}
+                      <h4 class="nw-warranty-timeline__step-title">{{ block.settings.title }}</h4>
+                    {%- endif -%}
+
+                    {%- if block.settings.text != blank -%}
+                      <div class="nw-warranty-timeline__step-text">{{ block.settings.text }}</div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_button and section.settings.button_text != blank -%}
+            <div class="nw-warranty-timeline__btn-wrap">
+              {% render 'nw-button',
+                text: section.settings.button_text,
+                link: section.settings.button_link,
+                style: section.settings.button_style,
+                btn_class: 'nw-btn'
+              %}
+            </div>
+          {%- endif -%}
+        </div>
+      </nw-warranty-timeline>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Warranty Timeline",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars in Header",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to Make a Warranty Claim"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "MEDIA SETTINGS"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile Optional)"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Desktop Image Position",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "TIMELINE SETTINGS"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "timeline_heading",
+      "label": "Timeline Subheading",
+      "default": "If you believe your mattress has a defect:"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "START A WARRANTY CLAIM",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFF29",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Timeline Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_badge",
+          "label": "Step Badge",
+          "default": "STEP 1"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Step Title",
+          "default": "Reach out to our Sleep Concierge team"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Step Description",
+          "default": "<p>Email us or start a claim online with your order details, and a real person takes it from there</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Warranty Timeline",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 1",
+            "title": "Reach out to our Sleep Concierge team",
+            "text": "<p>Email us or start a claim online with your order details, and a real person takes it from there</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 2",
+            "title": "Send a few photos or a short video",
+            "text": "<p>Email us or start a claim online with your order details, and a real person takes it from there</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 3",
+            "title": "We review within 3–5 business days",
+            "text": "<p>Our team checks your claim against your warranty coverage and follows up with next steps</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_badge": "STEP 4",
+            "title": "If it's covered, we repair or replace",
+            "text": "<p>No debating, no fine print. We resolve it and get you back to sleeping well</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
