@@ -57,6 +57,10 @@
     transform: translateY(0);
   }
 
+  .nw-mega-menu-item.is-instant .nw-mega-menu__panel {
+    transition: none !important;
+  }
+
   .nw-mega-menu__panel-shell {
     overflow: hidden;
   }
