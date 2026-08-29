@@ -473,6 +473,9 @@ header-drawer {
 shopify-chat{
     z-index: 1;
 }
+.header__icon{
+    color: var(--primary-color, #613916);
+}
 
 @media screen and (max-width: 1199px) {
     .header__inline-menu .list-menu--inline > li > .header__menu-item span,

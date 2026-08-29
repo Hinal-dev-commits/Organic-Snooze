@@ -1,0 +1,54 @@
+{% doc %}
+  What's included checklist for main product blocks.
+  @param {object} block - Block settings
+  @param {object} product - Product object
+{% enddoc %}
+
+{%- liquid
+  assign heading = block.settings.heading
+  assign items_raw = block.settings.items | strip
+
+  if block.settings.use_product_metafield
+    assign metafield_value = product.metafields.custom.whats_included.value | default: product.metafields.custom.whats_included
+    if metafield_value != blank
+      assign items_raw = metafield_value
+    endif
+  endif
+
+  assign show_block = false
+  if heading != blank or items_raw != blank
+    assign show_block = true
+  endif
+-%}
+
+{%- if show_block -%}
+  <div
+    class="nw-product-whats-included"
+    style="
+      --nw-pwi-heading-color: {{ block.settings.heading_color | default: '#613916' }};
+      --nw-pwi-text-color: {{ block.settings.text_color | default: '#613916' }};
+      --nw-pwi-icon-color: {{ block.settings.icon_color | default: '#613916' }};
+    "
+  >
+    {%- if heading != blank -%}
+      <h3 class="nw-product-whats-included__heading">{{ heading | escape }}</h3>
+    {%- endif -%}
+
+    {%- if items_raw != blank -%}
+      {%- assign item_lines = items_raw | newline_to_br | split: '<br />' -%}
+      <ul class="nw-product-whats-included__list" role="list">
+        {%- for item_text in item_lines -%}
+          {%- assign item_text = item_text | strip -%}
+          {%- if item_text != blank -%}
+            <li class="nw-product-whats-included__item">
+              <span class="nw-product-whats-included__icon" aria-hidden="true">
+                {%- render 'nw-icon', icon: 'checkmark' -%}
+              </span>
+              <span class="nw-product-whats-included__text">{{ item_text | escape }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+{%- endif -%}

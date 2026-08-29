@@ -57,11 +57,10 @@ Renders a Breezeline collection product card.
   endif
 
   assign tag_text = block.settings.tag_text | strip
-  assign tag_image = block.settings.custom_tag_image
-  if block.settings.use_custom_tag_image and tag_image != blank
-    assign show_tag_image = true
-  else
-    assign show_tag_image = false
+
+  assign card_image = card_product.featured_media
+  if block.settings.use_custom_image and block.settings.custom_image != blank
+    assign card_image = block.settings.custom_image
   endif
 
   assign breathable_label_1 = breathable_label_1 | default: 'Breathable'
@@ -73,10 +72,10 @@ Renders a Breezeline collection product card.
 <article class="nw-breezeline-card" {{ block.shopify_attributes }}>
   <div class="nw-breezeline-card__media">
     <a href="{{ card_product.url }}" class="nw-breezeline-card__media-link" aria-label="{{ card_title | escape }}">
-      {%- if card_product.featured_media -%}
+      {%- if card_image != blank -%}
         <img
-          src="{{ card_product.featured_media | image_url: width: 800 }}"
-          alt="{{ card_product.featured_media.alt | default: card_title | escape }}"
+          src="{{ card_image | image_url: width: 800 }}"
+          alt="{{ card_image.alt | default: card_title | escape }}"
           width="400"
           height="400"
           loading="lazy"
@@ -87,18 +86,7 @@ Renders a Breezeline collection product card.
       {%- endif -%}
     </a>
 
-    {%- if show_tag_image -%}
-      <span class="nw-breezeline-card__tag nw-breezeline-card__tag--image">
-        <img
-          src="{{ tag_image | image_url: width: 200 }}"
-          alt=""
-          width=""
-          height=""
-          loading="lazy"
-          class="nw-breezeline-card__tag-img"
-        >
-      </span>
-    {%- elsif tag_text != blank -%}
+    {%- if tag_text != blank -%}
       <span class="nw-breezeline-card__tag">{{ tag_text }}</span>
     {%- endif -%}
   </div>
@@ -110,7 +98,6 @@ Renders a Breezeline collection product card.
 
     {%- if show_feel_row -%}
       <div class="nw-breezeline-card__feel">
-        <span class="nw-breezeline-card__label">Feel:</span>
         {%- if card_product.metafields.custom.feel_text.type == 'rich_text_field' -%}
           <span class="nw-breezeline-card__value rte">{{ card_product.metafields.custom.feel_text | metafield_tag }}</span>
         {%- else -%}
@@ -121,7 +108,6 @@ Renders a Breezeline collection product card.
 
     {%- if show_best_for_row -%}
       <div class="nw-breezeline-card__best-for">
-        <span class="nw-breezeline-card__label">Best for:</span>
         {%- if card_product.metafields.custom.best_for.type == 'rich_text_field' -%}
           <span class="nw-breezeline-card__value rte">{{ card_product.metafields.custom.best_for | metafield_tag }}</span>
         {%- else -%}

@@ -22,6 +22,7 @@ if (!customElements.get('nw-breezeline-collection')) {
         if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
 
         var showPagination = this.dataset.showPagination === 'true';
+        var showArrows = this.dataset.showArrows === 'true';
         var paginationId = this.dataset.paginationId;
 
         var options = {
@@ -38,6 +39,13 @@ if (!customElements.get('nw-breezeline-collection')) {
             }
           }
         };
+
+        if (showArrows) {
+          options.navigation = {
+            nextEl: this.querySelector('.nw-swiper-btn--next'),
+            prevEl: this.querySelector('.nw-swiper-btn--prev')
+          };
+        }
 
         if (showPagination && paginationId) {
           options.pagination = {

@@ -32,7 +32,8 @@
 }
 
 .nw-breezeline-collection__slider-wrap {
-  width: 100%;
+  max-width: 100%;
+  width: auto;
   position: relative;
 }
 
@@ -46,7 +47,7 @@
 }
 
 .nw-breezeline-collection__swiper .swiper-slide {
-  width: min(311px, calc(100% - 64px));
+  width: min(311px, calc(100% - 105px));
   height: auto;
   display: flex;
   flex-shrink: 0;
@@ -61,17 +62,19 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--nw-bc-card-bg, #FFFFFF);
-  box-shadow: 0 4px 16px rgba(97, 57, 22, 0.06);
+  background: transparent;
+  max-width: 298px;
+  gap: 8px;
 }
 
 .nw-breezeline-card__media {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 2 / 1;
   overflow: hidden;
+  border-radius: 12px;
   background: var(--tertiary-color, #F4EFE8);
+  flex-shrink: 0;
+  min-height: 180px;
 }
 
 .nw-breezeline-card__media-link {
@@ -105,33 +108,23 @@
   white-space: nowrap;
 }
 
-.nw-breezeline-card__tag--image {
-  padding: 0;
-  background: transparent;
-  line-height: 0;
-}
-
-.nw-breezeline-card__tag-img {
-  display: block;
-  max-height: 28px;
-  width: auto;
-}
-
 .nw-breezeline-card__body {
   display: flex;
   flex-direction: column;
-  gap: 12px;
   padding: 16px;
   flex: 1;
+  border-radius: 12px;
+  background: var(--nw-bc-card-bg, #FFFFFF);
+  box-shadow: 0 4px 16px rgba(97, 57, 22, 0.06);
   color: var(--nw-bc-card-text, var(--primary-color, #613916));
 }
 
 .nw-breezeline-card__title {
-  margin: 0;
+  margin: 0 0 16px;
   font-family: var(--font-heading-family);
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
 .nw-breezeline-card__title a {
@@ -139,12 +132,12 @@
   text-decoration: none;
 }
 
-.nw-breezeline-card__feel,
-.nw-breezeline-card__best-for {
-  margin: 0;
-  font-family: var(--font-body-family);
-  font-size: 14px;
-  line-height: 1.5;
+.nw-breezeline-card__feel{
+  margin-bottom: 6px;
+}
+.nw-breezeline-card__best-for{
+  margin-bottom: 24px;
+  flex: 1;
 }
 
 .nw-breezeline-card__feel .nw-breezeline-card__value,
@@ -165,18 +158,24 @@
 
 .nw-breezeline-card__label {
   font-weight: 700;
+  margin-right: 3px;
 }
 
 .nw-breezeline-card__value {
   font-weight: 400;
-  opacity: 0.92;
+  text-align: left;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.nw-breezeline-card__value strong{
+  color: var(--nw-bc-value-color-strong, #613916);
 }
 
 .nw-breezeline-card__breathable {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 4px;
+  margin-bottom: 24px;
 }
 
 .nw-breezeline-card__breathable-track {
@@ -209,17 +208,26 @@
 }
 
 .nw-breezeline-card__breathable-labels {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: space-between;
   gap: 8px;
   text-align: center;
 }
-
+  .nw-breezeline-card__breathable-label:first-child{
+    text-align: left;
+  }
+  .nw-breezeline-card__breathable-label:last-child{
+    text-align: right;
+  }
+  .nw-breezeline-card__breathable-label:nth-child(2){
+    margin: 0 auto;
+  }
 .nw-breezeline-card__breathable-label {
   font-family: var(--font-body-family);
   font-size: 12px;
   line-height: 1.3;
   color: var(--nw-bc-scale-inactive, rgba(97, 57, 22, 0.55));
+  flex: 1;
 }
 
 .nw-breezeline-card__breathable-label.is-active {
@@ -234,23 +242,23 @@
   margin-top: auto;
   padding-top: 4px;
   font-family: var(--font-body-family);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.35;
   color: var(--nw-bc-card-text, var(--primary-color, #613916));
   text-decoration: none;
 }
 
 .nw-breezeline-card__cta svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   display: block;
 }
 
 @media screen and (min-width: 750px) {
   .nw-breezeline-collection__swiper .swiper-slide {
     width: calc((100% - 48px) / 3);
-    max-width: none;
+    max-width: 298px;
   }
 
   .nw-breezeline-collection .nw-swiper-pagination {
@@ -272,11 +280,22 @@
   }
 
   .nw-breezeline-card__title {
-    font-size: 20px;
+    font-size: 18px;
+    margin-bottom: 12px;
   }
-
-  .nw-breezeline-card__feel,
-  .nw-breezeline-card__best-for {
+  .nw-breezeline-card__value{
     font-size: 13px;
+  }
+  .nw-breezeline-card__breathable-label{
+    font-size: 10px;
+  }
+  .nw-breezeline-card__cta{
+    font-size: 14px;
+  }
+  .nw-breezeline-card__best-for{
+    margin-bottom: 12px;
+  }
+  .nw-breezeline-card__breathable{
+    margin-bottom: 12px;
   }
 }

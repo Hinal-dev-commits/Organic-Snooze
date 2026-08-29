@@ -7,6 +7,7 @@
 <nw-breezeline-collection
   id="NwBreezelineCollection-{{ section.id }}"
   class="nw-breezeline-collection section-{{ section.id }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
   data-pagination-id="NwBreezelinePagination-{{ section.id }}"
   style="
@@ -14,11 +15,18 @@
     --nw-bc-desc-color: {{ section.settings.description_color }};
     --nw-bc-card-bg: {{ section.settings.card_bg_color }};
     --nw-bc-card-text: {{ section.settings.card_text_color }};
+    --nw-bc-title-color: {{ section.settings.card_title_color }};
+    --nw-bc-label-color: {{ section.settings.label_color }};
+    --nw-bc-value-color: {{ section.settings.value_color }};
+    --nw-bc-value-color-strong: {{ section.settings.value_color_strong }};
+    --nw-bc-cta-color: {{ section.settings.cta_color }};
     --nw-bc-tag-bg: {{ section.settings.tag_bg_color }};
     --nw-bc-tag-text: {{ section.settings.tag_text_color }};
     --nw-bc-scale-active: {{ section.settings.scale_active_color }};
     --nw-bc-scale-inactive: {{ section.settings.scale_inactive_color }};
     --nw-swiper-bullet: {{ section.settings.pagination_color }};
+    --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
+    --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
   "
 >
   <div class="page-width">
@@ -58,7 +66,11 @@
             </div>
           </div>
 
-          {%- if section.settings.show_pagination and product_blocks.size > 1 -%}
+          {%- if section.settings.show_arrows -%}
+            {% render 'nw-swiper-arrows' %}
+          {%- endif -%}
+
+          {%- if section.settings.show_pagination -%}
             {%- assign bc_pagination_id = 'NwBreezelinePagination-' | append: section.id -%}
             {% render 'nw-swiper-pagination', id: bc_pagination_id %}
           {%- endif -%}
@@ -67,6 +79,31 @@
     </div>
   </div>
 </nw-breezeline-collection>
+
+<style>
+  #NwBreezelineCollection-{{ section.id }} .nw-breezeline-card__title,
+  #NwBreezelineCollection-{{ section.id }} .nw-breezeline-card__title a {
+    color: var(--nw-bc-title-color, var(--nw-bc-card-text, #613916));
+  }
+
+  #NwBreezelineCollection-{{ section.id }} .nw-breezeline-card__label {
+    color: var(--nw-bc-label-color, var(--nw-bc-card-text, #613916));
+  }
+
+  #NwBreezelineCollection-{{ section.id }} .nw-breezeline-card__value,
+  #NwBreezelineCollection-{{ section.id }} .nw-breezeline-card__feel .rte,
+  #NwBreezelineCollection-{{ section.id }} .nw-breezeline-card__best-for .rte {
+    color: var(--nw-bc-value-color, var(--nw-bc-card-text, #613916));
+  }
+
+  #NwBreezelineCollection-{{ section.id }} .nw-breezeline-card__cta {
+    color: var(--nw-bc-cta-color, var(--secondary-color, #CC926A));
+  }
+
+  #NwBreezelineCollection-{{ section.id }} .nw-breezeline-card__cta svg {
+    color: var(--nw-bc-cta-color, var(--secondary-color, #CC926A));
+  }
+</style>
 
 {% schema %}
 {
@@ -113,35 +150,44 @@
       "default": true
     },
     {
-      "type": "text",
-      "id": "breathable_label_1",
-      "label": "Breathable scale label (left)",
-      "default": "Breathable",
-      "visible_if": "{{ section.settings.show_breathable == true }}"
-    },
-    {
-      "type": "text",
-      "id": "breathable_label_2",
-      "label": "Breathable scale label (center)",
-      "default": "Comfort",
-      "visible_if": "{{ section.settings.show_breathable == true }}"
-    },
-    {
-      "type": "text",
-      "id": "breathable_label_3",
-      "label": "Breathable scale label (right)",
-      "default": "Cool",
-      "visible_if": "{{ section.settings.show_breathable == true }}"
-    },
-    {
       "type": "header",
-      "content": "Slider"
+      "content": "Slider settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show slider arrows",
+      "default": false
     },
     {
       "type": "checkbox",
       "id": "show_pagination",
-      "label": "Show pagination on mobile",
+      "label": "Show slider pagination",
       "default": true
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_bg",
+      "label": "Arrow background",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_color",
+      "label": "Arrow icon color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_pagination == true }}"
     },
     {
       "type": "text",
@@ -183,6 +229,41 @@
     },
     {
       "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Feel / Best for label color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "value_color",
+      "label": "Feel / Best for text color",
+      "default": "#61391699",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "value_color_strong",
+      "label": "Highlighted Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "Shop Now link color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
       "id": "tag_bg_color",
       "label": "Tag background",
       "default": "#613916",
@@ -210,14 +291,6 @@
       "default": "rgba(97, 57, 22, 0.35)",
       "alpha": true,
       "visible_if": "{{ section.settings.show_breathable == true }}"
-    },
-    {
-      "type": "color",
-      "id": "pagination_color",
-      "label": "Pagination color",
-      "default": "#613916",
-      "alpha": true,
-      "visible_if": "{{ section.settings.show_pagination == true }}"
     },
     {
       "type": "header",
@@ -324,25 +397,30 @@
         },
         {
           "type": "header",
+          "content": "Product image"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_image",
+          "label": "Use custom product image",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom product image",
+          "info": "Overrides the product featured image when enabled.",
+          "visible_if": "{{ block.settings.use_custom_image == true }}"
+        },
+        {
+          "type": "header",
           "content": "Image tag"
         },
         {
           "type": "text",
           "id": "tag_text",
           "label": "Tag text",
-          "info": "Shown on the product image when custom tag image is not used."
-        },
-        {
-          "type": "checkbox",
-          "id": "use_custom_tag_image",
-          "label": "Use custom tag image",
-          "default": false
-        },
-        {
-          "type": "image_picker",
-          "id": "custom_tag_image",
-          "label": "Custom tag image",
-          "visible_if": "{{ block.settings.use_custom_tag_image == true }}"
+          "info": "Text badge shown on the product image."
         }
       ]
     }
