@@ -1,0 +1,89 @@
+{% doc %}
+  Payment partner logo row for main product blocks.
+  @param {object} block - Block with two logo slots
+{% enddoc %}
+
+{%- liquid
+  assign has_items = false
+  for i in (1..2)
+    assign image_key = 'item_' | append: i | append: '_image'
+    if block.settings[image_key] != blank
+      assign has_items = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_items -%}
+  <div
+    class="nw-product-payment-logos"
+    style="
+      --nw-ppl-divider-color: {{ block.settings.divider_color | default: '#D1CCC2' }};
+      --nw-ppl-heading-color: {{ block.settings.heading_color | default: '#32323A' }};
+      --nw-ppl-subheading-color: {{ block.settings.subheading_color | default: '#32323A' }};
+      --nw-ppl-text-color: {{ block.settings.text_color | default: '#666666' }};
+    "
+  >
+    {%- for i in (1..2) -%}
+      {%- liquid
+        assign image_key = 'item_' | append: i | append: '_image'
+        assign heading_key = 'item_' | append: i | append: '_heading'
+        assign subheading_key = 'item_' | append: i | append: '_subheading'
+        assign text_key = 'item_' | append: i | append: '_text'
+        assign link_key = 'item_' | append: i | append: '_link'
+        assign layout_key = 'item_' | append: i | append: '_layout'
+        assign item_image = block.settings[image_key]
+        assign item_heading = block.settings[heading_key]
+        assign item_subheading = block.settings[subheading_key]
+        assign item_text = block.settings[text_key]
+        assign item_link = block.settings[link_key]
+        assign item_layout = block.settings[layout_key] | default: 'simple'
+      -%}
+      {%- if item_image != blank -%}
+        {%- unless forloop.first -%}
+          <span class="nw-product-payment-logos__divider" aria-hidden="true"></span>
+        {%- endunless -%}
+
+        {%- capture item_content -%}
+          <div class="nw-product-payment-logos__media{% if item_layout == 'inline' %} nw-product-payment-logos__media--inline{% endif %}">
+            {{
+              item_image
+              | image_url: width: 320
+              | image_tag:
+                widths: '117, 149, 298',
+                sizes: '149px',
+                loading: 'lazy',
+                class: 'nw-product-payment-logos__image',
+                alt: item_heading | default: item_text | default: 'Payment option' | escape
+            }}
+            {%- if item_layout == 'inline' -%}
+              {%- if item_heading != blank or item_subheading != blank -%}
+              <div class="nw-product-payment-logos__headings">
+                {%- if item_heading != blank -%}
+                  <span class="nw-product-payment-logos__heading">{{ item_heading }}</span>
+                {%- endif -%}
+                {%- if item_subheading != blank -%}
+                  <span class="nw-product-payment-logos__subheading">{{ item_subheading }}</span>
+                {%- endif -%}
+              </div>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+          {%- if item_text != blank -%}
+            <span class="nw-product-payment-logos__text">{{ item_text }}</span>
+          {%- endif -%}
+        {%- endcapture -%}
+
+        {%- if item_link != blank -%}
+          <a href="{{ item_link }}" class="nw-product-payment-logos__item">
+            {{ item_content }}
+          </a>
+        {%- else -%}
+          <div class="nw-product-payment-logos__item">
+            {{ item_content }}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}

@@ -247,19 +247,19 @@
 }
 
 .nw-trusted-people__role-icon {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--nw-tp-verified-color, var(--nonary-color));
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 0px;
 }
 
 .nw-trusted-people__role-icon svg {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   display: block;
   fill: var(--nw-tp-verified-color, var(--nonary-color));
 }
@@ -321,13 +321,8 @@
 }
 
 .nw-trusted-people__expand {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.36s ease-out;
-}
-
-.nw-trusted-people__card.is-expanded .nw-trusted-people__expand {
-  grid-template-rows: 1fr;
+  height: 0;
+  overflow: hidden;
 }
 
 .nw-trusted-people__header{
@@ -337,8 +332,6 @@
 .nw-trusted-people__expand-inner {
   overflow: hidden;
   min-height: 0;
-}
-.nw-trusted-people__card.is-expanded .nw-trusted-people__expand-inner {
   padding-bottom: 8px;
 }
 
@@ -347,6 +340,21 @@
   padding-top: 10px;
   border-top: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
   text-align: left;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.22s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nw-trusted-people__card.is-expanded .nw-trusted-people__quote {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nw-trusted-people__quote,
+  .nw-trusted-people__toggle-icon::after {
+    transition: none;
+  }
 }
 
 .nw-trusted-people__quote,
@@ -527,22 +535,9 @@
   }
 
   .nw-trusted-people__slider-wrap .nw-swiper-pagination {
-    gap: 4px;
-    margin-top: 32px;
     padding: 0 16px;
   }
 
-  .nw-trusted-people__slider-wrap .nw-swiper-pagination .swiper-pagination-bullet {
-    width: 5px;
-    height: 5px;
-    border-radius: 5px;
-  }
-
-  .nw-trusted-people__slider-wrap .nw-swiper-pagination .swiper-pagination-bullet-active {
-    width: 30px;
-    height: 5px;
-    border-radius: 6px;
-  }
   .nw-trusted-people__header{
     padding: 0 16px;
   }

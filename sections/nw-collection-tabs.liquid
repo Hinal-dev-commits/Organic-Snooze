@@ -3,7 +3,27 @@
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-collection-tabs.js' | asset_url }}" defer="defer"></script>
 
-{%- assign tab_blocks = section.blocks | where: 'type', 'tab' -%}
+{%- liquid
+  assign sidebar_block = nil
+  assign tab_blocks = section.blocks | where: 'type', 'tab'
+  for block in section.blocks
+    if block.type == 'sidebar'
+      assign sidebar_block = block
+    endif
+  endfor
+
+  assign default_tab_index = 0
+  assign tab_index_scan = 0
+  for block in section.blocks
+    if block.type == 'tab'
+      if block.settings.default_selected
+        assign default_tab_index = tab_index_scan
+        break
+      endif
+      assign tab_index_scan = tab_index_scan | plus: 1
+    endif
+  endfor
+-%}
 
 {%- assign nw_shell_selector = '#NwCollectionTabs-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
@@ -42,6 +62,17 @@
 >
   <div class="page-width">
     <div class="nw-collection-tabs__inner">
+      {%- if sidebar_block -%}
+        <div class="nw-collection-tabs__mobile-heading">
+          {%- if sidebar_block.settings.heading != blank -%}
+            <div class="nw-heading">{{ sidebar_block.settings.heading }}</div>
+          {%- endif -%}
+          {%- if sidebar_block.settings.subheading != blank -%}
+            <div class="nw-collection-tabs__sidebar-subheading rte">{{ sidebar_block.settings.subheading }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
       {%- if tab_blocks.size > 0 -%}
         <div class="nw-collection-tabs__tabs-wrap">
           <div class="nw-collection-tabs__tabs" role="tablist" aria-label="Collection categories">
@@ -50,12 +81,12 @@
               {%- if block.type == 'tab' -%}
                 <button
                   type="button"
-                  class="nw-collection-tabs__tab{% if tab_index == 0 %} is-active{% endif %}"
+                  class="nw-collection-tabs__tab{% if tab_index == default_tab_index %} is-active{% endif %}"
                   id="NwCollectionTabsBtn-{{ section.id }}-{{ tab_index }}"
                   role="tab"
-                  aria-selected="{% if tab_index == 0 %}true{% else %}false{% endif %}"
+                  aria-selected="{% if tab_index == default_tab_index %}true{% else %}false{% endif %}"
                   aria-controls="NwCollectionTabsPanel-{{ section.id }}-{{ tab_index }}"
-                  tabindex="{% if tab_index == 0 %}0{% else %}-1{% endif %}"
+                  tabindex="{% if tab_index == default_tab_index %}0{% else %}-1{% endif %}"
                   data-nw-tab="{{ tab_index }}"
                   data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}"
                   {{ block.shopify_attributes }}
@@ -70,53 +101,24 @@
       {%- endif -%}
 
       <div class="nw-collection-tabs__main">
+        {%- if sidebar_block -%}
+          <aside class="nw-collection-tabs__sidebar" {{ sidebar_block.shopify_attributes }}>
+            {% render 'nw-collection-tabs-sidebar', block: sidebar_block %}
+          </aside>
+        {%- endif -%}
+
         <div class="nw-collection-tabs__slider-col">
           {%- assign panel_index = 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'tab' -%}
-              {%- liquid
-                assign has_sidebar = false
-                if block.settings.heading != blank or block.settings.subheading != blank
-                  assign has_sidebar = true
-                endif
-                if block.settings.quote != blank or block.settings.author_name != blank or block.settings.author_title != blank or block.settings.author_image != blank
-                  assign has_sidebar = true
-                endif
-                if block.settings.show_promo
-                  if block.settings.promo_title != blank or block.settings.status_text != blank or block.settings.promo_subtext != blank or block.settings.countdown_label != blank
-                    assign has_sidebar = true
-                  endif
-                endif
-                if block.settings.badge_1_text != blank or block.settings.badge_2_text != blank or block.settings.badge_3_text != blank or block.settings.badge_4_text != blank
-                  assign has_sidebar = true
-                endif
-              -%}
               <div
-                class="nw-collection-tabs__panel{% unless has_sidebar %} nw-collection-tabs__panel--no-sidebar{% endunless %}{% if block.settings.show_sidebar == false %} nw-collection-tabs__panel--with-sidebar{% endif %}"
+                class="nw-collection-tabs__panel"
                 id="NwCollectionTabsPanel-{{ section.id }}-{{ panel_index }}"
                 data-nw-panel="{{ panel_index }}"
-                data-show-sidebar="{% if block.settings.show_sidebar %}true{% else %}false{% endif %}"
                 role="tabpanel"
                 aria-labelledby="NwCollectionTabsBtn-{{ section.id }}-{{ panel_index }}"
-                {% unless panel_index == 0 %}hidden{% endunless %}
+                {% unless panel_index == default_tab_index %}hidden{% endunless %}
               >
-                {%- if block.settings.heading != blank or block.settings.subheading != blank -%}
-                  <div class="nw-collection-tabs__mobile-heading">
-                    {%- if block.settings.heading != blank -%}
-                      <div class="nw-heading">{{ block.settings.heading }}</div>
-                    {%- endif -%}
-                    {%- if block.settings.subheading != blank -%}
-                      <div class="nw-collection-tabs__sidebar-subheading rte">{{ block.settings.subheading }}</div>
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
-                {%- if block.settings.show_sidebar -%}
-                  {%- if has_sidebar -%}
-                    <aside class="nw-collection-tabs__sidebar">
-                      {% render 'nw-collection-tabs-sidebar', block: block %}
-                    </aside>
-                  {%- endif -%}
-                {%- endif -%}
                 <div class="nw-collection-tabs__slider-wrap">
                   {%- if block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
                     <div class="swiper nw-collection-tabs__swiper" id="NwCollectionSwiper-{{ section.id }}-{{ panel_index }}">
@@ -128,6 +130,7 @@
                               section_id: section.id,
                               show_rating: section.settings.show_rating,
                               show_firmness: section.settings.show_firmness,
+                              show_best_for: section.settings.show_best_for,
                               firmness_label_soft: section.settings.firmness_label_soft,
                               firmness_label_firm: section.settings.firmness_label_firm,
                               button_text: section.settings.pcard_button_text,
@@ -159,9 +162,22 @@
           {%- liquid
             assign shop_all_link = section.settings.shop_all_link
             if shop_all_link == blank and tab_blocks.size > 0
-              assign first_tab = tab_blocks | first
-              if first_tab.settings.collection != blank
-                assign shop_all_link = first_tab.settings.collection.url
+              assign default_tab_block = nil
+              assign shop_all_tab_scan = 0
+              for block in section.blocks
+                if block.type == 'tab'
+                  if shop_all_tab_scan == default_tab_index
+                    assign default_tab_block = block
+                    break
+                  endif
+                  assign shop_all_tab_scan = shop_all_tab_scan | plus: 1
+                endif
+              endfor
+              if default_tab_block == nil
+                assign default_tab_block = tab_blocks | first
+              endif
+              if default_tab_block.settings.collection != blank
+                assign shop_all_link = default_tab_block.settings.collection.url
               endif
             endif
           -%}
@@ -223,6 +239,13 @@
       "label": "Show Firmness Scale",
       "default": false,
       "info": "Only displays when the product custom.firmness metafield is set."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_best_for",
+      "label": "Show Best For",
+      "default": false,
+      "info": "Only displays when the product custom.best_for metafield is set."
     },
     {
       "type": "text",
@@ -548,14 +571,18 @@
         },
         {
           "type": "checkbox",
-          "id": "show_sidebar",
-          "label": "Show Sidebar",
-          "default": false
-        },
-        {
-          "type": "header",
-          "content": "SIDEBAR"
-        },
+          "id": "default_selected",
+          "label": "Default selected tab",
+          "default": false,
+          "info": "If no tab is selected, the first tab opens by default."
+        }
+      ]
+    },
+    {
+      "type": "sidebar",
+      "name": "Sidebar Content",
+      "limit": 1,
+      "settings": [
         {
           "type": "inline_richtext",
           "id": "heading",
@@ -796,6 +823,9 @@
         {
           "type": "tab",
           "settings": { "label": "Kids" }
+        },
+        {
+          "type": "sidebar"
         }
       ]
     }

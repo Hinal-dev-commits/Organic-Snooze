@@ -179,12 +179,6 @@
   border: 1px solid var(--nw-brown, #613916);
 }
 
-.nw-btn.nw-quiz__button:hover,
-.nw-quiz__button:hover {
-  opacity: 0.92;
-  transform: translateY(-1px);
-}
-
 @media screen and (max-width: 989px) {
   .nw-quiz__container {
     padding: 0 20px;

@@ -20,14 +20,11 @@
         {% if section.settings.bg_gradient != blank %}
           background: {{ section.settings.bg_gradient }};
         {% endif %}
-      {% when 'image' %}
-        {% if section.settings.bg_color != blank %}
-          background-color: {{ section.settings.bg_color }};
-        {% endif %}
       {% when 'none' %}
         background: transparent;
     {% endcase %}
   }
+
 
   {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
     .nw-faq.section-{{ section.id }}::before {
@@ -40,19 +37,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      z-index: 0;
-      pointer-events: none;
-    }
-  {%- endif -%}
-
-  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
-    .nw-faq.section-{{ section.id }}::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background-color: {{ section.settings.bg_color_image }};
+      opacity: {{ section.settings.bg_image_opacity | default: 16 | times: 0.01 }};
       z-index: 0;
       pointer-events: none;
     }
@@ -470,7 +455,8 @@
       "alpha": true,
       "id": "bg_color",
       "label": "Background Color",
-      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.bg_type == 'color'}}"
     },
     {
       "type": "image_picker",
@@ -485,10 +471,14 @@
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
-      "type": "color",
-      "alpha": true,
-      "id": "bg_color_image",
-      "label": "Overlay Color",
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {

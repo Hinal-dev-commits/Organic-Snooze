@@ -26,9 +26,9 @@
           "settings": {
             "custom_title": "Pure Organic Latex Mattress",
             "margin_top": 0,
-            "margin_bottom": 16,
+            "margin_bottom": 14,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 16
+            "margin_bottom_mobile": 14
           }
         },
         "description": {
@@ -38,7 +38,7 @@
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
+            "margin_bottom_mobile": 16
           }
         },
         "price": {
@@ -46,8 +46,9 @@
           "settings": {
             "show_affirm": true,
             "show_sale_badge": true,
+            "show_save_percentage": false,
             "margin_top": 0,
-            "margin_bottom": 24,
+            "margin_bottom": 20,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 16
           }
@@ -147,15 +148,39 @@
             "margin_bottom_mobile": 0
           }
         },
+        "sleepers_UPVWMw": {
+          "type": "sleepers",
+          "settings": {
+            "label": "Best for:",
+            "label_color": "#613916",
+            "chip_bg_color": "#f4efe8",
+            "chip_text_color": "#613916",
+            "chip_icon_color": "#613916",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
-          "disabled": true,
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle",
+            "firmness_option_name": "Firmness",
+            "loft_option_name": "Loft",
+            "size_option_name": "Select Size",
+            "show_size_guide": false,
+            "size_guide_label": "Size Guide",
+            "quantity_option_name": "Select Quantity",
+            "picker_gap": 32,
+            "picker_gap_mobile": 24,
+            "option_position_order": "Size, Firmness",
+            "option_1_values_order": "",
+            "option_2_values_order": "",
             "margin_top": 32,
             "margin_bottom": 32,
-            "margin_top_mobile": 0,
+            "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
         },
@@ -198,14 +223,94 @@
             "margin_bottom_mobile": 0
           }
         },
+        "trust_badges_UF8dKt": {
+          "type": "trust_badges",
+          "settings": {
+            "item_1_text": "100-Night Risk-Free Trial",
+            "item_1_icon": "trial",
+            "item_1_use_custom_icon": false,
+            "item_2_text": "30-Year Warranty",
+            "item_2_icon": "warranty-check",
+            "item_2_use_custom_icon": false,
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "margin_top": 16,
+            "margin_bottom": 0,
+            "margin_top_mobile": 12,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "payment_logos_aAAW97": {
+          "type": "payment_logos",
+          "settings": {
+            "item_1_image": "shopify://shop_images/image_1268.png",
+            "item_1_layout": "simple",
+            "item_1_heading": "",
+            "item_1_subheading": "",
+            "item_1_text": "Pay over time",
+            "item_1_link": "",
+            "item_2_image": "shopify://shop_images/image_1269.png",
+            "item_2_layout": "simple",
+            "item_2_heading": "HSA/FSA",
+            "item_2_subheading": "Eligible",
+            "item_2_text": "Use your benefits",
+            "item_2_link": "",
+            "divider_color": "#d1ccc2",
+            "heading_color": "#32323a",
+            "subheading_color": "#32323a",
+            "text_color": "#666666",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "customer_reviews_n9JDUb": {
+          "type": "customer_reviews",
+          "settings": {
+            "heading": "",
+            "show_pagination": true,
+            "verified_text": "Verified Customer",
+            "card_bg_color": "",
+            "card_text_color": "",
+            "card_star_color": "",
+            "card_star_empty_color": "",
+            "verified_icon_color": "",
+            "verified_text_color": "",
+            "review_1_quote": "<p>“Healthier pillows—I can breathe, no more headaches. And they keep cold!”</p>",
+            "review_1_author": "Clara",
+            "review_1_rating": 5,
+            "review_1_verified": true,
+            "review_2_quote": "<p>“Amazing! Chemical-free and you can adapt it to your head and neck for pressure relief.”</p>",
+            "review_2_author": "Lauren",
+            "review_2_rating": 5,
+            "review_2_verified": true,
+            "review_3_quote": "<p>“Adjustable comfort—firmer or softer. Great knowing it’s made with health in mind. Highly recommend!”</p>",
+            "review_3_author": "Morgan",
+            "review_3_rating": 5,
+            "review_3_verified": true,
+            "review_4_quote": "",
+            "review_4_author": "",
+            "review_4_rating": 5,
+            "review_4_verified": true,
+            "review_5_quote": "",
+            "review_5_author": "",
+            "review_5_rating": 5,
+            "review_5_verified": true,
+            "margin_top": 48,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
         "collapsible_tab_W7etYx": {
           "type": "collapsible_tab",
           "settings": {
             "heading": "Product Specifications",
             "icon": "none",
-            "content": "<p><strong>Origin:</strong> USA</p><p><strong>Main Color:</strong> White</p><p><strong>Material:</strong> Made with Certified Organic Cotton, Made with Certified Organic Wool,  Certified Organic Latex, Steel Coils, Always Toxin-FREE</p><p><strong>Mattress Depth:</strong> 13\" Depth</p><h3>Top Comfort Layer</h3><ul><li>Cotton Cover and Wool Base Layer</li><li><strong>Made with Certified</strong> <strong>Cotton</strong> Cover - Soft, breathable, and familiar against the skin (Cotton)</li><li><strong>Made with Certified Wool </strong>Base layer naturally disperses heat and moisture to regulate temperature (Wool)</li><li>Naturally flame-resistant without toxic chemicals (Wool)</li></ul><h3>Second Performance Layer</h3><ul><li><strong>4” Organic certified Latex </strong>Comfort</li><li>Soft, responsive comfort that gently contours to your body</li><li>Designed with breathable pinhole perforations to promote airflow</li><li>Does not sink and compress like foam</li></ul><h3>Foundation Support Layer</h3><ul><li>1100-Count 5-Zone Pocketed Steel Coil System<br/></li><li>Provides balanced, medium support to help maintain healthy alignment</li><li>Reinforced edge support for stability and full use of the mattress</li></ul><h3>Construction & Durability</h3><ul><li>Tufted construction to secure layers and maintain long-term performance without glues</li><li>Designed to hold shape and comfort over time</li><li><strong>30-Year Warranty (On craftsmanship and structural integrity)</strong></li><li><strong>100-Night Risk-Free Trial </strong><em>(30-day grace period)</em></li></ul>",
+            "content": "<ul><li>10\" depth, medium-firm feel (4/10 on the comfort scale)</li><li>Organic cotton cover, soft and breathable against skin<br/></li><li>Organic wool base layer, regulates heat and naturally flame-resistan 1\" natural GOLS latex, responsive comfort that won't sink like foam</li><li>800-count pocketed steel coil system with reinforced edge support</li><li>Hand-tufted construction, no glues or adhesives</li><li>Organic latex, wool, and cotton. No chemical foams, no VOC off-gassing, no synthetic fillers</li><li>Handcrafted in the USA</li></ul>",
             "page": "",
-            "margin_top": 48,
+            "margin_top": 40,
             "margin_bottom": 0,
             "margin_top_mobile": 32,
             "margin_bottom_mobile": 0
@@ -216,7 +321,7 @@
           "settings": {
             "heading": "Warranty",
             "icon": "none",
-            "content": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London</p>",
+            "content": "<p>Backed by a 30-year warranty covering construction, structural integrity, and excessive sinking, non-prorated for years 1 to 20 and prorated for years 21 to 30. Every mattress also comes with a 100-night in-home trial and a 30-night break-in period, so you can decide on real sleep, not a first impression. A $199 pickup fee applies to returns in some cases.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -229,11 +334,68 @@
           "settings": {
             "heading": "Why you'll love it",
             "icon": "none",
-            "content": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London</p>",
+            "content": "<ul><li>Sleeps cool: breathable latex, wool, and cotton let heat escape all night </li><li>No chemical smell: organic materials with zero off-gassing </li><li>Firm, supportive feel that keeps your spine aligned </li><li>Built to hold its shape for years, backed by a 30-year warranty </li><li>Clean to the core: GOLS-certified, no foams, no fiberglass, no toxins</li></ul>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
             "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "complementary_dJ8CFV": {
+          "type": "complementary",
+          "settings": {
+            "block_heading": "Pairs well with",
+            "make_collapsible_row": false,
+            "icon": "price_tag",
+            "product_list_limit": 10,
+            "products_per_page": 3,
+            "pagination_style": "counter",
+            "image_ratio": "square",
+            "enable_quick_add": false,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "customer_videos_JijkkX": {
+          "type": "customer_videos",
+          "settings": {
+            "heading": "Why Customers Love Organic Snooze",
+            "show_pagination": true,
+            "video_1": "shopify://files/videos/UGC-Katherine-June-1.mp4",
+            "caption_1": "",
+            "video_2": "shopify://files/videos/instagram-video_a48594d2-3157-4b3d-9822-e4139a4b3c26.mp4",
+            "caption_2": "",
+            "video_3": "shopify://files/videos/instagram-video_8e990a33-eb47-475b-a442-768cc8ca7bbc.mp4",
+            "caption_3": "",
+            "video_4": "shopify://files/videos/instagram-video_92d7ea93-a816-4e76-9019-afc7c1cfda07.mp4",
+            "caption_4": "",
+            "video_5": "shopify://files/videos/instagram-video_9835e004-4cad-4a2f-a23d-e66d19addd26.mp4",
+            "caption_5": "",
+            "caption_6": "",
+            "margin_top": 40,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "bundle_save_K4nQ2p": {
+          "type": "bundle_save",
+          "settings": {
+            "product_source": "product_list",
+            "product_list": [
+              "organic-cooling-sheets",
+              "organic-waterproof-mattress-protector",
+              "signature-organic-cotton-pillows-combo-packs",
+              "snooze-btx4-adjustable-base-king-copy"
+            ],
+            "heading": "Bundle & save 30% on each add-on",
+            "button_label": "Add to cart",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
         },
@@ -323,13 +485,20 @@
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
+        "sleepers_UPVWMw",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
         "shipping_tag_Agd7QN",
+        "trust_badges_UF8dKt",
+        "payment_logos_aAAW97",
+        "customer_reviews_n9JDUb",
         "collapsible_tab_W7etYx",
         "collapsible_tab_THr6Kx",
         "collapsible_tab_wP3yAA",
+        "complementary_dJ8CFV",
+        "customer_videos_JijkkX",
+        "bundle_save_K4nQ2p",
         "icon_text_v2_JFUz9t",
         "founder_i4r3qP",
         "quiz_button_LNxxjE",
@@ -344,11 +513,16 @@
         "gallery_layout": "thumbnail_slider",
         "mobile_thumbnails": "show",
         "media_position": "left",
-        "image_zoom": "lightbox",
+        "image_zoom": "none",
         "hide_variants": false,
         "enable_video_looping": false,
         "show_media_arrows": true,
         "show_media_dots": true,
+        "media_pagination_color": "#613916",
+        "media_arrow_bg": "#ffffff",
+        "media_arrow_color": "#613916",
+        "media_arrow_hover_bg": "#efe0ca",
+        "media_arrow_hover_color": "#613916",
         "media_padding_top": 0,
         "media_padding_bottom": 0,
         "media_padding_top_mobile": 0,
@@ -496,7 +670,7 @@
           "type": "item",
           "settings": {
             "text": "10-YEAR WARRANTY",
-            "icon": "warranty",
+            "icon": "warranty-2",
             "link": ""
           }
         },
@@ -586,6 +760,8 @@
         "subheading": "<p>From busy parents to entrepreneurs, athletes, and everyday people, thousands are making sleep one of the healthiest investments they make every day.</p>",
         "heading_color": "#613916",
         "description_color": "#613916",
+        "eyebrow_color": "",
+        "text_color": "",
         "card_bg_color": "#f4efe8",
         "card_text_color": "#613916",
         "card_star_color": "#e57b1e",
@@ -615,6 +791,15 @@
             "use_custom_icon": true,
             "icon": "leaf",
             "custom_icon": "shopify://shop_images/recovery.svg",
+            "title": "Recovery",
+            "description": "Deep sleep is when your body is physically restored"
+          }
+        },
+        "box_igUnCq": {
+          "type": "box",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "leaf",
             "title": "Recovery",
             "description": "Deep sleep is when your body is physically restored"
           }
@@ -652,6 +837,7 @@
       },
       "block_order": [
         "box_EWMppf",
+        "box_igUnCq",
         "box_9hBmqr",
         "box_VM7jYF",
         "box_jiFfCC"
@@ -846,6 +1032,96 @@
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_benefits_J9TVzc": {
+      "type": "nw-benefits",
+      "blocks": {
+        "benefit_RYkEmU": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/4153241-uhd_2160_4096_25fps.mp4",
+            "title": "Zero Airborne VOCs",
+            "description": "<p>Sleep in a room that smells like nothing at all.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_rzHW3b": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/7234147-uhd_2160_3840_30fps.mp4",
+            "title": "Sleeps Cooler",
+            "description": "<p>Wool naturally regulates temperature. Perforated latex never traps heat.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_7fpBCW": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/6195937-uhd_2160_3840_25fps.mp4",
+            "title": "Real Pressure Relief",
+            "description": "<p>Latex lifts and contours so hips and shoulders stop aching.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_fQ8cWe": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/6195941-uhd_2160_3840_25fps.mp4",
+            "title": "Outlasts Foam",
+            "description": "<p>Add superior support and limited motion shift from coils</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_RYkEmU",
+        "benefit_rzHW3b",
+        "benefit_7fpBCW",
+        "benefit_fQ8cWe"
+      ],
+      "name": "Nw Benefits",
+      "settings": {
+        "heading": "Benefits That Matter",
+        "description": "<p>Four reasons our customers say they're never going back to foam.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_style": "style_1",
+        "card_bg_color": "#fbf9f6",
+        "card_border_color": "#61391633",
+        "card_title_color": "#613916",
+        "card_desc_color": "#613916",
+        "show_arrows": false,
+        "show_pagination": true,
+        "pagination_color": "#613916",
+        "show_button": false,
+        "button_text": "SHOP THE MATTRESS",
+        "button_link": "",
+        "button_style": "primary",
+        "badge_icon_color": "#cc926a",
+        "badge_text_color": "#613916",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/benifit-desktop.png",
+        "bg_image_mobile": "shopify://shop_images/benifit-mobile.png",
+        "bg_image_opacity": 21,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
@@ -897,6 +1173,9 @@
         "name": "Gary Brecka",
         "show_verified": true,
         "role": "Longevity Expert & Founder of The Ultimate Human",
+        "show_footer_content": false,
+        "footer_heading": "Alignment Starts at the Pillow",
+        "footer_description": "<p>The right loft helps support your head, neck, shoulders, and spine while your body rests, repairs, and resets.</p>",
         "disclaimer": "<p><em>*Results vary by individual. General sleep trends, not guarantees.</em></p>",
         "heading_color": "#613916",
         "star_color": "#e57b1e",
@@ -910,6 +1189,8 @@
         "stat_value_color": "#613916",
         "stat_desc_color": "#613916",
         "disclaimer_color": "#613916cc",
+        "footer_heading_color": "#613916",
+        "footer_description_color": "#613916",
         "bg_type": "none",
         "bg_color": "#ffffff",
         "bg_gradient": "",
@@ -982,6 +1263,7 @@
         "show_rating": true,
         "show_firmness": false,
         "show_seller_tag": false,
+        "show_best_for": false,
         "button_text": "add to cart",
         "button_style": "primary",
         "firmness_label_soft": "Soft",
@@ -1080,6 +1362,10 @@
         "eyebrow": "",
         "heading": "Frequently Asked Questions",
         "subheading": "",
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
         "show_search": false,
         "search_placeholder": "What can we help with?",
         "open_first_faq": false,
@@ -1101,6 +1387,7 @@
         "bg_type": "image",
         "bg_color": "#ffffff",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_opacity": 16,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -1118,6 +1405,7 @@
     "nw_testimonials_BU9rMk",
     "nw_recovery_yYVmK7",
     "nw_organic_gcGNTr",
+    "nw_benefits_J9TVzc",
     "nw_founder_story_RhHRer",
     "nw_guarantee_v2_KGGbhN",
     "nw_product_list_Ej8ReJ",

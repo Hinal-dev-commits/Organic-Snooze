@@ -190,7 +190,7 @@
       </div>
 
       {%- assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
-      {%- if trust_badge_blocks != blank -%}
+      {%- if trust_badge_blocks != blank or section.settings.show_button -%}
         <div class="nw-organic__footer">
           {% render 'nw-cta-badges',
             settings: section.settings,

@@ -157,6 +157,7 @@
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
+  text-align: left;
 }
 
 .nw-image-with-text__header.mobile-only {
@@ -178,6 +179,7 @@
   .nw-image-with-text__feature,
   .nw-image-with-text__features-wrap ul li {
     flex: 0 0 calc(50% - 16px);
+    font-size: 14px;
   }
   .nw-image-with-text__side{
     gap: 24px;

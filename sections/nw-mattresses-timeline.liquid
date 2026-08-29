@@ -1,4 +1,5 @@
 {{ 'nw-mattresses-timeline.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-mattresses-timeline.js' | asset_url }}" defer="defer"></script>
 {% comment %} Shared padding and background styles come from nw-section-shell. {% endcomment %}
 
 {%- assign nw_shell_selector = '.nw-mattresses-timeline.section-' | append: section.id -%}

@@ -256,8 +256,9 @@
   opacity: 0;
 }
 
-.nw-bundle-product__accordion-content {
-  box-sizing: border-box;
+.nw-bundle-product .accordion {
+  margin: 0;
+  border-top: 0;
 }
 
 .nw-bundle-product__accordion-body {
@@ -269,6 +270,8 @@
   line-height: 150%;
   color: var(--primary-color, #613916);
   opacity: 0.9;
+  text-align: left;
+  margin-bottom: 0;
 }
 
 .nw-bundle-product__accordion-body p {

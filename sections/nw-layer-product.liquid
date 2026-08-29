@@ -190,7 +190,8 @@
               {%- endif -%}
 
               {%- if section.settings.show_dots and section.blocks.size > 1 -%}
-                <div class="nw-swiper-pagination" id="NwLayerProductPagination-{{ section.id }}"></div>
+                {%- assign lp_pagination_id = 'NwLayerProductPagination-' | append: section.id -%}
+                {% render 'nw-swiper-pagination', id: lp_pagination_id %}
               {%- endif -%}
             </div>
           </div>

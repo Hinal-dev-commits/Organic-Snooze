@@ -14,6 +14,30 @@ if (!customElements.get('nw-founder-story')) {
       if (pauseBtn) pauseBtn.hidden = !isPlaying;
     }
 
+    _getPosterSrc(media) {
+      var mobilePoster = media.querySelector('.nw-founder-story__media-poster--mobile');
+      var desktopPoster = media.querySelector('.nw-founder-story__media-poster--desktop');
+      var singlePoster = media.querySelector(
+        '.nw-founder-story__media-poster:not(.nw-founder-story__media-poster--desktop):not(.nw-founder-story__media-poster--mobile)'
+      );
+
+      if (window.matchMedia('(max-width: 749px)').matches && mobilePoster && mobilePoster.src) {
+        return mobilePoster.src;
+      }
+
+      if (desktopPoster && desktopPoster.src) return desktopPoster.src;
+      if (singlePoster && singlePoster.src) return singlePoster.src;
+      if (mobilePoster && mobilePoster.src) return mobilePoster.src;
+      return '';
+    }
+
+    _syncVideoPoster(media, video) {
+      var posterSrc = this._getPosterSrc(media);
+      if (posterSrc) {
+        video.setAttribute('poster', posterSrc);
+      }
+    }
+
     _bindVideo() {
       var media = this.querySelector('[data-nw-founder-media]');
       if (!media || media.dataset.autoplay === 'true') return;
@@ -26,9 +50,11 @@ if (!customElements.get('nw-founder-story')) {
       video.disablePictureInPicture = true;
       video.tabIndex = -1;
 
-      var poster = media.querySelector('.nw-founder-story__media-poster');
-      if (poster && poster.src) {
-        video.setAttribute('poster', poster.src);
+      this._syncVideoPoster(media, video);
+
+      if (!this._onResizePoster) {
+        this._onResizePoster = () => this._syncVideoPoster(media, video);
+        window.addEventListener('resize', this._onResizePoster);
       }
 
       media.addEventListener('click', (e) => {
@@ -68,6 +94,13 @@ if (!customElements.get('nw-founder-story')) {
         this._setPlayingState(media, false);
         video.currentTime = 0;
       });
+    }
+
+    disconnectedCallback() {
+      if (this._onResizePoster) {
+        window.removeEventListener('resize', this._onResizePoster);
+        this._onResizePoster = null;
+      }
     }
   }
 

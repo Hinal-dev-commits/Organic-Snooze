@@ -76,6 +76,11 @@
   justify-content: flex-start;
 }
 
+.nw-compare__row--head+.nw-compare__row .nw-compare__cell--feature {
+  border-top: 1px solid rgba(97, 57, 22, 0.2);
+}
+
+
 .nw-compare__cell--p1 {
   flex: 1 1 0;
   min-width: 0;
@@ -140,6 +145,7 @@
 .nw-compare__cell--action .nw-btn {
   width: 100%;
   max-width: 266px;
+  min-height: 45px;
   height: 45px;
   font-size: 16px;
 }
@@ -208,6 +214,7 @@
   line-height: 130%;
   color: var(--primary-color, var(--nw-brown));
   margin: 0;
+  display: inline;
 }
 
 .nw-compare__info-btn {
@@ -220,6 +227,8 @@
   cursor: pointer;
   color: var(--primary-color, var(--nw-brown));
   position: relative;
+  vertical-align: -2.5px;
+  margin-left: 4px;
 }
 
 .nw-compare__info-btn svg {
@@ -316,7 +325,7 @@
 
   .nw-compare__cell--head {
     height: 72px;
-    padding: 16px 8px;
+    padding: 16px 19px;
   }
 
   .nw-compare__head-title {
@@ -343,6 +352,17 @@
   .nw-compare__feature-name {
     font-size: 12px;
     line-height: 130%;
+    display: inline;
+  }
+
+  .nw-compare__info-btn {
+    vertical-align: -2px;
+    margin-left: 3px;
+  }
+
+  .nw-compare__info-btn svg {
+    width: 14px;
+    height: 14px;
   }
 
   .nw-compare__cell-text {
@@ -357,7 +377,7 @@
 
   .nw-compare__cell--action .nw-btn {
     height: 42px;
-    padding: 10px 14px;
+    padding: 10px 9px;
     font-size: 14px;
   }
 }

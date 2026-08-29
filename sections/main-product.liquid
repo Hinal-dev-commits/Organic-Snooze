@@ -114,12 +114,16 @@
                     endif
                   -%}
                   <div class="product__title">
+                    {% if block.settings.custom_title != blank %}
                     <h1>{{ block.settings.custom_title }}</h1>
                     <a href="{{ product.url }}" class="product__title">
                       <h2 class="h1">
                         {{ block.settings.custom_title }}
                       </h2>
                     </a>
+                    {% else %}
+                      <h1>{{ product.title }}</h1>
+                    {% endif %}
                   </div>
                 {%- when 'price' -%}
                   {%- liquid
@@ -143,11 +147,16 @@
                     {%- if block.settings.show_sale_badge and compare_at_price > current_price -%}
                       {%- assign savings_amount = compare_at_price | minus: current_price -%}
                       <span class="nw-product-price__save-badge">
-                        SAVE {{ savings_amount | money_without_trailing_zeros }}
+                        {%- if block.settings.show_save_percentage -%}
+                          {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
+                          SAVE {{ save_percent }}%
+                        {%- else -%}
+                          SAVE {{ savings_amount | money_without_trailing_zeros }}
+                        {%- endif -%}
                       </span>
                     {%- endif -%}
                   </div>
-                  {%- if show_affirm -%}
+                  {% comment %} {%- if show_affirm -%}
                     <div class="nw-product-price__affirm">
                       {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
                       {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large nw-product-price__installment' -%}
@@ -155,7 +164,7 @@
                         {{ form | payment_terms }}
                       {%- endform -%}
                     </div>
-                  {%- endif -%}
+                  {%- endif -%} {% endcomment %}
                   {%- if product.quantity_price_breaks_configured? -%}
                     <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                       <span>{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -231,6 +240,10 @@
                   {%- if  block.settings.custom_description != blank -%}
                     <div class="product__description rte quick-add-hidden">
                       {{ block.settings.custom_description }}
+                    </div>
+                  {% else %}
+                    <div class="product__description rte quick-add-hidden">
+                      {{ product.description }}
                     </div>
                   {%- endif -%}
                 {%- when 'sku' -%}
@@ -535,8 +548,16 @@
                   -%}
                 {%- when 'shipping_tag' -%}
                   {%- render 'nw-product-shipping-tag', block: block, product: product -%}
+                {%- when 'setup_delivery' -%}
+                  {%- render 'nw-product-setup-delivery', block: block -%}
                 {%- when 'icon_text_v2' -%}
                   {%- render 'nw-product-icon-text-v2', block: block -%}
+                {%- when 'payment_logos' -%}
+                  {%- render 'nw-product-payment-logos', block: block -%}
+                {%- when 'trust_badges' -%}
+                  {%- render 'nw-product-trust-badges', block: block -%}
+                {%- when 'sleepers' -%}
+                  {%- render 'nw-product-sleepers', block: block, product: product -%}
                 {%- when 'customer_reviews' -%}
                   {%- render 'nw-product-customer-reviews', block: block, section_id: section.id -%}
                 {%- when 'customer_videos' -%}
@@ -545,6 +566,11 @@
                   {%- render 'nw-product-founder', block: block -%}
                 {%- when 'quiz_button' -%}
                   {%- render 'nw-product-quiz-button', block: block -%}
+                {%- when 'bundle_save' -%}
+                  {%- render 'nw-product-bundle-save', block: block, product: product -%}
+                {%- when 'bundle_tabs' -%}
+                  {%- render 'nw-product-bundle-tabs', block: block, section: section -%}
+                {%- when 'bundle_tab' -%}
                 {%- when 'rating' -%}
                   {%- if product.metafields.reviews.rating.value != blank -%}
                     <div class="rating-wrapper">
@@ -858,7 +884,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -868,7 +894,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -878,7 +904,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -888,7 +914,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -914,7 +940,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -924,7 +950,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -934,7 +960,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -944,7 +970,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -974,6 +1000,14 @@
           "default": true
         },
         {
+          "type": "checkbox",
+          "id": "show_save_percentage",
+          "label": "Show savings as percentage",
+          "default": false,
+          "info": "When enabled, the savings badge shows a percentage (e.g. SAVE 10%) instead of a dollar amount.",
+          "visible_if": "{{ block.settings.show_sale_badge == true }}"
+        },
+        {
           "type": "header",
           "content": "Block spacing"
         },
@@ -982,7 +1016,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -992,7 +1026,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1002,7 +1036,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1012,7 +1046,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1053,7 +1087,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1063,7 +1097,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1073,7 +1107,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1083,7 +1117,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1139,7 +1173,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1149,7 +1183,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1159,7 +1193,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1169,7 +1203,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1190,7 +1224,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1200,7 +1234,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1210,7 +1244,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1220,7 +1254,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1270,6 +1304,86 @@
           "default": "circle"
         },
         {
+          "type": "text",
+          "id": "firmness_option_name",
+          "label": "Firmness option name",
+          "default": "Firmness",
+          "info": "Enter the variant option name (e.g. Firmness) to use the firmness card design for that option."
+        },
+        {
+          "type": "text",
+          "id": "loft_option_name",
+          "label": "Loft option name",
+          "default": "Loft",
+          "info": "Enter the variant option name (e.g. Loft) to use the loft card design with custom.tag_text for that option."
+        },
+        {
+          "type": "text",
+          "id": "size_option_name",
+          "label": "Size option name",
+          "default": "Select Size",
+          "info": "Enter the variant option name (e.g. Size) to show custom.variant_tag for that option. When size guide is enabled, custom.select_size is hidden."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_size_guide",
+          "label": "Show size guide",
+          "default": true,
+          "info": "Shows a Size Guide link that opens the product metafield custom.size_guide image in a popup. Hides custom.select_size when enabled."
+        },
+        {
+          "type": "text",
+          "id": "size_guide_label",
+          "label": "Size guide link label",
+          "default": "Size Guide",
+          "visible_if": "{{ block.settings.show_size_guide == true }}"
+        },
+        {
+          "type": "text",
+          "id": "quantity_option_name",
+          "label": "Quantity option name",
+          "default": "Select Quantity",
+          "info": "Enter the variant option name (e.g. Select Quantity) to show custom.saving badges on that option."
+        },
+        {
+          "type": "range",
+          "id": "picker_gap",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Gap between variant pickers",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "picker_gap_mobile",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Gap between variant pickers (mobile)",
+          "default": 24
+        },
+        {
+          "type": "textarea",
+          "id": "option_position_order",
+          "label": "Option position order",
+          "info": "Comma-separated option names to control display order (e.g. Size, Firmness). Leave blank for default order."
+        },
+        {
+          "type": "textarea",
+          "id": "option_1_values_order",
+          "label": "Option 1 value order",
+          "info": "Comma-separated values for the first product option (e.g. Twin, Twin XL, Full, Queen, King, Cal King). Leave blank for default order."
+        },
+        {
+          "type": "textarea",
+          "id": "option_2_values_order",
+          "label": "Option 2 value order",
+          "info": "Comma-separated values for the second product option (e.g. Firm, Medium, Plush). Leave blank for default order."
+        },
+        {
           "type": "header",
           "content": "Block spacing"
         },
@@ -1278,7 +1392,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1288,7 +1402,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1298,7 +1412,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1308,7 +1422,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1349,7 +1463,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1359,7 +1473,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1369,7 +1483,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1379,7 +1493,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1405,7 +1519,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1415,7 +1529,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1425,7 +1539,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1435,7 +1549,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1462,7 +1576,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1472,7 +1586,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1482,7 +1596,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1492,7 +1606,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1518,7 +1632,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1528,7 +1642,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1538,7 +1652,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1548,7 +1662,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1605,7 +1719,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1615,7 +1729,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1625,7 +1739,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1635,7 +1749,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1855,7 +1969,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1865,7 +1979,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1875,7 +1989,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1885,7 +1999,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1916,7 +2030,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1926,7 +2040,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1936,7 +2050,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -1946,7 +2060,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -1971,7 +2085,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -1981,7 +2095,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -1991,7 +2105,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2001,7 +2115,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2287,7 +2401,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2297,7 +2411,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2307,7 +2421,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2317,7 +2431,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2462,7 +2576,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2472,7 +2586,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2482,7 +2596,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2492,7 +2606,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2569,7 +2683,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2579,7 +2693,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2589,7 +2703,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2599,7 +2713,156 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "setup_delivery",
+      "name": "Set-up & delivery",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Set-Up & Delivery Included"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>All items in the bundle ship for <strong>FREE</strong>. When you buy a complete mattress bundle, you also get <strong>FREE White Glove</strong> set-up—we'll install the adjustable base in your bedroom and place the mattress to ensure everything is perfect.</p>"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "badge_text",
+          "label": "Value badge text",
+          "default": "A $299 value — <strong>FREE with all mattress bundles</strong>"
+        },
+        {
+          "type": "header",
+          "content": "Icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use custom icon image",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "truck",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
+          "options": [
+            { "value": "truck", "label": "Truck" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "usamap", "label": "USA Map" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon",
+          "visible_if": "{{ block.settings.use_custom_icon }}"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background",
+          "default": "#F7F2EB",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border",
+          "default": "#E9B67E",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading",
+          "default": "#403326",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Description text",
+          "default": "#594D40",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "badge_bg_color",
+          "label": "Badge background",
+          "default": "#FFFFFF",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "badge_text_color",
+          "label": "Badge text",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2792,7 +3055,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -2802,7 +3065,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -2812,7 +3075,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -2822,7 +3085,423 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "payment_logos",
+      "name": "Payment logos",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Item 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_image",
+          "label": "Logo image"
+        },
+        {
+          "type": "select",
+          "id": "item_1_layout",
+          "label": "Layout",
+          "default": "simple",
+          "options": [
+            { "value": "simple", "label": "Logo + subtext" },
+            { "value": "inline", "label": "Logo + heading + subtext" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "item_1_heading",
+          "label": "Heading",
+          "visible_if": "{{ block.settings.item_1_layout == 'inline' }}"
+        },
+        {
+          "type": "text",
+          "id": "item_1_subheading",
+          "label": "Subheading",
+          "visible_if": "{{ block.settings.item_1_layout == 'inline' }}"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "Subtext",
+          "default": "Pay over time"
+        },
+        {
+          "type": "url",
+          "id": "item_1_link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "header",
+          "content": "Item 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_image",
+          "label": "Logo image"
+        },
+        {
+          "type": "select",
+          "id": "item_2_layout",
+          "label": "Layout",
+          "default": "inline",
+          "options": [
+            { "value": "simple", "label": "Logo + subtext" },
+            { "value": "inline", "label": "Logo + heading + subtext" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "item_2_heading",
+          "label": "Heading",
+          "default": "HSA/FSA",
+          "visible_if": "{{ block.settings.item_2_layout == 'inline' }}"
+        },
+        {
+          "type": "text",
+          "id": "item_2_subheading",
+          "label": "Subheading",
+          "default": "Eligible",
+          "visible_if": "{{ block.settings.item_2_layout == 'inline' }}"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "Subtext",
+          "default": "Use your benefits"
+        },
+        {
+          "type": "url",
+          "id": "item_2_link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "divider_color",
+          "label": "Divider color",
+          "default": "#D1CCC2",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading color",
+          "default": "#32323A",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "subheading_color",
+          "label": "Subheading color",
+          "default": "#32323A",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Subtext color",
+          "default": "#666666",
+          "alpha": true
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "trust_badges",
+      "name": "Trust badges",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Item 1"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "Text",
+          "default": "100-Night Risk-Free Trial"
+        },
+        {
+          "type": "select",
+          "id": "item_1_icon",
+          "label": "Icon",
+          "default": "trial",
+          "visible_if": "{{ block.settings.item_1_use_custom_icon == false }}",
+          "options": [
+            { "value": "trial", "label": "100-Night Trial" },
+            { "value": "warranty-check", "label": "Warranty" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "financing-badge", "label": "Financing" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "verified", "label": "Verified" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "usamap", "label": "USA Map" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "award", "label": "Award" },
+            { "value": "none", "label": "None" }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "item_1_use_custom_icon",
+          "label": "Use custom icon",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_custom_icon",
+          "label": "Custom icon",
+          "visible_if": "{{ block.settings.item_1_use_custom_icon }}"
+        },
+        {
+          "type": "header",
+          "content": "Item 2"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "Text",
+          "default": "30-Year Warranty"
+        },
+        {
+          "type": "select",
+          "id": "item_2_icon",
+          "label": "Icon",
+          "default": "warranty-check",
+          "visible_if": "{{ block.settings.item_2_use_custom_icon == false }}",
+          "options": [
+            { "value": "trial", "label": "100-Night Trial" },
+            { "value": "warranty-check", "label": "Warranty" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "financing-badge", "label": "Financing" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "verified", "label": "Verified" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "usamap", "label": "USA Map" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "award", "label": "Award" },
+            { "value": "none", "label": "None" }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "item_2_use_custom_icon",
+          "label": "Use custom icon",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_custom_icon",
+          "label": "Custom icon",
+          "visible_if": "{{ block.settings.item_2_use_custom_icon }}"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon color",
+          "default": "#CC926A",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "sleepers",
+      "name": "Best for sleepers",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Displays chips from the product custom.sleepers list metafield."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Best for:"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "label_color",
+          "label": "Label color",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "chip_bg_color",
+          "label": "Chip background",
+          "default": "#F4EFE8",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "chip_text_color",
+          "label": "Chip text color",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "chip_icon_color",
+          "label": "Chip icon color",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -2850,6 +3529,46 @@
           "id": "verified_text",
           "label": "Verified label",
           "default": "Verified Customer"
+        },
+        {
+          "type": "header",
+          "content": "Card colors"
+        },
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "card_bg_color",
+          "label": "Card background"
+        },
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "card_text_color",
+          "label": "Card text"
+        },
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "card_star_color",
+          "label": "Star color"
+        },
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "card_star_empty_color",
+          "label": "Empty star color"
+        },
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "verified_icon_color",
+          "label": "Verified icon color"
+        },
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "verified_text_color",
+          "label": "Verified text color"
         },
         {
           "type": "header",
@@ -3007,7 +3726,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3017,7 +3736,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3027,7 +3746,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3037,7 +3756,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3183,7 +3902,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3193,7 +3912,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3203,7 +3922,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3213,7 +3932,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3283,7 +4002,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3293,7 +4012,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3303,7 +4022,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3313,7 +4032,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -3402,7 +4121,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -3412,7 +4131,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -3422,7 +4141,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -3432,10 +4151,295 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
+        }
+      ]
+    },
+    {
+      "type": "bundle_save",
+      "name": "Bundle & Save",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "product_source",
+          "label": "Product source",
+          "default": "metafield",
+          "options": [
+            {
+              "value": "metafield",
+              "label": "Metafield"
+            },
+            {
+              "value": "product_list",
+              "label": "Products"
+            }
+          ]
+        },
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Products",
+          "limit": 12
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Bundle & save 30% on each add-on"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Add to cart"
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "bundle_tabs",
+      "name": "Product Bundle Tabs Main",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading", 
+          "default": "Explore what's included"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "tab_text_color",
+          "label": "Tab text",
+          "default": "#A0A0A0"
+        },
+        {
+          "type": "color",
+          "id": "tab_active_color",
+          "label": "Active tab text",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "tab_underline_color",
+          "label": "Active tab underline",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Product title",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "subtitle_color",
+          "label": "Product subtitle",
+          "default": "#8C8073"
+        },
+        {
+          "type": "color",
+          "id": "price_color",
+          "label": "Price",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "save_badge_bg",
+          "label": "Save badge background",
+          "default": "#338C331F"
+        },
+        {
+          "type": "color",
+          "id": "save_badge_text",
+          "label": "Save badge text",
+          "default": "#388E3C"
+        },
+        {
+          "type": "color",
+          "id": "feature_color",
+          "label": "Feature text",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "check_color",
+          "label": "Checkmark icon",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description text",
+          "default": "#59544D"
+        },
+        {
+          "type": "color",
+          "id": "learn_more_color",
+          "label": "Learn more link",
+          "default": "#59544D"
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "bundle_tab",
+      "name": "Product Bundle Tab",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "info": "Leave blank to use the product title."
+        },
+        {
+          "type": "header",
+          "content": "Content overrides"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Title",
+          "info": "Leave blank to use custom.product_title metafield or product title."
+        },
+        {
+          "type": "text",
+          "id": "custom_subtitle",
+          "label": "Subtitle",
+          "info": "Leave blank to hide."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "extra_description",
+          "label": "Description",
+          "info": "Additional product description text shown below the feature list."
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Image",
+          "info": "Leave blank to use the product featured image."
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features",
+          "info": "Enter one feature per line. Each line shows with a checkmark."
+        },
+        {
+          "type": "header",
+          "content": "Link"
+        },
+        {
+          "type": "text",
+          "id": "learn_more_label",
+          "label": "Learn more label",
+          "default": "Learn More"
         }
       ]
     },
@@ -4069,7 +5073,7 @@
           "id": "margin_top",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top",
           "default": 0
@@ -4079,7 +5083,7 @@
           "id": "margin_bottom",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom",
           "default": 0
@@ -4089,7 +5093,7 @@
           "id": "margin_top_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin top (mobile)",
           "default": 0
@@ -4099,7 +5103,7 @@
           "id": "margin_bottom_mobile",
           "min": 0,
           "max": 100,
-          "step": 4,
+          "step": 1,
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
@@ -4275,6 +5279,46 @@
       "label": "Show media dots"
     },
     {
+      "type": "color",
+      "alpha": true,
+      "id": "media_pagination_color",
+      "label": "Pagination bullet color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_media_dots == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_arrow_bg",
+      "label": "Arrow background",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_media_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_arrow_color",
+      "label": "Arrow icon color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_media_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_arrow_hover_bg",
+      "label": "Arrow hover background",
+      "default": "#EFE0CA",
+      "visible_if": "{{ section.settings.show_media_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_arrow_hover_color",
+      "label": "Arrow hover icon color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_media_arrows == true }}"
+    },
+    {
       "type": "header",
       "content": "Media padding"
     },
@@ -4283,7 +5327,7 @@
       "id": "media_padding_top",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
       "label": "Top padding (desktop)",
       "default": 0
@@ -4293,7 +5337,7 @@
       "id": "media_padding_bottom",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
       "label": "Bottom padding (desktop)",
       "default": 0
@@ -4303,7 +5347,7 @@
       "id": "media_padding_top_mobile",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
       "label": "Top padding (mobile)",
       "default": 0
@@ -4313,7 +5357,7 @@
       "id": "media_padding_bottom_mobile",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
       "label": "Bottom padding (mobile)",
       "default": 0

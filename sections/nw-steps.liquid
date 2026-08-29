@@ -80,11 +80,14 @@
 
 <nw-steps
   id="NwSteps-{{ section.id }}"
-  class="nw-steps section-{{ section.id }}"
+  class="nw-steps section-{{ section.id }} scroll-trigger animate--slide-in"
 >
   <div class="page-width">
     <div class="nw-steps__wrapper">
-      {%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.eyebrow != blank -%}
+      {%- if section.settings.heading != blank
+        or section.settings.subheading != blank
+        or section.settings.eyebrow != blank
+      -%}
         <div class="nw-steps__header">
           {% render 'nw-section-header',
             show_rating: section.settings.show_rating,

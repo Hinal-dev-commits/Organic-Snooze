@@ -9,6 +9,25 @@
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
 {%- unless product.has_only_default_variant -%}
+  {%- liquid
+    assign selected_variant = product.selected_or_first_available_variant
+    assign select_size_text = selected_variant.metafields.custom.select_size.value | default: selected_variant.metafields.custom.select_size
+    assign variant_tag_text = selected_variant.metafields.custom.variant_tag.value | default: selected_variant.metafields.custom.variant_tag
+    assign firmness_tag_text = selected_variant.metafields.custom.firmness_tag.value | default: selected_variant.metafields.custom.firmness_tag
+    assign firmness_option_name = block.settings.firmness_option_name | strip | downcase
+    assign loft_option_name = block.settings.loft_option_name | strip | downcase
+    assign size_option_name = block.settings.size_option_name | strip | downcase
+    assign quantity_option_name = block.settings.quantity_option_name | strip | downcase
+    assign option_position_order = block.settings.option_position_order | strip
+    assign picker_gap = block.settings.picker_gap | default: 0
+    assign picker_gap_mobile = block.settings.picker_gap_mobile | default: 0
+    assign show_size_guide = block.settings.show_size_guide
+    if show_size_guide == nil
+      assign show_size_guide = true
+    endif
+    assign size_guide_image = product.metafields.custom.size_guide.value | default: product.metafields.custom.size_guide
+    assign size_guide_modal_id = 'SizeGuideModal-' | append: section.id | append: '-' | append: block.id
+  -%}
   <variant-selects
     id="variant-selects-{{ section.id }}"
     data-section="{{ section.id }}"
@@ -16,83 +35,121 @@
     data-product-title="{{ product.title | escape }}"
     data-product-id="{{ product.id }}"
     data-currency-code="{{ cart.currency.iso_code }}"
+    style="--nw-variant-picker-gap: {{ picker_gap }}px; --nw-variant-picker-gap-mobile: {{ picker_gap_mobile }}px;"
     {% # theme-check-disable %}
     data-selected-price-amount="{{ product.selected_or_first_available_variant.price | default: 0 | money_amount | escape }}"
     {% # theme-check-enable %}
     {{ block.shopify_attributes }}
   >
-    {%- for option in product.options_with_values -%}
-      {%- liquid
-        assign swatch_count = option.values | map: 'swatch' | compact | size
-        assign picker_type = block.settings.picker_type
+    {%- if option_position_order != blank -%}
+      {%- assign ordered_option_names = option_position_order | split: ',' -%}
+      {%- assign rendered_option_names = '|' -%}
+      {%- for order_name in ordered_option_names -%}
+        {%- assign order_name_clean = order_name | strip | downcase -%}
+        {%- if order_name_clean == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- for option in product.options_with_values -%}
+          {%- assign option_name_clean = option.name | strip | downcase -%}
+          {%- if option_name_clean == order_name_clean -%}
+            {%- assign rendered_option_names = rendered_option_names | append: option_name_clean | append: '|' -%}
+            {%- liquid
+              assign values_order = ''
+              if option.position == 1
+                assign values_order = block.settings.option_1_values_order | strip
+              elsif option.position == 2
+                assign values_order = block.settings.option_2_values_order | strip
+              endif
+            -%}
+            {% render 'nw-variant-picker-option',
+              product: product,
+              option: option,
+              block: block,
+              product_form_id: product_form_id,
+              firmness_option_name: firmness_option_name,
+              loft_option_name: loft_option_name,
+              size_option_name: size_option_name,
+              quantity_option_name: quantity_option_name,
+              select_size_text: select_size_text,
+              variant_tag_text: variant_tag_text,
+              firmness_tag_text: firmness_tag_text,
+              values_order: values_order,
+              show_size_guide: show_size_guide,
+              size_guide_image: size_guide_image,
+              size_guide_modal_id: size_guide_modal_id
+            %}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
 
-        if swatch_count > 0 and block.settings.swatch_shape != 'none'
-          if block.settings.picker_type == 'dropdown'
-            assign picker_type = 'swatch_dropdown'
-          else
-            assign picker_type = 'swatch'
+      {%- for option in product.options_with_values -%}
+        {%- assign option_key = '|' | append: option.name | strip | downcase | append: '|' -%}
+        {%- unless rendered_option_names contains option_key -%}
+          {%- liquid
+            assign values_order = ''
+            if option.position == 1
+              assign values_order = block.settings.option_1_values_order | strip
+            elsif option.position == 2
+              assign values_order = block.settings.option_2_values_order | strip
+            endif
+          -%}
+          {% render 'nw-variant-picker-option',
+            product: product,
+            option: option,
+            block: block,
+            product_form_id: product_form_id,
+            firmness_option_name: firmness_option_name,
+            loft_option_name: loft_option_name,
+            size_option_name: size_option_name,
+            quantity_option_name: quantity_option_name,
+            select_size_text: select_size_text,
+            variant_tag_text: variant_tag_text,
+            firmness_tag_text: firmness_tag_text,
+            values_order: values_order,
+            show_size_guide: show_size_guide,
+            size_guide_image: size_guide_image,
+            size_guide_modal_id: size_guide_modal_id
+          %}
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for option in product.options_with_values -%}
+        {%- liquid
+          assign values_order = ''
+          if option.position == 1
+            assign values_order = block.settings.option_1_values_order | strip
+          elsif option.position == 2
+            assign values_order = block.settings.option_2_values_order | strip
           endif
-        endif
-      -%}
-      {%- if picker_type == 'swatch' -%}
-        <fieldset class="js product-form__input product-form__input--swatch">
-          <legend class="form__label">
-            {{ option.name }}:
-            <span data-selected-value>
-              {{- option.selected_value -}}
-            </span>
-          </legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
-          %}
-        </fieldset>
-      {%- elsif picker_type == 'button' -%}
-        <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
-          %}
-        </fieldset>
-      {%- else -%}
-        <div class="product-form__input product-form__input--dropdown">
-          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-            {{ option.name }}
-          </label>
-          <div class="select">
-            {%- if picker_type == 'swatch_dropdown' -%}
-              <span
-                data-selected-value
-                class="dropdown-swatch"
-              >
-                {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
-              </span>
-            {%- endif -%}
-            <select
-              id="Option-{{ section.id }}-{{ forloop.index0 }}"
-              class="select__select"
-              name="options[{{ option.name | escape }}]"
-              form="{{ product_form_id }}"
-            >
-              {% render 'product-variant-options',
-                product: product,
-                option: option,
-                block: block,
-                picker_type: picker_type
-              %}
-            </select>
-            <span class="svg-wrapper">
-              {{- 'icon-caret.svg' | inline_asset_content -}}
-            </span>
-          </div>
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
+        -%}
+        {% render 'nw-variant-picker-option',
+          product: product,
+          option: option,
+          block: block,
+          product_form_id: product_form_id,
+          firmness_option_name: firmness_option_name,
+          loft_option_name: loft_option_name,
+          size_option_name: size_option_name,
+          quantity_option_name: quantity_option_name,
+          select_size_text: select_size_text,
+          variant_tag_text: variant_tag_text,
+          firmness_tag_text: firmness_tag_text,
+          values_order: values_order,
+          show_size_guide: show_size_guide,
+          size_guide_image: size_guide_image,
+          size_guide_modal_id: size_guide_modal_id
+        %}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if show_size_guide and size_guide_image != blank -%}
+      {% render 'nw-product-size-guide-modal',
+        size_guide_image: size_guide_image,
+        modal_id: size_guide_modal_id,
+        size_guide_label: block.settings.size_guide_label
+      %}
+    {%- endif -%}
 
     <script type="application/json" data-selected-variant>
       {{ product.selected_or_first_available_variant | json }}

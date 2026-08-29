@@ -1,0 +1,47 @@
+{% doc %}
+Renders pagination dots for NW Swiper carousels.
+Uses global styles from nw-swiper.css (--nw-swiper-bullet).
+
+Leave count/blocks empty when Swiper should generate bullets automatically.
+
+@param {string} [id] - Element id for Swiper pagination.el
+@param {string} [class] - Extra class on the wrapper
+@param {string} [data_attribute] - Optional data attribute, e.g. data-nw-tp-pagination
+@param {number} [count] - Pre-render bullet count for manual pagination
+@param {object} [blocks] - Pre-render bullets from section blocks
+@example
+{% render 'nw-swiper-pagination', id: pagination_id %}
+{% enddoc %}
+
+<div
+  class="nw-swiper-pagination{% if class != blank %} {{ class }}{% endif %}"
+  {% if id != blank %}
+    id="{{ id }}"
+  {% endif %}
+  {% if data_attribute != blank %}
+    {{ data_attribute }}
+  {% endif %}
+>
+  {%- if blocks != blank and blocks.size > 0 -%}
+    {%- for block in blocks -%}
+      <span
+        class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+        data-bullet-index="{{ forloop.index0 }}"
+        role="button"
+        tabindex="0"
+        aria-label="Go to slide {{ forloop.index }}"
+        {{ block.shopify_attributes }}
+      ></span>
+    {%- endfor -%}
+  {%- elsif count != blank and count > 0 -%}
+    {%- for i in (1..count) -%}
+      <span
+        class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+        data-bullet-index="{{ forloop.index0 }}"
+        role="button"
+        tabindex="0"
+        aria-label="Go to slide {{ i }}"
+      ></span>
+    {%- endfor -%}
+  {%- endif -%}
+</div>

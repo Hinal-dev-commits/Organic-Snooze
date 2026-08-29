@@ -75,7 +75,7 @@
 
 <div
   id="NwGeneralCustomerHero-{{ section.id }}"
-  class="nw-general-customer-hero section-{{ section.id }}"
+  class="nw-general-customer-hero section-{{ section.id }} scroll-trigger animate--fade-in"
 >
   <div class="nw-general-customer-hero__container{% if section.settings.image_position == 'left' %} nw-general-customer-hero__container--image-left{% endif %}">
     <div class="nw-general-customer-hero__content-col">
@@ -106,7 +106,11 @@
                 <div class="nw-general-customer-hero__pill" {{ block.shopify_attributes }}>
                   {%- if pill_custom != blank or pill_icon != 'none' and pill_icon != blank -%}
                     <span class="nw-general-customer-hero__pill-icon">
-                      {% render 'nw-icon', icon: pill_icon, custom_icon: pill_custom, img_class: 'nw-general-customer-hero__pill-img' %}
+                      {% render 'nw-icon',
+                        icon: pill_icon,
+                        custom_icon: pill_custom,
+                        img_class: 'nw-general-customer-hero__pill-img'
+                      %}
                     </span>
                   {%- endif -%}
                   <span class="nw-general-customer-hero__pill-text">{{ block.settings.text }}</span>

@@ -9,11 +9,6 @@
 
 .nw-natural-layers .page-width {
   position: relative;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 80px;
-  box-sizing: border-box;
 }
 
 .nw-natural-layers__wrapper {
@@ -418,55 +413,33 @@
   font-style: italic;
 }
 
-.nw-natural-layers__insights-pagination,
-.nw-natural-layers__insights .swiper-pagination {
-  position: static !important;
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-  gap: 4px !important;
-  width: 100% !important;
-  margin: 0 !important;
-  inset: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  transform: none !important;
-  z-index: 2 !important;
+.nw-natural-layers__insights > .nw-swiper-pagination {
+  margin-top: 0;
 }
-
-.nw-natural-layers__insights-pagination .swiper-pagination-bullet,
-.nw-natural-layers__insights .swiper-pagination-bullet {
+.nw-natural-layers__insights .nw-swiper-pagination .swiper-pagination-bullet{
   width: 5px;
   height: 5px;
-  background: var(--primary-color);
-  opacity: 0.3;
-  border-radius: 5px;
-  margin: 0 !important;
-  cursor: pointer;
-  transition: width 0.3s ease, opacity 0.3s ease, border-radius 0.3s ease;
 }
-
-.nw-natural-layers__insights-pagination .swiper-pagination-bullet-active,
-.nw-natural-layers__insights .swiper-pagination-bullet-active {
+.nw-natural-layers__insights .nw-swiper-pagination .swiper-pagination-bullet-active{
   width: 30px;
-  height: 5px;
-  background: var(--primary-color);
-  opacity: 1;
-  border-radius: 6px;
 }
 
+@media screen and (max-width: 1023px) {
+  .nw-natural-layers__card-title{
+    font-size: 20px;
+  }
+  .nw-natural-layers__card-feature-text{
+    font-size: 14px;
+  }
+  .nw-natural-layers__leave-out{
+    flex-direction: column;
+    align-items: self-start;
+  }
+}
 @media screen and (max-width: 749px) {
   .nw-natural-layers__card-feature .nw-natural-layers__feature-icon {
     width: 16px;
     height: 16px;
-  }
-  
-  .nw-natural-layers .page-width {
-    padding: 0 16px;
   }
 
   .nw-natural-layers__wrapper {
@@ -578,11 +551,6 @@
     padding: 18px 16px;
     gap: 16px;
     width: 100%;
-  }
-
-  .nw-natural-layers__insights-pagination,
-  .nw-natural-layers__insights .swiper-pagination {
-    margin: 0 !important;
   }
 
   .nw-natural-layers__insight-tag {

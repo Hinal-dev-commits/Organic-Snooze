@@ -1,0 +1,199 @@
+{% doc %}
+  Single add-on row for the Bundle & Save block.
+  @param {object} bundle_product - Add-on product from custom.bundle
+  @param {object} block - Parent block
+{% enddoc %}
+
+{%- liquid
+  assign current_variant = bundle_product.selected_or_first_available_variant
+  assign item_image = current_variant.featured_media.preview_image | default: current_variant.image | default: bundle_product.featured_image
+  assign compare_price = current_variant.compare_at_price
+  assign sale_price = current_variant.price
+  assign save_cents = 0
+  assign save_money = ''
+  if compare_price > sale_price
+    assign save_cents = compare_price | minus: sale_price
+    assign save_money = save_cents | money_without_trailing_zeros
+  endif
+  assign check_id = 'BundleSave-' | append: block.id | append: '-' | append: bundle_product.id
+  assign bundle_product_title = bundle_product.metafields.custom.product_title.value | default: bundle_product.metafields.custom.product_title
+  if bundle_product_title == blank
+    assign bundle_product_title = bundle_product.title
+  endif
+  assign has_options = true
+  if bundle_product.has_only_default_variant
+    assign has_options = false
+  endif
+-%}
+
+<li
+  class="nw-bundle-save__item"
+  data-bundle-item
+  data-product-id="{{ bundle_product.id }}"
+  data-variant-id="{{ current_variant.id }}"
+  data-available="{{ current_variant.available }}"
+>
+  <div class="nw-bundle-save__row">
+    <label class="nw-bundle-save__toggle" for="{{ check_id }}">
+      <input
+        id="{{ check_id }}"
+        class="nw-bundle-save__check visually-hidden"
+        type="checkbox"
+        data-bundle-check
+        {% unless bundle_product.available %}
+          disabled
+        {% endunless %}
+      >
+      <span class="nw-bundle-save__box" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" focusable="false">
+          <path d="M2 6.2L4.7 9L10 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="visually-hidden">{{ 'products.bundle_save.select' | t: title: bundle_product_title }}</span>
+    </label>
+
+    <label class="nw-bundle-save__media" for="{{ check_id }}">
+      {%- if item_image != blank -%}
+        <img
+          class="nw-bundle-save__image"
+          src="{{ item_image | image_url: width: 160 }}"
+          alt="{{ bundle_product_title | escape }}"
+          width="64"
+          height="64"
+          loading="lazy"
+          data-bundle-image
+          {% if bundle_product.featured_image %}
+            data-default-src="{{ bundle_product.featured_image | image_url: width: 160 }}"
+          {% endif %}
+        >
+      {%- else -%}
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'nw-bundle-save__image nw-bundle-save__image--placeholder' }}
+      {%- endif -%}
+    </label>
+
+    <label class="nw-bundle-save__info" for="{{ check_id }}">
+      <span class="nw-bundle-save__title">{{ bundle_product_title }}</span>
+      <span class="nw-bundle-save__prices">
+        <s
+          class="nw-bundle-save__compare"
+          data-bundle-compare
+          {% if save_cents == 0 %}hidden{% endif %}
+        >
+          {%- if save_cents > 0 -%}{{ compare_price | money }}{%- endif -%}
+        </s>
+        <span class="nw-bundle-save__price" data-bundle-price>{{ sale_price | money }}</span>
+        <span
+          class="nw-product-price__save-badge nw-bundle-save__save"
+          data-bundle-save
+          {% if save_cents == 0 %}hidden{% endif %}
+        >
+          {%- if save_cents > 0 -%}
+            {{ 'products.bundle_save.save_amount' | t: amount: save_money }}
+          {%- endif -%}
+        </span>
+      </span>
+    </label>
+  </div>
+
+  {%- if has_options -%}
+    <div class="nw-bundle-save__options" data-bundle-options hidden>
+      {%- for option in bundle_product.options_with_values -%}
+        {%- liquid
+          assign swatch_count = option.values | map: 'swatch' | compact | size
+        -%}
+        {%- if swatch_count > 0 -%}
+          <fieldset class="nw-bundle-save__option nw-bundle-save__option--swatch">
+            <legend class="nw-bundle-save__option-label">
+              {{ option.name }}:
+              <span data-selected-value>{{ option.selected_value }}</span>
+            </legend>
+            <div class="nw-bundle-save__swatches">
+              {%- for value in option.values -%}
+                {%- liquid
+                  assign input_id = check_id | append: '-opt-' | append: option.position | append: '-' | append: forloop.index0
+                  assign input_name = check_id | append: '-option-' | append: option.position
+                -%}
+                <input
+                  type="radio"
+                  id="{{ input_id }}"
+                  class="swatch-input__input nw-bundle-save__swatch-input"
+                  name="{{ input_name }}"
+                  value="{{ value | escape }}"
+                  data-option-position="{{ option.position }}"
+                  {% if value.selected %}
+                    checked
+                  {% endif %}
+                >
+                <label
+                  for="{{ input_id }}"
+                  title="{{ value | escape }}"
+                  class="swatch-input__label"
+                >
+                  {% render 'swatch', swatch: value.swatch, shape: 'circle' %}
+                  <span class="visually-hidden">{{ value }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- else -%}
+          <div class="nw-bundle-save__option nw-bundle-save__option--select">
+            <label class="nw-bundle-save__option-label" for="{{ check_id }}-select-{{ option.position }}">
+              {{ option.name }}
+            </label>
+            <div class="nw-bundle-save__select-wrap">
+              <select
+                id="{{ check_id }}-select-{{ option.position }}"
+                class="nw-bundle-save__select"
+                data-option-position="{{ option.position }}"
+              >
+                {%- for value in option.values -%}
+                  <option
+                    value="{{ value | escape }}"
+                    {% if value.selected %}
+                      selected
+                    {% endif %}
+                  >
+                    {{ value }}
+                  </option>
+                {%- endfor -%}
+              </select>
+              <span class="svg-wrapper nw-bundle-save__select-caret" aria-hidden="true">
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </span>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <script type="application/json" data-bundle-product-json>
+    {
+      "id": {{ bundle_product.id }},
+      "available": {{ bundle_product.available | json }},
+      "has_only_default_variant": {{ bundle_product.has_only_default_variant | json }},
+      "variants": [
+        {%- for variant in bundle_product.variants -%}
+          {%- liquid
+            assign variant_save = 0
+            assign variant_save_money = ''
+            if variant.compare_at_price > variant.price
+              assign variant_save = variant.compare_at_price | minus: variant.price
+              assign variant_save_money = variant_save | money_without_trailing_zeros
+            endif
+            assign variant_image = variant.featured_media.preview_image | default: variant.image | default: bundle_product.featured_image
+          -%}
+          {
+            "id": {{ variant.id }},
+            "available": {{ variant.available | json }},
+            "options": {{ variant.options | json }},
+            "featured_image": {% if variant_image != blank %}{{ variant_image | image_url: width: 160 | json }}{% else %}null{% endif %},
+            "price": {{ variant.price | money | json }},
+            "compare_at_price": {% if variant_save > 0 %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},
+            "save_label": {% if variant_save > 0 %}{{ 'products.bundle_save.save_amount' | t: amount: variant_save_money | json }}{% else %}null{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+</li>

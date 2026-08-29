@@ -1,0 +1,43 @@
+{% comment %}
+  Renders the size guide popup modal.
+
+  Accepts:
+  - size_guide_image: {Object} product metafield custom.size_guide image
+  - modal_id: {String} unique modal element id
+  - size_guide_label: {String} accessible label for the dialog
+{% endcomment %}
+{%- if size_guide_image != blank and modal_id != blank -%}
+  {%- liquid
+    assign size_guide_dialog_label = size_guide_label | default: 'Size Guide' | escape
+  -%}
+  <modal-dialog id="{{ modal_id }}" class="product-popup-modal nw-size-guide-modal">
+    <div
+      role="dialog"
+      aria-label="{{ size_guide_dialog_label }}"
+      aria-modal="true"
+      class="product-popup-modal__content nw-size-guide-modal__content"
+      tabindex="-1"
+    >
+      <button
+        id="ModalClose-{{ modal_id }}"
+        type="button"
+        class="product-popup-modal__toggle"
+        aria-label="{{ 'accessibility.close' | t }}"
+      >
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </button>
+      <div class="product-popup-modal__content-info nw-size-guide-modal__body">
+        {{
+          size_guide_image
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'lazy',
+            widths: '375, 550, 750, 1100, 1500, 1600',
+            sizes: '(min-width: 750px) 720px, calc(100vw - 3rem)',
+            alt: size_guide_dialog_label,
+            class: 'nw-size-guide-modal__image'
+        }}
+      </div>
+    </div>
+  </modal-dialog>
+{%- endif -%}
