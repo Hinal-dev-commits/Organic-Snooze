@@ -405,7 +405,6 @@ header-drawer {
     flex-direction: row;
     align-items: center;
     gap: 0;
-    width: 90px;
     height: 18px;
     flex-shrink: 0;
 }
@@ -464,6 +463,9 @@ header-drawer {
 .header__heading-logo-wrapper {
     max-width: 200px;
 }
+.announcement-bar__message p{
+    margin: 0;
+}
 
 @media screen and (max-width: 749px) {
     .nw-eyebrow {
@@ -483,7 +485,7 @@ header-drawer {
     .h2 {
         font-size: 32px;
         line-height: 115%;
-        letter-spacing: -0.01em;
+        letter-spacing: -2%;
     }
 
     .rte {
@@ -492,6 +494,10 @@ header-drawer {
 
     .nw-section-description {
         margin-top: 12px;
+    }
+    .nw-star svg, .nw-star{
+        width: 14px;
+        height: 14px;
     }
 }
 
@@ -512,6 +518,7 @@ nw-marquee,
 nw-testimonials,
 nw-trusted-people,
 nw-benefits,
+nw-materials-matter,
 nw-founder-story,
 nw-product-list,
 nw-collection-tabs,

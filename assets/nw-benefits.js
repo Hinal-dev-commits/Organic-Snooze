@@ -24,19 +24,16 @@ if (!customElements.get('nw-benefits')) {
         var showArrows = this.dataset.showArrows === 'true';
         var showPagination = this.dataset.showPagination === 'true';
         var paginationId = this.dataset.paginationId;
+        var isStyle2 = this.dataset.cardStyle === 'style_2';
 
         var options = {
           slidesPerView: 'auto',
           spaceBetween: 12,
-          centeredSlides: false,
+          centeredSlides: isStyle2,
           grabCursor: true,
           watchOverflow: true,
           breakpoints: {
             750: {
-              spaceBetween: 12,
-              centeredSlides: false
-            },
-            990: {
               spaceBetween: 12,
               centeredSlides: false
             }

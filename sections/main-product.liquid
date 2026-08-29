@@ -114,12 +114,16 @@
                     endif
                   -%}
                   <div class="product__title">
+                    {% if block.settings.custom_title != blank %}
                     <h1>{{ block.settings.custom_title }}</h1>
                     <a href="{{ product.url }}" class="product__title">
                       <h2 class="h1">
                         {{ block.settings.custom_title }}
                       </h2>
                     </a>
+                    {% else %}
+                      <h1>{{ product.title }}</h1>
+                    {% endif %}
                   </div>
                 {%- when 'price' -%}
                   {%- liquid
@@ -143,7 +147,12 @@
                     {%- if block.settings.show_sale_badge and compare_at_price > current_price -%}
                       {%- assign savings_amount = compare_at_price | minus: current_price -%}
                       <span class="nw-product-price__save-badge">
-                        SAVE {{ savings_amount | money_without_trailing_zeros }}
+                        {%- if block.settings.show_save_percentage -%}
+                          {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
+                          SAVE {{ save_percent }}%
+                        {%- else -%}
+                          SAVE {{ savings_amount | money_without_trailing_zeros }}
+                        {%- endif -%}
                       </span>
                     {%- endif -%}
                   </div>
@@ -231,6 +240,10 @@
                   {%- if  block.settings.custom_description != blank -%}
                     <div class="product__description rte quick-add-hidden">
                       {{ block.settings.custom_description }}
+                    </div>
+                  {% else %}
+                    <div class="product__description rte quick-add-hidden">
+                      {{ product.description }}
                     </div>
                   {%- endif -%}
                 {%- when 'sku' -%}
@@ -982,6 +995,14 @@
           "default": true
         },
         {
+          "type": "checkbox",
+          "id": "show_save_percentage",
+          "label": "Show savings as percentage",
+          "default": false,
+          "info": "When enabled, the savings badge shows a percentage (e.g. SAVE 10%) instead of a dollar amount.",
+          "visible_if": "{{ block.settings.show_sale_badge == true }}"
+        },
+        {
           "type": "header",
           "content": "Block spacing"
         },
@@ -1283,6 +1304,27 @@
           "label": "Firmness option name",
           "default": "Firmness",
           "info": "Enter the variant option name (e.g. Firmness) to use the firmness card design for that option."
+        },
+        {
+          "type": "text",
+          "id": "loft_option_name",
+          "label": "Loft option name",
+          "default": "Loft",
+          "info": "Enter the variant option name (e.g. Loft) to use the loft card design with custom.tag_text for that option."
+        },
+        {
+          "type": "text",
+          "id": "size_option_name",
+          "label": "Size option name",
+          "default": "Size",
+          "info": "Enter the variant option name (e.g. Size) to show custom.select_size and custom.variant_tag for that option only."
+        },
+        {
+          "type": "text",
+          "id": "quantity_option_name",
+          "label": "Quantity option name",
+          "default": "Select Quantity",
+          "info": "Enter the variant option name (e.g. Select Quantity) to show custom.saving badges on that option."
         },
         {
           "type": "range",
@@ -4867,6 +4909,46 @@
       "id": "show_media_dots",
       "default": true,
       "label": "Show media dots"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_pagination_color",
+      "label": "Pagination bullet color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_media_dots == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_arrow_bg",
+      "label": "Arrow background",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_media_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_arrow_color",
+      "label": "Arrow icon color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_media_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_arrow_hover_bg",
+      "label": "Arrow hover background",
+      "default": "#EFE0CA",
+      "visible_if": "{{ section.settings.show_media_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "media_arrow_hover_color",
+      "label": "Arrow hover icon color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_media_arrows == true }}"
     },
     {
       "type": "header",

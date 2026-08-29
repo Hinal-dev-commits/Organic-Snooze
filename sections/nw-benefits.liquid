@@ -6,7 +6,8 @@
 
 <nw-benefits
   id="NwBenefits-{{ section.id }}"
-  class="nw-benefits"
+  class="nw-benefits{% if section.settings.card_style == 'style_2' %} nw-benefits--style-2{% endif %}"
+  data-card-style="{{ section.settings.card_style }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
   data-pagination-id="NwBenefitsPagination-{{ section.id }}"
@@ -55,7 +56,7 @@
                           }}
                         {%- elsif block.settings.image != blank -%}
                           <img
-                            src="{{ block.settings.image | image_url }}"
+                            src="{{ block.settings.image | image_url: width: 800 }}"
                             alt="{{ block.settings.title | escape }}"
                             class="nw-benefits__card-img"
                             width=""
@@ -66,6 +67,18 @@
                           <div class="nw-benefits__card-placeholder" aria-hidden="true">
                             {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
                           </div>
+                        {%- endif -%}
+
+                        {%- if section.settings.card_style == 'style_2' and block.settings.tag != blank -%}
+                          <span
+                            class="nw-benefits__card-tag"
+                            style="
+                              {%- if block.settings.tag_bg_color != blank -%}background-color: {{ block.settings.tag_bg_color }};{%- endif -%}
+                              {%- if block.settings.tag_text_color != blank -%}color: {{ block.settings.tag_text_color }};{%- endif -%}
+                            "
+                          >
+                            {{ block.settings.tag }}
+                          </span>
                         {%- endif -%}
                       </div>
 
@@ -147,6 +160,20 @@
       "label": "Description color",
       "default": "#613916",
       "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Card layout"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "default": "style_1",
+      "options": [
+        { "value": "style_1", "label": "Style 1" },
+        { "value": "style_2", "label": "Style 2" }
+      ]
     },
     {
       "type": "header",
@@ -391,6 +418,29 @@
           "id": "description",
           "label": "Description",
           "default": "<p>Sleep in a room that smells like nothing at all.</p>"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag label",
+          "default": "Side",
+          "visible_if": "{{ section.settings.card_style == 'style_2' }}"
+        },
+        {
+          "type": "color",
+          "id": "tag_bg_color",
+          "label": "Tag background color",
+          "default": "#613916",
+          "alpha": true,
+          "visible_if": "{{ section.settings.card_style == 'style_2' }}"
+        },
+        {
+          "type": "color",
+          "id": "tag_text_color",
+          "label": "Tag text color",
+          "default": "#FFFFFF",
+          "alpha": true,
+          "visible_if": "{{ section.settings.card_style == 'style_2' }}"
         }
       ]
     },

@@ -64,10 +64,9 @@
     </ul>
   </div>
 {%- elsif request.design_mode -%}
-  <div class="nw-product-sleepers nw-product-sleepers--empty">
-    {%- if label_text != blank -%}
+  {%- if label_text != blank -%}
+    <div class="nw-product-sleepers nw-product-sleepers--empty">
       <span class="nw-product-sleepers__label">{{ label_text }}</span>
-    {%- endif -%}
-    <p class="nw-product-sleepers__empty">Add sleeper types to the product <strong>custom.sleepers</strong> metafield.</p>
-  </div>
+    </div>
+  {%- endif -%}
 {%- endif -%}

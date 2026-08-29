@@ -7,6 +7,9 @@
   - block: {Object}
   - product_form_id: {String}
   - firmness_option_name: {String}
+  - loft_option_name: {String}
+  - size_option_name: {String}
+  - quantity_option_name: {String}
   - select_size_text: {String}
   - variant_tag_text: {String}
   - firmness_tag_text: {String}
@@ -26,8 +29,24 @@
 
   assign current_option_name = option.name | strip | downcase
   assign is_firmness_option = false
+  assign is_loft_option = false
+  assign is_size_option = false
+  assign is_quantity_option = false
+
   if firmness_option_name != blank and current_option_name == firmness_option_name
     assign is_firmness_option = true
+  endif
+
+  if loft_option_name != blank and current_option_name == loft_option_name
+    assign is_loft_option = true
+  endif
+
+  if size_option_name != blank and current_option_name == size_option_name
+    assign is_size_option = true
+  endif
+
+  if quantity_option_name != blank and current_option_name == quantity_option_name
+    assign is_quantity_option = true
   endif
 -%}
 {%- if picker_type == 'swatch' -%}
@@ -47,7 +66,7 @@
     %}
   </fieldset>
 {%- elsif picker_type == 'button' -%}
-  <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness{% endif %}">
+  <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness nw-variant-picker--card{% endif %}{% if is_loft_option %} nw-variant-picker--card nw-variant-picker--card-left{% endif %}{% if is_quantity_option %} nw-variant-picker--quantity{% endif %}">
     <legend class="visually-hidden">{{ option.name }}</legend>
     <div class="nw-variant-picker__header">
       <span class="nw-variant-picker__label">{{ option.name }}:</span>
@@ -55,13 +74,27 @@
         {%- if firmness_tag_text != blank -%}
           <span class="nw-variant-picker__firmness-tag">{{ firmness_tag_text }}</span>
         {%- endif -%}
-      {%- elsif select_size_text != blank -%}
+      {%- elsif is_size_option and select_size_text != blank -%}
         <span class="nw-variant-picker__size-desc">{{ select_size_text }}</span>
       {%- endif -%}
     </div>
     <div class="nw-variant-picker__options">
       {%- if is_firmness_option -%}
         {% render 'nw-product-variant-options-firmness',
+          product: product,
+          option: option,
+          block: block,
+          values_order: values_order
+        %}
+      {%- elsif is_loft_option -%}
+        {% render 'nw-product-variant-options-loft',
+          product: product,
+          option: option,
+          block: block,
+          values_order: values_order
+        %}
+      {%- elsif is_quantity_option -%}
+        {% render 'nw-product-variant-options-quantity',
           product: product,
           option: option,
           block: block,
@@ -77,11 +110,9 @@
         %}
       {%- endif -%}
     </div>
-    {%- unless is_firmness_option -%}
-      {%- if variant_tag_text != blank -%}
-        <p class="nw-variant-picker__tag">{{ variant_tag_text }}</p>
-      {%- endif -%}
-    {%- endunless -%}
+    {%- if is_size_option and variant_tag_text != blank -%}
+      <p class="nw-variant-picker__tag">{{ variant_tag_text }}</p>
+    {%- endif -%}
   </fieldset>
 {%- else -%}
   <div class="product-form__input product-form__input--dropdown">

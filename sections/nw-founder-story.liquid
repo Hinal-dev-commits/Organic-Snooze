@@ -5,8 +5,12 @@
   assign nw_shell_selector = '#NwFounderStory-' | append: section.id
 
   assign media_poster = section.settings.poster
+  assign media_poster_mobile = section.settings.poster_mobile
   if media_poster == blank and section.settings.video != blank and section.settings.video.preview_image != blank
     assign media_poster = section.settings.video.preview_image
+  endif
+  if media_poster_mobile == blank and media_poster != blank
+    assign media_poster_mobile = media_poster
   endif
 -%}
 
@@ -26,6 +30,8 @@
     --nw-fs-stat-value-color: {{ section.settings.stat_value_color }};
     --nw-fs-stat-desc-color: {{ section.settings.stat_desc_color }};
     --nw-fs-disclaimer-color: {{ section.settings.disclaimer_color }};
+    --nw-fs-footer-heading-color: {{ section.settings.footer_heading_color }};
+    --nw-fs-footer-desc-color: {{ section.settings.footer_description_color }};
     --nw-star-active: {{ section.settings.star_color }};
     --nw-star-inactive: {{ section.settings.star_color_inactive }};
   "
@@ -64,15 +70,43 @@
                   image_size: '1200x'
               }}
 
-              {%- if media_poster != blank -%}
-                <img
-                  src="{{ media_poster | image_url }}"
-                  alt="{{ section.settings.name | escape }}"
-                  class="nw-founder-story__media-poster"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
+              {%- if media_poster != blank or media_poster_mobile != blank -%}
+                {%- if media_poster != blank and media_poster_mobile != blank and media_poster != media_poster_mobile -%}
+                  <img
+                    src="{{ media_poster | image_url: width: 1200 }}"
+                    alt="{{ section.settings.name | escape }}"
+                    class="nw-founder-story__media-poster nw-founder-story__media-poster--desktop"
+                    width=""
+                    height=""
+                    loading="lazy"
+                  >
+                  <img
+                    src="{{ media_poster_mobile | image_url: width: 800 }}"
+                    alt="{{ section.settings.name | escape }}"
+                    class="nw-founder-story__media-poster nw-founder-story__media-poster--mobile"
+                    width=""
+                    height=""
+                    loading="lazy"
+                  >
+                {%- elsif media_poster != blank -%}
+                  <img
+                    src="{{ media_poster | image_url: width: 1200 }}"
+                    alt="{{ section.settings.name | escape }}"
+                    class="nw-founder-story__media-poster"
+                    width=""
+                    height=""
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <img
+                    src="{{ media_poster_mobile | image_url: width: 800 }}"
+                    alt="{{ section.settings.name | escape }}"
+                    class="nw-founder-story__media-poster"
+                    width=""
+                    height=""
+                    loading="lazy"
+                  >
+                {%- endif -%}
               {%- endif -%}
 
               {%- if section.settings.show_play_icon and section.settings.video_autoplay == false -%}
@@ -174,6 +208,17 @@
         </div>
       </div>
     </div>
+
+    {%- if section.settings.show_footer_content -%}
+      <div class="nw-founder-story__footer">
+        {%- if section.settings.footer_heading != blank -%}
+          <h3 class="nw-founder-story__footer-heading">{{ section.settings.footer_heading }}</h3>
+        {%- endif -%}
+        {%- if section.settings.footer_description != blank -%}
+          <div class="nw-founder-story__footer-description rte">{{ section.settings.footer_description }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </nw-founder-story>
 
@@ -252,7 +297,14 @@
     {
       "type": "image_picker",
       "id": "poster",
-      "label": "Video poster image",
+      "label": "Video poster image (desktop)",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_mobile",
+      "label": "Video poster image (mobile)",
+      "info": "Optional. Uses desktop poster when empty.",
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
@@ -299,6 +351,30 @@
       "id": "role",
       "label": "Role / title",
       "default": "Longevity Expert & Founder of The Ultimate Human"
+    },
+    {
+      "type": "header",
+      "content": "Footer content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_footer_content",
+      "label": "Show footer content",
+      "default": false
+    },
+    {
+      "type": "inline_richtext",
+      "id": "footer_heading",
+      "label": "Footer heading",
+      "default": "Alignment Starts at the Pillow",
+      "visible_if": "{{ section.settings.show_footer_content == true }}"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_description",
+      "label": "Footer description",
+      "default": "<p>The right loft helps support your head, neck, shoulders, and spine while your body rests, repairs, and resets.</p>",
+      "visible_if": "{{ section.settings.show_footer_content == true }}"
     },
     {
       "type": "header",
@@ -397,6 +473,22 @@
       "label": "Disclaimer color",
       "default": "rgba(97, 57, 22, 0.8)",
       "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "footer_heading_color",
+      "label": "Footer heading color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_footer_content == true }}"
+    },
+    {
+      "type": "color",
+      "id": "footer_description_color",
+      "label": "Footer description color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_footer_content == true }}"
     },
     {
       "type": "header",
