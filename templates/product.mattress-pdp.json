@@ -209,7 +209,8 @@
         "shipping_tag_Agd7QN": {
           "type": "shipping_tag",
           "settings": {
-            "text": "Ships from USA • Est. delivery July 2, 2026",
+            "text": "Ships from USA",
+            "delivery_threshold_days": 2,
             "use_product_metafield": false,
             "use_custom_icon": true,
             "icon": "truck",
