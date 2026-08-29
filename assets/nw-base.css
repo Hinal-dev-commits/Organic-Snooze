@@ -413,6 +413,9 @@ align-items: center;
 .header__heading-logo-wrapper{
     max-width: 200px;
 }
+shopify-chat{
+    z-index: 1;
+}
 
 @media screen and (max-width: 1199px) {
     .header__inline-menu .list-menu--inline > li > .header__menu-item span,
@@ -448,6 +451,20 @@ align-items: center;
 
     .nw-section-description {
         margin-top: 12px;
+    }
+
+    .search-modal__content{
+        padding: 0 16px;
+        justify-content: flex-start;
+    }
+    .search-modal__content > .search-modal__form {
+        width: calc(100% - 30px);
+    }
+    .search-modal .search__input.field__input {
+        height: 46px;
+    }
+    .header__search details[open]>.search-modal {
+        min-height: 60px;
     }
 }
 

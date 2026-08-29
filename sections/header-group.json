@@ -330,6 +330,43 @@
             "firmness_label_soft": "Soft",
             "firmness_label_firm": "Firm"
           }
+        },
+        "mobile_menu_primary_Ci6cxw": {
+          "type": "mobile_menu_primary",
+          "settings": {
+            "menu": "new-mobile-menu-1"
+          }
+        },
+        "mobile_menu_secondary_DMtLMJ": {
+          "type": "mobile_menu_secondary",
+          "settings": {
+            "menu": "new-mobile-menu-2"
+          }
+        },
+        "mobile_menu_utilities_AANfUk": {
+          "type": "mobile_menu_utilities",
+          "settings": {
+            "shop_now_label": "Shop All",
+            "shop_now_link": "shopify://collections/all",
+            "shop_now_style": "primary",
+            "chat_label": "Chat Now",
+            "chat_link": "tel:+14433331213",
+            "chat_icon": "shopify://shop_images/Frame_1.svg",
+            "call_label": "Call Us",
+            "call_link": "tel:+14433331213",
+            "call_icon": "shopify://shop_images/Capa_1.svg",
+            "trust_logo": "shopify://shop_images/Mask_group.png",
+            "trust_rating_text": "Trusted by 100k+ of happy Customers",
+            "reviewer_image_1": "shopify://shop_images/Frame_48100783_aa699dbd-b116-4d3a-9309-a879a3364669.png",
+            "reviewer_image_2": "shopify://shop_images/Frame_48100784.png",
+            "reviewer_image_3": "shopify://shop_images/Frame_48100785.png",
+            "trust_item_1_icon": "shopify://shop_images/svg642_13c58cfc-59cb-4bc0-a183-d4897dd8693c.svg",
+            "trust_item_1_text": "30-Year Warranty",
+            "trust_item_2_icon": "shopify://shop_images/moneyback_bdfa1ba4-876f-4313-bfe6-79d28b686b77.svg",
+            "trust_item_2_text": "100-Night Risk-Free Trial",
+            "trust_item_3_icon": "shopify://shop_images/Frame_2_bea9ba0e-f8c6-4023-8306-e333a28f4df5.svg",
+            "trust_item_3_text": "Free Shipping"
+          }
         }
       },
       "block_order": [
@@ -337,7 +374,10 @@
         "mega_menu_a8tkn9",
         "mega_menu_rcEfLp",
         "mega_menu_pdLBFx",
-        "mega_menu_jm79BN"
+        "mega_menu_jm79BN",
+        "mobile_menu_primary_Ci6cxw",
+        "mobile_menu_secondary_DMtLMJ",
+        "mobile_menu_utilities_AANfUk"
       ],
       "settings": {
         "logo_position": "middle-left",
@@ -355,7 +395,7 @@
         "transparent_border_color": "#ffffff1a",
         "contact_number": "+14433331213",
         "enable_country_selector": false,
-        "enable_language_selector": true,
+        "enable_language_selector": false,
         "margin_bottom": 0,
         "padding_top": 0,
         "padding_bottom": 0,

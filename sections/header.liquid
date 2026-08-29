@@ -14,13 +14,21 @@
 
 {%- liquid
   assign has_mega_menu_blocks = false
+  assign has_nw_mobile_menu = false
   for block in section.blocks
     if block.type == 'mega_menu'
       assign has_mega_menu_blocks = true
-      break
+    endif
+    if block.type == 'mobile_menu_primary'
+      assign has_nw_mobile_menu = true
     endif
   endfor
 -%}
+
+{%- if has_nw_mobile_menu -%}
+  {{ 'nw-mobile-menu.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'nw-mobile-menu.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {%- if has_mega_menu_blocks -%}
   {{ 'nw-mega-menu.css' | asset_url | stylesheet_tag }}
@@ -204,14 +212,14 @@
       assign language_selector = true
     endif
   -%}
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if country_selector or language_selector %} header--has-localizations{% endif %}">
+  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank or has_nw_mobile_menu %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if country_selector or language_selector %} header--has-localizations{% endif %}">
     {%- liquid
       assign render_search_left = false
       if section.settings.logo_position == 'top-center' or section.settings.menu == blank or shop.customer_accounts_enabled
         assign render_search_left = true
       endif
 
-      if section.settings.menu != blank
+      if section.settings.menu != blank or has_nw_mobile_menu
         render 'header-drawer', show_country_selector: country_selector, show_language_selector: language_selector, show_social_links: social_links
       endif
 
@@ -564,6 +572,14 @@
       "label": "t:sections.header.settings.menu.label"
     },
     {
+      "type": "header",
+      "content": "MOBILE MENU"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add the Mobile 1st Menu and Mobile 2nd Menu blocks at the bottom of this section to choose menus for the mobile drawer."
+    },
+    {
       "type": "select",
       "id": "menu_type_desktop",
       "options": [
@@ -763,6 +779,180 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "mobile_menu_primary",
+      "name": "Mobile 1st Menu",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "Primary mobile navigation. Nested items will open megamenu panels."
+        }
+      ]
+    },
+    {
+      "type": "mobile_menu_secondary",
+      "name": "Mobile 2nd Menu",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "Secondary mobile links. Dropdown items expand below the parent on toggle."
+        }
+      ]
+    },
+    {
+      "type": "mobile_menu_utilities",
+      "name": "Mobile Menu Utilities",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "SHOP NOW BUTTON"
+        },
+        {
+          "type": "text",
+          "id": "shop_now_label",
+          "label": "Label",
+          "default": "Shop All"
+        },
+        {
+          "type": "url",
+          "id": "shop_now_link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "shop_now_style",
+          "label": "Button Style",
+          "default": "primary",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "CHAT NOW BUTTON"
+        },
+        {
+          "type": "text",
+          "id": "chat_label",
+          "label": "Label",
+          "default": "Chat Now"
+        },
+        {
+          "type": "url",
+          "id": "chat_link",
+          "label": "Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "chat_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "header",
+          "content": "CALL US BUTTON"
+        },
+        {
+          "type": "text",
+          "id": "call_label",
+          "label": "Label",
+          "default": "Call Us"
+        },
+        {
+          "type": "url",
+          "id": "call_link",
+          "label": "Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "call_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "header",
+          "content": "TRUST BLOCK"
+        },
+        {
+          "type": "image_picker",
+          "id": "trust_logo",
+          "label": "Logo"
+        },
+        {
+          "type": "text",
+          "id": "trust_rating_text",
+          "label": "Rating Text",
+          "default": "Trusted by 100k+ of happy Customers"
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_image_1",
+          "label": "Reviewer Image 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_image_2",
+          "label": "Reviewer Image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_image_3",
+          "label": "Reviewer Image 3"
+        },
+        {
+          "type": "header",
+          "content": "TRUST ITEM 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "trust_item_1_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "trust_item_1_text",
+          "label": "Text",
+          "default": "20-Year Warranty"
+        },
+        {
+          "type": "header",
+          "content": "TRUST ITEM 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "trust_item_2_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "trust_item_2_text",
+          "label": "Text",
+          "default": "100-Night Risk-Free Trial"
+        },
+        {
+          "type": "header",
+          "content": "TRUST ITEM 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "trust_item_3_icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "trust_item_3_text",
+          "label": "Text",
+          "default": "Free Shipping"
+        }
+      ]
     },
     {
       "type": "mega_menu",

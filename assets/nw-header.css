@@ -65,6 +65,34 @@
     color: rgb(var(--color-foreground));
 }
 
+@media screen and (max-width: 989px) {
+    .header-wrapper.nw-header-transparent:has(.menu-drawer-container[open]),
+    .header-wrapper:has(.header.nw-header-transparent):has(.menu-drawer-container[open]) {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+    }
+
+    .header-wrapper.nw-header-transparent:has(.menu-drawer-container[open]) .header,
+    .header-wrapper:has(.header.nw-header-transparent):has(.menu-drawer-container[open]) .header {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+    }
+
+    .header-wrapper:has(.header.nw-header-transparent):has(.menu-drawer-container[open]) .header__heading-logo--default {
+        display: block;
+    }
+
+    .header-wrapper:has(.header.nw-header-transparent):has(.menu-drawer-container[open]) .header__heading-logo--transparent {
+        display: none;
+    }
+
+    .header-wrapper:has(.header.nw-header-transparent):has(.menu-drawer-container[open]) .header__icon,
+    .header-wrapper:has(.header.nw-header-transparent):has(.menu-drawer-container[open]) header-drawer .header__icon,
+    .header-wrapper:has(.header.nw-header-transparent):has(.menu-drawer-container[open]) .header__heading-link {
+        color: #613916;
+    }
+}
+
 @media screen and (min-width: 990px) {
     .header-wrapper.nw-header-transparent:hover,
     .header-wrapper:has(.header.nw-header-transparent):hover,
@@ -256,10 +284,6 @@
         width: 36px;
         justify-content: center;
     }
-    header-drawer .icon{
-        width: 24px !important;
-        height: 24px !important;
-    }
     .header__heading .header__heading-link{
         padding: 0px 10px;
     }
@@ -274,7 +298,6 @@
         padding: 14px 22px !important;
     }
 
-
     .header--middle-left{
         gap: 6px
     }
@@ -282,9 +305,13 @@
         width: 36px;
         justify-content: center;
     }
-    header-drawer .icon{
+    header-drawer .header__icon--menu .icon{
         width: 24px !important;
         height: 24px !important;
+    }
+    header-drawer .header__icon--menu .icon.icon-close {
+        width: 20px !important;
+        height: 20px !important;
     }
     .header__heading .header__heading-link{
         padding: 0px 10px;
