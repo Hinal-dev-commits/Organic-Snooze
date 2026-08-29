@@ -17,7 +17,6 @@ if (!customElements.get('nw-understand-mattress')) {
 
     onClick(e) {
       e.preventDefault();
-      this.el.style.overflow = 'hidden';
       if (this.accordionGroup && typeof this.accordionGroup.closeAllExcept === 'function') {
         this.accordionGroup.closeAllExcept(this);
       }
@@ -31,16 +30,21 @@ if (!customElements.get('nw-understand-mattress')) {
 
     shrink() {
       this.isClosing = true;
+      this.isExpanding = false;
+      this.el.style.overflow = 'hidden';
+
+      const startHeight = `${this.el.getBoundingClientRect().height}px`;
+
       const computedStyle = window.getComputedStyle(this.el);
       const totalPadding = (parseFloat(computedStyle.paddingTop) || 0) + (parseFloat(computedStyle.paddingBottom) || 0);
-      const startHeight = `${this.el.offsetHeight}px`;
-      const endHeight = `${this.summary.offsetHeight + totalPadding}px`;
+      const totalBorder = (parseFloat(computedStyle.borderTopWidth) || 0) + (parseFloat(computedStyle.borderBottomWidth) || 0);
+      const endHeight = `${this.summary.getBoundingClientRect().height + totalPadding + totalBorder}px`;
 
       if (this.animation) this.animation.cancel();
 
       this.animation = this.el.animate(
         { height: [startHeight, endHeight] },
-        { duration: 350, easing: 'ease-out' }
+        { duration: 320, easing: 'cubic-bezier(0.25, 1, 0.5, 1)' }
       );
 
       this.animation.onfinish = () => this.onAnimationFinish(false);
@@ -50,28 +54,24 @@ if (!customElements.get('nw-understand-mattress')) {
     }
 
     open() {
-      this.el.style.height = `${this.el.offsetHeight}px`;
-      this.el.open = true;
-      if (this.accordionGroup) {
-        this.accordionGroup.currentAccordion = this;
-      }
-      window.requestAnimationFrame(() => this.expand());
-    }
-
-    expand() {
       this.isExpanding = true;
+      this.isClosing = false;
+      this.el.style.overflow = 'hidden';
+
+      const startHeight = `${this.el.getBoundingClientRect().height}px`;
+      this.el.open = true;
+
       const computedStyle = window.getComputedStyle(this.el);
       const totalPadding = (parseFloat(computedStyle.paddingTop) || 0) + (parseFloat(computedStyle.paddingBottom) || 0);
-      const contentMarginTop = this.content ? parseFloat(window.getComputedStyle(this.content).marginTop) || 0 : 0;
-      const contentHeight = this.content ? this.content.scrollHeight + contentMarginTop : 0;
-      const startHeight = `${this.el.offsetHeight}px`;
-      const endHeight = `${this.summary.offsetHeight + totalPadding + contentHeight}px`;
+      const totalBorder = (parseFloat(computedStyle.borderTopWidth) || 0) + (parseFloat(computedStyle.borderBottomWidth) || 0);
+      const contentHeight = this.content ? this.content.getBoundingClientRect().height : 0;
+      const endHeight = `${this.summary.getBoundingClientRect().height + contentHeight + totalPadding + totalBorder}px`;
 
       if (this.animation) this.animation.cancel();
 
       this.animation = this.el.animate(
         { height: [startHeight, endHeight] },
-        { duration: 350, easing: 'ease-out' }
+        { duration: 320, easing: 'cubic-bezier(0.25, 1, 0.5, 1)' }
       );
 
       this.animation.onfinish = () => this.onAnimationFinish(true);
@@ -89,7 +89,7 @@ if (!customElements.get('nw-understand-mattress')) {
       this.el.style.overflow = '';
       this.updateAriaExpanded(open);
 
-      if (!open && this.accordionGroup) {
+      if (!open && this.accordionGroup && this.accordionGroup.currentAccordion === this) {
         this.accordionGroup.currentAccordion = null;
       }
     }
@@ -99,7 +99,9 @@ if (!customElements.get('nw-understand-mattress')) {
     }
 
     close() {
-      if (this.el.open) this.shrink();
+      if (this.el.open && !this.isClosing) {
+        this.shrink();
+      }
     }
   }
 

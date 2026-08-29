@@ -51,14 +51,17 @@
     line-height: 1.3;
     text-align: center;
     color: var(--nw-cta-badge-text, var(--nw-brown));
+    text-transform: capitalize;
 }
 
 
 @media screen and (max-width: 1023px) {
-    .nw-cta-badges__list{
+    .nw-cta-badges__list {
         gap: 8px 14px;
     }
-    .nw-cta-badges__text, .nw-cta-badges__text *{
+
+    .nw-cta-badges__text,
+    .nw-cta-badges__text * {
         font-size: 13px;
     }
 }
@@ -69,7 +72,9 @@
         max-width: 360px;
         margin: 0 auto;
     }
-    .nw-cta-badges__text, .nw-cta-badges__text *{
+
+    .nw-cta-badges__text,
+    .nw-cta-badges__text * {
         font-size: 12px;
     }
 }
