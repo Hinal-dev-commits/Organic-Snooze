@@ -154,6 +154,14 @@
   display: none;
 }
 
+@media screen and (max-width: 1199px) {
+  .nw-marquee-v2__group{
+    gap: 18px;
+  }
+  .nw-marquee-v2__text{
+    font-size: 16px;
+  }
+}
 @media screen and (max-width: 749px) {
   .nw-marquee-v2 {
     min-height: 44px;

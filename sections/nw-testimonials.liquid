@@ -84,14 +84,7 @@
             {% render 'nw-swiper-arrows' %}
           {%- endif -%}
           {%- if section.settings.show_pagination and section.blocks.size > 1 -%}
-            <div class="nw-swiper-pagination" id="NwTestimonialsPagination-{{ section.id }}" data-nw-testimonial-pagination>
-              {%- for block in section.blocks -%}
-                <span
-                  class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
-                  data-bullet-index="{{ forloop.index0 }}"
-                ></span>
-              {%- endfor -%}
-            </div>
+            <div class="nw-swiper-pagination" id="NwTestimonialsPagination-{{ section.id }}" data-nw-testimonial-pagination></div>
           {%- endif -%}
         </div>
       {%- endif -%}

@@ -54,6 +54,7 @@
 
 .nw-benefits__swiper .swiper-wrapper {
   align-items: stretch;
+  padding: 1px;
 }
 
 .nw-benefits__swiper .swiper-slide {
@@ -76,8 +77,6 @@
 
 .nw-benefits__card-media {
   width: 100%;
-  height: 180px;
-  max-height: 180px;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -172,6 +171,17 @@
   width: 100%;
 }
 
+@media screen and (max-width: 1199px) {
+  .nw-benefits__card-desc, .nw-benefits__card-desc *{
+    font-size: 14px;
+  }
+  .nw-benefits__card-title{
+    font-size: 20px;
+  }
+  .nw-benefits__card-body{
+    padding: 20px;
+  }
+}
 @media screen and (max-width: 989px) {
   .nw-benefits__swiper .swiper-slide {
     width: calc((100% - 12px) / 2);

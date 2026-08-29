@@ -9,11 +9,6 @@
 
 .nw-natural-layers .page-width {
   position: relative;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 80px;
-  box-sizing: border-box;
 }
 
 .nw-natural-layers__wrapper {
@@ -429,14 +424,22 @@
   width: 30px;
 }
 
+@media screen and (max-width: 1023px) {
+  .nw-natural-layers__card-title{
+    font-size: 20px;
+  }
+  .nw-natural-layers__card-feature-text{
+    font-size: 14px;
+  }
+  .nw-natural-layers__leave-out{
+    flex-direction: column;
+    align-items: self-start;
+  }
+}
 @media screen and (max-width: 749px) {
   .nw-natural-layers__card-feature .nw-natural-layers__feature-icon {
     width: 16px;
     height: 16px;
-  }
-  
-  .nw-natural-layers .page-width {
-    padding: 0 16px;
   }
 
   .nw-natural-layers__wrapper {
