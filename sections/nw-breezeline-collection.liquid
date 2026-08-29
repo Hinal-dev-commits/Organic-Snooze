@@ -1,0 +1,362 @@
+{{ 'nw-breezeline-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-breezeline-collection.js' | asset_url }}" defer="defer"></script>
+
+{%- assign nw_shell_selector = '#NwBreezelineCollection-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFAF3' %}
+
+<nw-breezeline-collection
+  id="NwBreezelineCollection-{{ section.id }}"
+  class="nw-breezeline-collection section-{{ section.id }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
+  data-pagination-id="NwBreezelinePagination-{{ section.id }}"
+  style="
+    --nw-bc-heading-color: {{ section.settings.heading_color }};
+    --nw-bc-desc-color: {{ section.settings.description_color }};
+    --nw-bc-card-bg: {{ section.settings.card_bg_color }};
+    --nw-bc-card-text: {{ section.settings.card_text_color }};
+    --nw-bc-tag-bg: {{ section.settings.tag_bg_color }};
+    --nw-bc-tag-text: {{ section.settings.tag_text_color }};
+    --nw-bc-scale-active: {{ section.settings.scale_active_color }};
+    --nw-bc-scale-inactive: {{ section.settings.scale_inactive_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-breezeline-collection__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.heading != blank or section.settings.description != blank -%}
+        <div class="nw-breezeline-collection__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.description,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- assign product_blocks = section.blocks | where: 'type', 'product' -%}
+      {%- if product_blocks.size > 0 -%}
+        <div class="nw-breezeline-collection__slider-wrap">
+          <div class="swiper nw-breezeline-collection__swiper" id="NwBreezelineSwiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {%- for block in product_blocks -%}
+                {%- if block.settings.product != blank -%}
+                  <div class="swiper-slide" data-slide-index="{{ forloop.index0 }}">
+                    {% render 'nw-breezeline-card',
+                      product: block.settings.product,
+                      block: block,
+                      show_feel: section.settings.show_feel,
+                      show_best_for: section.settings.show_best_for,
+                      show_breathable: section.settings.show_breathable,
+                      breathable_label_1: section.settings.breathable_label_1,
+                      breathable_label_2: section.settings.breathable_label_2,
+                      breathable_label_3: section.settings.breathable_label_3,
+                      cta_text: section.settings.cta_text
+                    %}
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.settings.show_pagination and product_blocks.size > 1 -%}
+            {%- assign bc_pagination_id = 'NwBreezelinePagination-' | append: section.id -%}
+            {% render 'nw-swiper-pagination', id: bc_pagination_id %}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-breezeline-collection>
+
+{% schema %}
+{
+  "name": "t:sections.nw-breezeline-collection.name",
+  "tag": "section",
+  "class": "section-nw-breezeline-collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop the Breezeline Collection"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>The right pillow height depends on how you sleep. Here's your starting point.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Product metafields"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_feel",
+      "label": "Show Feel (custom.feel_text)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_best_for",
+      "label": "Show Best for (custom.best_for)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breathable",
+      "label": "Show Breathable scale (custom.breathable)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "breathable_label_1",
+      "label": "Breathable scale label (left)",
+      "default": "Breathable",
+      "visible_if": "{{ section.settings.show_breathable == true }}"
+    },
+    {
+      "type": "text",
+      "id": "breathable_label_2",
+      "label": "Breathable scale label (center)",
+      "default": "Comfort",
+      "visible_if": "{{ section.settings.show_breathable == true }}"
+    },
+    {
+      "type": "text",
+      "id": "breathable_label_3",
+      "label": "Breathable scale label (right)",
+      "default": "Cool",
+      "visible_if": "{{ section.settings.show_breathable == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show pagination on mobile",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Card link label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_bg_color",
+      "label": "Tag background",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_text_color",
+      "label": "Tag text color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "scale_active_color",
+      "label": "Breathable scale active color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_breathable == true }}"
+    },
+    {
+      "type": "color",
+      "id": "scale_inactive_color",
+      "label": "Breathable scale inactive color",
+      "default": "rgba(97, 57, 22, 0.35)",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_breathable == true }}"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFAF3",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "custom_title",
+          "label": "Custom title",
+          "info": "Leave blank to use the product title."
+        },
+        {
+          "type": "header",
+          "content": "Image tag"
+        },
+        {
+          "type": "text",
+          "id": "tag_text",
+          "label": "Tag text",
+          "info": "Shown on the product image when custom tag image is not used."
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_tag_image",
+          "label": "Use custom tag image",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_tag_image",
+          "label": "Custom tag image",
+          "visible_if": "{{ block.settings.use_custom_tag_image == true }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-breezeline-collection.name",
+      "category": "NW Sections",
+      "blocks": [
+        { "type": "product", "settings": { "tag_text": "100% COTTON" } },
+        { "type": "product", "settings": { "tag_text": "LINEN + COTTON" } },
+        { "type": "product", "settings": { "tag_text": "LINEN + COTTON" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

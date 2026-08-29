@@ -76,12 +76,110 @@
     navButton?.click();
   }
 
+  function initDrag(viewer, getSlidesRef, navigateRef) {
+    const dragSurface = viewer.querySelector('.nw-product-media__viewport');
+    if (!dragSurface) return;
+
+    const slides = getSlidesRef();
+    if (slides.length < 2) return;
+
+    const supportsPointerDrag = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!supportsPointerDrag) return;
+
+    dragSurface.classList.add('nw-product-media__viewport--draggable');
+
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+    let isHorizontal = null;
+    let didDrag = false;
+    const threshold = 40;
+
+    const isInteractiveTarget = (target) =>
+      !!target.closest(
+        'button, a, input, label, .deferred-media__poster, .nw-swiper-pagination, .nw-swiper-btn, .product__media-toggle'
+      );
+
+    const onPointerStart = (clientX, clientY) => {
+      startX = clientX;
+      startY = clientY;
+      isDragging = true;
+      isHorizontal = null;
+      didDrag = false;
+    };
+
+    const onPointerEnd = (clientX, clientY) => {
+      if (!isDragging) return;
+      isDragging = false;
+      dragSurface.classList.remove('is-dragging');
+
+      if (isHorizontal !== true) return;
+
+      const deltaX = clientX - startX;
+      if (Math.abs(deltaX) < threshold) return;
+
+      didDrag = true;
+      navigateRef(deltaX < 0 ? 'next' : 'previous');
+    };
+
+    dragSurface.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0 || isInteractiveTarget(event.target)) return;
+      dragSurface.setPointerCapture(event.pointerId);
+      onPointerStart(event.clientX, event.clientY);
+    });
+
+    dragSurface.addEventListener('pointermove', (event) => {
+      if (!isDragging) return;
+
+      const deltaX = event.clientX - startX;
+      const deltaY = event.clientY - startY;
+
+      if (isHorizontal === null && (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8)) {
+        isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
+      }
+
+      if (isHorizontal) {
+        event.preventDefault();
+        dragSurface.classList.add('is-dragging');
+      }
+    });
+
+    dragSurface.addEventListener('pointerup', (event) => {
+      onPointerEnd(event.clientX, event.clientY);
+      if (dragSurface.hasPointerCapture(event.pointerId)) {
+        dragSurface.releasePointerCapture(event.pointerId);
+      }
+    });
+
+    dragSurface.addEventListener('pointercancel', () => {
+      isDragging = false;
+      isHorizontal = null;
+      dragSurface.classList.remove('is-dragging');
+    });
+
+    dragSurface.addEventListener(
+      'click',
+      (event) => {
+        if (!didDrag) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        didDrag = false;
+      },
+      true
+    );
+  }
+
   function initViewer(viewer) {
     if (viewer.dataset.nwMediaInit === 'true') return;
     viewer.dataset.nwMediaInit = 'true';
 
     const slides = getSlides(viewer);
     if (slides.length < 2) return;
+
+    const getSlidesForViewer = () => getSlides(viewer);
+    const navigateForViewer = (direction) => navigateByDirection(viewer, getSlidesForViewer(), direction);
+
+    initDrag(viewer, getSlidesForViewer, navigateForViewer);
 
     const syncDots = () => updateDots(viewer, getCurrentSlideIndex(viewer, getSlides(viewer)));
 
@@ -146,7 +244,7 @@
   }
 
   function initAll() {
-    document.querySelectorAll('.nw-product-media--custom-controls').forEach(initViewer);
+    document.querySelectorAll('media-gallery [id^="GalleryViewer"]').forEach(initViewer);
   }
 
   if (document.readyState === 'loading') {

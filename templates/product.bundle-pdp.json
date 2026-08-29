@@ -224,7 +224,7 @@
         "trust_badges_nMR3Vh": {
           "type": "trust_badges",
           "settings": {
-            "item_1_text": "Free shipping",
+            "item_1_text": "Free Shipping",
             "item_1_icon": "truck",
             "item_1_use_custom_icon": false,
             "item_2_text": "",
@@ -302,13 +302,13 @@
         "bundle_tab_HnzHwR": {
           "type": "bundle_tab",
           "settings": {
-            "product": "2ab6ffb3-e07b-490a-aa77-1eab2fec6568",
+            "product": "the-snooze-lift-adjustable-base",
             "tab_label": "Base",
-            "custom_title": "Pillow Top Organic Mattress",
-            "custom_subtitle": "4-inch organic latex pillowtop, 1,100 coils",
-            "extra_description": "4\" organic latex pillowtop over 1,100 pocketed coils. Plush comfort for side sleepers. GOLS certified.",
+            "custom_title": "SnoozeLift 5.0 Adjustable Base",
+            "custom_subtitle": "Head & foot positioning, massage, low-EMF",
+            "extra_description": "Low-EMF quiet motors. Head & feet elevation for zero-gravity recovery.",
             "custom_image": "shopify://shop_images/product-image_1.png",
-            "features": "4\" Latex Pillowtop\n1,100 Pocketed Coils\n100-Night Sleep Trial\n30-Year Warranty",
+            "features": "Head and Feet Position\nRemote Controlled\nMassage Setting\n20-Year Warranty",
             "learn_more_label": "Learn More"
           }
         },
@@ -328,13 +328,13 @@
         "bundle_tab_Mq7NRW": {
           "type": "bundle_tab",
           "settings": {
-            "product": "100-linen-natural-cool-sheet-set",
+            "product": "organic-cooling-sheets",
             "tab_label": "Sheets",
-            "custom_title": "Pillow Top Organic Mattress",
-            "custom_subtitle": "4-inch organic latex pillowtop, 1,100 coils",
-            "extra_description": "4\" organic latex pillowtop over 1,100 pocketed coils. Plush comfort for side sleepers. GOLS certified.",
+            "custom_title": "Breezeline Organic Sheet Set",
+            "custom_subtitle": "Fitted, flat, 2 pillowcases, cooling weave",
+            "extra_description": "Organic cotton cooling weave. Releases heat, fits securely. GOTS certified.",
             "custom_image": "shopify://shop_images/product-image_1.png",
-            "features": "4\" Latex Pillowtop\n1,100 Pocketed Coils\n100-Night Sleep Trial\n30-Year Warranty",
+            "features": "One (1) fitted sheet\nOne (1) flat sheet\nTwo (2) pillowcases",
             "learn_more_label": "Learn More"
           }
         },
@@ -343,11 +343,11 @@
           "settings": {
             "product": "organic-waterproof-mattress-protector",
             "tab_label": "Protector",
-            "custom_title": "Pillow Top Organic Mattress",
-            "custom_subtitle": "4-inch organic latex pillowtop, 1,100 coils",
-            "extra_description": "4\" organic latex pillowtop over 1,100 pocketed coils. Plush comfort for side sleepers. GOLS certified.",
+            "custom_title": "Mattress Protector",
+            "custom_subtitle": "Organic-Air + MoistureGuard barrier",
+            "extra_description": "Organic-Air™ cotton + MoistureGuard™ barrier. Protects without changing feel.",
             "custom_image": "shopify://shop_images/product-image_1.png",
-            "features": "4\" Latex Pillowtop\n1,100 Pocketed Coils\n100-Night Sleep Trial\n30-Year Warranty",
+            "features": "Organic Cotton\nCorner straps for secure fit\nWater Resistant Barrier\nSoft feel",
             "learn_more_label": "Learn More"
           }
         },
@@ -469,6 +469,7 @@
             "text_color": "#594d40",
             "badge_bg_color": "#ffffff",
             "badge_text_color": "#613916",
+            "shadow_color": "#c07a2e",
             "margin_top": 32,
             "margin_bottom": 0,
             "margin_top_mobile": 32,
@@ -516,7 +517,7 @@
         "gallery_layout": "thumbnail_slider",
         "mobile_thumbnails": "hide",
         "media_position": "left",
-        "image_zoom": "lightbox",
+        "image_zoom": "none",
         "hide_variants": true,
         "enable_video_looping": false,
         "show_media_arrows": true,
@@ -580,7 +581,7 @@
             "description": "Gently supports the head and neck while keeping you cool all night.",
             "pin_label": "1",
             "pos_x_desktop": 24,
-            "pos_y_desktop": 22,
+            "pos_y_desktop": 25,
             "pos_x_mobile": 16,
             "pos_y_mobile": 22
           }
@@ -595,7 +596,7 @@
             "description": "Breathable, moisture-wicking barrier that preserves mattress freshness.",
             "pin_label": "",
             "pos_x_desktop": 40,
-            "pos_y_desktop": 38,
+            "pos_y_desktop": 36,
             "pos_x_mobile": 41,
             "pos_y_mobile": 38
           }
@@ -610,7 +611,7 @@
             "description": "Pressure-relieving organic latex contours to your body for cloud-like comfort.",
             "pin_label": "",
             "pos_x_desktop": 52,
-            "pos_y_desktop": 48,
+            "pos_y_desktop": 44,
             "pos_x_mobile": 55,
             "pos_y_mobile": 48
           }
@@ -625,7 +626,7 @@
             "description": "Targeted lumbar support and motion isolation for undisturbed sleep.",
             "pin_label": "",
             "pos_x_desktop": 34,
-            "pos_y_desktop": 68,
+            "pos_y_desktop": 61,
             "pos_x_mobile": 30,
             "pos_y_mobile": 68
           }
@@ -641,8 +642,8 @@
             "custom_price": "",
             "description": "Firm support that takes pressure off aging joints and resists flattening, unlike foam that sags.",
             "pin_label": "",
-            "pos_x_desktop": 58,
-            "pos_y_desktop": 86,
+            "pos_x_desktop": 54,
+            "pos_y_desktop": 79,
             "pos_x_mobile": 61,
             "pos_y_mobile": 86
           }
@@ -1072,6 +1073,9 @@
         "heading_color": "#613916",
         "description_color": "#613916",
         "cell_text_color": "#613916",
+        "media_type": "image",
+        "video_autoplay": false,
+        "show_play_icon": true,
         "image_position": "right",
         "image_desktop": "shopify://shop_images/mattress_f9f3ee97-3c4c-4943-8518-09e126f3c035.png",
         "image_mobile": "shopify://shop_images/ultimate-snooze-mobile.png",

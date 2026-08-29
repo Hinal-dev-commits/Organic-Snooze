@@ -7,14 +7,10 @@
     if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
 
     var hotspots = sectionEl.querySelectorAll('.nw-layer-product__hotspot');
-    var mediaSlides = sectionEl.querySelectorAll('.nw-layer-product__media-slide');
 
     function setActiveIndex(index) {
       hotspots.forEach(function (pin, i) {
         pin.classList.toggle('is-active', i === index);
-      });
-      mediaSlides.forEach(function (slide, i) {
-        slide.classList.toggle('is-active', i === index);
       });
     }
 

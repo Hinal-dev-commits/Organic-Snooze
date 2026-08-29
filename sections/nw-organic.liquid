@@ -1,4 +1,5 @@
 {{ 'nw-organic.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-organic.js' | asset_url }}" defer="defer"></script>
 
 {%- assign nw_shell_selector = '#NwOrganic-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
@@ -141,50 +142,137 @@
           </div>
         </div>
 
-        <div class="nw-organic__image-col">
-          {%- liquid
-            assign img_dt = section.settings.image_desktop
-            assign img_mb = section.settings.image_mobile
-          -%}
-          {%- if img_dt != blank or img_mb != blank -%}
-            {%- if img_dt != blank and img_mb != blank -%}
-              <img
-                src="{{ img_dt | image_url }}"
-                alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                class="nw-organic__img nw-organic__img--desktop"
-                width=""
-                height=""
-                loading="lazy"
-              >
-              <img
-                src="{{ img_mb | image_url }}"
-                alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                class="nw-organic__img nw-organic__img--mobile"
-                width=""
-                height=""
-                loading="lazy"
-              >
-            {%- elsif img_dt != blank -%}
-              <img
-                src="{{ img_dt | image_url }}"
-                alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                class="nw-organic__img"
-                width=""
-                height=""
-                loading="lazy"
-              >
-            {%- else -%}
-              <img
-                src="{{ img_mb | image_url }}"
-                alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                class="nw-organic__img"
-                width=""
-                height=""
-                loading="lazy"
-              >
+        <div
+          class="nw-organic__image-col{% if section.settings.media_type == 'video' %} nw-organic__image-col--video{% if section.settings.video_autoplay %} is-autoplay{% endif %}{% endif %}"
+          {% if section.settings.media_type == 'video' and section.settings.video != blank %}
+            data-nw-organic-media
+            data-autoplay="{{ section.settings.video_autoplay }}"
+          {% endif %}
+        >
+          {%- if section.settings.media_type == 'video' and section.settings.video != blank -%}
+            {%- liquid
+              assign media_poster = section.settings.video_poster
+              assign media_poster_mobile = section.settings.video_poster_mobile
+              if media_poster == blank and section.settings.video.preview_image != blank
+                assign media_poster = section.settings.video.preview_image
+              endif
+              if media_poster_mobile == blank and media_poster != blank
+                assign media_poster_mobile = media_poster
+              endif
+            -%}
+
+            {{
+              section.settings.video
+              | video_tag:
+                autoplay: section.settings.video_autoplay,
+                loop: section.settings.video_autoplay,
+                muted: section.settings.video_autoplay,
+                controls: false,
+                playsinline: true,
+                preload: 'metadata',
+                tabindex: -1,
+                class: 'nw-organic__video',
+                image_size: '1200x'
+            }}
+
+            {%- if media_poster != blank or media_poster_mobile != blank -%}
+              {%- if media_poster != blank and media_poster_mobile != blank and media_poster != media_poster_mobile -%}
+                <img
+                  src="{{ media_poster | image_url: width: 1200 }}"
+                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
+                  class="nw-organic__img nw-organic__img--desktop nw-organic__poster"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+                <img
+                  src="{{ media_poster_mobile | image_url: width: 800 }}"
+                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
+                  class="nw-organic__img nw-organic__img--mobile nw-organic__poster"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+              {%- elsif media_poster != blank -%}
+                <img
+                  src="{{ media_poster | image_url: width: 1200 }}"
+                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
+                  class="nw-organic__img nw-organic__poster"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+              {%- else -%}
+                <img
+                  src="{{ media_poster_mobile | image_url: width: 800 }}"
+                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
+                  class="nw-organic__img nw-organic__poster"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if section.settings.show_play_icon and section.settings.video_autoplay == false -%}
+              <div class="nw-organic__video-controls">
+                <button type="button" class="nw-organic__play" data-nw-organic-play aria-label="Play video">
+                  <span class="nw-organic__control-icon" aria-hidden="true">
+                    {{ 'play-v2.svg' | inline_asset_content }}
+                  </span>
+                </button>
+                <button type="button" class="nw-organic__pause" data-nw-organic-pause aria-label="Pause video" hidden>
+                  <span class="nw-organic__control-icon" aria-hidden="true">
+                    {{ 'icon-pause.svg' | inline_asset_content }}
+                  </span>
+                </button>
+              </div>
             {%- endif -%}
           {%- else -%}
-            <div class="nw-organic__placeholder"></div>
+            {%- liquid
+              assign img_dt = section.settings.image_desktop
+              assign img_mb = section.settings.image_mobile
+            -%}
+            {%- if img_dt != blank or img_mb != blank -%}
+              {%- if img_dt != blank and img_mb != blank -%}
+                <img
+                  src="{{ img_dt | image_url }}"
+                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
+                  class="nw-organic__img nw-organic__img--desktop"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+                <img
+                  src="{{ img_mb | image_url }}"
+                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
+                  class="nw-organic__img nw-organic__img--mobile"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+              {%- elsif img_dt != blank -%}
+                <img
+                  src="{{ img_dt | image_url }}"
+                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
+                  class="nw-organic__img"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+              {%- else -%}
+                <img
+                  src="{{ img_mb | image_url }}"
+                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
+                  class="nw-organic__img"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+              {%- endif -%}
+            {%- else -%}
+              <div class="nw-organic__placeholder"></div>
+            {%- endif -%}
           {%- endif -%}
         </div>
       </div>
@@ -270,6 +358,55 @@
     },
     {
       "type": "select",
+      "id": "media_type",
+      "label": "Media type",
+      "default": "image",
+      "options": [
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "video",
+          "label": "Video"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay video",
+      "default": false,
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_play_icon",
+      "label": "Show play/pause controls",
+      "default": true,
+      "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_autoplay == false }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video poster (desktop)",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster_mobile",
+      "label": "Video poster (mobile)",
+      "info": "Optional. Uses desktop poster when empty.",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "select",
       "id": "image_position",
       "label": "Image Position (Desktop)",
       "options": [
@@ -287,12 +424,14 @@
     {
       "type": "image_picker",
       "id": "image_desktop",
-      "label": "Product Image (Desktop)"
+      "label": "Product Image (Desktop)",
+      "visible_if": "{{ section.settings.media_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "image_mobile",
-      "label": "Product Image (Mobile)"
+      "label": "Product Image (Mobile)",
+      "visible_if": "{{ section.settings.media_type == 'image' }}"
     },
     {
       "type": "header",

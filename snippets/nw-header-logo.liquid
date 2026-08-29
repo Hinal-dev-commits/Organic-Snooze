@@ -28,34 +28,14 @@ Renders the header logo, including an optional transparent-header variant.
   <div class="header__heading-logo-wrapper">
     {%- if settings.logo != blank -%}
       {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
-      {{
-        settings.logo
-        | image_url: width: 600
-        | image_tag:
-          class: 'header__heading-logo header__heading-logo--default motion-reduce',
-          widths: logo_widths,
-          height: logo_height,
-          width: settings.logo_width,
-          alt: logo_alt,
-          sizes: logo_sizes,
-          preload: true
-      }}
+      <img src="{{ settings.logo | image_url: width: 600 }}" alt="{{ logo_alt }}" class="header__heading-logo header__heading-logo--default motion-reduce" width="" height="" sizes="" preload="eager">
+      
     {%- endif -%}
     {%- if section.settings.transparent_logo != blank -%}
       {%- assign transparent_logo_alt = section.settings.transparent_logo.alt | default: shop.name | escape -%}
       {%- assign transparent_logo_height = transparent_logo_width | divided_by: section.settings.transparent_logo.aspect_ratio -%}
-      {{
-        section.settings.transparent_logo
-        | image_url: width: 600
-        | image_tag:
-          class: 'header__heading-logo header__heading-logo--transparent motion-reduce',
-          widths: transparent_logo_widths,
-          height: transparent_logo_height,
-          width: transparent_logo_width,
-          alt: transparent_logo_alt,
-          sizes: logo_sizes,
-          loading: 'eager'
-      }}
+      <img src="{{ section.settings.transparent_logo | image_url: width: 600 }}" alt="{{ transparent_logo_alt }}" class="header__heading-logo header__heading-logo--transparent motion-reduce" width="" height="" sizes="" preload="eager">
+      
     {%- endif -%}
   </div>
 {%- else -%}

@@ -61,38 +61,39 @@
       <div class="nw-layer-product__main">
         <div class="nw-layer-product__media-col">
           <div class="nw-layer-product__media-wrap">
-            {%- for block in section.blocks -%}
-              {%- liquid
-                assign main_img = block.settings.image
-                if main_img == blank and block.settings.product != blank and block.settings.product.featured_image != blank
-                  assign main_img = block.settings.product.featured_image
+            {%- liquid
+              assign diagram_img = section.settings.diagram_image
+              assign diagram_img_mobile = section.settings.diagram_image_mobile
+
+              for block in section.blocks
+                if diagram_img == blank and block.settings.image != blank
+                  assign diagram_img = block.settings.image
                 endif
-                assign main_img_mobile = block.settings.image_mobile
-              -%}
-              <div
-                class="nw-layer-product__media-slide{% if forloop.first %} is-active{% endif %}"
-                data-media-index="{{ forloop.index0 }}"
-                {{ block.shopify_attributes }}
-              >
-                {%- if main_img != blank -%}
-                  <picture>
-                    {%- if main_img_mobile != blank -%}
-                      <source media="(max-width: 749px)" srcset="{{ main_img_mobile | image_url: width: 750 }}">
-                    {%- endif -%}
-                    <img
-                      src="{{ main_img | image_url: width: 1100 }}"
-                      alt="{{ block.settings.title | default: forloop.index | escape }}"
-                      width="536"
-                      height="502"
-                      loading="lazy"
-                      class="nw-layer-product__img"
-                    >
-                  </picture>
-                {%- else -%}
-                  <div class="nw-layer-product__placeholder"></div>
-                {%- endif -%}
-              </div>
-            {%- endfor -%}
+                if diagram_img_mobile == blank and block.settings.image_mobile != blank
+                  assign diagram_img_mobile = block.settings.image_mobile
+                endif
+              endfor
+            -%}
+
+            <div class="nw-layer-product__media-slide is-active">
+              {%- if diagram_img != blank -%}
+                <picture>
+                  {%- if diagram_img_mobile != blank -%}
+                    <source media="(max-width: 749px)" srcset="{{ diagram_img_mobile | image_url: width: 750 }}">
+                  {%- endif -%}
+                  <img
+                    src="{{ diagram_img | image_url: width: 1100 }}"
+                    alt="{{ section.settings.heading | default: 'Layer product diagram' | escape }}"
+                    width="536"
+                    height="502"
+                    loading="lazy"
+                    class="nw-layer-product__img"
+                  >
+                </picture>
+              {%- else -%}
+                <div class="nw-layer-product__placeholder"></div>
+              {%- endif -%}
+            </div>
 
             {%- for block in section.blocks -%}
               <button
@@ -227,6 +228,22 @@
       "type": "inline_richtext",
       "id": "price_prefix",
       "label": "Price Prefix"
+    },
+    {
+      "type": "header",
+      "content": "MAIN DIAGRAM IMAGE"
+    },
+    {
+      "type": "image_picker",
+      "id": "diagram_image",
+      "label": "Main diagram image (desktop)",
+      "info": "Static image shown behind all hotspot pins. Does not change with the slider."
+    },
+    {
+      "type": "image_picker",
+      "id": "diagram_image_mobile",
+      "label": "Main diagram image (mobile)",
+      "info": "Optional. Uses desktop diagram when empty."
     },
     {
       "type": "header",
