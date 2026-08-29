@@ -39,7 +39,7 @@
   }
 
   {% if section.settings.image_width != blank %}
-    @media screen and (min-width: 750px) {
+    @media screen and (min-width: 990px) {
       #NwGuaranteeCard-{{ section.id }} .nw-guarantee-card__media-wrap {
         width: {{ section.settings.image_width }}px;
       }
@@ -87,7 +87,7 @@
   class="nw-guarantee-card{% if section.settings.image_position == 'right' %} nw-guarantee-card--image-right{% endif %}"
 >
   <div class="page-width">
-    <div class="nw-guarantee-card__card">
+    <div class="nw-guarantee-card__card scroll-trigger animate--slide-in">
       <div class="nw-guarantee-card__media-wrap">
         {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
           {%- if section.settings.image_mobile != blank -%}

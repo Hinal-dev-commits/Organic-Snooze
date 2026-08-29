@@ -76,7 +76,7 @@
   class="nw-return-policy section-{{ section.id }}{% if section.settings.image_position == 'right' %} nw-return-policy--image-right{% endif %}{% if section.settings.image_position_mobile == 'bottom' %} nw-return-policy--mobile-image-bottom{% elsif section.settings.image_position_mobile == 'none' %} nw-return-policy--mobile-image-none{% endif %}"
 >
   <div class="page-width">
-    <div class="nw-return-policy__wrapper">
+    <div class="nw-return-policy__wrapper scroll-trigger animate--slide-in">
       {%- if section.settings.heading != blank
         or section.settings.subheading != blank
         or section.settings.eyebrow != blank
@@ -139,8 +139,8 @@
                 {% endif %}
               >
                 <summary class="nw-return-policy__summary">
-                  <div class="nw-return-policy__icon-wrap">
-                    {%- if block.settings.use_custom_image and block.settings.custom_image != blank -%}
+                  {%- if block.settings.use_custom_image and block.settings.custom_image != blank -%}
+                    <div class="nw-return-policy__icon-wrap">
                       <img
                         src="{{ block.settings.custom_image | image_url: width: 120 }}"
                         alt="{{ block.settings.title | strip_html | escape }}"
@@ -148,27 +148,27 @@
                         height="28"
                         loading="lazy"
                       >
-                    {%- else -%}
+                    </div>
+                  {%- elsif block.settings.icon != 'none' and block.settings.icon != blank -%}
+                    <div class="nw-return-policy__icon-wrap">
                       {% render 'nw-icon', icon: block.settings.icon %}
-                    {%- endif -%}
-                  </div>
+                    </div>
+                  {%- endif -%}
 
-                  <div class="nw-return-policy__title-wrap">
+                  <div class="nw-return-policy__info">
                     {%- if block.settings.title != blank -%}
                       <h3 class="nw-return-policy__title">{{ block.settings.title }}</h3>
+                    {%- endif -%}
+
+                    {%- if block.settings.content != blank -%}
+                      <div class="nw-return-policy__content">
+                        {{ block.settings.content }}
+                      </div>
                     {%- endif -%}
                   </div>
 
                   <span class="nw-return-policy__toggle-btn" aria-hidden="true"></span>
                 </summary>
-
-                {%- if block.settings.content != blank -%}
-                  <div class="nw-return-policy__content">
-                    <div class="nw-return-policy__content-inner">
-                      {{ block.settings.content }}
-                    </div>
-                  </div>
-                {%- endif -%}
               </details>
             {%- endfor -%}
           </div>
@@ -460,6 +460,7 @@
           "label": "Preset Icon",
           "default": "offer",
           "options": [
+            { "value": "none", "label": "None" },
             { "value": "offer", "label": "Offer / Tag" },
             { "value": "money", "label": "Money / Refund" },
             { "value": "shield", "label": "Shield / Condition" },

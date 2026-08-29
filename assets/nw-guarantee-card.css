@@ -11,12 +11,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 48px;
+  gap: 32px;
   width: 100%;
   max-width: 922px;
   min-height: 392px;
   margin: 0 auto;
-  padding: 16px 46px 16px 16px;
+  padding: 16px 30px 16px 16px;
   background: #FFFFFF;
   border: 1px solid rgba(97, 57, 22, 0.2);
   border-radius: 14px;
@@ -146,7 +146,30 @@
 
   .nw-guarantee-card__media-wrap {
     width: 280px;
+    max-width: 45%;
+    flex-shrink: 0;
     height: auto;
+  }
+
+  .nw-guarantee-card__content {
+    flex: 1;
+    min-width: 0;
+    gap: 20px;
+  }
+
+  .nw-guarantee-card__text-wrap .nw-section-heading h2,
+  .nw-guarantee-card__text-wrap .nw-section-heading .h2 {
+    font-size: 28px;
+  }
+
+  .nw-guarantee-card__text-wrap .nw-section-description,
+  .nw-guarantee-card__text-wrap .nw-section-description p {
+    font-size: 15px;
+  }
+
+  .nw-guarantee-card__btn-wrap .nw-btn {
+    min-height: 50px;
+    font-size: 16px;
   }
 }
 

@@ -59,8 +59,7 @@
   z-index: 1;
   pointer-events: none;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-self: flex-start;
 }
 
 .nw-materials__card-img {
@@ -172,7 +171,7 @@
   max-width: 520px;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
+  margin: 20px 0 auto;
 }
 
 .nw-materials__btn-wrap .nw-btn {
