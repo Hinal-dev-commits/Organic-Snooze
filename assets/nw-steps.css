@@ -284,9 +284,15 @@
 
   .nw-steps__container {
     gap: 25px;
-    width: 100%;
-    max-width: 100%;
+    width: calc(100% + 30px);
+    max-width: calc(100% + 30px);
     overflow: hidden;
+    margin-left: -15px;
+  }
+
+  .swiper.nw-steps__swiper {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .nw-steps__track {
@@ -299,6 +305,7 @@
     will-change: transform;
     transition-property: transform;
     overflow: visible;
+    padding-left: 15px;
   }
 
   .nw-steps__track-item {

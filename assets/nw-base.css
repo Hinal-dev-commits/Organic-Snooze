@@ -15,6 +15,10 @@
     height: 200px;
 }
 
+html{
+    overflow-x: hidden;
+}
+
 body.overflow-hidden,
 body.overflow-hidden-desktop {
     padding-right: var(--scrollbar-width);
