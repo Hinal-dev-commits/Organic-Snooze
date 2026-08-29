@@ -1,0 +1,55 @@
+{% doc %}
+Horizontal product row for the mobile megamenu drawer.
+@param {product} product
+@param {object} block - mega_menu block for card settings
+@param {string} panel_id
+@example
+{% render 'nw-mobile-menu-product-row', product: product, block: block, panel_id: panel_id %}
+{% enddoc %}
+
+{%- liquid
+  assign card_product = product
+  assign card_description = card_product.metafields.custom.card_description.value | default: card_product.metafields.custom.card_description
+  assign card_price = card_product.price_min
+  assign card_compare_at = card_product.compare_at_price_min
+  assign seller_tag = card_product.metafields.custom.seller_tag.value | default: card_product.metafields.custom.seller_tag
+-%}
+
+<article class="nw-mobile-menu-product">
+  <a href="{{ card_product.url }}" class="nw-mobile-menu-product__media" aria-label="{{ card_product.title | escape }}">
+    {%- if card_product.featured_media -%}
+      <img
+        src="{{ card_product.featured_media | image_url: width: 240 }}"
+        alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
+        width="120"
+        height="120"
+        loading="lazy"
+        class="nw-mobile-menu-product__image"
+      >
+    {%- else -%}
+      {{ 'product-apparel-2' | placeholder_svg_tag: 'nw-mobile-menu-product__image nw-mobile-menu-product__image--placeholder' }}
+    {%- endif -%}
+
+    {%- if block.settings.show_seller_tag and seller_tag != blank -%}
+      <span class="nw-mobile-menu-product__tag">{{ seller_tag | escape }}</span>
+    {%- endif -%}
+  </a>
+
+  <div class="nw-mobile-menu-product__body">
+    <h3 class="nw-mobile-menu-product__title">
+      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+    </h3>
+
+    {%- if card_description != blank -%}
+      <p class="nw-mobile-menu-product__description">{{ card_description | escape }}</p>
+    {%- endif -%}
+
+    <div class="nw-mobile-menu-product__price">
+      <span class="nw-mobile-menu-product__price-from">from</span>
+      <span class="nw-mobile-menu-product__price-current">{{ card_price | money }}</span>
+      {%- if card_compare_at > card_price -%}
+        <span class="nw-mobile-menu-product__price-compare">{{ card_compare_at | money }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

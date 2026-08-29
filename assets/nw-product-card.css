@@ -124,6 +124,17 @@
     line-height: inherit;
 }
 
+.nw-product-card__description {
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    line-height: 1.5;
+    color: rgba(97, 57, 22, 0.75);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 .nw-product-card__best-for {
     display: block;
     font-family: var(--font-body-family);

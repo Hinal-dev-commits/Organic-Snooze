@@ -1,0 +1,189 @@
+{% doc %}
+Custom NW mobile menu drawer content.
+@param {boolean} [show_country_selector]
+@param {boolean} [show_language_selector]
+@param {boolean} [show_social_links]
+@example
+{% render 'nw-mobile-menu-drawer', show_country_selector: true %}
+{% enddoc %}
+
+{%- liquid
+  assign mobile_primary_menu = nil
+  assign mobile_secondary_menu = nil
+  assign utilities_block = nil
+
+  for block in section.blocks
+    if block.type == 'mobile_menu_primary' and block.settings.menu != blank
+      assign mobile_primary_menu = linklists[block.settings.menu]
+    endif
+    if block.type == 'mobile_menu_secondary' and block.settings.menu != blank
+      assign mobile_secondary_menu = linklists[block.settings.menu]
+    endif
+    if block.type == 'mobile_menu_utilities'
+      assign utilities_block = block
+    endif
+  endfor
+-%}
+
+<nw-mobile-menu class="nw-mobile-menu">
+  <div class="nw-mobile-menu__shell">
+    <div class="nw-mobile-menu__scroll" data-nw-mobile-menu-main>
+      <div class="nw-mobile-menu__scroll-inner">
+        <div class="nw-mobile-menu__main">
+      <nav class="nw-mobile-menu__nav nw-mobile-menu__nav--primary" aria-label="Primary">
+        {%- if mobile_primary_menu != blank -%}
+          <ul class="nw-mobile-menu__list" role="list">
+            {%- for link in mobile_primary_menu.links -%}
+              {%- liquid
+                assign mega_block = nil
+
+                for block in section.blocks
+                  if block.type == 'mega_menu' and block.settings.title == link.title
+                    assign mega_block = block
+                    break
+                  endif
+                endfor
+              -%}
+
+              <li class="nw-mobile-menu__item">
+                {%- if mega_block -%}
+                  <button
+                    type="button"
+                    class="nw-mobile-menu__link nw-mobile-menu__link--mega"
+                    data-nw-mobile-mega-open="{{ mega_block.id }}"
+                    aria-controls="NwMobileMega-{{ mega_block.id }}"
+                  >
+                    <span class="nw-mobile-menu__link-text">{{ link.title | escape }}</span>
+                    <span class="nw-mobile-menu__link-icon" aria-hidden="true">
+                      {{- 'icon-caret.svg' | inline_asset_content -}}
+                    </span>
+                  </button>
+                {%- else -%}
+                  <a
+                    href="{{ link.url }}"
+                    class="nw-mobile-menu__link{% if link.current %} nw-mobile-menu__link--active{% endif %}"
+                    {% if link.current %}aria-current="page"{% endif %}
+                  >
+                    <span class="nw-mobile-menu__link-text">{{ link.title | escape }}</span>
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </nav>
+
+      {%- if utilities_block and utilities_block.settings.shop_now_label != blank -%}
+        <div class="nw-mobile-menu__shop-now">
+          {% render 'nw-button',
+            text: utilities_block.settings.shop_now_label,
+            link: utilities_block.settings.shop_now_link,
+            style: utilities_block.settings.shop_now_style,
+            btn_class: 'nw-mobile-menu__shop-now-btn'
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- if mobile_secondary_menu != blank -%}
+        <nav class="nw-mobile-menu__nav nw-mobile-menu__nav--secondary" aria-label="Secondary">
+          <ul class="nw-mobile-menu__list nw-mobile-menu__list--secondary" role="list">
+            {%- for link in mobile_secondary_menu.links -%}
+              <li class="nw-mobile-menu__item">
+                {%- if link.links != blank -%}
+                  <details class="nw-mobile-menu__details">
+                    <summary class="nw-mobile-menu__link nw-mobile-menu__link--toggle">
+                      <span class="nw-mobile-menu__link-text">{{ link.title | escape }}</span>
+                      <span class="nw-mobile-menu__link-icon nw-mobile-menu__link-icon--caret" aria-hidden="true">
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      </span>
+                    </summary>
+                    <ul class="nw-mobile-menu__sublist" role="list">
+                      {%- for childlink in link.links -%}
+                        <li>
+                          <a
+                            href="{{ childlink.url }}"
+                            class="nw-mobile-menu__sublink{% if childlink.current %} nw-mobile-menu__sublink--active{% endif %}"
+                            {% if childlink.current %}aria-current="page"{% endif %}
+                          >
+                            {{ childlink.title | escape }}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </details>
+                {%- else -%}
+                  <a
+                    href="{{ link.url }}"
+                    class="nw-mobile-menu__link nw-mobile-menu__link--simple{% if link.current %} nw-mobile-menu__link--active{% endif %}"
+                    {% if link.current %}aria-current="page"{% endif %}
+                  >
+                    <span class="nw-mobile-menu__link-text">{{ link.title | escape }}</span>
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+
+      {%- if show_country_selector or show_language_selector or show_social_links -%}
+        <div class="menu-drawer__utility-links nw-mobile-menu__legacy-utilities">
+          {%- if show_country_selector or show_language_selector -%}
+            <div class="menu-drawer__localization header-localization">
+              {%- if show_country_selector -%}
+                <localization-form>
+                  {%- form 'localization', id: 'HeaderCountryMobileFormNw', class: 'localization-form' -%}
+                    <div>
+                      <h2 class="visually-hidden" id="HeaderCountryMobileLabelNw">
+                        {{ 'localization.country_label' | t }}
+                      </h2>
+                      {%- render 'country-localization', localPosition: 'HeaderCountryMobileNw' -%}
+                    </div>
+                  {%- endform -%}
+                </localization-form>
+              {%- endif -%}
+
+              {%- if show_language_selector -%}
+                <localization-form>
+                  {%- form 'localization', id: 'HeaderLanguageMobileFormNw', class: 'localization-form' -%}
+                    <div>
+                      <h2 class="visually-hidden" id="HeaderLanguageMobileLabelNw">
+                        {{ 'localization.language_label' | t }}
+                      </h2>
+                      {%- render 'language-localization', localPosition: 'HeaderLanguageMobileNw' -%}
+                    </div>
+                  {%- endform -%}
+                </localization-form>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+        </div>
+
+        {%- if utilities_block -%}
+          {% render 'nw-mobile-menu-utilities', block: utilities_block %}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="nw-mobile-menu__mega-panels" data-nw-mobile-mega-panels>
+      {%- if mobile_primary_menu != blank -%}
+        {%- for link in mobile_primary_menu.links -%}
+          {%- liquid
+            assign mega_block = nil
+            for block in section.blocks
+              if block.type == 'mega_menu' and block.settings.title == link.title
+                assign mega_block = block
+                break
+              endif
+            endfor
+          -%}
+          {%- if mega_block -%}
+            {% render 'nw-mobile-mega-panel', block: mega_block, link: link, menu_index: forloop.index, utilities_block: utilities_block %}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</nw-mobile-menu>

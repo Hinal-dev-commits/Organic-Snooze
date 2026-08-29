@@ -309,10 +309,18 @@
 .header__menu-item:hover span{
     text-decoration: none;
     text-underline-offset: unset;
-    color: var(--nw-tan);
 }
-.header.nw-header-transparent .header__menu-item:hover span{
+
+.header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover,
+.header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover span {
+    color: #613916;
+}
+.header-wrapper.nw-header-transparent:not(:hover):not(.nw-header-mega-open) .header.nw-header-transparent .header__menu-item:hover span,
+.header-wrapper:has(.header.nw-header-transparent):not(:hover):not(.nw-header-mega-open) .header.nw-header-transparent .header__menu-item:hover span {
     color: var(--nw-orange) !important;
+}
+.header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover span{
+    color: #613916;
 }
 .footer-block__details-content .list-menu__item--link:hover, .copyright__content a:hover{
     text-decoration: none !important;

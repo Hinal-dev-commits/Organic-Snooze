@@ -1,0 +1,353 @@
+{% doc %}
+Renders a custom megamenu panel for a matched header block.
+@param {block} block - mega_menu section block
+@param {link} link - matched top-level navigation link
+@param {number} menu_index - loop index for unique ids
+@example
+{% render 'nw-mega-menu-panel', block: block, link: link, menu_index: forloop.index %}
+{% enddoc %}
+
+{%- liquid
+  assign panel_id = 'NwMegaMenu-' | append: block.id
+  assign valid_category_count = 0
+  assign first_valid_index = 0
+  assign categories = '1,2,3,4,5' | split: ','
+
+  for category_index in categories
+    assign i = category_index | plus: 0
+    assign category_title = blank
+    assign category_source = 'product_list'
+    assign category_collection = blank
+    assign category_product_list = blank
+
+    case i
+      when 1
+        assign category_title = block.settings.category_1_title
+        assign category_source = block.settings.category_1_product_source
+        assign category_collection = block.settings.category_1_collection
+        assign category_product_list = block.settings.category_1_product_list
+      when 2
+        assign category_title = block.settings.category_2_title
+        assign category_source = block.settings.category_2_product_source
+        assign category_collection = block.settings.category_2_collection
+        assign category_product_list = block.settings.category_2_product_list
+      when 3
+        assign category_title = block.settings.category_3_title
+        assign category_source = block.settings.category_3_product_source
+        assign category_collection = block.settings.category_3_collection
+        assign category_product_list = block.settings.category_3_product_list
+      when 4
+        assign category_title = block.settings.category_4_title
+        assign category_source = block.settings.category_4_product_source
+        assign category_collection = block.settings.category_4_collection
+        assign category_product_list = block.settings.category_4_product_list
+      when 5
+        assign category_title = block.settings.category_5_title
+        assign category_source = block.settings.category_5_product_source
+        assign category_collection = block.settings.category_5_collection
+        assign category_product_list = block.settings.category_5_product_list
+    endcase
+
+    assign category_source = category_source | default: 'product_list'
+    assign category_has_products = false
+
+    if category_title != blank
+      if category_source == 'collection'
+        if category_collection != blank and category_collection.products_count > 0
+          assign category_has_products = true
+        endif
+      elsif category_product_list != blank and category_product_list.size > 0
+        assign category_has_products = true
+      endif
+    endif
+
+    if category_has_products
+      assign valid_category_count = valid_category_count | plus: 1
+      if first_valid_index == 0
+        assign first_valid_index = i
+      endif
+    endif
+  endfor
+-%}
+
+{%- if valid_category_count > 0 -%}
+  <nw-mega-menu-item
+    class="nw-mega-menu-item"
+    data-nw-mega-menu-item
+    {{ block.shopify_attributes }}
+  >
+    {%- if link.url != blank -%}
+      <a
+        id="HeaderMenu-{{ link.handle }}"
+        href="{{ link.url }}"
+        class="header__menu-item list-menu__item link link--text focus-inset nw-mega-menu__trigger{% if link.child_active or link.current %} nw-mega-menu__trigger--active{% endif %}"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="{{ panel_id }}"
+        data-nw-mega-trigger
+      >
+        <span{% if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+      </a>
+    {%- else -%}
+      <button
+        type="button"
+        id="HeaderMenu-{{ link.handle }}"
+        class="header__menu-item list-menu__item link link--text focus-inset nw-mega-menu__trigger{% if link.child_active %} nw-mega-menu__trigger--active{% endif %}"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="{{ panel_id }}"
+        data-nw-mega-trigger
+      >
+        <span>{{ link.title | escape }}</span>
+      </button>
+    {%- endif -%}
+
+    <div
+      id="{{ panel_id }}"
+      class="nw-mega-menu__panel color-{{ section.settings.menu_color_scheme }} gradient"
+      data-nw-mega-panel
+      hidden
+      style="
+        --nw-mega-sidebar-bg: {{ block.settings.sidebar_bg_color }};
+        --nw-mega-content-bg: {{ block.settings.content_bg_color }};
+        --nw-mega-tab-active: {{ block.settings.tab_active_color }};
+        --nw-mega-tab-text: {{ block.settings.tab_text_color }};
+        --nw-mega-swiper-arrow-bg: {{ block.settings.swiper_arrow_bg }};
+        --nw-mega-swiper-arrow-color: {{ block.settings.swiper_arrow_color }};
+        --nw-mega-pagination-color: {{ block.settings.pagination_color }};
+      "
+    >
+      <div class="nw-mega-menu__panel-shell">
+        <div class="nw-mega-menu__panel-inner page-width">
+          <div class="nw-mega-menu__layout">
+            <aside class="nw-mega-menu__sidebar">
+              <div class="nw-mega-menu__tabs" role="tablist" aria-label="{{ link.title | escape }}">
+                {%- for category_index in categories -%}
+                  {%- liquid
+                    assign i = category_index | plus: 0
+                    assign category_title = blank
+                    assign category_source = 'product_list'
+                    assign category_collection = blank
+                    assign category_product_list = blank
+
+                    case i
+                      when 1
+                        assign category_title = block.settings.category_1_title
+                        assign category_source = block.settings.category_1_product_source
+                        assign category_collection = block.settings.category_1_collection
+                        assign category_product_list = block.settings.category_1_product_list
+                      when 2
+                        assign category_title = block.settings.category_2_title
+                        assign category_source = block.settings.category_2_product_source
+                        assign category_collection = block.settings.category_2_collection
+                        assign category_product_list = block.settings.category_2_product_list
+                      when 3
+                        assign category_title = block.settings.category_3_title
+                        assign category_source = block.settings.category_3_product_source
+                        assign category_collection = block.settings.category_3_collection
+                        assign category_product_list = block.settings.category_3_product_list
+                      when 4
+                        assign category_title = block.settings.category_4_title
+                        assign category_source = block.settings.category_4_product_source
+                        assign category_collection = block.settings.category_4_collection
+                        assign category_product_list = block.settings.category_4_product_list
+                      when 5
+                        assign category_title = block.settings.category_5_title
+                        assign category_source = block.settings.category_5_product_source
+                        assign category_collection = block.settings.category_5_collection
+                        assign category_product_list = block.settings.category_5_product_list
+                    endcase
+
+                    assign category_source = category_source | default: 'product_list'
+                    assign category_has_products = false
+
+                    if category_title != blank
+                      if category_source == 'collection'
+                        if category_collection != blank and category_collection.products_count > 0
+                          assign category_has_products = true
+                        endif
+                      elsif category_product_list != blank and category_product_list.size > 0
+                        assign category_has_products = true
+                      endif
+                    endif
+                  -%}
+
+                  {%- if category_has_products -%}
+                    <button
+                      type="button"
+                      class="nw-mega-menu__tab{% if i == first_valid_index %} is-active{% endif %}"
+                      role="tab"
+                      id="{{ panel_id }}-tab-{{ i }}"
+                      aria-selected="{% if i == first_valid_index %}true{% else %}false{% endif %}"
+                      aria-controls="{{ panel_id }}-panel-{{ i }}"
+                      tabindex="{% if i == first_valid_index %}0{% else %}-1{% endif %}"
+                      data-nw-mega-tab="{{ i }}"
+                    >
+                      {{ category_title | escape }}
+                    </button>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+              <div class="nw-mega-menu__actions">
+                {%- if block.settings.button_1_label != blank -%}
+                  {% render 'nw-button',
+                    text: block.settings.button_1_label,
+                    link: block.settings.button_1_link,
+                    style: block.settings.button_1_style,
+                    btn_class: 'nw-mega-menu__action-btn'
+                  %}
+                {%- endif -%}
+                {%- if block.settings.button_2_label != blank -%}
+                  {% render 'nw-button',
+                    text: block.settings.button_2_label,
+                    link: block.settings.button_2_link,
+                    style: block.settings.button_2_style,
+                    btn_class: 'nw-mega-menu__action-btn'
+                  %}
+                {%- endif -%}
+              </div>
+            </aside>
+
+            <div class="nw-mega-menu__content">
+              {%- for category_index in categories -%}
+                {%- liquid
+                  assign i = category_index | plus: 0
+                  assign category_title = blank
+                  assign category_source = 'product_list'
+                  assign category_collection = blank
+                  assign category_product_list = blank
+                  assign category_limit = 8
+
+                  case i
+                    when 1
+                      assign category_title = block.settings.category_1_title
+                      assign category_source = block.settings.category_1_product_source
+                      assign category_collection = block.settings.category_1_collection
+                      assign category_product_list = block.settings.category_1_product_list
+                      assign category_limit = block.settings.category_1_products_limit
+                    when 2
+                      assign category_title = block.settings.category_2_title
+                      assign category_source = block.settings.category_2_product_source
+                      assign category_collection = block.settings.category_2_collection
+                      assign category_product_list = block.settings.category_2_product_list
+                      assign category_limit = block.settings.category_2_products_limit
+                    when 3
+                      assign category_title = block.settings.category_3_title
+                      assign category_source = block.settings.category_3_product_source
+                      assign category_collection = block.settings.category_3_collection
+                      assign category_product_list = block.settings.category_3_product_list
+                      assign category_limit = block.settings.category_3_products_limit
+                    when 4
+                      assign category_title = block.settings.category_4_title
+                      assign category_source = block.settings.category_4_product_source
+                      assign category_collection = block.settings.category_4_collection
+                      assign category_product_list = block.settings.category_4_product_list
+                      assign category_limit = block.settings.category_4_products_limit
+                    when 5
+                      assign category_title = block.settings.category_5_title
+                      assign category_source = block.settings.category_5_product_source
+                      assign category_collection = block.settings.category_5_collection
+                      assign category_product_list = block.settings.category_5_product_list
+                      assign category_limit = block.settings.category_5_products_limit
+                  endcase
+
+                  assign category_source = category_source | default: 'product_list'
+                  assign category_limit = category_limit | default: 8
+
+                  assign category_has_products = false
+                  assign category_product_count = 0
+
+                  if category_title != blank
+                    if category_source == 'collection'
+                      if category_collection != blank and category_collection.products_count > 0
+                        assign category_has_products = true
+                        assign category_product_count = category_collection.products_count
+                        if category_product_count > category_limit
+                          assign category_product_count = category_limit
+                        endif
+                      endif
+                    elsif category_product_list != blank and category_product_list.size > 0
+                      assign category_has_products = true
+                      assign category_product_count = category_product_list.size
+                    endif
+                  endif
+                -%}
+
+                {%- if category_has_products -%}
+                  <div
+                    class="nw-mega-menu__tab-panel{% if i == first_valid_index %} is-active{% endif %}"
+                    role="tabpanel"
+                    id="{{ panel_id }}-panel-{{ i }}"
+                    aria-labelledby="{{ panel_id }}-tab-{{ i }}"
+                    data-nw-mega-tab-panel="{{ i }}"
+                    {% unless i == first_valid_index %}hidden{% endunless %}
+                  >
+                    <nw-mega-menu-slider
+                      class="nw-mega-menu-slider"
+                      data-product-count="{{ category_product_count }}"
+                    >
+                      <div class="nw-mega-menu-slider__wrap">
+                        <div class="swiper nw-mega-menu-slider__swiper" data-nw-mega-slider>
+                          <div class="swiper-wrapper">
+                            {%- if category_source == 'collection' -%}
+                              {%- for product in category_collection.products limit: category_limit -%}
+                                <div class="swiper-slide">
+                                  {% render 'nw-product-card',
+                                    product: product,
+                                    section_id: panel_id,
+                                    show_rating: block.settings.show_rating,
+                                    show_firmness: block.settings.show_firmness,
+                                    show_seller_tag: block.settings.show_seller_tag,
+                                    show_description: true,
+                                    show_card_button: block.settings.show_card_button,
+                                    firmness_label_soft: block.settings.firmness_label_soft,
+                                    firmness_label_firm: block.settings.firmness_label_firm,
+                                    button_text: block.settings.card_button_text,
+                                    button_style: block.settings.card_button_style,
+                                    lazy_load: true
+                                  %}
+                                </div>
+                              {%- endfor -%}
+                            {%- else -%}
+                              {%- for product in category_product_list -%}
+                                <div class="swiper-slide">
+                                  {% render 'nw-product-card',
+                                    product: product,
+                                    section_id: panel_id,
+                                    show_rating: block.settings.show_rating,
+                                    show_firmness: block.settings.show_firmness,
+                                    show_seller_tag: block.settings.show_seller_tag,
+                                    show_description: true,
+                                    show_card_button: block.settings.show_card_button,
+                                    firmness_label_soft: block.settings.firmness_label_soft,
+                                    firmness_label_firm: block.settings.firmness_label_firm,
+                                    button_text: block.settings.card_button_text,
+                                    button_style: block.settings.card_button_style,
+                                    lazy_load: true
+                                  %}
+                                </div>
+                              {%- endfor -%}
+                            {%- endif -%}
+                          </div>
+                        </div>
+
+                        <div class="nw-mega-menu-slider__controls" data-nw-mega-slider-controls hidden>
+                          {% render 'nw-swiper-arrows',
+                            prev_class: ' nw-mega-menu-slider__arrow',
+                            next_class: ' nw-mega-menu-slider__arrow'
+                          %}
+                          <div class="nw-swiper-pagination nw-mega-menu-slider__pagination" data-nw-mega-pagination></div>
+                        </div>
+                      </div>
+                    </nw-mega-menu-slider>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nw-mega-menu-item>
+{%- endif -%}
