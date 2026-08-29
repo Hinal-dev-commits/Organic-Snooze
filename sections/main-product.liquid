@@ -548,6 +548,8 @@
                   -%}
                 {%- when 'shipping_tag' -%}
                   {%- render 'nw-product-shipping-tag', block: block, product: product -%}
+                {%- when 'setup_delivery' -%}
+                  {%- render 'nw-product-setup-delivery', block: block -%}
                 {%- when 'icon_text_v2' -%}
                   {%- render 'nw-product-icon-text-v2', block: block -%}
                 {%- when 'payment_logos' -%}
@@ -566,6 +568,9 @@
                   {%- render 'nw-product-quiz-button', block: block -%}
                 {%- when 'bundle_save' -%}
                   {%- render 'nw-product-bundle-save', block: block, product: product -%}
+                {%- when 'bundle_tabs' -%}
+                  {%- render 'nw-product-bundle-tabs', block: block, section: section -%}
+                {%- when 'bundle_tab' -%}
                 {%- when 'rating' -%}
                   {%- if product.metafields.reviews.rating.value != blank -%}
                     <div class="rating-wrapper">
@@ -1316,8 +1321,22 @@
           "type": "text",
           "id": "size_option_name",
           "label": "Size option name",
-          "default": "Size",
-          "info": "Enter the variant option name (e.g. Size) to show custom.select_size and custom.variant_tag for that option only."
+          "default": "Select Size",
+          "info": "Enter the variant option name (e.g. Size) to show custom.variant_tag for that option. When size guide is enabled, custom.select_size is hidden."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_size_guide",
+          "label": "Show size guide",
+          "default": true,
+          "info": "Shows a Size Guide link that opens the product metafield custom.size_guide image in a popup. Hides custom.select_size when enabled."
+        },
+        {
+          "type": "text",
+          "id": "size_guide_label",
+          "label": "Size guide link label",
+          "default": "Size Guide",
+          "visible_if": "{{ block.settings.show_size_guide == true }}"
         },
         {
           "type": "text",
@@ -2702,6 +2721,155 @@
       ]
     },
     {
+      "type": "setup_delivery",
+      "name": "Set-up & delivery",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Set-Up & Delivery Included"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>All items in the bundle ship for <strong>FREE</strong>. When you buy a complete mattress bundle, you also get <strong>FREE White Glove</strong> set-up—we'll install the adjustable base in your bedroom and place the mattress to ensure everything is perfect.</p>"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "badge_text",
+          "label": "Value badge text",
+          "default": "A $299 value — <strong>FREE with all mattress bundles</strong>"
+        },
+        {
+          "type": "header",
+          "content": "Icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use custom icon image",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "truck",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
+          "options": [
+            { "value": "truck", "label": "Truck" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "usamap", "label": "USA Map" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon",
+          "visible_if": "{{ block.settings.use_custom_icon }}"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background",
+          "default": "#F7F2EB",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border",
+          "default": "#E9B67E",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading",
+          "default": "#403326",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Description text",
+          "default": "#594D40",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "badge_bg_color",
+          "label": "Badge background",
+          "default": "#FFFFFF",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "badge_text_color",
+          "label": "Badge text",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
       "type": "icon_text_v2",
       "name": "Icon text v2 (badges row)",
       "settings": [
@@ -4072,6 +4240,206 @@
           "unit": "px",
           "label": "Margin bottom (mobile)",
           "default": 0
+        }
+      ]
+    },
+    {
+      "type": "bundle_tabs",
+      "name": "Product Bundle Tabs Main",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading", 
+          "default": "Explore what's included"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "tab_text_color",
+          "label": "Tab text",
+          "default": "#A0A0A0"
+        },
+        {
+          "type": "color",
+          "id": "tab_active_color",
+          "label": "Active tab text",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "tab_underline_color",
+          "label": "Active tab underline",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Product title",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "subtitle_color",
+          "label": "Product subtitle",
+          "default": "#8C8073"
+        },
+        {
+          "type": "color",
+          "id": "price_color",
+          "label": "Price",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "save_badge_bg",
+          "label": "Save badge background",
+          "default": "#338C331F"
+        },
+        {
+          "type": "color",
+          "id": "save_badge_text",
+          "label": "Save badge text",
+          "default": "#388E3C"
+        },
+        {
+          "type": "color",
+          "id": "feature_color",
+          "label": "Feature text",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "check_color",
+          "label": "Checkmark icon",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description text",
+          "default": "#59544D"
+        },
+        {
+          "type": "color",
+          "id": "learn_more_color",
+          "label": "Learn more link",
+          "default": "#59544D"
+        },
+        {
+          "type": "header",
+          "content": "Block spacing"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin top (mobile)",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin bottom (mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "bundle_tab",
+      "name": "Product Bundle Tab",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab label",
+          "info": "Leave blank to use the product title."
+        },
+        {
+          "type": "header",
+          "content": "Content overrides"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Title",
+          "info": "Leave blank to use custom.product_title metafield or product title."
+        },
+        {
+          "type": "text",
+          "id": "custom_subtitle",
+          "label": "Subtitle",
+          "info": "Leave blank to hide."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "extra_description",
+          "label": "Description",
+          "info": "Additional product description text shown below the feature list."
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Image",
+          "info": "Leave blank to use the product featured image."
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features",
+          "info": "Enter one feature per line. Each line shows with a checkmark."
+        },
+        {
+          "type": "header",
+          "content": "Link"
+        },
+        {
+          "type": "text",
+          "id": "learn_more_label",
+          "label": "Learn more label",
+          "default": "Learn More"
         }
       ]
     },

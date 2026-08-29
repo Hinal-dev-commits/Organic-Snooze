@@ -16,7 +16,10 @@
   assign icon_name = icon | default: ''
   assign svg_class = class | default: ''
   assign custom_img_class = img_class | default: 'nw-icon__img'
-  assign custom_img_width = img_width | default: 40
+  assign custom_img_width = img_width | default: 40 | plus: 0
+  if custom_img_width < 1
+    assign custom_img_width = 40
+  endif
   assign icon_asset = ''
 
   case icon_name
@@ -103,7 +106,7 @@
 -%}
 
 {%- if custom_icon != blank -%}
-  {{ custom_icon | image_url: width: custom_img_width | image_tag: loading: 'lazy', alt: '', class: custom_img_class }}
+  {{ custom_icon | image_url: width: custom_img_width | image_tag: loading: 'lazy', alt: '', class: custom_img_class, width: custom_img_width, height: custom_img_width }}
 {%- elsif icon_asset != blank -%}
   {{ icon_asset | inline_asset_content }}
 {%- else -%}

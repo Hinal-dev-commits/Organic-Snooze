@@ -14,18 +14,13 @@
   - variant_tag_text: {String}
   - firmness_tag_text: {String}
   - values_order: {String}
+  - show_size_guide: {Boolean}
+  - size_guide_image: {Object}
+  - size_guide_modal_id: {String}
 {% endcomment %}
 {%- liquid
   assign swatch_count = option.values | map: 'swatch' | compact | size
   assign picker_type = block.settings.picker_type
-
-  if swatch_count > 0 and block.settings.swatch_shape != 'none'
-    if block.settings.picker_type == 'dropdown'
-      assign picker_type = 'swatch_dropdown'
-    else
-      assign picker_type = 'swatch'
-    endif
-  endif
 
   assign current_option_name = option.name | strip | downcase
   assign is_firmness_option = false
@@ -48,22 +43,35 @@
   if quantity_option_name != blank and current_option_name == quantity_option_name
     assign is_quantity_option = true
   endif
+
+  if is_firmness_option or is_loft_option or is_size_option or is_quantity_option
+    assign picker_type = 'button'
+  elsif swatch_count > 0 and block.settings.swatch_shape != 'none'
+    if block.settings.picker_type == 'dropdown'
+      assign picker_type = 'swatch_dropdown'
+    else
+      assign picker_type = 'swatch'
+    endif
+  endif
 -%}
 {%- if picker_type == 'swatch' -%}
-  <fieldset class="js product-form__input product-form__input--swatch">
-    <legend class="form__label">
-      {{ option.name }}:
-      <span data-selected-value>
-        {{- option.selected_value -}}
+  <fieldset class="js product-form__input product-form__input--swatch nw-variant-picker nw-variant-picker--swatch">
+    <legend class="visually-hidden">{{ option.name }}</legend>
+    <div class="nw-variant-picker__header">
+      <span class="nw-variant-picker__label">
+        {{ option.name }}:
+        <span data-selected-value>{{ option.selected_value }}</span>
       </span>
-    </legend>
-    {% render 'product-variant-options',
-      product: product,
-      option: option,
-      block: block,
-      picker_type: picker_type,
-      values_order: values_order
-    %}
+    </div>
+    <div class="nw-variant-picker__swatches">
+      {% render 'product-variant-options',
+        product: product,
+        option: option,
+        block: block,
+        picker_type: picker_type,
+        values_order: values_order
+      %}
+    </div>
   </fieldset>
 {%- elsif picker_type == 'button' -%}
   <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness nw-variant-picker--card{% endif %}{% if is_loft_option %} nw-variant-picker--card nw-variant-picker--card-left{% endif %}{% if is_quantity_option %} nw-variant-picker--quantity{% endif %}">
@@ -74,8 +82,23 @@
         {%- if firmness_tag_text != blank -%}
           <span class="nw-variant-picker__firmness-tag">{{ firmness_tag_text }}</span>
         {%- endif -%}
-      {%- elsif is_size_option and select_size_text != blank -%}
-        <span class="nw-variant-picker__size-desc">{{ select_size_text }}</span>
+      {%- elsif is_size_option -%}
+        {%- if show_size_guide and size_guide_image != blank -%}
+          <modal-opener
+            class="nw-variant-picker__size-guide-opener"
+            data-modal="#{{ size_guide_modal_id }}"
+          >
+            <button
+              type="button"
+              class="nw-variant-picker__size-guide link"
+              aria-haspopup="dialog"
+            >
+              {{ block.settings.size_guide_label | default: 'Size Guide' | escape }}
+            </button>
+          </modal-opener>
+        {%- elsif show_size_guide == false and select_size_text != blank -%}
+          <span class="nw-variant-picker__size-desc">{{ select_size_text }}</span>
+        {%- endif -%}
       {%- endif -%}
     </div>
     <div class="nw-variant-picker__options">

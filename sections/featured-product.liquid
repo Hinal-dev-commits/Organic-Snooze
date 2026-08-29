@@ -684,7 +684,21 @@
           "id": "size_option_name",
           "label": "Size option name",
           "default": "Size",
-          "info": "Enter the variant option name (e.g. Size) to show custom.select_size and custom.variant_tag for that option only."
+          "info": "Enter the variant option name (e.g. Size) to show custom.variant_tag for that option. When size guide is enabled, custom.select_size is hidden."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_size_guide",
+          "label": "Show size guide",
+          "default": true,
+          "info": "Shows a Size Guide link that opens the product metafield custom.size_guide image in a popup. Hides custom.select_size when enabled."
+        },
+        {
+          "type": "text",
+          "id": "size_guide_label",
+          "label": "Size guide link label",
+          "default": "Size Guide",
+          "visible_if": "{{ block.settings.show_size_guide == true }}"
         },
         {
           "type": "text",

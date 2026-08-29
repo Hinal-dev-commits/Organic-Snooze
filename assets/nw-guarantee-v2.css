@@ -69,7 +69,10 @@
   color: var(--nw-gv2-text-color, #613916);
   text-align: left;
 }
-
+.nw-guarantee-v2__description > p{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
 .nw-guarantee-v2__cta {
   display: flex;

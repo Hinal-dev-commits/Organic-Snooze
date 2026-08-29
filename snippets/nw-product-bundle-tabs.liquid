@@ -1,0 +1,121 @@
+{% comment %}
+  Explore what's included — tabbed bundle product block.
+
+  Accepts:
+  - block: {Object} bundle_tabs settings block
+  - section: {Object} main product section
+{% endcomment %}
+{%- liquid
+  assign tab_blocks = section.blocks | where: 'type', 'bundle_tab'
+  assign tab_count = 0
+  for tab_block in tab_blocks
+    if tab_block.settings.product != blank
+      assign tab_count = tab_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if tab_count == 0 -%}
+  {%- if request.design_mode -%}
+    <nw-product-bundle-tabs
+      class="nw-bundle-tabs nw-bundle-tabs--empty"
+      style="
+        --nw-bt-heading-color: {{ block.settings.heading_color }};
+        --nw-bt-tab-text: {{ block.settings.tab_text_color }};
+        --nw-bt-tab-active: {{ block.settings.tab_active_color }};
+        --nw-bt-tab-underline: {{ block.settings.tab_underline_color }};
+      "
+    >
+      {%- if block.settings.heading != blank -%}
+        <h2 class="nw-bundle-tabs__heading">{{ block.settings.heading | escape }}</h2>
+      {%- endif -%}
+      <p class="nw-bundle-tabs__empty">{{ 'products.bundle_tabs.empty' | t }}</p>
+    </nw-product-bundle-tabs>
+  {%- endif -%}
+{%- else -%}
+  <script src="{{ 'nw-product-bundle-tabs.js' | asset_url }}" defer="defer"></script>
+
+  <nw-product-bundle-tabs
+    class="nw-bundle-tabs"
+    id="NwBundleTabs-{{ block.id }}"
+    style="
+      --nw-bt-heading-color: {{ block.settings.heading_color }};
+      --nw-bt-tab-text: {{ block.settings.tab_text_color }};
+      --nw-bt-tab-active: {{ block.settings.tab_active_color }};
+      --nw-bt-tab-underline: {{ block.settings.tab_underline_color }};
+      --nw-bt-title-color: {{ block.settings.title_color }};
+      --nw-bt-subtitle-color: {{ block.settings.subtitle_color }};
+      --nw-bt-price-color: {{ block.settings.price_color }};
+      --nw-bt-save-bg: {{ block.settings.save_badge_bg }};
+      --nw-bt-save-text: {{ block.settings.save_badge_text }};
+      --nw-bt-feature-color: {{ block.settings.feature_color }};
+      --nw-bt-check-color: {{ block.settings.check_color }};
+      --nw-bt-description-color: {{ block.settings.description_color }};
+      --nw-bt-link-color: {{ block.settings.learn_more_color }};
+    "
+  >
+    {%- if block.settings.heading != blank -%}
+      <h2 class="nw-bundle-tabs__heading">{{ block.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    <div class="nw-bundle-tabs__tabs-wrap">
+      <div class="nw-bundle-tabs__tabs" role="tablist" aria-label="{{ block.settings.heading | default: 'Included products' | escape }}">
+        {%- assign tab_index = 0 -%}
+        {%- assign active_assigned = false -%}
+        {%- for tab_block in tab_blocks -%}
+          {%- if tab_block.settings.product != blank -%}
+            {%- liquid
+              assign tab_label = tab_block.settings.tab_label | strip
+              if tab_label == blank
+                assign tab_label = tab_block.settings.product.title
+              endif
+
+              assign is_active = false
+              unless active_assigned
+                assign is_active = true
+                assign active_assigned = true
+              endunless
+            -%}
+            <button
+              type="button"
+              class="nw-bundle-tabs__tab{% if is_active %} is-active{% endif %}"
+              id="NwBundleTabsBtn-{{ block.id }}-{{ tab_index }}"
+              role="tab"
+              aria-selected="{% if is_active %}true{% else %}false{% endif %}"
+              aria-controls="NwBundleTabsPanel-{{ block.id }}-{{ tab_index }}"
+              tabindex="{% if is_active %}0{% else %}-1{% endif %}"
+              data-bundle-tab="{{ tab_index }}"
+              {{ tab_block.shopify_attributes }}
+            >
+              {{ tab_label | escape }}
+            </button>
+            {%- assign tab_index = tab_index | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="nw-bundle-tabs__panels">
+      {%- assign tab_index = 0 -%}
+      {%- assign active_assigned = false -%}
+      {%- for tab_block in tab_blocks -%}
+        {%- if tab_block.settings.product != blank -%}
+          {%- liquid
+            assign is_active = false
+            unless active_assigned
+              assign is_active = true
+              assign active_assigned = true
+            endunless
+          -%}
+          {% render 'nw-product-bundle-tab-panel',
+            tab_block: tab_block,
+            block: block,
+            tab_index: tab_index,
+            is_active: is_active
+          %}
+          {%- assign tab_index = tab_index | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </nw-product-bundle-tabs>
+{%- endif -%}

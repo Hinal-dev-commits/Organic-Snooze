@@ -1,0 +1,47 @@
+{% doc %}
+  Set-up and delivery callout card for main product blocks.
+  @param {object} block - Block settings
+{% enddoc %}
+
+{%- liquid
+  assign show_block = false
+  if block.settings.heading != blank or block.settings.description != blank or block.settings.badge_text != blank
+    assign show_block = true
+  endif
+-%}
+
+{%- if show_block -%}
+  <div
+    class="nw-product-setup-delivery"
+    style="
+      --nw-psd-bg: {{ block.settings.bg_color | default: '#FDF8F5' }};
+      --nw-psd-border: {{ block.settings.border_color | default: '#E9B07F' }};
+      --nw-psd-heading-color: {{ block.settings.heading_color | default: '#613916' }};
+      --nw-psd-icon-color: {{ block.settings.icon_color | default: '#613916' }};
+      --nw-psd-text-color: {{ block.settings.text_color | default: '#4D4740' }};
+      --nw-psd-badge-bg: {{ block.settings.badge_bg_color | default: '#FFFFFF' }};
+      --nw-psd-badge-text: {{ block.settings.badge_text_color | default: '#613916' }};
+    "
+  >
+    {%- if block.settings.heading != blank -%}
+      <div class="nw-product-setup-delivery__header">
+        <span class="nw-product-setup-delivery__icon" aria-hidden="true">
+          {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
+            {%- render 'nw-icon', icon: 'custom', custom_icon: block.settings.custom_icon, img_class: 'nw-product-setup-delivery__icon-img', img_width: 24 -%}
+          {%- else -%}
+            {%- render 'nw-icon', icon: block.settings.icon | default: 'truck' -%}
+          {%- endif -%}
+        </span>
+        <h3 class="nw-product-setup-delivery__heading">{{ block.settings.heading | escape }}</h3>
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.description != blank -%}
+      <div class="nw-product-setup-delivery__description rte">{{ block.settings.description }}</div>
+    {%- endif -%}
+
+    {%- if block.settings.badge_text != blank -%}
+      <div class="nw-product-setup-delivery__badge inline-richtext">{{ block.settings.badge_text }}</div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
