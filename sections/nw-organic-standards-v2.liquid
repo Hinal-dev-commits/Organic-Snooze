@@ -1,0 +1,463 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
+{{ 'nw-organic-standards-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-organic-standards-v2.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  #NwOrganicStandardsV2-{{ section.id }} {
+    display: block;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% when 'image' %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+      {% when 'none' %}
+        background: transparent;
+      {% else %}
+        background-color: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    #NwOrganicStandardsV2-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    #NwOrganicStandardsV2-{{ section.id }}::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: {{ section.settings.bg_color_image | default: '#FFFFFF29' }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  #NwOrganicStandardsV2-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwOrganicStandardsV2-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      #NwOrganicStandardsV2-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+
+<nw-organic-standards-v2 id="NwOrganicStandardsV2-{{ section.id }}" class="nw-organic-standards-v2 section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-organic-standards-v2__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-organic-standards-v2__header">
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-organic-standards-v2__slider-wrap">
+          <div class="swiper nw-organic-standards-v2__swiper">
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                  <div class="nw-organic-standards-v2__card">
+                    <div class="nw-organic-standards-v2__card-logo">
+                      {%- if block.settings.logo_image != blank -%}
+                        <img
+                          src="{{ block.settings.logo_image | image_url: width: 600 }}"
+                          alt="{{ block.settings.title | default: 'Standard Logo' | escape }}"
+                          width="300"
+                          height="120"
+                          loading="lazy"
+                        >
+                      {%- else -%}
+                        <span class="nw-organic-standards-v2__logo-placeholder" aria-hidden="true"></span>
+                      {%- endif -%}
+                    </div>
+
+                    <div class="nw-organic-standards-v2__card-body">
+                      {%- if block.settings.title != blank -%}
+                        <h3 class="nw-organic-standards-v2__card-title">{{ block.settings.title }}</h3>
+                      {%- endif -%}
+                      {%- if block.settings.description != blank -%}
+                        <div class="nw-organic-standards-v2__card-description">{{ block.settings.description }}</div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <div class="nw-organic-standards-v2__pagination"></div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_featured_card -%}
+        <div class="nw-organic-standards-v2__featured-card">
+          <div class="nw-organic-standards-v2__featured-media">
+            {%- if section.settings.featured_image != blank or section.settings.featured_image_mobile != blank -%}
+              <picture>
+                {%- if section.settings.featured_image_mobile != blank -%}
+                  <source media="(max-width: 749px)" srcset="{{ section.settings.featured_image_mobile | image_url: width: 750 }}">
+                {%- endif -%}
+                <img
+                  src="{{ section.settings.featured_image | default: section.settings.featured_image_mobile | image_url: width: 1000 }}"
+                  alt="{{ section.settings.stat_number | default: 'Featured Stat' | escape }}"
+                  width="343"
+                  height="200"
+                  loading="lazy"
+                  class="nw-organic-standards-v2__featured-img"
+                >
+              </picture>
+            {%- else -%}
+              <span class="nw-organic-standards-v2__featured-placeholder" aria-hidden="true"></span>
+            {%- endif -%}
+          </div>
+
+          <div class="nw-organic-standards-v2__featured-stat">
+            {%- if section.settings.stat_number != blank -%}
+              <h4 class="nw-organic-standards-v2__stat-number">{{ section.settings.stat_number }}</h4>
+            {%- endif -%}
+            {%- if section.settings.stat_text != blank -%}
+              <div class="nw-organic-standards-v2__stat-text">{{ section.settings.stat_text }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_button and section.settings.btn_text != blank -%}
+        <div class="nw-organic-standards-v2__btn-wrap">
+          {% render 'nw-button',
+            text: section.settings.btn_text,
+            link: section.settings.btn_link,
+            style: section.settings.btn_style,
+            btn_class: 'nw-organic-standards-v2__btn'
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-organic-standards-v2>
+
+{% schema %}
+{
+  "name": "NW Organic Standards V2",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Star Rating",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 0.5,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "\"Organic\" Only Counts When It's Verified"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>We support \"organic\" with GOTS for textiles and GOLS for latex — third-party proof separates real organic from marketing.</p>"
+    },
+    {
+      "type": "header",
+      "content": "FEATURED STAT CARD"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_card",
+      "label": "Show Featured Stat Card",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Featured Image (Desktop)",
+      "visible_if": "{{ section.settings.show_featured_card == true }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image_mobile",
+      "label": "Featured Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.show_featured_card == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "stat_number",
+      "label": "Stat Number / Title",
+      "default": "96%",
+      "visible_if": "{{ section.settings.show_featured_card == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "stat_text",
+      "label": "Stat Description",
+      "default": "of U.S. mattresses use petroleum foam. We're in the 2% that doesn't.",
+      "visible_if": "{{ section.settings.show_featured_card == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Label",
+      "default": "VERIFY OUR CERTIFICATIONS",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#FFFFFF29",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "standard_card",
+      "name": "Standard Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo Image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "GOTS"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "Verifies our organic cotton and wool, from harvest to finished textile."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Organic Standards V2",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "standard_card",
+          "settings": {
+            "title": "GOTS",
+            "description": "Verifies our organic cotton and wool, from harvest to finished textile."
+          }
+        },
+        {
+          "type": "standard_card",
+          "settings": {
+            "title": "GOLS",
+            "description": "Verifies our natural latex as genuinely organic, traced from tree to mattress."
+          }
+        },
+        {
+          "type": "standard_card",
+          "settings": {
+            "title": "OEKO-TEX",
+            "description": "Independently tests the latex for harmful substances and emissions."
+          }
+        },
+        {
+          "type": "standard_card",
+          "settings": {
+            "title": "ECO-INSTITUT",
+            "description": "Verifies the latex for low emissions and freedom from pollutants."
+          }
+        },
+        {
+          "type": "standard_card",
+          "settings": {
+            "title": "FSC",
+            "description": "Confirms the latex is sourced from responsibly managed forests."
+          }
+        },
+        {
+          "type": "standard_card",
+          "settings": {
+            "title": "Made in the USA",
+            "description": "Every mattress is built and hand-tufted in our USA facility."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

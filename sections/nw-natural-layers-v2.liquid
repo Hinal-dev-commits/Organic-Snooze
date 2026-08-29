@@ -1,7 +1,14 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
 {{ 'nw-natural-layers-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-natural-layers-v2.js' | asset_url }}" defer="defer"></script>
 
 <style>
+  #NwNaturalLayersV2-{{ section.id }},
   .nw-natural-layers-v2.section-{{ section.id }} {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
     --nw-nl-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
     --nw-nl-star-inactive: {{ section.settings.star_color_inactive | default: '#D1D5DB' }};
     --nw-star-active: {{ section.settings.star_color | default: '#E57B1E' }};
@@ -26,6 +33,7 @@
   }
 
   {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    #NwNaturalLayersV2-{{ section.id }}::before,
     .nw-natural-layers-v2.section-{{ section.id }}::before {
       content: '';
       position: absolute;
@@ -42,6 +50,7 @@
   {%- endif -%}
 
   {%- if section.settings.bg_type == 'image' and section.settings.bg_color_image != blank -%}
+    #NwNaturalLayersV2-{{ section.id }}::after,
     .nw-natural-layers-v2.section-{{ section.id }}::after {
       content: '';
       position: absolute;
@@ -54,18 +63,21 @@
     }
   {%- endif -%}
 
+  #NwNaturalLayersV2-{{ section.id }} > *,
   .nw-natural-layers-v2.section-{{ section.id }} > * {
     position: relative;
     z-index: 1;
   }
 
   @media screen and (max-width: 749px) {
+    #NwNaturalLayersV2-{{ section.id }},
     .nw-natural-layers-v2.section-{{ section.id }} {
       padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
     }
 
     {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      #NwNaturalLayersV2-{{ section.id }}::before,
       .nw-natural-layers-v2.section-{{ section.id }}::before {
         background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
       }
@@ -73,7 +85,13 @@
   }
 </style>
 
-<div class="nw-natural-layers-v2 section-{{ section.id }}">
+<nw-natural-layers-v2
+  id="NwNaturalLayersV2-{{ section.id }}"
+  class="nw-natural-layers-v2 section-{{ section.id }}{% if section.settings.enable_slider_desktop %} nw-natural-layers-v2--slider-desktop{% endif %}"
+  data-enable-slider="{{ section.settings.enable_slider_desktop }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-dots="{{ section.settings.show_dots }}"
+>
   <div class="page-width">
     <div class="nw-natural-layers-v2__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-natural-layers-v2__header">
@@ -90,54 +108,117 @@
       <div class="nw-natural-layers-v2__main">
         {%- assign layer_cards = section.blocks | where: 'type', 'layer_card' -%}
         {%- if layer_cards.size > 0 -%}
-          <div class="nw-natural-layers-v2__cards">
-            {%- for block in layer_cards -%}
-              <div class="nw-natural-layers-v2__card" {{ block.shopify_attributes }}>
-                <div class="nw-natural-layers-v2__card-media">
-                  {%- if block.settings.image != blank -%}
-                    <img
-                      src="{{ block.settings.image | image_url: width: 600 }}"
-                      alt="{{ block.settings.title | escape }}"
-                      width="305"
-                      height="239"
-                      loading="lazy"
-                      class="nw-natural-layers-v2__card-img"
-                    >
-                  {%- else -%}
-                    <span class="nw-natural-layers-v2__card-placeholder" aria-hidden="true"></span>
-                  {%- endif -%}
-                </div>
-                <div class="nw-natural-layers-v2__card-body">
-                  {%- if block.settings.title != blank -%}
-                    <h3 class="nw-natural-layers-v2__card-title">{{ block.settings.title }}</h3>
-                  {%- endif -%}
-                  {%- if block.settings.feature_text != blank -%}
-                    <div class="nw-natural-layers-v2__card-feature">
-                      {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
-                        <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                          {% render 'nw-icon',
-                            icon: 'none',
-                            custom_icon: block.settings.custom_icon,
-                            img_class: 'nw-natural-layers-v2__feature-icon-img',
-                            img_width: 40
-                          %}
-                        </span>
-                      {%- elsif block.settings.icon == 'cross' -%}
-                        <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                          {% render 'nw-icon', icon: 'cross-circle' %}
-                        </span>
-                      {%- elsif block.settings.icon == 'check' -%}
-                        <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                          {% render 'nw-icon', icon: 'check-circle' %}
-                        </span>
-                      {%- endif -%}
-                      <div class="nw-natural-layers-v2__card-feature-text">{{ block.settings.feature_text }}</div>
+          {%- if section.settings.enable_slider_desktop -%}
+            <div class="nw-natural-layers-v2__slider-wrap">
+              <div class="swiper nw-natural-layers-v2__swiper" id="NwNaturalLayersSwiper-{{ section.id }}">
+                <div class="swiper-wrapper nw-natural-layers-v2__cards">
+                  {%- for block in layer_cards -%}
+                    <div class="swiper-slide nw-natural-layers-v2__card" {{ block.shopify_attributes }}>
+                      <div class="nw-natural-layers-v2__card-media">
+                        {%- if block.settings.image != blank -%}
+                          <img
+                            src="{{ block.settings.image | image_url: width: 700 }}"
+                            alt="{{ block.settings.title | escape }}"
+                            width="350"
+                            height="274"
+                            loading="lazy"
+                            class="nw-natural-layers-v2__card-img"
+                          >
+                        {%- else -%}
+                          <span class="nw-natural-layers-v2__card-placeholder" aria-hidden="true"></span>
+                        {%- endif -%}
+                      </div>
+                      <div class="nw-natural-layers-v2__card-body">
+                        {%- if block.settings.title != blank -%}
+                          <h3 class="nw-natural-layers-v2__card-title">{{ block.settings.title }}</h3>
+                        {%- endif -%}
+                        {%- if block.settings.feature_text != blank -%}
+                          <div class="nw-natural-layers-v2__card-feature">
+                            {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+                              <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                                {% render 'nw-icon',
+                                  icon: 'none',
+                                  custom_icon: block.settings.custom_icon,
+                                  img_class: 'nw-natural-layers-v2__feature-icon-img',
+                                  img_width: 40
+                                %}
+                              </span>
+                            {%- elsif block.settings.icon == 'cross' -%}
+                              <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                                {% render 'nw-icon', icon: 'cross-circle' %}
+                              </span>
+                            {%- elsif block.settings.icon == 'check' -%}
+                              <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                                {% render 'nw-icon', icon: 'check-circle' %}
+                              </span>
+                            {%- endif -%}
+                            <div class="nw-natural-layers-v2__card-feature-text">{{ block.settings.feature_text }}</div>
+                          </div>
+                        {%- endif -%}
+                      </div>
                     </div>
-                  {%- endif -%}
+                  {%- endfor -%}
                 </div>
               </div>
-            {%- endfor -%}
-          </div>
+
+              {%- if section.settings.show_arrows -%}
+                {% render 'nw-swiper-arrows' %}
+              {%- endif -%}
+
+              {%- if section.settings.show_dots and layer_cards.size > 1 -%}
+                <div class="nw-swiper-pagination" id="NwNaturalLayersPagination-{{ section.id }}"></div>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <div class="nw-natural-layers-v2__cards">
+              {%- for block in layer_cards -%}
+                <div class="nw-natural-layers-v2__card" {{ block.shopify_attributes }}>
+                  <div class="nw-natural-layers-v2__card-media">
+                    {%- if block.settings.image != blank -%}
+                      <img
+                        src="{{ block.settings.image | image_url: width: 600 }}"
+                        alt="{{ block.settings.title | escape }}"
+                        width="305"
+                        height="239"
+                        loading="lazy"
+                        class="nw-natural-layers-v2__card-img"
+                      >
+                    {%- else -%}
+                      <span class="nw-natural-layers-v2__card-placeholder" aria-hidden="true"></span>
+                    {%- endif -%}
+                  </div>
+                  <div class="nw-natural-layers-v2__card-body">
+                    {%- if block.settings.title != blank -%}
+                      <h3 class="nw-natural-layers-v2__card-title">{{ block.settings.title }}</h3>
+                    {%- endif -%}
+                    {%- if block.settings.feature_text != blank -%}
+                      <div class="nw-natural-layers-v2__card-feature">
+                        {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+                          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                            {% render 'nw-icon',
+                              icon: 'none',
+                              custom_icon: block.settings.custom_icon,
+                              img_class: 'nw-natural-layers-v2__feature-icon-img',
+                              img_width: 40
+                            %}
+                          </span>
+                        {%- elsif block.settings.icon == 'cross' -%}
+                          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                            {% render 'nw-icon', icon: 'cross-circle' %}
+                          </span>
+                        {%- elsif block.settings.icon == 'check' -%}
+                          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+                            {% render 'nw-icon', icon: 'check-circle' %}
+                          </span>
+                        {%- endif -%}
+                        <div class="nw-natural-layers-v2__card-feature-text">{{ block.settings.feature_text }}</div>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         {%- endif -%}
 
         {%- assign leave_out_items = section.blocks | where: 'type', 'leave_out_item' -%}
@@ -188,7 +269,7 @@
       </div>
     </div>
   </div>
-</div>
+</nw-natural-layers-v2>
 
 {% schema %}
 {
@@ -247,6 +328,30 @@
       "type": "richtext",
       "id": "subheading",
       "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_desktop",
+      "label": "Enable Slider on Desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Arrows",
+      "default": true,
+      "visible_if": "{{ section.settings.enable_slider_desktop == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Dots",
+      "default": true,
+      "visible_if": "{{ section.settings.enable_slider_desktop == true }}"
     },
     {
       "type": "header",

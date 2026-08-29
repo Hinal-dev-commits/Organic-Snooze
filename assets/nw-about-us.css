@@ -1,0 +1,190 @@
+.nw-about-us {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.nw-about-us__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.nw-about-us__header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.nw-about-us__body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-about-us__body--image-right {
+  flex-direction: row-reverse;
+}
+
+.nw-about-us__media-col {
+  width: 50%;
+  flex: 1 1 0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.nw-about-us__media-col picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nw-about-us__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  display: block;
+}
+
+.nw-about-us__placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  background-color: rgba(97, 57, 22, 0.05);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nw-about-us__placeholder svg {
+  width: 100%;
+  height: 100%;
+  max-height: 200px;
+  opacity: 0.4;
+}
+
+.nw-about-us__content-col {
+  width: 50%;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.nw-about-us__text {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 20px;
+}
+
+.nw-about-us__footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .nw-about-us__wrapper {
+    gap: 32px;
+  }
+
+  .nw-about-us__body {
+    gap: 28px;
+  }
+
+  .nw-about-us__footer {
+    max-width: 480px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-about-us__wrapper {
+    gap: 32px;
+  }
+
+  .nw-about-us__header {
+    max-width: 330px;
+  }
+
+  .nw-about-us__body,
+  .nw-about-us__body--image-right {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .nw-about-us__body--mobile-image-top .nw-about-us__media-col {
+    order: 0;
+  }
+
+  .nw-about-us__body--mobile-image-top .nw-about-us__content-col {
+    order: 1;
+  }
+
+  .nw-about-us__body--mobile-image-bottom .nw-about-us__media-col {
+    order: 1;
+  }
+
+  .nw-about-us__body--mobile-image-bottom .nw-about-us__content-col {
+    order: 0;
+  }
+
+  .nw-about-us__media-col {
+    width: 100%;
+    flex: none;
+    height: 220px;
+  }
+
+  .nw-about-us__placeholder {
+    min-height: 220px;
+    height: 220px;
+  }
+
+  .nw-about-us__content-col {
+    width: 100%;
+    flex: none;
+    align-items: center;
+    text-align: center;
+  }
+
+  .nw-about-us__text {
+    text-align: center;
+    font-size: 16px;
+    max-width: 343px;
+  }
+
+  .nw-about-us__footer {
+    max-width: 343px;
+    width: 100%;
+  }
+
+  .nw-about-us__btn {
+    max-width: 343px;
+  }
+}
