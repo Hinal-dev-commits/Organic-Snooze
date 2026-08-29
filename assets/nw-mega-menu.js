@@ -28,8 +28,8 @@ if (!customElements.get('nw-mega-menu-slider')) {
         }
 
         var options = {
-          slidesPerView: 3.8,
-          spaceBetween: 16,
+          slidesPerView: 3.2,
+          spaceBetween: 12,
           speed: 550,
           grabCursor: true,
           watchOverflow: true,
@@ -37,7 +37,8 @@ if (!customElements.get('nw-mega-menu-slider')) {
           observeParents: true,
           breakpoints: {
             1200: {
-              spaceBetween: 20
+              slidesPerView: 3.8,
+              spaceBetween: 16
             },
             1400: {
               spaceBetween: 24
@@ -97,12 +98,14 @@ if (!customElements.get('nw-mega-menu-item')) {
       this.tabPanels = this.querySelectorAll('[data-nw-mega-tab-panel]');
 
       this._bindEvents();
+      this._bindHeaderNavEvents();
       this._initActiveSlider();
     }
 
     disconnectedCallback() {
       this._clearTimers();
       this._unbindEvents();
+      this._unbindHeaderNavEvents();
     }
 
     _isDesktop() {
@@ -129,6 +132,40 @@ if (!customElements.get('nw-mega-menu-item')) {
       if (!this.classList.contains('is-open')) {
         this.open();
       }
+    }
+
+    _bindHeaderNavEvents() {
+      if (NwMegaMenuItem._headerNavBound) return;
+
+      var navList = document.querySelector('[data-nw-hybrid-menu] .list-menu--inline');
+      if (!navList) return;
+
+      NwMegaMenuItem._headerNavBound = true;
+      NwMegaMenuItem._headerNavList = navList;
+
+      NwMegaMenuItem._onHeaderNavMouseOver = (event) => {
+        if (!window.matchMedia(NwMegaMenuItem.DESKTOP_BREAKPOINT).matches) return;
+
+        var navItem = event.target.closest('[data-nw-hybrid-menu] .list-menu--inline > li');
+        if (!navItem) return;
+
+        document.querySelectorAll('nw-mega-menu-item.is-open').forEach((openItem) => {
+          if (navItem.contains(openItem)) return;
+          openItem.close();
+        });
+      };
+
+      navList.addEventListener('mouseover', NwMegaMenuItem._onHeaderNavMouseOver);
+    }
+
+    _unbindHeaderNavEvents() {
+      if (!NwMegaMenuItem._headerNavBound || !NwMegaMenuItem._headerNavList) return;
+      if (document.querySelectorAll('nw-mega-menu-item').length) return;
+
+      NwMegaMenuItem._headerNavList.removeEventListener('mouseover', NwMegaMenuItem._onHeaderNavMouseOver);
+      NwMegaMenuItem._headerNavBound = false;
+      NwMegaMenuItem._headerNavList = null;
+      NwMegaMenuItem._onHeaderNavMouseOver = null;
     }
 
     _bindEvents() {

@@ -120,8 +120,28 @@
     .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item,
     .header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item.list-menu__item,
     .header__inline-menu .list-menu--inline > li > nw-mega-menu-item > .nw-mega-menu__trigger.header__menu-item.list-menu__item {
-        border-bottom: 2px solid transparent;
+        position: relative;
         box-sizing: border-box;
+    }
+
+    .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item::after,
+    .header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item.list-menu__item::after,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item > .nw-mega-menu__trigger.header__menu-item.list-menu__item::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 2px;
+        background: #613916;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item::after {
+        bottom: -1px;   
     }
 
     .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item:hover,
@@ -132,9 +152,18 @@
     .header__inline-menu .list-menu--inline > li > nw-mega-menu-item.is-open > .nw-mega-menu__trigger.header__menu-item.list-menu__item,
     .header__inline-menu .list-menu--inline > li > nw-mega-menu-item:hover > .nw-mega-menu__trigger.header__menu-item.list-menu__item {
         background: #F4EFE8;
-        border-bottom: 2px solid #613916;
         border-radius: 0;
         text-decoration: none;
+    }
+
+    .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item:hover::after,
+    .header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item.list-menu__item:hover::after,
+    .header__inline-menu .list-menu--inline > li > header-menu.is-open > details > summary.header__menu-item.list-menu__item::after,
+    .header__inline-menu .list-menu--inline > li > header-menu:hover > details > summary.header__menu-item.list-menu__item::after,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item > .nw-mega-menu__trigger.header__menu-item.list-menu__item:hover::after,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item.is-open > .nw-mega-menu__trigger.header__menu-item.list-menu__item::after,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item:hover > .nw-mega-menu__trigger.header__menu-item.list-menu__item::after {
+        transform: scaleX(1);
     }
 
     .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item:hover span,
@@ -179,6 +208,14 @@
         text-decoration: none;
     }
 }
+
+@media screen and (min-width: 990px) and (prefers-reduced-motion: reduce) {
+    .header__inline-menu .list-menu--inline > li > .header__menu-item.list-menu__item::after,
+    .header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item.list-menu__item::after,
+    .header__inline-menu .list-menu--inline > li > nw-mega-menu-item > .nw-mega-menu__trigger.header__menu-item.list-menu__item::after {
+        transition: none;
+    }
+}
 .announcement-bar__message p {
     margin: 0px;
 }
@@ -188,9 +225,9 @@
     .header__heading-logo-wrapper{
         max-width: 180px;
     }
-    .header__menu-item{
+    /* .header__menu-item{
         padding: 14px 10px;
-    }
+    } */
     .header--middle-left{
         gap: 43px;
     }
@@ -198,6 +235,17 @@
 @media screen and (max-width: 1199px) {
     .list-menu--inline{
         justify-content: center;
+    }
+    .header:not(.drawer-menu).page-width {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        gap: 10px;
+    }
+    .header__icons{
+        gap: 6px;
+    }
+    .header__heading-logo-wrapper {
+        max-width: 150px;
     }
 }
 @media screen and (max-width: 749px) {

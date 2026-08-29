@@ -413,6 +413,15 @@ align-items: center;
 .header__heading-logo-wrapper{
     max-width: 200px;
 }
+
+@media screen and (max-width: 1199px) {
+    .header__inline-menu .list-menu--inline > li > .header__menu-item span,
+    .header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item span,
+    .header__inline-menu .list-menu--inline > li .nw-mega-menu__trigger span {
+        font-size: 12px;
+    }
+}
+
 @media screen and (max-width: 749px) {
     .nw-eyebrow {
         font-size: 12px;
