@@ -1,15 +1,34 @@
 {% doc %}
   Shipping / delivery tag for main product blocks.
   @param {object} block - Block settings
+  @param {object} [product] - Product for optional metafield override
 {% enddoc %}
 
 {%- liquid
-  assign tag_text = block.settings.text
+  assign tag_prefix = block.settings.text
   if block.settings.use_product_metafield
     assign metafield_value = product.metafields.custom.shipping_tag.value | default: product.metafields.custom.shipping_tag
     if metafield_value != blank
-      assign tag_text = metafield_value
+      assign tag_prefix = metafield_value
     endif
+  endif
+
+  if tag_prefix contains 'Est. delivery'
+    assign tag_prefix = tag_prefix | split: 'Est. delivery' | first | strip
+    if tag_prefix contains '•'
+      assign tag_prefix = tag_prefix | split: '•' | first | strip
+    endif
+  endif
+
+  assign threshold_days = block.settings.delivery_threshold_days | default: 2
+  assign seconds_to_add = threshold_days | times: 86400
+  assign delivery_timestamp = 'now' | date: '%s' | plus: seconds_to_add
+  assign delivery_date = delivery_timestamp | date: '%B %d, %Y' | replace: ' 0', ' '
+
+  if tag_prefix != blank
+    assign tag_text = tag_prefix | append: ' • Est. delivery ' | append: delivery_date
+  else
+    assign tag_text = 'Est. delivery ' | append: delivery_date
   endif
 -%}
 

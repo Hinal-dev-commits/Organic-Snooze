@@ -2623,7 +2623,19 @@
           "type": "inline_richtext",
           "id": "text",
           "label": "Text",
-          "default": "Ships from USA • Est. delivery July 2, 2026"
+          "default": "Ships from USA",
+          "info": "Estimated delivery date is added automatically from today plus the threshold days."
+        },
+        {
+          "type": "range",
+          "id": "delivery_threshold_days",
+          "min": 1,
+          "max": 30,
+          "step": 1,
+          "unit": "d",
+          "label": "Delivery threshold",
+          "default": 2,
+          "info": "Days from today used to calculate the estimated delivery date."
         },
         {
           "type": "checkbox",
