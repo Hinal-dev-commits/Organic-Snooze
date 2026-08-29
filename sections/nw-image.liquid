@@ -1,0 +1,206 @@
+<style>
+  #NwImage-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop | default: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 0 }}px;
+  }
+
+  #NwImage-{{ section.id }} .nw-image__container {
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.height_desktop | default: 300 }}px;
+    min-height: {{ section.settings.height_desktop | default: 300 }}px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #NwImage-{{ section.id }} .nw-image__container picture,
+  #NwImage-{{ section.id }} .nw-image__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  #NwImage-{{ section.id }} .nw-image__container--fixed {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    {%- if section.settings.image_desktop != blank -%}
+      background-image: url('{{ section.settings.image_desktop | image_url: width: 2880 }}');
+    {%- else -%}
+      background-color: #EAE3D9;
+    {%- endif -%}
+  }
+
+  #NwImage-{{ section.id }} .nw-image__container svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+    background-color: #EAE3D9;
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwImage-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 0 }}px;
+    }
+
+    #NwImage-{{ section.id }} .nw-image__container {
+      height: {{ section.settings.height_mobile | default: 167 }}px;
+      min-height: {{ section.settings.height_mobile | default: 167 }}px;
+    }
+
+    #NwImage-{{ section.id }} .nw-image__container--fixed {
+      background-attachment: scroll;
+      {%- if section.settings.image_mobile != blank -%}
+        background-image: url('{{ section.settings.image_mobile | image_url: width: 1200 }}');
+      {%- elsif section.settings.image_desktop != blank -%}
+        background-image: url('{{ section.settings.image_desktop | image_url: width: 1200 }}');
+      {%- endif -%}
+    }
+  }
+</style>
+
+<div id="NwImage-{{ section.id }}" class="nw-image section-{{ section.id }}">
+  <div class="nw-image__container{% if section.settings.enable_fixed_bg %} nw-image__container--fixed{% endif %}">
+    {%- liquid
+      assign desktop_img = section.settings.image_desktop
+      assign mobile_img = section.settings.image_mobile
+      if desktop_img == blank and mobile_img != blank
+        assign desktop_img = mobile_img
+      endif
+    -%}
+    {%- if section.settings.enable_fixed_bg -%}
+      {%- if desktop_img == blank and mobile_img == blank -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    {%- elsif desktop_img != blank -%}
+      <picture>
+        {%- if mobile_img != blank -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ mobile_img | image_url: width: 750 }}"
+          >
+        {%- endif -%}
+        <img
+          src="{{ desktop_img | image_url: width: 2880 }}"
+          alt="{{ desktop_img.alt | default: 'Banner Image' | strip_html | escape }}"
+          width="1440"
+          height="300"
+          loading="lazy"
+          class="nw-image__img"
+        >
+      </picture>
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Image",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "IMAGE SETTINGS"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Background Image (Optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_fixed_bg",
+      "label": "Enable Fixed Background (Parallax Effect)",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "label": "Desktop Height",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Mobile Height",
+      "min": 67,
+      "max": 267,
+      "step": 2,
+      "unit": "px",
+      "default": 167
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Image",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

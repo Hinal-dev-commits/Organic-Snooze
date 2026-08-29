@@ -1,0 +1,458 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "nw_about_hero_XUGxWb": {
+      "type": "nw-about-hero",
+      "blocks": {
+        "trust_badge_zF99XK": {
+          "type": "trust_badge",
+          "settings": {
+            "text": "30-Year Warranty",
+            "icon": "shield",
+            "use_custom_icon": false,
+            "icon_color": "#613916"
+          }
+        },
+        "trust_badge_dt66H6": {
+          "type": "trust_badge",
+          "settings": {
+            "text": "100-Night Risk-Free Trial",
+            "icon": "moneyback",
+            "use_custom_icon": false,
+            "icon_color": "#613916"
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_zF99XK",
+        "trust_badge_dt66H6"
+      ],
+      "name": "NW About Hero",
+      "settings": {
+        "show_rating": true,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "4.8/5 from 100'S sleepers",
+        "content_position": "center",
+        "content_position_mobile": "top",
+        "heading": "Certified Organic. Not Just Called It.",
+        "subheading": "<p>GOTS textiles, GOLS latex, made in the USA. Every claim on this page is backed by proof you can verify.</p>",
+        "show_button": true,
+        "button_text": "SHOP THE MATTRESS",
+        "button_link": "",
+        "button_style": "primary",
+        "show_image": false,
+        "image_position": "right",
+        "show_gradient_blend": false,
+        "gradient_blend_color": "#ddd6cd",
+        "bg_type": "image",
+        "bg_color": "#ddd6cd",
+        "bg_image": "shopify://shop_images/about-hero-desktop.png",
+        "bg_image_mobile": "shopify://shop_images/about-hero-mobile.png",
+        "bg_color_image": "rgba(0,0,0,0)",
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_marquee_KA9xtN": {
+      "type": "nw-marquee",
+      "blocks": {
+        "item_UWrMGi": {
+          "type": "item",
+          "settings": {
+            "text": "GOTS Certified Organic Cotton & Wool",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_HmfV3B": {
+          "type": "item",
+          "settings": {
+            "text": "GOLS Certified Natural Latex",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_ChbEqq": {
+          "type": "item",
+          "settings": {
+            "text": "Zero Fiberglass · Zero Foam",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_adgnkD": {
+          "type": "item",
+          "settings": {
+            "text": "Made in the USA",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        }
+      },
+      "block_order": [
+        "item_UWrMGi",
+        "item_HmfV3B",
+        "item_ChbEqq",
+        "item_adgnkD"
+      ],
+      "name": "t:sections.nw-marquee.name",
+      "settings": {
+        "direction": "right_to_left",
+        "speed": 35,
+        "pause_on_hover": true,
+        "enable_parallax": false,
+        "repeat_count": 3,
+        "bg_color": "#613916",
+        "text_color": "#ffffff",
+        "icon_color": "#f4efe8",
+        "icon_size_desktop": 24,
+        "icon_size_mobile": 16,
+        "font_size_desktop": 18,
+        "font_size_mobile": 12,
+        "font_weight": 500,
+        "text_transform": "uppercase",
+        "letter_spacing": 0,
+        "gap_icon_text_desktop": 10,
+        "gap_icon_text_mobile": 10,
+        "gap_items_desktop": 18,
+        "gap_items_mobile": 10,
+        "section_height_desktop": 56,
+        "section_height_mobile": 44,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_top_mobile": 14,
+        "padding_bottom_mobile": 14
+      }
+    },
+    "nw_about_us_zXNJqF": {
+      "type": "nw-about-us",
+      "name": "NW About Us",
+      "settings": {
+        "heading": "Sleep, Rebuilt From the Ground Up",
+        "text": "<p>The Ultimate Snooze was born from a simple belief: nature already knows how to help us heal — we just have to stop getting in the way. Created with human biologist Gary Brecka and veteran mattress makers, we built the world's first bio-optimized organic sleep system. Not the cheapest bed. The right one.</p>",
+        "image_desktop": "shopify://shop_images/about-us.png",
+        "image_position": "left",
+        "image_position_mobile": "top",
+        "show_button": true,
+        "button_text": "Meet the Sleep System",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_natural_layers_v2_Ezb37e": {
+      "type": "nw-natural-layers-v2",
+      "blocks": {
+        "layer_card_M9zWTw": {
+          "type": "layer_card",
+          "settings": {
+            "image": "shopify://shop_images/organic_cotton.png",
+            "title": "Organic Cotton",
+            "icon": "none",
+            "feature_text": "Breathable, soft against the skin, and grown without pesticides or harsh chemicals. Forms the cover that lets your body breathe all night."
+          }
+        },
+        "layer_card_wVE64W": {
+          "type": "layer_card",
+          "settings": {
+            "image": "shopify://shop_images/New_Zealand_Wool.png",
+            "title": "New Zealand Wool",
+            "icon": "none",
+            "feature_text": "A natural temperature regulator that wicks moisture and keeps you cool in summer and warm in winter. Naturally flame-resistant, so there's no need for chemical fire retardants."
+          }
+        },
+        "layer_card_HNDEgk": {
+          "type": "layer_card",
+          "settings": {
+            "image": "shopify://shop_images/Natural_Talalay_Latex.png",
+            "title": "Organic Dunlop",
+            "icon": "none",
+            "feature_text": "Plant based latex sourced from Sri Lanka. Responsive, breathable, and durable, it lifts and contours without heat-trapping and sink of petroleum baseed foams."
+          }
+        },
+        "layer_card_mEcAmF": {
+          "type": "layer_card",
+          "settings": {
+            "image": "shopify://shop_images/kapok.png",
+            "title": "Kapok",
+            "icon": "none",
+            "feature_text": "A silky, plant-based fiber blended into our pillows for an airy, cloud-like feel — a plant based alternative to down."
+          }
+        },
+        "trust_badge_NwkKCQ": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_qdz7wF": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        }
+      },
+      "block_order": [
+        "layer_card_M9zWTw",
+        "layer_card_wVE64W",
+        "layer_card_HNDEgk",
+        "layer_card_mEcAmF",
+        "trust_badge_NwkKCQ",
+        "trust_badge_qdz7wF"
+      ],
+      "name": "NW Natural Layers V2",
+      "settings": {
+        "show_rating": true,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "Real sleepers, real mornings",
+        "heading": "What Your Mattress Is Made Of",
+        "subheading": "<p>Six materials. Each chosen for a reason, each doing a job.</p>",
+        "enable_slider_desktop": true,
+        "show_arrows": false,
+        "show_dots": true,
+        "show_leave_out_box": false,
+        "leave_out_title": "What We Leave Out Matters Too",
+        "show_button": true,
+        "btn_text": "Shop Organic Mattresses",
+        "btn_link": "",
+        "btn_style": "primary",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_color_image": "#ffffffd6",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_image_7tYLF4": {
+      "type": "nw-image",
+      "name": "NW Image",
+      "settings": {
+        "image_desktop": "shopify://shop_images/desktop-image.png",
+        "enable_fixed_bg": true,
+        "height_desktop": 300,
+        "height_mobile": 167,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_never_use_tbP94K": {
+      "type": "nw-never-use",
+      "blocks": {
+        "card_gcnXQU": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/no-fiberglass.png",
+            "title": "No Fiberglass",
+            "text": "A hidden fire barrier that can escape into your home. We use natural wool."
+          }
+        },
+        "card_AyKhir": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/no-plastic-fibers.png",
+            "title": "No Plastic Fibers",
+            "text": "Petroleum-based and heat-trapping. We use natural latex."
+          }
+        },
+        "card_Q89bqp": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/no-toxic-glues.png",
+            "title": "No toxic glues",
+            "text": "The adhesives that off-gas in most beds. Ours are hand-tufted."
+          }
+        },
+        "card_n3AHgH": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/No_formaldehyde.png",
+            "title": "No formaldehyde",
+            "text": "A known irritant hiding in mattress adhesives. Never ours."
+          }
+        },
+        "card_RBEqwG": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/No_synthetic_flame_retardants.png",
+            "title": "No synthetic flame retardants",
+            "text": "Replaced by naturally flame-resistant wool."
+          }
+        },
+        "card_FUFJ83": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/No_off-gassing.png",
+            "title": "No off-gassing",
+            "text": "That \"new mattress smell\" is VOCs. Ours has none."
+          }
+        }
+      },
+      "block_order": [
+        "card_gcnXQU",
+        "card_AyKhir",
+        "card_Q89bqp",
+        "card_n3AHgH",
+        "card_RBEqwG",
+        "card_FUFJ83"
+      ],
+      "name": "NW Never Use",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "What We Never Use",
+        "subheading": "<p>A cleaner mattress is what we refuse. Most beds hide chemicals. We build without them and let labs prove it.</p>",
+        "show_button": true,
+        "btn_text": "VERIFY OUR CERTIFICATIONS",
+        "btn_link": "",
+        "btn_style": "primary",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_organic_standards_v2_EaH6LV": {
+      "type": "nw-organic-standards-v2",
+      "blocks": {
+        "standard_card_g3ckrm": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/gots-logo.png",
+            "title": "GOTS",
+            "description": "Verifies our organic cotton and wool, from harvest to finished textile."
+          }
+        },
+        "standard_card_BpHqPd": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/gols-logo.png",
+            "title": "GOLS",
+            "description": "Verifies our natural latex as genuinely organic, traced from tree to mattress."
+          }
+        },
+        "standard_card_xyUfwb": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/oeko-logo.png",
+            "title": "OEKO-TEX",
+            "description": "Independently tests the latex for harmful substances and emissions."
+          }
+        },
+        "standard_card_abEXJJ": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/eco-logo.png",
+            "title": "ECO-INSTITUT",
+            "description": "Verifies the latex for low emissions and freedom from pollutants."
+          }
+        },
+        "standard_card_RkzGmC": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/gots-logo.png",
+            "title": "FSC",
+            "description": "Confirms the latex is sourced from responsibly managed forests."
+          }
+        },
+        "standard_card_at3cPL": {
+          "type": "standard_card",
+          "settings": {
+            "logo_image": "shopify://shop_images/gols-logo.png",
+            "title": "Made in the USA",
+            "description": "Every mattress is built and hand-tufted in our USA facility."
+          }
+        }
+      },
+      "block_order": [
+        "standard_card_g3ckrm",
+        "standard_card_BpHqPd",
+        "standard_card_xyUfwb",
+        "standard_card_abEXJJ",
+        "standard_card_RkzGmC",
+        "standard_card_at3cPL"
+      ],
+      "name": "NW Organic Standards V2",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "\"Organic\" Only Counts When It's Verified",
+        "subheading": "<p>We support \"organic\" with GOTS for textiles and GOLS for latex — third-party proof separates real organic from marketing.</p>",
+        "show_featured_card": true,
+        "featured_image": "shopify://shop_images/about-materials.png",
+        "stat_number": "96%",
+        "stat_text": "of U.S. mattresses use petroleum foam. We're in the 2% that doesn't.",
+        "show_button": true,
+        "btn_text": "VERIFY OUR CERTIFICATIONS",
+        "btn_link": "",
+        "btn_style": "primary",
+        "bg_type": "image",
+        "bg_color": "#FFFFFF",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_color_image": "#FFFFFFD6",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "nw_about_hero_XUGxWb",
+    "nw_marquee_KA9xtN",
+    "nw_about_us_zXNJqF",
+    "nw_natural_layers_v2_Ezb37e",
+    "nw_image_7tYLF4",
+    "nw_never_use_tbP94K",
+    "nw_organic_standards_v2_EaH6LV"
+  ]
+}

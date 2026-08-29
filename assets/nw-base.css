@@ -15,6 +15,10 @@
     height: 200px;
 }
 
+html{
+    overflow-x: hidden;
+}
+
 body.overflow-hidden,
 body.overflow-hidden-desktop {
     padding-right: var(--scrollbar-width);
@@ -478,6 +482,22 @@ shopify-chat{
     }
 }
 
+@media screen and (max-width: 989px) {
+    .search-modal__content{
+        padding: 0 16px;
+        justify-content: flex-start;
+    }
+    .search-modal__content > .search-modal__form {
+        width: calc(100% - 30px);
+    }
+    .search-modal .search__input.field__input {
+        height: 46px;
+    }
+    .header__search details[open]>.search-modal {
+        min-height: 60px;
+    }
+}
+
 @media screen and (max-width: 749px) {
     .nw-eyebrow {
         font-size: 12px;
@@ -505,19 +525,6 @@ shopify-chat{
 
     .nw-section-description {
         margin-top: 12px;
-    }
-    .search-modal__content{
-        padding: 0 16px;
-        justify-content: flex-start;
-    }
-    .search-modal__content > .search-modal__form {
-        width: calc(100% - 30px);
-    }
-    .search-modal .search__input.field__input {
-        height: 46px;
-    }
-    .header__search details[open]>.search-modal {
-        min-height: 60px;
     }
     .nw-star svg, .nw-star{
         width: 14px;

@@ -389,9 +389,12 @@
     bottom: 12px;
   }
 
-  .nw-guarantee-offer__content,
-  .nw-guarantee-offer__price-box {
+  .nw-guarantee-offer__content{
     gap: 0px;
+  }
+
+  .nw-guarantee-offer__price-box {
+    gap: 5px;
   }
 
   .nw-guarantee-offer__rating-row {
