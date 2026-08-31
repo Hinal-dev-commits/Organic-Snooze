@@ -124,7 +124,21 @@
 .nw-trusted-people__swiper .swiper-slide .nw-trusted-people__card {
   width: 330px;
   max-width: 330px;
+  padding: unset;
+  border-radius: unset;
+  background: unset;
+  border: unset;
 }
+
+  .nw-trusted-people__swiper .swiper-slide .nw-trusted-people__card .nw-trusted-people__testimonial-inner{
+    height: 100%;
+    box-sizing: border-box;
+    max-height: var(--nw-trusted-people-testimonial-height);
+    padding: 16px;
+    border-radius: 10px;
+    background: var(--nw-tp-card-bg, var(--tertiary-color));
+    border: 1px solid var(--nw-tp-card-border, rgba(78, 47, 20, .2));
+  }
 
 .nw-trusted-people__card {
   display: flex;
@@ -623,19 +637,6 @@
   .nw-trusted-people__swiper .swiper-slide .nw-trusted-people__card {
     width: 280px;
     max-width: 280px;
-    padding: unset;
-    border-radius: unset;
-    background: unset;
-    border: unset;
-  }
-  .nw-trusted-people__swiper .swiper-slide .nw-trusted-people__card .nw-trusted-people__testimonial-inner{
-    height: 100%;
-    box-sizing: border-box;
-    max-height: var(--nw-trusted-people-testimonial-height);
-    padding: 16px;
-    border-radius: 10px;
-    background: var(--nw-tp-card-bg, var(--tertiary-color));
-    border: 1px solid var(--nw-tp-card-border, rgba(78, 47, 20, .2));
   }
 
   .nw-trusted-people__slider-wrap::before,
