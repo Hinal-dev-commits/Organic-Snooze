@@ -1,0 +1,299 @@
+{% doc %}
+Renders a testimonial card for NW Testimonial V2 from tab block settings.
+@param {object} block - Review tab block
+@param {number} card_index - Card slot number from 1 to 15
+@param {string} [category_tag] - Fallback category label from tab
+{% enddoc %}
+
+{%- liquid
+  case card_index
+    when 1
+      assign card_rating = block.settings.card_1_rating
+      assign card_quote = block.settings.card_1_quote
+      assign card_category_tag = block.settings.card_1_category_tag
+      assign card_avatar = block.settings.card_1_avatar
+      assign card_name = block.settings.card_1_name
+      assign card_show_verified = block.settings.card_1_show_verified
+      assign card_verified_text = block.settings.card_1_verified_text
+      assign card_show_product = block.settings.card_1_show_product
+      assign card_product = block.settings.card_1_product
+      assign card_product_title = block.settings.card_1_product_title
+    when 2
+      assign card_rating = block.settings.card_2_rating
+      assign card_quote = block.settings.card_2_quote
+      assign card_category_tag = block.settings.card_2_category_tag
+      assign card_avatar = block.settings.card_2_avatar
+      assign card_name = block.settings.card_2_name
+      assign card_show_verified = block.settings.card_2_show_verified
+      assign card_verified_text = block.settings.card_2_verified_text
+      assign card_show_product = block.settings.card_2_show_product
+      assign card_product = block.settings.card_2_product
+      assign card_product_title = block.settings.card_2_product_title
+    when 3
+      assign card_rating = block.settings.card_3_rating
+      assign card_quote = block.settings.card_3_quote
+      assign card_category_tag = block.settings.card_3_category_tag
+      assign card_avatar = block.settings.card_3_avatar
+      assign card_name = block.settings.card_3_name
+      assign card_show_verified = block.settings.card_3_show_verified
+      assign card_verified_text = block.settings.card_3_verified_text
+      assign card_show_product = block.settings.card_3_show_product
+      assign card_product = block.settings.card_3_product
+      assign card_product_title = block.settings.card_3_product_title
+    when 4
+      assign card_rating = block.settings.card_4_rating
+      assign card_quote = block.settings.card_4_quote
+      assign card_category_tag = block.settings.card_4_category_tag
+      assign card_avatar = block.settings.card_4_avatar
+      assign card_name = block.settings.card_4_name
+      assign card_show_verified = block.settings.card_4_show_verified
+      assign card_verified_text = block.settings.card_4_verified_text
+      assign card_show_product = block.settings.card_4_show_product
+      assign card_product = block.settings.card_4_product
+      assign card_product_title = block.settings.card_4_product_title
+    when 5
+      assign card_rating = block.settings.card_5_rating
+      assign card_quote = block.settings.card_5_quote
+      assign card_category_tag = block.settings.card_5_category_tag
+      assign card_avatar = block.settings.card_5_avatar
+      assign card_name = block.settings.card_5_name
+      assign card_show_verified = block.settings.card_5_show_verified
+      assign card_verified_text = block.settings.card_5_verified_text
+      assign card_show_product = block.settings.card_5_show_product
+      assign card_product = block.settings.card_5_product
+      assign card_product_title = block.settings.card_5_product_title
+    when 6
+      assign card_rating = block.settings.card_6_rating
+      assign card_quote = block.settings.card_6_quote
+      assign card_category_tag = block.settings.card_6_category_tag
+      assign card_avatar = block.settings.card_6_avatar
+      assign card_name = block.settings.card_6_name
+      assign card_show_verified = block.settings.card_6_show_verified
+      assign card_verified_text = block.settings.card_6_verified_text
+      assign card_show_product = block.settings.card_6_show_product
+      assign card_product = block.settings.card_6_product
+      assign card_product_title = block.settings.card_6_product_title
+    when 7
+      assign card_rating = block.settings.card_7_rating
+      assign card_quote = block.settings.card_7_quote
+      assign card_category_tag = block.settings.card_7_category_tag
+      assign card_avatar = block.settings.card_7_avatar
+      assign card_name = block.settings.card_7_name
+      assign card_show_verified = block.settings.card_7_show_verified
+      assign card_verified_text = block.settings.card_7_verified_text
+      assign card_show_product = block.settings.card_7_show_product
+      assign card_product = block.settings.card_7_product
+      assign card_product_title = block.settings.card_7_product_title
+    when 8
+      assign card_rating = block.settings.card_8_rating
+      assign card_quote = block.settings.card_8_quote
+      assign card_category_tag = block.settings.card_8_category_tag
+      assign card_avatar = block.settings.card_8_avatar
+      assign card_name = block.settings.card_8_name
+      assign card_show_verified = block.settings.card_8_show_verified
+      assign card_verified_text = block.settings.card_8_verified_text
+      assign card_show_product = block.settings.card_8_show_product
+      assign card_product = block.settings.card_8_product
+      assign card_product_title = block.settings.card_8_product_title
+    when 9
+      assign card_rating = block.settings.card_9_rating
+      assign card_quote = block.settings.card_9_quote
+      assign card_category_tag = block.settings.card_9_category_tag
+      assign card_avatar = block.settings.card_9_avatar
+      assign card_name = block.settings.card_9_name
+      assign card_show_verified = block.settings.card_9_show_verified
+      assign card_verified_text = block.settings.card_9_verified_text
+      assign card_show_product = block.settings.card_9_show_product
+      assign card_product = block.settings.card_9_product
+      assign card_product_title = block.settings.card_9_product_title
+    when 10
+      assign card_rating = block.settings.card_10_rating
+      assign card_quote = block.settings.card_10_quote
+      assign card_category_tag = block.settings.card_10_category_tag
+      assign card_avatar = block.settings.card_10_avatar
+      assign card_name = block.settings.card_10_name
+      assign card_show_verified = block.settings.card_10_show_verified
+      assign card_verified_text = block.settings.card_10_verified_text
+      assign card_show_product = block.settings.card_10_show_product
+      assign card_product = block.settings.card_10_product
+      assign card_product_title = block.settings.card_10_product_title
+    when 11
+      assign card_rating = block.settings.card_11_rating
+      assign card_quote = block.settings.card_11_quote
+      assign card_category_tag = block.settings.card_11_category_tag
+      assign card_avatar = block.settings.card_11_avatar
+      assign card_name = block.settings.card_11_name
+      assign card_show_verified = block.settings.card_11_show_verified
+      assign card_verified_text = block.settings.card_11_verified_text
+      assign card_show_product = block.settings.card_11_show_product
+      assign card_product = block.settings.card_11_product
+      assign card_product_title = block.settings.card_11_product_title
+    when 12
+      assign card_rating = block.settings.card_12_rating
+      assign card_quote = block.settings.card_12_quote
+      assign card_category_tag = block.settings.card_12_category_tag
+      assign card_avatar = block.settings.card_12_avatar
+      assign card_name = block.settings.card_12_name
+      assign card_show_verified = block.settings.card_12_show_verified
+      assign card_verified_text = block.settings.card_12_verified_text
+      assign card_show_product = block.settings.card_12_show_product
+      assign card_product = block.settings.card_12_product
+      assign card_product_title = block.settings.card_12_product_title
+    when 13
+      assign card_rating = block.settings.card_13_rating
+      assign card_quote = block.settings.card_13_quote
+      assign card_category_tag = block.settings.card_13_category_tag
+      assign card_avatar = block.settings.card_13_avatar
+      assign card_name = block.settings.card_13_name
+      assign card_show_verified = block.settings.card_13_show_verified
+      assign card_verified_text = block.settings.card_13_verified_text
+      assign card_show_product = block.settings.card_13_show_product
+      assign card_product = block.settings.card_13_product
+      assign card_product_title = block.settings.card_13_product_title
+    when 14
+      assign card_rating = block.settings.card_14_rating
+      assign card_quote = block.settings.card_14_quote
+      assign card_category_tag = block.settings.card_14_category_tag
+      assign card_avatar = block.settings.card_14_avatar
+      assign card_name = block.settings.card_14_name
+      assign card_show_verified = block.settings.card_14_show_verified
+      assign card_verified_text = block.settings.card_14_verified_text
+      assign card_show_product = block.settings.card_14_show_product
+      assign card_product = block.settings.card_14_product
+      assign card_product_title = block.settings.card_14_product_title
+    when 15
+      assign card_rating = block.settings.card_15_rating
+      assign card_quote = block.settings.card_15_quote
+      assign card_category_tag = block.settings.card_15_category_tag
+      assign card_avatar = block.settings.card_15_avatar
+      assign card_name = block.settings.card_15_name
+      assign card_show_verified = block.settings.card_15_show_verified
+      assign card_verified_text = block.settings.card_15_verified_text
+      assign card_show_product = block.settings.card_15_show_product
+      assign card_product = block.settings.card_15_product
+      assign card_product_title = block.settings.card_15_product_title
+  endcase
+
+  assign card_title = blank
+  assign card_image = blank
+  assign card_price = blank
+  assign card_compare = blank
+  assign card_link = blank
+
+  if card_product != blank
+    assign card_title = card_product.title
+    if card_product.featured_image != blank
+      assign card_image = card_product.featured_image
+    endif
+    assign card_price = card_product.price_min
+    assign card_compare = card_product.compare_at_price_min
+    assign card_link = card_product.url
+  endif
+
+  assign category_label = card_category_tag
+  if category_label == blank
+    assign category_label = category_tag
+  endif
+
+  assign reviewer_name = card_name | strip
+  assign reviewer_initials = ''
+  if reviewer_name != blank and card_avatar == blank
+    assign name_parts = reviewer_name | split: ' '
+    assign reviewer_initials = name_parts[0] | slice: 0, 1 | upcase
+    if name_parts.size > 1
+      assign reviewer_initials = reviewer_initials | append: name_parts[1] | slice: 0, 1 | upcase
+    endif
+  endif
+-%}
+
+<article class="nw-testimonial-v2__card">
+  <div class="nw-testimonial-v2__card-main">
+    {% render 'nw-stars',
+      rating: card_rating,
+      class: 'nw-testimonial-v2__stars',
+      star_class: 'nw-testimonial-v2__star',
+      icon: 'star-rating-sm'
+    %}
+
+    {%- if card_quote != blank -%}
+      <div class="nw-testimonial-v2__quote rte">{{ card_quote }}</div>
+    {%- endif -%}
+
+    {%- if category_label != blank -%}
+      <p class="nw-testimonial-v2__category">{{ category_label | upcase }}</p>
+    {%- endif -%}
+
+    <div class="nw-testimonial-v2__author">
+      {%- if card_avatar != blank -%}
+        <img
+          src="{{ card_avatar | image_url: width: 96 }}"
+          alt=""
+          class="nw-testimonial-v2__avatar"
+          width="32"
+          height="32"
+          loading="lazy"
+        >
+      {%- elsif reviewer_initials != blank -%}
+        <span class="nw-testimonial-v2__avatar nw-testimonial-v2__avatar--initials" aria-hidden="true">
+          {{ reviewer_initials }}
+        </span>
+      {%- endif -%}
+      <div class="nw-testimonial-v2__author-main">
+
+        {%- if reviewer_name != blank -%}
+          <span class="nw-testimonial-v2__name">{{ reviewer_name }}</span>
+        {%- endif -%}
+        {%- if card_show_verified -%}
+          <div class="nw-testimonial-v2__verified">
+            <span class="nw-testimonial-v2__verified-icon" aria-hidden="true">
+              {% render 'nw-icon', icon: 'verified' %}
+            </span>
+            <span class="nw-testimonial-v2__verified-text">
+              {{ card_verified_text | default: 'Verified Customer' }}
+            </span>
+          </div>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+
+  {%- if card_show_product and card_product != blank -%}
+    <div class="nw-testimonial-v2__product">
+      {%- if card_image != blank -%}
+        <img
+          src="{{ card_image | image_url: width: 120 }}"
+          alt=""
+          class="nw-testimonial-v2__product-img"
+          width="48"
+          height="48"
+          loading="lazy"
+        >
+      {%- endif -%}
+
+      <div class="nw-testimonial-v2__product-copy">
+        <p class="nw-testimonial-v2__product-title">{{ card_product_title | default: card_title }}</p>
+        <div class="nw-testimonial-v2__product-prices">
+          {%- if card_compare != blank and card_compare != card_price -%}
+            <span class="nw-testimonial-v2__product-compare">{{ card_compare | money }}</span>
+          {%- endif -%}
+          {%- if card_price != blank -%}
+            <span class="nw-testimonial-v2__product-price">{{ card_price | money }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if card_link != blank -%}
+        <a
+          href="{{ card_link }}"
+          class="nw-testimonial-v2__product-add"
+          aria-label="{{ 'products.product.view_full_details' | t | default: 'View product' | escape }}"
+        >
+          <span aria-hidden="true">{% render 'nw-icon', icon: 'plus' %}</span>
+        </a>
+      {%- else -%}
+        <span class="nw-testimonial-v2__product-add" aria-hidden="true">{% render 'nw-icon', icon: 'plus' %}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</article>

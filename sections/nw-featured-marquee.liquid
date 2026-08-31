@@ -7,6 +7,7 @@
     padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
     position: relative;
     --nw-fm-speed: {{ section.settings.speed }}s;
+    --nw-fm-text-color: {{ section.settings.text_color }};
     --nw-fm-gap-dt: {{ section.settings.gap_desktop }}px;
     --nw-fm-gap-mb: {{ section.settings.gap_mobile }}px;
     --nw-fm-height-dt: {{ section.settings.logo_height_desktop }}px;
@@ -116,6 +117,13 @@
       "id": "heading",
       "label": "Heading",
       "default": "FEATURED ON"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "alpha": true,
+      "default": "#613916"
     },
     {
       "type": "header",

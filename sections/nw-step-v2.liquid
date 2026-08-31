@@ -1,0 +1,555 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-step-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-step-v2.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwStepV2-' | append: section.id
+  assign article_blocks = section.blocks | where: 'type', 'article'
+  assign cards_to_show = section.settings.cards_to_show | default: 4
+  if cards_to_show > 8
+    assign cards_to_show = 8
+  elsif cards_to_show < 1
+    assign cards_to_show = 1
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFCF0' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-step-v2
+  id="NwStepV2-{{ section.id }}"
+  class="nw-step-v2 section-{{ section.id }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
+  data-pagination-id="NwStepV2Pagination-{{ section.id }}"
+  data-enable-autoplay="{{ section.settings.enable_autoplay }}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
+  data-slides-desktop="{{ cards_to_show }}"
+  style="
+    --nw-sv2-card-bg: {{ section.settings.card_bg_color }};
+    --nw-sv2-card-border: {{ section.settings.card_border_color }};
+    --nw-sv2-card-title: {{ section.settings.card_title_color }};
+    --nw-sv2-card-desc: {{ section.settings.card_desc_color }};
+    --nw-sv2-source-border: {{ section.settings.source_border_color }};
+    --nw-sv2-source-text: {{ section.settings.source_text_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+    --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
+    --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-step-v2__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="nw-step-v2__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- if article_blocks.size > 0 -%}
+        {%- liquid
+          assign pagination_id = 'NwStepV2Pagination-' | append: section.id
+        -%}
+        <div class="nw-step-v2__cards">
+          <div class="nw-step-v2__slider-wrap">
+            {%- if section.settings.show_arrows -%}
+              {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+            {%- endif -%}
+
+            <div class="swiper nw-step-v2__swiper" id="NwStepV2Swiper-{{ section.id }}">
+              <div class="swiper-wrapper">
+              {%- assign cards_shown = 0 -%}
+              {%- for block in article_blocks -%}
+                {%- if cards_shown >= cards_to_show -%}
+                  {%- break -%}
+                {%- endif -%}
+                {%- liquid
+                  assign card_button_style = block.settings.button_style
+                  if card_button_style == blank
+                    assign card_button_style = section.settings.card_button_style
+                  endif
+                -%}
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                  <article class="nw-step-v2__card">
+                    <div class="nw-step-v2__media">
+                      {%- if block.settings.image_card != blank -%}
+                        <img
+                          src="{{ block.settings.image_card | image_url }}"
+                          alt="{{ block.settings.image_card.alt | default: block.settings.title | strip_html | escape }}"
+                          width=""
+                          height=""
+                          loading="lazy"
+                          class="nw-step-v2__image nw-step-v2__image-desktop"
+                        >
+                        {%- if block.settings.image_card_mobile != blank -%}
+                        <img
+                          src="{{ block.settings.image_card_mobile | image_url }}"
+                          alt="{{ block.settings.image_card_mobile.alt | default: block.settings.title | strip_html | escape }}"
+                          width=""
+                          height=""
+                          loading="lazy"
+                            class="nw-step-v2__image nw-step-v2__image-mobile"
+                          >
+                        {%- else -%}
+                          <img
+                              src="{{ block.settings.image_card | image_url }}"
+                              alt="{{ block.settings.image_card.alt | default: block.settings.title | strip_html | escape }}"
+                              width=""
+                              height=""
+                              loading="lazy"
+                              class="nw-step-v2__image nw-step-v2__image-mobile"
+                            >
+                        {%- endif -%}
+                      {%- else -%}
+                        <div class="nw-step-v2__placeholder" aria-hidden="true">
+                          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        </div>
+                      {%- endif -%}
+                    </div>
+
+                    <div class="nw-step-v2__body">
+                      {%- if block.settings.source_logo != blank or block.settings.source_text != blank -%}
+                        <div class="nw-step-v2__source">
+                          {%- if block.settings.source_logo != blank -%}
+                            <img
+                              src="{{ block.settings.source_logo | image_url }}"
+                              alt="{{ block.settings.source_logo.alt | default: block.settings.source_text | default: 'Source logo' | escape }}"
+                              width=""
+                              height=""
+                              loading="lazy"
+                              class="nw-step-v2__source-logo"
+                            >
+                          {%- elsif block.settings.source_text != blank -%}
+                            <span class="nw-step-v2__source-text">{{ block.settings.source_text }}</span>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+
+                      {%- if block.settings.title != blank -%}
+                        <h3 class="nw-step-v2__title">{{ block.settings.title }}</h3>
+                      {%- endif -%}
+
+                      {%- if block.settings.description != blank -%}
+                        <div class="nw-step-v2__desc rte">{{ block.settings.description }}</div>
+                      {%- endif -%}
+
+                      {%- if block.settings.button_text != blank -%}
+                        <div class="nw-step-v2__action">
+                          {% render 'nw-button',
+                            text: block.settings.button_text,
+                            link: block.settings.button_link,
+                            style: card_button_style,
+                            btn_class: 'nw-step-v2__card-btn'
+                          %}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  </article>
+                </div>
+                {%- assign cards_shown = cards_shown | plus: 1 -%}
+              {%- endfor -%}
+              </div>
+            </div>
+
+            {%- if section.settings.show_pagination -%}
+              {% render 'nw-swiper-pagination', id: pagination_id, class: 'nw-step-v2__pagination' %}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-step-v2>
+
+{% schema %}
+{
+  "name": "t:sections.nw-step-v2.name",
+  "tag": "section",
+  "class": "section-nw-step-v2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Where Better Sleep Makes Headlines"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Explore the latest media coverage, interviews, and stories connected to Organic Snooze and the people behind it.</p>"
+    },
+    {
+      "type": "header",
+      "content": "CARD DISPLAY"
+    },
+    {
+      "type": "range",
+      "id": "cards_to_show",
+      "label": "Cards To Show",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "info": "Maximum 8 article cards can be added as blocks."
+    },
+    {
+      "type": "select",
+      "id": "card_button_style",
+      "label": "Default Card Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Slider Arrows",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "arrow_style",
+      "label": "Arrow Style",
+      "default": "style_1",
+      "options": [
+        { "value": "style_1", "label": "Style 1" },
+        { "value": "style_2", "label": "Style 2" }
+      ],
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_bg",
+      "label": "Arrow Background",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_color",
+      "label": "Arrow Icon Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Slider Pagination",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination Color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (Seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "CARD COLORS"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "rgba(97, 57, 22, 0.12)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card Title Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "source_border_color",
+      "label": "Source Badge Border Color",
+      "default": "rgba(97, 57, 22, 0.25)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "source_text_color",
+      "label": "Source Badge Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFCF0",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Article Card",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "header",
+          "content": "MEDIA"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_card",
+          "label": "Featured Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_card_mobile",
+          "label": "Featured Image (Mobile Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "source_logo",
+          "label": "Source Logo"
+        },
+        {
+          "type": "text",
+          "id": "source_text",
+          "label": "Source Text",
+          "default": "wellworthy",
+          "info": "Used when source logo is empty."
+        },
+        {
+          "type": "header",
+          "content": "CONTENT"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "What makes natural Latex different from memory foam"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Why plant-based latex breathes, lasts, and supports better than foam.</p>"
+        },
+        {
+          "type": "header",
+          "content": "BUTTON"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Label",
+          "default": "READ THE ARTICLE"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "default": "primary",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-step-v2.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "article",
+          "settings": {
+            "source_text": "wellworthy",
+            "title": "What makes natural Latex different from memory foam",
+            "description": "<p>Why plant-based latex breathes, lasts, and supports better than foam.</p>",
+            "button_text": "READ THE ARTICLE"
+          }
+        },
+        {
+          "type": "article",
+          "settings": {
+            "source_text": "wellworthy",
+            "title": "What makes natural Latex different from memory foam",
+            "description": "<p>Why plant-based latex breathes, lasts, and supports better than foam.</p>",
+            "button_text": "READ THE ARTICLE"
+          }
+        },
+        {
+          "type": "article",
+          "settings": {
+            "source_text": "wellworthy",
+            "title": "What makes natural Latex different from memory foam",
+            "description": "<p>Why plant-based latex breathes, lasts, and supports better than foam.</p>",
+            "button_text": "READ THE ARTICLE"
+          }
+        },
+        {
+          "type": "article",
+          "settings": {
+            "source_text": "wellworthy",
+            "title": "What makes natural Latex different from memory foam",
+            "description": "<p>Why plant-based latex breathes, lasts, and supports better than foam.</p>",
+            "button_text": "READ THE ARTICLE"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

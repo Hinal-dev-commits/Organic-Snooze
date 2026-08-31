@@ -1,0 +1,1845 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-cta-badges.css' | asset_url | stylesheet_tag }}
+{{ 'nw-testimonial-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-testimonial-v2.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwTestimonialV2-' | append: section.id
+  assign tab_blocks = section.blocks | where: 'type', 'tab'
+  assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
+
+  assign default_tab_index = 0
+  assign tab_index_scan = 0
+  for block in tab_blocks
+    if block.settings.default_selected
+      assign default_tab_index = tab_index_scan
+      break
+    endif
+    assign tab_index_scan = tab_index_scan | plus: 1
+  endfor
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFCF0' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-testimonial-v2
+  id="NwTestimonialV2-{{ section.id }}"
+  class="nw-testimonial-v2 section-{{ section.id }}"
+  style="
+    --nw-tv2-tab-bg: {{ section.settings.tab_bg_color }};
+    --nw-tv2-tab-text: {{ section.settings.tab_text_color }};
+    --nw-tv2-tab-border: {{ section.settings.tab_border_color }};
+    --nw-tv2-tab-active-bg: {{ section.settings.tab_active_bg_color }};
+    --nw-tv2-tab-active-text: {{ section.settings.tab_active_text_color }};
+    --nw-tv2-tab-active-border: {{ section.settings.tab_active_border_color }};
+    --nw-tv2-card-bg: {{ section.settings.card_bg_color }};
+    --nw-tv2-card-border: {{ section.settings.card_border_color }};
+    --nw-tv2-card-text: {{ section.settings.card_text_color }};
+    --nw-tv2-card-product-text: {{ section.settings.product_text_color }};
+    --nw-tv2-star-color: {{ section.settings.card_star_color }};
+    --nw-tv2-star-inactive: {{ section.settings.card_star_empty_color }};
+    --nw-tv2-tag-bg: {{ section.settings.tag_bg_color }};
+    --nw-tv2-tag-text: {{ section.settings.tag_text_color }};
+    --nw-tv2-tag-border: {{ section.settings.tag_border_color }};
+    --nw-tv2-verified-color: {{ section.settings.verified_icon_color }};
+    --nw-tv2-verified-text: {{ section.settings.verified_text_color }};
+    --nw-tv2-product-bg: {{ section.settings.product_bg_color }};
+    --nw-tv2-product-border: {{ section.settings.product_border_color }};
+    --nw-tv2-add-bg: {{ section.settings.add_button_bg_color }};
+    --nw-tv2-add-text: {{ section.settings.add_button_text_color }};
+    --nw-cta-badge-text: {{ section.settings.badge_text_color }};
+    --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-testimonial-v2__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.show_rating
+        or section.settings.eyebrow != blank
+        or section.settings.heading != blank
+        or section.settings.subheading != blank
+      -%}
+        <div class="nw-testimonial-v2__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- if tab_blocks.size > 0 -%}
+        <div class="nw-testimonial-v2__tabs-wrap">
+          <div
+            class="nw-testimonial-v2__tabs"
+            role="tablist"
+            aria-label="{{ section.settings.tabs_aria_label | default: 'Review categories' | escape }}"
+            data-nw-tv2-tablist
+          >
+            {%- assign tab_index = 0 -%}
+            {%- for block in tab_blocks -%}
+              <button
+                type="button"
+                class="nw-testimonial-v2__tab{% if tab_index == default_tab_index %} is-active{% endif %}"
+                id="NwTestimonialV2TabBtn-{{ section.id }}-{{ tab_index }}"
+                role="tab"
+                aria-selected="{% if tab_index == default_tab_index %}true{% else %}false{% endif %}"
+                aria-controls="NwTestimonialV2TabPanel-{{ section.id }}-{{ tab_index }}"
+                tabindex="{% if tab_index == default_tab_index %}0{% else %}-1{% endif %}"
+                data-nw-tv2-tab="{{ tab_index }}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.tab_label | escape }}
+              </button>
+              {%- assign tab_index = tab_index | plus: 1 -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="nw-testimonial-v2__panels">
+          {%- assign panel_index = 0 -%}
+          {%- for block in tab_blocks -%}
+            {%- liquid
+              assign cards_to_show = block.settings.cards_to_show | default: 3
+              if cards_to_show > 15
+                assign cards_to_show = 15
+              elsif cards_to_show < 1
+                assign cards_to_show = 1
+              endif
+              assign category_tag = block.settings.category_tag
+              if category_tag == blank
+                assign category_tag = block.settings.tab_label
+              endif
+            -%}
+            <div
+              class="nw-testimonial-v2__panel"
+              id="NwTestimonialV2TabPanel-{{ section.id }}-{{ panel_index }}"
+              data-nw-tv2-panel="{{ panel_index }}"
+              role="tabpanel"
+              aria-labelledby="NwTestimonialV2TabBtn-{{ section.id }}-{{ panel_index }}"
+              {% unless panel_index == default_tab_index %}
+                hidden
+              {% endunless %}
+            >
+              <div class="nw-testimonial-v2__cards">
+                {%- for card_index in (1..cards_to_show) -%}
+                  {% render 'nw-testimonial-v2-card',
+                    block: block,
+                    card_index: card_index,
+                    category_tag: category_tag
+                  %}
+                {%- endfor -%}
+              </div>
+            </div>
+            {%- assign panel_index = panel_index | plus: 1 -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_button -%} 
+      {% render 'nw-cta-badges',
+        settings: section.settings,
+          blocks: trust_badge_blocks,
+          class: 'nw-testimonial-v2__footer'
+        %}
+      {%- endif -%}
+    </div>
+  </div>
+</nw-testimonial-v2>
+
+{% schema %}
+{
+  "name": "t:sections.nw-testimonial-v2.name",
+  "tag": "section",
+  "class": "section-nw-testimonial-v2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rating Text",
+      "default": "98% Satisfactory rating among sleepers",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop By What Sleepers Notice Most"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Explore reviews grouped by comfort, support, materials, couples, and cooler sleep.</p>"
+    },
+    {
+      "type": "text",
+      "id": "tabs_aria_label",
+      "label": "Tabs Accessibility Label",
+      "default": "Review categories"
+    },
+    {
+      "type": "header",
+      "content": "TAB COLORS"
+    },
+    {
+      "type": "color",
+      "id": "tab_bg_color",
+      "label": "Tab Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tab_text_color",
+      "label": "Tab Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tab_border_color",
+      "label": "Tab Border Color",
+      "default": "rgba(97, 57, 22, 0.2)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tab_active_bg_color",
+      "label": "Active Tab Background",
+      "default": "#F4EFE8",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tab_active_text_color",
+      "label": "Active Tab Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tab_active_border_color",
+      "label": "Active Tab Border Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "CARD COLORS"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#F4EFE8",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "rgba(97, 57, 22, 0.12)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#4E2F14",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_star_color",
+      "label": "Star Color",
+      "default": "#E57B1E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_star_empty_color",
+      "label": "Empty Star Color",
+      "default": "rgba(97, 57, 22, 0.25)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_bg_color",
+      "label": "Category Tag Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_text_color",
+      "label": "Category Tag Text Color",
+      "default": "#A96B3E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_border_color",
+      "label": "Category Tag Border Color",
+      "default": "rgba(97, 57, 22, 0.15)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "verified_icon_color",
+      "label": "Verified Icon Color",
+      "default": "#878735",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "verified_text_color",
+      "label": "Verified Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "product_bg_color",
+      "label": "Product Box Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "product_text_color",
+      "label": "Product Box Text Color",
+      "default": "#000",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "product_border_color",
+      "label": "Product Box Border Color",
+      "default": "rgba(97, 57, 22, 0.12)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "add_button_bg_color",
+      "label": "Add Button Background",
+      "default": "#A96B3E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "add_button_text_color",
+      "label": "Add Button Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Rating Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "SHOW ALL REVIEWS",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TRUST BADGES"
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Badge Icon Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFCF0",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Review Tab",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab Label",
+          "default": "Premium Comfort"
+        },
+        {
+          "type": "text",
+          "id": "category_tag",
+          "label": "Default Category Tag",
+          "info": "Used on cards when card category tag is empty."
+        },
+        {
+          "type": "checkbox",
+          "id": "default_selected",
+          "label": "Default Selected Tab",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "TAB DISPLAY"
+        },
+        {
+          "type": "range",
+          "id": "cards_to_show",
+          "label": "Cards To Show",
+          "min": 1,
+          "max": 15,
+          "step": 1,
+          "default": 3,
+          "info": "Number of review cards to display for this tab (max 15)."
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 1",
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_1_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_1_quote",
+          "label": "Review Quote",
+          "default": "<p>\"I forget the protector is even there. It keeps the mattress clean without changing how the bed feels.\"</p>",
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_1_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_1_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_1_name",
+          "label": "Reviewer Name",
+          "default": "Evelyn R.",
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_1_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_1_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_1_show_verified == true and block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 1 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_1_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_1_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_1_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_1_show_product == true and block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 2",
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_2_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_2_quote",
+          "label": "Review Quote",
+          "default": "<p>\"The pillow holds my neck in place without collapsing, and I wake up feeling more rested and clear-headed.\"</p>",
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_2_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_2_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_2_name",
+          "label": "Reviewer Name",
+          "default": "Gary B.",
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_2_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_2_verified_text",
+          "label": "Verified Text",
+          "default": "Human Biologist",
+          "visible_if": "{{ block.settings.card_2_show_verified == true and block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 2 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_2_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_2_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_2_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_2_show_product == true and block.settings.cards_to_show >= 2 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 3",
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_3_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_3_quote",
+          "label": "Review Quote",
+          "default": "<p>\"The sheets feel soft and breathable. They stay cool through the night without that synthetic cling.\"</p>",
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_3_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_3_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_3_name",
+          "label": "Reviewer Name",
+          "default": "David M.",
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_3_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_3_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_3_show_verified == true and block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 3 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_3_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_3_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_3_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_3_show_product == true and block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 4",
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_4_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_4_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_4_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_4_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_4_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_4_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_4_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_4_show_verified == true and block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 4 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_4_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_4_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_4_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_4_show_product == true and block.settings.cards_to_show >= 4 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 5",
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_5_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_5_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_5_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_5_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_5_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_5_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_5_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_5_show_verified == true and block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 5 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_5_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_5_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_5_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_5_show_product == true and block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 6",
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_6_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_6_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_6_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_6_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_6_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_6_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_6_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_6_show_verified == true and block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 6 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_6_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_6_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_6_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_6_show_product == true and block.settings.cards_to_show >= 6 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 7",
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_7_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_7_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_7_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_7_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_7_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_7_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_7_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_7_show_verified == true and block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 7 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_7_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_7_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_7_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_7_show_product == true and block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 8",
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_8_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_8_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_8_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_8_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_8_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_8_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_8_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_8_show_verified == true and block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 8 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_8_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_8_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_8_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_8_show_product == true and block.settings.cards_to_show >= 8 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 9",
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_9_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_9_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_9_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_9_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_9_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_9_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_9_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_9_show_verified == true and block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 9 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_9_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_9_product",
+          "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 10",
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_10_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_10_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_10_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_10_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_10_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_10_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_10_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_10_show_verified == true and block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 10 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_10_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_10_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_10_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_10_show_product == true and block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 11",
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_11_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_11_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_11_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_11_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_11_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_11_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_11_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_11_show_verified == true and block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 11 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_11_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_11_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_11_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_11_show_product == true and block.settings.cards_to_show >= 11 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 12",
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_12_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_12_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_12_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_12_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_12_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_12_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_12_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_12_show_verified == true and block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 12 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_12_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_12_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_12_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_12_show_product == true and block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 13",
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_13_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_13_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_13_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_13_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_13_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_13_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_13_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_13_show_verified == true and block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 13 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_13_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_13_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_13_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_13_show_product == true and block.settings.cards_to_show >= 13 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 14",
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_14_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_14_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_14_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_14_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_14_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_14_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_14_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_14_show_verified == true and block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 14 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_14_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_14_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_14_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_14_show_product == true and block.settings.cards_to_show >= 14 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 15",
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "range",
+          "id": "card_15_rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "richtext",
+          "id": "card_15_quote",
+          "label": "Review Quote",
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_15_category_tag",
+          "label": "Category Tag",
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_15_avatar",
+          "label": "Reviewer Avatar",
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_15_name",
+          "label": "Reviewer Name",
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_15_show_verified",
+          "label": "Show Verified Badge",
+          "default": true,
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "text",
+          "id": "card_15_verified_text",
+          "label": "Verified Text",
+          "default": "Verified Customer",
+          "visible_if": "{{ block.settings.card_15_show_verified == true and block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "header",
+          "content": "REVIEW CARD 15 PRODUCT FOOTER",
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "card_15_show_product",
+          "label": "Show Product Footer",
+          "default": false,
+          "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "product",
+          "id": "card_15_product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "card_15_product_title",
+          "label": "Product Title",
+          "visible_if": "{{ block.settings.card_15_show_product == true and block.settings.cards_to_show >= 15 }}"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "default": "none",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "moneyback",
+              "label": "100-Night Trial / Moneyback"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "shipping",
+              "label": "Shipping / Truck"
+            },
+            {
+              "value": "financing",
+              "label": "Financing / Offer"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-testimonial-v2.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Premium Comfort",
+            "default_selected": true,
+            "cards_to_show": 3,
+            "card_1_quote": "<p>\"I forget the protector is even there. It keeps the mattress clean without changing how the bed feels.\"</p>",
+            "card_1_name": "Evelyn R.",
+            "card_1_verified_text": "Verified Customer",
+            "card_2_quote": "<p>\"The pillow holds my neck in place without collapsing, and I wake up feeling more rested and clear-headed.\"</p>",
+            "card_2_name": "Gary B.",
+            "card_2_verified_text": "Human Biologist",
+            "card_3_quote": "<p>\"The sheets feel soft and breathable. They stay cool through the night without that synthetic cling.\"</p>",
+            "card_3_name": "David M.",
+            "card_3_verified_text": "Verified Customer"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Back Support"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Organic Materials"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Hot Sleepers"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_label": "Couple"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "none",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "none",
+            "text": "30-Year Warranty"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "none",
+            "text": "Free Shipping"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

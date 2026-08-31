@@ -28,7 +28,7 @@ nw-featured-marquee {
   line-height: 140%;
   text-align: center;
   text-transform: uppercase;
-  color: var(--primary-color, var(--nw-brown));
+  color: var(--nw-fm-text-color, var(--primary-color, var(--nw-brown)));
   margin: 0;
   padding: 0 16px;
   width: 100%;
@@ -98,7 +98,7 @@ nw-featured-marquee {
   align-items: center;
   justify-content: center;
   height: var(--nw-fm-height-dt, 48px);
-  color: var(--primary-color, var(--nw-brown));
+  color: var(--nw-fm-text-color, var(--primary-color, var(--nw-brown)));
 }
 
 .nw-featured-marquee__svg-wrap svg {

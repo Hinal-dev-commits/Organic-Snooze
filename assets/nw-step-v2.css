@@ -1,0 +1,247 @@
+nw-step-v2 {
+  display: block;
+  width: 100%;
+}
+
+.nw-step-v2 {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-step-v2 .page-width {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+  box-sizing: border-box;
+}
+
+.nw-step-v2__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.nw-step-v2__header {
+  width: 100%;
+  max-width: 810px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nw-step-v2__cards {
+  width: 100%;
+}
+
+.nw-step-v2__slider-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.nw-step-v2__swiper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.nw-step-v2__swiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+.nw-step-v2__swiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.nw-step-v2 .nw-swiper-btn {
+  top: 42%;
+  z-index: 2;
+}
+
+.nw-step-v2 .nw-swiper-btn--prev {
+  left: -20px;
+}
+
+.nw-step-v2 .nw-swiper-btn--next {
+  right: -20px;
+}
+
+.nw-step-v2 .nw-swiper-btn.swiper-button-lock {
+  display: none !important;
+}
+
+.nw-step-v2__pagination {
+  margin-top: 32px;
+}
+
+.nw-step-v2__pagination.swiper-pagination-lock {
+  display: none !important;
+}
+
+.nw-step-v2__card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  background: var(--nw-sv2-card-bg, #ffffff);
+  border: 1px solid var(--nw-sv2-card-border, rgba(97, 57, 22, 0.12));
+  border-radius: 14px;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 18px;
+}
+
+.nw-step-v2__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--tertiary-color, #f4efe8);
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.nw-step-v2__image,
+.nw-step-v2__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nw-step-v2__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nw-step-v2__placeholder svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.35;
+}
+
+.nw-step-v2__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+}
+
+.nw-step-v2__source {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 7px;
+  border: 1px solid var(--nw-sv2-source-border, rgba(97, 57, 22, 0.25));
+  border-radius: 6px;
+  background: #f4efe8;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+.nw-step-v2__source-logo {
+  display: block;
+  max-width: 110px;
+  max-height: 20px;
+  min-width: 93px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.nw-step-v2__source-text {
+  font-family: var(--font-heading-family);
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--nw-sv2-source-text, #613916);
+}
+
+.nw-step-v2__title {
+  margin: 0 0 12px;
+  font-family: var(--font-body-family);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--nw-sv2-card-title, #613916);
+}
+
+.nw-step-v2__desc {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--nw-sv2-card-desc, #613916);
+  text-align: left;
+}
+
+.nw-step-v2__action {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.nw-step-v2__card-btn {
+  min-height: 47px;
+  padding: 11px 20px;
+}
+
+.nw-step-v2__image-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 989px) {
+  .nw-step-v2 .page-width {
+    padding: 0 32px;
+  }
+
+  .nw-step-v2 .nw-swiper-btn--prev {
+    left: -8px;
+  }
+
+  .nw-step-v2 .nw-swiper-btn--next {
+    right: -8px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-step-v2 .page-width {
+    padding: 0 16px;
+  }
+
+  .nw-step-v2__image-mobile {
+    display: block;
+  }
+
+  .nw-step-v2__image-desktop {
+    display: none;
+  }
+
+  .nw-step-v2__media {
+    margin-bottom: 12px;
+  }
+
+  .nw-step-v2__source {
+    margin-bottom: 12px;
+  }
+
+  .nw-step-v2__wrapper {
+    gap: 20px;
+  }
+
+  .nw-step-v2__title {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .nw-step-v2__desc,
+  .nw-step-v2__desc * {
+    font-size: 14px;
+  }
+
+  .nw-step-v2__card {
+    padding: 16px;
+  }
+}

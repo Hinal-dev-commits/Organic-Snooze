@@ -1,6 +1,13 @@
 {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-cta-badges.css' | asset_url | stylesheet_tag }}
 {{ 'nw-review-video.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'nw-review-video.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign video_blocks = section.blocks | where: 'type', 'review'
+  assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
+-%}
 
 {%- assign nw_shell_selector = '.nw-review-video.section-' | append: section.id -%}
 {% capture nw_shell_extra %}
@@ -17,7 +24,11 @@
 
 <nw-review-video
   class="nw-review-video section-{{ section.id }}{%- render 'nw-scroll-animation' -%}"
-  data-block-count="{{ section.blocks.size | default: 1 }}"
+  style="
+    --nw-cta-badge-text: {{ section.settings.badge_text_color }};
+    --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
+  "
+  data-block-count="{{ video_blocks.size | default: 1 }}"
   data-enable-autoplay="{{ section.settings.enable_autoplay }}"
   data-autoplay-delay="{{ section.settings.autoplay_delay | default: 3 | times: 1000 }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
@@ -37,18 +48,18 @@
     </div>
   </div>
 
-  {%- if section.blocks.size > 0 -%}
+  {%- if video_blocks.size > 0 -%}
     {%- liquid
       assign repeat_times = 1
-      if section.blocks.size == 1
+      if video_blocks.size == 1
         assign repeat_times = 8
-      elsif section.blocks.size == 2
+      elsif video_blocks.size == 2
         assign repeat_times = 5
-      elsif section.blocks.size == 3
+      elsif video_blocks.size == 3
         assign repeat_times = 4
-      elsif section.blocks.size == 4
+      elsif video_blocks.size == 4
         assign repeat_times = 3
-      elsif section.blocks.size <= 7
+      elsif video_blocks.size <= 7
         assign repeat_times = 2
       endif
     -%}
@@ -60,7 +71,7 @@
       <div class="swiper" id="nw-review-videos-{{ section.id }}" data-nw-review-slider>
         <div class="swiper-wrapper">
           {%- for r in (1..repeat_times) -%}
-            {%- for block in section.blocks -%}
+            {%- for block in video_blocks -%}
               {%- liquid
                 assign review_product = block.settings.product
                 assign product_image = block.settings.custom_image
@@ -121,7 +132,7 @@
                       </span>
                     </button>
                   </div>
-
+                  {%- if block.settings.author != blank or block.settings.show_verified or product_title != blank or product_url != blank -%}
                   <div class="nw-review-video__body">
                     <div class="nw-review-video__author-row">
                       {%- if block.settings.author != blank -%}
@@ -137,7 +148,7 @@
 
                     <hr class="nw-review-video__divider">
 
-                    {%- if product_title != blank or product_image != blank -%}
+                    {%- if product_title != blank -%}
                       {%- if product_url != blank -%}
                         <a href="{{ product_url }}" class="nw-review-video__product">
                       {%- else -%}
@@ -170,6 +181,7 @@
                       {%- endif -%}
                     {%- endif -%}
                   </div>
+                  {%- endif -%}
                 </article>
               </div>
             {%- endfor -%}
@@ -177,9 +189,9 @@
         </div>
       </div>
 
-      {%- if section.settings.show_dots and section.blocks.size > 1 -%}
+      {%- if section.settings.show_dots and video_blocks.size > 1 -%}
         <div class="nw-swiper-pagination" id="nw-review-videos-pagination-{{ section.id }}" data-nw-review-pagination>
-          {%- for block in section.blocks -%}
+          {%- for block in video_blocks -%}
             <button
               type="button"
               class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
@@ -191,6 +203,14 @@
       {%- endif -%}
     </div>
   {%- endif -%}
+
+  <div class="page-width">
+    {% render 'nw-cta-badges',
+      settings: section.settings,
+      blocks: trust_badge_blocks,
+      class: 'nw-review-video__footer'
+    %}
+  </div>
 </nw-review-video>
 
 {% schema %}
@@ -354,6 +374,59 @@
     },
     {
       "type": "header",
+      "content": "GLOBAL CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Footer CTA",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "SHOP NOW",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TRUST BADGES"
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Badge Icon Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
       "content": "SECTION SPACING"
     },
     {
@@ -467,6 +540,46 @@
           "type": "url",
           "id": "custom_link",
           "label": "Custom Product Link (Overrides Product URL)"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "default": "none",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "moneyback", "label": "100-Night Trial / Moneyback" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "shipping", "label": "Shipping / Truck" },
+            { "value": "financing", "label": "Financing / Offer" },
+            { "value": "shield", "label": "Shield" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
         }
       ]
     }

@@ -3,6 +3,7 @@ Renders a CTA button plus optional trust badges from section or block settings.
 @param {object} settings - Section or block settings with button and badge fields
 @param {object} [blocks] - Optional badge blocks
 @param {string} [class] - Extra class on the wrapper
+@param {boolean} [show_cta_button] - When false, skips rendering the CTA button (badges only). Default: true
 @example
 {% render 'nw-cta-badges', settings: section.settings, blocks: section.blocks %}
 {% enddoc %}
@@ -13,9 +14,11 @@ Renders a CTA button plus optional trust badges from section or block settings.
   assign cta_style = settings.button_style | default: settings.btn_style
 
   assign show_button = false
-  if settings.show_button == null or settings.show_button != false
-    if cta_text != blank
-      assign show_button = true
+  if show_cta_button != false
+    if settings.show_button == null or settings.show_button != false
+      if cta_text != blank
+        assign show_button = true
+      endif
     endif
   endif
 
@@ -85,14 +88,16 @@ Renders a CTA button plus optional trust badges from section or block settings.
                 endif
               -%}
               <div class="nw-cta-badges__item" {{ block.shopify_attributes }}>
-                <span
-                  class="nw-cta-badges__icon"
-                  {% if block.settings.icon_color != blank %}
-                    style="--nw-cta-badge-icon: {{ block.settings.icon_color }}; color: {{ block.settings.icon_color }};"
-                  {% endif %}
-                >
-                  {% render 'nw-trust-badge-icon', icon: badge_icon, custom_icon: badge_custom_icon %}
-                </span>
+                {%- if badge_custom_icon != blank or badge_icon != blank and badge_icon != 'none' -%}
+                  <span
+                    class="nw-cta-badges__icon"
+                    {% if block.settings.icon_color != blank %}
+                      style="--nw-cta-badge-icon: {{ block.settings.icon_color }}; color: {{ block.settings.icon_color }};"
+                    {% endif %}
+                  >
+                    {% render 'nw-trust-badge-icon', icon: badge_icon, custom_icon: badge_custom_icon %}
+                  </span>
+                {%- endif -%}
                 <div class="nw-cta-badges__text">{{ block.settings.text }}</div>
               </div>
             {%- endif -%}
