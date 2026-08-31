@@ -1,0 +1,350 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-our-standards.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwOurStandards-' | append: section.id -%}
+{%- assign nw_card_bg_color = section.settings.card_bg_color | default: '#6139160D' -%}
+{%- assign nw_card_border_color = section.settings.card_border_color | default: '#6139161A' -%}
+{%- assign nw_card_text_color = section.settings.card_text_color | default: '#613916' -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  {{ nw_shell_selector }} .nw-our-standards__card {
+    background-color: {{ nw_card_bg_color }};
+    border-color: {{ nw_card_border_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-our-standards__card-text,
+  {{ nw_shell_selector }} .nw-our-standards__card-text p {
+    color: {{ nw_card_text_color }};
+  }
+</style>
+
+<nw-our-standards
+  id="NwOurStandards-{{ section.id }}"
+  class="nw-our-standards section-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="nw-our-standards__wrapper{%- render 'nw-scroll-animation' -%}">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+        <div class="nw-our-standards__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+        <div class="nw-our-standards__grid">
+          {%- for block in section.blocks -%}
+            <article class="nw-our-standards__card" {{ block.shopify_attributes }}>
+              <div class="nw-our-standards__card-media">
+                {%- liquid
+                  assign card_img = block.settings.image
+                  assign card_img_mb = block.settings.image_mobile
+                  if card_img == blank and card_img_mb != blank
+                    assign card_img = card_img_mb
+                  endif
+                -%}
+                {%- if card_img != blank -%}
+                  <picture>
+                    {%- if card_img_mb != blank -%}
+                      <source
+                        media="(max-width: 749px)"
+                        srcset="{{ card_img_mb | image_url: width: 200 }}"
+                      >
+                    {%- endif -%}
+                    <img
+                      src="{{ card_img | image_url: width: 300 }}"
+                      alt="{{ card_img.alt | default: block.settings.text | strip_html | escape }}"
+                      width="120"
+                      height="120"
+                      loading="lazy"
+                      class="nw-our-standards__card-img"
+                    >
+                  </picture>
+                {%- else -%}
+                  <div class="nw-our-standards__placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+
+              {%- if block.settings.text != blank -%}
+                <div class="nw-our-standards__card-text">
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+            </article>
+          {%- endfor -%}
+        </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_button and section.settings.button_text != blank -%}
+        <div class="nw-our-standards__footer">
+          {% render 'nw-button',
+            text: section.settings.button_text,
+            link: section.settings.button_link | default: '#',
+            style: section.settings.button_style,
+            btn_class: 'nw-our-standards__btn'
+          %}
+        </div>
+    {%- endif -%}
+  </div>
+  </div>
+</nw-our-standards>
+
+{% schema %}
+{
+  "name": "NW Our Standards",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clean for You, Responsible for the Planet"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>We're accountable at every step - from sourcing traceable materials and partnering with certified facilities, to building mattresses that return responsibly to the earth.</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#6139160D"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#6139161A"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Read About Our Standards",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "standard_card",
+      "name": "Standard Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Card Image (Mobile Optional)"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Traceable natural materials, including responsibly sourced wool and latex</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Our Standards",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "standard_card",
+          "settings": {
+            "text": "<p>Traceable natural materials, including responsibly sourced wool and latex</p>"
+          }
+        },
+        {
+          "type": "standard_card",
+          "settings": {
+            "text": "<p>Made in certified facilities, audited for quality, safety, and ethical labor practices</p>"
+          }
+        },
+        {
+          "type": "standard_card",
+          "settings": {
+            "text": "<p>Responsibly sourced throughout - like our certified latex from well-managed forests</p>"
+          }
+        },
+        {
+          "type": "standard_card",
+          "settings": {
+            "text": "<p>Biodegradable, recyclable materials designed to break down responsibly - not sit in landfills</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

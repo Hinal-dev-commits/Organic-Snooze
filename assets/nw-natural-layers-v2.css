@@ -41,11 +41,6 @@ nw-natural-layers-v2,
     box-sizing: border-box;
 }
 
-.nw-natural-layers-v2 .nw-section-description {
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
-}
 
 .nw-natural-layers-v2__main {
     display: flex;
@@ -584,7 +579,19 @@ nw-natural-layers-v2,
     }
 
     .nw-natural-layers-v2 .page-width {
+        padding: 0;
+    }
+
+    .nw-natural-layers-v2__header{
         padding: 0 16px;
+    }
+
+    .nw-natural-layers-v2__cta-wrap{
+        padding: 0 16px;
+    }
+
+    .nw-natural-layers-v2__header .nw-section-description{
+        max-width: 230px;
     }
 
     .nw-natural-layers-v2__wrapper {
@@ -593,6 +600,38 @@ nw-natural-layers-v2,
 
     .nw-natural-layers-v2__main {
         gap: 32px;
+    }
+
+    .nw-natural-layers-v2__slider-wrap {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .nw-natural-layers-v2__swiper {
+        overflow: visible;
+    }
+
+    .nw-natural-layers-v2__swiper .swiper-wrapper.nw-natural-layers-v2__cards {
+        display: flex !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        overflow: visible !important;
+        scroll-snap-type: none;
+    }
+
+    .nw-natural-layers-v2__swiper .swiper-wrapper.nw-natural-layers-v2__cards .nw-natural-layers-v2__card:first-child {
+        margin-left: 0 !important;
+        margin-right: 12px !important;
+    }
+
+    .nw-natural-layers-v2__swiper .swiper-wrapper.nw-natural-layers-v2__cards .nw-natural-layers-v2__card:last-child{
+        margin-left: 0 !important;
+        margin-right: 0px !important;
     }
 
     .nw-natural-layers-v2__cards {
@@ -762,6 +801,16 @@ nw-natural-layers-v2,
     box-sizing: border-box;
 }
 
+.nw-natural-layers-v2__slider-wrap .nw-swiper-pagination .swiper-pagination-bullet{
+    width: 5px;
+    height: 5px;
+}
+
+.nw-natural-layers-v2__slider-wrap .nw-swiper-pagination .swiper-pagination-bullet-active{
+    width: 30px;
+    height: 5px;
+}
+
 .nw-natural-layers-v2__swiper {
     width: 100%;
     overflow: hidden;
@@ -813,5 +862,5 @@ nw-natural-layers-v2,
 }
 
 .nw-natural-layers-v2 .nw-swiper-pagination {
-    margin-top: 24px;
+    margin-top: 40px;
 }

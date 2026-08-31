@@ -87,19 +87,6 @@
     display: block;
 }
 
-.nw-never-use__card-media::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 142%;
-    height: 5px;
-    background-color: #FFFFFF;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    pointer-events: none;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
 .nw-never-use__card-content {
     display: flex;
     flex-direction: column;

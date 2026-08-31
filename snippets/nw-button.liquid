@@ -11,14 +11,10 @@ Renders a primary, secondary, or outline CTA. Empty links become a button so the
 {%- liquid
   assign btn_style = style | default: 'primary'
   assign btn_text = text
-  assign btn_link = link
+  assign btn_link = link | default: '#'
 -%}
-{%- if btn_link != blank -%}
+{%- if btn_text != blank -%}
   <a href="{{ btn_link }}" class="nw-btn nw-btn--{{ btn_style }}{% if btn_class != blank %} {{ btn_class }}{% endif %}">
     <span class="nw-btn__text">{{ btn_text }}</span>
   </a>
-{%- else -%}
-  <button type="button" class="nw-btn nw-btn--{{ btn_style }}{% if btn_class != blank %} {{ btn_class }}{% endif %}">
-    <span class="nw-btn__text">{{ btn_text }}</span>
-  </button>
 {%- endif -%}

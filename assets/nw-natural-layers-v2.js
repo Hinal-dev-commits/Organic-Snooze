@@ -47,15 +47,21 @@ if (!customElements.get('nw-natural-layers-v2')) {
           breakpoints: {
             0: {
               slidesPerView: 'auto',
-              spaceBetween: 12
+              spaceBetween: 12,
+              slidesOffsetBefore: 16,
+              slidesOffsetAfter: 16
             },
             750: {
               slidesPerView: 'auto',
-              spaceBetween: 16
+              spaceBetween: 16,
+              slidesOffsetBefore: 0,
+              slidesOffsetAfter: 0
             },
             990: {
               slidesPerView: 'auto',
-              spaceBetween: 20
+              spaceBetween: 20,
+              slidesOffsetBefore: 0,
+              slidesOffsetAfter: 0
             }
           }
         };

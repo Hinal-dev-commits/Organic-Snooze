@@ -1,0 +1,138 @@
+.nw-our-standards {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-our-standards__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-our-standards__header{
+  max-width: 900px;
+}
+
+.nw-our-standards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-our-standards__card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 12px 20px 12px 12px;
+  border: 1px solid;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.nw-our-standards__card-media {
+  position: relative;
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--nw-sand, #f4efe8);
+}
+
+.nw-our-standards__card-media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nw-our-standards__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+}
+
+.nw-our-standards__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--nw-sand, #f4efe8);
+}
+
+.nw-our-standards__placeholder svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.nw-our-standards__card-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-body-family, 'DM Sans');
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+}
+
+.nw-our-standards__card-text p {
+  margin: 0;
+}
+
+.nw-our-standards__card-text p + p {
+  margin-top: 4px;
+}
+
+.nw-our-standards__footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.nw-our-standards .nw-our-standards__footer .nw-btn,
+.nw-our-standards .nw-our-standards__footer .nw-our-standards__btn {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 520px;
+}
+
+@media screen and (max-width: 749px) {
+  .nw-our-standards__wrapper {
+    gap: 32px;
+  }
+
+  .nw-our-standards__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .nw-our-standards__card {
+    padding: 8px 12px 8px 8px;
+  }
+
+  .nw-our-standards__card-media {
+    width: 80px;
+    height: 80px;
+  }
+
+  .nw-our-standards__card-text {
+    font-size: 14px;
+    line-height: 150%;
+  }
+}

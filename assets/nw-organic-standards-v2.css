@@ -262,11 +262,30 @@
 
 @media screen and (max-width: 749px) {
     .nw-organic-standards-v2 .page-width {
+        padding: 0;
+    }
+
+    .nw-organic-standards-v2__header{
+        padding: 0;
+    }
+
+    .nw-organic-standards-v2__btn-wrap{
         padding: 0 16px;
     }
 
     .nw-organic-standards-v2__wrapper {
         gap: 32px;
+    }
+
+    .nw-organic-standards-v2__slider-wrap {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .nw-organic-standards-v2__swiper {
+        overflow: visible;
     }
 
     .nw-organic-standards-v2__swiper .swiper-slide {

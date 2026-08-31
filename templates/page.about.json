@@ -268,7 +268,7 @@
       "name": "NW Image",
       "settings": {
         "image_desktop": "shopify://shop_images/desktop-image.png",
-        "enable_fixed_bg": true,
+        "enable_fixed_bg": false,
         "height_desktop": 300,
         "height_mobile": 167,
         "padding_top_desktop": 0,
@@ -396,7 +396,7 @@
         "standard_card_RkzGmC": {
           "type": "standard_card",
           "settings": {
-            "logo_image": "shopify://shop_images/gots-logo.png",
+            "logo_image": "shopify://shop_images/fsc-logo.png",
             "title": "FSC",
             "description": "Confirms the latex is sourced from responsibly managed forests."
           }
@@ -404,7 +404,7 @@
         "standard_card_at3cPL": {
           "type": "standard_card",
           "settings": {
-            "logo_image": "shopify://shop_images/gols-logo.png",
+            "logo_image": "shopify://shop_images/made-in-usa-logo.png",
             "title": "Made in the USA",
             "description": "Every mattress is built and hand-tufted in our USA facility."
           }
@@ -434,9 +434,367 @@
         "btn_link": "",
         "btn_style": "primary",
         "bg_type": "image",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#ffffff",
         "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_color_image": "#FFFFFFD6",
+        "bg_color_image": "#ffffffd6",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_build_process_KirngL": {
+      "type": "nw-build-process",
+      "blocks": {
+        "process_card_Bf8fcJ": {
+          "type": "process_card",
+          "settings": {
+            "image": "shopify://shop_images/proccess-1.png",
+            "text": "<p>Crafted and hand-tufted in the USA</p>"
+          }
+        },
+        "process_card_che7kP": {
+          "type": "process_card",
+          "settings": {
+            "image": "shopify://shop_images/process-2.png",
+            "text": "<p>Ships from our Georgia facility</p>"
+          }
+        },
+        "process_card_Bxnf8V": {
+          "type": "process_card",
+          "settings": {
+            "image": "shopify://shop_images/process-3.png",
+            "text": "<p>Partners held to strict standards</p>"
+          }
+        },
+        "process_card_RVbcYr": {
+          "type": "process_card",
+          "settings": {
+            "image": "shopify://shop_images/process-4.png",
+            "text": "<p>Every unit inspected and packed to spec</p>"
+          }
+        }
+      },
+      "block_order": [
+        "process_card_Bf8fcJ",
+        "process_card_che7kP",
+        "process_card_Bxnf8V",
+        "process_card_RVbcYr"
+      ],
+      "name": "NW Build Process",
+      "settings": {
+        "heading": "Made in the USA, Built by Hand",
+        "subheading": "<p>Every Ultimate Snooze mattress is hand-tufted in the USA and ships from our Georgia facility, produced and inspected by vetted partners held to strict quality and ethical standards.</p>",
+        "heading_color": "",
+        "description_color": "",
+        "card_text_color": "",
+        "icon_color": "#878735",
+        "card_icon": "check-circle",
+        "show_button": true,
+        "button_text": "See How It's Made",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_image_WiGKNx": {
+      "type": "nw-image",
+      "name": "NW Image",
+      "settings": {
+        "image_desktop": "shopify://shop_images/image_12_f53c8169-b14f-4323-b3c2-b586e167e2b2.png",
+        "image_mobile": "shopify://shop_images/mobile-image.png",
+        "enable_fixed_bg": false,
+        "height_desktop": 300,
+        "height_mobile": 167,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_our_standards_AxbnYB": {
+      "type": "nw-our-standards",
+      "blocks": {
+        "standard_card_64DRE7": {
+          "type": "standard_card",
+          "settings": {
+            "image": "shopify://shop_images/standard-1.png",
+            "text": "<p>Traceable natural materials, including responsibly sourced wool and latex</p>"
+          }
+        },
+        "standard_card_fCzpjU": {
+          "type": "standard_card",
+          "settings": {
+            "image": "shopify://shop_images/standard-2.png",
+            "text": "<p>Made in certified facilities, audited for quality, safety, and ethical labor practices</p>"
+          }
+        },
+        "standard_card_xBkmUD": {
+          "type": "standard_card",
+          "settings": {
+            "image": "shopify://shop_images/standard-3.png",
+            "text": "<p>Responsibly sourced throughout - like our certified latex from well-managed forests</p>"
+          }
+        },
+        "standard_card_e3bmxe": {
+          "type": "standard_card",
+          "settings": {
+            "image": "shopify://shop_images/standard-4.png",
+            "text": "<p>Biodegradable, recyclable materials designed to break down responsibly - not sit in landfills</p>"
+          }
+        }
+      },
+      "block_order": [
+        "standard_card_64DRE7",
+        "standard_card_fCzpjU",
+        "standard_card_xBkmUD",
+        "standard_card_e3bmxe"
+      ],
+      "name": "NW Our Standards",
+      "settings": {
+        "heading": "Clean for You, Responsible for the Planet",
+        "subheading": "<p>We're accountable at every step - from sourcing traceable materials and partnering with certified facilities, to building mattresses that return responsibly to the earth.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_bg_color": "#6139160d",
+        "card_border_color": "#6139161a",
+        "card_text_color": "#613916",
+        "show_button": true,
+        "button_text": "Read About Our Standards",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_collection_list_WxdytG": {
+      "type": "nw-collection-list",
+      "blocks": {
+        "collection_qbDEan": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories",
+            "custom_title": "Bedding",
+            "custom_image": "shopify://shop_images/SnapInsta.to_670318428_17874444948586195_2339425393624769511_n_1_1_2.png",
+            "custom_link": ""
+          }
+        },
+        "collection_hJpefH": {
+          "type": "collection",
+          "settings": {
+            "collection": "mattress",
+            "custom_title": "Mattresses",
+            "custom_image": "shopify://shop_images/DSC09699_1_1.png",
+            "custom_link": ""
+          }
+        },
+        "collection_6MFzaU": {
+          "type": "collection",
+          "settings": {
+            "collection": "family-organic-mattress-and-bedding-for-kids",
+            "custom_title": "Kids",
+            "custom_image": "shopify://shop_images/CRIB_0753_1280_1_1.png",
+            "custom_link": ""
+          }
+        },
+        "collection_NCPAyt": {
+          "type": "collection",
+          "settings": {
+            "collection": "adjustable-bases-1",
+            "custom_title": "Bases",
+            "custom_image": "shopify://shop_images/category-3_1.png",
+            "custom_link": ""
+          }
+        },
+        "collection_bVLWWw": {
+          "type": "collection",
+          "settings": {
+            "collection": "bundles-ultimate-sleep-optimization-system",
+            "custom_title": "Bundle & Save",
+            "custom_image": "shopify://shop_images/category-4_1.png",
+            "custom_link": ""
+          }
+        },
+        "trust_badge_dCbMPQ": {
+          "type": "trust_badge",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "moneyback",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_iXt6Nx": {
+          "type": "trust_badge",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        },
+        "trust_badge_YGfCR3": {
+          "type": "trust_badge",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "shipping",
+            "text": "Free Shipping"
+          }
+        },
+        "trust_badge_hLWJig": {
+          "type": "trust_badge",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "financing",
+            "text": "0% Interest Financing Options"
+          }
+        }
+      },
+      "block_order": [
+        "collection_qbDEan",
+        "collection_hJpefH",
+        "collection_6MFzaU",
+        "collection_NCPAyt",
+        "collection_bVLWWw",
+        "trust_badge_dCbMPQ",
+        "trust_badge_iXt6Nx",
+        "trust_badge_YGfCR3",
+        "trust_badge_hLWJig"
+      ],
+      "name": "t:sections.nw-collection-list.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "",
+        "star_color_inactive": "",
+        "eyebrow": "",
+        "heading": "Explore Our Collections",
+        "subheading": "<p>Find the right organic sleep essentials for every stage of your recovery.</p>",
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
+        "show_arrows": true,
+        "show_dots": true,
+        "show_fade": true,
+        "enable_autoplay": false,
+        "autoplay_delay": 4,
+        "show_button": true,
+        "button_label": "SHOP ALL",
+        "button_link": "",
+        "button_style": "primary",
+        "show_features": true,
+        "bg_type": "none",
+        "bg_color": "",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_faq_QRDGAh": {
+      "type": "nw-faq",
+      "blocks": {
+        "faq_item_y66aRz": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the mattress really free of fiberglass?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_NCDqpK": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is natural latex different from memory foam?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_QfaXFJ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What makes wool a better fire barrier than chemicals?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_er8HLg": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What does \"organic\" actually mean here?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_yTKMy4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where is the mattress made?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_3ATbxX": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why does it matter what my mattress is made of?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_y66aRz",
+        "faq_item_NCDqpK",
+        "faq_item_QfaXFJ",
+        "faq_item_er8HLg",
+        "faq_item_yTKMy4",
+        "faq_item_3ATbxX"
+      ],
+      "name": "t:sections.nw-faq.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "",
+        "star_color_inactive": "",
+        "eyebrow": "",
+        "heading": "Frequently Asked Questions",
+        "subheading": "",
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
+        "show_search": true,
+        "search_placeholder": "What can we help with?",
+        "open_first_faq": false,
+        "initial_faq_count": 4,
+        "more_label": "SEE MORE FAQ’S",
+        "contact_heading": "Speak with Our Live Sleep Experts.",
+        "show_call_btn": true,
+        "call_label": "CALL (443) 333-1213",
+        "call_link": "tel:+14433331213",
+        "call_style": "primary",
+        "show_text_btn": true,
+        "text_label": "TEXT US",
+        "text_link": "sms:+14433331213",
+        "text_style": "outline",
+        "show_quiz_btn": true,
+        "quiz_label": "SLEEP QUIZ",
+        "quiz_link": "",
+        "quiz_style": "outline",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_opacity": 16,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -453,6 +811,11 @@
     "nw_natural_layers_v2_Ezb37e",
     "nw_image_7tYLF4",
     "nw_never_use_tbP94K",
-    "nw_organic_standards_v2_EaH6LV"
+    "nw_organic_standards_v2_EaH6LV",
+    "nw_build_process_KirngL",
+    "nw_image_WiGKNx",
+    "nw_our_standards_AxbnYB",
+    "nw_collection_list_WxdytG",
+    "nw_faq_QRDGAh"
   ]
 }

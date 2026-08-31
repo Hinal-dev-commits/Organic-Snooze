@@ -40,10 +40,14 @@ if (!customElements.get('nw-organic-standards-v2')) {
             : false,
           breakpoints: {
             0: {
-              spaceBetween: 12
+              spaceBetween: 12,
+              slidesOffsetBefore: 16,
+              slidesOffsetAfter: 16
             },
             750: {
-              spaceBetween: 20
+              spaceBetween: 20,
+              slidesOffsetBefore: 0,
+              slidesOffsetAfter: 0
             }
           }
         });

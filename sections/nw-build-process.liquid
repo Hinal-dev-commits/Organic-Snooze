@@ -1,0 +1,367 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-build-process.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-build-process.js' | asset_url }}" defer="defer"></script>
+
+{%- assign nw_shell_selector = '#NwBuildProcess-' | append: section.id -%}
+{%- assign nw_card_text_color = section.settings.card_text_color | default: '#613916' -%}
+{%- assign nw_icon_color = section.settings.icon_color | default: '#878735' -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  {{ nw_shell_selector }} .nw-build-process__card-text,
+  {{ nw_shell_selector }} .nw-build-process__card-text p {
+    color: {{ nw_card_text_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-build-process__card-icon svg rect {
+    fill: {{ nw_icon_color }};
+  }
+
+</style>
+
+<nw-build-process
+  id="NwBuildProcess-{{ section.id }}"
+  class="nw-build-process section-{{ section.id }}"
+>
+  <div class="nw-build-process__wrapper{%- render 'nw-scroll-animation' -%}">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="page-width">
+        <div class="nw-build-process__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index
+          %}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="nw-build-process__slider-wrap">
+          <div class="swiper nw-build-process__swiper" id="NwBuildProcessSwiper-{{ section.id }}">
+            <div class="swiper-wrapper nw-build-process__grid">
+              {%- for block in section.blocks -%}
+                <div class="swiper-slide nw-build-process__card" {{ block.shopify_attributes }}>
+                  <div class="nw-build-process__card-media">
+                    {%- liquid
+                      assign card_img = block.settings.image
+                      assign card_img_mb = block.settings.image_mobile
+                      if card_img == blank and card_img_mb != blank
+                        assign card_img = card_img_mb
+                      endif
+                    -%}
+                    {%- if card_img != blank -%}
+                      <picture>
+                        {%- if card_img_mb != blank -%}
+                          <source
+                            media="(max-width: 749px)"
+                            srcset="{{ card_img_mb | image_url: width: 500 }}"
+                          >
+                        {%- endif -%}
+                        <img
+                          src="{{ card_img | image_url: width: 800 }}"
+                          alt="{{ card_img.alt | default: block.settings.text | strip_html | escape }}"
+                          width="370"
+                          height="180"
+                          loading="lazy"
+                          class="nw-build-process__card-img"
+                        >
+                      </picture>
+                    {%- else -%}
+                      <div class="nw-build-process__placeholder">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                      </div>
+                    {%- endif -%}
+                  </div>
+
+                  {%- if block.settings.text != blank -%}
+                    <div class="nw-build-process__card-caption">
+                      <span class="nw-build-process__card-icon" aria-hidden="true">
+                        {% render 'nw-icon', icon: section.settings.card_icon, class: 'nw-build-process__icon-svg' %}
+                      </span>
+                      <div class="nw-build-process__card-text">
+                        {{ block.settings.text }}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.blocks.size > 1 -%}
+            <div class="nw-build-process__pagination" id="NwBuildProcessPagination-{{ section.id }}"></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    {%- if section.settings.show_button and section.settings.button_text != blank -%}
+        <div class="nw-build-process__footer">
+          {% render 'nw-button',
+            text: section.settings.button_text,
+            link: section.settings.button_link | default: '#',
+            style: section.settings.button_style,
+            btn_class: 'nw-build-process__btn'
+          %}
+        </div>
+    {%- endif -%}
+  </div>
+</nw-build-process>
+
+{% schema %}
+{
+  "name": "NW Build Process",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Made in the USA, Built by Hand"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Every Ultimate Snooze mattress is hand-tufted in the USA and ships from our Georgia facility, produced and inspected by vetted partners held to strict quality and ethical standards.</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "icon_color",
+      "label": "Card Icon Color",
+      "default": "#878735"
+    },
+    {
+      "type": "select",
+      "id": "card_icon",
+      "label": "Card Icon",
+      "default": "check-circle",
+      "options": [
+        { "value": "check-circle", "label": "Check Circle" },
+        { "value": "check-v2", "label": "Check V2" },
+        { "value": "checkmark", "label": "Checkmark" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "See How It's Made",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "process_card",
+      "name": "Process Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Card Image (Mobile Optional)"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Caption",
+          "default": "<p>Crafted and hand-tufted in the USA</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Build Process",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "process_card",
+          "settings": {
+            "text": "<p>Crafted and hand-tufted in the USA</p>"
+          }
+        },
+        {
+          "type": "process_card",
+          "settings": {
+            "text": "<p>Ships from our Georgia facility</p>"
+          }
+        },
+        {
+          "type": "process_card",
+          "settings": {
+            "text": "<p>Partners held to strict standards</p>"
+          }
+        },
+        {
+          "type": "process_card",
+          "settings": {
+            "text": "<p>Every unit inspected and packed to spec</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
