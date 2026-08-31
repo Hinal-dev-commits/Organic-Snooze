@@ -154,19 +154,6 @@
   margin: 0;
 }
 
-.nw-section-banner__btn.nw-btn {
-  width: 100%;
-  min-height: 56px;
-  padding: 14px 32px;
-  border-radius: 1000px;
-  background: var(--nw-sb-btn-bg, #a96b3e);
-  color: var(--nw-sb-btn-text, #ffffff);
-  border-color: var(--nw-sb-btn-bg, #a96b3e);
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
 .nw-section-banner__btn.nw-btn .nw-btn__text {
   color: inherit;
 }
