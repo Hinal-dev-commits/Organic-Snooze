@@ -61,11 +61,35 @@ if (!customElements.get('nw-testimonials')) {
       return totalWidth <= sliderWidth + 2;
     }
 
+    _shouldUseInfiniteClones() {
+      var isFullWidth = this.dataset.fullWidth === 'true';
+      var enableLoop = this.dataset.loop === 'true';
+      return this.originalCount > 1 && (isFullWidth || enableLoop);
+    }
+
+    _isFullWidthMode() {
+      return this.dataset.fullWidth === 'true';
+    }
+
     _updateOverflowState() {
       var sliderEl = this.querySelector('.nw-testimonials__swiper');
       if (!sliderEl) return;
 
+      var isFullWidth = this._isFullWidthMode();
       var allFit = this._allSlidesFit(sliderEl);
+
+      if (isFullWidth) {
+        this.classList.remove('nw-testimonials--all-visible');
+        this._buildPagination();
+
+        if (!this.swiperInstance) return;
+
+        this.swiperInstance.allowTouchMove = true;
+        this.swiperInstance.params.simulateTouch = true;
+        this.swiperInstance.update();
+        return;
+      }
+
       this.classList.toggle('nw-testimonials--all-visible', allFit);
 
       var paginationEl = this.querySelector('[data-nw-testimonial-pagination]');
@@ -154,9 +178,9 @@ if (!customElements.get('nw-testimonials')) {
       if (pageIndex < 0 || pageIndex >= pageCount) return;
 
       var targetIndex = pageIndex;
-      var enableInfinite = this.dataset.loop === 'true' && this.originalCount > 1;
+      var enableInfinite = this._shouldUseInfiniteClones();
 
-      if (enableInfinite && !this.classList.contains('nw-testimonials--all-visible')) {
+      if (enableInfinite && (this._isFullWidthMode() || !this.classList.contains('nw-testimonials--all-visible'))) {
         var meta = this._getSlideMeta(sliderEl);
         targetIndex = meta.startIndex + pageIndex;
       }
@@ -293,19 +317,36 @@ if (!customElements.get('nw-testimonials')) {
 
       var sliderWidth = sliderEl.clientWidth || window.innerWidth;
       var slideWidth = (originalSlides[0] && originalSlides[0].getBoundingClientRect().width) || 305;
-      var spaceBetween = window.innerWidth >= 750 ? 20 : 12;
+      var spaceBetween = this._getSpaceBetween();
       var visibleSlides = Math.ceil(sliderWidth / (slideWidth + spaceBetween)) || 4;
 
-      var isFullWidth = this.dataset.fullWidth === 'true';
-      var setsPerSide = isFullWidth
-        ? Math.max(3, Math.ceil((visibleSlides * 2) / count) + 1)
-        : Math.max(2, Math.ceil(visibleSlides / count));
-
-      var prependSets = setsPerSide;
-      var appendSets = setsPerSide;
+      var isFullWidth = this._isFullWidthMode();
+      var prependSets;
+      var appendSets;
       var p;
       var a;
       var fragment;
+
+      if (isFullWidth) {
+        if (!sliderWidth || !slideWidth || slideWidth <= 0) {
+          sliderEl.dataset.nwStartIndex = String(count);
+          sliderEl.dataset.nwCopyCount = String(count);
+          sliderEl.dataset.nwMiddleEnd = String(count * 2);
+          return { startIndex: count, copyCount: count, middleEnd: count * 2 };
+        }
+
+        var setsNeeded = Math.max(
+          3,
+          Math.ceil((visibleSlides * 2 + count) / count) + 1
+        );
+        var extraSets = setsNeeded - 1;
+        prependSets = Math.ceil(extraSets / 2);
+        appendSets = extraSets - prependSets;
+      } else {
+        var setsPerSide = Math.max(2, Math.ceil(visibleSlides / count));
+        prependSets = setsPerSide;
+        appendSets = setsPerSide;
+      }
 
       for (p = 0; p < prependSets; p++) {
         fragment = document.createDocumentFragment();
@@ -335,6 +376,10 @@ if (!customElements.get('nw-testimonials')) {
       };
     }
 
+    _getSpaceBetween() {
+      return window.innerWidth >= 750 ? 20 : 12;
+    }
+
     _fixInfinitePosition(swiper) {
       if (!swiper || this.originalCount <= 1) return;
 
@@ -343,11 +388,9 @@ if (!customElements.get('nw-testimonials')) {
       var activeIndex = swiper.activeIndex;
 
       if (activeIndex >= meta.middleEnd) {
-        var offset = (activeIndex - meta.startIndex) % meta.copyCount;
-        swiper.slideTo(meta.startIndex + offset, 0);
+        swiper.slideTo(activeIndex - meta.copyCount, 0);
       } else if (activeIndex < meta.startIndex) {
-        var offset = (((activeIndex - meta.startIndex) % meta.copyCount) + meta.copyCount) % meta.copyCount;
-        swiper.slideTo(meta.startIndex + offset, 0);
+        swiper.slideTo(activeIndex + meta.copyCount, 0);
       }
     }
 
@@ -364,10 +407,9 @@ if (!customElements.get('nw-testimonials')) {
 
         var showArrows = this.dataset.showArrows === 'true';
         var showPagination = this.dataset.showPagination === 'true';
-        var isFullWidth = this.dataset.fullWidth === 'true';
-        var enableLoop = this.dataset.loop === 'true';
+        var isFullWidth = this._isFullWidthMode();
 
-        var enableInfinite = enableLoop && this.originalCount > 1;
+        var enableInfinite = this._shouldUseInfiniteClones();
         var slideMeta = { startIndex: 0, copyCount: this.originalCount, middleEnd: this.originalCount };
 
         if (enableInfinite) {
@@ -377,7 +419,7 @@ if (!customElements.get('nw-testimonials')) {
           if (wrapper) this._removeClones(wrapper);
         }
 
-        if (this._allSlidesFit(sliderEl)) {
+        if (!isFullWidth && this._allSlidesFit(sliderEl)) {
           enableInfinite = false;
           var fitWrapper = sliderEl.querySelector('.swiper-wrapper');
           if (fitWrapper) this._removeClones(fitWrapper);
@@ -435,14 +477,14 @@ if (!customElements.get('nw-testimonials')) {
             var wasAllVisible = this.classList.contains('nw-testimonials--all-visible');
             this._updateOverflowState();
 
-            if (this.classList.contains('nw-testimonials--all-visible')) {
+            if (!isFullWidth && this.classList.contains('nw-testimonials--all-visible')) {
               return;
             }
 
             if (wasAllVisible && !this.classList.contains('nw-testimonials--all-visible')) {
               slideMeta = this._ensureEnoughSlides(sliderEl);
               this.swiperInstance.slideTo(slideMeta.startIndex, 0);
-            } else if (!wasAllVisible) {
+            } else if (isFullWidth || !wasAllVisible) {
               var savedIndex = this._getRealSlideIndex(this.swiperInstance.activeIndex);
               var refreshedMeta = this._ensureEnoughSlides(sliderEl);
 
@@ -482,7 +524,7 @@ if (!customElements.get('nw-testimonials')) {
           this.swiperInstance.update();
           this._updateOverflowState();
           this._buildPagination();
-          if (enableInfinite && !this.classList.contains('nw-testimonials--all-visible')) {
+          if (enableInfinite && (isFullWidth || !this.classList.contains('nw-testimonials--all-visible'))) {
             this.swiperInstance.slideTo(slideMeta.startIndex + this._getActivePage(), 0);
             this._fixInfinitePosition(this.swiperInstance);
             this._updateCustomPagination();
@@ -496,7 +538,7 @@ if (!customElements.get('nw-testimonials')) {
           if (!this.swiperInstance) return;
           this._updateOverflowState();
           this._buildPagination();
-          if (enableInfinite && !this.classList.contains('nw-testimonials--all-visible')) {
+          if (enableInfinite && (isFullWidth || !this.classList.contains('nw-testimonials--all-visible'))) {
             slideMeta = this._ensureEnoughSlides(sliderEl);
             this.swiperInstance.update();
             this.swiperInstance.slideTo(slideMeta.startIndex + this._getActivePage(), 0);

@@ -1,0 +1,420 @@
+.nw-biology {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: block;
+}
+.nw-biology .page-width{
+  max-width: 1440px;
+  padding-right: 0;
+}
+
+.nw-biology__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 36px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.nw-biology__media-col {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.nw-biology__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 620 / 461;
+  overflow: hidden;
+}
+
+.nw-biology__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nw-biology__image--mobile {
+  display: none;
+}
+
+.nw-biology__image-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nw-biology__content-col {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 40px;
+  width: 100%;
+  min-width: 0;
+}
+
+.nw-biology__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  max-width: 85%;
+}
+
+.nw-biology .nw-section-heading .h1,
+.nw-biology .nw-section-heading .h2,
+.nw-biology .nw-section-heading .h1 *,
+.nw-biology .nw-section-heading .h2 * {
+  text-align: left;
+}
+
+.nw-biology__subheading {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-body-family);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--nw-biology-subheading-color, #ffffff);
+}
+
+.nw-biology__body,
+.nw-biology__body * {
+  color: var(--nw-biology-body-color, #ffffff);
+}
+
+.nw-biology__body {
+  width: 100%;
+  font-family: var(--font-body-family);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.nw-biology__body p {
+  margin: 0;
+}
+
+.nw-biology__slider-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  box-sizing: border-box;
+}
+
+.nw-biology__swiper {
+  width: 100%;
+  overflow: visible;
+}
+
+.nw-biology__swiper .swiper-wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+.nw-biology__swiper .swiper-slide {
+  width: 360px;
+  height: auto;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.nw-biology__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--nw-biology-card-border, rgba(78, 47, 20, 0.15));
+  background: var(--nw-biology-card-bg, #ffffff);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+.nw-biology__card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.nw-biology__card-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: var(--nw-biology-tag-bg, #a96b3e);
+  color: var(--nw-biology-tag-text, #ffffff);
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.nw-biology__card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding-right: 56px;
+  box-sizing: border-box;
+}
+
+.nw-biology__card-title {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.18px;
+  color: var(--nw-biology-card-text, #4e2f14);
+}
+
+.nw-biology__card-description,
+.nw-biology__card-description * {
+  color: var(--nw-biology-card-text, #4e2f14);
+}
+
+.nw-biology__card-description {
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.nw-biology__card-description p {
+  margin: 0;
+}
+
+.nw-biology__card-icon {
+  position: absolute;
+  top: 15px;
+  right: 16px;
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+}
+
+.nw-biology__card-icon-img {
+  display: block;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.nw-biology__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  max-width: 85%;
+}
+
+.nw-biology__nav .nw-swiper-btn--prev {
+  order: 1;
+}
+
+.nw-biology__nav .nw-swiper-pagination {
+  order: 2;
+}
+
+.nw-biology__nav .nw-swiper-btn--next {
+  order: 3;
+}
+
+.nw-biology__nav .nw-swiper-btn {
+  position: static;
+  top: auto;
+  transform: none;
+  flex-shrink: 0;
+}
+
+.nw-biology__nav .nw-swiper-btn:disabled,
+.nw-biology__nav .nw-swiper-btn.swiper-button-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.nw-biology__nav .nw-swiper-pagination {
+  margin-top: 0;
+  flex: 1;
+}
+
+.nw-biology__nav .nw-swiper-pagination .swiper-pagination-bullet {
+  background: var(--nw-swiper-bullet, #ffffff);
+}
+
+.nw-biology__cta {
+  display: none;
+  width: 100%;
+  max-width: 349px;
+  margin: 0 auto;
+}
+
+.nw-biology__cta .nw-btn {
+  width: 100%;
+  min-height: 56px;
+  padding: 18px 14px;
+  border-radius: 1000px;
+  background: var(--nw-biology-button-bg, #a96b3e);
+  border-color: var(--nw-biology-button-bg, #a96b3e);
+  color: var(--nw-biology-button-text, #ffffff);
+}
+
+.nw-biology__cta .nw-btn__text {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width: 750px) {
+  .nw-biology__wrapper {
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .nw-biology__media-col {
+    flex: 1 1;
+    max-width: 620px;
+    margin: 0;
+  }
+
+  .nw-biology__content-col {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .nw-biology__slider-wrap {
+    max-width: unset;
+    width: 100%;
+  }
+  .nw-biology__nav {
+    max-width: 85%;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .nw-biology__media-col{
+    flex: 1 1;
+    width: 100%;
+    max-width: 100%;
+  }
+  .nw-biology .page-width{
+    padding: 0px;
+  }
+  .nw-biology .nw-section-heading .h2 {
+    text-align: left;
+  }
+  .nw-biology__intro, .nw-biology__nav{
+    max-width: 90%;
+  }
+  .nw-biology__wrapper{
+    gap: 20px;
+  }
+}
+@media screen and (max-width: 749px) {
+  .nw-biology__wrapper{
+    gap: 0px;
+  }
+  .nw-biology__content-col {
+    display: contents;
+  }
+  .nw-biology .page-width{
+    padding: 0px;
+  }
+  .nw-biology .nw-section-heading .h2{
+    text-align: center;
+  }
+  .nw-biology__body{
+    text-align: center;
+  }
+  .nw-biology__subheading{
+    text-align: center;
+    font-size: 16px;
+  }
+  .nw-biology__intro {
+    order: 1;
+    align-items: center;
+    gap: 12px;
+    max-width: 100%;
+    margin: 0 auto 36px;
+    text-align: center;
+    padding: 0px 16px;
+  }
+
+  .nw-biology__media-col {
+    order: 2;
+    max-width: 100%;
+    padding: 0px 16px;
+    
+  }
+
+  .nw-biology__image-wrap {
+    aspect-ratio: 343 / 255;
+  }
+
+  .nw-biology__image--desktop {
+    display: none;
+  }
+
+  .nw-biology__image--mobile {
+    display: block;
+  }
+
+  .nw-biology__slider-wrap {
+    order: 3;
+    margin: 24px auto 24px;
+  }
+  .nw-biology__swiper .swiper-wrapper{
+    padding: 0px 16px;
+  }
+
+  .nw-biology__swiper .swiper-slide {
+    width: 100%;
+  }
+
+  .nw-biology__card {
+    min-height: 184px;
+  }
+
+  .nw-biology__card-description {
+    font-size: 14px;
+  }
+
+  .nw-biology__nav {
+    order: 4;
+    max-width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .nw-biology__nav .nw-swiper-btn {
+    display: none;
+  }
+
+  .nw-biology__nav .nw-swiper-pagination {
+    flex: 0 1 auto;
+  }
+
+  .nw-biology__cta {
+    display: block;
+    order: 5;
+    margin-top: 24px;
+  }
+}

@@ -250,6 +250,10 @@
   color: var(--primary-color, var(--primary-color));
   white-space: nowrap;
 }
+.nw-no-loop .nw-collection-list__slider-wrap .swiper{
+  max-width: 100%;
+  width: max-content;
+}
 
 @media screen and (max-width: 749px) {
   .nw-collection-list__inner {

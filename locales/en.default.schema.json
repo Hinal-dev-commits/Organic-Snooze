@@ -391,8 +391,57 @@
     "nw-review-video": { "name": "NW Review Videos" },
     "nw-testimonials": { "name": "NW Testimonials" },
     "nw-natural-layers": { "name": "NW Natural Layers" },
-    "nw-trusted-people": { "name": "NW Trusted People" },
+    "nw-trusted-people": {
+      "name": "NW Trusted People",
+      "blocks": {
+        "testimonial": {
+          "name": "Testimonial card",
+          "settings": {
+            "rating": {
+              "label": "Star rating"
+            },
+            "quote": {
+              "label": "Quote"
+            },
+            "image": {
+              "label": "Reviewer image"
+            },
+            "name": {
+              "label": "Reviewer name"
+            },
+            "show_verified": {
+              "label": "Show verified badge"
+            },
+            "verified_text": {
+              "label": "Verified badge text"
+            }
+          }
+        }
+      }
+    },
     "nw-human-biologist": { "name": "NW Human Biologist" },
+    "nw-biology": {
+      "name": "NW Biology",
+      "blocks": {
+        "card": {
+          "name": "Biology Card",
+          "settings": {
+            "tag": {
+              "label": "Tag"
+            },
+            "title": {
+              "label": "Title"
+            },
+            "description": {
+              "label": "Description"
+            },
+            "icon": {
+              "label": "Icon Image"
+            }
+          }
+        }
+      }
+    },
     "nw-image-with-text": { "name": "NW Image With Text" },
     "nw-guarantee": { "name": "NW Guarantee" },
     "nw-guarantee-v2": { "name": "NW Guarantee V2" },
@@ -401,10 +450,36 @@
     "nw-collection-list": { "name": "NW Collection List" },
     "nw-layer-product": { "name": "NW Layer Product" },
     "nw-breezeline-collection": { "name": "NW Breezeline Collection" },
+    "nw-section-banner": { "name": "NW Section Banner" },
+    "nw-image-slider-text": { "name": "NW Image Slider Text" },
     "nw-bundle-product": { "name": "NW Bundle Product" },
-    "nw-organic": { "name": "NW Organic" },
+    "nw-organic": {
+      "name": "NW Organic",
+      "settings": {
+        "layout_width": {
+          "label": "Layout width",
+          "options__1": {
+            "label": "Page width"
+          },
+          "options__2": {
+            "label": "Full width"
+          }
+        },
+        "content_panel_bg": {
+          "label": "Content panel background"
+        },
+        "content_panel_heading_color": {
+          "label": "Content panel heading color"
+        },
+        "content_panel_description_color": {
+          "label": "Content panel description color"
+        }
+      }
+    },
     "nw-mattresses-timeline": { "name": "NW Mattress Timeline" },
     "nw-recovery": { "name": "NW Recovery" },
+    "nw-recovery-v2": { "name": "NW Recovery V2" },
+    "nw-sleep-foundation": { "name": "NW Sleep Foundation" },
     "nw-benefits": { "name": "NW Benefits" },
     "nw-materials-matter": { "name": "NW Materials Matter" },
     "nw-founder-story": { "name": "NW Founder Story" },
@@ -2048,6 +2123,26 @@
         "description": {
           "name": "Description"
         },
+        "mattress_upgrade": {
+          "name": "Upgrade Your Mattress",
+          "settings": {
+            "features_header": {
+              "content": "FEATURES"
+            },
+            "features_range_start": {
+              "label": "Feature Range Start"
+            },
+            "features_range_end": {
+              "label": "Feature Range End"
+            },
+            "feature_image": {
+              "label": "Feature Icon Image"
+            },
+            "feature_text": {
+              "label": "Feature Text"
+            }
+          }
+        },
         "sku": {
           "name": "SKU",
           "settings": {
@@ -2275,7 +2370,7 @@
               }
             },
             "product_card": {
-              "heading": "Product card"
+              "heading": "PRODUCT CARD"
             },
             "image_ratio": {
               "label": "Image ratio",
@@ -2302,7 +2397,7 @@
               }
             },
             "pairing_1": {
-              "label": "Pairing 1",
+              "label": "PAIRING 1",
               "info": "Choose an icon or add an image for each pairing"
             },
             "heading": {
@@ -2319,7 +2414,7 @@
               "default": "Heading"
             },
             "pairing_2": {
-              "label": "Pairing 2"
+              "label": "PAIRING 2"
             },            
             "icon_2": {
               "label": "Icon"
@@ -2332,7 +2427,7 @@
               "default": "Heading"
             },
             "pairing_3": {
-            "label": "Pairing 3"
+            "label": "PAIRING 3"
             },             
             "icon_3": {
               "label": "Icon"
@@ -2349,10 +2444,51 @@
       },
       "settings": {
         "header": {
-          "content": "Media"
+          "content": "MEDIA"
+        },
+        "product": {
+          "label": "Product",
+          "info": "Used on pages other than the product template. On product pages, the current product is used automatically."
+        },
+        "section_header": {
+          "content": "SECTION HEADER"
+        },
+        "show_section_header": {
+          "label": "Show Section Header"
+        },
+        "section_header_heading": {
+          "label": "Heading"
+        },
+        "section_header_description": {
+          "label": "Description"
+        },
+        "product_page_layout": {
+          "content": "PRODUCT PAGE LAYOUT",
+          "info": "These settings apply when this section is used on pages other than the product template."
+        },
+        "hide_media_slider": {
+          "label": "Hide Media Slider"
+        },
+        "use_custom_media_images": {
+          "label": "Use Custom Media Images"
+        },
+        "custom_media_range_start": {
+          "label": "Custom Image Range Start"
+        },
+        "custom_media_range_end": {
+          "label": "Custom Image Range End"
+        },
+        "custom_media_image": {
+          "label": "Custom Image"
+        },
+        "media_badge_left": {
+          "label": "Media Badge Left"
+        },
+        "media_badge_right": {
+          "label": "Media Badge Right"
         },
         "enable_sticky_info": {
-          "label": "Sticky content"
+          "label": "Sticky Content"
         },
         "gallery_layout": {
           "label": "Layout",
@@ -2370,7 +2506,7 @@
           }
         },
         "constrain_to_viewport": {
-          "label": "Constrain to screen height"
+          "label": "Constrain to Screen Height"
         },
         "media_size": {
           "label": "Width",
@@ -2432,6 +2568,9 @@
         "enable_video_looping": {
           "label": "Loop video"
         }
+      },
+      "presets": {
+        "name": "Product information"
       }
     },
     "main-search": {

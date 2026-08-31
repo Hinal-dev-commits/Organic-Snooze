@@ -63,12 +63,15 @@ if (!customElements.get('nw-collection-list')) {
         var autoplayDelay = parseInt(this.dataset.autoplayDelay, 10) || 4000;
         var showArrows = this.dataset.showArrows === 'true';
         var showDots = this.dataset.showDots === 'true';
+        var noLoop = this.dataset.noLoop === 'true';
+        var originalSlideCount = this._getSlideCount();
+        var centerSlides = !noLoop;
 
         var swiperOptions = {
           slidesPerView: 'auto',
           spaceBetween: 16,
           centeredSlides: true,
-          loop: slideCount > 1,
+          loop: !noLoop && slideCount > 1,
           speed: 600,
           grabCursor: true,
           simulateTouch: true,
@@ -86,7 +89,7 @@ if (!customElements.get('nw-collection-list')) {
             750: {
               slidesPerView: 'auto',
               spaceBetween: 16,
-              centeredSlides: true
+              centeredSlides: centerSlides
             }
           }
         };
@@ -108,7 +111,7 @@ if (!customElements.get('nw-collection-list')) {
 
         var swiperInstance = new Swiper(sliderEl, swiperOptions);
 
-        if (showDots && this._getSlideCount() > 1) {
+        if (showDots && originalSlideCount > 1) {
           swiperInstance.on('slideChange', () => {
             this._updateCustomPagination(swiperInstance);
           });

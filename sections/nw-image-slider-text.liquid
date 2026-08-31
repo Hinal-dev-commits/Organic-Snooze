@@ -1,0 +1,378 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
+{{ 'nw-image-slider-text.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-when-swiper-ready.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-image-slider-text.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwImageSliderText-' | append: section.id
+  assign slide_blocks = section.blocks | where: 'type', 'slide'
+  assign slide_count = slide_blocks.size
+  assign image_position = section.settings.image_position | default: 'left'
+  assign pagination_id = 'NwImageSliderTextPagination-' | append: section.id
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  {{ nw_shell_selector }} {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+</style>
+
+<nw-image-slider-text
+  id="NwImageSliderText-{{ section.id }}"
+  class="nw-image-slider-text nw-image-slider-text--image-{{ image_position }} section-{{ section.id }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
+  data-pagination-id="{{ pagination_id }}"
+  data-slide-count="{{ slide_count }}"
+  style="
+    --nw-ist-heading-color: {{ section.settings.heading_color }};
+    --nw-ist-desc-color: {{ section.settings.description_color }};
+    --nw-swiper-arrow-bg: {{ section.settings.arrow_bg_color }};
+    --nw-swiper-arrow-color: {{ section.settings.arrow_icon_color }};
+    --nw-ist-arrow-prev-bg: {{ section.settings.arrow_prev_bg_color }};
+    --nw-ist-arrow-next-bg: {{ section.settings.arrow_next_bg_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+  "
+>
+  <div class="nw-image-slider-text__grid{%- render 'nw-scroll-animation' -%}">
+    <div class="nw-image-slider-text__media-col">
+      {%- if slide_count > 0 -%}
+        <div class="nw-image-slider-text__slider-wrap">
+          <div class="swiper nw-image-slider-text__swiper" id="NwImageSliderTextSwiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {%- for block in slide_blocks -%}
+                <div class="swiper-slide" {{ block.shopify_attributes }}>
+                  <div class="nw-image-slider-text__slide-media">
+                    {%- if block.settings.image != blank -%}
+                      <img
+                        src="{{ block.settings.image | image_url }}"
+                        alt="{{ block.settings.image.alt | default: section.settings.heading | strip_html | escape }}"
+                        class="nw-image-slider-text__slide-img-desktop nw-image-slider-text__slide-img"
+                        loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                        {% if forloop.first %}fetchpriority="high"{% endif %}
+                        width=""
+                        height=""
+                      >
+                      {%- if block.settings.image_mobile != blank -%}
+                        <img
+                          src="{{ block.settings.image_mobile | image_url }}"
+                          alt="{{ block.settings.image_mobile.alt | default: section.settings.heading | strip_html | escape }}"
+                          class="nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img"
+                          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                          {% if forloop.first %}fetchpriority="high"{% endif %}
+                          width=""
+                          height=""
+                        >
+                        {% else %}
+                        <img
+                          src="{{ block.settings.image | image_url }}"
+                          alt="{{ block.settings.image.alt | default: section.settings.heading | strip_html | escape }}"
+                          class="nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img"
+                          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                          {% if forloop.first %}fetchpriority="high"{% endif %}
+                          width=""
+                          height=""
+                        >
+                      {%- endif -%}
+                    {%- else -%}
+                      {{ 'lifestyle-2' | placeholder_svg_tag: 'nw-image-slider-text__slide-placeholder placeholder-svg' }}
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          {%- if section.settings.show_arrows and slide_count > 1 -%}
+            {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+          {%- endif -%}
+
+          {%- if section.settings.show_pagination and slide_count > 1 -%}
+            {% render 'nw-swiper-pagination',
+              id: pagination_id,
+              class: 'nw-image-slider-text__pagination'
+            %}
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <div class="nw-image-slider-text__slide-media nw-image-slider-text__slide-media--empty">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'nw-image-slider-text__slide-placeholder placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="nw-image-slider-text__content-col">
+      <div class="nw-image-slider-text__content">
+        {%- if section.settings.heading != blank -%}
+          {% render 'nw-section-heading',
+            text: section.settings.heading,
+            section_index: section.index,
+            class: 'nw-image-slider-text__heading'
+          %}
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          {% render 'nw-section-description',
+            text: section.settings.subheading,
+            class: 'nw-image-slider-text__description'
+          %}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</nw-image-slider-text>
+
+{% schema %}
+{
+  "name": "t:sections.nw-image-slider-text.name",
+  "tag": "section",
+  "class": "section-nw-image-slider-text",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Gary Brecka's Organic Snooze Recovery Mattress"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Designed by Snooze Mattress Company with Gary Brecka and The Ultimate Human, the Recovery Mattress pairs responsive pocketed coils with buoyant organic latex, clean materials engineered for airway support, circulation, and deep recovery.</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#4E2F14"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Body Text Color"
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position (Desktop)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Slider Arrows",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "arrow_style",
+      "label": "Arrow Style",
+      "default": "style_1",
+      "options": [
+        { "value": "style_1", "label": "Style 1" },
+        { "value": "style_2", "label": "Style 2" }
+      ],
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Slider Pagination",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "SLIDER COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "arrow_prev_bg_color",
+      "label": "Previous Arrow Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "arrow_next_bg_color",
+      "label": "Next Arrow Background",
+      "default": "#D4B896"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "arrow_bg_color",
+      "label": "Arrow Background (Fallback)",
+      "default": "#FFFFFF",
+      "info": "Used when previous/next colors are not set."
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "arrow_icon_color",
+      "label": "Arrow Icon Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "pagination_color",
+      "label": "Pagination Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (Mobile)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-image-slider-text.name",
+      "category": "NW Sections",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

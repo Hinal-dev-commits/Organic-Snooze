@@ -1,0 +1,59 @@
+{% doc %}
+Renders a custom image slide using the same markup as product-thumbnail (image only).
+@param {object} image - Image from section settings
+@param {number} media_count - Total slide count
+@param {string} desktop_layout - Gallery desktop layout
+@param {string} mobile_layout - Gallery mobile layout
+@param {string} media_fit - contain or cover
+@param {boolean} constrain_to_viewport - Constrain slide height
+@param {number} media_width - Desktop media column width ratio
+@param {boolean} [lazy_load] - Lazy load image
+@param {string} [alt] - Image alt text
+@param {string} [image_zoom] - Image zoom setting from section
+{% enddoc %}
+
+{%- liquid
+  unless lazy_load == false
+    assign lazy = 'lazy'
+  else
+    assign lazy = 'eager'
+  endunless
+
+  assign desktop_columns = 1
+  if desktop_layout == 'columns' and media_count > 1
+    assign desktop_columns = 2
+  endif
+
+  assign mobile_columns = 1
+  if mobile_layout == 'columns' and media_count > 1
+    assign mobile_columns = 2
+  endif
+
+  assign zoom_setting = image_zoom | default: 'lightbox'
+  assign image_class = 'image-magnify-' | append: zoom_setting
+  assign image_alt = alt | default: image.alt | escape
+-%}
+
+{%- capture sizes -%}
+  (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | times: media_width | divided_by: desktop_columns | round }}px, (min-width: 990px) calc({{ media_width | times: 100 | divided_by: desktop_columns }}vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / {{ mobile_columns }} - 4rem)
+{%- endcapture -%}
+
+<div
+  class="product-media-container media-type-image media-fit-{{ media_fit }} global-media-settings gradient{% if constrain_to_viewport %} constrain-height{% endif %}"
+  style="--ratio: {{ image.aspect_ratio | default: 1.0 }}; --preview-ratio: {{ image.aspect_ratio | default: 1.0 }};"
+>
+  <div class="product__modal-opener product__modal-opener--image">
+    <div class="product__media media media--transparent">
+      {{
+        image
+        | image_url: width: 1946
+        | image_tag:
+          class: image_class,
+          loading: lazy,
+          sizes: sizes,
+          widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946',
+          alt: image_alt
+      }}
+    </div>
+  </div>
+</div>

@@ -113,7 +113,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Section header"
+      "content": "SECTION HEADER"
     },
     {
       "type": "inline_richtext",
@@ -129,46 +129,46 @@
     },
     {
       "type": "header",
-      "content": "Product metafields"
+      "content": "PRODUCT METAFIELDS"
     },
     {
       "type": "checkbox",
       "id": "show_feel",
-      "label": "Show Feel (custom.feel_text)",
+      "label": "Show Feel (Custom.feel_Text)",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_best_for",
-      "label": "Show Best for (custom.best_for)",
+      "label": "Show Best For (Custom.best_For)",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_breathable",
-      "label": "Show Breathable scale (custom.breathable)",
+      "label": "Show Breathable Scale (Custom.breathable)",
       "default": true
     },
     {
       "type": "header",
-      "content": "Slider settings"
+      "content": "SLIDER SETTINGS"
     },
     {
       "type": "checkbox",
       "id": "show_arrows",
-      "label": "Show slider arrows",
+      "label": "Show Slider Arrows",
       "default": false
     },
     {
       "type": "checkbox",
       "id": "show_pagination",
-      "label": "Show slider pagination",
+      "label": "Show Slider Pagination",
       "default": true
     },
     {
       "type": "color",
       "id": "swiper_arrow_bg",
-      "label": "Arrow background",
+      "label": "Arrow Background",
       "default": "#613916",
       "alpha": true,
       "visible_if": "{{ section.settings.show_arrows == true }}"
@@ -176,7 +176,7 @@
     {
       "type": "color",
       "id": "swiper_arrow_color",
-      "label": "Arrow icon color",
+      "label": "Arrow Icon Color",
       "default": "#FFFFFF",
       "alpha": true,
       "visible_if": "{{ section.settings.show_arrows == true }}"
@@ -184,7 +184,7 @@
     {
       "type": "color",
       "id": "pagination_color",
-      "label": "Pagination color",
+      "label": "Pagination Color",
       "default": "#613916",
       "alpha": true,
       "visible_if": "{{ section.settings.show_pagination == true }}"
@@ -192,59 +192,59 @@
     {
       "type": "text",
       "id": "cta_text",
-      "label": "Card link label",
+      "label": "Card Link Label",
       "default": "Shop Now"
     },
     {
       "type": "header",
-      "content": "Colors"
+      "content": "COLORS"
     },
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading color",
+      "label": "Heading Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "description_color",
-      "label": "Description color",
+      "label": "Description Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "card_bg_color",
-      "label": "Card background",
+      "label": "Card Background",
       "default": "#FFFFFF",
       "alpha": true
     },
     {
       "type": "color",
       "id": "card_text_color",
-      "label": "Card text color",
+      "label": "Card Text Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "card_title_color",
-      "label": "Card title color",
+      "label": "Card Title Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "label_color",
-      "label": "Feel / Best for label color",
+      "label": "Feel / Best For Label Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "value_color",
-      "label": "Feel / Best for text color",
+      "label": "Feel / Best For Text Color",
       "default": "#61391699",
       "alpha": true
     },
@@ -258,28 +258,28 @@
     {
       "type": "color",
       "id": "cta_color",
-      "label": "Shop Now link color",
+      "label": "Shop Now Link Color",
       "default": "#CC926A",
       "alpha": true
     },
     {
       "type": "color",
       "id": "tag_bg_color",
-      "label": "Tag background",
+      "label": "Tag Background",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "tag_text_color",
-      "label": "Tag text color",
+      "label": "Tag Text Color",
       "default": "#FFFFFF",
       "alpha": true
     },
     {
       "type": "color",
       "id": "scale_active_color",
-      "label": "Breathable scale active color",
+      "label": "Breathable Scale Active Color",
       "default": "#613916",
       "alpha": true,
       "visible_if": "{{ section.settings.show_breathable == true }}"
@@ -287,19 +287,19 @@
     {
       "type": "color",
       "id": "scale_inactive_color",
-      "label": "Breathable scale inactive color",
+      "label": "Breathable Scale Inactive Color",
       "default": "rgba(97, 57, 22, 0.35)",
       "alpha": true,
       "visible_if": "{{ section.settings.show_breathable == true }}"
     },
     {
       "type": "header",
-      "content": "Background"
+      "content": "BACKGROUND"
     },
     {
       "type": "select",
       "id": "bg_type",
-      "label": "Background type",
+      "label": "Background Type",
       "default": "color",
       "options": [
         { "value": "none", "label": "None" },
@@ -311,7 +311,7 @@
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background color",
+      "label": "Background Color",
       "default": "#FFFAF3",
       "alpha": true,
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
@@ -319,29 +319,29 @@
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background image (desktop)",
+      "label": "Background Image (Desktop)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image_mobile",
-      "label": "Background image (mobile)",
+      "label": "Background Image (Mobile)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "color_background",
       "id": "bg_gradient",
-      "label": "Background gradient",
+      "label": "Background Gradient",
       "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
     },
     {
       "type": "header",
-      "content": "Section spacing"
+      "content": "SECTION SPACING"
     },
     {
       "type": "range",
       "id": "padding_top_desktop",
-      "label": "Padding top (desktop)",
+      "label": "Padding Top (Desktop)",
       "min": 0,
       "max": 160,
       "step": 4,
@@ -351,7 +351,7 @@
     {
       "type": "range",
       "id": "padding_bottom_desktop",
-      "label": "Padding bottom (desktop)",
+      "label": "Padding Bottom (Desktop)",
       "min": 0,
       "max": 160,
       "step": 4,
@@ -361,7 +361,7 @@
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "Padding top (mobile)",
+      "label": "Padding Top (Mobile)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -371,7 +371,7 @@
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "Padding bottom (mobile)",
+      "label": "Padding Bottom (Mobile)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -392,34 +392,34 @@
         {
           "type": "inline_richtext",
           "id": "custom_title",
-          "label": "Custom title",
+          "label": "Custom Title",
           "info": "Leave blank to use the product title."
         },
         {
           "type": "header",
-          "content": "Product image"
+          "content": "PRODUCT IMAGE"
         },
         {
           "type": "checkbox",
           "id": "use_custom_image",
-          "label": "Use custom product image",
+          "label": "Use Custom Product Image",
           "default": false
         },
         {
           "type": "image_picker",
           "id": "custom_image",
-          "label": "Custom product image",
+          "label": "Custom Product Image",
           "info": "Overrides the product featured image when enabled.",
           "visible_if": "{{ block.settings.use_custom_image == true }}"
         },
         {
           "type": "header",
-          "content": "Image tag"
+          "content": "IMAGE TAG"
         },
         {
           "type": "text",
           "id": "tag_text",
-          "label": "Tag text",
+          "label": "Tag Text",
           "info": "Text badge shown on the product image."
         }
       ]

@@ -1,0 +1,334 @@
+{{ 'nw-recovery-v2.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign nw_shell_selector = '#NwRecoveryV2-' | append: section.id
+  assign role_text = section.settings.role
+  if section.settings.role_mobile != blank
+    assign role_mobile_text = section.settings.role_mobile
+  else
+    assign role_mobile_text = role_text
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<section
+  id="NwRecoveryV2-{{ section.id }}"
+  class="nw-recovery-v2 section-{{ section.id }}"
+  style="
+    --nw-rv2-body-color: {{ section.settings.body_color }};
+    --nw-rv2-card-text: {{ section.settings.card_text_color }};
+    --nw-rv2-quote-mark-color: {{ section.settings.quote_mark_color }};
+    --nw-rv2-card-border: {{ section.settings.card_border_color }};
+    --nw-rv2-verified-icon-color: {{ section.settings.verified_icon_color }};
+    {% if section.settings.card_gradient != blank %}
+      --nw-rv2-card-gradient: {{ section.settings.card_gradient }};
+    {% endif %}
+  "
+>
+  <div class="page-width">
+    <div class="nw-recovery-v2__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.heading != blank -%}
+        <div class="nw-recovery-v2__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      <div class="nw-recovery-v2__main">
+        <article class="nw-recovery-v2__card">
+          <span class="nw-recovery-v2__quote-mark" aria-hidden="true">
+            {% render 'nw-icon', icon: 'quote' %}
+          </span>
+
+          <div class="nw-recovery-v2__card-inner">
+            {%- if section.settings.quote != blank -%}
+              <div class="nw-recovery-v2__quote rte">
+                {{ section.settings.quote }}
+              </div>
+            {%- endif -%}
+
+            <div class="nw-recovery-v2__card-footer">
+              <div class="nw-recovery-v2__author">
+                {%- if section.settings.name != blank -%}
+                  <div class="nw-recovery-v2__name-row">
+                    <p class="nw-recovery-v2__name">{{ section.settings.name }}</p>
+                    {%- if section.settings.show_verified or section.settings.custom_icon != blank -%}
+                      {% if section.settings.custom_icon != blank %}
+                        <span class="nw-recovery-v2__verified" aria-label="Verified">
+                          {{ section.settings.custom_icon | image_url: width: 14 | image_tag: class: 'nw-recovery-v2__verified-icon' }}
+                        </span>
+                      {% else %}
+                      <span class="nw-recovery-v2__verified" aria-label="Verified">
+                        {% render 'nw-icon', icon: 'verified' %}
+                      </span>
+                      {% endif %}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if role_text != blank -%}
+                  <p class="nw-recovery-v2__role nw-recovery-v2__role--desktop">{{ role_text }}</p>
+                  <p class="nw-recovery-v2__role nw-recovery-v2__role--mobile">{{ role_mobile_text }}</p>
+                {%- endif -%}
+              </div>
+
+              {%- if section.settings.photo != blank -%}
+                <div class="nw-recovery-v2__photo">
+                  <img
+                    src="{{ section.settings.photo | image_url }}"
+                    alt="{{ section.settings.photo.alt | default: section.settings.name | default: section.settings.heading | strip_html | escape }}"
+                    class="nw-recovery-v2__photo-img"
+                    loading="lazy"
+                    width=""
+                    height=""
+                  >
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </article>
+
+        {%- if section.settings.body_text != blank -%}
+          <div class="nw-recovery-v2__body rte">
+            {{ section.settings.body_text }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.nw-recovery-v2.name",
+  "tag": "section",
+  "class": "section-nw-recovery-v2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Curated by Gary Brecka. Built for Recovery."
+    },
+    {
+      "type": "header",
+      "content": "TESTIMONIAL CARD"
+    },
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "Quote",
+      "default": "<p>If deep sleep and true recovery matter to you, this is the only mattress I'd put my body on in my own home. Nothing else even comes close.</p>"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name",
+      "default": "Gary Brecka"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Role (Desktop)",
+      "default": "Longevity Expert & Co-founder of The Ultimate Human"
+    },
+    {
+      "type": "text",
+      "id": "role_mobile",
+      "label": "Role (Mobile Optional)",
+      "default": "Longevity Expert & Founder of The Ultimate Human",
+      "info": "Uses desktop role when empty."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_verified",
+      "label": "Show Verified Badge",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_custom_icon",
+      "label": "Show Custom Verified Icon",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_icon",
+      "label": "Custom Verified Icon",
+      "visible_if": "{{ section.settings.show_custom_icon == true }}"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "photo",
+      "label": "Portrait Image"
+    },
+    {
+      "type": "header",
+      "content": "BODY COPY"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Body Text",
+      "default": "<p>Gary co-created this collection around <strong>what actually happens while you sleep:</strong> cellular repair, nervous-system recovery, and a clean environment <strong>free of the chemicals most beds are built with.</strong></p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#4E2F14"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "quote_mark_color",
+      "label": "Quote Mark Color",
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "verified_icon_color",
+      "label": "Verified Icon Color",
+      "default": "#878735"
+    },
+    {
+      "type": "header",
+      "content": "CARD STYLE"
+    },
+    {
+      "type": "color_background",
+      "id": "card_gradient",
+      "label": "Card Gradient",
+      "default": "linear-gradient(180deg, #4E2F14 0%, #A96B3E 100%)"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "rgba(255, 255, 255, 0.05)"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-recovery-v2.name",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

@@ -15,6 +15,10 @@
   {% render 'nw-section-color-var', name: '--nw-testimonials-star-empty-color', value: section.settings.card_star_empty_color %}
   {% render 'nw-section-color-var', name: '--nw-testimonials-verified-color', value: section.settings.verified_icon_color %}
   {% render 'nw-section-color-var', name: '--nw-testimonials-verified-textcolor', value: section.settings.verified_text_color %}
+  {%- if section.settings.header_max_width_desktop > 0 -%}
+    {% assign header_max_width_desktop = section.settings.header_max_width_desktop | append: 'px' %}
+    {% render 'nw-section-color-var', name: '--nw-testimonials-header-max-width', value: header_max_width_desktop %}
+  {%- endif -%}
 {% endcapture %}
 
 <nw-testimonials
@@ -150,6 +154,17 @@
       "label": "Description"
     },
     {
+      "type": "range",
+      "id": "header_max_width_desktop",
+      "label": "Header Max Width (Desktop)",
+      "min": 0,
+      "max": 1440,
+      "step": 20,
+      "unit": "px",
+      "default": 1200,
+      "info": "Set to 0 for no max width."
+    },
+    {
       "type": "header",
       "content": "TEXT COLORS"
     },
@@ -165,7 +180,7 @@
       "id": "description_color",
       "label": "Description Color"
     },
-    {
+    { 
       "type": "color",
       "alpha": true,
       "id": "eyebrow_color",
@@ -236,7 +251,7 @@
     {
       "type": "checkbox",
       "id": "enable_edge_shadow",
-      "label": "Add Shadow on Edges",
+      "label": "Add Shadow On Edges",
       "default": false
     },
     {

@@ -45,9 +45,10 @@
 
 .nw-guarantee-offer__media-wrap {
   position: relative;
-  width: 537px;
-  min-width: 537px;
-  height: 383px;
+  width: 100%;
+  flex: 1 1;
+  max-width: 537px;
+  aspect-ratio: 2/1.43;
   border-radius: 8px;
   overflow: hidden;
   background: var(--tertiary-color, #F4EFE8);
@@ -140,7 +141,7 @@
 }
 
 .nw-guarantee-offer__content {
-  flex: 1 1 auto;
+  flex: 1 1;
   width: 100%;
   max-width: 450px;
   display: flex;

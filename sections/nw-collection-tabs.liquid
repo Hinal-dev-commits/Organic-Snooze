@@ -28,7 +28,11 @@
 {%- assign nw_shell_selector = '#NwCollectionTabs-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 <style>
-  
+  {% if section.settings.hide_shadow == ture %}
+  .nw-collection-tabs__slider-wrap::after{
+    display: none !important;
+  }
+  {% endif %}
 </style>
 <nw-collection-tabs
   id="NwCollectionTabs-{{ section.id }}"
@@ -58,9 +62,9 @@
     --nw-collection-tabs-promo-timer-bg: {{ section.settings.promo_timer_bg }};
     --nw-collection-tabs-promo-sep: {{ section.settings.promo_sep_color }};
   "
-  data-products-limit="{{ section.settings.products_to_show }}"
 >
-  <div class="page-width">
+
+  <div class="{% if section.settings.full_width == false %}page-width {% else %} nw-collection-full-width {% endif %}">
     <div class="nw-collection-tabs__inner">
       {%- if sidebar_block -%}
         <div class="nw-collection-tabs__mobile-heading">
@@ -100,7 +104,7 @@
         </div>
       {%- endif -%}
 
-      <div class="nw-collection-tabs__main">
+      <div class="nw-collection-tabs__main {% if sidebar_block == blank %}nw-collection-tabs__main--without-sidebar{% endif %}">
         {%- if sidebar_block -%}
           <aside class="nw-collection-tabs__sidebar" {{ sidebar_block.shopify_attributes }}>
             {% render 'nw-collection-tabs-sidebar', block: sidebar_block %}
@@ -123,7 +127,8 @@
                   {%- if block.settings.collection != blank and block.settings.collection.products_count > 0 -%}
                     <div class="swiper nw-collection-tabs__swiper" id="NwCollectionSwiper-{{ section.id }}-{{ panel_index }}">
                       <div class="swiper-wrapper">
-                        {%- for product in block.settings.collection.products limit: section.settings.products_to_show -%}
+                        {%- assign tab_products_limit = block.settings.products_to_show | default: 8 -%}
+                        {%- for product in block.settings.collection.products limit: tab_products_limit -%}
                           <div class="swiper-slide">
                             {% render 'nw-product-card',
                               product: product,
@@ -202,13 +207,16 @@
       "content": "PRODUCT SLIDER"
     },
     {
-      "type": "range",
-      "id": "products_to_show",
-      "min": 2,
-      "max": 24,
-      "step": 1,
-      "label": "Products To Show Per Tab",
-      "default": 8
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_shadow",
+      "label": "Hide Slider Shadow",
+      "default": false
     },
     {
       "type": "checkbox",
@@ -570,9 +578,18 @@
           "label": "Collection"
         },
         {
+          "type": "range",
+          "id": "products_to_show",
+          "min": 2,
+          "max": 24,
+          "step": 1,
+          "label": "Products To Show",
+          "default": 8
+        },
+        {
           "type": "checkbox",
           "id": "default_selected",
-          "label": "Default selected tab",
+          "label": "Default Selected Tab",
           "default": false,
           "info": "If no tab is selected, the first tab opens by default."
         }
@@ -669,7 +686,7 @@
         {
           "type": "text",
           "id": "countdown_end_date",
-          "label": "Countdown Target Date (YYYY-MM-DD HH:MM:SS)",
+          "label": "Countdown Target Date (Yyyy-mm-dd HH:MM:SS)",
           "default": "2026-12-31 23:59:59",
           "visible_if": "{{ block.settings.show_promo == true }}"
         },

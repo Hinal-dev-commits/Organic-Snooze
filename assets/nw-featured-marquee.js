@@ -1,7 +1,7 @@
 if (!customElements.get('nw-featured-marquee')) {
   class NwFeaturedMarquee extends HTMLElement {
     static get observedAttributes() {
-      return ['data-direction', 'data-speed', 'data-pause-hover'];
+      return ['data-direction', 'data-speed', 'data-pause-hover', 'data-animate-desktop', 'data-animate-mobile'];
     }
 
     attributeChangedCallback(name, oldVal, newVal) {
@@ -12,6 +12,13 @@ if (!customElements.get('nw-featured-marquee')) {
         this.speed = parseFloat(newVal) || 30;
       } else if (name === 'data-pause-hover') {
         this.pauseOnHover = newVal === 'true';
+      } else if (name === 'data-animate-desktop') {
+        this.animateDesktop = newVal === 'true';
+      } else if (name === 'data-animate-mobile') {
+        this.animateMobile = newVal === 'true';
+      }
+      if (this.isConnected) {
+        this.setupMarquee();
       }
     }
 
@@ -23,6 +30,9 @@ if (!customElements.get('nw-featured-marquee')) {
       this.direction = this.getAttribute('data-direction') || 'rtl';
       this.speed = parseFloat(this.getAttribute('data-speed')) || 30;
       this.pauseOnHover = this.getAttribute('data-pause-hover') === 'true';
+      this.animateDesktop = this.getAttribute('data-animate-desktop') === 'true';
+      this.animateMobile = this.getAttribute('data-animate-mobile') === 'true';
+      this.mobileQuery = window.matchMedia('(max-width: 749px)');
 
       this.pos = 0;
       this.groupWidth = 0;
@@ -34,12 +44,19 @@ if (!customElements.get('nw-featured-marquee')) {
       this.onMouseLeave = this.onMouseLeave.bind(this);
       this.animate = this.animate.bind(this);
       this.onResize = this.onResize.bind(this);
+      this.onBreakpointChange = this.onBreakpointChange.bind(this);
 
       if (this.pauseOnHover) {
         this.wrapper.addEventListener('mouseenter', this.onMouseEnter);
         this.wrapper.addEventListener('mouseleave', this.onMouseLeave);
         this.wrapper.addEventListener('touchstart', this.onMouseEnter, { passive: true });
         this.wrapper.addEventListener('touchend', this.onMouseLeave, { passive: true });
+      }
+
+      if (this.mobileQuery.addEventListener) {
+        this.mobileQuery.addEventListener('change', this.onBreakpointChange);
+      } else if (this.mobileQuery.addListener) {
+        this.mobileQuery.addListener(this.onBreakpointChange);
       }
 
       this.setupMarquee();
@@ -53,9 +70,13 @@ if (!customElements.get('nw-featured-marquee')) {
     }
 
     disconnectedCallback() {
-      if (this.rafId) {
-        cancelAnimationFrame(this.rafId);
-        this.rafId = null;
+      this.stopAnimation();
+      if (this.mobileQuery) {
+        if (this.mobileQuery.removeEventListener) {
+          this.mobileQuery.removeEventListener('change', this.onBreakpointChange);
+        } else if (this.mobileQuery.removeListener) {
+          this.mobileQuery.removeListener(this.onBreakpointChange);
+        }
       }
       if (this.resizeObserver) {
         this.resizeObserver.disconnect();
@@ -68,6 +89,31 @@ if (!customElements.get('nw-featured-marquee')) {
         this.wrapper.removeEventListener('touchstart', this.onMouseEnter);
         this.wrapper.removeEventListener('touchend', this.onMouseLeave);
       }
+    }
+
+    shouldAnimate() {
+      const isMobile = this.mobileQuery.matches;
+      return isMobile ? this.animateMobile : this.animateDesktop;
+    }
+
+    stopAnimation() {
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId);
+        this.rafId = null;
+      }
+      if (this.track) {
+        this.track.style.transform = '';
+      }
+      this.lastTime = null;
+    }
+
+    resetGroups() {
+      const groups = Array.from(this.track.querySelectorAll('.nw-featured-marquee__group'));
+      groups.forEach(function (group, index) {
+        if (index > 1) {
+          group.remove();
+        }
+      });
     }
 
     onMouseEnter() {
@@ -83,9 +129,27 @@ if (!customElements.get('nw-featured-marquee')) {
       this.setupMarquee();
     }
 
+    onBreakpointChange() {
+      this.pos = 0;
+      this.setupMarquee();
+    }
+
     setupMarquee() {
       const firstGroup = this.track.querySelector('.nw-featured-marquee__group');
       if (!firstGroup) return;
+
+      this.resetGroups();
+
+      if (!this.shouldAnimate()) {
+        this.stopAnimation();
+        const groups = this.track.querySelectorAll('.nw-featured-marquee__group');
+        groups.forEach(function (group, index) {
+          if (index > 0) {
+            group.remove();
+          }
+        });
+        return;
+      }
 
       const groupRect = firstGroup.getBoundingClientRect();
       this.groupWidth = groupRect.width;
@@ -114,6 +178,11 @@ if (!customElements.get('nw-featured-marquee')) {
 
     animate(time) {
       if (!this.isConnected) return;
+
+      if (!this.shouldAnimate()) {
+        this.setupMarquee();
+        return;
+      }
 
       if (!this.lastTime) {
         this.lastTime = time;

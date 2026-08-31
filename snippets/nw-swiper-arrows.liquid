@@ -1,16 +1,27 @@
 {% doc %}
 Renders previous and next buttons for NW Swiper carousels.
+@param {string} [arrow_style] - style_1 or style_2. Default: style_1
 @param {string} [prev_class] - Extra class on the previous button
 @param {string} [next_class] - Extra class on the next button
 @param {string} [prev_label] - Accessible label for previous. Default: translation
 @param {string} [next_label] - Accessible label for next. Default: translation
 @example
-{% render 'nw-swiper-arrows' %}
+{% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
 {% enddoc %}
 
 {%- liquid
   assign prev_extra_class = prev_class | default: ''
   assign next_extra_class = next_class | default: ''
+  assign selected_arrow_style = arrow_style | default: 'style_1'
+  if selected_arrow_style == 'style_2'
+    assign prev_icon = 'arrow-left-2'
+    assign next_icon = 'arrow-right-2'
+    assign arrow_style_class = ' nw-swiper-btn--style-2'
+  else
+    assign prev_icon = 'arrow-left'
+    assign next_icon = 'arrow-right'
+    assign arrow_style_class = ''
+  endif
   if prev_label != blank
     assign prev_aria = prev_label
   else
@@ -22,9 +33,9 @@ Renders previous and next buttons for NW Swiper carousels.
     assign next_aria = 'general.slider.next_slide' | t
   endif
 -%}
-<button type="button" class="nw-swiper-btn nw-swiper-btn--prev{{ prev_extra_class }}" aria-label="{{ prev_aria }}">
-  {% render 'nw-icon', icon: 'arrow-left' %}
+<button type="button" class="nw-swiper-btn nw-swiper-btn--prev{{ arrow_style_class }}{{ prev_extra_class }}" aria-label="{{ prev_aria }}">
+  {% render 'nw-icon', icon: prev_icon %}
 </button>
-<button type="button" class="nw-swiper-btn nw-swiper-btn--next{{ next_extra_class }}" aria-label="{{ next_aria }}">
-  {% render 'nw-icon', icon: 'arrow-right' %}
+<button type="button" class="nw-swiper-btn nw-swiper-btn--next{{ arrow_style_class }}{{ next_extra_class }}" aria-label="{{ next_aria }}">
+  {% render 'nw-icon', icon: next_icon %}
 </button>

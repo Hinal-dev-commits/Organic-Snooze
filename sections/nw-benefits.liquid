@@ -129,7 +129,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Section header"
+      "content": "SECTION HEADER"
     },
     {
       "type": "inline_richtext",
@@ -145,30 +145,30 @@
     },
     {
       "type": "header",
-      "content": "Text colors"
+      "content": "TEXT COLORS"
     },
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading color",
+      "label": "Heading Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "description_color",
-      "label": "Description color",
+      "label": "Description Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "header",
-      "content": "Card layout"
+      "content": "CARD LAYOUT"
     },
     {
       "type": "select",
       "id": "card_style",
-      "label": "Card style",
+      "label": "Card Style",
       "default": "style_1",
       "options": [
         { "value": "style_1", "label": "Style 1" },
@@ -177,87 +177,87 @@
     },
     {
       "type": "header",
-      "content": "Card colors"
+      "content": "CARD COLORS"
     },
     {
       "type": "color",
       "id": "card_bg_color",
-      "label": "Card background",
+      "label": "Card Background",
       "default": "#FBF9F6",
       "alpha": true
     },
     {
       "type": "color",
       "id": "card_border_color",
-      "label": "Card border color",
+      "label": "Card Border Color",
       "default": "rgba(97, 57, 22, 0.2)",
       "alpha": true
     },
     {
       "type": "color",
       "id": "card_title_color",
-      "label": "Card title color",
+      "label": "Card Title Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "card_desc_color",
-      "label": "Card description color",
+      "label": "Card Description Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "header",
-      "content": "Slider settings"
+      "content": "SLIDER SETTINGS"
     },
     {
       "type": "checkbox",
       "id": "show_arrows",
-      "label": "Show slider arrows",
+      "label": "Show Slider Arrows",
       "default": false
     },
     {
       "type": "checkbox",
       "id": "show_pagination",
-      "label": "Show slider pagination",
+      "label": "Show Slider Pagination",
       "default": true
     },
     {
       "type": "color",
       "id": "pagination_color",
-      "label": "Pagination color",
+      "label": "Pagination Color",
       "default": "#613916",
       "alpha": true,
       "visible_if": "{{ section.settings.show_pagination == true }}"
     },
     {
       "type": "header",
-      "content": "Footer CTA"
+      "content": "FOOTER CTA"
     },
     {
       "type": "checkbox",
       "id": "show_button",
-      "label": "Show button",
+      "label": "Show Button",
       "default": false
     },
     {
       "type": "text",
       "id": "button_text",
-      "label": "Button label",
+      "label": "Button Label",
       "default": "SHOP THE MATTRESS",
       "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Button link",
+      "label": "Button Link",
       "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "select",
       "id": "button_style",
-      "label": "Button style",
+      "label": "Button Style",
       "default": "primary",
       "options": [
         { "value": "primary", "label": "Primary" },
@@ -269,7 +269,7 @@
     {
       "type": "color",
       "id": "badge_icon_color",
-      "label": "Badge icon color",
+      "label": "Badge Icon Color",
       "default": "#CC926A",
       "alpha": true,
       "visible_if": "{{ section.settings.show_button == true }}"
@@ -277,19 +277,19 @@
     {
       "type": "color",
       "id": "badge_text_color",
-      "label": "Badge text color",
+      "label": "Badge Text Color",
       "default": "#613916",
       "alpha": true,
       "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
       "type": "header",
-      "content": "Background"
+      "content": "BACKGROUND"
     },
     {
       "type": "select",
       "id": "bg_type",
-      "label": "Background type",
+      "label": "Background Type",
       "default": "image",
       "options": [
         { "value": "none", "label": "None" },
@@ -301,7 +301,7 @@
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background color",
+      "label": "Background Color",
       "default": "#FFFFFF",
       "alpha": true,
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
@@ -309,19 +309,19 @@
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background image (desktop)",
+      "label": "Background Image (Desktop)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image_mobile",
-      "label": "Background image (mobile)",
+      "label": "Background Image (Mobile)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "range",
       "id": "bg_image_opacity",
-      "label": "Background image opacity",
+      "label": "Background Image Opacity",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -332,17 +332,17 @@
     {
       "type": "color_background",
       "id": "bg_gradient",
-      "label": "Background gradient",
+      "label": "Background Gradient",
       "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
     },
     {
       "type": "header",
-      "content": "Section spacing"
+      "content": "SECTION SPACING"
     },
     {
       "type": "range",
       "id": "padding_top_desktop",
-      "label": "Padding top (desktop)",
+      "label": "Padding Top (Desktop)",
       "min": 0,
       "max": 160,
       "step": 4,
@@ -352,7 +352,7 @@
     {
       "type": "range",
       "id": "padding_bottom_desktop",
-      "label": "Padding bottom (desktop)",
+      "label": "Padding Bottom (Desktop)",
       "min": 0,
       "max": 160,
       "step": 4,
@@ -362,7 +362,7 @@
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "Padding top (mobile)",
+      "label": "Padding Top (Mobile)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -372,7 +372,7 @@
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "Padding bottom (mobile)",
+      "label": "Padding Bottom (Mobile)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -388,7 +388,7 @@
         {
           "type": "select",
           "id": "media_type",
-          "label": "Media type",
+          "label": "Media Type",
           "default": "image",
           "options": [
             { "value": "image", "label": "Image" },
@@ -422,14 +422,14 @@
         {
           "type": "text",
           "id": "tag",
-          "label": "Tag label",
+          "label": "Tag Label",
           "default": "Side",
           "visible_if": "{{ section.settings.card_style == 'style_2' }}"
         },
         {
           "type": "color",
           "id": "tag_bg_color",
-          "label": "Tag background color",
+          "label": "Tag Background Color",
           "default": "#613916",
           "alpha": true,
           "visible_if": "{{ section.settings.card_style == 'style_2' }}"
@@ -437,7 +437,7 @@
         {
           "type": "color",
           "id": "tag_text_color",
-          "label": "Tag text color",
+          "label": "Tag Text Color",
           "default": "#FFFFFF",
           "alpha": true,
           "visible_if": "{{ section.settings.card_style == 'style_2' }}"
@@ -451,13 +451,13 @@
         {
           "type": "checkbox",
           "id": "use_custom_icon",
-          "label": "Use custom icon",
+          "label": "Use Custom Icon",
           "default": false
         },
         {
           "type": "select",
           "id": "icon",
-          "label": "Badge icon",
+          "label": "Badge Icon",
           "default": "money",
           "options": [
             { "value": "money", "label": "Moneyback / Trial" },
@@ -474,13 +474,13 @@
         {
           "type": "image_picker",
           "id": "custom_icon",
-          "label": "Custom icon",
+          "label": "Custom Icon",
           "visible_if": "{{ block.settings.use_custom_icon }}"
         },
         {
           "type": "inline_richtext",
           "id": "text",
-          "label": "Badge text",
+          "label": "Badge Text",
           "default": "100-Night Risk-Free Trial"
         }
       ]

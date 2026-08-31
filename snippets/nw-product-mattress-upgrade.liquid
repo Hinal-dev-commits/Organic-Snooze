@@ -1,0 +1,165 @@
+{% doc %}
+Renders the Upgrade Your Mattress block for product page layouts.
+@param {object} block - Block settings
+{% enddoc %}
+
+{%- liquid
+  assign upgrade_product = block.settings.upgrade_product
+  assign card_title = block.settings.title
+  if card_title == blank and upgrade_product != blank
+    assign card_title = upgrade_product.title
+  endif
+
+  assign upgrade_price = upgrade_product.price | default: 0
+  assign upgrade_compare = upgrade_product.compare_at_price | default: 0
+  assign upgrade_save = 0
+  if upgrade_compare > upgrade_price
+    assign upgrade_save = upgrade_compare | minus: upgrade_price
+  endif
+
+  assign add_on_label = block.settings.add_on_label
+  if add_on_label == blank and upgrade_product != blank
+    assign add_on_label = upgrade_product.title
+  endif
+
+  assign features_range_start = block.settings.features_range_start | default: 1
+  assign features_range_end = block.settings.features_range_end | default: 8
+  if features_range_start > features_range_end
+    assign features_range_start = features_range_end
+  endif
+-%}
+
+<div class="nw-mattress-upgrade" {{ block.shopify_attributes }}>
+  {%- if block.settings.heading != blank -%}
+    <h3 class="nw-mattress-upgrade__heading">{{ block.settings.heading }}</h3>
+  {%- endif -%}
+
+  <div class="nw-mattress-upgrade__card">
+    <div class="nw-mattress-upgrade__top">
+      {%- if block.settings.image != blank -%}
+        <div class="nw-mattress-upgrade__media">
+          <img
+            src="{{ block.settings.image | image_url: width: 500 }}"
+            alt="{{ block.settings.image.alt | default: card_title | escape }}"
+            class="nw-mattress-upgrade__img"
+            loading="lazy"
+            width=""
+            height=""
+          >
+        </div>
+      {%- elsif upgrade_product != blank and upgrade_product.featured_image != blank -%}
+        <div class="nw-mattress-upgrade__media">
+          <img
+            src="{{ upgrade_product.featured_image | image_url: width: 500 }}"
+            alt="{{ upgrade_product.featured_image.alt | default: card_title | escape }}"
+            class="nw-mattress-upgrade__img"
+            loading="lazy"
+            width=""
+            height=""
+          >
+        </div>
+      {%- endif -%}
+
+      <div class="nw-mattress-upgrade__content">
+        {%- if card_title != blank -%}
+          <h4 class="nw-mattress-upgrade__title">{{ card_title }}</h4>
+        {%- endif -%}
+
+        {%- capture features_markup -%}
+          {%- for i in (1..8) -%}
+            {%- if i >= features_range_start and i <= features_range_end -%}
+              {%- liquid
+                assign feature_image = blank
+                assign feature_text = blank
+                case i
+                  when 1
+                    assign feature_image = block.settings.feature_1_image
+                    assign feature_text = block.settings.feature_1_text
+                  when 2
+                    assign feature_image = block.settings.feature_2_image
+                    assign feature_text = block.settings.feature_2_text
+                  when 3
+                    assign feature_image = block.settings.feature_3_image
+                    assign feature_text = block.settings.feature_3_text
+                  when 4
+                    assign feature_image = block.settings.feature_4_image
+                    assign feature_text = block.settings.feature_4_text
+                  when 5
+                    assign feature_image = block.settings.feature_5_image
+                    assign feature_text = block.settings.feature_5_text
+                  when 6
+                    assign feature_image = block.settings.feature_6_image
+                    assign feature_text = block.settings.feature_6_text
+                  when 7
+                    assign feature_image = block.settings.feature_7_image
+                    assign feature_text = block.settings.feature_7_text
+                  when 8
+                    assign feature_image = block.settings.feature_8_image
+                    assign feature_text = block.settings.feature_8_text
+                endcase
+              -%}
+              {%- if feature_image != blank or feature_text != blank -%}
+                <li class="nw-mattress-upgrade__feature">
+                  <span class="nw-mattress-upgrade__feature-icon" aria-hidden="true">
+                    {%- if feature_image != blank -%}
+                      <img
+                        src="{{ feature_image | image_url: width: 88 }}"
+                        alt=""
+                        class="nw-mattress-upgrade__feature-img"
+                        loading="lazy"
+                        width=""
+                        height=""
+                      >
+                    {%- else -%}
+                      {% render 'nw-icon', icon: 'check-v2' %}
+                    {%- endif -%}
+                  </span>
+                  {%- if feature_text != blank -%}
+                    <span>{{ feature_text }}</span>
+                  {%- endif -%}
+                </li>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+
+        {%- if features_markup != blank -%}
+          <ul class="nw-mattress-upgrade__features" role="list">
+            {{ features_markup }}
+          </ul>
+        {%- endif -%}
+
+        {%- if block.settings.button_label != blank -%}
+          {%- if upgrade_product != blank -%}
+            <a href="{{ upgrade_product.url }}" class="nw-mattress-upgrade__button nw-btn nw-btn--outline">
+              {{ block.settings.button_label }}
+            </a>
+          {%- else -%}
+            <span class="nw-mattress-upgrade__button">{{ block.settings.button_label }}</span>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if block.settings.show_add_on_row and upgrade_product != blank -%}
+          <label class="nw-mattress-upgrade__addon">
+            <input type="checkbox" class="nw-mattress-upgrade__checkbox" name="properties[{{ add_on_label | escape }}]" value="yes">
+            <span class="nw-mattress-upgrade__checkbox-ui" aria-hidden="true"></span>
+            <span class="nw-mattress-upgrade__addon-inner" aria-hidden="true">
+              <span class="nw-mattress-upgrade__addon-title">{{ card_title }}</span>
+              <span class="nw-mattress-upgrade__addon-pricing">
+                <span class="nw-mattress-upgrade__addon-price-inner">
+                  <span class="nw-mattress-upgrade__addon-price">+{{ upgrade_price | money }}</span>
+                  {%- if block.settings.save_badge != blank and upgrade_save > 0 -%}
+                    <span class="nw-mattress-upgrade__addon-save">{{ block.settings.save_badge }}</span>
+                  {%- endif -%}
+                </span>
+                {%- if upgrade_compare > upgrade_price -%}
+                  <span class="nw-mattress-upgrade__addon-compare">{{ upgrade_compare | money }}</span>
+                {%- endif -%}
+              </span>
+            </span>
+          </label>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</div>

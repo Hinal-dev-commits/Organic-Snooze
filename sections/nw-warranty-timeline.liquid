@@ -74,6 +74,24 @@
 <div
   id="NwWarrantyTimeline-{{ section.id }}"
   class="nw-warranty-timeline section-{{ section.id }}{% if section.settings.image_position == 'right' %} nw-warranty-timeline--image-right{% endif %}"
+  style="
+    --nw-wt-heading-color: {{ section.settings.heading_color }};
+    --nw-wt-description-color: {{ section.settings.description_color }};
+    --nw-wt-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --nw-wt-timeline-heading-color: {{ section.settings.timeline_heading_color }};
+    --nw-wt-step-badge-text-color: {{ section.settings.step_badge_text_color }};
+    --nw-wt-step-badge-bg-color: {{ section.settings.step_badge_bg_color }};
+    --nw-wt-step-title-color: {{ section.settings.step_title_color }};
+    --nw-wt-step-text-color: {{ section.settings.step_text_color }};
+    --nw-wt-step-dot-bg-color: {{ section.settings.step_dot_bg_color }};
+    --nw-wt-step-dot-border-color: {{ section.settings.step_dot_border_color }};
+    --nw-wt-step-dot-active-bg-color: {{ section.settings.step_dot_active_bg_color }};
+    --nw-wt-step-dot-active-border-color: {{ section.settings.step_dot_active_border_color }};
+    --nw-wt-step-line-color: {{ section.settings.step_line_color }};
+    --nw-wt-step-line-fill-color: {{ section.settings.step_line_fill_color }};
+    --nw-wt-button-bg-color: {{ section.settings.button_bg_color }};
+    --nw-wt-button-text-color: {{ section.settings.button_text_color }};
+  "
 >
   <div class="page-width">
     <div class="nw-warranty-timeline__wrapper scroll-trigger animate--slide-in">
@@ -93,9 +111,97 @@
         </div>
       {%- endif -%}
 
-      <nw-warranty-timeline class="nw-warranty-timeline__main">
-        <div class="nw-warranty-timeline__media-col">
-          {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
+      <nw-warranty-timeline
+        class="nw-warranty-timeline__main"
+        data-scroll-trigger="{{ section.settings.scroll_trigger_percent | default: 60 }}"
+      >
+        <div
+          class="nw-warranty-timeline__media-col{% if section.settings.media_type == 'video' %} nw-warranty-timeline__media-col--video{% if section.settings.video_autoplay %} is-autoplay{% endif %}{% endif %}"
+          {% if section.settings.media_type == 'video' and section.settings.video != blank %}
+            data-nw-warranty-timeline-media
+            data-autoplay="{{ section.settings.video_autoplay }}"
+          {% endif %}
+        >
+          {%- if section.settings.media_type == 'video' and section.settings.video != blank -%}
+            {%- liquid
+              assign media_poster = section.settings.video_poster
+              assign media_poster_mobile = section.settings.video_poster_mobile
+              if media_poster == blank and section.settings.video.preview_image != blank
+                assign media_poster = section.settings.video.preview_image
+              endif
+              if media_poster_mobile == blank and media_poster != blank
+                assign media_poster_mobile = media_poster
+              endif
+            -%}
+
+            {{
+              section.settings.video
+              | video_tag:
+                autoplay: section.settings.video_autoplay,
+                loop: section.settings.video_autoplay,
+                muted: section.settings.video_autoplay,
+                controls: false,
+                playsinline: true,
+                preload: 'metadata',
+                tabindex: -1,
+                class: 'nw-warranty-timeline__video',
+                image_size: '1400x'
+            }}
+
+            {%- if media_poster != blank or media_poster_mobile != blank -%}
+              {%- if media_poster != blank and media_poster_mobile != blank and media_poster != media_poster_mobile -%}
+                <img
+                  src="{{ media_poster | image_url: width: 1400 }}"
+                  alt="{{ section.settings.heading | strip_html | escape }}"
+                  class="nw-warranty-timeline__img nw-warranty-timeline__img--desktop nw-warranty-timeline__poster"
+                  loading="lazy"
+                  width=""
+                  height=""
+                >
+                <img
+                  src="{{ media_poster_mobile | image_url: width: 800 }}"
+                  alt="{{ section.settings.heading | strip_html | escape }}"
+                  class="nw-warranty-timeline__img nw-warranty-timeline__img--mobile nw-warranty-timeline__poster"
+                  loading="lazy"
+                  width=""
+                  height=""
+                >
+              {%- elsif media_poster != blank -%}
+                <img
+                  src="{{ media_poster | image_url: width: 1400 }}"
+                  alt="{{ section.settings.heading | strip_html | escape }}"
+                  class="nw-warranty-timeline__img nw-warranty-timeline__poster"
+                  loading="lazy"
+                  width=""
+                  height=""
+                >
+              {%- else -%}
+                <img
+                  src="{{ media_poster_mobile | image_url: width: 800 }}"
+                  alt="{{ section.settings.heading | strip_html | escape }}"
+                  class="nw-warranty-timeline__img nw-warranty-timeline__poster"
+                  loading="lazy"
+                  width=""
+                  height=""
+                >
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- if section.settings.show_play_icon and section.settings.video_autoplay == false -%}
+              <div class="nw-warranty-timeline__video-controls">
+                <button type="button" class="nw-warranty-timeline__play" data-nw-wt-play aria-label="Play video">
+                  <span class="nw-warranty-timeline__control-icon" aria-hidden="true">
+                    {{ 'play-v2.svg' | inline_asset_content }}
+                  </span>
+                </button>
+                <button type="button" class="nw-warranty-timeline__pause" data-nw-wt-pause aria-label="Pause video" hidden>
+                  <span class="nw-warranty-timeline__control-icon" aria-hidden="true">
+                    {{ 'icon-pause.svg' | inline_asset_content }}
+                  </span>
+                </button>
+              </div>
+            {%- endif -%}
+          {%- elsif section.settings.image != blank or section.settings.image_mobile != blank -%}
             {%- if section.settings.image_mobile != blank -%}
               <picture class="nw-warranty-timeline__picture">
                 <source
@@ -137,7 +243,7 @@
             <div class="nw-warranty-timeline__steps">
               {%- for block in section.blocks -%}
                 <div
-                  class="nw-warranty-timeline__step{% if forloop.first %} is-active{% endif %}"
+                  class="nw-warranty-timeline__step"
                   {{ block.shopify_attributes }}
                   data-step-index="{{ forloop.index0 }}"
                 >
@@ -197,7 +303,7 @@
     {
       "type": "checkbox",
       "id": "show_rating",
-      "label": "Show Rating Stars in Header",
+      "label": "Show Rating Stars In Header",
       "default": false
     },
     {
@@ -219,26 +325,174 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "How to Make a Warranty Claim"
+      "default": "What Actually Happens to Your Body When You Don't Sleep"
     },
     {
       "type": "richtext",
       "id": "subheading",
-      "label": "Description"
+      "label": "Description",
+      "default": "<p>In this episode, Gary breaks down the real science of sleep: why you can't supplement or exercise your way around it, and how fast the damage sets in</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "timeline_heading_color",
+      "label": "Timeline Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_badge_text_color",
+      "label": "Step Badge Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_badge_bg_color",
+      "label": "Step Badge Background Color",
+      "default": "#4E2F14"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_title_color",
+      "label": "Step Title Color",
+      "default": "#4E2F14"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_text_color",
+      "label": "Step Description Color",
+      "default": "#4E2F14"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_dot_bg_color",
+      "label": "Step Dot Background Color",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_dot_border_color",
+      "label": "Step Dot Border Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_dot_active_bg_color",
+      "label": "Step Dot Active Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_dot_active_border_color",
+      "label": "Step Dot Active Border Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_line_color",
+      "label": "Timeline Line Color",
+      "default": "#FFFFFF59"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "step_line_fill_color",
+      "label": "Timeline Line Fill Color",
+      "default": "#FFFFFF"
     },
     {
       "type": "header",
       "content": "MEDIA SETTINGS"
     },
     {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media Type",
+      "default": "video",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video" }
+      ]
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay Video",
+      "default": false,
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_play_icon",
+      "label": "Show Play/pause Controls",
+      "default": true,
+      "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_autoplay == false }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video Poster (Desktop)",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster_mobile",
+      "label": "Video Poster (Mobile Optional)",
+      "info": "Uses desktop poster when empty.",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
       "type": "image_picker",
       "id": "image",
-      "label": "Image (Desktop)"
+      "label": "Image (Desktop)",
+      "visible_if": "{{ section.settings.media_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "image_mobile",
-      "label": "Image (Mobile Optional)"
+      "label": "Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.media_type == 'image' }}"
     },
     {
       "type": "select",
@@ -257,8 +511,18 @@
     {
       "type": "inline_richtext",
       "id": "timeline_heading",
-      "label": "Timeline Subheading",
-      "default": "If you believe your mattress has a defect:"
+      "label": "Timeline Subheading"
+    },
+    {
+      "type": "range",
+      "id": "scroll_trigger_percent",
+      "label": "Scroll Trigger Position",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 60,
+      "info": "Viewport height percentage where timeline dots activate while scrolling."
     },
     {
       "type": "header",
@@ -274,7 +538,7 @@
       "type": "text",
       "id": "button_text",
       "label": "Button Label",
-      "default": "START A WARRANTY CLAIM",
+      "default": "Listen to the Full Episode",
       "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
@@ -296,6 +560,22 @@
       "visible_if": "{{ section.settings.show_button == true }}"
     },
     {
+      "type": "color",
+      "alpha": true,
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#A96B3E",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
       "type": "header",
       "content": "BACKGROUND SETTINGS"
     },
@@ -303,7 +583,7 @@
       "type": "select",
       "id": "bg_type",
       "label": "Background Type",
-      "default": "color",
+      "default": "image",
       "options": [
         { "value": "none", "label": "None" },
         { "value": "color", "label": "Color" },
@@ -399,19 +679,18 @@
           "type": "text",
           "id": "step_badge",
           "label": "Step Badge",
-          "default": "STEP 1"
+          "default": "KEY POINT 1"
         },
         {
           "type": "inline_richtext",
           "id": "title",
-          "label": "Step Title",
-          "default": "Reach out to our Sleep Concierge team"
+          "label": "Step Title (Optional)"
         },
         {
           "type": "richtext",
           "id": "text",
           "label": "Step Description",
-          "default": "<p>Email us or start a claim online with your order details, and a real person takes it from there</p>"
+          "default": "<p>The research on how one week of short sleep changes your metabolism, and how chronic short sleep affects long-term brain health.</p>"
         }
       ]
     }
@@ -424,33 +703,22 @@
         {
           "type": "step",
           "settings": {
-            "step_badge": "STEP 1",
-            "title": "Reach out to our Sleep Concierge team",
-            "text": "<p>Email us or start a claim online with your order details, and a real person takes it from there</p>"
+            "step_badge": "KEY POINT 1",
+            "text": "<p>The research on how one week of short sleep changes your metabolism, and how chronic short sleep affects long-term brain health.</p>"
           }
         },
         {
           "type": "step",
           "settings": {
-            "step_badge": "STEP 2",
-            "title": "Send a few photos or a short video",
-            "text": "<p>Email us or start a claim online with your order details, and a real person takes it from there</p>"
+            "step_badge": "KEY POINT 2",
+            "text": "<p>The 10-3-2-1-0 rule for winding down: no caffeine 10 hours before bed, no food or alcohol at 3, no work at 2, no screens at 1, and zero snoozes in the morning.</p>"
           }
         },
         {
           "type": "step",
           "settings": {
-            "step_badge": "STEP 3",
-            "title": "We review within 3–5 business days",
-            "text": "<p>Our team checks your claim against your warranty coverage and follows up with next steps</p>"
-          }
-        },
-        {
-          "type": "step",
-          "settings": {
-            "step_badge": "STEP 4",
-            "title": "If it's covered, we repair or replace",
-            "text": "<p>No debating, no fine print. We resolve it and get you back to sleeping well</p>"
+            "step_badge": "KEY POINT 3",
+            "text": "<p>Why your sleep environment, from light to temperature to what your mattress is made of, decides how much recovery you actually get.</p>"
           }
         }
       ]

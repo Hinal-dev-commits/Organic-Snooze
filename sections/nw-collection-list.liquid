@@ -36,8 +36,9 @@
 </style>
 
 <nw-collection-list
-  class="nw-collection-list nw-main-section section-{{ section.id }}"
+  class="nw-collection-list nw-main-section section-{{ section.id }}{% if section.settings.no_loop %} nw-no-loop{% endif %}"
   data-slide-count="{{ slide_count }}"
+  data-no-loop="{{ section.settings.no_loop }}"
   data-enable-autoplay="{{ section.settings.enable_autoplay }}"
   data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
@@ -64,11 +65,13 @@
 
           {%- liquid
             assign repeat_times = 1
-            if slide_count > 0 and slide_count < 6
-              assign repeat_times = 3
-            elsif slide_count >= 6 and slide_count < 10
-              assign repeat_times = 2
-            endif
+            unless section.settings.no_loop
+              if slide_count > 0 and slide_count < 6
+                assign repeat_times = 3
+              elsif slide_count >= 6 and slide_count < 10
+                assign repeat_times = 2
+              endif
+            endunless
           -%}
           <div class="swiper" id="nw-collection-list-{{ section.id }}" data-nw-collection-slider>
             <div class="swiper-wrapper">
@@ -251,6 +254,12 @@
     {
       "type": "header",
       "content": "SLIDER CONTROLS"
+    },
+    {
+      "type": "checkbox",
+      "id": "no_loop",
+      "label": "No Loop",
+      "default": false
     },
     {
       "type": "checkbox",

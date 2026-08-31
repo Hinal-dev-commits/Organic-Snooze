@@ -1,32 +1,63 @@
 {{ 'nw-organic.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'nw-organic.js' | asset_url }}" defer="defer"></script>
 
-{%- assign nw_shell_selector = '#NwOrganic-' | append: section.id -%}
+{%- liquid
+  assign layout_width = section.settings.layout_width | default: 'page_width'
+  assign nw_shell_selector = '#NwOrganic-' | append: section.id
+-%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
+
+{%- if layout_width == 'full_width' -%}
+  <style>
+    {{ nw_shell_selector }}.nw-organic--full-width {
+      padding-top: 0;
+      padding-bottom: 0;
+      background: transparent;
+    }
+  </style>
+{%- endif -%}
 
 <div
   id="NwOrganic-{{ section.id }}"
-  class="nw-organic section-{{ section.id }}"
+  class="nw-organic nw-organic--{{ layout_width }} section-{{ section.id }}"
   style="
     --nw-organic-brand-bg: {{ section.settings.brand_column_bg }};
     --nw-organic-border-color: {{ section.settings.table_border_color }};
-    --nw-organic-heading-color: {{ section.settings.heading_color }};
-    --nw-organic-desc-color: {{ section.settings.description_color }};
     --nw-organic-cell-text-color: {{ section.settings.cell_text_color }};
+    --nw-organic-table-bg: {{ section.settings.table_bg }};
+    {%- if layout_width == 'full_width' -%}
+      --nw-organic-content-panel-bg: {{ section.settings.content_panel_bg }};
+      --nw-organic-heading-color: {{ section.settings.content_panel_heading_color }};
+      --nw-organic-desc-color: {{ section.settings.content_panel_description_color }};
+    {%- else -%}
+      --nw-organic-heading-color: {{ section.settings.heading_color }};
+      --nw-organic-desc-color: {{ section.settings.description_color }};
+    {%- endif -%}
   "
 >
-  <div class="page-width">
-    <div class="nw-organic__wrapper{%- render 'nw-scroll-animation' -%}">
+  <div class="nw-organic__inner{% if layout_width == 'page_width' %} page-width {% else %} full-width{% endif %}">
+    <div class="nw-organic__wrapper{% if section.settings.image_position == 'left' %} nw-organic__wrapper--image-left{% endif %}{%- render 'nw-scroll-animation' -%}">
       <div class="nw-organic__header">
+        {%- if layout_width == 'page_width' -%}
         {% render 'nw-section-header',
           heading: section.settings.heading,
           description: section.settings.description,
           section_index: section.index
         %}
+        {%- endif -%}
       </div>
 
       <div class="nw-organic__main{% if section.settings.image_position == 'left' %} nw-organic__main--image-left{% endif %}">
         <div class="nw-organic__table-col">
+          <div class="nw-organic__header">
+            {%- if layout_width == 'full_width' -%}
+            {% render 'nw-section-header',
+              heading: section.settings.heading,
+                description: section.settings.description,
+                section_index: section.index
+              %}
+            {%- endif -%}
+          </div>
           <div class="nw-organic__table">
             <div class="nw-organic__table-row nw-organic__table-row--head">
               <div class="nw-organic__cell nw-organic__cell--feature"></div>
@@ -315,41 +346,47 @@
     },
     {
       "type": "header",
-      "content": "Table colors"
+      "content": "TABLE COLORS"
     },
     {
       "type": "color",
       "id": "brand_column_bg",
-      "label": "Brand column background",
+      "label": "Brand Column Background",
       "default": "#FFFCF0",
       "alpha": true
     },
     {
       "type": "color",
       "id": "table_border_color",
-      "label": "Table border color",
+      "label": "Table Border Color",
       "default": "rgba(97, 57, 22, 0.2)",
       "alpha": true
     },
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading color",
+      "label": "Heading Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "description_color",
-      "label": "Description color",
+      "label": "Description Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "cell_text_color",
-      "label": "Table text color",
+      "label": "Table Text Color",
       "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "table_bg",
+      "label": "Table Background Color",
       "alpha": true
     },
     {
@@ -358,8 +395,45 @@
     },
     {
       "type": "select",
+      "id": "layout_width",
+      "label": "t:sections.nw-organic.settings.layout_width.label",
+      "default": "page_width",
+      "options": [
+        {
+          "value": "page_width",
+          "label": "t:sections.nw-organic.settings.layout_width.options__1.label"
+        },
+        {
+          "value": "full_width",
+          "label": "t:sections.nw-organic.settings.layout_width.options__2.label"
+        }
+      ]
+    },
+    {
+      "type": "color_background",
+      "id": "content_panel_bg",
+      "label": "t:sections.nw-organic.settings.content_panel_bg.label",
+      "default": "linear-gradient(132deg, rgba(169, 107, 62, 1) 0.9%, rgba(78, 47, 20, 1) 57.786%)",
+      "visible_if": "{{ section.settings.layout_width == 'full_width' }}"
+    },
+    {
+      "type": "color",
+      "id": "content_panel_heading_color",
+      "label": "t:sections.nw-organic.settings.content_panel_heading_color.label",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.layout_width == 'full_width' }}"
+    },
+    {
+      "type": "color",
+      "id": "content_panel_description_color",
+      "label": "t:sections.nw-organic.settings.content_panel_description_color.label",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.layout_width == 'full_width' }}"
+    },
+    {
+      "type": "select",
       "id": "media_type",
-      "label": "Media type",
+      "label": "Media Type",
       "default": "image",
       "options": [
         {
@@ -381,27 +455,27 @@
     {
       "type": "checkbox",
       "id": "video_autoplay",
-      "label": "Autoplay video",
+      "label": "Autoplay Video",
       "default": false,
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
       "type": "checkbox",
       "id": "show_play_icon",
-      "label": "Show play/pause controls",
+      "label": "Show Play/pause Controls",
       "default": true,
       "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_autoplay == false }}"
     },
     {
       "type": "image_picker",
       "id": "video_poster",
-      "label": "Video poster (desktop)",
+      "label": "Video Poster (Desktop)",
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
       "type": "image_picker",
       "id": "video_poster_mobile",
-      "label": "Video poster (mobile)",
+      "label": "Video Poster (Mobile)",
       "info": "Optional. Uses desktop poster when empty.",
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
@@ -617,7 +691,7 @@
         {
           "type": "checkbox",
           "id": "col1_use_custom_icon",
-          "label": "Use custom brand icon",
+          "label": "Use Custom Brand Icon",
           "default": false
         },
         {
@@ -656,13 +730,13 @@
         {
           "type": "image_picker",
           "id": "col1_custom_icon",
-          "label": "Brand custom icon",
+          "label": "Brand Custom Icon",
           "visible_if": "{{ block.settings.col1_use_custom_icon }}"
         },
         {
           "type": "color",
           "id": "col1_icon_color",
-          "label": "Brand column icon color",
+          "label": "Brand Column Icon Color",
           "default": "#878735",
           "alpha": true
         },
@@ -675,7 +749,7 @@
         {
           "type": "checkbox",
           "id": "col2_use_custom_icon",
-          "label": "Use custom competitor icon",
+          "label": "Use Custom Competitor Icon",
           "default": false
         },
         {
@@ -714,13 +788,13 @@
         {
           "type": "image_picker",
           "id": "col2_custom_icon",
-          "label": "Competitor custom icon",
+          "label": "Competitor Custom Icon",
           "visible_if": "{{ block.settings.col2_use_custom_icon }}"
         },
         {
           "type": "color",
           "id": "col2_icon_color",
-          "label": "Competitor column icon color",
+          "label": "Competitor Column Icon Color",
           "default": "#B61919",
           "alpha": true
         },

@@ -44,7 +44,12 @@
                 {{ block.shopify_attributes }}
                 data-slide-index="{{ forloop.index0 }}"
               >
-                {% render 'nw-trusted-people-card', block: block %}
+                {%- case block.type -%}
+                  {%- when 'testimonial' -%}
+                    {% render 'nw-trusted-people-testimonial-card', block: block %}
+                  {%- when 'person' -%}
+                    {% render 'nw-trusted-people-card', block: block %}
+                {%- endcase -%}
               </div>
             {%- endfor -%}
           </div>
@@ -429,6 +434,51 @@
     }
   ],
   "blocks": [
+    {
+      "type": "testimonial",
+      "name": "t:sections.nw-trusted-people.blocks.testimonial.name",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "t:sections.nw-trusted-people.blocks.testimonial.settings.rating.label",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "t:sections.nw-trusted-people.blocks.testimonial.settings.quote.label",
+          "default": "<p>“My husband and I used to toss all night because we both sleep differently. This mattress supports both of us without sinking or dipping. We wake up at the same time actually feeling good.”</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.nw-trusted-people.blocks.testimonial.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "t:sections.nw-trusted-people.blocks.testimonial.settings.name.label",
+          "default": "Tara N."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_verified",
+          "label": "t:sections.nw-trusted-people.blocks.testimonial.settings.show_verified.label",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "verified_text",
+          "label": "t:sections.nw-trusted-people.blocks.testimonial.settings.verified_text.label",
+          "default": "Verified Buyer",
+          "visible_if": "{{ block.settings.show_verified == true }}"
+        }
+      ]
+    },
     {
       "type": "person",
       "name": "Person card",

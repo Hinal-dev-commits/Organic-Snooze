@@ -46,6 +46,19 @@
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
+.nw-collection-tabs__main.nw-collection-tabs__main--without-sidebar{
+  display: flex;
+}
+.nw-collection-tabs__main--without-sidebar .nw-collection-tabs__slider-col{
+  margin-right: 0px;
+}
+.nw-collection-tabs__main--without-sidebar .nw-collection-tabs__swiper{
+  overflow: hidden;
+}
+.nw-collection-full-width .nw-collection-tabs__main.nw-collection-tabs__main--without-sidebar{
+  max-width: 100%;
+  width: max-content;
+}
 
 .nw-collection-tabs__tab.is-active {
   background: var(--nw-collection-tabs-tab-active-bg, var(--secondary-color));

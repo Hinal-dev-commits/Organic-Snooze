@@ -41,10 +41,12 @@
 
 <nw-featured-marquee
   id="NwFeaturedMarquee-{{ section.id }}"
-  class="nw-featured-marquee nw-featured-marquee--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} nw-featured-marquee--pause{% endif %}{% if section.settings.show_edge_fade %} nw-featured-marquee--edge-fade{% endif %} section-{{ section.id }}"
+  class="nw-featured-marquee nw-featured-marquee--{{ section.settings.direction }}{% if section.settings.pause_on_hover %} nw-featured-marquee--pause{% endif %}{% if section.settings.show_edge_fade %} nw-featured-marquee--edge-fade{% endif %}{% unless section.settings.enable_animation_desktop %} nw-featured-marquee--static-desktop{% endunless %}{% unless section.settings.enable_animation_mobile %} nw-featured-marquee--static-mobile{% endunless %} section-{{ section.id }}"
   data-direction="{{ section.settings.direction }}"
   data-speed="{{ section.settings.speed }}"
   data-pause-hover="{{ section.settings.pause_on_hover }}"
+  data-animate-desktop="{% if section.settings.enable_animation_desktop %}true{% else %}false{% endif %}"
+  data-animate-mobile="{% if section.settings.enable_animation_mobile %}true{% else %}false{% endif %}"
 >
   <div class="nw-featured-marquee__inner">
     {%- if section.settings.heading != blank -%}
@@ -120,6 +122,18 @@
       "content": "MARQUEE SETTINGS"
     },
     {
+      "type": "checkbox",
+      "id": "enable_animation_desktop",
+      "label": "Enable Animation (Desktop)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation_mobile",
+      "label": "Enable Animation (Mobile)",
+      "default": true
+    },
+    {
       "type": "select",
       "id": "direction",
       "label": "Direction",
@@ -133,7 +147,8 @@
           "label": "Left To Right"
         }
       ],
-      "default": "rtl"
+      "default": "rtl",
+      "visible_if": "{{ section.settings.enable_animation_desktop == true or section.settings.enable_animation_mobile == true }}"
     },
     {
       "type": "range",
@@ -143,19 +158,22 @@
       "max": 80,
       "step": 2,
       "unit": "s",
-      "default": 30
+      "default": 30,
+      "visible_if": "{{ section.settings.enable_animation_desktop == true or section.settings.enable_animation_mobile == true }}"
     },
     {
       "type": "checkbox",
       "id": "pause_on_hover",
       "label": "Pause On Hover",
-      "default": true
+      "default": true,
+      "visible_if": "{{ section.settings.enable_animation_desktop == true or section.settings.enable_animation_mobile == true }}"
     },
     {
       "type": "checkbox",
       "id": "show_edge_fade",
       "label": "Show Edge Gradient / Shadow",
-      "default": true
+      "default": true,
+      "visible_if": "{{ section.settings.enable_animation_desktop == true or section.settings.enable_animation_mobile == true }}"
     },
     {
       "type": "range",

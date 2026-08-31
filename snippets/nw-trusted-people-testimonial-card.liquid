@@ -1,0 +1,53 @@
+{% doc %}
+Renders a written testimonial card for the trusted people slider.
+@param {object} block - Section block
+{% enddoc %}
+
+<article class="nw-trusted-people__card nw-trusted-people__card--testimonial" data-nw-tp-card>
+  <div class="nw-trusted-people__testimonial-inner">
+    {% render 'nw-stars',
+      rating: block.settings.rating,
+      class: 'nw-trusted-people__stars',
+      star_class: 'nw-trusted-people__star',
+      icon: 'star-rating-sm'
+    %}
+
+    {%- if block.settings.quote != blank -%}
+      <div class="nw-trusted-people__testimonial-quote rte">{{ block.settings.quote }}</div>
+    {%- endif -%}
+
+    {%- if block.settings.name != blank or block.settings.image != blank or block.settings.show_verified -%}
+      <div class="nw-trusted-people__testimonial-author">
+        {%- if block.settings.name != blank or block.settings.image != blank -%}
+          <div class="nw-trusted-people__testimonial-author-main">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 96 }}"
+                alt=""
+                class="nw-trusted-people__testimonial-avatar"
+                width=""
+                height=""
+                loading="lazy"
+              >
+            {%- endif -%}
+            {%- if block.settings.name != blank -%}
+              <span class="nw-trusted-people__testimonial-name">{{ block.settings.name }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.show_verified -%}
+          <span class="nw-trusted-people__testimonial-divider" aria-hidden="true"></span>
+          <div class="nw-trusted-people__testimonial-verified">
+            <span class="nw-trusted-people__testimonial-verified-icon" aria-hidden="true">
+              {% render 'nw-icon', icon: 'verified' %}
+            </span>
+            <span class="nw-trusted-people__testimonial-verified-text">
+              {{ block.settings.verified_text | default: 'Verified Buyer' }}
+            </span>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>

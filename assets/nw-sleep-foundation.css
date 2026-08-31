@@ -1,0 +1,414 @@
+.nw-sleep-foundation {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(78, 47, 20, 0.4);
+}
+
+.nw-sleep-foundation .page-width {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.nw-sleep-foundation__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.nw-sleep-foundation__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 810px;
+  text-align: center;
+}
+
+.nw-sleep-foundation__header .nw-rating {
+  justify-content: center;
+}
+
+.nw-sleep-foundation__grid {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+}
+
+.nw-sleep-foundation__card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.nw-sleep-foundation__card--standard {
+  flex: 1 1 0;
+  background: #ffffff;
+}
+
+.nw-sleep-foundation__card--gift {
+  flex: 0 0 440px;
+  width: 440px;
+  max-width: 100%;
+  padding: 19px 20px;
+  background: var(--nw-sf-gift-bg, #fffcf0);
+  border: 1px solid rgba(97, 57, 22, 0.2);
+}
+
+.nw-sleep-foundation__media {
+  position: relative;
+  width: 100%;
+  height: 207px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #1a1a1a;
+}
+
+.nw-sleep-foundation__card--gift .nw-sleep-foundation__media {
+  height: 230px;
+  border-radius: 8px;
+}
+
+.nw-sleep-foundation__video,
+.nw-sleep-foundation__poster,
+.nw-sleep-foundation__img,
+.nw-sleep-foundation__placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nw-sleep-foundation__img--desktop {
+  display: block;
+}
+
+.nw-sleep-foundation__img--mobile {
+  display: none;
+}
+
+.nw-sleep-foundation__video {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.nw-sleep-foundation__card.is-playing .nw-sleep-foundation__video {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 5;
+}
+
+.nw-sleep-foundation__card.is-playing .nw-sleep-foundation__poster,
+.nw-sleep-foundation__card.is-playing .nw-sleep-foundation__img,
+.nw-sleep-foundation__card.is-playing .nw-sleep-foundation__placeholder,
+.nw-sleep-foundation__card.is-playing [data-nw-sf-play] {
+  display: none;
+}
+
+.nw-sleep-foundation__placeholder {
+  background: #2d241e;
+}
+
+.nw-sleep-foundation__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 4;
+  backdrop-filter: blur(2.8px);
+  -webkit-backdrop-filter: blur(2.8px);
+  background: rgba(255, 255, 255, 0.45);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.nw-sleep-foundation__play:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.nw-sleep-foundation__play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  margin-left: 3px;
+}
+
+.nw-sleep-foundation__play-icon svg {
+  width: 18px;
+  height: 20px;
+  display: block;
+}
+
+.nw-sleep-foundation__badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 6px;
+  border-radius: 2px;
+  border: 1px solid var(--nw-sf-badge-bg, #878735);
+  background: var(--nw-sf-badge-bg, #878735);
+  color: var(--nw-sf-badge-text, #ffffff);
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.nw-sleep-foundation__badge svg,
+.nw-sleep-foundation__badge-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.nw-sleep-foundation__badge-icon {
+  object-fit: contain;
+  display: block;
+}
+
+.nw-sleep-foundation__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: var(--nw-sf-card-bg, #ffffff);
+  flex: 1 1 auto;
+}
+
+.nw-sleep-foundation__card--gift .nw-sleep-foundation__body {
+  padding: 0 0 0;
+  background: transparent;
+  gap: 10px;
+}
+
+.nw-sleep-foundation__gift-header {
+  display: none;
+}
+
+.nw-sleep-foundation__label {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--nw-sf-label-color, #4e2f14);
+}
+
+.nw-sleep-foundation__divider {
+  width: 100%;
+  height: 0;
+  border: none;
+  border-top: 1px solid rgba(97, 57, 22, 0.2);
+  margin: 0;
+}
+
+.nw-sleep-foundation__title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.nw-sleep-foundation__title {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-heading-family);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  color: var(--nw-sf-title-color, #613916);
+}
+
+.nw-sleep-foundation__card--gift .nw-sleep-foundation__title {
+  font-size: 18px;
+  color: var(--nw-sf-gift-title-color, #4e2f14);
+}
+
+.nw-sleep-foundation__description {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.42;
+  color: var(--nw-sf-desc-color, #4e2f14);
+  text-align: left;
+}
+
+.nw-sleep-foundation__card-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nw-sleep-foundation__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--nw-sf-arrow-bg, #613916);
+  color: var(--nw-sf-arrow-color, #ffffff);
+}
+
+.nw-sleep-foundation__arrow svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.nw-sleep-foundation__gift-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1199px) {
+  .nw-sleep-foundation__card--gift {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .nw-sleep-foundation__grid {
+    flex-wrap: wrap;
+  }
+
+  .nw-sleep-foundation__card--standard {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 280px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-sleep-foundation {
+    border-bottom: none;
+  }
+
+  .nw-sleep-foundation .page-width {
+    padding: 0 14px;
+  }
+
+  .nw-sleep-foundation__wrapper {
+    gap: 32px;
+  }
+
+  .nw-sleep-foundation__grid {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nw-sleep-foundation__card--standard,
+  .nw-sleep-foundation__card--gift {
+    flex: 1 1 auto;
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .nw-sleep-foundation__card--gift {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .nw-sleep-foundation__media {
+    height: 186px;
+  }
+
+  .nw-sleep-foundation__card--gift .nw-sleep-foundation__media {
+    height: 108px;
+    width: 117px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+
+  .nw-sleep-foundation__img--desktop {
+    display: none;
+  }
+
+  .nw-sleep-foundation__img--mobile {
+    display: block;
+  }
+
+  .nw-sleep-foundation__body {
+    padding: 14px;
+  }
+
+  .nw-sleep-foundation__card--gift .nw-sleep-foundation__body {
+    padding: 0;
+    gap: 10px;
+  }
+
+  .nw-sleep-foundation__gift-header {
+    display: block;
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--nw-sf-gift-header-color, #613916);
+  }
+
+  .nw-sleep-foundation__gift-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nw-sleep-foundation__label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .nw-sleep-foundation__title {
+    font-size: 20px;
+    line-height: 1.25;
+    color: var(--nw-sf-title-color, #4e2f14);
+  }
+
+  .nw-sleep-foundation__card--gift .nw-sleep-foundation__title {
+    font-size: 16px;
+  }
+
+  .nw-sleep-foundation__description {
+    font-size: 12px;
+  }
+
+  .nw-sleep-foundation__card--gift .nw-sleep-foundation__badge {
+    top: 6px;
+    left: 6px;
+    font-size: 10px;
+  }
+}

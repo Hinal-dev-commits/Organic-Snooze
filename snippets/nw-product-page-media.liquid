@@ -1,0 +1,132 @@
+{% doc %}
+Renders product page media wrapper with badges and gallery for non-product templates.
+@param {object} section - Section object
+@param {object} product - Selected product
+@param {object} [variant_images] - Variant image sources for product media fallback
+{% enddoc %}
+
+{%- liquid
+  assign range_start = section.settings.custom_media_range_start | default: 1
+  assign range_end = section.settings.custom_media_range_end | default: 1
+  if range_start > range_end
+    assign range_start = range_end
+  endif
+
+  assign slide_count = 0
+  assign use_custom = section.settings.use_custom_media_images
+
+  if use_custom
+    for i in (1..10)
+      assign media_image = blank
+      case i
+        when 1
+          assign media_image = section.settings.custom_media_image_1
+        when 2
+          assign media_image = section.settings.custom_media_image_2
+        when 3
+          assign media_image = section.settings.custom_media_image_3
+        when 4
+          assign media_image = section.settings.custom_media_image_4
+        when 5
+          assign media_image = section.settings.custom_media_image_5
+        when 6
+          assign media_image = section.settings.custom_media_image_6
+        when 7
+          assign media_image = section.settings.custom_media_image_7
+        when 8
+          assign media_image = section.settings.custom_media_image_8
+        when 9
+          assign media_image = section.settings.custom_media_image_9
+        when 10
+          assign media_image = section.settings.custom_media_image_10
+      endcase
+      if i >= range_start and i <= range_end and media_image != blank
+        assign slide_count = slide_count | plus: 1
+      endif
+    endfor
+  else
+    assign slide_count = product.media.size
+  endif
+
+  assign show_gallery = true
+  assign gallery_limit = null
+  if section.settings.hide_media_slider
+    assign show_gallery = false
+  endif
+-%}
+
+<div class="nw-product-page-media{% unless show_gallery %} nw-product-page-media--static{% endunless %}">
+  <div class="nw-product-page-media__main">
+    {%- if section.settings.media_badge_left != blank -%}
+      <span class="nw-product-page-media__badge nw-product-page-media__badge--left">
+        {{ section.settings.media_badge_left }}
+      </span>
+    {%- endif -%}
+    {%- if section.settings.media_badge_right != blank -%}
+      <span class="nw-product-page-media__badge nw-product-page-media__badge--right">
+        {{ section.settings.media_badge_right }}
+      </span>
+    {%- endif -%}
+
+    {%- if slide_count == 0 -%}
+      <div class="nw-product-page-media__placeholder">
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- elsif show_gallery -%}
+      {% render 'nw-product-page-media-gallery',
+        section: section,
+        product: product,
+        variant_images: variant_images,
+        limit: gallery_limit
+      %}
+    {%- else -%}
+      {%- if use_custom -%}
+        {%- for i in (1..10) -%}
+          {%- liquid
+            assign media_image = blank
+            case i
+              when 1
+                assign media_image = section.settings.custom_media_image_1
+              when 2
+                assign media_image = section.settings.custom_media_image_2
+              when 3
+                assign media_image = section.settings.custom_media_image_3
+              when 4
+                assign media_image = section.settings.custom_media_image_4
+              when 5
+                assign media_image = section.settings.custom_media_image_5
+              when 6
+                assign media_image = section.settings.custom_media_image_6
+              when 7
+                assign media_image = section.settings.custom_media_image_7
+              when 8
+                assign media_image = section.settings.custom_media_image_8
+              when 9
+                assign media_image = section.settings.custom_media_image_9
+              when 10
+                assign media_image = section.settings.custom_media_image_10
+            endcase
+          -%}
+          {%- if i >= range_start and i <= range_end and media_image != blank -%}
+            <img
+              src="{{ media_image | image_url: width: 1600 }}"
+              alt="{{ media_image.alt | default: product.title | escape }}"
+              class="nw-product-page-media__img"
+              loading="eager"
+              width=""
+              height=""
+            >
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {% render 'nw-product-page-media-gallery',
+          section: section,
+          product: product,
+          variant_images: variant_images,
+          limit: 1
+        %}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>

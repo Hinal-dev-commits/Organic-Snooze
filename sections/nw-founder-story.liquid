@@ -230,18 +230,18 @@
   "settings": [
     {
       "type": "header",
-      "content": "Section header"
+      "content": "SECTION HEADER"
     },
     {
       "type": "checkbox",
       "id": "show_rating",
-      "label": "Show star rating",
+      "label": "Show Star Rating",
       "default": true
     },
     {
       "type": "range",
       "id": "star_rating",
-      "label": "Star rating",
+      "label": "Star Rating",
       "min": 0,
       "max": 5,
       "step": 1,
@@ -251,7 +251,7 @@
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow text",
+      "label": "Eyebrow Text",
       "default": "Real sleepers, real mornings"
     },
     {
@@ -262,12 +262,12 @@
     },
     {
       "type": "header",
-      "content": "Media"
+      "content": "MEDIA"
     },
     {
       "type": "select",
       "id": "media_type",
-      "label": "Media type",
+      "label": "Media Type",
       "default": "video",
       "options": [
         { "value": "video", "label": "Video" },
@@ -283,27 +283,27 @@
     {
       "type": "checkbox",
       "id": "video_autoplay",
-      "label": "Autoplay video",
+      "label": "Autoplay Video",
       "default": false,
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
       "type": "checkbox",
       "id": "show_play_icon",
-      "label": "Show play/pause controls",
+      "label": "Show Play/pause Controls",
       "default": true,
       "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_autoplay == false }}"
     },
     {
       "type": "image_picker",
       "id": "poster",
-      "label": "Video poster image (desktop)",
+      "label": "Video Poster Image (Desktop)",
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
     {
       "type": "image_picker",
       "id": "poster_mobile",
-      "label": "Video poster image (mobile)",
+      "label": "Video Poster Image (Mobile)",
       "info": "Optional. Uses desktop poster when empty.",
       "visible_if": "{{ section.settings.media_type == 'video' }}"
     },
@@ -316,17 +316,17 @@
     {
       "type": "text",
       "id": "overlay_text",
-      "label": "Media overlay text",
+      "label": "Media Overlay Text",
       "default": "Ultimate Snooze Mattress"
     },
     {
       "type": "header",
-      "content": "Testimonial"
+      "content": "TESTIMONIAL"
     },
     {
       "type": "image_picker",
       "id": "avatar",
-      "label": "Avatar image"
+      "label": "Avatar Image"
     },
     {
       "type": "richtext",
@@ -343,42 +343,42 @@
     {
       "type": "checkbox",
       "id": "show_verified",
-      "label": "Show verified badge",
+      "label": "Show Verified Badge",
       "default": true
     },
     {
       "type": "text",
       "id": "role",
-      "label": "Role / title",
+      "label": "Role / Title",
       "default": "Longevity Expert & Founder of The Ultimate Human"
     },
     {
       "type": "header",
-      "content": "Footer content"
+      "content": "FOOTER CONTENT"
     },
     {
       "type": "checkbox",
       "id": "show_footer_content",
-      "label": "Show footer content",
+      "label": "Show Footer Content",
       "default": false
     },
     {
       "type": "inline_richtext",
       "id": "footer_heading",
-      "label": "Footer heading",
+      "label": "Footer Heading",
       "default": "Alignment Starts at the Pillow",
       "visible_if": "{{ section.settings.show_footer_content == true }}"
     },
     {
       "type": "richtext",
       "id": "footer_description",
-      "label": "Footer description",
+      "label": "Footer Description",
       "default": "<p>The right loft helps support your head, neck, shoulders, and spine while your body rests, repairs, and resets.</p>",
       "visible_if": "{{ section.settings.show_footer_content == true }}"
     },
     {
       "type": "header",
-      "content": "Disclaimer"
+      "content": "DISCLAIMER"
     },
     {
       "type": "richtext",
@@ -388,96 +388,96 @@
     },
     {
       "type": "header",
-      "content": "Text colors"
+      "content": "TEXT COLORS"
     },
     {
       "type": "color",
       "id": "heading_color",
-      "label": "Heading color",
+      "label": "Heading Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "star_color",
-      "label": "Star color",
+      "label": "Star Color",
       "default": "#E57B1E",
       "alpha": true
     },
     {
       "type": "color",
       "id": "star_color_inactive",
-      "label": "Star inactive color",
+      "label": "Star Inactive Color",
       "default": "#D1D5DB",
       "alpha": true
     },
     {
       "type": "color",
       "id": "card_border_color",
-      "label": "Card border color",
+      "label": "Card Border Color",
       "default": "rgba(97, 57, 22, 0.2)",
       "alpha": true
     },
     {
       "type": "color",
       "id": "card_bg_color",
-      "label": "Card background",
+      "label": "Card Background",
       "default": "#FBF9F6",
       "alpha": true
     },
     {
       "type": "color",
       "id": "quote_color",
-      "label": "Quote color",
+      "label": "Quote Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "name_color",
-      "label": "Name color",
+      "label": "Name Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "role_color",
-      "label": "Role color",
+      "label": "Role Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "stat_border_color",
-      "label": "Stat divider color",
+      "label": "Stat Divider Color",
       "default": "rgba(97, 57, 22, 0.2)",
       "alpha": true
     },
     {
       "type": "color",
       "id": "stat_value_color",
-      "label": "Stat value color",
+      "label": "Stat Value Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "stat_desc_color",
-      "label": "Stat description color",
+      "label": "Stat Description Color",
       "default": "#613916",
       "alpha": true
     },
     {
       "type": "color",
       "id": "disclaimer_color",
-      "label": "Disclaimer color",
+      "label": "Disclaimer Color",
       "default": "rgba(97, 57, 22, 0.8)",
       "alpha": true
     },
     {
       "type": "color",
       "id": "footer_heading_color",
-      "label": "Footer heading color",
+      "label": "Footer Heading Color",
       "default": "#613916",
       "alpha": true,
       "visible_if": "{{ section.settings.show_footer_content == true }}"
@@ -485,19 +485,19 @@
     {
       "type": "color",
       "id": "footer_description_color",
-      "label": "Footer description color",
+      "label": "Footer Description Color",
       "default": "#613916",
       "alpha": true,
       "visible_if": "{{ section.settings.show_footer_content == true }}"
     },
     {
       "type": "header",
-      "content": "Background"
+      "content": "BACKGROUND"
     },
     {
       "type": "select",
       "id": "bg_type",
-      "label": "Background type",
+      "label": "Background Type",
       "default": "none",
       "options": [
         { "value": "none", "label": "None" },
@@ -509,7 +509,7 @@
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background color",
+      "label": "Background Color",
       "default": "#FFFFFF",
       "alpha": true,
       "visible_if": "{{ section.settings.bg_type == 'color' }}"
@@ -517,29 +517,29 @@
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background image (desktop)",
+      "label": "Background Image (Desktop)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "image_picker",
       "id": "bg_image_mobile",
-      "label": "Background image (mobile)",
+      "label": "Background Image (Mobile)",
       "visible_if": "{{ section.settings.bg_type == 'image' }}"
     },
     {
       "type": "color_background",
       "id": "bg_gradient",
-      "label": "Background gradient",
+      "label": "Background Gradient",
       "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
     },
     {
       "type": "header",
-      "content": "Section spacing"
+      "content": "SECTION SPACING"
     },
     {
       "type": "range",
       "id": "padding_top_desktop",
-      "label": "Padding top (desktop)",
+      "label": "Padding Top (Desktop)",
       "min": 0,
       "max": 160,
       "step": 4,
@@ -549,7 +549,7 @@
     {
       "type": "range",
       "id": "padding_bottom_desktop",
-      "label": "Padding bottom (desktop)",
+      "label": "Padding Bottom (Desktop)",
       "min": 0,
       "max": 160,
       "step": 4,
@@ -559,7 +559,7 @@
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "Padding top (mobile)",
+      "label": "Padding Top (Mobile)",
       "min": 0,
       "max": 120,
       "step": 4,
@@ -569,7 +569,7 @@
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "Padding bottom (mobile)",
+      "label": "Padding Bottom (Mobile)",
       "min": 0,
       "max": 120,
       "step": 4,

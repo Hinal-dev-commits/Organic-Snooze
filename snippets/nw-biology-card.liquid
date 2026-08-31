@@ -1,0 +1,39 @@
+{% doc %}
+Renders a biology fact card for the NW Biology section slider.
+@param {object} block - Section block with tag, title, description, and icon settings
+@example
+{% render 'nw-biology-card', block: block %}
+{% enddoc %}
+
+<article class="nw-biology__card">
+  {%- if block.settings.icon != blank -%}
+    <div class="nw-biology__card-icon">
+      <img
+        src="{{ block.settings.icon | image_url: width: 100 }}"
+        alt=""
+        class="nw-biology__card-icon-img"
+        loading="lazy"
+        width="50"
+        height="50"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="nw-biology__card-content">
+    {%- if block.settings.tag != blank -%}
+      <span class="nw-biology__card-tag">{{ block.settings.tag }}</span>
+    {%- endif -%}
+
+    <div class="nw-biology__card-copy">
+      {%- if block.settings.title != blank -%}
+        <h3 class="nw-biology__card-title">{{ block.settings.title }}</h3>
+      {%- endif -%}
+
+      {%- if block.settings.description != blank -%}
+        <div class="nw-biology__card-description rte">
+          {{ block.settings.description }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

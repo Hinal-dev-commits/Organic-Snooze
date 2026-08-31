@@ -1,0 +1,545 @@
+{{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
+{{ 'nw-biology.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-biology.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwBiology-' | append: section.id
+  assign card_blocks = section.blocks | where: 'type', 'card'
+  assign card_count = card_blocks.size
+  assign pagination_id = 'NwBiologyPagination-' | append: section.id
+  assign image_alt = section.settings.image.alt | default: section.settings.heading | strip_html | escape
+  assign image_mobile_alt = section.settings.image_mobile.alt | default: image_alt
+  assign show_button = false
+  if section.settings.show_button and section.settings.button_text != blank
+    assign show_button = true
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#4e2f14' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-biology
+  id="NwBiology-{{ section.id }}"
+  class="nw-biology section-{{ section.id }}"
+  data-block-count="{{ card_count }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  style="
+    --nw-biology-subheading-color: {{ section.settings.subheading_color }};
+    --nw-biology-body-color: {{ section.settings.body_color }};
+    --nw-biology-card-bg: {{ section.settings.card_bg_color }};
+    --nw-biology-card-text: {{ section.settings.card_text_color }};
+    --nw-biology-card-border: {{ section.settings.card_border_color }};
+    --nw-biology-tag-bg: {{ section.settings.tag_bg_color }};
+    --nw-biology-tag-text: {{ section.settings.tag_text_color }};
+    --nw-biology-button-bg: {{ section.settings.button_bg_color }};
+    --nw-biology-button-text: {{ section.settings.button_text_color }};
+    --nw-swiper-arrow-bg: {{ section.settings.arrow_bg_color }};
+    --nw-swiper-arrow-color: {{ section.settings.arrow_icon_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-biology__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-biology__media-col">
+        <div class="nw-biology__image-wrap">
+          {%- if section.settings.image != blank -%}
+            <img
+              src="{{ section.settings.image | image_url: width: 1240 }}"
+              alt="{{ image_alt }}"
+              class="nw-biology__image nw-biology__image--desktop"
+              loading="lazy"
+              width="620"
+              height="461"
+            >
+            {%- if section.settings.image_mobile != blank -%}
+              <img
+                src="{{ section.settings.image_mobile | image_url: width: 686 }}"
+                alt="{{ image_mobile_alt }}"
+                class="nw-biology__image nw-biology__image--mobile"
+                loading="lazy"
+                width="343"
+                height="255"
+              >
+            {%- else -%}
+              <img
+                src="{{ section.settings.image | image_url: width: 686 }}"
+                alt="{{ image_alt }}"
+                class="nw-biology__image nw-biology__image--mobile"
+                loading="lazy"
+                width="343"
+                height="255"
+              >
+            {%- endif -%}
+          {%- else -%}
+            <span class="nw-biology__image-placeholder" aria-hidden="true"></span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="nw-biology__content-col">
+        {%- if section.settings.heading != blank or section.settings.subheading != blank or section.settings.body_text != blank -%}
+          <div class="nw-biology__intro">
+            {%- if section.settings.heading != blank -%}
+              {% render 'nw-section-header',
+                heading: section.settings.heading,
+                section_index: section.index
+              %}
+            {%- endif -%}
+
+            {%- if section.settings.subheading != blank -%}
+              <p class="nw-biology__subheading">{{ section.settings.subheading }}</p>
+            {%- endif -%}
+
+            {%- if section.settings.body_text != blank -%}
+              <div class="nw-biology__body rte">
+                {{ section.settings.body_text }}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if card_count > 0 -%}
+          <div class="nw-biology__slider-wrap">
+            <div class="swiper nw-biology__swiper" id="NwBiologySwiper-{{ section.id }}">
+              <div class="swiper-wrapper">
+                {%- for block in card_blocks -%}
+                  <div
+                    class="swiper-slide"
+                    data-slide-index="{{ forloop.index0 }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {% render 'nw-biology-card', block: block %}
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+
+          {%- if section.settings.show_pagination or section.settings.show_arrows -%}
+            <div class="nw-biology__nav">
+              {%- if section.settings.show_arrows and card_count > 1 -%}
+                {% render 'nw-swiper-arrows' %}
+              {%- endif -%}
+
+              {%- if section.settings.show_pagination and card_count > 1 -%}
+                {% render 'nw-swiper-pagination',
+                  id: pagination_id,
+                  data_attribute: 'data-nw-biology-pagination',
+                  blocks: card_blocks
+                %}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if show_button -%}
+          <div class="nw-biology__cta">
+            {% render 'nw-button',
+              text: section.settings.button_text,
+              link: section.settings.button_link,
+              style: section.settings.button_style,
+              btn_class: 'nw-biology__button'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</nw-biology>
+
+{% schema %}
+{
+  "name": "t:sections.nw-biology.name",
+  "tag": "section",
+  "class": "section-nw-biology",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Recovery Isn't a Feeling. It's Biology."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "You already know sleep matters. But do you know what one bad night actually does to your body?"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Body Text",
+      "default": "<p>Gary Brecka has spent decades on human biology, from mortality research to longevity. Here's what the science says about why sleep is the foundation of recovery, and what happens when you cut it short.</p>"
+    },
+    {
+      "type": "header",
+      "content": "HERO IMAGE"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile Optional)",
+      "info": "Uses the desktop image when empty."
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "CARD COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_text_color",
+      "label": "Card Text",
+      "default": "#4E2F14"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_border_color",
+      "label": "Card Border",
+      "default": "#4E2F1426"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tag_bg_color",
+      "label": "Tag Background",
+      "default": "#A96B3E"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tag_text_color",
+      "label": "Tag Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Slider Arrows",
+      "default": true,
+      "info": "Arrows display on desktop only."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Slider Pagination",
+      "default": true
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "pagination_color",
+      "label": "Pagination Bullet",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "arrow_bg_color",
+      "label": "Arrow Background",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "arrow_icon_color",
+      "label": "Arrow Icon Color",
+      "default": "#4E2F14",
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "header",
+      "content": "CTA BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true,
+      "info": "Button displays on mobile only."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Watch Gary Break Down the Science",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "button_bg_color",
+      "label": "Button Background",
+      "default": "#A96B3E",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "gradient",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#4E2F14",
+      "visible_if": "{{ section.settings.bg_type == 'color' or section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "default": "linear-gradient(164deg, rgba(169, 107, 62, 1) 0.9%, rgba(78, 47, 20, 1) 57.79%)",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "t:sections.nw-biology.blocks.card.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "t:sections.nw-biology.blocks.card.settings.tag.label",
+          "default": "METABOLISM"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "t:sections.nw-biology.blocks.card.settings.title.label",
+          "default": "Pre-Diabetic in One Week"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "t:sections.nw-biology.blocks.card.settings.description.label",
+          "default": "<p>A landmark Harvard study showed healthy young men developed pre-diabetic metabolic markers after just one week of restricted sleep, even when eating carefully.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "t:sections.nw-biology.blocks.card.settings.icon.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-biology.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "tag": "METABOLISM",
+            "title": "Pre-Diabetic in One Week",
+            "description": "<p>A landmark Harvard study showed healthy young men developed pre-diabetic metabolic markers after just one week of restricted sleep, even when eating carefully.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "tag": "LONG-TERM BRAIN HEALTH",
+            "title": "A 30% Higher Dementia Risk",
+            "description": "<p>A 25-year study of nearly 8,000 people linked chronic short sleep in midlife to a 30% higher dementia risk decades later.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "tag": "BRAIN DETOX",
+            "title": "Your Brain Cleans Itself at Night",
+            "description": "<p>During deep sleep, the brain's glymphatic system clears out waste. Cut sleep short and that nightly clean-out never fully runs.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "tag": "THE ENVIRONMENT",
+            "title": "Your Body Wants to Heal",
+            "description": "<p>\"Your body is trying to heal you. It just needs the environment.\" For Gary, sleep drives oxygen, inflammation, recovery, hormones, and cellular repair. You can't out-supplement a bad night.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "tag": "MUSCLE & RECOVERY",
+            "title": "Muscle Repairs in Deep Sleep",
+            "description": "<p>Deep sleep is where physical repair happens: growth hormone spikes, the brain detoxes, and the body rebuilds. Cut it short and recovery never fully runs.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "tag": "TESTOSTERONE",
+            "title": "Testosterone Is Made at Night",
+            "description": "<p>Gary is direct about it: testosterone is produced during sleep. Skip the deep, restorative hours and you undercut the hormones that drive energy, drive, and recovery.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "tag": "CORTISOL",
+            "title": "Poor Sleep Spikes Cortisol",
+            "description": "<p>Chronic short sleep and stress keep cortisol elevated and wear down the adrenal system. Better sleep hygiene is Gary's first lever for bringing it back into balance.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

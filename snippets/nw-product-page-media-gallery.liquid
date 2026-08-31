@@ -1,0 +1,346 @@
+{% doc %}
+Duplicate of product-media-gallery for page templates using custom section images.
+@param {object} section - Section object
+@param {object} product - Selected product
+@param {object} [variant_images] - Variant image sources for product media fallback
+@param {number} [limit] - Limit visible slides
+{% enddoc %}
+
+{%- unless section.settings.use_custom_media_images -%}
+  {% render 'product-media-gallery', product: product, variant_images: variant_images, limit: limit %}
+{%- else -%}
+  {%- liquid
+    assign range_start = section.settings.custom_media_range_start | default: 1
+    assign range_end = section.settings.custom_media_range_end | default: 1
+    if range_start > range_end
+      assign range_start = range_end
+    endif
+
+    assign media_count = 0
+    for i in (1..10)
+      assign media_image = blank
+      case i
+        when 1
+          assign media_image = section.settings.custom_media_image_1
+        when 2
+          assign media_image = section.settings.custom_media_image_2
+        when 3
+          assign media_image = section.settings.custom_media_image_3
+        when 4
+          assign media_image = section.settings.custom_media_image_4
+        when 5
+          assign media_image = section.settings.custom_media_image_5
+        when 6
+          assign media_image = section.settings.custom_media_image_6
+        when 7
+          assign media_image = section.settings.custom_media_image_7
+        when 8
+          assign media_image = section.settings.custom_media_image_8
+        when 9
+          assign media_image = section.settings.custom_media_image_9
+        when 10
+          assign media_image = section.settings.custom_media_image_10
+      endcase
+      if i >= range_start and i <= range_end and media_image != blank
+        assign media_count = media_count | plus: 1
+      endif
+    endfor
+
+    assign single_media_visible = false
+    if limit == 1
+      assign single_media_visible = true
+    endif
+
+    if media_count == 1 or single_media_visible
+      assign single_media_visible_mobile = true
+    endif
+
+    if media_count == 0 or single_media_visible_mobile or section.settings.mobile_thumbnails == 'show' or section.settings.mobile_thumbnails == 'columns' and media_count < 3
+      assign hide_mobile_slider = true
+    endif
+
+    if section.settings.media_size == 'large'
+      assign media_width = 0.65
+    elsif section.settings.media_size == 'medium'
+      assign media_width = 0.55
+    elsif section.settings.media_size == 'small'
+      assign media_width = 0.45
+    endif
+  -%}
+
+  <media-gallery
+    id="MediaGallery-{{ section.id }}"
+    role="region"
+    {% if section.settings.enable_sticky_info %}
+      class="product__column-sticky"
+    {% endif %}
+    aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
+    data-desktop-layout="{{ section.settings.gallery_layout }}"
+  >
+    <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
+    {%- liquid
+      assign nw_custom_media_controls = false
+      if section.settings.show_media_arrows or section.settings.show_media_dots
+        assign nw_custom_media_controls = true
+      endif
+    -%}
+    <slider-component
+      id="GalleryViewer-{{ section.id }}"
+      class="slider-mobile-gutter{% if nw_custom_media_controls %} nw-product-media--custom-controls{% endif %}"
+    >
+      <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
+        {{ 'accessibility.skip_to_product_info' | t }}
+      </a>
+      <div class="nw-product-media__viewport">
+        <ul
+          id="Slider-Gallery-{{ section.id }}"
+          class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
+          role="list"
+        >
+          {%- assign media_position = 0 -%}
+          {%- assign slide_index = 0 -%}
+          {%- for i in (1..10) -%}
+            {%- liquid
+              assign media_image = blank
+              case i
+                when 1
+                  assign media_image = section.settings.custom_media_image_1
+                when 2
+                  assign media_image = section.settings.custom_media_image_2
+                when 3
+                  assign media_image = section.settings.custom_media_image_3
+                when 4
+                  assign media_image = section.settings.custom_media_image_4
+                when 5
+                  assign media_image = section.settings.custom_media_image_5
+                when 6
+                  assign media_image = section.settings.custom_media_image_6
+                when 7
+                  assign media_image = section.settings.custom_media_image_7
+                when 8
+                  assign media_image = section.settings.custom_media_image_8
+                when 9
+                  assign media_image = section.settings.custom_media_image_9
+                when 10
+                  assign media_image = section.settings.custom_media_image_10
+              endcase
+            -%}
+            {%- if i >= range_start and i <= range_end and media_image != blank -%}
+              {%- if limit != null and media_position >= limit -%}
+                {%- break -%}
+              {%- endif -%}
+              {%- assign media_position = media_position | plus: 1 -%}
+              <li
+                id="Slide-{{ section.id }}-custom-{{ slide_index }}"
+                class="product__media-item grid__item slider__slide{% if slide_index == 0 %} is-active{% endif %}{% if single_media_visible %} product__media-item--single{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+                data-media-id="{{ section.id }}-custom-{{ slide_index }}"
+              >
+                {% render 'nw-product-page-media-thumbnail',
+                  image: media_image,
+                  media_count: media_count,
+                  desktop_layout: section.settings.gallery_layout,
+                  mobile_layout: section.settings.mobile_thumbnails,
+                  media_width: media_width,
+                  media_fit: section.settings.media_fit,
+                  constrain_to_viewport: section.settings.constrain_to_viewport,
+                  lazy_load: media_position > 1,
+                  alt: media_image.alt | default: product.title,
+                  image_zoom: section.settings.image_zoom
+                %}
+              </li>
+              {%- assign slide_index = slide_index | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- if nw_custom_media_controls and media_count > 1 -%}
+          {%- if section.settings.show_media_arrows and section.settings.gallery_layout == 'thumbnail_slider' -%}
+            <button type="button" class="nw-swiper-btn nw-swiper-btn--prev" aria-label="{{ 'general.slider.previous_slide' | t }}">
+              {{ 'arrow-left-2.svg' | inline_asset_content }}
+            </button>
+            <button type="button" class="nw-swiper-btn nw-swiper-btn--next" aria-label="{{ 'general.slider.next_slide' | t }}">
+              {{ 'arrow-right-2.svg' | inline_asset_content }}
+            </button>
+          {%- endif -%}
+          {%- if section.settings.show_media_dots -%}
+            <div class="nw-swiper-pagination" data-nw-media-dots>
+              {%- for i in (1..media_count) -%}
+                <span
+                  class="swiper-pagination-bullet{% if i == 1 %} swiper-pagination-bullet-active{% endif %}"
+                  data-index="{{ i | minus: 1 }}"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Go to slide {{ i }}"
+                ></span>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+      {%- if nw_custom_media_controls -%}
+        <div class="slider-buttons visually-hidden" aria-hidden="true">
+          <button type="button" class="slider-button slider-button--prev" name="previous" tabindex="-1">
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </button>
+          <div class="slider-counter caption">
+            <span class="slider-counter--current">1</span>
+            <span aria-hidden="true"> / </span>
+            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+            <span class="slider-counter--total">{{ media_count }}</span>
+          </div>
+          <button type="button" class="slider-button slider-button--next" name="next" tabindex="-1">
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </button>
+        </div>
+      {%- else -%}
+        <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
+          <button
+            type="button"
+            class="slider-button slider-button--prev"
+            name="previous"
+            aria-label="{{ 'general.slider.previous_slide' | t }}"
+          >
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </button>
+          <div class="slider-counter caption">
+            <span class="slider-counter--current">1</span>
+            <span aria-hidden="true"> / </span>
+            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+            <span class="slider-counter--total">{{ media_count }}</span>
+          </div>
+          <button
+            type="button"
+            class="slider-button slider-button--next"
+            name="next"
+            aria-label="{{ 'general.slider.next_slide' | t }}"
+          >
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </button>
+        </div>
+      {%- endif -%}
+    </slider-component>
+    {%- liquid
+      assign is_not_limited_to_single_item = false
+      if limit == null or limit > 1
+        assign is_not_limited_to_single_item = true
+      endif
+    -%}
+    {%- if is_not_limited_to_single_item
+      and media_count > 1
+      and section.settings.gallery_layout contains 'thumbnail'
+      or section.settings.mobile_thumbnails == 'show'
+    -%}
+      <slider-component
+        id="GalleryThumbnails-{{ section.id }}"
+        class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}"
+      >
+        <button
+          type="button"
+          class="slider-button slider-button--prev{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}"
+          name="previous"
+          aria-label="{{ 'general.slider.previous_slide' | t }}"
+          aria-controls="GalleryThumbnails-{{ section.id }}"
+          data-step="3"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </button>
+        <ul
+          id="Slider-Thumbnails-{{ section.id }}"
+          class="thumbnail-list list-unstyled slider slider--mobile{% if section.settings.gallery_layout == 'thumbnail_slider' %} slider--tablet-up{% endif %}"
+        >
+          {%- capture sizes -%}
+            (min-width: {{ settings.page_width }}px) calc(({{ settings.page_width | minus: 100 | times: media_width | round }} - 4rem) / 4),
+            (min-width: 990px) calc(({{ media_width | times: 100 }}vw - 4rem) / 4),
+            (min-width: 750px) calc((100vw - 15rem) / 8),
+            calc((100vw - 8rem) / 3)
+          {%- endcapture -%}
+
+          {%- assign thumb_index = 0 -%}
+          {%- assign image_index = 0 -%}
+          {%- for i in (1..10) -%}
+            {%- liquid
+              assign media_image = blank
+              case i
+                when 1
+                  assign media_image = section.settings.custom_media_image_1
+                when 2
+                  assign media_image = section.settings.custom_media_image_2
+                when 3
+                  assign media_image = section.settings.custom_media_image_3
+                when 4
+                  assign media_image = section.settings.custom_media_image_4
+                when 5
+                  assign media_image = section.settings.custom_media_image_5
+                when 6
+                  assign media_image = section.settings.custom_media_image_6
+                when 7
+                  assign media_image = section.settings.custom_media_image_7
+                when 8
+                  assign media_image = section.settings.custom_media_image_8
+                when 9
+                  assign media_image = section.settings.custom_media_image_9
+                when 10
+                  assign media_image = section.settings.custom_media_image_10
+              endcase
+            -%}
+            {%- if i >= range_start and i <= range_end and media_image != blank -%}
+              {%- assign image_index = image_index | plus: 1 -%}
+              <li
+                id="Slide-Thumbnails-{{ section.id }}-{{ thumb_index }}"
+                class="thumbnail-list__item slider__slide"
+                data-target="{{ section.id }}-custom-{{ thumb_index }}"
+                data-media-position="{{ image_index }}"
+              >
+                {%- capture thumbnail_id -%}
+                  Thumbnail-{{ section.id }}-{{ thumb_index }}
+                {%- endcapture -%}
+                <button
+                  class="thumbnail global-media-settings global-media-settings--no-shadow"
+                  aria-label="{{ 'products.product.media.load_image' | t: index: image_index }}"
+                  {% if thumb_index == 0 %}
+                    aria-current="true"
+                  {% endif %}
+                  aria-controls="GalleryViewer-{{ section.id }}"
+                  aria-describedby="{{ thumbnail_id }}"
+                >
+                  {{
+                    media_image
+                    | image_url: width: 416
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: sizes,
+                      widths: '54, 74, 104, 162, 208, 324, 416',
+                      id: thumbnail_id,
+                      alt: media_image.alt | default: product.title | escape
+                  }}
+                </button>
+              </li>
+              {%- assign thumb_index = thumb_index | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        <button
+          type="button"
+          class="slider-button slider-button--next{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}"
+          name="next"
+          aria-label="{{ 'general.slider.next_slide' | t }}"
+          aria-controls="GalleryThumbnails-{{ section.id }}"
+          data-step="3"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </slider-component>
+    {%- endif -%}
+  </media-gallery>
+{%- endunless -%}

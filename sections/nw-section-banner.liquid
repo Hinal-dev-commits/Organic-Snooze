@@ -1,0 +1,435 @@
+{{ 'nw-section-banner.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign nw_shell_selector = '#NwSectionBanner-' | append: section.id
+  assign banner_bg_type = section.settings.bg_type | default: 'image'
+  assign banner_desktop_image = section.settings.bg_image
+  assign banner_mobile_image = section.settings.bg_image_mobile
+  if banner_mobile_image == blank
+    assign banner_mobile_image = banner_desktop_image
+  endif
+
+  if banner_bg_type == 'image' and section.settings.bg_color_image != blank
+    assign banner_overlay = section.settings.bg_color_image
+    assign banner_overlay_opacity = 1
+  else
+    assign banner_overlay = 'transparent'
+    assign banner_overlay_opacity = 0
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#8B5E3C' %}
+
+{%- if banner_bg_type == 'image' -%}
+  <style>
+    {{ nw_shell_selector }} {
+      background-image: none !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      {{ nw_shell_selector }} {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+    }
+  </style>
+{%- endif -%}
+
+<nw-section-banner
+  id="NwSectionBanner-{{ section.id }}"
+  class="nw-section-banner section-{{ section.id }}"
+  style="
+    --nw-sb-heading-color: {{ section.settings.heading_color }};
+    --nw-sb-desc-color: {{ section.settings.description_color }};
+    --nw-sb-tag-bg: {{ section.settings.tag_bg_color }};
+    --nw-sb-tag-text: {{ section.settings.tag_text_color }};
+    --nw-sb-rating-text: {{ section.settings.rating_text_color }};
+    --nw-sb-star-color: {{ section.settings.star_color }};
+    --nw-sb-star-inactive: {{ section.settings.star_inactive_color }};
+    --nw-sb-btn-bg: {{ section.settings.button_bg_color }};
+    --nw-sb-btn-text: {{ section.settings.button_text_color }};
+    --nw-sb-overlay: {{ banner_overlay }};
+    --nw-sb-overlay-opacity: {{ banner_overlay_opacity }};
+  "
+>
+  {%- if banner_bg_type == 'image' -%}
+    <div class="nw-section-banner__media" aria-hidden="true">
+      {%- if banner_desktop_image != blank or banner_mobile_image != blank -%}
+        {%- if banner_desktop_image != blank and banner_mobile_image != blank and banner_desktop_image != banner_mobile_image -%}
+          <img
+            src="{{ banner_mobile_image | image_url: width: 1200 }}"
+            class="nw-section-banner__image nw-section-banner__image--mobile"
+            loading="eager"
+            fetchpriority="high"
+            width=""
+            height=""
+            alt=""
+          >
+          <img
+            src="{{ banner_desktop_image | image_url: width: 2880 }}"
+            class="nw-section-banner__image nw-section-banner__image--desktop"
+            loading="eager"
+            fetchpriority="high"
+            width=""
+            height=""
+            alt=""
+          >
+        {%- elsif banner_desktop_image != blank -%}
+          <img
+            src="{{ banner_desktop_image | image_url: width: 2880 }}"
+            class="nw-section-banner__image"
+            loading="eager"
+            fetchpriority="high"
+            width=""
+            height=""
+            alt=""
+          >
+        {%- else -%}
+          <img
+            src="{{ banner_mobile_image | image_url: width: 1200 }}"
+            class="nw-section-banner__image"
+            loading="eager"
+            fetchpriority="high"
+            width=""
+            height=""
+            alt=""
+          >
+        {%- endif -%}
+      {%- else -%}
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'nw-section-banner__image nw-section-banner__image--placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="nw-section-banner__overlay"></div>
+  {%- endif -%}
+
+  <div class="nw-section-banner__layout">
+    <div class="nw-section-banner__inner{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-section-banner__content">
+        {%- if section.settings.tag_text != blank -%}
+          <p class="nw-section-banner__tag">{{ section.settings.tag_text }}</p>
+        {%- endif -%}
+
+        <div class="nw-section-banner__copy">
+          {%- if section.settings.show_rating and section.settings.rating_at_top -%}
+            <div class="nw-section-banner__rating nw-section-banner__rating--top">
+              {% render 'nw-stars',
+                rating: section.settings.star_rating,
+                class: 'nw-section-banner__stars',
+                star_class: 'nw-section-banner__star',
+                icon: 'star-rating'
+              %}
+              {%- if section.settings.rating_text != blank -%}
+                <p class="nw-section-banner__rating-text">{{ section.settings.rating_text }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.heading != blank -%}
+            {% render 'nw-section-heading',
+              text: section.settings.heading,
+              section_index: section.index,
+              class: 'nw-section-banner__heading'
+            %}
+          {%- endif -%}
+
+          {%- if section.settings.description != blank -%}
+            {% render 'nw-section-description',
+              text: section.settings.description,
+              class: 'nw-section-banner__description'
+            %}
+          {%- endif -%}
+        </div>
+
+        <div class="nw-section-banner__actions">
+          {%- if section.settings.button_text != blank -%}
+            <div class="nw-section-banner__cta">
+              {% render 'nw-button',
+                text: section.settings.button_text,
+                link: section.settings.button_link,
+                style: section.settings.button_style,
+                btn_class: 'nw-section-banner__btn'
+              %}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_rating and section.settings.rating_at_top == false -%}
+            <div class="nw-section-banner__rating">
+              {% render 'nw-stars',
+                rating: section.settings.star_rating,
+                class: 'nw-section-banner__stars',
+                star_class: 'nw-section-banner__star',
+                icon: 'star-rating'
+              %}
+              {%- if section.settings.rating_text != blank -%}
+                <p class="nw-section-banner__rating-text">{{ section.settings.rating_text }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="nw-section-banner__aside" aria-hidden="true"></div>
+  </div>
+</nw-section-banner>
+
+{% schema %}
+{
+  "name": "t:sections.nw-section-banner.name",
+  "tag": "section",
+  "class": "section-nw-section-banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "text",
+      "id": "tag_text",
+      "label": "Tag Text",
+      "default": "The Ultimate Human Collection | By Gary Brecka"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Organic Sleep System Gary Brecka Built For Recovery"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Chemical-free, science-backed sleep, engineered for the recovery and performance your body is built for</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "EXPLORE THE COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "RATING"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "rating_at_top",
+      "label": "Show Rating Above Title",
+      "default": false,
+      "info": "When enabled, stars and rating text appear after the tag and before the heading. When disabled, they appear below the button.",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating Text",
+      "default": "98% Satisfactory rating among sleepers",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#8B5E3C",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "info": "Uses desktop image when empty.",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_image",
+      "label": "Overlay Color",
+      "default": "#00000000",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_text_color",
+      "label": "Tag Text Color",
+      "default": "#FFFCF0",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_bg_color",
+      "label": "Tag Background",
+      "default": "rgba(255, 255, 255, 0.2)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "rating_text_color",
+      "label": "Rating Text Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#E57B1E",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "star_inactive_color",
+      "label": "Empty Star Color",
+      "default": "rgba(255, 255, 255, 0.3)",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background",
+      "default": "#A96B3E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-section-banner.name",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}
