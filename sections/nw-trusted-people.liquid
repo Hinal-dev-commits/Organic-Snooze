@@ -91,6 +91,28 @@
       role.style.setProperty('--nw-trusted-people-role', `${maxHeight}px`);
     });
   });
+  function setTestimonialHeight() {
+    const cards = document.querySelectorAll('.nw-trusted-people__card--testimonial');
+
+    if (!cards.length) return;
+
+    let maxHeight = 0;
+
+    cards.forEach(card => {
+      card.style.height = '';
+      maxHeight = Math.max(maxHeight, card.offsetHeight);
+    });
+
+    cards.forEach(card => {
+      card.style.setProperty(
+        '--nw-trusted-people-testimonial-height',
+        `${maxHeight}px`
+      );
+    });
+  }
+
+  setTestimonialHeight();
+  window.addEventListener('resize', setTestimonialHeight);
 </script>
 {% schema %}
 {
