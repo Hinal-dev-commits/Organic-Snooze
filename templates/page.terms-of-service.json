@@ -1,0 +1,161 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "nw_image_ArhVxC": {
+      "type": "nw-image",
+      "name": "NW Image",
+      "settings": {
+        "image_desktop": "shopify://shop_images/terms-of-service.png",
+        "image_mobile": "shopify://shop_images/terms-mobile.png",
+        "enable_fixed_bg": false,
+        "height_desktop": 300,
+        "height_mobile": 167,
+        "show_gradient": false,
+        "gradient_color_start": "",
+        "gradient_color_end": "#fffcf0",
+        "gradient_end_position": 91,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_terms_of_service_mzecKq": {
+      "type": "nw-terms-of-service",
+      "name": "NW Terms of Service",
+      "settings": {
+        "heading": "Terms of Service",
+        "show_updated_date": true,
+        "use_page_updated_date": true,
+        "date_prefix": "Last Updated:",
+        "last_updated": "",
+        "content": "<p>These Terms of Service govern your use of the website and services provided by The Ultimate Snooze LLC (“The Ultimate Snooze,” “we,” “us,” or “our”).</p><p>By accessing or using https://theultimatesnooze.com, you agree to these Terms of Service. If you do not agree, please discontinue use of our website.</p><p>For information on how we collect, use, and protect your information, please review our Privacy Policy.</p>",
+        "heading_color": "#613916",
+        "date_color": "#61391680",
+        "body_color": "#613916",
+        "card_bg_color": "#ffffff",
+        "bg_type": "image",
+        "bg_color": "#fffcf0",
+        "bg_image": "shopify://shop_images/bg-image.png",
+        "bg_image_opacity": 21,
+        "bg_gradient": "",
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_terms_of_service_content_eCje9M": {
+      "type": "nw-terms-of-service-content",
+      "blocks": {
+        "content_item_1": {
+          "type": "content_item",
+          "settings": {
+            "heading": "Use of Website & Orders",
+            "content": "<p>By using our website, you agree to comply with these Terms of Service. We reserve the right to update product descriptions, pricing, availability, and content at any time without prior notice. Orders may be canceled or refused due to technical errors, pricing inaccuracies, suspected fraud, or incorrect or incomplete information.</p>"
+          }
+        },
+        "content_item_2": {
+          "type": "content_item",
+          "settings": {
+            "heading": "Secure Payments",
+            "content": "<p>All payments are processed through secure third-party payment providers. <strong>The Ultimate Snooze does not store or have access to your full payment information.</strong></p>"
+          }
+        },
+        "content_item_3": {
+          "type": "content_item",
+          "settings": {
+            "heading": "Comfort & Product Disclaimer",
+            "content": "<p>Comfort, firmness, and feel are subjective and may vary from person to person. We are not responsible for individual comfort preferences, provided the product delivered matches the description and specifications listed at the time of purchase.</p>"
+          }
+        },
+        "content_item_4": {
+          "type": "content_item",
+          "settings": {
+            "heading": "Materials & Allergy Disclaimer",
+            "content": "<p>Our products are made using natural and organic materials, including organic Talalay latex, organic wool, and organic cotton. While these materials are commonly considered hypoallergenic and are selected for their safety and quality, individual sensitivities and allergic reactions can vary. The Ultimate Snooze does not guarantee that our products are free from allergens and is not responsible for allergic reactions, sensitivities, or health responses that may occur as a result of using our products. Customers with known allergies or sensitivities, including latex sensitivity, should consult a medical professional prior to purchase and use. By purchasing and using our products, you acknowledge and accept responsibility for determining whether the materials are suitable for your individual health needs.</p>"
+          }
+        },
+        "content_item_5": {
+          "type": "content_item",
+          "settings": {
+            "heading": "Intellectual Property",
+            "content": "<p>All content on this website, including text, images, graphics, logos, videos, and design elements, is the property of <strong>The Ultimate Snooze LLC</strong> and is protected by intellectual property laws. This content may not be copied, reproduced, distributed, or used without prior written permission.</p>"
+          }
+        },
+        "content_item_6": {
+          "type": "content_item",
+          "settings": {
+            "heading": "Limitation of Liability",
+            "content": "<p>To the fullest extent permitted by law, The Ultimate Snooze LLC shall not be liable for any indirect, incidental, or consequential damages arising from the use of our website or products.</p>"
+          }
+        },
+        "content_item_7": {
+          "type": "content_item",
+          "settings": {
+            "heading": "Governing Law",
+            "content": "<p>These Terms of Service are governed by and interpreted in accordance with the laws of the <strong>United States of America,</strong> without regard to conflict-of-law principles.</p>"
+          }
+        },
+        "content_item_8": {
+          "type": "content_item",
+          "settings": {
+            "heading": "Contact Information",
+            "content": "<p>If you have questions about these Terms of Service, please contact us:</p><p><strong>The Ultimate Snooze LLC</strong><br>102 Oneida Street Pueblo,<br>CO 81003</p><p><strong>Email:</strong> info@TheUltimateSnooze.com</p><p>We may contact you using the information you provide for customer support or transactional purposes, including order assistance or abandoned cart follow-ups.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "content_item_1",
+        "content_item_2",
+        "content_item_3",
+        "content_item_4",
+        "content_item_5",
+        "content_item_6",
+        "content_item_7",
+        "content_item_8"
+      ],
+      "name": "NW Terms Content",
+      "settings": {
+        "show_dividers": true,
+        "blocks_gap_desktop": 32,
+        "blocks_gap_mobile": 24,
+        "item_gap_desktop": 12,
+        "item_gap_mobile": 12,
+        "heading_color": "#613916",
+        "body_color": "#613916",
+        "divider_color": "#61391633",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "nw_image_ArhVxC",
+    "nw_terms_of_service_mzecKq",
+    "nw_terms_of_service_content_eCje9M"
+  ]
+}

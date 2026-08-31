@@ -1,0 +1,267 @@
+{{ 'nw-terms-of-service.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwTermsOfService-' | append: section.id -%}
+{%- assign nw_card_bg = section.settings.card_bg_color | default: '#FFFFFF' -%}
+{%- assign nw_body_color = section.settings.body_color | default: '#613916' -%}
+{%- assign nw_date_color = section.settings.date_color | default: 'rgba(97, 57, 22, 0.5)' -%}
+
+{%- liquid
+  if section.settings.use_page_updated_date and page.updated_at != blank
+    assign terms_updated_date = page.updated_at | date: '%B %d, %Y'
+  elsif section.settings.last_updated != blank
+    assign terms_updated_date = section.settings.last_updated
+  else
+    assign terms_updated_date = 'now' | date: '%B %d, %Y'
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFCF0' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  {{ nw_shell_selector }} .nw-terms-of-service__card {
+    background-color: {{ nw_card_bg }};
+  }
+
+  {{ nw_shell_selector }} .nw-terms-of-service__content,
+  {{ nw_shell_selector }} .nw-terms-of-service__content p,
+  {{ nw_shell_selector }} .nw-terms-of-service__content li,
+  {{ nw_shell_selector }} .nw-terms-of-service__content a {
+    color: {{ nw_body_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-terms-of-service__date {
+    color: {{ nw_date_color }};
+  }
+</style>
+
+<nw-terms-of-service
+  id="NwTermsOfService-{{ section.id }}"
+  class="nw-terms-of-service section-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="nw-terms-of-service__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.heading != blank -%}
+        <div class="nw-terms-of-service__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            section_index: section.index
+          %}
+
+          {%- if section.settings.show_updated_date -%}
+            <p class="nw-terms-of-service__date">
+              {{ section.settings.date_prefix | default: 'Last Updated:' }}
+              {{ terms_updated_date }}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.content != blank -%}
+        <div class="nw-terms-of-service__card">
+          <div class="nw-terms-of-service__content rte">
+            {{ section.settings.content }}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-terms-of-service>
+
+{% schema %}
+{
+  "name": "NW Terms of Service",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Terms of Service"
+    },
+    {
+      "type": "header",
+      "content": "LAST UPDATED DATE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_updated_date",
+      "label": "Show last updated date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "use_page_updated_date",
+      "label": "Use page last updated date automatically",
+      "default": true,
+      "info": "When enabled on a page template, uses that page's last saved date.",
+      "visible_if": "{{ section.settings.show_updated_date == true }}"
+    },
+    {
+      "type": "text",
+      "id": "date_prefix",
+      "label": "Date label",
+      "default": "Last Updated:",
+      "visible_if": "{{ section.settings.show_updated_date == true }}"
+    },
+    {
+      "type": "text",
+      "id": "last_updated",
+      "label": "Manual last updated date",
+      "default": "January 29, 2026",
+      "info": "Used when automatic page date is disabled or unavailable.",
+      "visible_if": "{{ section.settings.show_updated_date == true }}"
+    },
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Terms content",
+      "default": "<p>These Terms of Service govern your use of the website and services provided by The Ultimate Snooze LLC (“The Ultimate Snooze,” “we,” “us,” or “our”).</p><p>By accessing or using https://theultimatesnooze.com, you agree to these Terms of Service. If you do not agree, please discontinue use of our website.</p><p>For information on how we collect, use, and protect your information, please review our Privacy Policy.</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "date_color",
+      "label": "Date Color",
+      "default": "#61391680"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 21,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Terms of Service",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

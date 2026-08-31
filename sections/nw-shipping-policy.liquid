@@ -1,0 +1,612 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-shipping-policy.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwShippingPolicy-' | append: section.id -%}
+{%- assign nw_card_bg = section.settings.card_bg_color | default: '#FFFFFF' -%}
+{%- assign nw_body_color = section.settings.body_color | default: '#613916' -%}
+{%- assign nw_stat_value_color = section.settings.stat_value_color | default: '#878735' -%}
+{%- assign nw_icon_color = section.settings.icon_color | default: '#878735' -%}
+{%- assign nw_divider_color = section.settings.divider_color | default: 'rgba(97, 57, 22, 0.2)' -%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFCF0' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  {{ nw_shell_selector }} {
+    --nw-sp-icon-color: {{ nw_icon_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-policy__card,
+  {{ nw_shell_selector }} .nw-shipping-policy__stat {
+    background-color: {{ nw_card_bg }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-policy__card-title,
+  {{ nw_shell_selector }} .nw-shipping-policy__group-title,
+  {{ nw_shell_selector }} .nw-shipping-policy__detail-text,
+  {{ nw_shell_selector }} .nw-shipping-policy__note,
+  {{ nw_shell_selector }} .nw-shipping-policy__note p,
+  {{ nw_shell_selector }} .nw-shipping-policy__note li,
+  {{ nw_shell_selector }} .nw-shipping-policy__note a,
+  {{ nw_shell_selector }} .nw-shipping-policy__trial-heading,
+  {{ nw_shell_selector }} .nw-shipping-policy__trial-description,
+  {{ nw_shell_selector }} .nw-shipping-policy__stat-label {
+    color: {{ nw_body_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-policy__stat-value {
+    color: {{ nw_stat_value_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-policy__divider {
+    border-top-color: {{ nw_divider_color }};
+  }
+</style>
+
+<nw-shipping-policy
+  id="NwShippingPolicy-{{ section.id }}"
+  class="nw-shipping-policy section-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="nw-shipping-policy__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.heading != blank -%}
+        <div class="nw-shipping-policy__header">
+          {% render 'nw-section-header',
+            heading: section.settings.heading,
+            section_index: section.index
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- assign nw_delivery_blocks = section.blocks | where: 'type', 'delivery_group' -%}
+      {%- if section.settings.delivery_card_title != blank or nw_delivery_blocks.size > 0 or section.settings.delivery_note != blank or section.settings.show_buttons -%}
+        <div class="nw-shipping-policy__card">
+          {%- if section.settings.delivery_card_title != blank -%}
+            <h2 class="nw-shipping-policy__card-title">
+              {{ section.settings.delivery_card_title | escape }}
+            </h2>
+            {%- assign nw_show_divider = true -%}
+          {%- else -%}
+            {%- assign nw_show_divider = false -%}
+          {%- endif -%}
+
+          {%- for block in nw_delivery_blocks -%}
+            {%- if nw_show_divider -%}
+              <hr class="nw-shipping-policy__divider" aria-hidden="true">
+            {%- endif -%}
+
+            <div class="nw-shipping-policy__group" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="nw-shipping-policy__group-title">
+                  {{ block.settings.heading | escape }}
+                </h3>
+              {%- endif -%}
+
+              {%- if block.settings.processing_text != blank -%}
+                {%- liquid
+                  assign nw_processing_custom = blank
+                  if block.settings.processing_use_custom_icon
+                    assign nw_processing_custom = block.settings.processing_custom_icon
+                  endif
+                -%}
+                <div class="nw-shipping-policy__detail">
+                  <span class="nw-shipping-policy__detail-icon" aria-hidden="true">
+                    {% render 'nw-icon',
+                      icon: block.settings.processing_icon | default: 'clock',
+                      custom_icon: nw_processing_custom,
+                      img_class: 'nw-shipping-policy__detail-icon-img',
+                      img_width: 16
+                    %}
+                  </span>
+                  <p class="nw-shipping-policy__detail-text">{{ block.settings.processing_text | escape }}</p>
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.delivery_text != blank -%}
+                {%- liquid
+                  assign nw_delivery_custom = blank
+                  if block.settings.delivery_use_custom_icon
+                    assign nw_delivery_custom = block.settings.delivery_custom_icon
+                  endif
+                -%}
+                <div class="nw-shipping-policy__detail">
+                  <span class="nw-shipping-policy__detail-icon" aria-hidden="true">
+                    {% render 'nw-icon',
+                      icon: block.settings.delivery_icon | default: 'check-v2',
+                      custom_icon: nw_delivery_custom,
+                      img_class: 'nw-shipping-policy__detail-icon-img',
+                      img_width: 16
+                    %}
+                  </span>
+                  <p class="nw-shipping-policy__detail-text">{{ block.settings.delivery_text | escape }}</p>
+                </div>
+              {%- endif -%}
+            </div>
+
+            {%- assign nw_show_divider = true -%}
+          {%- endfor -%}
+
+          {%- if section.settings.delivery_note != blank -%}
+            {%- if nw_show_divider -%}
+              <hr class="nw-shipping-policy__divider" aria-hidden="true">
+            {%- endif -%}
+            <div class="nw-shipping-policy__note rte">
+              {{ section.settings.delivery_note }}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_buttons -%}
+            {%- if section.settings.button_1_text != blank or section.settings.button_2_text != blank -%}
+              <div class="nw-shipping-policy__actions">
+                {%- if section.settings.button_1_text != blank -%}
+                  {% render 'nw-button',
+                    text: section.settings.button_1_text,
+                    link: section.settings.button_1_link | default: '#',
+                    style: section.settings.button_1_style,
+                    btn_class: 'nw-shipping-policy__btn'
+                  %}
+                {%- endif -%}
+                {%- if section.settings.button_2_text != blank -%}
+                  {% render 'nw-button',
+                    text: section.settings.button_2_text,
+                    link: section.settings.button_2_link | default: '#',
+                    style: section.settings.button_2_style,
+                    btn_class: 'nw-shipping-policy__btn'
+                  %}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- assign nw_stat_blocks = section.blocks | where: 'type', 'stat_card' -%}
+      {%- if section.settings.show_trial_section -%}
+        {%- if section.settings.trial_heading != blank or section.settings.trial_description != blank or nw_stat_blocks.size > 0 -%}
+        <div class="nw-shipping-policy__trial">
+          {%- if section.settings.trial_heading != blank or section.settings.trial_description != blank -%}
+            <div class="nw-shipping-policy__trial-header">
+              {%- if section.settings.trial_heading != blank -%}
+                <h2 class="nw-shipping-policy__trial-heading">
+                  {{ section.settings.trial_heading | escape }}
+                </h2>
+              {%- endif -%}
+              {%- if section.settings.trial_description != blank -%}
+                <p class="nw-shipping-policy__trial-description">
+                  {{ section.settings.trial_description | escape }}
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if nw_stat_blocks.size > 0 -%}
+            <div class="nw-shipping-policy__stats">
+              {%- for block in nw_stat_blocks -%}
+                <article class="nw-shipping-policy__stat" {{ block.shopify_attributes }}>
+                  {%- if block.settings.value != blank -%}
+                    <p class="nw-shipping-policy__stat-value">{{ block.settings.value | escape }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.label != blank -%}
+                    <p class="nw-shipping-policy__stat-label">{{ block.settings.label | escape }}</p>
+                  {%- endif -%}
+                </article>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</nw-shipping-policy>
+
+{% schema %}
+{
+  "name": "NW Shipping Policy",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shipping & Returns Policy"
+    },
+    {
+      "type": "header",
+      "content": "DELIVERY CARD"
+    },
+    {
+      "type": "text",
+      "id": "delivery_card_title",
+      "label": "Card Title",
+      "default": "Delivery Information"
+    },
+    {
+      "type": "richtext",
+      "id": "delivery_note",
+      "label": "Delivery Note",
+      "default": "<p>Delivery times may vary during peak seasons. Orders placed on weekends will be processed on the next business day. Products may not come in the same package. Questions on orders should be directed to <strong>Orders@theultimatesnooze.com</strong></p>"
+    },
+    {
+      "type": "header",
+      "content": "BUTTONS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buttons",
+      "label": "Show buttons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 Text",
+      "default": "Start Return"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "select",
+      "id": "button_1_style",
+      "label": "Button 1 Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 Text",
+      "default": "See Policies"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "select",
+      "id": "button_2_style",
+      "label": "Button 2 Style",
+      "default": "outline",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "SLEEP TRIAL SECTION"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trial_section",
+      "label": "Show sleep trial section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trial_heading",
+      "label": "Trial Heading",
+      "default": "Sleep Trial & Return Policy"
+    },
+    {
+      "type": "textarea",
+      "id": "trial_description",
+      "label": "Trial Description",
+      "default": "We stand behind every mattress we make. Sleep on it — and if it's not right, we'll make it right."
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "stat_value_color",
+      "label": "Stat Value Color",
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "divider_color",
+      "label": "Divider Color",
+      "default": "#61391633"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 21,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "delivery_group",
+      "name": "Delivery Group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Group Heading",
+          "default": "Mattress Order"
+        },
+        {
+          "type": "text",
+          "id": "processing_text",
+          "label": "Processing Time Text",
+          "default": "Processing Time: 3-5 Business days"
+        },
+        {
+          "type": "header",
+          "content": "PROCESSING ICON"
+        },
+        {
+          "type": "checkbox",
+          "id": "processing_use_custom_icon",
+          "label": "Custom Icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "processing_icon",
+          "label": "Processing Icon",
+          "default": "clock",
+          "options": [
+            { "value": "clock", "label": "Clock" },
+            { "value": "check-v2", "label": "Check" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "truck", "label": "Truck" }
+          ],
+          "visible_if": "{{ block.settings.processing_use_custom_icon == false }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "processing_custom_icon",
+          "label": "Processing Custom Icon",
+          "visible_if": "{{ block.settings.processing_use_custom_icon == true }}"
+        },
+        {
+          "type": "text",
+          "id": "delivery_text",
+          "label": "Delivery Time Text",
+          "default": "Mattress Delivery: 10-14 Business days"
+        },
+        {
+          "type": "header",
+          "content": "DELIVERY ICON"
+        },
+        {
+          "type": "checkbox",
+          "id": "delivery_use_custom_icon",
+          "label": "Custom Icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "delivery_icon",
+          "label": "Delivery Icon",
+          "default": "check-v2",
+          "options": [
+            { "value": "check-v2", "label": "Check" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "truck", "label": "Truck" }
+          ],
+          "visible_if": "{{ block.settings.delivery_use_custom_icon == false }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "delivery_custom_icon",
+          "label": "Delivery Custom Icon",
+          "visible_if": "{{ block.settings.delivery_use_custom_icon == true }}"
+        }
+      ]
+    },
+    {
+      "type": "stat_card",
+      "name": "Stat Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "100"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Night Sleep Trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Shipping Policy",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "delivery_group",
+          "settings": {
+            "heading": "Mattress Order",
+            "processing_text": "Processing Time: 3-5 Business days",
+            "delivery_text": "Mattress Delivery: 10-14 Business days"
+          }
+        },
+        {
+          "type": "delivery_group",
+          "settings": {
+            "heading": "Accessory Orders",
+            "processing_text": "Processing Time: 1-2 Business days",
+            "delivery_text": "Mattress Delivery: 10-14 Business days"
+          }
+        },
+        {
+          "type": "stat_card",
+          "settings": {
+            "value": "100",
+            "label": "Night Sleep Trial"
+          }
+        },
+        {
+          "type": "stat_card",
+          "settings": {
+            "value": "30",
+            "label": "Night Break-In Period"
+          }
+        },
+        {
+          "type": "stat_card",
+          "settings": {
+            "value": "30 years",
+            "label": "Limited Warranty"
+          }
+        },
+        {
+          "type": "stat_card",
+          "settings": {
+            "value": "Free",
+            "label": "Mattress Exchanges"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,862 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-shipping-content.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwShippingContent-' | append: section.id -%}
+{%- assign nw_heading_color = section.settings.heading_color | default: '#613916' -%}
+{%- assign nw_body_color = section.settings.body_color | default: '#613916' -%}
+{%- assign nw_badge_bg = section.settings.badge_bg_color | default: '#878735' -%}
+{%- assign nw_badge_text = section.settings.badge_text_color | default: '#FFFFFF' -%}
+{%- assign nw_callout_bg = section.settings.callout_bg_color | default: '#FFFCF0' -%}
+{%- assign nw_callout_heading_color = section.settings.callout_heading_color | default: '#878735' -%}
+{%- assign nw_cta_bg = section.settings.cta_bg_color | default: '#878735' -%}
+{%- assign nw_cta_text = section.settings.cta_text_color | default: '#FFFFFF' -%}
+{%- assign nw_table_border = section.settings.table_border_color | default: '#F0EFF2' -%}
+{%- assign nw_table_stripe = section.settings.table_stripe_color | default: 'rgba(97, 57, 22, 0.05)' -%}
+{%- assign nw_divider_light = section.settings.divider_light_color | default: 'rgba(97, 57, 22, 0.12)' -%}
+{%- assign nw_divider_heavy = section.settings.divider_heavy_color | default: 'rgba(97, 57, 22, 0.35)' -%}
+{%- assign nw_blocks_gap_desktop = section.settings.blocks_gap_desktop | default: 48 -%}
+{%- assign nw_blocks_gap_mobile = section.settings.blocks_gap_mobile | default: 48 -%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+
+<style>
+  {{ nw_shell_selector }} {
+    --nw-sc-blocks-gap: {{ nw_blocks_gap_desktop }}px;
+    --nw-sc-blocks-gap-mobile: {{ nw_blocks_gap_mobile }}px;
+    --nw-sc-divider-light: {{ nw_divider_light }};
+    --nw-sc-divider-heavy: {{ nw_divider_heavy }};
+    --nw-sc-table-border-color: {{ nw_table_border }};
+    --nw-sc-table-stripe-color: {{ nw_table_stripe }};
+  }
+
+  @media screen and (max-width: 749px) {
+    {{ nw_shell_selector }} {
+      --nw-sc-blocks-gap-mobile: {{ nw_blocks_gap_mobile }}px;
+    }
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-content__heading,
+  {{ nw_shell_selector }} .nw-shipping-content__body,
+  {{ nw_shell_selector }} .nw-shipping-content__body p,
+  {{ nw_shell_selector }} .nw-shipping-content__body li,
+  {{ nw_shell_selector }} .nw-shipping-content__intro,
+  {{ nw_shell_selector }} .nw-shipping-content__intro p,
+  {{ nw_shell_selector }} .nw-shipping-content__intro li,
+  {{ nw_shell_selector }} .nw-shipping-content__table td,
+  {{ nw_shell_selector }} .nw-shipping-content__callout-body,
+  {{ nw_shell_selector }} .nw-shipping-content__callout-body p {
+    color: {{ nw_body_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-content__heading {
+    color: {{ nw_heading_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-content__badge {
+    background-color: {{ nw_badge_bg }};
+    color: {{ nw_badge_text }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-content__callout {
+    background-color: {{ nw_callout_bg }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-content__callout-heading {
+    color: {{ nw_callout_heading_color }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-content__cta {
+    background-color: {{ nw_cta_bg }};
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-content__cta-heading,
+  {{ nw_shell_selector }} .nw-shipping-content__cta-description,
+  {{ nw_shell_selector }} .nw-shipping-content__cta-footer,
+  {{ nw_shell_selector }} .nw-shipping-content__cta-footer p {
+    color: {{ nw_cta_text }};
+  }
+</style>
+
+<nw-shipping-content
+  id="NwShippingContent-{{ section.id }}"
+  class="nw-shipping-content section-{{ section.id }}"
+>
+  <div class="page-width">
+    {%- if section.blocks.size > 0 -%}
+      <div class="nw-shipping-content__wrapper{%- render 'nw-scroll-animation' -%}">
+        {%- liquid
+          assign nw_table_open = false
+          assign nw_table_layout = 'two_column'
+          assign nw_text_group_open = false
+          assign nw_table_section_open = false
+          assign nw_table_group_open = false
+        -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type != 'table_row' -%}
+            {%- if nw_table_open -%}
+                    </tbody>
+                  </table>
+                </div>
+              {%- assign nw_table_open = false -%}
+            {%- endif -%}
+
+            {%- if nw_table_group_open -%}
+              </div>
+              {%- assign nw_table_group_open = false -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- liquid
+            assign nw_divider_before = block.settings.divider_before | default: 'none'
+            assign nw_starts_major_section = false
+            if nw_divider_before == 'heavy'
+              assign nw_starts_major_section = true
+            endif
+            if block.type == 'table_group' or block.type == 'cta'
+              assign nw_starts_major_section = true
+            endif
+          -%}
+
+          {%- if nw_text_group_open and nw_starts_major_section -%}
+            </div>
+            {%- assign nw_text_group_open = false -%}
+          {%- endif -%}
+
+          {%- if nw_table_section_open and nw_starts_major_section -%}
+            </div>
+            {%- assign nw_table_section_open = false -%}
+          {%- endif -%}
+
+          {%- if nw_divider_before != 'none' and forloop.first == false -%}
+            <hr
+              class="nw-shipping-content__divider nw-shipping-content__divider--{{ nw_divider_before }}"
+              aria-hidden="true"
+            >
+          {%- endif -%}
+
+          {%- case block.type -%}
+            {%- when 'content_item' -%}
+              {%- if block.settings.heading != blank or block.settings.content != blank -%}
+                {%- unless nw_text_group_open or nw_table_section_open -%}
+                  <div class="nw-shipping-content__text-group">
+                  {%- assign nw_text_group_open = true -%}
+                {%- endunless -%}
+                <article
+                  class="nw-shipping-content__item{% if block.settings.heading_size == 'medium' %} nw-shipping-content__item--medium{% else %} nw-shipping-content__item--large{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.heading != blank -%}
+                    <h2 class="nw-shipping-content__heading{% if block.settings.heading_size == 'medium' %} nw-shipping-content__heading--medium{% endif %}">
+                      {{ block.settings.heading | escape }}
+                    </h2>
+                  {%- endif -%}
+
+                  {%- if block.settings.content != blank -%}
+                    <div class="nw-shipping-content__body rte">
+                      {{ block.settings.content }}
+                    </div>
+                  {%- endif -%}
+                </article>
+              {%- endif -%}
+
+            {%- when 'table_group' -%}
+              {%- unless nw_table_section_open -%}
+                <div class="nw-shipping-content__table-section">
+                {%- assign nw_table_section_open = true -%}
+              {%- endunless -%}
+              <div class="nw-shipping-content__table-group" {{ block.shopify_attributes }}>
+                <div class="nw-shipping-content__table-group-header">
+                  {%- if block.settings.heading != blank or block.settings.badge != blank -%}
+                    <div class="nw-shipping-content__heading-row">
+                      {%- if block.settings.heading != blank -%}
+                        <h2 class="nw-shipping-content__heading">{{ block.settings.heading | escape }}</h2>
+                      {%- endif -%}
+                      {%- if block.settings.badge != blank -%}
+                        <span class="nw-shipping-content__badge">{{ block.settings.badge | escape }}</span>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.intro != blank -%}
+                    <div class="nw-shipping-content__intro rte">{{ block.settings.intro }}</div>
+                  {%- endif -%}
+                </div>
+
+                {%- assign nw_table_layout = block.settings.table_layout | default: 'two_column' -%}
+                {%- assign nw_table_group_open = true -%}
+                {%- unless nw_table_layout == 'hidden' -%}
+                  {%- assign nw_table_open = true -%}
+                  <div class="nw-shipping-content__table-scroll">
+                    <table class="nw-shipping-content__table nw-shipping-content__table--{{ nw_table_layout | replace: '_', '-' }}">
+                      <tbody>
+                {%- endunless -%}
+            {%- when 'table_row' -%}
+              {%- if nw_table_open -%}
+                <tr class="nw-shipping-content__table-row" {{ block.shopify_attributes }}>
+                  {%- if nw_table_layout == 'four_column' -%}
+                    <td>{{ block.settings.column_1 | escape }}</td>
+                    <td>{{ block.settings.column_2 | escape }}</td>
+                    <td>{{ block.settings.column_3 | escape }}</td>
+                    <td>{{ block.settings.column_4 | escape }}</td>
+                  {%- else -%}
+                    <td>{{ block.settings.column_1 | escape }}</td>
+                    <td>{{ block.settings.column_2 | escape }}</td>
+                  {%- endif -%}
+                </tr>
+              {%- endif -%}
+
+            {%- when 'callout' -%}
+              {%- if block.settings.heading != blank or block.settings.content != blank -%}
+                {%- unless nw_table_section_open -%}
+                  <div class="nw-shipping-content__table-section">
+                  {%- assign nw_table_section_open = true -%}
+                {%- endunless -%}
+                <aside class="nw-shipping-content__callout" {{ block.shopify_attributes }}>
+                  {%- if block.settings.heading != blank -%}
+                    <h3 class="nw-shipping-content__callout-heading">{{ block.settings.heading | escape }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.content != blank -%}
+                    <div class="nw-shipping-content__callout-body rte">{{ block.settings.content }}</div>
+                  {%- endif -%}
+                </aside>
+              {%- endif -%}
+
+            {%- when 'cta' -%}
+              {%- if block.settings.heading != blank or block.settings.description != blank or block.settings.button_text != blank -%}
+                <aside class="nw-shipping-content__cta" {{ block.shopify_attributes }}>
+                  <div class="nw-shipping-content__cta-copy">
+                    {%- if block.settings.heading != blank -%}
+                      <h2 class="nw-shipping-content__cta-heading">{{ block.settings.heading | escape }}</h2>
+                    {%- endif -%}
+                    {%- if block.settings.description != blank -%}
+                      <p class="nw-shipping-content__cta-description">{{ block.settings.description | escape }}</p>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="nw-shipping-content__cta-actions">
+                    {%- if block.settings.button_text != blank -%}
+                      {% render 'nw-button',
+                        text: block.settings.button_text,
+                        link: block.settings.button_link | default: '#',
+                        style: 'primary',
+                        btn_class: 'nw-shipping-content__cta-btn'
+                      %}
+                    {%- endif -%}
+
+                    {%- if block.settings.footer_note != blank -%}
+                      <div class="nw-shipping-content__cta-footer rte">{{ block.settings.footer_note }}</div>
+                    {%- endif -%}
+                  </div>
+                </aside>
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- if nw_table_open -%}
+                    </tbody>
+                  </table>
+                </div>
+        {%- endif -%}
+
+        {%- if nw_table_group_open -%}
+              </div>
+        {%- endif -%}
+
+        {%- if nw_text_group_open -%}
+          </div>
+        {%- endif -%}
+
+        {%- if nw_table_section_open -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</nw-shipping-content>
+
+{% schema %}
+{
+  "name": "NW Shipping Content",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "LAYOUT"
+    },
+    {
+      "type": "range",
+      "id": "blocks_gap_desktop",
+      "label": "Space between blocks (Desktop)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "blocks_gap_mobile",
+      "label": "Space between blocks (Mobile)",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "divider_light_color",
+      "label": "Light Divider Color",
+      "default": "#6139161F"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "divider_heavy_color",
+      "label": "Heavy Divider Color",
+      "default": "#61391659"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "badge_bg_color",
+      "label": "Badge Background Color",
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "callout_bg_color",
+      "label": "Callout Background Color",
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "callout_heading_color",
+      "label": "Callout Heading Color",
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "cta_bg_color",
+      "label": "CTA Background Color",
+      "default": "#878735"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "cta_text_color",
+      "label": "CTA Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "table_border_color",
+      "label": "Table Border Color",
+      "default": "#F0EFF2"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "table_stripe_color",
+      "label": "Table Stripe Color",
+      "default": "#6139160D"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content_item",
+      "name": "Content Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "divider_before",
+          "label": "Divider before block",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "light", "label": "Light" },
+            { "value": "heavy", "label": "Heavy" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "100-Night Mattress Sleep Trial"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading Size",
+          "default": "large",
+          "options": [
+            { "value": "large", "label": "Large" },
+            { "value": "medium", "label": "Medium" }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Sleep on your new mattress for 100 nights, completely risk-free. We're confident you'll love it — but if it's not the perfect fit, we'll take care of you.</p>"
+        }
+      ]
+    },
+    {
+      "type": "table_group",
+      "name": "Table Group",
+      "settings": [
+        {
+          "type": "select",
+          "id": "divider_before",
+          "label": "Divider before block",
+          "default": "heavy",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "light", "label": "Light" },
+            { "value": "heavy", "label": "Heavy" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Mattress Exchanges"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "default": "FREE"
+        },
+        {
+          "type": "richtext",
+          "id": "intro",
+          "label": "Intro Text",
+          "default": "<p>Want a different size or firmness? We make it simple with no exchange fees.</p>"
+        },
+        {
+          "type": "select",
+          "id": "table_layout",
+          "label": "Table Layout",
+          "default": "two_column",
+          "options": [
+            { "value": "two_column", "label": "Two Column" },
+            { "value": "four_column", "label": "Four Column" },
+            { "value": "hidden", "label": "Hidden" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "table_row",
+      "name": "Table Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "column_1",
+          "label": "Column 1",
+          "default": "Exchange Fee"
+        },
+        {
+          "type": "text",
+          "id": "column_2",
+          "label": "Column 2",
+          "default": "$0 — always free"
+        },
+        {
+          "type": "text",
+          "id": "column_3",
+          "label": "Column 3",
+          "info": "Used with four column layout."
+        },
+        {
+          "type": "text",
+          "id": "column_4",
+          "label": "Column 4",
+          "info": "Used with four column layout."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "name": "Callout",
+      "settings": [
+        {
+          "type": "select",
+          "id": "divider_before",
+          "label": "Divider before block",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "light", "label": "Light" },
+            { "value": "heavy", "label": "Heavy" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Prefer store credit?"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Choose store credit instead of a refund and we'll waive the $199 return fee entirely. Store credit is valid for 12 months and can be used on any purchase in our store.</p>"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "name": "CTA",
+      "settings": [
+        {
+          "type": "select",
+          "id": "divider_before",
+          "label": "Divider before block",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "light", "label": "Light" },
+            { "value": "heavy", "label": "Heavy" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Ready to Start a Return or Exchange?"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Fill out our simple request form and our team will take it from there. We typically respond within 1 business day."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Start My Return or Exchange"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "richtext",
+          "id": "footer_note",
+          "label": "Footer Note",
+          "default": "<p>Questions? Call us at <strong>443-333-1213</strong><br>or email <strong>info@theultimatesnooze.com</strong></p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Shipping Content",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "content_item",
+          "settings": {
+            "heading": "100-Night Mattress Sleep Trial",
+            "heading_size": "large",
+            "content": "<p>Sleep on your new mattress for 100 nights, completely risk-free. We're confident you'll love it — but if it's not the perfect fit, we'll take care of you.</p>"
+          }
+        },
+        {
+          "type": "content_item",
+          "settings": {
+            "heading": "30-Night Break-In Period",
+            "heading_size": "medium",
+            "content": "<p>Because we use only premium natural materials — certified organic latex and wool — your mattress needs a short settling period to truly become yours. Give it 30 nights before making any decisions. Most customers are glad they did.</p>"
+          }
+        },
+        {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "light",
+            "heading": "Trial Eligibility",
+            "heading_size": "medium",
+            "content": "<p>If your mattress isn't the right fit between night 31 and night 100, you may request a return or exchange, provided:</p><ul><li>The mattress is in clean and sanitary condition</li><li>It is free from stains, odors, pet damage, burns, or structural damage</li><li>The law tag remains attached and untampered</li></ul><p>Mattresses that do not meet sanitary or condition standards may be denied return eligibility.</p>"
+          }
+        },
+        {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "light",
+            "heading": "One-Time Trial",
+            "heading_size": "medium",
+            "content": "<p>Each mattress purchase is eligible for one return OR one exchange per order. An exchanged mattress does not receive a new 100-night trial—the original trial period continues from the original delivery date.</p>"
+          }
+        },
+        {
+          "type": "table_group",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Mattress Exchanges",
+            "badge": "FREE",
+            "intro": "<p>Want a different size or firmness? We make it simple with no exchange fees.</p>",
+            "table_layout": "two_column"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Exchange Fee", "column_2": "$0 — always free" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Upgrade to Higher Price", "column_2": "Customer pays the price difference only" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Downgrade to Lower Price", "column_2": "Difference issued as store credit (non-transferable)" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "New Trial Period?", "column_2": "No — you may only redeem one sleep trial exchange" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Warranty", "column_2": "30-Year Limited Warranty from original purchase date" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Availability", "column_2": "Subject to current product availability" }
+        },
+        {
+          "type": "table_group",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Mattress Returns & Refunds",
+            "intro": "<p>If your mattress truly isn't working for you, we'll take it back between nights 31 and 100 — no runaround.</p>",
+            "table_layout": "two_column"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Return Window", "column_2": "Night 31 – Night 100" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Return Processing Fee", "column_2": "$199 per mattress" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Refund Amount", "column_2": "Purchase price less processing fee" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Original Shipping Charges", "column_2": "Non-refundable" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Refund Timeline", "column_2": "3–5 business days after receipt & inspection" }
+        },
+        {
+          "type": "table_row",
+          "settings": { "column_1": "Refund Method", "column_2": "Original payment method" }
+        },
+        {
+          "type": "callout",
+          "settings": {
+            "heading": "Prefer store credit?",
+            "content": "<p>Choose store credit instead of a refund and we'll waive the $199 return fee entirely. Store credit is valid for 12 months and can be used on any purchase in our store.</p>"
+          }
+        },
+        {
+          "type": "content_item",
+          "settings": {
+            "heading": "Return Pickup",
+            "heading_size": "large",
+            "content": "<p>Approved returns are coordinated through a local pickup or donation partner where available. Customers outside our standard delivery regions may be responsible for additional freight fees.</p>"
+          }
+        },
+        {
+          "type": "table_group",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Accessories",
+            "badge": "Sheets, Pillows & Protectors",
+            "table_layout": "four_column"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Unopened & Sealed",
+            "column_2": "30 days",
+            "column_3": "None",
+            "column_4": "Customer pays return shipping"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Opened / Lightly Used",
+            "column_2": "30 days",
+            "column_3": "20% restocking fee",
+            "column_4": "Customer pays return shipping"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Stained, Odored, or Damaged",
+            "column_2": "—",
+            "column_3": "Not eligible for return",
+            "column_4": ""
+          }
+        },
+        {
+          "type": "content_item",
+          "settings": {
+            "content": "<p>Original outbound shipping fees are non-refundable. Refunds are issued after inspection.</p>"
+          }
+        },
+        {
+          "type": "cta",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Ready to Start a Return or Exchange?",
+            "description": "Fill out our simple request form and our team will take it from there. We typically respond within 1 business day.",
+            "button_text": "Start My Return or Exchange"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

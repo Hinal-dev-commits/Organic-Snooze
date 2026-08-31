@@ -119,6 +119,21 @@
   {{ icon_asset | inline_asset_content }}
 {%- else -%}
   {%- case icon_name -%}
+    {%- when 'clock' -%}
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {% if svg_class != blank %}
+          class="{{ svg_class }}"
+        {% endif %}
+      >
+        <circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M8 4.5V8L10.25 10.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     {%- when 'trial' -%}
       <svg
         width="20"

@@ -13,13 +13,25 @@
     height: {{ section.settings.height_desktop | default: 300 }}px;
     min-height: {{ section.settings.height_desktop | default: 300 }}px;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    isolation: isolate;
   }
 
-  #NwImage-{{ section.id }} .nw-image__container picture,
-  #NwImage-{{ section.id }} .nw-image__img {
+  #NwImage-{{ section.id }} .nw-image__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  #NwImage-{{ section.id }} .nw-image__media picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #NwImage-{{ section.id }} .nw-image__media .nw-image__img,
+  #NwImage-{{ section.id }} .nw-image__media svg {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -27,7 +39,39 @@
     display: block;
   }
 
-  #NwImage-{{ section.id }} .nw-image__container--fixed {
+  #NwImage-{{ section.id }} .nw-image__media svg {
+    opacity: 0.5;
+    background-color: #EAE3D9;
+  }
+
+  {%- liquid
+    assign nw_show_gradient = section.settings.show_gradient
+    assign nw_gradient_end = section.settings.gradient_color_end | default: '#FFFCF0'
+    assign nw_gradient_position = section.settings.gradient_end_position | default: 91
+
+    if section.settings.gradient_color_start != blank
+      assign nw_gradient_start = section.settings.gradient_color_start
+    else
+      assign nw_gradient_start = nw_gradient_end | color_modify: 'alpha', 0
+    endif
+  -%}
+
+  {%- if nw_show_gradient -%}
+    #NwImage-{{ section.id }} .nw-image__container::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        {{ nw_gradient_start }} 0%,
+        {{ nw_gradient_end }} {{ nw_gradient_position }}%
+      );
+    }
+  {%- endif -%}
+
+  #NwImage-{{ section.id }} .nw-image__container--fixed .nw-image__media {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -37,14 +81,6 @@
     {%- else -%}
       background-color: #EAE3D9;
     {%- endif -%}
-  }
-
-  #NwImage-{{ section.id }} .nw-image__container svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.5;
-    background-color: #EAE3D9;
   }
 
   @media screen and (max-width: 749px) {
@@ -58,7 +94,7 @@
       min-height: {{ section.settings.height_mobile | default: 167 }}px;
     }
 
-    #NwImage-{{ section.id }} .nw-image__container--fixed {
+    #NwImage-{{ section.id }} .nw-image__container--fixed .nw-image__media {
       background-attachment: scroll;
       {%- if section.settings.image_mobile != blank -%}
         background-image: url('{{ section.settings.image_mobile | image_url: width: 1200 }}');
@@ -69,8 +105,12 @@
   }
 </style>
 
-<div id="NwImage-{{ section.id }}" class="nw-image section-{{ section.id }}">
+<div
+  id="NwImage-{{ section.id }}"
+  class="nw-image section-{{ section.id }}"
+>
   <div class="nw-image__container{% if section.settings.enable_fixed_bg %} nw-image__container--fixed{% endif %}">
+    <div class="nw-image__media">
     {%- liquid
       assign desktop_img = section.settings.image_desktop
       assign mobile_img = section.settings.image_mobile
@@ -102,6 +142,7 @@
     {%- else -%}
       {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
     {%- endif -%}
+    </div>
   </div>
 </div>
 
@@ -150,6 +191,42 @@
       "step": 2,
       "unit": "px",
       "default": 167
+    },
+    {
+      "type": "header",
+      "content": "GRADIENT OVERLAY"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_gradient",
+      "label": "Show Gradient",
+      "default": false,
+      "info": "Adds a bottom fade overlay on the image. Customize the gradient colors below."
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "gradient_color_start",
+      "label": "Gradient Start Color",
+      "info": "Leave empty to auto-fade from transparent using the end color."
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "gradient_color_end",
+      "label": "Gradient End Color",
+      "default": "#FFFCF0",
+      "info": "Match this to the background color of the section below the image."
+    },
+    {
+      "type": "range",
+      "id": "gradient_end_position",
+      "label": "Gradient End Position",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 91
     },
     {
       "type": "header",

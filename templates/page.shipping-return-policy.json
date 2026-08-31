@@ -1,0 +1,502 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "nw_image_hctYY8": {
+      "type": "nw-image",
+      "name": "NW Image",
+      "settings": {
+        "image_desktop": "shopify://shop_images/shipping-policy-desktop.png",
+        "image_mobile": "shopify://shop_images/shipping-mobile.png",
+        "enable_fixed_bg": false,
+        "height_desktop": 300,
+        "height_mobile": 167,
+        "show_gradient": false,
+        "gradient_color_start": "",
+        "gradient_color_end": "#fffcf0",
+        "gradient_end_position": 91,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_shipping_policy_py3QCR": {
+      "type": "nw-shipping-policy",
+      "blocks": {
+        "delivery_group_9FYTBp": {
+          "type": "delivery_group",
+          "settings": {
+            "heading": "Mattress Order",
+            "processing_text": "Processing Time: 3-5 Business days",
+            "processing_use_custom_icon": true,
+            "processing_icon": "clock",
+            "processing_custom_icon": "shopify://shop_images/clock.svg",
+            "delivery_text": "Mattress Delivery: 10-14 Business days",
+            "delivery_use_custom_icon": true,
+            "delivery_icon": "check-v2",
+            "delivery_custom_icon": "shopify://shop_images/checkmark.svg"
+          }
+        },
+        "delivery_group_rGfPMb": {
+          "type": "delivery_group",
+          "settings": {
+            "heading": "Accessory Orders",
+            "processing_text": "Processing Time: 1-2 Business days",
+            "processing_use_custom_icon": true,
+            "processing_icon": "clock",
+            "processing_custom_icon": "shopify://shop_images/clock.svg",
+            "delivery_text": "Mattress Delivery: 10-14 Business days",
+            "delivery_use_custom_icon": true,
+            "delivery_icon": "check-v2",
+            "delivery_custom_icon": "shopify://shop_images/checkmark.svg"
+          }
+        },
+        "stat_card_9bhkQj": {
+          "type": "stat_card",
+          "settings": {
+            "value": "100",
+            "label": "Night Sleep Trial"
+          }
+        },
+        "stat_card_bT7B7F": {
+          "type": "stat_card",
+          "settings": {
+            "value": "30",
+            "label": "Night Break-In Period"
+          }
+        },
+        "stat_card_wjDATC": {
+          "type": "stat_card",
+          "settings": {
+            "value": "30 years",
+            "label": "Limited Warranty"
+          }
+        },
+        "stat_card_73ayP7": {
+          "type": "stat_card",
+          "settings": {
+            "value": "Free",
+            "label": "Mattress Exchanges"
+          }
+        }
+      },
+      "block_order": [
+        "delivery_group_9FYTBp",
+        "delivery_group_rGfPMb",
+        "stat_card_9bhkQj",
+        "stat_card_bT7B7F",
+        "stat_card_wjDATC",
+        "stat_card_73ayP7"
+      ],
+      "name": "NW Shipping Policy",
+      "settings": {
+        "heading": "Shipping & Returns Policy",
+        "delivery_card_title": "Delivery Information",
+        "delivery_note": "<p>Delivery times may vary during peak seasons. Orders placed on weekends will be processed on the next business day. Products may not come in the same package. Questions on orders should be directed to <strong>Orders@theultimatesnooze.com</strong></p>",
+        "show_buttons": true,
+        "button_1_text": "Start Return",
+        "button_1_link": "",
+        "button_1_style": "primary",
+        "button_2_text": "See Policies",
+        "button_2_link": "",
+        "button_2_style": "outline",
+        "show_trial_section": true,
+        "trial_heading": "Sleep Trial & Return Policy",
+        "trial_description": "We stand behind every mattress we make. Sleep on it — and if it's not right, we'll make it right.",
+        "heading_color": "#613916",
+        "body_color": "#613916",
+        "stat_value_color": "#878735",
+        "icon_color": "#613916",
+        "divider_color": "#6139160a",
+        "card_bg_color": "#ffffff",
+        "bg_type": "image",
+        "bg_color": "#fffcf0",
+        "bg_image": "shopify://shop_images/bg-image.png",
+        "bg_image_opacity": 21,
+        "bg_gradient": "",
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_shipping_content_a8Km2P": {
+      "type": "nw-shipping-content",
+      "blocks": {
+        "content_item_sleep_trial": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "none",
+            "heading": "100-Night Mattress Sleep Trial",
+            "heading_size": "large",
+            "content": "<p>Sleep on your new mattress for 100 nights, completely risk-free. We're confident you'll love it — but if it's not the perfect fit, we'll take care of you.</p>"
+          }
+        },
+        "content_item_break_in": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "none",
+            "heading": "30-Night Break-In Period",
+            "heading_size": "medium",
+            "content": "<p>Because we use only premium natural materials — certified organic latex and wool — your mattress needs a short settling period to truly become yours. Give it 30 nights before making any decisions. Most customers are glad they did.</p>"
+          }
+        },
+        "content_item_eligibility": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "light",
+            "heading": "Trial Eligibility",
+            "heading_size": "medium",
+            "content": "<p>If your mattress isn't the right fit between night 31 and night 100, you may request a return or exchange, provided:</p><ul><li>The mattress is in clean and sanitary condition</li><li>It is free from stains, odors, pet damage, burns, or structural damage</li><li>The law tag remains attached and untampered</li></ul><p>Mattresses that do not meet sanitary or condition standards may be denied return eligibility.</p>"
+          }
+        },
+        "content_item_one_time": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "light",
+            "heading": "One-Time Trial",
+            "heading_size": "medium",
+            "content": "<p>Each mattress purchase is eligible for one return OR one exchange per order. An exchanged mattress does not receive a new 100-night trial—the original trial period continues from the original delivery date.</p>"
+          }
+        },
+        "table_group_exchanges": {
+          "type": "table_group",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Mattress Exchanges",
+            "badge": "FREE",
+            "intro": "<p>Want a different size or firmness? We make it simple with no exchange fees.</p>",
+            "table_layout": "two_column"
+          }
+        },
+        "table_row_ex_1": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Exchange Fee",
+            "column_2": "$0 — always free",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ex_2": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Upgrade to Higher Price",
+            "column_2": "Customer pays the price difference only",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ex_3": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Downgrade to Lower Price",
+            "column_2": "Difference issued as store credit (non-transferable)",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ex_4": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "New Trial Period?",
+            "column_2": "No — you may only redeem one sleep trial exchange",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ex_5": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Warranty",
+            "column_2": "30-Year Limited Warranty from original purchase date",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ex_6": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Availability",
+            "column_2": "Subject to current product availability",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_group_returns": {
+          "type": "table_group",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Mattress Returns & Refunds",
+            "badge": "",
+            "intro": "<p>If your mattress truly isn't working for you, we'll take it back between nights 31 and 100 — no runaround.</p>",
+            "table_layout": "two_column"
+          }
+        },
+        "table_row_ret_1": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Return Window",
+            "column_2": "Night 31 – Night 100",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ret_2": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Return Processing Fee",
+            "column_2": "Customer pays the price difference only",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ret_3": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Refund Amount",
+            "column_2": "Difference issued as store credit (non-transferable)",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ret_4": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Original Shipping Charges",
+            "column_2": "No — you may only redeem one sleep trial exchange",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ret_5": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Refund Timeline",
+            "column_2": "3–5 business days after receipt & inspection",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "table_row_ret_6": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Refund Method",
+            "column_2": "Original payment method",
+            "column_3": "",
+            "column_4": ""
+          }
+        },
+        "callout_store_credit": {
+          "type": "callout",
+          "settings": {
+            "divider_before": "none",
+            "heading": "Prefer store credit?",
+            "content": "<p>Choose store credit instead of a refund and we'll waive the $199 return fee entirely. Store credit is valid for 12 months and can be used on any purchase in our store.</p>"
+          }
+        },
+        "content_item_pickup": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "none",
+            "heading": "Return Pickup",
+            "heading_size": "large",
+            "content": "<p>Approved returns are coordinated through a local pickup or donation partner where available. Customers outside our standard delivery regions may be responsible for additional freight fees.</p>"
+          }
+        },
+        "table_group_accessories": {
+          "type": "table_group",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Accessories",
+            "badge": "Sheets, Pillows & Protectors",
+            "intro": "",
+            "table_layout": "four_column"
+          }
+        },
+        "table_row_acc_1": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Unopened & Sealed",
+            "column_2": "30 days",
+            "column_3": "None",
+            "column_4": "Customer pays return shipping"
+          }
+        },
+        "table_row_acc_2": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Opened / LightlyUsed",
+            "column_2": "30 days",
+            "column_3": "20% restocking fee",
+            "column_4": "Customer pays return shipping"
+          }
+        },
+        "table_row_acc_3": {
+          "type": "table_row",
+          "settings": {
+            "column_1": "Stained, Odored, or Damaged",
+            "column_2": "—",
+            "column_3": "Not eligible for return",
+            "column_4": ""
+          }
+        },
+        "content_item_acc_note": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "none",
+            "heading": "",
+            "heading_size": "large",
+            "content": "<p>Original outbound shipping fees are non-refundable. Refunds are issued after inspection.</p>"
+          }
+        },
+        "content_item_X4EL7n": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Mattress Toppers",
+            "heading_size": "large",
+            "content": "<p>Due to hygiene considerations, mattress toppers follow the same return eligibility as our mattresses. If your topper isn't the right fit between night 31 and night 100, you may request a return or exchange under the same conditions (clean, sanitary, law tag intact).<br/><br/>We allow one size exchange under the following conditions:</p><ul><li>Request made within 30 days of delivery</li><li>Item remains unopened and sealed</li><li>Exchange is for size correction only</li></ul>"
+          }
+        },
+        "table_group_9tTJWN": {
+          "type": "table_group",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Mattress Exchanges",
+            "badge": "FINAL SALE",
+            "intro": "<p>All adjustable bases and frames are <strong>Final Sale</strong>. Due to their mechanical and electrical components, these items cannot be returned, exchanged, or cancelled once the order has been processed. We recommend confirming your selection before ordering — our team is happy to help.</p>",
+            "table_layout": "hidden"
+          }
+        },
+        "content_item_AGpdT9": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Accessory Exchanges",
+            "heading_size": "large",
+            "content": "<p>Accessories may be exchanged within 30 days for a different size or option with no restocking fees. Organic Snooze covers exchange shipping. Exchanges are subject to product availability.</p>"
+          }
+        },
+        "content_item_RJQVA4": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Store Credit Option",
+            "heading_size": "large",
+            "content": "<p>Prefer credit over a refund? We make it worth your while:</p><ul><li>$199 return fee waived — choose store credit and we'll absorb the fee</li><li>Store credit is valid for 12 months</li><li>Applicable to any product in our store</li><li>Non-transferable and cannot be redeemed for cash</li></ul>"
+          }
+        },
+        "callout_8KCJGc": {
+          "type": "callout",
+          "settings": {
+            "divider_before": "none",
+            "heading": "30-Year Limited Warranty",
+            "content": "<p>Every Organic Snooze mattress is backed by our 30-Year Limited Warranty, beginning from your original purchase date — even on exchanged mattresses. Sleep confidently knowing we stand behind our craftsmanship for the long haul.</p>"
+          }
+        },
+        "content_item_dFrGge": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Additional Notes",
+            "heading_size": "large",
+            "content": "<p>Organic Snooze reserves the right to limit or deny returns in cases of excessive return activity, misuse of promotional offers, or policy abuse.<br/><br/>Freight and pickup fees for mattress returns may vary by location.<br/><br/>This policy may be updated at any time to maintain the best experience for our customers.</p>"
+          }
+        },
+        "cta_return": {
+          "type": "cta",
+          "settings": {
+            "divider_before": "none",
+            "heading": "Ready to Start a Return or Exchange?",
+            "description": "Fill out our simple request form and our team will take it from there. We typically respond within 1 business day.",
+            "button_text": "Start My Return or Exchange",
+            "button_link": "",
+            "footer_note": "<p>Questions? Call us at <strong>443-333-1213</strong><br/>or email <strong>info@theultimatesnooze.com</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "content_item_sleep_trial",
+        "content_item_break_in",
+        "content_item_eligibility",
+        "content_item_one_time",
+        "table_group_exchanges",
+        "table_row_ex_1",
+        "table_row_ex_2",
+        "table_row_ex_3",
+        "table_row_ex_4",
+        "table_row_ex_5",
+        "table_row_ex_6",
+        "table_group_returns",
+        "table_row_ret_1",
+        "table_row_ret_2",
+        "table_row_ret_3",
+        "table_row_ret_4",
+        "table_row_ret_5",
+        "table_row_ret_6",
+        "callout_store_credit",
+        "content_item_pickup",
+        "table_group_accessories",
+        "table_row_acc_1",
+        "table_row_acc_2",
+        "table_row_acc_3",
+        "content_item_acc_note",
+        "content_item_X4EL7n",
+        "table_group_9tTJWN",
+        "content_item_AGpdT9",
+        "content_item_RJQVA4",
+        "callout_8KCJGc",
+        "content_item_dFrGge",
+        "cta_return"
+      ],
+      "name": "NW Shipping Content",
+      "settings": {
+        "blocks_gap_desktop": 48,
+        "blocks_gap_mobile": 48,
+        "divider_light_color": "#6139161f",
+        "divider_heavy_color": "#61391659",
+        "heading_color": "#613916",
+        "body_color": "#613916",
+        "badge_bg_color": "#878735",
+        "badge_text_color": "#ffffff",
+        "callout_bg_color": "#fffcf0",
+        "callout_heading_color": "#878735",
+        "cta_bg_color": "#878735",
+        "cta_text_color": "#ffffff",
+        "table_border_color": "#f0eff2",
+        "table_stripe_color": "#6139160d",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "nw_image_hctYY8",
+    "nw_shipping_policy_py3QCR",
+    "nw_shipping_content_a8Km2P"
+  ]
+}
