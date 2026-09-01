@@ -2,11 +2,15 @@ if (!customElements.get('nw-review-video')) {
   class NwReviewVideo extends HTMLElement {
     connectedCallback() {
       this._videoBound = false;
+      this._onResize = this._handleResize.bind(this);
+      window.addEventListener('resize', this._onResize);
+      this._syncVideoLoop();
       this._initSlider();
       this._bindEditorEvents();
     }
 
     disconnectedCallback() {
+      window.removeEventListener('resize', this._onResize);
       this._unbindEditorEvents();
       var sliderEl = this.querySelector('[data-nw-review-slider]');
       if (sliderEl && sliderEl.swiper) {
@@ -20,6 +24,52 @@ if (!customElements.get('nw-review-video')) {
 
     _getBlockCount() {
       return parseInt(this.dataset.blockCount, 10) || 1;
+    }
+
+    _shouldLoopVideos() {
+      return this.dataset.enableVideoLoop === 'true';
+    }
+
+    _syncVideoLoop() {
+      var shouldLoop = this._shouldLoopVideos();
+      this.querySelectorAll('video').forEach(function (video) {
+        video.loop = shouldLoop;
+      });
+    }
+
+    _sliderNeedsNavigation(swiper) {
+      if (!swiper || !swiper.wrapperEl || !swiper.el) return false;
+      return swiper.wrapperEl.scrollWidth > swiper.el.clientWidth + 1;
+    }
+
+    _updateStaticSliderState(swiper) {
+      var wrap = this.querySelector('.nw-review-video__slider-wrap');
+      if (!wrap || !swiper) return;
+
+      var enableLoop = this._shouldLoopVideos();
+      var needsNav = this._sliderNeedsNavigation(swiper);
+      var isStatic = !enableLoop && !needsNav;
+
+      wrap.classList.toggle('nw-review-video__slider-wrap--static', isStatic);
+
+      swiper.allowTouchMove = !isStatic;
+      swiper.params.simulateTouch = !isStatic;
+
+      if (isStatic) {
+        swiper.slideTo(0, 0);
+        swiper.wrapperEl.style.transform = 'translate3d(0px, 0, 0)';
+      }
+
+      if (swiper.navigation && swiper.navigation.update) {
+        swiper.navigation.update();
+      }
+    }
+
+    _handleResize() {
+      var sliderEl = this.querySelector('[data-nw-review-slider]');
+      if (!sliderEl || !sliderEl.swiper) return;
+      sliderEl.swiper.update();
+      this._updateStaticSliderState(sliderEl.swiper);
     }
 
     _pauseOtherVideos(currentVideo) {
@@ -49,37 +99,47 @@ if (!customElements.get('nw-review-video')) {
         if (!card) return;
         var video = card.querySelector('video');
         if (!video) return;
+        this._syncVideoLoop();
         this._pauseOtherVideos(video);
         card.classList.add('is-playing');
         video.play();
       });
 
       this.addEventListener('pause', (e) => {
-        if (e.target && e.target.tagName === 'VIDEO') {
-          var card = e.target.closest('.nw-review-video__card');
-          if (e.target.currentTime === 0 || e.target.ended) {
-            if (card) card.classList.remove('is-playing');
-          }
-          var sliderEl = this.querySelector('[data-nw-review-slider]');
-          if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay) {
-            sliderEl.swiper.autoplay.start();
-          }
+        if (!e.target || e.target.tagName !== 'VIDEO') return;
+        if (e.target.loop) return;
+
+        var card = e.target.closest('.nw-review-video__card');
+        if (e.target.currentTime === 0 || e.target.ended) {
+          if (card) card.classList.remove('is-playing');
+        }
+
+        var sliderEl = this.querySelector('[data-nw-review-slider]');
+        if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay) {
+          sliderEl.swiper.autoplay.start();
         }
       }, true);
 
       this.addEventListener('ended', (e) => {
-        if (e.target && e.target.tagName === 'VIDEO') {
-          var card = e.target.closest('.nw-review-video__card');
-          if (card) card.classList.remove('is-playing');
-          var sliderEl = this.querySelector('[data-nw-review-slider]');
-          if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay) {
-            sliderEl.swiper.autoplay.start();
-          }
+        if (!e.target || e.target.tagName !== 'VIDEO') return;
+        if (e.target.loop) {
+          e.target.play();
+          return;
+        }
+
+        var card = e.target.closest('.nw-review-video__card');
+        if (card) card.classList.remove('is-playing');
+
+        var sliderEl = this.querySelector('[data-nw-review-slider]');
+        if (sliderEl && sliderEl.swiper && sliderEl.swiper.autoplay) {
+          sliderEl.swiper.autoplay.start();
         }
       }, true);
     }
 
     _updateCustomPagination(swiper) {
+      if (!this._shouldLoopVideos()) return;
+
       var totalBlocks = this._getBlockCount();
       if (totalBlocks <= 1) return;
       var currentRealIndex = swiper.realIndex % totalBlocks;
@@ -97,25 +157,28 @@ if (!customElements.get('nw-review-video')) {
       var enableAutoplay = this.dataset.enableAutoplay === 'true';
       var autoplayDelay = parseInt(this.dataset.autoplayDelay, 10) || 3000;
       var showArrows = this.dataset.showArrows === 'true';
+      var enableLoop = this._shouldLoopVideos();
+      var centeredSlides = enableLoop;
 
       var swiperOptions = {
         slidesPerView: 'auto',
         spaceBetween: 20,
-        centeredSlides: true,
-        loop: true,
+        centeredSlides: centeredSlides,
+        loop: enableLoop,
+        watchOverflow: true,
         speed: 600,
-        grabCursor: true,
-        simulateTouch: true,
-        allowTouchMove: true,
+        grabCursor: enableLoop,
+        simulateTouch: enableLoop,
+        allowTouchMove: enableLoop,
         watchSlidesProgress: true,
         breakpoints: {
-          0: { slidesPerView: 'auto', spaceBetween: 12, centeredSlides: true },
-          750: { slidesPerView: 'auto', spaceBetween: 16, centeredSlides: true },
-          990: { slidesPerView: 'auto', spaceBetween: 20, centeredSlides: true }
+          0: { slidesPerView: 'auto', spaceBetween: 12, centeredSlides: centeredSlides },
+          750: { slidesPerView: 'auto', spaceBetween: 16, centeredSlides: centeredSlides },
+          990: { slidesPerView: 'auto', spaceBetween: 20, centeredSlides: centeredSlides }
         }
       };
 
-      if (enableAutoplay) {
+      if (enableAutoplay && enableLoop) {
         swiperOptions.autoplay = {
           delay: autoplayDelay,
           disableOnInteraction: false,
@@ -137,8 +200,13 @@ if (!customElements.get('nw-review-video')) {
       });
       swiperInstance.on('init', () => {
         this._updateCustomPagination(swiperInstance);
+        this._updateStaticSliderState(swiperInstance);
+      });
+      swiperInstance.on('resize', () => {
+        this._updateStaticSliderState(swiperInstance);
       });
       this._updateCustomPagination(swiperInstance);
+      this._updateStaticSliderState(swiperInstance);
 
       var paginationEl = this.querySelector('[data-nw-review-pagination]');
       if (paginationEl && !paginationEl._bound) {
@@ -148,11 +216,16 @@ if (!customElements.get('nw-review-video')) {
           if (!bullet) return;
           var targetIndex = parseInt(bullet.getAttribute('data-bullet-index'), 10);
           if (!isNaN(targetIndex) && sliderEl.swiper) {
-            sliderEl.swiper.slideToLoop(targetIndex, 600);
+            if (sliderEl.swiper.params.loop) {
+              sliderEl.swiper.slideToLoop(targetIndex, 600);
+            } else {
+              sliderEl.swiper.slideTo(targetIndex, 600);
+            }
           }
         });
       }
 
+      this._syncVideoLoop();
       this._bindVideoEvents();
     }
 
@@ -161,10 +234,15 @@ if (!customElements.get('nw-review-video')) {
     }
 
     _onSectionSelect = () => {
-      var sliderEl = this.querySelector('[data-nw-review-slider]');
-      if (sliderEl && sliderEl.swiper) {
-        sliderEl.swiper.update();
-      }
+      this._handleResize();
+    };
+
+    _onSectionLoad = (e) => {
+      var section = this.closest('.shopify-section');
+      if (!section || e.target !== section) return;
+      this._videoBound = false;
+      this._syncVideoLoop();
+      this._whenSwiperReady(() => this._runSlider());
     };
 
     _onBlockSelect = (e) => {
@@ -182,21 +260,20 @@ if (!customElements.get('nw-review-video')) {
     };
 
     _onBlockDeselect = () => {
-      var sliderEl = this.querySelector('[data-nw-review-slider]');
-      if (sliderEl && sliderEl.swiper) {
-        sliderEl.swiper.update();
-      }
+      this._handleResize();
     };
 
     _bindEditorEvents() {
       if (!Shopify || !Shopify.designMode) return;
       document.addEventListener('shopify:section:select', this._onSectionSelect);
+      document.addEventListener('shopify:section:load', this._onSectionLoad);
       document.addEventListener('shopify:block:select', this._onBlockSelect);
       document.addEventListener('shopify:block:deselect', this._onBlockDeselect);
     }
 
     _unbindEditorEvents() {
       document.removeEventListener('shopify:section:select', this._onSectionSelect);
+      document.removeEventListener('shopify:section:load', this._onSectionLoad);
       document.removeEventListener('shopify:block:select', this._onBlockSelect);
       document.removeEventListener('shopify:block:deselect', this._onBlockDeselect);
     }

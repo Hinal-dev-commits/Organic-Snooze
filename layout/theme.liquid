@@ -401,7 +401,7 @@
     {% render 'nw-script' %}
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} nw-theme-{{ template.name }}">
     <div id="scrollbar-measure">
       <div class="scrollbar-measure-inner"></div>
     </div>

@@ -1,0 +1,280 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-quiz-bar.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign nw_shell_selector = '#NwQuizBar-' | append: section.id
+  assign quiz_icon = section.settings.icon
+  assign quiz_icon_asset = 'nw-quiz-bar-icon.png' | asset_url
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#F4EFE8' %}
+
+<nw-quiz-bar
+  id="NwQuizBar-{{ section.id }}"
+  class="nw-quiz-bar section-{{ section.id }}"
+  style="
+    --nw-qb-border: {{ section.settings.border_color }};
+    --nw-qb-heading-color: {{ section.settings.heading_color }};
+    --nw-qb-text-color: {{ section.settings.description_color }};
+    --nw-qb-btn-bg: {{ section.settings.button_bg_color }};
+    --nw-qb-btn-text: {{ section.settings.button_text_color }};
+  "
+>
+  <div class="nw-quiz-bar__container">
+    <div class="nw-quiz-bar__inner{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.heading != blank or section.settings.description != blank or quiz_icon != blank or quiz_icon_asset != blank -%}
+        <div class="nw-quiz-bar__content">
+          <div class="nw-quiz-bar__icon" aria-hidden="true">
+            {%- if quiz_icon != blank -%}
+              <img
+                src="{{ quiz_icon | image_url: width: 120 }}"
+                alt=""
+                class="nw-quiz-bar__icon-img"
+                width=""
+                height=""
+                loading="lazy"
+              >
+            {%- else -%}
+              <img
+                src="{{ quiz_icon_asset }}"
+                alt=""
+                class="nw-quiz-bar__icon-img"
+                width=""
+                height=""
+                loading="lazy"
+              >
+            {%- endif -%}
+          </div>
+
+          <div class="nw-quiz-bar__copy">
+            {%- if section.settings.heading != blank -%}
+              <p class="nw-quiz-bar__heading">{{ section.settings.heading }}</p>
+            {%- endif -%}
+            {%- if section.settings.description != blank -%}
+              <p class="nw-quiz-bar__description">{{ section.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_button and section.settings.button_text != blank -%}
+        <div class="nw-quiz-bar__button">
+          {% render 'nw-button',
+            text: section.settings.button_text,
+            link: section.settings.button_link,
+            style: section.settings.button_style,
+            btn_class: 'nw-quiz-bar__btn'
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-quiz-bar>
+
+{% schema %}
+{
+  "name": "t:sections.nw-quiz-bar.name",
+  "tag": "section",
+  "class": "section-nw-quiz-bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION CONTENT"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find your perfect mattress"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Two quick questions to the right fit."
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Take quiz",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "secondary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background",
+      "default": "#7F7F29",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "rgba(97, 57, 22, 0.15)",
+      "alpha": true
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F4EFE8",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-quiz-bar.name",
+      "category": "NW Sections",
+      "settings": {
+        "heading": "Find your perfect mattress",
+        "description": "Two quick questions to the right fit.",
+        "show_button": true,
+        "button_text": "Take quiz",
+        "button_style": "secondary",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    }
+  ]
+}
+{% endschema %}

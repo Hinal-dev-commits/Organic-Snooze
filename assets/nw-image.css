@@ -1,0 +1,119 @@
+.nw-image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.nw-image__container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.nw-image__media {
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.nw-image__media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nw-image__media .nw-image__img,
+.nw-image__media svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.nw-image__media svg {
+  opacity: 0.5;
+  background-color: #eae3d9;
+}
+
+.nw-image__content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 40px;
+  padding: 0px;
+  box-sizing: border-box;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 50px;
+  max-width: 1380px;
+}
+
+.nw-image__content > * {
+  pointer-events: auto;
+}
+
+.nw-image__heading,
+.nw-image__heading * {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  text-align: left;
+  color: var(--nw-image-heading-color, #613916);
+}
+.nw-image__content-inner{
+    max-width: 520px;
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.nw-image__button {
+  width: 100%;
+  max-width: 520px;
+}
+
+
+@media screen and (max-width: 749px) {
+  .nw-image__content {
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 48px 16px;
+    height: 100%;
+  }
+  .nw-image__content-inner{
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+  }
+
+  .nw-image__heading,
+  .nw-image__heading * {
+    max-width: 100%;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+
+  .nw-image__button {
+    max-width: 343px;
+  }
+}

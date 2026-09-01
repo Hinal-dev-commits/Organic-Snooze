@@ -1,0 +1,707 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-cta-badges.css' | asset_url | stylesheet_tag }}
+{{ 'nw-blog-latest.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-blog-latest.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwBlogLatest-' | append: section.id
+  assign article_source = section.settings.article_source | default: 'blog'
+  assign selected_blog = section.settings.blog
+  assign selected_articles = section.settings.article
+  assign selected_articles_count = section.settings.article.count | default: 0
+  assign post_limit = section.settings.post_limit | default: 6
+  assign slides_desktop = section.settings.slides_desktop | default: 4
+  if post_limit < 1
+    assign post_limit = 1
+  endif
+  if slides_desktop < 1
+    assign slides_desktop = 1
+  endif
+  if slides_desktop > 4
+    assign slides_desktop = 4
+  endif
+  assign pagination_id = 'NwBlogLatestPagination-' | append: section.id
+  assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
+  assign has_articles = false
+  if article_source == 'article_list' and selected_articles != blank
+    assign has_articles = true
+  elsif article_source == 'blog' and selected_blog != blank and selected_blog.articles_count > 0
+    assign has_articles = true
+  endif
+  assign placeholder_count = post_limit
+  if article_source == 'article_list'
+    if selected_articles_count > 0
+      assign placeholder_count = selected_articles_count
+    else
+      assign placeholder_count = 3
+    endif
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-blog-latest
+  id="NwBlogLatest-{{ section.id }}"
+  class="nw-blog-latest section-{{ section.id }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
+  data-pagination-id="{{ pagination_id }}"
+  data-enable-autoplay="{{ section.settings.enable_autoplay }}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
+  data-slides-desktop="{{ slides_desktop }}"
+  style="
+    --nw-bl-slides-desktop: {{ slides_desktop }};
+    --nw-bl-heading-color: {{ section.settings.heading_color }};
+    --nw-bl-header-desc-color: {{ section.settings.description_color }};
+    --nw-star-active: {{ section.settings.star_color }};
+    --nw-star-inactive: {{ section.settings.star_inactive_color }};
+    --nw-cta-badge-text: {{ section.settings.badge_text_color }};
+    --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
+    --nw-bl-tag-color: {{ section.settings.tag_color }};
+    --nw-bl-title-color: {{ section.settings.title_color }};
+    --nw-bl-excerpt-color: {{ section.settings.excerpt_color }};
+    --nw-bl-meta-color: {{ section.settings.meta_color }};
+    --nw-bl-card-bg: {{ section.settings.card_bg_color }};
+    --nw-bl-card-border: {{ section.settings.card_border_color }};
+    --nw-bl-media-bg: {{ section.settings.media_bg_color }};
+    --nw-bl-badge-bg: {{ section.settings.badge_bg_color }};
+    --nw-bl-badge-text: {{ section.settings.editor_badge_text_color }};
+    --nw-bl-btn-bg: {{ section.settings.button_bg_color }};
+    --nw-bl-btn-text: {{ section.settings.button_text_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+    --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
+    --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-blog-latest__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.show_rating
+        or section.settings.eyebrow != blank
+        or section.settings.heading != blank
+        or section.settings.description != blank
+      -%}
+        <div class="nw-blog-latest__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.description,
+            section_index: section.index,
+            heading_class: 'nw-blog-latest__heading'
+          %}
+        </div>
+      {%- endif -%}
+
+      <div class="nw-blog-latest__slider-wrap">
+        {%- if section.settings.show_arrows -%}
+          {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+        {%- endif -%}
+
+        <div class="swiper nw-blog-latest__swiper" id="NwBlogLatestSwiper-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {%- if has_articles -%}
+              {%- if article_source == 'article_list' -%}
+                {%- for item in selected_articles -%}
+                  {%- liquid
+                    assign featured_article = item
+                    if featured_article == blank or featured_article.title == blank
+                      assign article_path = item | strip
+                      if article_path contains '/'
+                        assign article_path_parts = article_path | split: '/'
+                        assign article_blog_handle = article_path_parts.first
+                        assign article_handle = article_path_parts.last
+                        if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+                          assign featured_article = blogs[article_blog_handle].articles[article_handle]
+                        endif
+                      else
+                        assign featured_article = articles[article_path]
+                      endif
+                    endif
+                  -%}
+                  {%- if featured_article != blank -%}
+                    <div class="swiper-slide">
+                      {% render 'nw-blog-latest-card', article: featured_article, section: section %}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- for article in selected_blog.articles limit: post_limit -%}
+                  <div class="swiper-slide">
+                    {% render 'nw-blog-latest-card', article: article, section: section %}
+                  </div>
+                {%- endfor -%}
+              {%- endif -%}
+            {%- else -%}
+              {%- for i in (1..placeholder_count) -%}
+                {%- assign placeholder_image_index = forloop.index0 | modulo: 3 | plus: 1 -%}
+                <div class="swiper-slide">
+                  <article class="nw-blog-latest__card">
+                    <div class="nw-blog-latest__media">
+                      {{ 'blog-apparel-' | append: placeholder_image_index | placeholder_svg_tag: 'nw-blog-latest__placeholder' }}
+                      {%- if section.settings.show_editors_pick and i == 1 -%}
+                        <span class="nw-blog-latest__badge">
+                          <span class="nw-blog-latest__badge-icon" aria-hidden="true">
+                            {% render 'nw-icon', icon: 'star' %}
+                          </span>
+                          <span class="nw-blog-latest__badge-text">{{ section.settings.editor_pick_label | default: "Editor's Pick" }}</span>
+                        </span>
+                      {%- endif -%}
+                    </div>
+                    <div class="nw-blog-latest__body">
+                      <div class="nw-blog-latest__copy">
+                        <p class="nw-blog-latest__tag">{{ 'sections.featured_blog.onboarding_title' | t | upcase }}</p>
+                        <h3 class="nw-blog-latest__title">{{ 'sections.featured_blog.onboarding_title' | t }}</h3>
+                        <p class="nw-blog-latest__excerpt">{{ 'sections.featured_blog.onboarding_content' | t }}</p>
+                      </div>
+                      <div class="nw-blog-latest__meta">
+                        {%- if section.settings.show_author -%}
+                          <span class="nw-blog-latest__author">{{ shop.name }}</span>
+                          <span class="nw-blog-latest__meta-dot" aria-hidden="true">&bull;</span>
+                        {%- endif -%}
+                        <span class="nw-blog-latest__read-time">8 min read</span>
+                      </div>
+                      {%- if section.settings.show_card_button -%}
+                        <span class="nw-blog-latest__btn">
+                          <span class="nw-blog-latest__btn-text">{{ section.settings.card_button_text | default: 'Read the article' }}</span>
+                          <span class="nw-blog-latest__btn-icon" aria-hidden="true">
+                            {% render 'nw-icon', icon: 'arrow-right-3' %}
+                          </span>
+                        </span>
+                      {%- endif -%}
+                    </div>
+                  </article>
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if section.settings.show_pagination -%}
+          {% render 'nw-swiper-pagination', id: pagination_id, class: 'nw-blog-latest__pagination' %}
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_button -%}
+        <div class="nw-blog-latest__footer">
+          {% render 'nw-cta-badges',
+            settings: section.settings,
+            blocks: trust_badge_blocks,
+            class: 'nw-blog-latest__cta'
+          %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-blog-latest>
+
+{% schema %}
+{
+  "name": "t:sections.nw-blog-latest.name",
+  "tag": "section",
+  "class": "section-nw-blog-latest",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Rating Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Latest"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "BLOG SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "article_source",
+      "label": "Article Source",
+      "default": "blog",
+      "options": [
+        { "value": "blog", "label": "Blog" },
+        { "value": "article_list", "label": "Article List" }
+      ],
+      "info": "Choose Blog to pull latest articles from a blog, or Article List to hand-pick specific articles."
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Used when Article Source is set to Blog."
+    },
+    {
+      "type": "article_list",
+      "id": "article",
+      "label": "Article",
+      "info": "Used when Article Source is set to Article List."
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": "Articles To Show",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "default": 6,
+      "visible_if": "{{ section.settings.article_source == 'blog' }}"
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Slides Per View (Desktop)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "CARD SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_card_button",
+      "label": "Show Card Button",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_editors_pick",
+      "label": "Show Editor's Pick Tag",
+      "default": false,
+      "info": "Shows when the article metafield custom.editor_s_pick has text."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show Author Name",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "editor_pick_label",
+      "label": "Editor's Pick Fallback Label",
+      "default": "Editor's Pick",
+      "visible_if": "{{ section.settings.show_editors_pick == true }}"
+    },
+    {
+      "type": "text",
+      "id": "card_button_text",
+      "label": "Card Button Label",
+      "default": "Read the article",
+      "visible_if": "{{ section.settings.show_card_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "VIEW ALL ARTICLES",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TRUST BADGES"
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Badge Icon Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Slider Arrows",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "arrow_style",
+      "label": "Arrow Style",
+      "default": "style_1",
+      "options": [
+        { "value": "style_1", "label": "Style 1" },
+        { "value": "style_2", "label": "Style 2" }
+      ],
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_bg",
+      "label": "Arrow Background",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_color",
+      "label": "Arrow Icon Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Slider Pagination",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination Color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (Seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "CARD COLORS"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "media_bg_color",
+      "label": "Media Placeholder Background",
+      "default": "#F4EFE8",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Editor's Pick Background",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "editor_badge_text_color",
+      "label": "Editor's Pick Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#E57B1E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "star_inactive_color",
+      "label": "Star Inactive Color",
+      "default": "#D1D5DB",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_color",
+      "label": "Tag Color",
+      "default": "#C2673B",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "excerpt_color",
+      "label": "Description Color",
+      "default": "rgba(45, 45, 45, 0.79)",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Read Time Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "default": "none",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "moneyback", "label": "100-Night Trial / Moneyback" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "shipping", "label": "Shipping / Truck" },
+            { "value": "financing", "label": "Financing / Offer" },
+            { "value": "shield", "label": "Shield" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "100-Night Risk-Free Trial"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-blog-latest.name",
+      "category": "NW Sections",
+      "settings": {
+        "heading": "The Latest",
+        "article_source": "blog",
+        "post_limit": 8,
+        "slides_desktop": 4,
+        "show_card_button": false,
+        "show_editors_pick": false,
+        "show_pagination": true,
+        "padding_top_desktop": 68,
+        "padding_bottom_desktop": 68,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  ]
+}
+{% endschema %}

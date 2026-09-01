@@ -7,6 +7,7 @@
 {%- liquid
   assign video_blocks = section.blocks | where: 'type', 'review'
   assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
+  assign card_style = section.settings.card_style | default: 'style-1' | replace: '_', '-'
 -%}
 
 {%- assign nw_shell_selector = '.nw-review-video.section-' | append: section.id -%}
@@ -23,7 +24,7 @@
 {% render 'nw-section-text-colors', selector: nw_shell_selector %}
 
 <nw-review-video
-  class="nw-review-video section-{{ section.id }}{%- render 'nw-scroll-animation' -%}"
+  class="nw-review-video nw-review-video--{{ card_style }} section-{{ section.id }}{%- render 'nw-scroll-animation' -%}"
   style="
     --nw-cta-badge-text: {{ section.settings.badge_text_color }};
     --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
@@ -32,6 +33,10 @@
   data-enable-autoplay="{{ section.settings.enable_autoplay }}"
   data-autoplay-delay="{{ section.settings.autoplay_delay | default: 3 | times: 1000 }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-dots="{{ section.settings.show_dots }}"
+  data-card-style="{{ card_style }}"
+  data-enable-video-loop="{{ section.settings.enable_video_loop }}"
+  {% unless section.settings.enable_video_loop %}data-no-loop{% endunless %}
 >
   <div class="page-width"> 
     <div class="nw-review-video__wrapper">
@@ -51,19 +56,21 @@
   {%- if video_blocks.size > 0 -%}
     {%- liquid
       assign repeat_times = 1
-      if video_blocks.size == 1
-        assign repeat_times = 8
-      elsif video_blocks.size == 2
-        assign repeat_times = 5
-      elsif video_blocks.size == 3
-        assign repeat_times = 4
-      elsif video_blocks.size == 4
-        assign repeat_times = 3
-      elsif video_blocks.size <= 7
-        assign repeat_times = 2
+      if section.settings.enable_video_loop
+        if video_blocks.size == 1
+          assign repeat_times = 8
+        elsif video_blocks.size == 2
+          assign repeat_times = 5
+        elsif video_blocks.size == 3
+          assign repeat_times = 4
+        elsif video_blocks.size == 4
+          assign repeat_times = 3
+        elsif video_blocks.size <= 7
+          assign repeat_times = 2
+        endif
       endif
     -%}
-    <div class="nw-review-video__slider-wrap">
+    <div class="nw-review-video__slider-wrap{% unless section.settings.enable_video_loop %} nw-review-video__slider-wrap--no-loop{% endunless %}">
       {%- if section.settings.show_arrows -%}
         {% render 'nw-swiper-arrows', prev_label: 'Previous video', next_label: 'Next video' %}
       {%- endif -%}
@@ -90,22 +97,22 @@
                 if poster == blank and block.settings.video != blank and block.settings.video.preview_image != blank
                   assign poster = block.settings.video.preview_image
                 endif
+                assign video_loop = section.settings.enable_video_loop
               -%}
               <div class="swiper-slide" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-                <article class="nw-review-video__card">
+                <article class="nw-review-video__card{% if card_style == 'style-2' %} nw-review-video__card--style-2{% endif %}">
                   <div class="nw-review-video__media">
                     {%- if block.settings.video != blank -%}
                       {{
                         block.settings.video
                         | video_tag:
                           autoplay: false,
-                          loop: false,
+                          loop: video_loop,
                           muted: false,
                           controls: true,
                           playsinline: true,
                           preload: 'none',
-                          class: 'nw-review-video__video',
-                          image_size: '800x'
+                          class: 'nw-review-video__video'
                       }}
                     {%- endif -%}
 
@@ -132,23 +139,29 @@
                       </span>
                     </button>
                   </div>
-                  {%- if block.settings.author != blank or block.settings.show_verified or product_title != blank or product_url != blank -%}
+
                   <div class="nw-review-video__body">
-                    <div class="nw-review-video__author-row">
-                      {%- if block.settings.author != blank -%}
-                        <span class="nw-review-video__author">{{ block.settings.author }}</span>
-                      {%- endif -%}
-                      {%- if block.settings.show_verified -%}
-                        <span class="nw-review-video__verified">
-                          {% render 'nw-icon', icon: 'verified' %}
-                          <span>{{ block.settings.verified_text | default: 'Verified Customer' }}</span>
-                        </span>
-                      {%- endif -%}
-                    </div>
+                    {%- if block.settings.review_text != blank -%}
+                      <div class="nw-review-video__quote rte">{{ block.settings.review_text }}</div>
+                    {%- endif -%}
 
-                    <hr class="nw-review-video__divider">
+                    {%- if block.settings.author != blank or block.settings.show_verified -%}
+                      <div class="nw-review-video__author-row">
+                        {%- if block.settings.author != blank -%}
+                          <span class="nw-review-video__author">{{ block.settings.author }}</span>
+                        {%- endif -%}
+                        {%- if block.settings.show_verified -%}
+                          <span class="nw-review-video__verified">
+                            {% render 'nw-icon', icon: 'verified' %}
+                            <span>{{ block.settings.verified_text | default: 'Verified Customer' }}</span>
+                          </span>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
 
-                    {%- if product_title != blank -%}
+                    {%- if card_style != 'style-2' and product_title != blank -%}
+                      <hr class="nw-review-video__divider">
+
                       {%- if product_url != blank -%}
                         <a href="{{ product_url }}" class="nw-review-video__product">
                       {%- else -%}
@@ -167,9 +180,7 @@
                           {%- else -%}
                             <span class="nw-review-video__product-placeholder" aria-hidden="true"></span>
                           {%- endif -%}
-                          {%- if product_title != blank -%}
-                            <span class="nw-review-video__product-title">{{ product_title }}</span>
-                          {%- endif -%}
+                          <span class="nw-review-video__product-title">{{ product_title }}</span>
                         </div>
                         <span class="nw-review-video__product-arrow" aria-hidden="true">
                           {% render 'nw-icon', icon: 'arrow-right' %}
@@ -181,6 +192,36 @@
                       {%- endif -%}
                     {%- endif -%}
                   </div>
+
+                  {%- if card_style == 'style-2' and product_title != blank -%}
+                    {%- if product_url != blank -%}
+                      <a href="{{ product_url }}" class="nw-review-video__product-footer">
+                    {%- else -%}
+                      <div class="nw-review-video__product-footer">
+                    {%- endif -%}
+                      <div class="nw-review-video__product-info">
+                        {%- if product_image != blank -%}
+                          <img
+                            src="{{ product_image | image_url: width: 120 }}"
+                            alt="{{ product_title | escape }}"
+                            width="58"
+                            height="31"
+                            loading="lazy"
+                            class="nw-review-video__product-img"
+                          >
+                        {%- else -%}
+                          <span class="nw-review-video__product-placeholder" aria-hidden="true"></span>
+                        {%- endif -%}
+                        <span class="nw-review-video__product-title">{{ product_title }}</span>
+                      </div>
+                      <span class="nw-review-video__product-arrow" aria-hidden="true">
+                        {% render 'nw-icon', icon: 'arrow-right' %}
+                      </span>
+                    {%- if product_url != blank -%}
+                      </a>
+                    {%- else -%}
+                      </div>
+                    {%- endif -%}
                   {%- endif -%}
                 </article>
               </div>
@@ -189,7 +230,7 @@
         </div>
       </div>
 
-      {%- if section.settings.show_dots and video_blocks.size > 1 -%}
+      {%- if section.settings.show_dots and video_blocks.size > 1 and section.settings.enable_video_loop -%}
         <div class="nw-swiper-pagination" id="nw-review-videos-pagination-{{ section.id }}" data-nw-review-pagination>
           {%- for block in video_blocks -%}
             <button
@@ -300,7 +341,27 @@
     },
     {
       "type": "header",
+      "content": "CARD SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card Style",
+      "default": "style-1",
+      "options": [
+        { "value": "style-1", "label": "Style 1" },
+        { "value": "style-2", "label": "Style 2" }
+      ]
+    },
+    {
+      "type": "header",
       "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_loop",
+      "label": "Loop Videos",
+      "default": true
     },
     {
       "type": "checkbox",
@@ -499,10 +560,14 @@
           "content": "REVIEW"
         },
         {
+          "type": "richtext",
+          "id": "review_text",
+          "label": "Review Text"
+        },
+        {
           "type": "text",
           "id": "author",
-          "label": "Author Name",
-          "default": "Katherine"
+          "label": "Author Name"
         },
         {
           "type": "checkbox",
@@ -533,8 +598,7 @@
         {
           "type": "text",
           "id": "custom_title",
-          "label": "Custom Product Title (Overrides Product Title)",
-          "default": "Pillowtop Mattress"
+          "label": "Custom Product Title (Overrides Product Title)"
         },
         {
           "type": "url",
@@ -589,35 +653,10 @@
       "name": "t:sections.nw-review-video.name",
       "category": "NW Sections",
       "blocks": [
-        {
-          "type": "review",
-          "settings": {
-            "author": "Katherine",
-            "custom_title": "Pillowtop Mattress",
-            "overlay_text": "I LOVE IT."
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "author": "Courtney",
-            "custom_title": "Pillowtop Mattress"
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "author": "Rivera",
-            "custom_title": "Pure Mattress"
-          }
-        },
-        {
-          "type": "review",
-          "settings": {
-            "author": "Gary Brecka",
-            "custom_title": "Mitopure Softgels"
-          }
-        }
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
       ]
     }
   ]

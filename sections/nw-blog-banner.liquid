@@ -1,0 +1,505 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-cta-badges.css' | asset_url | stylesheet_tag }}
+{{ 'nw-blog-banner.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-blog-banner.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
+  assign banner_desktop_image = section.settings.bg_image
+  assign banner_mobile_image = section.settings.bg_image_mobile
+  if banner_mobile_image == blank
+    assign banner_mobile_image = banner_desktop_image
+  endif
+-%}
+
+<style>
+  #NwBlogBanner-{{ section.id }} {
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        background-color: {{ section.settings.bg_color }};
+        background-image: none;
+      {% when 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+        background-image: none;
+      {% when 'none' %}
+        background: transparent;
+        background-image: none;
+    {% endcase %}
+    {% if section.settings.enable_transparent_header %}
+      margin-top: calc(-1 * var(--header-height, 76px));
+      min-height: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    {% else %}
+      min-height: 0;
+      padding-top: {{ section.settings.padding_top_desktop  }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop  }}px;
+    {% endif %}
+  }
+
+  #NwBlogBanner-{{ section.id }} .nw-blog-banner__overlay {
+    background-color: {{ section.settings.overlay_color }};
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  }
+
+  @media screen and (max-width: 749px) {
+    #NwBlogBanner-{{ section.id }} {
+      {% if section.settings.enable_transparent_header %}
+        margin-top: calc(-1 * var(--header-height, 60px) - 2px);
+        min-height: 0;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      {% else %}
+        padding-top: {{ section.settings.padding_top_mobile }}px;
+        padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% endif %}
+    }
+
+    #NwBlogBanner-{{ section.id }} .nw-blog-banner__media {
+      min-height: 0;
+    }
+  }
+</style>
+
+<nw-blog-banner
+  id="NwBlogBanner-{{ section.id }}"
+  class="nw-blog-banner section-{{ section.id }}{% if section.settings.enable_transparent_header %} nw-blog-banner--transparent-header{% endif %}{%- render 'nw-scroll-animation', type: 'fade-in' -%}"
+  {% if section.settings.enable_transparent_header %}data-nw-transparent-header{% endif %}
+  style="
+    --nw-bb-kicker-color: {{ section.settings.kicker_color }};
+    --nw-bb-heading-color: {{ section.settings.heading_color }};
+    --nw-bb-desc-color: {{ section.settings.description_color }};
+    --nw-bb-rating-text-color: {{ section.settings.rating_text_color }};
+    --nw-star-active: {{ section.settings.star_color }};
+    --nw-star-inactive: {{ section.settings.star_inactive_color }};
+    --nw-cta-badge-text: {{ section.settings.badge_text_color }};
+    --nw-cta-badge-icon: {{ section.settings.badge_icon_color }};
+    --nw-bb-media-height-desktop: {{ section.settings.banner_height_desktop | default: 544 }}px;
+    --nw-bb-media-height-mobile: {{ section.settings.banner_height_mobile | default: 380 }}px;
+    --nw-bb-pt-dt: {{ section.settings.padding_top_desktop | default: 0 }}px;
+    --nw-bb-pb-dt: {{ section.settings.padding_bottom_desktop | default: 0 }}px;
+    --nw-bb-pt-mb: {{ section.settings.padding_top_mobile | default: 0 }}px;
+    --nw-bb-pb-mb: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+  "
+>
+  <div class="nw-blog-banner__media" aria-hidden="true">
+    {%- if section.settings.show_banner_image -%}
+      {%- if banner_desktop_image != blank or banner_mobile_image != blank -%}
+      {%- if banner_desktop_image != blank and banner_mobile_image != blank and banner_desktop_image != banner_mobile_image -%}
+        <img
+          src="{{ banner_mobile_image | image_url: width: 1200 }}"
+          class="nw-blog-banner__image nw-blog-banner__image--mobile"
+          loading="eager"
+          fetchpriority="high"
+          width=""
+          height=""
+          alt=""
+        >
+        <img
+          src="{{ banner_desktop_image | image_url: width: 2880 }}"
+          class="nw-blog-banner__image nw-blog-banner__image--desktop"
+          loading="eager"
+          fetchpriority="high"
+          width=""
+          height=""
+          alt=""
+        >
+      {%- elsif banner_desktop_image != blank -%}
+        <img
+          src="{{ banner_desktop_image | image_url: width: 2880 }}"
+          class="nw-blog-banner__image"
+          loading="eager"
+          fetchpriority="high"
+          width=""
+          height=""
+          alt=""
+        >
+      {%- else -%}
+        <img
+          src="{{ banner_mobile_image | image_url: width: 1200 }}"
+          class="nw-blog-banner__image"
+          loading="eager"
+          fetchpriority="high"
+          width=""
+          height=""
+          alt=""
+        >
+      {%- endif -%}
+    {%- else -%}
+      {{ 'hero-apparel-1' | placeholder_svg_tag: 'nw-blog-banner__image nw-blog-banner__image--placeholder' }}
+    {%- endif -%}
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_banner_image -%}
+    <div class="nw-blog-banner__overlay"></div>
+  {%- endif -%}
+
+  <div class="page-width">
+    <div class="nw-blog-banner__layout nw-blog-banner__layout--align-{{ section.settings.text_alignment }}">
+      <div class="nw-blog-banner__content">
+        <div class="nw-blog-banner__copy">
+          {%- if section.settings.kicker != blank -%}
+            <p class="nw-blog-banner__kicker">{{ section.settings.kicker }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.show_reviews -%}
+            <div class="nw-rating nw-blog-banner__rating">
+              {% render 'nw-stars', rating: section.settings.rating_stars %}
+              {%- if section.settings.rating_text != blank -%}
+                <div class="nw-eyebrow nw-blog-banner__rating-text rte">{{ section.settings.rating_text }}</div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.heading != blank -%}
+            {% render 'nw-section-heading',
+              text: section.settings.heading,
+              section_index: section.index,
+              class: 'nw-blog-banner__heading'
+            %}
+          {%- endif -%}
+
+          {%- if section.settings.description != blank -%}
+            {% render 'nw-section-description',
+              text: section.settings.description,
+              class: 'nw-blog-banner__description'
+            %}
+          {%- endif -%}
+        </div>
+
+        {% render 'nw-cta-badges',
+          settings: section.settings,
+          blocks: trust_badge_blocks,
+          class: 'nw-blog-banner__actions'
+        %}
+      </div>
+    </div>
+  </div>
+</nw-blog-banner>
+
+{% schema %}
+{
+  "name": "t:sections.nw-blog-banner.name",
+  "tag": "section",
+  "class": "section-nw-blog-banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "HEADER INTEGRATION"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header",
+      "label": "Enable Transparent Header Over Hero",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "THE SLEEP LAB"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Blog"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Insights on sleep, biology, and clean technology – created to help you understand your body and improve the way you rest.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "REVIEWS / RATING"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show Reviews / Rating",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "rating_stars",
+      "label": "Rating Stars Count",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_reviews == true }}"
+    },
+    {
+      "type": "richtext",
+      "id": "rating_text",
+      "label": "Review Text",
+      "default": "<p>4.9/5 (10,000+ happy sleepers)</p>",
+      "visible_if": "{{ section.settings.show_reviews == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "SHOP MATTRESSES",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner_image",
+      "label": "Show Banner Image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.show_banner_image == true }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.show_banner_image == true }}"
+    },
+    {
+      "type": "header",
+      "content": "OVERLAY"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_banner_image == true }}"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 0,
+      "visible_if": "{{ section.settings.show_banner_image == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "kicker_color",
+      "label": "Kicker Color",
+      "default": "#C2673B",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "rating_text_color",
+      "label": "Rating Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#E57B1E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "star_inactive_color",
+      "label": "Star Inactive Color",
+      "default": "#D1D5DB",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_icon_color",
+      "label": "Badge Icon Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "icon_color",
+          "label": "Icon Color",
+          "default": "#CC926A"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon Image",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Badge Icon",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
+          "options": [
+            { "value": "moneyback", "label": "Moneyback / Shield" },
+            { "value": "truck", "label": "Truck / Free Shipping" },
+            { "value": "warranty", "label": "Warranty / Ribbon" },
+            { "value": "financing", "label": "0% Financing" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "leaf", "label": "Organic / Leaf" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "moneyback"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "<p>100-Night Risk-Free Trial</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-blog-banner.name",
+      "category": "NW Sections",
+      "settings": {
+        "enable_transparent_header": true,
+        "kicker": "THE SLEEP LAB",
+        "heading": "Blog",
+        "description": "<p>Insights on sleep, biology, and clean technology – created to help you understand your body and improve the way you rest.</p>",
+        "text_alignment": "left",
+        "kicker_color": "#C2673B",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "show_banner_image": true,
+        "bg_type": "none"
+      }
+    }
+  ]
+}
+{% endschema %}

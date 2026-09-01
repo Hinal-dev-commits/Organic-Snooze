@@ -1,0 +1,139 @@
+{% doc %}
+Video card for NW Ultimate Video.
+@param {object} block - Section block settings
+@example
+{% render 'nw-ultimate-video-card', block: block %}
+{% enddoc %}
+
+{%- liquid
+  assign poster = block.settings.image
+  if poster == blank and block.settings.video != blank and block.settings.video.preview_image != blank
+    assign poster = block.settings.video.preview_image
+  endif
+  assign poster_alt = block.settings.description | strip_html | strip
+  if poster_alt == blank
+    assign poster_alt = block.settings.category | default: 'Video thumbnail'
+  endif
+  assign card_link = block.settings.video_link
+  if card_link == blank
+    assign card_link = block.settings.social_link
+  endif
+-%}
+
+<article class="nw-ultimate-video__card" {{ block.shopify_attributes }}>
+  <div class="nw-ultimate-video__media">
+    {%- if block.settings.video != blank -%}
+      {{
+        block.settings.video
+        | video_tag:
+          autoplay: false,
+          loop: false,
+          muted: true,
+          controls: false,
+          playsinline: true,
+          preload: 'none',
+          class: 'nw-ultimate-video__video'
+      }}
+    {%- endif -%}
+
+    {%- if poster != blank -%}
+      <img
+        src="{{ poster | image_url: width: 1040 }}"
+        alt="{{ poster_alt | escape }}"
+        loading="lazy"
+        width="{{ poster.width }}"
+        height="{{ poster.height }}"
+        class="nw-ultimate-video__poster"
+      >
+    {%- else -%}
+      <div class="nw-ultimate-video__placeholder" aria-hidden="true">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.media_badge != blank -%}
+      <span class="nw-ultimate-video__media-badge">{{ block.settings.media_badge }}</span>
+    {%- endif -%}
+
+    {%- if block.settings.duration != blank -%}
+      <span class="nw-ultimate-video__duration">{{ block.settings.duration }}</span>
+    {%- endif -%}
+    {%- if block.settings.video != blank -%}
+      <button type="button" class="nw-ultimate-video__play" data-uv-video-play aria-label="Play video">
+        <span class="nw-ultimate-video__play-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'play' %}
+        </span>
+        <span class="nw-ultimate-video__pause-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'pause' %}
+        </span>
+      </button>
+    {%- elsif card_link != blank -%}
+      <a href="{{ card_link }}" class="nw-ultimate-video__play nw-ultimate-video__play--link" aria-label="Open video">
+        <span class="nw-ultimate-video__play-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'play' %}
+        </span>
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="nw-ultimate-video__body">
+    {%- if block.settings.category != blank -%}
+      <p class="nw-ultimate-video__tag">{{ block.settings.category }}</p>
+    {%- endif -%}
+
+    {%- if block.settings.description != blank -%}
+      <div class="nw-ultimate-video__description rte">{{ block.settings.description }}</div>
+    {%- endif -%}
+
+    {%- if block.settings.social_handle != blank
+      or block.settings.followers != blank
+      or block.settings.avatar != blank
+      or block.settings.show_social_icon
+    -%}
+      <div class="nw-ultimate-video__footer">
+        <div class="nw-ultimate-video__author">
+          {%- if block.settings.avatar != blank -%}
+            <img
+              src="{{ block.settings.avatar | image_url: width: 56 }}"
+              alt=""
+              width="28"
+              height="28"
+              loading="lazy"
+              class="nw-ultimate-video__avatar"
+            >
+          {%- endif -%}
+
+          {%- if block.settings.social_handle != blank -%}
+            <span class="nw-ultimate-video__handle">{{ block.settings.social_handle }}</span>
+          {%- endif -%}
+
+          {%- if block.settings.social_handle != blank and block.settings.followers != blank -%}
+            <span class="nw-ultimate-video__meta-dot" aria-hidden="true">&bull;</span>
+          {%- endif -%}
+
+          {%- if block.settings.followers != blank -%}
+            <span class="nw-ultimate-video__followers">{{ block.settings.followers }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if block.settings.show_social_icon != blank -%}
+          {%- if block.settings.social_link != blank -%}
+          <a href="{{ block.settings.social_link }}" class="nw-ultimate-video__social" target="_blank" rel="noopener noreferrer" aria-label="{{ block.settings.social_handle | default: 'Social profile' | escape }}">
+          {%- endif -%}
+            {%- if block.settings.social_icon != blank -%}
+              {{
+                block.settings.social_icon
+                | image_url: width: 56
+                | image_tag: loading: 'lazy', class: 'nw-ultimate-video__social-icon', alt: '', width: 28, height: 28
+              }}
+            {%- else -%}
+              {% render 'nw-icon', icon: 'instagram' %}
+            {%- endif -%}
+          {% if block.settings.social_link != blank %}
+          </a>
+          {% endif %}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>

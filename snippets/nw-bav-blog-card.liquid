@@ -1,0 +1,84 @@
+{% doc %}
+Blog grid card for NW Blog And Video.
+@param {object} article - Shopify article object
+@param {object} section - Section settings
+@param {boolean} [hidden] - Hide card until load more
+@example
+{% render 'nw-bav-blog-card', article: article, section: section %}
+{% enddoc %}
+
+{%- liquid
+  assign blog_tag_metafield = article.metafields.custom.blog_tag
+  assign read_time_metafield = article.metafields.custom.read_time
+  assign blog_tag = blank
+  if blog_tag_metafield != blank
+    assign blog_tag = blog_tag_metafield.value
+  endif
+  assign read_time = blank
+  if read_time_metafield != blank
+    assign read_time = read_time_metafield.value
+  endif
+  assign read_time_display = blank
+  if read_time != blank
+    assign read_time_text = read_time | strip
+    if read_time_text contains 'read'
+      assign read_time_display = read_time_text
+    else
+      assign read_time_display = read_time_text | append: ' min read'
+    endif
+  endif
+
+  assign show_author_meta = false
+  if section.settings.show_author and article.author != blank
+    assign show_author_meta = true
+  endif
+
+  assign show_read_time_meta = false
+  if read_time_display != blank
+    assign show_read_time_meta = true
+  endif
+-%}
+
+<article class="nw-blog-video__blog-card{% if hidden %} nw-blog-video__blog-card--hidden{% endif %}" data-blog-video-blog-card>
+  <div class="nw-blog-video__blog-media">
+    {%- if article.image != blank -%}
+      <img
+        src="{{ article.image | image_url: width: 800 }}"
+        alt="{{ article.image.alt | default: article.title | escape }}"
+        width=""
+        height=""
+        loading="lazy"
+        class="nw-blog-video__blog-image"
+      >
+    {%- else -%}
+      <div class="nw-blog-video__blog-placeholder" aria-hidden="true">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="nw-blog-video__blog-body">
+    <div class="nw-blog-video__blog-copy">
+      {%- if blog_tag != blank -%}
+        <p class="nw-blog-video__blog-tag">{{ blog_tag }}</p>
+      {%- endif -%}
+      {%- if article.title != blank -%}
+        <h3 class="nw-blog-video__blog-title">
+          <a href="{{ article.url }}" class="nw-blog-video__blog-title-link">{{ article.title }}</a>
+        </h3>
+      {%- endif -%}
+    </div>
+    {%- if show_author_meta or show_read_time_meta -%}
+      <div class="nw-blog-video__blog-meta">
+        {%- if show_author_meta -%}
+          <span class="nw-blog-video__blog-author">{{ article.author }}</span>
+        {%- endif -%}
+        {%- if show_author_meta and show_read_time_meta -%}
+          <span class="nw-blog-video__blog-meta-dot" aria-hidden="true">&bull;</span>
+        {%- endif -%}
+        {%- if show_read_time_meta -%}
+          <span class="nw-blog-video__blog-read-time">{{ read_time_display }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>

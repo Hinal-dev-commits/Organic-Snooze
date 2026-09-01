@@ -1,0 +1,851 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-blog-and-video.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-blog-and-video.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwBlogAndVideo-' | append: section.id
+  assign blog_articles = section.settings.article
+  assign blog_article_count = section.settings.article.count | default: 0
+  assign featured_video_article = section.settings.featured_video_article
+  assign video_articles = section.settings.video_articles
+  assign video_article_count = section.settings.video_articles.count | default: 0
+  assign blog_initial_count = section.settings.blog_initial_count | default: 8
+  assign blog_load_more_count = section.settings.blog_load_more_count | default: 4
+  assign video_initial_count = section.settings.video_initial_count | default: 3
+  assign video_load_more_count = section.settings.video_load_more_count | default: 3
+
+  if blog_initial_count < 1
+    assign blog_initial_count = 1
+  endif
+  if blog_load_more_count < 1
+    assign blog_load_more_count = 1
+  endif
+  if video_initial_count < 1
+    assign video_initial_count = 1
+  endif
+  if video_load_more_count < 1
+    assign video_load_more_count = 1
+  endif
+
+  assign blog_hidden_count = 0
+  if blog_article_count > blog_initial_count
+    assign blog_hidden_count = blog_article_count | minus: blog_initial_count
+  endif
+
+  assign video_latest_count = 0
+  if video_article_count > 0
+    for item in video_articles
+      assign latest_article = item
+      if latest_article == blank or latest_article.title == blank
+        assign article_path = item | strip
+        if article_path contains '/'
+          assign article_path_parts = article_path | split: '/'
+          assign article_blog_handle = article_path_parts.first
+          assign article_handle = article_path_parts.last
+          if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+            assign latest_article = blogs[article_blog_handle].articles[article_handle]
+          endif
+        else
+          assign latest_article = articles[article_path]
+        endif
+      endif
+
+      if latest_article != blank
+        assign skip_latest = false
+        if featured_video_article != blank and latest_article.id == featured_video_article.id
+          assign skip_latest = true
+        endif
+        unless skip_latest
+          assign video_latest_count = video_latest_count | plus: 1
+        endunless
+      endif
+    endfor
+  endif
+
+  assign video_hidden_count = 0
+  if video_latest_count > video_initial_count
+    assign video_hidden_count = video_latest_count | minus: video_initial_count
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-blog-and-video
+  id="NwBlogAndVideo-{{ section.id }}"
+  class="nw-blog-video section-{{ section.id }}"
+  data-blog-load-more="{{ blog_load_more_count }}"
+  data-video-load-more="{{ video_load_more_count }}"
+  style="
+    --nw-bav-heading-color: {{ section.settings.heading_color }};
+    --nw-bav-label-color: {{ section.settings.label_color }};
+    --nw-bav-filter-border: {{ section.settings.filter_border_color }};
+    --nw-bav-filter-text: {{ section.settings.filter_text_color }};
+    --nw-bav-filter-bg: {{ section.settings.filter_bg_color }};
+    --nw-bav-search-btn-bg: {{ section.settings.search_button_bg_color }};
+    --nw-bav-search-btn-text: {{ section.settings.search_button_text_color }};
+    --nw-bav-tab-active: {{ section.settings.tab_active_color }};
+    --nw-bav-tab-inactive: {{ section.settings.tab_inactive_color }};
+    --nw-bav-tag-color: {{ section.settings.tag_color }};
+    --nw-bav-title-color: {{ section.settings.title_color }};
+    --nw-bav-meta-color: {{ section.settings.meta_color }};
+    --nw-bav-card-bg: {{ section.settings.card_bg_color }};
+    --nw-bav-card-border: {{ section.settings.card_border_color }};
+    --nw-bav-media-bg: {{ section.settings.media_bg_color }};
+    --nw-bav-badge-bg: {{ section.settings.badge_bg_color }};
+    --nw-bav-badge-text: {{ section.settings.badge_text_color }};
+    --nw-bav-play-bg: {{ section.settings.play_button_bg_color }};
+    --nw-bav-play-icon: {{ section.settings.play_button_icon_color }};
+    --nw-bav-btn-border: {{ section.settings.button_border_color }};
+    --nw-bav-btn-text: {{ section.settings.button_text_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-blog-video__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.show_mobile_tabs -%}
+        <div class="nw-blog-video__tabs" role="tablist" aria-label="{{ section.settings.blog_tab_label | escape }} / {{ section.settings.video_tab_label | escape }}">
+          <button
+            type="button"
+            class="nw-blog-video__tab nw-blog-video__tab--active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="NwBavBlogPanel-{{ section.id }}"
+            id="NwBavBlogTab-{{ section.id }}"
+            data-blog-video-tab="blog"
+          >
+            {{ section.settings.blog_tab_label }}
+          </button>
+          <button
+            type="button"
+            class="nw-blog-video__tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="NwBavVideoPanel-{{ section.id }}"
+            id="NwBavVideoTab-{{ section.id }}"
+            data-blog-video-tab="video"
+          >
+            {{ section.settings.video_tab_label }}
+          </button>
+        </div>
+      {%- endif -%}
+
+      <div
+        class="nw-blog-video__panel nw-blog-video__panel--blog nw-blog-video__panel--active"
+        id="NwBavBlogPanel-{{ section.id }}"
+        role="tabpanel"
+        aria-labelledby="NwBavBlogTab-{{ section.id }}"
+        data-blog-video-panel="blog"
+      >
+        {%- if section.settings.blog_heading != blank -%}
+          <h2 class="nw-blog-video__heading">{{ section.settings.blog_heading }}</h2>
+        {%- endif -%}
+
+        <div class="nw-blog-video__filters">
+          <div class="nw-blog-video__filter nw-blog-video__filter--topic">
+            <label class="nw-blog-video__filter-label" for="NwBavTopic-{{ section.id }}">
+              {{ section.settings.topic_label }}
+            </label>
+            <div class="nw-blog-video__filter-control">
+              <select id="NwBavTopic-{{ section.id }}" class="nw-blog-video__select" disabled aria-disabled="true">
+                <option>{{ section.settings.topic_default }}</option>
+              </select>
+              <span class="nw-blog-video__select-icon" aria-hidden="true">
+                {% render 'nw-icon', icon: 'arrow-down-2' %}
+              </span>
+            </div>
+          </div>
+
+          <div class="nw-blog-video__filter nw-blog-video__filter--search">
+            <label class="nw-blog-video__filter-label visually-hidden" for="NwBavSearch-{{ section.id }}">
+              {{ section.settings.search_placeholder }}
+            </label>
+            <div class="nw-blog-video__search">
+              <input
+                id="NwBavSearch-{{ section.id }}"
+                type="search"
+                class="nw-blog-video__search-input"
+                placeholder="{{ section.settings.search_placeholder }}"
+                disabled
+                aria-disabled="true"
+                autocomplete="off"
+              >
+              <span class="nw-blog-video__search-btn" aria-hidden="true">
+                {{ 'search-2.svg' | inline_asset_content }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="nw-blog-video__blog-grid" data-blog-video-blog-grid>
+          {%- if blog_articles != blank and blog_article_count > 0 -%}
+            {%- for item in blog_articles -%}
+              {%- liquid
+                assign blog_article = item
+                if blog_article == blank or blog_article.title == blank
+                  assign article_path = item | strip
+                  if article_path contains '/'
+                    assign article_path_parts = article_path | split: '/'
+                    assign article_blog_handle = article_path_parts.first
+                    assign article_handle = article_path_parts.last
+                    if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+                      assign blog_article = blogs[article_blog_handle].articles[article_handle]
+                    endif
+                  else
+                    assign blog_article = articles[article_path]
+                  endif
+                endif
+
+                assign is_hidden = false
+                if forloop.index > blog_initial_count
+                  assign is_hidden = true
+                endif
+              -%}
+              {%- if blog_article != blank -%}
+                {% render 'nw-bav-blog-card', article: blog_article, section: section, hidden: is_hidden %}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        {%- if blog_hidden_count > 0 and section.settings.blog_button_text != blank -%}
+          <div class="nw-blog-video__actions">
+            <button type="button" class="nw-blog-video__load-more nw-btn nw-btn--{{ section.settings.blog_button_style | default: 'outline' }}" data-blog-video-load-blog>
+              <span class="nw-btn__text">{{ section.settings.blog_button_text }}</span>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div
+        class="nw-blog-video__panel nw-blog-video__panel--video"
+        id="NwBavVideoPanel-{{ section.id }}"
+        role="tabpanel"
+        aria-labelledby="NwBavVideoTab-{{ section.id }}"
+        data-blog-video-panel="video"
+      >
+        {%- if section.settings.video_heading != blank -%}
+          <h2 class="nw-blog-video__heading">{{ section.settings.video_heading }}</h2>
+        {%- endif -%}
+
+        <div class="nw-blog-video__video-layout">
+          <div class="nw-blog-video__video-featured">
+            <p class="nw-blog-video__video-label">{{ section.settings.featured_label }}</p>
+            <div class="nw-blog-video__video-featured-card" data-blog-video-featured>
+              {%- if featured_video_article != blank -%}
+                {% render 'nw-bav-video-card', article: featured_video_article, section: section, variant: 'featured' %}
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="nw-blog-video__filters nw-blog-video__filters--video">
+            <div class="nw-blog-video__filter nw-blog-video__filter--topic">
+              <label class="nw-blog-video__filter-label" for="NwBavTopic-{{ section.id }}">
+                {{ section.settings.topic_label }}
+              </label>
+              <div class="nw-blog-video__filter-control">
+                <select id="NwBavTopic-{{ section.id }}" class="nw-blog-video__select" disabled aria-disabled="true">
+                  <option>{{ section.settings.topic_default }}</option>
+                </select>
+                <span class="nw-blog-video__select-icon" aria-hidden="true">
+                  {% render 'nw-icon', icon: 'arrow-down-2' %}
+                </span>
+              </div>
+            </div>
+
+            <div class="nw-blog-video__filter nw-blog-video__filter--search">
+              <label class="nw-blog-video__filter-label visually-hidden" for="NwBavSearch-{{ section.id }}">
+                {{ section.settings.search_placeholder }}
+              </label>
+              <div class="nw-blog-video__search">
+                <input
+                  id="NwBavSearch-{{ section.id }}"
+                  type="search"
+                  class="nw-blog-video__search-input"
+                  placeholder="{{ section.settings.search_placeholder }}"
+                  disabled
+                  aria-disabled="true"
+                  autocomplete="off"
+                >
+                <span class="nw-blog-video__search-btn" aria-hidden="true">
+                  {{ 'search-2.svg' | inline_asset_content }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="nw-blog-video__video-latest">
+            <p class="nw-blog-video__video-label">{{ section.settings.latest_label }}</p>
+
+            {%- liquid
+              assign latest_index = 0
+            -%}
+
+            <div class="nw-blog-video__video-grid" data-blog-video-grid>
+              {%- if video_articles != blank and video_article_count > 0 -%}
+                {%- for item in video_articles -%}
+                  {%- liquid
+                    assign video_article = item
+                    if video_article == blank or video_article.title == blank
+                      assign article_path = item | strip
+                      if article_path contains '/'
+                        assign article_path_parts = article_path | split: '/'
+                        assign article_blog_handle = article_path_parts.first
+                        assign article_handle = article_path_parts.last
+                        if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+                          assign video_article = blogs[article_blog_handle].articles[article_handle]
+                        endif
+                      else
+                        assign video_article = articles[article_path]
+                      endif
+                    endif
+
+                    assign skip_video = false
+                    if featured_video_article != blank and video_article != blank and video_article.id == featured_video_article.id
+                      assign skip_video = true
+                    endif
+                  -%}
+
+                  {%- if video_article != blank and skip_video == false -%}
+                    {%- liquid
+                      assign latest_index = latest_index | plus: 1
+                    -%}
+                    {%- if latest_index <= video_initial_count -%}
+                      {% render 'nw-bav-video-card', article: video_article, section: section, variant: 'latest' %}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+
+            <div class="nw-blog-video__video-pool" data-blog-video-pool hidden>
+              {%- liquid
+                assign pool_index = 0
+              -%}
+              {%- if video_articles != blank and video_article_count > 0 -%}
+                {%- for item in video_articles -%}
+                  {%- liquid
+                    assign video_article = item
+                    if video_article == blank or video_article.title == blank
+                      assign article_path = item | strip
+                      if article_path contains '/'
+                        assign article_path_parts = article_path | split: '/'
+                        assign article_blog_handle = article_path_parts.first
+                        assign article_handle = article_path_parts.last
+                        if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+                          assign video_article = blogs[article_blog_handle].articles[article_handle]
+                        endif
+                      else
+                        assign video_article = articles[article_path]
+                      endif
+                    endif
+
+                    assign skip_video = false
+                    if featured_video_article != blank and video_article != blank and video_article.id == featured_video_article.id
+                      assign skip_video = true
+                    endif
+                  -%}
+
+                  {%- if video_article != blank and skip_video == false -%}
+                    {%- liquid
+                      assign pool_index = pool_index | plus: 1
+                    -%}
+                    {%- if pool_index > video_initial_count -%}
+                      {% render 'nw-bav-video-card', article: video_article, section: section, variant: 'latest', hidden: true %}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+
+        <div class="nw-blog-video__video-grid-wrapper" data-blog-video-grid-wrapper></div>
+
+        {%- if video_hidden_count > 0 and section.settings.video_button_text != blank -%}
+          <div class="nw-blog-video__actions">
+            <button type="button" class="nw-blog-video__load-more nw-btn nw-btn--{{ section.settings.video_button_style | default: 'outline' }}" data-blog-video-load-video>
+              <span class="nw-btn__text">{{ section.settings.video_button_text }}</span>
+            </button>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</nw-blog-and-video>
+
+{% schema %}
+{
+  "name": "t:sections.nw-blog-and-video.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "text",
+      "id": "blog_heading",
+      "label": "Blog Heading",
+      "default": "The Blog"
+    },
+    {
+      "type": "text",
+      "id": "video_heading",
+      "label": "Video Heading",
+      "default": "Our Video"
+    },
+    {
+      "type": "header",
+      "content": "BLOG SETTINGS"
+    },
+    {
+      "type": "article_list",
+      "id": "article",
+      "label": "Articles"
+    },
+    {
+      "type": "range",
+      "id": "blog_initial_count",
+      "label": "Initial Blog Articles",
+      "min": 2,
+      "max": 24,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "blog_load_more_count",
+      "label": "Blog Load More Count",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show Author Name",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "VIDEO SETTINGS"
+    },
+    {
+      "type": "article",
+      "id": "featured_video_article",
+      "label": "Featured Video Article"
+    },
+    {
+      "type": "article_list",
+      "id": "video_articles",
+      "label": "Video Articles"
+    },
+    {
+      "type": "range",
+      "id": "video_initial_count",
+      "label": "Initial Latest Videos Shown",
+      "info": "Number of latest video cards shown in the grid. Featured video is separate.",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "video_load_more_count",
+      "label": "Video Load More Count",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "video_media_type",
+      "label": "Video Card Media",
+      "default": "image",
+      "options": [
+        { "value": "image", "label": "Article Image" },
+        { "value": "video", "label": "Blog Video Metafield" }
+      ],
+      "info": "When Blog Video Metafield is selected and no video is set, the article featured image is used."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_editors_pick",
+      "label": "Show Editor's Pick Badge on Featured Video",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "featured_label",
+      "label": "Featured Label",
+      "default": "FEATURED"
+    },
+    {
+      "type": "text",
+      "id": "latest_label",
+      "label": "Latest Label",
+      "default": "LATEST"
+    },
+    {
+      "type": "header",
+      "content": "FILTERS (STATIC)"
+    },
+    {
+      "type": "text",
+      "id": "topic_label",
+      "label": "Topic Label",
+      "default": "Topic"
+    },
+    {
+      "type": "text",
+      "id": "topic_default",
+      "label": "Topic Default Value",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search Placeholder",
+      "default": "Search articles"
+    },
+    {
+      "type": "header",
+      "content": "MOBILE TABS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_tabs",
+      "label": "Show Mobile Tabs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "blog_tab_label",
+      "label": "Blog Tab Label",
+      "default": "BLOG POSTS"
+    },
+    {
+      "type": "text",
+      "id": "video_tab_label",
+      "label": "Video Tab Label",
+      "default": "VIDEOS"
+    },
+    {
+      "type": "header",
+      "content": "BUTTONS"
+    },
+    {
+      "type": "text",
+      "id": "blog_button_text",
+      "label": "View More Articles Label",
+      "default": "VIEW MORE ARTICLES"
+    },
+    {
+      "type": "select",
+      "id": "blog_button_style",
+      "label": "View More Articles Style",
+      "default": "outline",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "video_button_text",
+      "label": "See More Videos Label",
+      "default": "SEE MORE VIDEOS"
+    },
+    {
+      "type": "select",
+      "id": "video_button_style",
+      "label": "See More Videos Style",
+      "default": "outline",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Video Label Color",
+      "default": "#c2673b",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_color",
+      "label": "Tag Color",
+      "default": "#c2673b",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Read Time Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "FILTER COLORS"
+    },
+    {
+      "type": "color",
+      "id": "filter_border_color",
+      "label": "Filter Border Color",
+      "default": "#cc926a",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "filter_text_color",
+      "label": "Filter Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "filter_bg_color",
+      "label": "Filter Background Color",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "search_button_bg_color",
+      "label": "Search Button Background",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "search_button_text_color",
+      "label": "Search Button Icon Color",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "TAB COLORS"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_color",
+      "label": "Active Tab Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tab_inactive_color",
+      "label": "Inactive Tab Color",
+      "default": "#61391680",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "CARD COLORS"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#cc926a",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "media_bg_color",
+      "label": "Media Background",
+      "default": "#f4efe8",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Editor Badge Background",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Editor Badge Text",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "play_button_bg_color",
+      "label": "Play Button Background",
+      "default": "#ffffff80",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "play_button_icon_color",
+      "label": "Play Button Icon Color",
+      "default": "#fff",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-blog-and-video.name",
+      "category": "NW Sections",
+      "settings": {
+        "blog_heading": "The Blog",
+        "video_heading": "Our Video",
+        "blog_initial_count": 8,
+        "blog_load_more_count": 4,
+        "video_initial_count": 3,
+        "video_load_more_count": 3,
+        "video_media_type": "image",
+        "show_editors_pick": true,
+        "show_author": false,
+        "blog_button_style": "outline",
+        "video_button_style": "outline",
+        "padding_top_desktop": 68,
+        "padding_bottom_desktop": 68,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  ]
+}
+{% endschema %}

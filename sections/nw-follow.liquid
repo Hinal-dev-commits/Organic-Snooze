@@ -1,0 +1,585 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-follow.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-follow.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign image_blocks = section.blocks | where: 'type', 'image'
+  assign nw_shell_selector = '#NwFollow-' | append: section.id
+  assign pagination_id = 'NwFollowPagination-' | append: section.id
+  assign show_socials = false
+  if section.settings.show_instagram or section.settings.show_facebook
+    assign show_socials = true
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-follow
+  id="NwFollow-{{ section.id }}"
+  class="nw-follow section-{{ section.id }}"
+  data-block-count="{{ image_blocks.size | default: 6 }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-pagination="{{ section.settings.show_pagination }}"
+  data-pagination-id="{{ pagination_id }}"
+  data-enable-autoplay="{{ section.settings.enable_autoplay }}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
+  data-enable-loop="{{ section.settings.enable_slider_loop }}"
+  style="
+    --nw-follow-heading-color: {{ section.settings.heading_color }};
+    --nw-follow-handle-color: {{ section.settings.handle_color }};
+    --nw-follow-social-color: {{ section.settings.social_icon_color }};
+    --nw-follow-social-border: {{ section.settings.social_border_color }};
+    --nw-follow-fade-color: {{ section.settings.edge_fade_color }};
+    --nw-follow-play-bg: {{ section.settings.play_bg_color }};
+    --nw-follow-play-icon: {{ section.settings.play_icon_color }};
+    --nw-swiper-bullet: {{ section.settings.pagination_color }};
+    --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
+    --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-follow__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if show_socials or section.settings.handle != blank or section.settings.heading != blank -%}
+        <div class="nw-follow__header">
+          {%- if show_socials -%}
+            <div class="nw-follow__socials">
+              {%- if section.settings.show_instagram and section.settings.instagram_link != blank -%}
+                <a
+                  href="{{ section.settings.instagram_link }}"
+                  class="nw-follow__social nw-follow__social--instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="{{ section.settings.handle | default: 'Instagram' | escape }}"
+                >
+                  {% render 'nw-icon', icon: 'instagram' %}
+                </a>
+              {%- endif -%}
+
+              {%- if section.settings.show_facebook and section.settings.facebook_link != blank -%}
+                <a
+                  href="{{ section.settings.facebook_link }}"
+                  class="nw-follow__social nw-follow__social--facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                >
+                  {% render 'nw-icon', icon: 'facebook' %}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.handle != blank or section.settings.heading != blank -%}
+            <div class="nw-follow__text">
+              {%- if section.settings.handle != blank -%}
+                <p class="nw-follow__handle">{{ section.settings.handle }}</p>
+              {%- endif -%}
+
+              {% render 'nw-section-header',
+                heading: section.settings.heading,
+                section_index: section.index,
+                heading_class: 'nw-follow__heading'
+              %}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if image_blocks.size > 0 -%}
+    {%- liquid
+      assign repeat_times = 1
+      if section.settings.enable_slider_loop and image_blocks.size > 1
+        assign repeat_times = 2
+        if image_blocks.size <= 4
+          assign repeat_times = 3
+        endif
+        if image_blocks.size == 1
+          assign repeat_times = 8
+        endif
+      endif
+    -%}
+    <div class="nw-follow__slider-wrap{% if section.settings.show_edge_fade %} nw-follow__slider-wrap--fade{% endif %}">
+      {%- if section.settings.show_arrows and image_blocks.size > 1 -%}
+        {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+      {%- endif -%}
+
+      <div class="swiper nw-follow__swiper" id="NwFollowSwiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {%- for r in (1..repeat_times) -%}
+            {%- for block in image_blocks -%}
+              <div class="swiper-slide" data-slide-index="{{ forloop.index0 }}">
+                {% render 'nw-follow-card', block: block %}
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="page-width">
+      <div class="nw-follow__footer">
+        {%- if section.settings.show_pagination and image_blocks.size > 1 -%}
+          <div
+            id="{{ pagination_id }}"
+            class="nw-swiper-pagination nw-follow__pagination"
+            data-nw-follow-pagination
+            aria-label="Follow gallery pagination"
+          >
+            {%- for block in image_blocks -%}
+              <button
+                type="button"
+                class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+                data-bullet-index="{{ forloop.index0 }}"
+                aria-label="Go to slide {{ forloop.index }}"
+              ></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_button and section.settings.button_text != blank -%}
+          <div class="nw-follow__button-wrap">
+            {% render 'nw-button',
+              text: section.settings.button_text,
+              link: section.settings.button_link,
+              style: section.settings.button_style,
+              btn_class: 'nw-follow__btn'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- else -%}
+    <div class="nw-follow__slider-wrap{% if section.settings.show_edge_fade %} nw-follow__slider-wrap--fade{% endif %}">
+      {%- if section.settings.show_arrows -%}
+        {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+      {%- endif -%}
+
+      <div class="swiper nw-follow__swiper" id="NwFollowSwiper-{{ section.id }}">
+        <div class="swiper-wrapper">
+          {%- for i in (1..6) -%}
+            <div class="swiper-slide" data-slide-index="{{ forloop.index0 }}">
+              <article class="nw-follow__card">
+                <div class="nw-follow__card-link">
+                  <div class="nw-follow__card-placeholder" aria-hidden="true">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                </div>
+              </article>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="page-width">
+      <div class="nw-follow__footer">
+        {%- if section.settings.show_pagination -%}
+          <div
+            id="{{ pagination_id }}"
+            class="nw-swiper-pagination nw-follow__pagination"
+            data-nw-follow-pagination
+            aria-label="Follow gallery pagination"
+          >
+            {%- for i in (1..6) -%}
+              <button
+                type="button"
+                class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+                data-bullet-index="{{ forloop.index0 }}"
+                aria-label="Go to slide {{ forloop.index }}"
+              ></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_button and section.settings.button_text != blank -%}
+          <div class="nw-follow__button-wrap">
+            {% render 'nw-button',
+              text: section.settings.button_text,
+              link: section.settings.button_link,
+              style: section.settings.button_style,
+              btn_class: 'nw-follow__btn'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+</nw-follow>
+
+{% schema %}
+{
+  "name": "t:sections.nw-follow.name",
+  "tag": "section",
+  "class": "section-nw-follow",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_instagram",
+      "label": "Show Instagram Icon",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "instagram_link",
+      "label": "Instagram Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_facebook",
+      "label": "Show Facebook Icon",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "facebook_link",
+      "label": "Facebook Link"
+    },
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Social Handle",
+      "default": "@theultimatesnooze"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Follow the movement"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Follow us",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "visible_if": "{{ section.settings.show_button == true }}",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_edge_fade",
+      "label": "Show Desktop Edge Fade",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Pagination Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Navigation Arrows",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "arrow_style",
+      "label": "Arrow Style",
+      "default": "style_1",
+      "visible_if": "{{ section.settings.show_arrows == true }}",
+      "options": [
+        { "value": "style_1", "label": "Style 1" },
+        { "value": "style_2", "label": "Style 2" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_loop",
+      "label": "Enable Slider Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (Seconds)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "handle_color",
+      "label": "Handle Color",
+      "default": "#C2673B",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "social_icon_color",
+      "label": "Social Icon Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "social_border_color",
+      "label": "Social Icon Border Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "edge_fade_color",
+      "label": "Edge Fade Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_edge_fade == true }}"
+    },
+    {
+      "type": "header",
+      "content": "SLIDER COLORS"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination Dot Color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_pagination == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_bg",
+      "label": "Arrow Background",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_color",
+      "label": "Arrow Icon Color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "play_bg_color",
+      "label": "Play Button Background",
+      "default": "#FFFFFF80",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "play_icon_color",
+      "label": "Play Button Icon Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Media",
+      "settings": [
+        {
+          "type": "select",
+          "id": "media_type",
+          "label": "Media Type",
+          "default": "image",
+          "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Video" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image / Video Poster"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video",
+          "visible_if": "{{ block.settings.media_type == 'video' }}"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "visible_if": "{{ block.settings.media_type == 'image' }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-follow.name",
+      "category": "NW Sections",
+      "settings": {
+        "handle": "@theultimatesnooze",
+        "heading": "Follow the movement",
+        "button_text": "Follow us",
+        "show_button": true,
+        "show_instagram": true,
+        "show_facebook": true,
+        "show_edge_fade": true,
+        "show_pagination": true,
+        "show_arrows": true,
+        "enable_slider_loop": true,
+        "padding_top_desktop": 44,
+        "padding_bottom_desktop": 44,
+        "padding_top_mobile": 44,
+        "padding_bottom_mobile": 44
+      },
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

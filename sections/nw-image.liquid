@@ -1,3 +1,14 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-image.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign desktop_img = section.settings.image_desktop
+  assign mobile_img = section.settings.image_mobile
+  if desktop_img == blank and mobile_img != blank
+    assign desktop_img = mobile_img
+  endif
+-%}
+
 <style>
   #NwImage-{{ section.id }} {
     position: relative;
@@ -5,43 +16,15 @@
     overflow: hidden;
     padding-top: {{ section.settings.padding_top_desktop | default: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop | default: 0 }}px;
+    --nw-image-heading-color: {{ section.settings.heading_color }};
   }
 
   #NwImage-{{ section.id }} .nw-image__container {
-    position: relative;
-    width: 100%;
-    height: {{ section.settings.height_desktop | default: 300 }}px;
-    min-height: {{ section.settings.height_desktop | default: 300 }}px;
-    overflow: hidden;
-    isolation: isolate;
-  }
-
-  #NwImage-{{ section.id }} .nw-image__media {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
     height: 100%;
-    pointer-events: none;
+    min-height: {{ section.settings.height_desktop | default: 560 }}px;
   }
-
-  #NwImage-{{ section.id }} .nw-image__media picture {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-  #NwImage-{{ section.id }} .nw-image__media .nw-image__img,
-  #NwImage-{{ section.id }} .nw-image__media svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-  }
-
-  #NwImage-{{ section.id }} .nw-image__media svg {
-    opacity: 0.5;
-    background-color: #EAE3D9;
+  #NwImage-{{ section.id }} .nw-image__container .nw-image__media .nw-image__img{
+    min-height: {{ section.settings.height_desktop | default: 560 }}px;
   }
 
   {%- liquid
@@ -90,8 +73,8 @@
     }
 
     #NwImage-{{ section.id }} .nw-image__container {
-      height: {{ section.settings.height_mobile | default: 167 }}px;
-      min-height: {{ section.settings.height_mobile | default: 167 }}px;
+      height: 100%;
+      min-height: {{ section.settings.height_mobile | default: 600 }}px;
     }
 
     #NwImage-{{ section.id }} .nw-image__container--fixed .nw-image__media {
@@ -111,47 +94,95 @@
 >
   <div class="nw-image__container{% if section.settings.enable_fixed_bg %} nw-image__container--fixed{% endif %}">
     <div class="nw-image__media">
-    {%- liquid
-      assign desktop_img = section.settings.image_desktop
-      assign mobile_img = section.settings.image_mobile
-      if desktop_img == blank and mobile_img != blank
-        assign desktop_img = mobile_img
-      endif
-    -%}
-    {%- if section.settings.enable_fixed_bg -%}
-      {%- if desktop_img == blank and mobile_img == blank -%}
+      {%- if section.settings.enable_fixed_bg -%}
+        {%- if desktop_img == blank and mobile_img == blank -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      {%- elsif desktop_img != blank -%}
+        <picture>
+          {%- if mobile_img != blank -%}
+            <source
+              media="(max-width: 749px)"
+              srcset="{{ mobile_img | image_url: width: 750 }}"
+            >
+          {%- endif -%}
+          <img
+            src="{{ desktop_img | image_url }}"
+            alt="{{ desktop_img.alt | default: section.settings.heading | strip_html | default: 'Banner image' | escape }}"
+            width=""
+            height=""
+            loading="lazy"
+            class="nw-image__img"
+          >
+        </picture>
+      {%- else -%}
         {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
       {%- endif -%}
-    {%- elsif desktop_img != blank -%}
-      <picture>
-        {%- if mobile_img != blank -%}
-          <source
-            media="(max-width: 749px)"
-            srcset="{{ mobile_img | image_url: width: 750 }}"
-          >
+    </div>
+    <div class="nw-image__content">
+      <div class="nw-image__content-inner">
+        {%- if section.settings.heading != blank -%}
+          <div class="nw-image__heading rte">{{ section.settings.heading }}</div>
         {%- endif -%}
-        <img
-          src="{{ desktop_img | image_url: width: 2880 }}"
-          alt="{{ desktop_img.alt | default: 'Banner Image' | strip_html | escape }}"
-          width="1440"
-          height="300"
-          loading="lazy"
-          class="nw-image__img"
-        >
-      </picture>
-    {%- else -%}
-      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-    {%- endif -%}
+
+        {%- if section.settings.button_text != blank -%}
+          <div class="nw-image__button">
+            {% render 'nw-button',
+              text: section.settings.button_text,
+              link: section.settings.button_link,
+              style: section.settings.button_style,
+              btn_class: 'nw-image__btn'
+            %}
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "NW Image",
+  "name": "t:sections.nw-image.name",
   "tag": "section",
-  "class": "section",
+  "class": "section-nw-image",
   "settings": [
+    {
+      "type": "header",
+      "content": "SECTION CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
     {
       "type": "header",
       "content": "IMAGE SETTINGS"
@@ -186,11 +217,11 @@
       "type": "range",
       "id": "height_mobile",
       "label": "Mobile Height",
-      "min": 67,
-      "max": 267,
-      "step": 2,
+      "min": 200,
+      "max": 800,
+      "step": 10,
       "unit": "px",
-      "default": 167
+      "default": 200
     },
     {
       "type": "header",
@@ -275,7 +306,7 @@
   ],
   "presets": [
     {
-      "name": "NW Image",
+      "name": "t:sections.nw-image.name",
       "category": "NW Sections"
     }
   ]

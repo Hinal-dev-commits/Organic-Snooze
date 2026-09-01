@@ -35,6 +35,11 @@
   text-align: center;
   box-sizing: border-box;
 }
+.nw-review-video__header .nw-eyebrow{
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
 .nw-review-video__slider-wrap {
   position: relative;
   width: 100%;
@@ -223,7 +228,12 @@
   flex-grow: 1;
 }
 
-.nw-review-video__quote {
+.nw-review-video__body:empty {
+  display: none;
+}
+
+.nw-review-video__quote,
+.nw-review-video__quote * {
   font-family: var(--font-body-family);
   font-style: normal;
   font-weight: 400;
@@ -232,6 +242,15 @@
   color: var(--primary-color);
   margin: 0;
   width: 100%;
+  text-align: left;
+}
+
+.nw-review-video__quote p {
+  margin: 0;
+}
+
+.nw-review-video__quote p + p {
+  margin-top: 0.35em;
 }
 
 .nw-review-video__author-row {
@@ -373,6 +392,31 @@
   pointer-events: none;
 }
 
+.nw-review-video__slider-wrap .nw-swiper-btn.swiper-button-lock {
+  display: none !important;
+}
+
+.nw-review-video__slider-wrap--static .nw-swiper-btn {
+  display: none !important;
+}
+
+.nw-review-video__slider-wrap--static .nw-swiper-pagination {
+  display: none !important;
+}
+
+.nw-review-video__slider-wrap--static .swiper {
+  overflow: visible;
+}
+
+.nw-review-video__slider-wrap--static .swiper-wrapper {
+  justify-content: center;
+  transform: none !important;
+}
+
+.nw-review-video__slider-wrap--no-loop:not(.nw-review-video__slider-wrap--static) .swiper-wrapper {
+  justify-content: flex-start;
+}
+
 .nw-review-video__slider-wrap > .nw-swiper-pagination {
   --nw-swiper-bullet: var(--primary-color);
 }
@@ -381,6 +425,11 @@
   width: 100%;
   max-width: 560px;
   margin: 40px auto 0;
+}
+.nw-review-video__slider-wrap--no-loop  .nw-review-video .swiper-wrapper{
+  max-width: 100%;
+  width: max-content;
+  margin: 0 auto;
 }
 
 .nw-review-video__footer .nw-cta-badges__button {
@@ -439,6 +488,7 @@
 
   .nw-review-video__slider-wrap {
     margin-top: 32px;
+    padding: 0 16px;
   }
 
   .nw-review-video .swiper-slide {
@@ -515,4 +565,134 @@
     margin-top: 32px;
   }
 
+}
+
+.nw-review-video--style-2 .swiper-slide {
+  width: 309px;
+}
+
+.nw-review-video--style-2 .nw-review-video__card,
+.nw-review-video--style-2 .nw-review-video__card--style-2 {
+  display: flex;
+  flex-direction: column;
+  width: 309px;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fffcf0;
+}
+
+.nw-review-video--style-2 .nw-review-video__media {
+  aspect-ratio: auto;
+  width: 100%;
+  height: 415px;
+  flex-shrink: 0;
+  border-radius: 2px 2px 0 0;
+}
+
+.nw-review-video--style-2 .nw-review-video__video,
+.nw-review-video--style-2 .nw-review-video__poster,
+.nw-review-video--style-2 .nw-review-video__placeholder {
+  border-radius: 2px 2px 0 0;
+}
+
+.nw-review-video--style-2 .nw-review-video__body {
+  width: 100%;
+  min-height: 0;
+  padding: 14px;
+  gap: 12px;
+  background: #fffcf0;
+  border-radius: 0;
+  flex: 1 1 auto;
+}
+
+.nw-review-video--style-2 .nw-review-video__body:empty {
+  display: none;
+}
+
+.nw-review-video--style-2 .nw-review-video__divider {
+  display: none;
+}
+
+.nw-review-video--style-2 .nw-review-video__quote,
+.nw-review-video--style-2 .nw-review-video__quote * {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #613916;
+}
+
+.nw-review-video--style-2 .nw-review-video__author {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.nw-review-video--style-2 .nw-review-video__verified {
+  font-size: 12px;
+  gap: 6px;
+}
+
+.nw-review-video--style-2 .nw-review-video__verified svg {
+  width: 20px;
+  height: 20px;
+}
+
+.nw-review-video--style-2 .nw-review-video__product-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  padding: 14px;
+  background: #f4efe8;
+  border-radius: 0 0 10px 10px;
+  text-decoration: none;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+.nw-review-video--style-2 .nw-review-video__product-footer .nw-review-video__product-info {
+  min-width: 0;
+}
+
+.nw-review-video--style-2 .nw-review-video__product-footer .nw-review-video__product-title {
+  font-size: 15px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nw-review-video--style-2 .nw-review-video__product-footer .nw-review-video__product-img,
+.nw-review-video--style-2 .nw-review-video__product-footer .nw-review-video__product-placeholder {
+  height: 36px;
+}
+.nw-review-video--style-2 .nw-review-video__product-arrow{
+  background-color: var(--nonary-color);
+}
+
+@media screen and (max-width: 749px) {
+  .nw-review-video--style-2 .swiper-slide,
+  .nw-review-video--style-2 .nw-review-video__card {
+    width: 309px;
+  }
+
+  .nw-review-video--style-2 .nw-review-video__media {
+    width: 100%;
+    height: 415px;
+  }
+
+  .nw-review-video--style-2 .nw-review-video__quote,
+  .nw-review-video--style-2 .nw-review-video__quote * {
+    font-size: 14px;
+  }
+
+  .nw-review-video--style-2 .nw-review-video__product-footer .nw-review-video__product-title {
+    font-size: 15px;
+  }
 }

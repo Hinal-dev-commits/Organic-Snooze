@@ -1,0 +1,487 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-social.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign nw_shell_selector = '.nw-social.section-' | append: section.id
+  assign show_call = false
+  if section.settings.show_call_button and section.settings.call_button_text != blank
+    assign show_call = true
+  endif
+  assign show_text = false
+  if section.settings.show_text_button and section.settings.text_button_text != blank
+    assign show_text = true
+  endif
+  assign show_quiz = false
+  if section.settings.show_quiz_button and section.settings.quiz_button_text != blank
+    assign show_quiz = true
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+{%- if section.settings.bg_type == 'image' and section.settings.bg_image == blank -%}
+  <style>
+    .nw-social.section-{{ section.id }}::before {
+      background-image: url('{{ 'nw-social-bg-texture.png' | asset_url }}');
+    }
+  </style>
+{%- endif -%}
+
+<section
+  class="nw-social section-{{ section.id }}"
+  style="
+    --nw-social-heading-color: {{ section.settings.heading_color }};
+    --nw-social-text-color: {{ section.settings.text_color }};
+    --nw-social-input-border: {{ section.settings.input_border_color }};
+    --nw-social-input-text: {{ section.settings.input_text_color }};
+    --nw-social-submit-bg: {{ section.settings.submit_bg_color }};
+    --nw-social-submit-icon: {{ section.settings.submit_icon_color }};
+    --nw-social-call-bg: {{ section.settings.call_button_bg_color }};
+    --nw-social-call-text: {{ section.settings.call_button_text_color }};
+    --nw-social-outline-border: {{ section.settings.outline_button_border_color }};
+    --nw-social-outline-text: {{ section.settings.outline_button_text_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-social__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-social__intro">
+        {%- if section.settings.heading != blank or section.settings.description != blank -%}
+          <div class="nw-social__header">
+            {% render 'nw-section-header',
+              heading: section.settings.heading,
+              description: section.settings.description,
+              section_index: section.index,
+              heading_class: 'nw-social__heading'
+            %}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_newsletter -%}
+          <div class="nw-social__newsletter">
+            {%- capture newsletter_form_id -%}NwSocialNewsletter-{{ section.id }}{%- endcapture -%}
+            {% form 'customer', id: newsletter_form_id, class: 'nw-social__newsletter-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="nw-social__field">
+                <label class="visually-hidden" for="NwSocialEmail-{{ section.id }}">
+                  {{ section.settings.email_placeholder | default: 'Email address' }}
+                </label>
+                <input
+                  id="NwSocialEmail-{{ section.id }}"
+                  type="email"
+                  name="contact[email]"
+                  class="nw-social__input"
+                  value="{{ form.email }}"
+                  placeholder="{{ section.settings.email_placeholder | default: 'Email address' }}"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="email"
+                  {% if form.errors %}
+                    aria-invalid="true"
+                    aria-describedby="NwSocialNewsletter-error-{{ section.id }}"
+                  {% elsif form.posted_successfully? %}
+                    aria-describedby="NwSocialNewsletter-success-{{ section.id }}"
+                  {% endif %}
+                  required
+                >
+                <button
+                  type="submit"
+                  class="nw-social__submit"
+                  aria-label="{{ section.settings.submit_label | default: 'Subscribe' }}"
+                >
+                  <span class="nw-social__submit-icon" aria-hidden="true">
+                    {% render 'nw-icon', icon: 'arrow-right' %}
+                  </span>
+                </button>
+              </div>
+
+              {%- if form.errors -%}
+                <p class="nw-social__form-message nw-social__form-message--error" id="NwSocialNewsletter-error-{{ section.id }}">
+                  {{ form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email }}
+                </p>
+              {%- endif -%}
+
+              {%- if form.posted_successfully? -%}
+                <p class="nw-social__form-message nw-social__form-message--success" id="NwSocialNewsletter-success-{{ section.id }}">
+                  {{ section.settings.success_message | default: 'Thanks for subscribing!' }}
+                </p>
+              {%- endif -%}
+            {% endform %}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if show_call or show_text or show_quiz -%}
+        <div class="nw-social__actions">
+          {%- if show_call -%}
+            {% render 'nw-button',
+              text: section.settings.call_button_text,
+              link: section.settings.call_button_link,
+              style: 'primary',
+              btn_class: 'nw-social__btn nw-social__btn--call'
+            %}
+          {%- endif -%}
+
+          {%- if show_text or show_quiz -%}
+            <div class="nw-social__actions-row">
+              {%- if show_text -%}
+                {% render 'nw-button',
+                  text: section.settings.text_button_text,
+                  link: section.settings.text_button_link,
+                  style: 'outline',
+                  btn_class: 'nw-social__btn nw-social__btn--outline'
+                %}
+              {%- endif -%}
+
+              {%- if show_quiz -%}
+                {% render 'nw-button',
+                  text: section.settings.quiz_button_text,
+                  link: section.settings.quiz_button_link,
+                  style: 'outline',
+                  btn_class: 'nw-social__btn nw-social__btn--outline'
+                %}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.nw-social.name",
+  "tag": "section",
+  "class": "section-nw-social",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get the Sleep-Science Digest"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Exclusive insights, deals, and early access. no spam - just better sleep.</p>"
+    },
+    {
+      "type": "header",
+      "content": "NEWSLETTER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter Form",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email Placeholder",
+      "default": "Email address",
+      "visible_if": "{{ section.settings.show_newsletter == true }}"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit Button Label",
+      "default": "Subscribe",
+      "visible_if": "{{ section.settings.show_newsletter == true }}"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thanks for subscribing!",
+      "visible_if": "{{ section.settings.show_newsletter == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTONS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_call_button",
+      "label": "Show Call Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "call_button_text",
+      "label": "Call Button Label",
+      "default": "Call (443) 333-1213",
+      "visible_if": "{{ section.settings.show_call_button == true }}"
+    },
+    {
+      "type": "text",
+      "id": "call_button_link",
+      "label": "Call Button Link (E.g. Tel:+14433331213)",
+      "default": "tel:+14433331213",
+      "visible_if": "{{ section.settings.show_call_button == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_button",
+      "label": "Show Text Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_button_text",
+      "label": "Text Button Label",
+      "default": "Text Us",
+      "visible_if": "{{ section.settings.show_text_button == true }}"
+    },
+    {
+      "type": "text",
+      "id": "text_button_link",
+      "label": "Text Button Link (E.g. Sms:+14433331213)",
+      "default": "sms:+14433331213",
+      "visible_if": "{{ section.settings.show_text_button == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quiz_button",
+      "label": "Show Sleep Quiz Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quiz_button_text",
+      "label": "Sleep Quiz Button Label",
+      "default": "Sleep Quiz",
+      "visible_if": "{{ section.settings.show_quiz_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "quiz_button_link",
+      "label": "Sleep Quiz Button Link",
+      "visible_if": "{{ section.settings.show_quiz_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "FORM COLORS"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Input Border Color",
+      "default": "#61391673",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_newsletter == true }}"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "Input Text Color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_newsletter == true }}"
+    },
+    {
+      "type": "color",
+      "id": "submit_bg_color",
+      "label": "Submit Button Background",
+      "default": "#878735",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_newsletter == true }}"
+    },
+    {
+      "type": "color",
+      "id": "submit_icon_color",
+      "label": "Submit Button Icon Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_newsletter == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON COLORS"
+    },
+    {
+      "type": "color",
+      "id": "call_button_bg_color",
+      "label": "Call Button Background",
+      "default": "#CC926A",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_call_button == true }}"
+    },
+    {
+      "type": "color",
+      "id": "call_button_text_color",
+      "label": "Call Button Text Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_call_button == true }}"
+    },
+    {
+      "type": "color",
+      "id": "outline_button_border_color",
+      "label": "Outline Button Border Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "outline_button_text_color",
+      "label": "Outline Button Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "info": "Leave empty to use the default texture.",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-social.name",
+      "category": "NW Sections",
+      "settings": {
+        "heading": "Get the Sleep-Science Digest",
+        "description": "<p>Exclusive insights, deals, and early access. no spam - just better sleep.</p>",
+        "show_newsletter": true,
+        "email_placeholder": "Email address",
+        "show_call_button": true,
+        "call_button_text": "Call (443) 333-1213",
+        "call_button_link": "tel:+14433331213",
+        "show_text_button": true,
+        "text_button_text": "Text Us",
+        "text_button_link": "sms:+14433331213",
+        "show_quiz_button": true,
+        "quiz_button_text": "Sleep Quiz",
+        "bg_type": "image",
+        "bg_color": "#FFFFFF",
+        "bg_image_opacity": 16,
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  ]
+}
+{% endschema %}

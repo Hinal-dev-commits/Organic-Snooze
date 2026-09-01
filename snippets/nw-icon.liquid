@@ -33,6 +33,9 @@
       assign icon_asset = 'arrow-right-2.svg'
     when 'arrow-down'
       assign icon_asset = 'arrow-down.svg'
+      assign icon_asset = 'arrow-right-2.svg'
+    when 'arrow-down-2'
+      assign icon_asset = 'arrow-down-2.svg'
     when 'money', 'moneyback'
       assign icon_asset = 'money.svg'
     when 'truck'
@@ -84,6 +87,8 @@
       assign icon_asset = 'wind.svg'
     when 'instagram'
       assign icon_asset = 'icon-instagram.svg'
+    when 'facebook'
+      assign icon_asset = 'icon-facebook.svg'
     when 'insta', 'insta-color'
       assign icon_asset = 'insta-color.svg'
     when 'search'
@@ -110,6 +115,8 @@
       assign icon_asset = 'silent.svg'
     when 'plus'
       assign icon_asset = 'plus.svg'
+    when 'arrow-right-3'
+      assign icon_asset = 'arrow-right-3.svg'
   endcase
 -%}
 
@@ -387,6 +394,16 @@
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.74178 0.75V16.75M16.75 8.74178L0.75 8.74178" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
       </svg>
+    {%- when 'arrow-right-3' -%}
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 3.33325L12.6667 7.99992L8 12.6666" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    {%- when 'arrow-down-2' -%}
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.3333 6L7.66659 10.6667L2.99992 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+
+      
 
   {%- endcase -%}
 {%- endif -%}

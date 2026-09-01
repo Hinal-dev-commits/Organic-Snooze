@@ -1,0 +1,97 @@
+{% doc %}
+Video card for NW Blog And Video.
+@param {object} article - Shopify article object
+@param {object} section - Section settings
+@param {string} [variant] - featured or latest
+@param {boolean} [hidden] - Hide card until load more
+@example
+{% render 'nw-bav-video-card', article: article, section: section, variant: 'featured' %}
+{% enddoc %}
+
+{%- liquid
+  assign blog_tag_metafield = article.metafields.custom.blog_tag
+  assign editors_pick_metafield = article.metafields.custom.editor_s_pick
+  assign blog_video_metafield = article.metafields.custom.blog_video
+
+  assign blog_tag = blank
+  if blog_tag_metafield != blank
+    assign blog_tag = blog_tag_metafield.value
+  endif
+
+  assign show_editors_pick = false
+  assign editors_pick_label = blank
+  if section.settings.show_editors_pick and editors_pick_metafield != blank
+    assign editors_pick_value = editors_pick_metafield.value | strip
+    if editors_pick_value != blank
+      assign show_editors_pick = true
+      assign editors_pick_label = editors_pick_value
+    endif
+  endif
+
+  assign card_variant = variant | default: 'latest'
+  assign has_video_metafield = false
+  if blog_video_metafield != blank and blog_video_metafield.value != blank
+    assign has_video_metafield = true
+  endif
+  assign use_video_media = false
+  if section.settings.video_media_type == 'video' and has_video_metafield
+    assign use_video_media = true
+  endif
+  assign blog_video_file = blog_video_metafield.value
+-%}
+
+<article class="nw-blog-video__video-card nw-blog-video__video-card--{{ card_variant }}{% if hidden %} nw-blog-video__video-card--hidden{% endif %}{% if has_video_metafield %} nw-blog-video__video-card--has-video{% endif %}" data-blog-video-card>
+  <div class="nw-blog-video__video-media">
+    {%- if has_video_metafield -%}
+      {{ blog_video_file | video_tag: controls: false, muted: true, loop: false, autoplay: false, playsinline: true, class: 'nw-blog-video__video-file', image_size: '800x' }}
+    {%- endif -%}
+
+    {%- unless use_video_media -%}
+      {%- if article.image != blank -%}
+        <img
+          src="{{ article.image | image_url: width: 1040 }}"
+          alt="{{ article.image.alt | default: article.title | escape }}"
+          width=""
+          height=""
+          loading="lazy"
+          class="nw-blog-video__video-image nw-blog-video__video-poster"
+        >
+      {%- elsif has_video_metafield == false -%}
+        <div class="nw-blog-video__video-placeholder" aria-hidden="true">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    {%- endunless -%}
+
+    {%- if show_editors_pick and card_variant == 'featured' -%}
+      <span class="nw-blog-video__video-badge">
+        <span class="nw-blog-video__video-badge-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'star' %}
+        </span>
+        <span class="nw-blog-video__video-badge-text">{{ editors_pick_label }}</span>
+      </span>
+    {%- endif -%}
+
+    {%- if has_video_metafield -%}
+      <button type="button" class="nw-blog-video__video-play" data-blog-video-play aria-label="Play video">
+        <span class="nw-blog-video__video-play-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'play' %}
+        </span>
+        <span class="nw-blog-video__video-pause-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'pause' %}
+        </span>
+      </button>
+    {%- endif -%}
+  </div>
+
+  <div class="nw-blog-video__video-body">
+    {%- if blog_tag != blank -%}
+      <p class="nw-blog-video__video-tag">{{ blog_tag }}</p>
+    {%- endif -%}
+    {%- if article.title != blank -%}
+      <h3 class="nw-blog-video__video-title">
+        <a href="{{ article.url }}" class="nw-blog-video__video-title-link">{{ article.title }}</a>
+      </h3>
+    {%- endif -%}
+  </div>
+</article>

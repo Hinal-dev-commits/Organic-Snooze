@@ -1,0 +1,101 @@
+{% doc %}
+Media card for NW Follow slider.
+@param {object} block - Section block settings
+@example
+{% render 'nw-follow-card', block: block %}
+{% enddoc %}
+
+{%- liquid
+  assign media_type = block.settings.media_type | default: 'image'
+  assign card_image = block.settings.image
+  assign card_video = block.settings.video
+  assign card_link = block.settings.link
+  assign poster = card_image
+  if poster == blank and card_video != blank and card_video.preview_image != blank
+    assign poster = card_video.preview_image
+  endif
+  assign use_video = false
+  if media_type == 'video' and card_video != blank
+    assign use_video = true
+  endif
+-%}
+
+<article
+  class="nw-follow__card{% if use_video %} nw-follow__card--has-video{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  {%- if use_video -%}
+    <div class="nw-follow__card-media">
+      {{
+        card_video
+        | video_tag:
+          autoplay: false,
+          loop: false,
+          muted: true,
+          controls: false,
+          playsinline: true,
+          preload: 'none',
+          class: 'nw-follow__card-video'
+      }}
+
+      {%- if poster != blank -%}
+        {%- liquid
+          assign poster_alt = poster.alt | default: 'Social post'
+        -%}
+        {{
+          poster
+          | image_url: width: 840
+          | image_tag:
+            loading: 'lazy',
+            class: 'nw-follow__card-poster',
+            alt: poster_alt,
+            width: 280,
+            height: 280
+        }}
+      {%- else -%}
+        <div class="nw-follow__card-placeholder" aria-hidden="true">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+
+      <button type="button" class="nw-follow__play" data-nw-follow-video-play aria-label="Play video">
+        <span class="nw-follow__play-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'play' %}
+        </span>
+        <span class="nw-follow__pause-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'pause' %}
+        </span>
+      </button>
+    </div>
+  {%- else -%}
+    {%- if card_link != blank -%}
+      <a href="{{ card_link }}" class="nw-follow__card-link" target="_blank" rel="noopener noreferrer">
+    {%- else -%}
+      <div class="nw-follow__card-link">
+    {%- endif -%}
+      {%- if card_image != blank -%}
+        {%- liquid
+          assign card_alt = card_image.alt | default: 'Social post'
+        -%}
+        {{
+          card_image
+          | image_url: width: 840
+          | image_tag:
+            loading: 'lazy',
+            class: 'nw-follow__card-img',
+            alt: card_alt,
+            width: 280,
+            height: 280
+        }}
+      {%- else -%}
+        <div class="nw-follow__card-placeholder" aria-hidden="true">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    {%- if card_link != blank -%}
+      </a>
+    {%- else -%}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</article>

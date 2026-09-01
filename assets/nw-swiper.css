@@ -47,7 +47,7 @@
 }
 
 .nw-swiper-pagination {
-    position: unset;
+    position: unset !important;
     display: flex;
     align-items: center;
     justify-content: center;
