@@ -1,0 +1,529 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-discount.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwDiscount-' | append: section.id -%}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFFFF' %}
+
+<section
+  id="NwDiscount-{{ section.id }}"
+  class="nw-discount section-{{ section.id }}"
+  style="
+    --nw-discount-heading-color: {{ section.settings.heading_color }};
+    --nw-discount-card-bg: {{ section.settings.card_bg_color }};
+    --nw-discount-card-border: {{ section.settings.card_border_color }};
+    --nw-discount-input-bg: {{ section.settings.input_bg_color }};
+    --nw-discount-input-border: {{ section.settings.input_border_color }};
+    --nw-discount-input-color: {{ section.settings.input_text_color }};
+    --nw-discount-star-color: {{ section.settings.star_color }};
+    --nw-discount-rating-color: {{ section.settings.rating_text_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-discount__card scroll-trigger animate--slide-in">
+      <div
+        class="nw-discount__body{% if section.settings.image_position == 'left' %} nw-discount__body--image-left{% else %} nw-discount__body--image-right{% endif %}{% if section.settings.image_position_mobile == 'bottom' %} nw-discount__body--mobile-image-bottom{% else %} nw-discount__body--mobile-image-top{% endif %}"
+      >
+        <div class="nw-discount__content-col">
+          <div class="nw-discount__header">
+            {%- if section.settings.show_logo -%}
+              <div class="nw-discount__logo-wrap" style="max-width: {{ section.settings.logo_width | default: 161 }}px;">
+                {%- if section.settings.logo_image != blank -%}
+                  <img
+                    src="{{ section.settings.logo_image | image_url: width: 400 }}"
+                    alt="{{ section.settings.logo_image.alt | default: shop.name | escape }}"
+                    class="nw-discount__logo-img"
+                    width="{{ section.settings.logo_width | default: 161 }}"
+                    height=""
+                    loading="lazy"
+                  >
+                {%- elsif settings.logo != blank -%}
+                  <img
+                    src="{{ settings.logo | image_url: width: 400 }}"
+                    alt="{{ settings.logo.alt | default: shop.name | escape }}"
+                    class="nw-discount__logo-img"
+                    width="{{ section.settings.logo_width | default: 161 }}"
+                    height=""
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="nw-discount__logo-lockup" aria-label="Organic Snooze">
+                    <span class="nw-discount__logo-text">ORGANIC</span>
+                    <span class="nw-discount__logo-icon">
+                      <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="14.5" stroke="#CC926A" stroke-width="1.8"/>
+                        <path d="M16 25V13" stroke="#CC926A" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M16 19C14 17.5 11 17.5 10 19" stroke="#CC926A" stroke-width="1.4" stroke-linecap="round"/>
+                        <path d="M16 19C18 17.5 21 17.5 22 19" stroke="#CC926A" stroke-width="1.4" stroke-linecap="round"/>
+                        <path d="M16 15C13.5 13 11 14 9.5 15.5" stroke="#CC926A" stroke-width="1.4" stroke-linecap="round"/>
+                        <path d="M16 15C18.5 13 21 14 22.5 15.5" stroke="#CC926A" stroke-width="1.4" stroke-linecap="round"/>
+                        <circle cx="16" cy="10" r="3" stroke="#CC926A" stroke-width="1.4"/>
+                        <circle cx="11.5" cy="12.5" r="2.2" stroke="#CC926A" stroke-width="1.2"/>
+                        <circle cx="20.5" cy="12.5" r="2.2" stroke="#CC926A" stroke-width="1.2"/>
+                        <path d="M13.5 25H18.5" stroke="#CC926A" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                    <span class="nw-discount__logo-text">SNOOZE</span>
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.heading != blank -%}
+              <h2 class="nw-discount__heading">
+                {{ section.settings.heading }}
+              </h2>
+            {%- endif -%}
+          </div>
+
+          <div class="nw-discount__form-wrap">
+            {%- form 'customer', class: 'nw-discount__form' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter, discount_signup">
+              
+              <div class="nw-discount__input-wrap">
+                <span class="nw-discount__input-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                  </svg>
+                </span>
+                <input
+                  id="NwDiscountForm--{{ section.id }}"
+                  type="email"
+                  name="contact[email]"
+                  class="nw-discount__input"
+                  value="{{ form.email }}"
+                  aria-required="true"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="email"
+                  {% if form.errors %}
+                    autofocus
+                    aria-invalid="true"
+                    aria-describedby="NwDiscount-error--{{ section.id }}"
+                  {% elsif form.posted_successfully? %}
+                    aria-describedby="NwDiscount-success--{{ section.id }}"
+                  {% endif %}
+                  placeholder="{{ section.settings.email_placeholder | default: 'Your email address' }}"
+                  required
+                >
+              </div>
+
+              {%- if form.errors -%}
+                <small class="nw-discount__message nw-discount__message--error" id="NwDiscount-error--{{ section.id }}">
+                  {{ form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email }}
+                </small>
+              {%- endif -%}
+
+              {%- if form.posted_successfully? -%}
+                <p class="nw-discount__message nw-discount__message--success" id="NwDiscount-success--{{ section.id }}">
+                  {{ section.settings.success_message | default: 'Thank you! Your 20% off code has been sent.' }}
+                </p>
+              {%- endif -%}
+
+              {%- if section.settings.show_button and section.settings.button_text != blank -%}
+                {%- if section.settings.button_link != blank -%}
+                  <a
+                    href="{{ section.settings.button_link }}"
+                    class="nw-btn nw-btn--{{ section.settings.button_style | default: 'primary' }} nw-discount__btn"
+                  >
+                    <span class="nw-btn__text">{{ section.settings.button_text }}</span>
+                  </a>
+                {%- else -%}
+                  <button
+                    type="submit"
+                    class="nw-btn nw-btn--{{ section.settings.button_style | default: 'primary' }} nw-discount__btn"
+                    name="commit"
+                    id="NwDiscountSubmit--{{ section.id }}"
+                  >
+                    <span class="nw-btn__text">{{ section.settings.button_text }}</span>
+                  </button>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endform -%}
+          </div>
+
+          {%- if section.settings.show_rating -%}
+            <div class="nw-discount__reviews">
+              <div class="nw-discount__stars" aria-label="{{ section.settings.rating_stars | default: 5 }} out of 5 stars">
+                {%- assign star_count = section.settings.rating_stars | default: 5 -%}
+                {%- for i in (1..star_count) -%}
+                  <svg class="nw-discount__star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                {%- endfor -%}
+              </div>
+              {%- if section.settings.rating_text != blank -%}
+                <span class="nw-discount__reviews-text">{{ section.settings.rating_text }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="nw-discount__media-col">
+          {%- liquid
+            assign desktop_img = section.settings.image_desktop
+            assign mobile_img = section.settings.image_mobile
+            if desktop_img == blank and mobile_img != blank
+              assign desktop_img = mobile_img
+            endif
+          -%}
+
+          {%- if desktop_img != blank -%}
+            <picture>
+              {%- if mobile_img != blank -%}
+                <source
+                  media="(max-width: 749px)"
+                  srcset="
+                    {{ mobile_img | image_url: width: 375 }} 375w,
+                    {{ mobile_img | image_url: width: 750 }} 750w
+                  "
+                  sizes="100vw"
+                >
+              {%- endif -%}
+              <img
+                src="{{ desktop_img | image_url: width: 1300 }}"
+                srcset="
+                  {{ desktop_img | image_url: width: 631 }} 631w,
+                  {{ desktop_img | image_url: width: 900 }} 900w,
+                  {{ desktop_img | image_url: width: 1300 }} 1300w
+                "
+                sizes="(min-width: 990px) 631px, 100vw"
+                alt="{{ desktop_img.alt | default: section.settings.heading | strip_html | escape }}"
+                width="{{ desktop_img.width | default: 631 }}"
+                height="{{ desktop_img.height | default: 420 }}"
+                loading="lazy"
+                class="nw-discount__img"
+              >
+            </picture>
+          {%- else -%}
+            <div class="nw-discount__img-placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW Discount",
+  "tag": "section",
+  "class": "section-nw-discount",
+  "settings": [
+    {
+      "type": "header",
+      "content": "BRAND LOGO"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo",
+      "label": "Show Logo",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Custom Logo Image",
+      "info": "Optional. Falls back to theme logo or brand emblem if empty."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo Max Width",
+      "min": 80,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "header",
+      "content": "HEADING"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your 20% Off Is Ready"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "GET MY 20% OFF",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "info": "Optional. Submits newsletter form if empty.",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "NEWSLETTER FORM"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email Placeholder",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thank you! Your 20% off code has been sent."
+    },
+    {
+      "type": "header",
+      "content": "RATING & REVIEWS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Reviews Rating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "rating_stars",
+      "label": "Star Count",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating Text",
+      "default": "4.8/5 from 100’s of sleepers"
+    },
+    {
+      "type": "header",
+      "content": "MEDIA & LAYOUT"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position (Desktop)",
+      "default": "right",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position_mobile",
+      "label": "Image Position (Mobile)",
+      "default": "top",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile)",
+      "info": "Optional. Uses desktop image when empty."
+    },
+    {
+      "type": "header",
+      "content": "COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "rgba(97, 57, 22, 0.08)"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "input_bg_color",
+      "label": "Input Background Color",
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "input_border_color",
+      "label": "Input Border Color",
+      "default": "rgba(97, 57, 22, 0.08)"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "input_text_color",
+      "label": "Input Text / Icon Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color",
+      "label": "Stars Color",
+      "default": "#E57B1E"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "rating_text_color",
+      "label": "Rating Text Color",
+      "default": "#444444"
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Discount",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

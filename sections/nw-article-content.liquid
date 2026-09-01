@@ -1,0 +1,480 @@
+{{ 'nw-article-content.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwArticleContent-' | append: section.id -%}
+{%- assign nw_heading_color = section.settings.heading_color | default: '#613916' -%}
+{%- assign nw_body_color = section.settings.body_color | default: '#613916' -%}
+
+{%- liquid
+  assign nw_pad_top_dt = section.settings.padding_top_desktop | default: 48
+  assign nw_pad_bot_dt = section.settings.padding_bottom_desktop | default: 80
+  assign nw_pad_top_mb = section.settings.padding_top_mobile | default: 32
+  assign nw_pad_bot_mb = section.settings.padding_bottom_mobile | default: 32
+
+  assign nw_share_permalink = request.origin | append: article.url
+  assign nw_share_title = article.title | escape
+  assign nw_share_image = article.image | image_url: width: 1024
+-%}
+
+<style>
+  {{ nw_shell_selector }} {
+    --nw-ac-section-bg: {{ section.settings.section_bg_color | default: '#FFFFFF' }};
+    --nw-ac-pad-top: {{ nw_pad_top_dt }}px;
+    --nw-ac-pad-bottom: {{ nw_pad_bot_dt }}px;
+    --nw-ac-pad-top-mobile: {{ nw_pad_top_mb }}px;
+    --nw-ac-pad-bottom-mobile: {{ nw_pad_bot_mb }}px;
+    --nw-ac-content-max-width: {{ section.settings.content_max_width | default: 900 }}px;
+    --nw-ac-heading-color: {{ nw_heading_color }};
+    --nw-ac-body-color: {{ nw_body_color }};
+    --nw-ac-share-heading-color: {{ section.settings.share_heading_color | default: '#613916' }};
+    --nw-ac-share-icon-color: {{ section.settings.share_icon_color | default: '#613916' }};
+    --nw-ac-share-icon-border: {{ section.settings.share_icon_border_color | default: '#613916' }};
+  }
+</style>
+
+<div
+  id="NwArticleContent-{{ section.id }}"
+  class="nw-article-content section-{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="nw-article-content__inner">
+      <div class="nw-article-content__wrapper">
+        {%- if article.content != blank -%}
+          <div class="nw-article-content__body rte">
+            {{ article.content }}
+          </div>
+        {%- endif -%}
+
+        {%- liquid
+          assign nw_has_share_block = false
+          for block in section.blocks
+            if block.type == 'share'
+              assign nw_has_share_block = true
+              break
+            endif
+          endfor
+          assign nw_share_icons = section.blocks | where: 'type', 'social_icon'
+        -%}
+
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+
+            {%- when 'share' -%}
+              <div
+                class="nw-article-content__share"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.heading != blank -%}
+                  <p class="nw-article-content__share-heading">
+                    {{ block.settings.heading | escape }}
+                  </p>
+                {%- endif -%}
+
+                {%- if nw_share_icons.size > 0 -%}
+                  <ul class="nw-article-content__share-list" role="list">
+                    {%- for social_block in nw_share_icons -%}
+                      {%- liquid
+                        assign nw_icon_key = social_block.settings.icon
+                        assign nw_icon_label = social_block.settings.aria_label
+                        assign nw_custom_icon = social_block.settings.custom_icon
+                        assign nw_social_url = social_block.settings.url
+
+                        if nw_social_url == blank
+                          case nw_icon_key
+                            when 'facebook'
+                              assign nw_social_url = 'https://www.facebook.com/sharer/sharer.php?u=' | append: nw_share_permalink
+                            when 'twitter'
+                              assign nw_social_url = 'https://twitter.com/intent/tweet?text=' | append: nw_share_title | append: '&url=' | append: nw_share_permalink
+                            when 'pinterest'
+                              assign nw_social_url = 'https://pinterest.com/pin/create/button/?url=' | append: nw_share_permalink | append: '&media=' | append: nw_share_image | append: '&description=' | append: nw_share_title
+                            when 'linkedin'
+                              assign nw_social_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' | append: nw_share_permalink
+                            when 'email'
+                              assign nw_social_url = 'mailto:?subject=' | append: nw_share_title | append: '&body=' | append: nw_share_permalink
+                            when 'link'
+                              assign nw_social_url = nw_share_permalink
+                            else
+                              assign nw_social_url = nw_share_permalink
+                          endcase
+                        endif
+
+                        if nw_icon_label == blank
+                          case nw_icon_key
+                            when 'facebook'
+                              assign nw_icon_label = 'general.social.links.facebook' | t
+                            when 'twitter'
+                              assign nw_icon_label = 'general.social.links.twitter' | t
+                            when 'pinterest'
+                              assign nw_icon_label = 'general.social.links.pinterest' | t
+                            when 'instagram'
+                              assign nw_icon_label = 'general.social.links.instagram' | t
+                            when 'youtube'
+                              assign nw_icon_label = 'general.social.links.youtube' | t
+                            when 'tiktok'
+                              assign nw_icon_label = 'general.social.links.tiktok' | t
+                            when 'linkedin'
+                              assign nw_icon_label = 'LinkedIn'
+                            when 'snapchat'
+                              assign nw_icon_label = 'general.social.links.snapchat' | t
+                            when 'tumblr'
+                              assign nw_icon_label = 'general.social.links.tumblr' | t
+                            when 'vimeo'
+                              assign nw_icon_label = 'general.social.links.vimeo' | t
+                            when 'email'
+                              assign nw_icon_label = 'Email'
+                            when 'link'
+                              assign nw_icon_label = 'general.share.share_url' | t
+                            else
+                              assign nw_icon_label = 'Social link'
+                          endcase
+                        endif
+                      -%}
+
+                      <li
+                        class="nw-article-content__share-item"
+                        {{ social_block.shopify_attributes }}
+                      >
+                        <a
+                          href="{{ nw_social_url }}"
+                          class="nw-article-content__share-link"
+                          {% if social_block.settings.open_new_tab %}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          {% endif %}
+                          aria-label="{{ nw_icon_label | escape }}"
+                        >
+                          <span class="nw-article-content__share-icon" aria-hidden="true">
+                            {%- if social_block.settings.use_custom_icon and nw_custom_icon != blank -%}
+                              {%- render 'nw-icon', custom_icon: nw_custom_icon, img_width: 48 -%}
+                            {%- else -%}
+                              {%- render 'nw-icon', icon: nw_icon_key -%}
+                            {%- endif -%}
+                          </span>
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+
+            {%- when 'social_icon' -%}
+              {%- unless nw_has_share_block -%}
+                {%- if forloop.first or nw_rendered_standalone_share != true -%}
+                  {%- assign nw_rendered_standalone_share = true -%}
+                  <div class="nw-article-content__share">
+                    <ul class="nw-article-content__share-list" role="list">
+                      {%- for social_block in nw_share_icons -%}
+                        {%- liquid
+                          assign nw_icon_key = social_block.settings.icon
+                          assign nw_icon_label = social_block.settings.aria_label
+                          assign nw_custom_icon = social_block.settings.custom_icon
+                          assign nw_social_url = social_block.settings.url
+
+                          if nw_social_url == blank
+                            case nw_icon_key
+                              when 'facebook'
+                                assign nw_social_url = 'https://www.facebook.com/sharer/sharer.php?u=' | append: nw_share_permalink
+                              when 'twitter'
+                                assign nw_social_url = 'https://twitter.com/intent/tweet?text=' | append: nw_share_title | append: '&url=' | append: nw_share_permalink
+                              when 'pinterest'
+                                assign nw_social_url = 'https://pinterest.com/pin/create/button/?url=' | append: nw_share_permalink | append: '&media=' | append: nw_share_image | append: '&description=' | append: nw_share_title
+                              when 'linkedin'
+                                assign nw_social_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' | append: nw_share_permalink
+                              when 'email'
+                                assign nw_social_url = 'mailto:?subject=' | append: nw_share_title | append: '&body=' | append: nw_share_permalink
+                              when 'link'
+                                assign nw_social_url = nw_share_permalink
+                              else
+                                assign nw_social_url = nw_share_permalink
+                            endcase
+                          endif
+
+                          if nw_icon_label == blank
+                            case nw_icon_key
+                              when 'facebook'
+                                assign nw_icon_label = 'general.social.links.facebook' | t
+                              when 'twitter'
+                                assign nw_icon_label = 'general.social.links.twitter' | t
+                              when 'pinterest'
+                                assign nw_icon_label = 'general.social.links.pinterest' | t
+                              when 'instagram'
+                                assign nw_icon_label = 'general.social.links.instagram' | t
+                              when 'youtube'
+                                assign nw_icon_label = 'general.social.links.youtube' | t
+                              when 'tiktok'
+                                assign nw_icon_label = 'general.social.links.tiktok' | t
+                              when 'linkedin'
+                                assign nw_icon_label = 'LinkedIn'
+                              when 'snapchat'
+                                assign nw_icon_label = 'general.social.links.snapchat' | t
+                              when 'tumblr'
+                                assign nw_icon_label = 'general.social.links.tumblr' | t
+                              when 'vimeo'
+                                assign nw_icon_label = 'general.social.links.vimeo' | t
+                              when 'email'
+                                assign nw_icon_label = 'Email'
+                              when 'link'
+                                assign nw_icon_label = 'general.share.share_url' | t
+                              else
+                                assign nw_icon_label = 'Social link'
+                            endcase
+                          endif
+                        -%}
+
+                        <li
+                          class="nw-article-content__share-item"
+                          {{ social_block.shopify_attributes }}
+                        >
+                          <a
+                            href="{{ nw_social_url }}"
+                            class="nw-article-content__share-link"
+                            {% if social_block.settings.open_new_tab %}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            {% endif %}
+                            aria-label="{{ nw_icon_label | escape }}"
+                          >
+                            <span class="nw-article-content__share-icon" aria-hidden="true">
+                              {%- if social_block.settings.use_custom_icon and nw_custom_icon != blank -%}
+                                {%- render 'nw-icon', custom_icon: nw_custom_icon, img_width: 48 -%}
+                              {%- else -%}
+                                {%- render 'nw-icon', icon: nw_icon_key -%}
+                              {%- endif -%}
+                            </span>
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                {%- endif -%}
+              {%- endunless -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Article Content",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": {
+    "templates": ["article"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "paragraph",
+      "content": "Displays the article body content from the blog post editor."
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content Max Width",
+      "min": 600,
+      "max": 1440,
+      "step": 10,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "header",
+      "content": "COLORS"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "share_heading_color",
+      "label": "Share Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "share_icon_color",
+      "label": "Share Icon Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "share_icon_border_color",
+      "label": "Share Icon Border Color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "share",
+      "name": "Share",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Share this!"
+        },
+        {
+          "type": "paragraph",
+          "content": "Add Social Icon blocks below to choose which icons appear and configure each link."
+        }
+      ]
+    },
+    {
+      "type": "social_icon",
+      "name": "Social Icon",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use custom icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "visible_if": "{{ block.settings.use_custom_icon == false }}",
+          "default": "facebook",
+          "options": [
+            { "value": "facebook", "label": "Facebook" },
+            { "value": "twitter", "label": "X (Twitter)" },
+            { "value": "pinterest", "label": "Pinterest" },
+            { "value": "instagram", "label": "Instagram" },
+            { "value": "youtube", "label": "YouTube" },
+            { "value": "tiktok", "label": "TikTok" },
+            { "value": "linkedin", "label": "LinkedIn" },
+            { "value": "snapchat", "label": "Snapchat" },
+            { "value": "tumblr", "label": "Tumblr" },
+            { "value": "vimeo", "label": "Vimeo" },
+            { "value": "email", "label": "Email" },
+            { "value": "link", "label": "Link" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL",
+          "info": "Optional. If left blank, automatically shares this article."
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab",
+          "label": "Open in new tab",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "aria_label",
+          "label": "Accessibility label",
+          "info": "Optional. Used for screen readers when the icon name is not enough."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Article Content",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "share"
+        },
+        {
+          "type": "social_icon",
+          "settings": {
+            "icon": "facebook"
+          }
+        },
+        {
+          "type": "social_icon",
+          "settings": {
+            "icon": "twitter"
+          }
+        },
+        {
+          "type": "social_icon",
+          "settings": {
+            "icon": "pinterest"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

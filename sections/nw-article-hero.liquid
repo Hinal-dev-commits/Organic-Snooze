@@ -1,0 +1,391 @@
+{{ 'nw-article-hero.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwArticleHero-' | append: section.id -%}
+{%- assign nw_heading_color = section.settings.heading_color | default: '#613916' -%}
+{%- assign nw_body_color = section.settings.body_color | default: '#613916' -%}
+{%- assign nw_date_color = section.settings.date_color | default: '#C2673B' -%}
+{%- assign nw_accent_color = section.settings.accent_color | default: '#C2673B' -%}
+
+{%- liquid
+  assign nw_pad_top_dt = section.settings.padding_top_desktop | default: 24
+  assign nw_pad_bot_dt = section.settings.padding_bottom_desktop | default: 0
+  assign nw_pad_top_mb = section.settings.padding_top_mobile | default: 16
+  assign nw_pad_bot_mb = section.settings.padding_bottom_mobile | default: 0
+  assign nw_card_bg_dt = section.settings.card_bg_color | default: 'rgba(230, 226, 222, 0.8)'
+  assign nw_card_bg_mb = section.settings.card_bg_color_mobile | default: 'rgba(0, 0, 0, 0.004)'
+  assign nw_section_bg = section.settings.section_bg_gradient | default: 'linear-gradient(180deg, #F0EEEB 0%, #FFFFFF 100%)'
+  assign nw_section_bg_mobile = section.settings.section_bg_gradient_mobile | default: 'linear-gradient(0deg, rgba(246, 246, 246, 0.2), rgba(246, 246, 246, 0.2)), #FFFFFF'
+
+  assign nw_back_label = section.settings.back_link_text | default: 'All Blogs'
+
+  assign nw_article_excerpt = blank
+  if section.settings.show_excerpt
+    if article.excerpt != blank
+      assign nw_article_excerpt = article.excerpt | strip_html
+    elsif article.excerpt_or_content != blank
+      assign nw_article_excerpt = article.excerpt_or_content | strip_html | truncate: section.settings.excerpt_length
+    endif
+  endif
+
+  assign nw_category_label = blank
+  if section.settings.show_category
+    if section.settings.category_source == 'blog_title' and blog.title != blank
+      assign nw_category_label = blog.title
+    elsif article.tags.size > 0
+      assign nw_category_label = article.tags.first
+    elsif blog.title != blank
+      assign nw_category_label = blog.title
+    endif
+  endif
+
+  assign nw_read_time = blank
+  if section.settings.show_reading_time
+    assign nw_read_time = article.metafields.custom.read_time.value | default: article.metafields.custom.read_time
+  endif
+
+  assign nw_img_alt = article.image.alt | default: article.title | escape
+-%}
+
+<style>
+  {{ nw_shell_selector }} {
+    --nw-ah-section-bg: {{ nw_section_bg }};
+    --nw-ah-section-bg-mobile: {{ nw_section_bg_mobile }};
+    --nw-ah-section-gap: 14px;
+    --nw-ah-pad-top: {{ nw_pad_top_dt }}px;
+    --nw-ah-pad-bottom: {{ nw_pad_bot_dt }}px;
+    --nw-ah-pad-top-mobile: {{ nw_pad_top_mb }}px;
+    --nw-ah-pad-bottom-mobile: {{ nw_pad_bot_mb }}px;
+    --nw-ah-media-ratio: 1280 / 420;
+    --nw-ah-media-ratio-mobile: 375 / 250;
+    --nw-ah-card-max-width: {{ section.settings.card_max_width | default: 860 }}px;
+    --nw-ah-card-bg: {{ nw_card_bg_dt }};
+    --nw-ah-card-bg-mobile: {{ nw_card_bg_mb }};
+    --nw-ah-heading-color: {{ nw_heading_color }};
+    --nw-ah-body-color: {{ nw_body_color }};
+    --nw-ah-date-color: {{ nw_date_color }};
+    --nw-ah-accent-color: {{ nw_accent_color }};
+    --nw-ah-detail-border: {{ section.settings.detail_border_color | default: 'rgba(97, 57, 22, 0.24)' }};
+  }
+</style>
+
+<section
+  id="NwArticleHero-{{ section.id }}"
+  class="nw-article-hero section-{{ section.id }}"
+>
+  <div class="nw-article-hero__inner">
+    {%- if section.settings.show_back_link and blog.url != blank -%}
+      <a href="{{ blog.url }}" class="nw-article-hero__back">
+        <span class="nw-article-hero__back-icon" aria-hidden="true">
+          {% render 'nw-icon', icon: 'arrow-back' %}
+        </span>
+        {{ nw_back_label | escape }}
+      </a>
+    {%- endif -%}
+
+    <div class="nw-article-hero__stack{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-article-hero__media">
+        {%- if article.image != blank -%}
+          {{
+            article.image
+            | image_url: width: 2880
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '375, 550, 750, 1100, 1500, 2200, 2880',
+              sizes: '100vw',
+              alt: nw_img_alt
+          }}
+        {%- else -%}
+          <div class="nw-article-hero__placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <article class="nw-article-hero__card">
+        <div class="nw-article-hero__card-inner">
+          {%- if section.settings.show_date and article.published_at != blank -%}
+            <time class="nw-article-hero__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+              {{ article.published_at | date: '%B %d, %Y' | upcase }}
+            </time>
+          {%- endif -%}
+
+          <h1 class="nw-article-hero__title">{{ article.title | escape }}</h1>
+
+          {%- if nw_article_excerpt != blank -%}
+            <p class="nw-article-hero__excerpt">{{ nw_article_excerpt | escape }}</p>
+          {%- endif -%}
+
+          {%- if nw_category_label != blank
+            or section.settings.show_author
+            and article.author != blank
+            or nw_read_time != blank
+          -%}
+            <div class="nw-article-hero__details">
+              {%- if nw_category_label != blank -%}
+                <div class="nw-article-hero__detail-row">
+                  <p class="nw-article-hero__detail-text">
+                    {{ section.settings.category_label | default: 'Category:' }}
+                    <strong class="nw-article-hero__detail-value nw-article-hero__detail-value--category">
+                      {{- nw_category_label | upcase | escape -}}
+                    </strong>
+                  </p>
+                </div>
+              {%- endif -%}
+
+              {%- if section.settings.show_author and article.author != blank -%}
+                <div class="nw-article-hero__detail-row">
+                  <p class="nw-article-hero__detail-text">
+                    {{ section.settings.author_label | default: 'Author:' }}
+                    <strong class="nw-article-hero__detail-value nw-article-hero__detail-value--author">
+                      {{- article.author | upcase | escape -}}
+                    </strong>
+                  </p>
+                </div>
+              {%- endif -%}
+
+              {%- if nw_read_time != blank -%}
+                <div class="nw-article-hero__detail-row nw-article-hero__detail-row--last">
+                  <p class="nw-article-hero__detail-text">
+                    {{ section.settings.reading_time_label | default: 'Reading time:' }}
+                    <strong class="nw-article-hero__detail-value">{{ nw_read_time | escape }}</strong>
+                  </p>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NW Article Hero",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": {
+    "templates": ["article"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "DISPLAY OPTIONS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back_link",
+      "label": "Show Back Link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "back_link_text",
+      "label": "Back Link Text",
+      "default": "All Blogs"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show Published Date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show Excerpt",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "excerpt_length",
+      "label": "Excerpt Length (fallback)",
+      "min": 80,
+      "max": 400,
+      "step": 20,
+      "default": 200,
+      "info": "Used when the article has no manual excerpt."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category",
+      "label": "Show Category",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "category_source",
+      "label": "Category Source",
+      "default": "first_tag",
+      "options": [
+        { "value": "first_tag", "label": "First article tag" },
+        { "value": "blog_title", "label": "Blog title" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "category_label",
+      "label": "Category Label",
+      "default": "Category:"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show Author",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "author_label",
+      "label": "Author Label",
+      "default": "Author:"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reading_time",
+      "label": "Show Reading Time",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reading_time_label",
+      "label": "Reading Time Label",
+      "default": "Reading time:"
+    },
+    {
+      "type": "header",
+      "content": "HERO IMAGE"
+    },
+    {
+      "type": "paragraph",
+      "content": "Uses the article featured image automatically. Image height is responsive via aspect ratio (desktop 1280:420, mobile 375:250)."
+    },
+    {
+      "type": "header",
+      "content": "CARD"
+    },
+    {
+      "type": "range",
+      "id": "card_max_width",
+      "label": "Card Max Width (Desktop)",
+      "min": 600,
+      "max": 960,
+      "step": 10,
+      "unit": "px",
+      "default": 860
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_bg_color",
+      "label": "Card Background (Desktop)",
+      "default": "#E6E2DECC"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "card_bg_color_mobile",
+      "label": "Card Background (Mobile)",
+      "default": "#E6E2DECC"
+    },
+    {
+      "type": "header",
+      "content": "COLORS"
+    },
+    {
+      "type": "color_background",
+      "id": "section_bg_gradient",
+      "label": "Section Background (Desktop)",
+      "default": "linear-gradient(180deg, #F0EEEB 0%, #FFFFFF 100%)"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_gradient_mobile",
+      "label": "Section Background (Mobile)",
+      "default": "#fcf6ee"
+    },
+    {
+      "type": "color",
+      "id": "date_color",
+      "label": "Date Color",
+      "default": "#C2673B"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Meta Value Color",
+      "default": "#C2673B"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Title Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "detail_border_color",
+      "label": "Detail Row Border Color",
+      "default": "#6139163D"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Article Hero",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,264 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "nw_article_hero_wJfMxg": {
+      "type": "nw-article-hero",
+      "name": "NW Article Hero",
+      "settings": {
+        "show_back_link": true,
+        "back_link_text": "All Blogs",
+        "show_date": true,
+        "show_excerpt": true,
+        "excerpt_length": 200,
+        "show_category": true,
+        "category_source": "first_tag",
+        "category_label": "Category:",
+        "show_author": true,
+        "author_label": "Author:",
+        "show_reading_time": true,
+        "reading_time_label": "Reading time:",
+        "card_max_width": 860,
+        "card_bg_color": "#e6e2decc",
+        "card_bg_color_mobile": "#e6e2decc",
+        "section_bg_gradient": "linear-gradient(180deg, rgba(240, 238, 235, 1), rgba(255, 255, 255, 1) 100%)",
+        "section_bg_gradient_mobile": "#EEE9D8",
+        "date_color": "#c2673b",
+        "accent_color": "#c2673b",
+        "heading_color": "#613916",
+        "body_color": "#613916",
+        "detail_border_color": "#6139163d",
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_article_content_wJfMxg": {
+      "type": "nw-article-content",
+      "blocks": {
+        "share_block": {
+          "type": "share",
+          "settings": {
+            "heading": "Share this!"
+          }
+        },
+        "social_facebook": {
+          "type": "social_icon",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "facebook",
+            "custom_icon": "shopify://shop_images/svg642_d7f161bd-e1c1-4277-a621-a7a438d88657.png",
+            "url": "",
+            "open_new_tab": true,
+            "aria_label": ""
+          }
+        },
+        "social_twitter": {
+          "type": "social_icon",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "instagram",
+            "url": "",
+            "open_new_tab": true,
+            "aria_label": ""
+          }
+        },
+        "social_pinterest": {
+          "type": "social_icon",
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "twitter",
+            "url": "",
+            "open_new_tab": true,
+            "aria_label": ""
+          }
+        }
+      },
+      "block_order": [
+        "share_block",
+        "social_facebook",
+        "social_twitter",
+        "social_pinterest"
+      ],
+      "name": "NW Article Content",
+      "settings": {
+        "content_max_width": 900,
+        "section_bg_color": "#ffffff",
+        "heading_color": "#613916",
+        "body_color": "#613916",
+        "share_heading_color": "#613916",
+        "share_icon_color": "#613916",
+        "share_icon_border_color": "#613916",
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "nw_article_products_wJfMxg": {
+      "type": "nw-article-products",
+      "settings": {
+        "heading": "Products Mentioned in this Article",
+        "show_button": true,
+        "button_text": "Learn more",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "none",
+        "bg_color": "#eee9d8",
+        "bg_gradient": "",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_discount_6hRdfF": {
+      "type": "nw-discount",
+      "name": "NW Discount",
+      "settings": {
+        "show_logo": true,
+        "logo_image": "shopify://shop_images/organic_snooz-logo.png",
+        "logo_width": 160,
+        "heading": "Your 20% Off Is Ready",
+        "show_button": true,
+        "button_text": "Get My 20% Off",
+        "button_link": "",
+        "button_style": "primary",
+        "email_placeholder": "Your email address",
+        "success_message": "Thank you! Your 20% off code has been sent.",
+        "show_rating": true,
+        "rating_stars": 5,
+        "rating_text": "4.8/5 from 100’s of sleepers",
+        "image_position": "right",
+        "image_position_mobile": "top",
+        "image_desktop": "shopify://shop_images/discount-image.png",
+        "heading_color": "#613916",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#61391633",
+        "input_bg_color": "#fffcf0",
+        "input_border_color": "#61391614",
+        "input_text_color": "#613916",
+        "star_color": "#e57b1e",
+        "rating_text_color": "#444444",
+        "bg_type": "none",
+        "bg_color": "#6139160a",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "main": {
+      "type": "main-article",
+      "blocks": {
+        "content": {
+          "type": "content",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "content"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "nw_faq_3fYmKq": {
+      "type": "nw-faq",
+      "blocks": {
+        "faq_item_PfKnPe": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What makes the Ultimate Snooze different from other organic mattresses?",
+            "answer": "<p>Ultimate Snooze combines certified organic latex, organic wool, and pocket coils with zero toxic chemicals, glues, or fiberglass for restorative, clean sleep.</p>"
+          }
+        },
+        "faq_item_aFLzkr": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What materials are used?",
+            "answer": "<p>We use 100% GOLS certified organic latex, GOTS certified organic wool, and GOTS certified organic cotton with recycled steel pocket coils.</p>"
+          }
+        },
+        "faq_item_UMdweC": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does it contain flame retardants or fiberglass?",
+            "answer": "<p>No. We never use chemical flame retardants or fiberglass. We use natural organic wool as our flame barrier.</p>"
+          }
+        },
+        "faq_item_3GRzMM": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will I sleep hot?",
+            "answer": "<p>Organic latex and wool are naturally temperature regulating and breathable, keeping you cool all night long.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_PfKnPe",
+        "faq_item_aFLzkr",
+        "faq_item_UMdweC",
+        "faq_item_3GRzMM"
+      ],
+      "name": "t:sections.nw-faq.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "",
+        "star_color_inactive": "",
+        "eyebrow": "",
+        "heading": "Frequently Asked Questions",
+        "subheading": "",
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
+        "show_search": false,
+        "search_placeholder": "What can we help with?",
+        "open_first_faq": false,
+        "initial_faq_count": 6,
+        "more_label": "",
+        "contact_heading": "",
+        "show_call_btn": false,
+        "call_label": "CALL (443) 333-1213",
+        "call_link": "tel:+14433331213",
+        "call_style": "primary",
+        "show_text_btn": false,
+        "text_label": "TEXT US",
+        "text_link": "sms:+14433331213",
+        "text_style": "outline",
+        "show_quiz_btn": false,
+        "quiz_label": "SLEEP QUIZ",
+        "quiz_link": "",
+        "quiz_style": "outline",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_opacity": 16,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "nw_article_hero_wJfMxg",
+    "nw_article_content_wJfMxg",
+    "nw_article_products_wJfMxg",
+    "nw_discount_6hRdfF",
+    "main",
+    "nw_faq_3fYmKq"
+  ]
+}
