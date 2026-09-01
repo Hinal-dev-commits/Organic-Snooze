@@ -1,0 +1,456 @@
+.nw-discount {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-discount .page-width {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+.nw-discount__card {
+  padding: 37px 0px;
+}
+
+.nw-discount__body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 45px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-discount__body--image-left {
+  flex-direction: row-reverse;
+}
+
+.nw-discount__content-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 604px;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+}
+
+/* Header & Logo */
+.nw-discount__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-discount__logo-wrap {
+  width: 100%;
+  max-width: 161px;
+  min-height: 30.46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.nw-discount__logo-img {
+  width: 100%;
+  max-width: 161px;
+  height: auto;
+  max-height: 34px;
+  object-fit: contain;
+  display: block;
+}
+
+.nw-discount__logo-lockup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  color: #CC926A;
+  user-select: none;
+}
+
+.nw-discount__logo-text {
+  font-family: var(--font-heading-family, 'Optima', 'Optima LT Pro', serif);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #CC926A;
+  line-height: 1;
+}
+
+.nw-discount__logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.nw-discount__logo-icon svg {
+  display: block;
+}
+
+/* Heading */
+.nw-discount__heading {
+  margin: 0;
+  font-size: 34px;
+}
+
+.nw-discount__form-wrap {
+  width: 100%;
+  max-width: 524px;
+  box-sizing: border-box;
+}
+
+.nw-discount__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 30px 0 12px 0;
+}
+
+.nw-discount__input-wrap {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 16px;
+  gap: 10px;
+  width: 100%;
+  height: 52px;
+  background: var(--nw-discount-input-bg, #FFFCF0);
+  border: 1px solid var(--nw-discount-input-border, rgba(97, 57, 22, 0.08));
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nw-discount__input-wrap:focus-within {
+  border-color: rgba(97, 57, 22, 0.35);
+  box-shadow: 0 0 0 2px rgba(97, 57, 22, 0.06);
+}
+
+.nw-discount__input-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--nw-discount-input-color, #613916);
+}
+
+.nw-discount__input-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.nw-discount__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-body-family, 'Inter', 'DM Sans', sans-serif);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--nw-discount-input-color, #613916);
+  box-shadow: none;
+}
+
+.nw-discount__input::placeholder {
+  color: var(--nw-discount-input-color, #613916);
+  opacity: 0.85;
+}
+
+.nw-discount__btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+  gap: 10px;
+  width: 100%;
+  height: 56px;
+  background: var(--nw-discount-btn-bg, #CC926A);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-family: var(--font-body-family, 'Inter', sans-serif);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  text-transform: uppercase;
+  color: var(--nw-discount-btn-color, #FFFFFF);
+  letter-spacing: 0.02em;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+}
+
+.nw-discount__btn:hover {
+  background: var(--nw-discount-btn-bg-hover, #B57D57);
+}
+
+
+/* Feedback messages */
+.nw-discount__message {
+  margin: 0;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  width: 100%;
+}
+
+.nw-discount__message--error {
+  color: #b61919;
+}
+
+.nw-discount__message--success {
+  color: #3b7a3e;
+  font-weight: 500;
+}
+
+.nw-discount__reviews {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  gap: 8px;
+  width: auto;
+  height: 18px;
+  box-sizing: border-box;
+}
+
+.nw-discount__stars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 2px;
+  width: auto;
+  height: 14px;
+}
+
+.nw-discount__star {
+  width: 14px;
+  height: 14px;
+  color: var(--nw-discount-star-color, #E57B1E);
+  fill: currentColor;
+  flex-shrink: 0;
+  display: block;
+}
+
+.nw-discount__reviews-text {
+  font-size: 14px;
+  color: var(--nw-discount-rating-color, #444444);
+}
+
+.nw-discount__media-col {
+  flex: 0 0 631px;
+  width: 631px;
+  height: auto;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.nw-discount__media-col picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nw-discount__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 20px;
+}
+
+.nw-discount__img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f0eb;
+  border-radius: 20px;
+}
+
+.nw-discount__img-placeholder svg {
+  width: 90px;
+  height: 90px;
+  fill: rgba(97, 57, 22, 0.25);
+}
+
+@media screen and (min-width: 750px) and (max-width: 1024px) {
+
+  .nw-discount__body,
+  .nw-discount__body--image-left {
+    gap: 24px;
+  }
+
+  .nw-discount__content-col {
+    padding: 20px 10px;
+    gap: 24px;
+    flex: 1 1 50%;
+    max-width: 50%;
+  }
+
+  .nw-discount__media-col {
+    flex: 1 1 50%;
+    width: 100%;
+    max-width: 50%;
+    height: auto;
+    border-radius: 16px;
+  }
+
+  .nw-discount__img {
+    border-radius: 16px;
+  }
+
+  .nw-discount__heading {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .nw-discount__btn {
+    font-size: 16px;
+    height: 52px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-discount .page-width {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .nw-discount__card {
+    padding: 32px 0 0 0;
+  }
+
+  .nw-discount__body,
+  .nw-discount__body--image-left {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .nw-discount__body--mobile-image-top .nw-discount__media-col {
+    order: 0;
+  }
+
+  .nw-discount__body--mobile-image-top .nw-discount__content-col {
+    order: 1;
+  }
+
+  .nw-discount__body--mobile-image-bottom .nw-discount__media-col {
+    order: 1;
+  }
+
+  .nw-discount__body--mobile-image-bottom .nw-discount__content-col {
+    order: 0;
+  }
+
+  .nw-discount__media-col {
+    flex: none;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .nw-discount__img {
+    border-radius: 10px;
+  }
+
+  .nw-discount__img-placeholder {
+    border-radius: 10px;
+  }
+
+  .nw-discount__content-col {
+    padding: 0px;
+    width: 100%;
+  }
+
+  .nw-discount__header {
+    gap: 10px;
+    width: 100%;
+  }
+
+  .nw-discount__heading {
+    font-size: 28px;
+    line-height: 31px;
+    width: 100%;
+  }
+
+  .nw-discount__form {
+    margin: 20px 0 12px 0;
+  }
+
+  .nw-discount__input-wrap {
+    padding: 14px 10px;
+    gap: 6px;
+    width: 100%;
+    height: 52px;
+  }
+
+  .nw-discount__input {
+    font-family: var(--font-body-family, 'DM Sans', sans-serif);
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .nw-discount__btn {
+    padding: 20px 10px;
+    gap: 10px;
+    width: 100%;
+    height: 56px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .nw-discount__reviews {
+    gap: 8px;
+    width: auto;
+    height: 16px;
+  }
+
+  .nw-discount__reviews-text {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
