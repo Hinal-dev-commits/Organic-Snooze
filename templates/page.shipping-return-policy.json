@@ -21,6 +21,11 @@
       "type": "nw-image",
       "name": "NW Image",
       "settings": {
+        "heading": "",
+        "button_text": "",
+        "button_link": "",
+        "button_style": "primary",
+        "heading_color": "#613916",
         "image_desktop": "shopify://shop_images/shipping-policy-desktop.png",
         "image_mobile": "shopify://shop_images/shipping-mobile.png",
         "show_gradient": false,
@@ -180,7 +185,7 @@
             "badge": "FREE",
             "intro": "<p>Want a different size or firmness? We make it simple with no exchange fees.</p>",
             "table_layout": "two_column",
-            "show_scrollbar": true
+            "show_scrollbar": false
           }
         },
         "table_row_ex_1": {

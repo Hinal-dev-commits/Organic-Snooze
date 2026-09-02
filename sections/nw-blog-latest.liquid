@@ -9,6 +9,7 @@
   assign selected_blog = section.settings.blog
   assign selected_articles = section.settings.article
   assign selected_articles_count = section.settings.article.count | default: 0
+  assign similar_articles = article.metafields.custom.similar_article.value | default: article.metafields.custom.similar_article
   assign post_limit = section.settings.post_limit | default: 6
   assign slides_desktop = section.settings.slides_desktop | default: 4
   if post_limit < 1
@@ -23,7 +24,9 @@
   assign pagination_id = 'NwBlogLatestPagination-' | append: section.id
   assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge'
   assign has_articles = false
-  if article_source == 'article_list' and selected_articles != blank
+  if article_source == 'metafields' and similar_articles != blank
+    assign has_articles = true
+  elsif article_source == 'article_list' and selected_articles != blank
     assign has_articles = true
   elsif article_source == 'blog' and selected_blog != blank and selected_blog.articles_count > 0
     assign has_articles = true
@@ -32,6 +35,12 @@
   if article_source == 'article_list'
     if selected_articles_count > 0
       assign placeholder_count = selected_articles_count
+    else
+      assign placeholder_count = 3
+    endif
+  elsif article_source == 'metafields'
+    if similar_articles.count > 0
+      assign placeholder_count = similar_articles.count
     else
       assign placeholder_count = 3
     endif
@@ -102,7 +111,37 @@
         <div class="swiper nw-blog-latest__swiper" id="NwBlogLatestSwiper-{{ section.id }}">
           <div class="swiper-wrapper">
             {%- if has_articles -%}
-              {%- if article_source == 'article_list' -%}
+              {%- if article_source == 'metafields' -%}
+                {%- if similar_articles.title != blank -%}
+                  <div class="swiper-slide">
+                    {% render 'nw-blog-latest-card', article: similar_articles, section: section %}
+                  </div>
+                {%- else -%}
+                  {%- for item in similar_articles limit: post_limit -%}
+                    {%- liquid
+                      assign item_article = item
+                      if item_article == blank or item_article.title == blank
+                        assign article_path = item | strip
+                        if article_path contains '/'
+                          assign article_path_parts = article_path | split: '/'
+                          assign article_blog_handle = article_path_parts.first
+                          assign article_handle = article_path_parts.last
+                          if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+                            assign item_article = blogs[article_blog_handle].articles[article_handle]
+                          endif
+                        else
+                          assign item_article = articles[article_path]
+                        endif
+                      endif
+                    -%}
+                    {%- if item_article != blank and item_article.title != blank -%}
+                      <div class="swiper-slide">
+                        {% render 'nw-blog-latest-card', article: item_article, section: section %}
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              {%- elsif article_source == 'article_list' -%}
                 {%- for item in selected_articles -%}
                   {%- liquid
                     assign featured_article = item
@@ -155,13 +194,19 @@
                         <h3 class="nw-blog-latest__title">{{ 'sections.featured_blog.onboarding_title' | t }}</h3>
                         <p class="nw-blog-latest__excerpt">{{ 'sections.featured_blog.onboarding_content' | t }}</p>
                       </div>
-                      <div class="nw-blog-latest__meta">
-                        {%- if section.settings.show_author -%}
-                          <span class="nw-blog-latest__author">{{ shop.name }}</span>
-                          <span class="nw-blog-latest__meta-dot" aria-hidden="true">&bull;</span>
-                        {%- endif -%}
-                        <span class="nw-blog-latest__read-time">8 min read</span>
-                      </div>
+                      {%- if section.settings.show_author or section.settings.show_read_time -%}
+                        <div class="nw-blog-latest__meta">
+                          {%- if section.settings.show_author -%}
+                            <span class="nw-blog-latest__author">{{ shop.name }}</span>
+                          {%- endif -%}
+                          {%- if section.settings.show_author and section.settings.show_read_time -%}
+                            <span class="nw-blog-latest__meta-dot" aria-hidden="true">&bull;</span>
+                          {%- endif -%}
+                          {%- if section.settings.show_read_time -%}
+                            <span class="nw-blog-latest__read-time">6 min read</span>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
                       {%- if section.settings.show_card_button -%}
                         <span class="nw-blog-latest__btn">
                           <span class="nw-blog-latest__btn-text">{{ section.settings.card_button_text | default: 'Read the article' }}</span>
@@ -249,9 +294,10 @@
       "default": "blog",
       "options": [
         { "value": "blog", "label": "Blog" },
-        { "value": "article_list", "label": "Article List" }
+        { "value": "article_list", "label": "Article List" },
+        { "value": "metafields", "label": "Metafields" }
       ],
-      "info": "Choose Blog to pull latest articles from a blog, or Article List to hand-pick specific articles."
+      "info": "Choose Blog to pull latest articles, Article List for specific articles, or Metafields for article.metafields.custom.similar_article."
     },
     {
       "type": "blog",
@@ -272,8 +318,7 @@
       "min": 1,
       "max": 50,
       "step": 1,
-      "default": 6,
-      "visible_if": "{{ section.settings.article_source == 'blog' }}"
+      "default": 6
     },
     {
       "type": "range",
@@ -287,6 +332,13 @@
     {
       "type": "header",
       "content": "CARD SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_read_time",
+      "label": "Show Read Time",
+      "default": false,
+      "info": "Displays the read time from article metafield custom.read_time."
     },
     {
       "type": "checkbox",
