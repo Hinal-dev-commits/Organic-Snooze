@@ -78,12 +78,57 @@
     color: {{ nw_cta_text }};
   }
 
-  {{ nw_shell_selector }} .nw-shipping-content__scrollbar-track {
-    background-color: rgba(97, 57, 22, 0.1);
+  @media screen and (max-width: 749px) {
+    {{ nw_shell_selector }} .nw-shipping-content__table-scroll {
+      width: calc(100% + 32px) !important;
+      margin-left: -16px !important;
+      margin-right: -16px !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+      box-sizing: border-box !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+    }
+
+    {{ nw_shell_selector }} .nw-shipping-content__table-scroll::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    {{ nw_shell_selector }} .nw-shipping-content__scrollbar-track {
+      display: block !important;
+      position: relative !important;
+      width: 100% !important;
+      height: 8px !important;
+      min-height: 8px !important;
+      background-color: rgba(97, 57, 22, 0.1) !important;
+      border-radius: 100px !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+
+    {{ nw_shell_selector }} .nw-shipping-content__scrollbar-thumb {
+      display: block !important;
+      position: absolute !important;
+      top: 0 !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      height: 8px !important;
+      min-height: 8px !important;
+      width: 35%;
+      min-width: 20px !important;
+      background-color: #613916 !important;
+      border-radius: 100px !important;
+      pointer-events: none !important;
+      z-index: 2 !important;
+      transition: width 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+    }
   }
 
-  {{ nw_shell_selector }} .nw-shipping-content__scrollbar-thumb {
-    background-color: #613916;
+  @media screen and (min-width: 750px) {
+    {{ nw_shell_selector }} .nw-shipping-content__scrollbar-track {
+      display: none !important;
+    }
   }
 </style>
 
@@ -106,14 +151,14 @@
         {%- for block in section.blocks -%}
           {%- if block.type != 'table_row' -%}
             {%- if nw_table_open -%}
-                    </tbody>
-                  </table>
+              </tbody>
+              </table>
+              </div>
+              {%- if nw_table_show_scrollbar -%}
+                <div class="nw-shipping-content__scrollbar-track" aria-hidden="true">
+                  <div class="nw-shipping-content__scrollbar-thumb"></div>
                 </div>
-                {%- if nw_table_show_scrollbar -%}
-                  <div class="nw-shipping-content__scrollbar-track" aria-hidden="true">
-                    <div class="nw-shipping-content__scrollbar-thumb"></div>
-                  </div>
-                {%- endif -%}
+              {%- endif -%}
               {%- assign nw_table_open = false -%}
             {%- endif -%}
 
@@ -156,7 +201,7 @@
               {%- if block.settings.heading != blank or block.settings.content != blank -%}
                 {%- unless nw_text_group_open or nw_table_section_open -%}
                   <div class="nw-shipping-content__text-group">
-                  {%- assign nw_text_group_open = true -%}
+                    {%- assign nw_text_group_open = true -%}
                 {%- endunless -%}
                 <article
                   class="nw-shipping-content__item{% if block.settings.heading_size == 'medium' %} nw-shipping-content__item--medium{% else %} nw-shipping-content__item--large{% endif %}"
@@ -179,7 +224,7 @@
             {%- when 'table_group' -%}
               {%- unless nw_table_section_open -%}
                 <div class="nw-shipping-content__table-section">
-                {%- assign nw_table_section_open = true -%}
+                  {%- assign nw_table_section_open = true -%}
               {%- endunless -%}
               <div class="nw-shipping-content__table-group" {{ block.shopify_attributes }}>
                 <div class="nw-shipping-content__table-group-header">
@@ -200,10 +245,7 @@
                 </div>
 
                 {%- assign nw_table_layout = block.settings.table_layout | default: 'two_column' -%}
-                {%- assign nw_table_show_scrollbar = false -%}
-                {%- if nw_table_layout == 'four_column' and block.settings.show_scrollbar -%}
-                  {%- assign nw_table_show_scrollbar = true -%}
-                {%- endif -%}
+                {%- assign nw_table_show_scrollbar = block.settings.show_scrollbar | default: false -%}
                 {%- assign nw_table_group_open = true -%}
                 {%- unless nw_table_layout == 'hidden' -%}
                   {%- assign nw_table_open = true -%}
@@ -230,7 +272,7 @@
               {%- if block.settings.heading != blank or block.settings.content != blank -%}
                 {%- unless nw_table_section_open -%}
                   <div class="nw-shipping-content__table-section">
-                  {%- assign nw_table_section_open = true -%}
+                    {%- assign nw_table_section_open = true -%}
                 {%- endunless -%}
                 <aside class="nw-shipping-content__callout" {{ block.shopify_attributes }}>
                   {%- if block.settings.heading != blank -%}
@@ -243,7 +285,10 @@
               {%- endif -%}
 
             {%- when 'cta' -%}
-              {%- if block.settings.heading != blank or block.settings.description != blank or block.settings.button_text != blank -%}
+              {%- if block.settings.heading != blank
+                or block.settings.description != blank
+                or block.settings.button_text != blank
+              -%}
                 <aside class="nw-shipping-content__cta" {{ block.shopify_attributes }}>
                   <div class="nw-shipping-content__cta-copy">
                     {%- if block.settings.heading != blank -%}
@@ -256,7 +301,8 @@
 
                   <div class="nw-shipping-content__cta-actions">
                     {%- if block.settings.button_text != blank -%}
-                      {% render 'nw-button',
+                      {%
+                        render 'nw-button',
                         text: block.settings.button_text,
                         link: block.settings.button_link | default: '#',
                         style: 'primary',
@@ -274,18 +320,18 @@
         {%- endfor -%}
 
         {%- if nw_table_open -%}
-                    </tbody>
-                  </table>
-                </div>
-                {%- if nw_table_show_scrollbar -%}
-                  <div class="nw-shipping-content__scrollbar-track" aria-hidden="true">
-                    <div class="nw-shipping-content__scrollbar-thumb"></div>
-                  </div>
-                {%- endif -%}
+          </tbody>
+          </table>
+          </div>
+          {%- if nw_table_show_scrollbar -%}
+            <div class="nw-shipping-content__scrollbar-track" aria-hidden="true">
+              <div class="nw-shipping-content__scrollbar-thumb"></div>
+            </div>
+          {%- endif -%}
         {%- endif -%}
 
         {%- if nw_table_group_open -%}
-              </div>
+          </div>
         {%- endif -%}
 
         {%- if nw_text_group_open -%}
@@ -775,11 +821,17 @@
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Downgrade to Lower Price", "column_2": "Difference issued as store credit (non-transferable)" }
+          "settings": {
+            "column_1": "Downgrade to Lower Price",
+            "column_2": "Difference issued as store credit (non-transferable)"
+          }
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "New Trial Period?", "column_2": "No — you may only redeem one sleep trial exchange" }
+          "settings": {
+            "column_1": "New Trial Period?",
+            "column_2": "No — you may only redeem one sleep trial exchange"
+          }
         },
         {
           "type": "table_row",

@@ -1,9 +1,11 @@
 {% doc %}
-Renders a blog article card for NW Blog Latest.
-@param {object} article - Shopify article object
-@param {object} section - Parent section for settings
-@example
-{% render 'nw-blog-latest-card', article: article, section: section %}
+  Renders a blog article card for NW Blog Latest.
+
+  @param {object} article - Shopify article object
+  @param {object} section - Parent section for settings
+
+  @example
+  {% render 'nw-blog-latest-card', article: article, section: section %}
 {% enddoc %}
 
 {%- liquid
@@ -13,12 +15,20 @@ Renders a blog article card for NW Blog Latest.
 
   assign blog_tag = blank
   if blog_tag_metafield != blank
-    assign blog_tag = blog_tag_metafield.value
+    if blog_tag_metafield.value != blank
+      assign blog_tag = blog_tag_metafield.value
+    else
+      assign blog_tag = blog_tag_metafield
+    endif
   endif
 
   assign read_time = blank
-  if read_time_metafield != blank
-    assign read_time = read_time_metafield.value
+  if section.settings.show_read_time and read_time_metafield != blank
+    if read_time_metafield.value != blank
+      assign read_time = read_time_metafield.value
+    else
+      assign read_time = read_time_metafield
+    endif
   endif
 
   assign card_excerpt = article.excerpt | strip_html
@@ -28,18 +38,30 @@ Renders a blog article card for NW Blog Latest.
 
   assign read_time_display = blank
   if read_time != blank
-    assign read_time_text = read_time | strip
-    if read_time_text contains 'read'
-      assign read_time_display = read_time_text
-    else
-      assign read_time_display = read_time_text | append: ' min read'
+    assign read_time_text = read_time | strip_html | strip
+    if read_time_text != blank
+      if read_time_text contains 'read'
+        assign read_time_display = read_time_text
+      else
+        assign read_time_display = read_time_text | append: ' read'
+      endif
     endif
+  endif
+
+  assign show_author_meta = false
+  if section.settings.show_author and article.author != blank
+    assign show_author_meta = true
+  endif
+
+  assign show_read_time_meta = false
+  if section.settings.show_read_time and read_time_display != blank
+    assign show_read_time_meta = true
   endif
 
   assign show_editors_pick = false
   assign editors_pick_label = section.settings.editor_pick_label | default: "Editor's Pick"
   if section.settings.show_editors_pick and editors_pick_metafield != blank
-    assign editors_pick_value = editors_pick_metafield.value | strip
+    assign editors_pick_value = editors_pick_metafield.value | default: editors_pick_metafield | strip
     if editors_pick_value != blank
       assign show_editors_pick = true
       assign editors_pick_label = editors_pick_value
@@ -93,15 +115,15 @@ Renders a blog article card for NW Blog Latest.
       {%- endif -%}
     </div>
 
-    {%- if section.settings.show_author and article.author != blank or read_time_display != blank -%}
+    {%- if show_author_meta or show_read_time_meta -%}
       <div class="nw-blog-latest__meta">
-        {%- if section.settings.show_author and article.author != blank -%}
+        {%- if show_author_meta -%}
           <span class="nw-blog-latest__author">{{ article.author }}</span>
         {%- endif -%}
-        {%- if section.settings.show_author and article.author != blank and read_time_display != blank -%}
+        {%- if show_author_meta and show_read_time_meta -%}
           <span class="nw-blog-latest__meta-dot" aria-hidden="true">&bull;</span>
         {%- endif -%}
-        {%- if read_time_display != blank -%}
+        {%- if show_read_time_meta -%}
           <span class="nw-blog-latest__read-time">{{ read_time_display }}</span>
         {%- endif -%}
       </div>
