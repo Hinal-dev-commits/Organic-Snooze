@@ -237,6 +237,8 @@
                   {%- endif -%}
                 {%- when 'icon_text' -%}
                   {%- render 'nw-product-icon-text', block: block -%}
+                {%- when 'nw_benifits_list' -%}
+                  {%- render 'nw-product-benifits-list', block: block, product: product -%}
                 {%- when 'inventory' -%}
                   <p
                     class="product__inventory{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.inventory_management != 'shopify' %} visibility-hidden{% endif %}"
@@ -2677,6 +2679,94 @@
       ]
     },
     {
+      "type": "nw_benifits_list",
+      "name": "NW Benefits list",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Displays items from product metafield custom.benefits (Product benefits metaobjects)."
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon Color",
+          "default": "#CC926A",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "range",
+          "id": "icon_size",
+          "label": "Icon Size",
+          "min": 16,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "default": 28
+        },
+        {
+          "type": "range",
+          "id": "icon_gap",
+          "label": "Icon and Text Gap",
+          "min": 4,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 10
+        },
+        {
+          "type": "header",
+          "content": "BLOCK SPACING"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom Mobile",
+          "default": 0
+        }
+      ]
+    },
+    {
       "type": "shipping_tag",
       "name": "Shipping tag",
       "settings": [
@@ -3049,6 +3139,17 @@
       "type": "icon_text_v2",
       "name": "Icon text v2 (badges row)",
       "settings": [
+        {
+          "type": "select",
+          "id": "text_case",
+          "label": "Text Case",
+          "options": [
+            { "value": "uppercase", "label": "Uppercase" },
+            { "value": "lowercase", "label": "Lowercase" },
+            { "value": "capitalize", "label": "Capitalize" }
+          ],
+          "default": "uppercase"
+        },
         {
           "type": "header",
           "content": "ITEM 1"

@@ -288,7 +288,7 @@
 
     .product__info-container .nw-product-price .price-item--regular {
         font-family: var(--font-body-family);
-        font-weight: 400;
+        font-weight: 600;
     }
     .product__info-container .nw-product-price .price-item--sale{
         font-weight: 600;
@@ -300,6 +300,7 @@
         font-size: 18px;
         line-height: 140%;
         color: rgba(97, 57, 22, 0.45);
+        font-weight: 400;
         text-decoration: line-through;
     }
 
@@ -1215,6 +1216,30 @@
         color: var(--nw-pit-icon-color, #CC926A);
     }
 
+    /* Benefits list */
+    .nw-product-benifits-list__items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+    }
+
+    .nw-product-benifits-list__item {
+        margin: 0;
+        padding: 0;
+    }
+
+    .nw-product-benifits-list--empty .nw-product-benifits-list__empty {
+        margin: 0;
+        font-family: var(--font-body-family);
+        font-size: 13px;
+        line-height: 140%;
+        color: rgba(97, 57, 22, 0.65);
+    }
+
     /* Shipping tag */
     .nw-product-shipping-tag {
         display: flex;
@@ -1454,7 +1479,7 @@
         font-size: 14px;
         font-weight: 500;
         line-height: 130%;
-        text-transform: uppercase;
+        text-transform: var(--nw-pit2-text-transform, uppercase);
         color: var(--nw-pit2-text-color, #613916);
     }
 

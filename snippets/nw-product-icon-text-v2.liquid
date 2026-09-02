@@ -22,6 +22,7 @@
       --nw-pit2-icon-bg: {{ block.settings.icon_bg_color | default: '#FFFCF0' }};
       --nw-pit2-icon-color: {{ block.settings.icon_color | default: '#CC926A' }};
       --nw-pit2-text-color: {{ block.settings.text_color | default: '#613916' }};
+      --nw-pit2-text-transform: {{ block.settings.text_case | default: 'uppercase' }};
     "
   >
     {%- for i in (1..4) -%}

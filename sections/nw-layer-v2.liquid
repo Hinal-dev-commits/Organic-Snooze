@@ -1,0 +1,618 @@
+{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+{{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
+{{ 'nw-layer-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-layer-v2.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwLayerV2-' | append: section.id
+  assign layer_blocks = section.blocks | where: 'type', 'layer_slide'
+  assign safety_blocks = section.blocks | where: 'type', 'safety_item'
+-%}
+
+{% capture nw_shell_extra %}
+  --nw-lv2-hotspot-active: {{ section.settings.hotspot_active_color | default: '#613916' }};
+  --nw-lv2-hotspot-inactive: {{ section.settings.hotspot_inactive_color | default: '#BB967C' }};
+  --nw-lv2-hotspot-text: {{ section.settings.hotspot_text_color | default: '#FFFFFF' }};
+  --nw-lv2-card-bg: {{ section.settings.card_bg_color | default: '#FFFAF2' }};
+  --nw-lv2-card-border: {{ section.settings.card_border_color | default: 'rgba(97, 57, 22, 0.15)' }};
+  --nw-lv2-card-title: {{ section.settings.card_title_color | default: '#613916' }};
+  --nw-lv2-card-desc: {{ section.settings.card_desc_color | default: '#613916' }};
+  --nw-lv2-safety-bg: {{ section.settings.safety_bg_color | default: '#F5FAF5' }};
+  --nw-lv2-safety-border: {{ section.settings.safety_border_color | default: '#CCE5CC' }};
+  --nw-lv2-safety-title: {{ section.settings.safety_title_color | default: '#261F1A' }};
+  --nw-lv2-safety-text: {{ section.settings.safety_text_color | default: '#407340' }};
+  --nw-swiper-bullet: {{ section.settings.pagination_color | default: '#613916' }};
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', extra: nw_shell_extra, default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  {%- for block in layer_blocks -%}
+    #NwLayerV2-{{ section.id }} [data-hotspot-index="{{ forloop.index0 }}"] {
+      left: {{ block.settings.pos_x_desktop | default: 50 }}%;
+      top: {{ block.settings.pos_y_desktop | default: 50 }}%;
+    }
+  {%- endfor -%}
+
+  @media screen and (max-width: 749px) {
+    {%- for block in layer_blocks -%}
+      #NwLayerV2-{{ section.id }} [data-hotspot-index="{{ forloop.index0 }}"] {
+        left: {{ block.settings.pos_x_mobile | default: block.settings.pos_x_desktop | default: 50 }}%;
+        top: {{ block.settings.pos_y_mobile | default: block.settings.pos_y_desktop | default: 50 }}%;
+      }
+    {%- endfor -%}
+  }
+</style>
+
+<nw-layer-v2
+  id="NwLayerV2-{{ section.id }}"
+  class="nw-layer-v2 section-{{ section.id }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | default: 5 }}"
+  data-show-arrows="{{ section.settings.show_arrows }}"
+  data-show-dots="{{ section.settings.show_dots }}"
+>
+  <div class="page-width">
+    <div class="nw-layer-v2__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-layer-v2__header">
+        {% render 'nw-section-header',
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index,
+          heading_class: 'nw-layer-v2__heading'
+        %}
+      </div>
+
+      <div class="nw-layer-v2__main">
+        {%- if section.settings.show_safety_box and safety_blocks.size > 0 or section.settings.show_safety_box and section.settings.safety_title != blank -%}
+          <aside class="nw-layer-v2__safety">
+            {%- if section.settings.safety_title != blank -%}
+              <h3 class="nw-layer-v2__safety-title">{{ section.settings.safety_title }}</h3>
+            {%- endif -%}
+            {%- if safety_blocks.size > 0 -%}
+              <ul class="nw-layer-v2__safety-list">
+                {%- for block in safety_blocks -%}
+                  <li class="nw-layer-v2__safety-item" {{ block.shopify_attributes }}>
+                    {% comment %} <span class="nw-layer-v2__safety-icon" aria-hidden="true">
+                      {% render 'nw-icon', icon: 'check-v2' %}
+                    </span> {% endcomment %}
+                    <span class="nw-layer-v2__safety-text">{{ block.settings.text }}</span>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </aside>
+        {%- endif -%}
+
+        <div class="nw-layer-v2__media-col">
+          <div class="nw-layer-v2__media-wrap">
+            {%- liquid
+              assign diagram_img = section.settings.diagram_image
+              assign diagram_img_mobile = section.settings.diagram_image_mobile
+            -%}
+            {%- if diagram_img != blank -%}
+              <picture>
+                {%- if diagram_img_mobile != blank -%}
+                  <source media="(max-width: 749px)" srcset="{{ diagram_img_mobile | image_url: width: 750 }}">
+                {%- endif -%}
+                <img
+                  src="{{ diagram_img | image_url: width: 1100 }}"
+                  alt="{{ section.settings.heading | default: 'Mattress layers diagram' | escape }}"
+                  width="473"
+                  height="372"
+                  loading="lazy"
+                  class="nw-layer-v2__img"
+                >
+              </picture>
+            {%- else -%}
+              <div class="nw-layer-v2__placeholder" aria-hidden="true"></div>
+            {%- endif -%}
+
+            {%- for block in layer_blocks -%}
+              <button
+                type="button"
+                class="nw-layer-v2__hotspot{% if forloop.first %} is-active{% endif %}"
+                data-hotspot-index="{{ forloop.index0 }}"
+                aria-label="{{ block.settings.title | default: forloop.index | escape }}"
+              >
+                {{ block.settings.pin_label | default: forloop.index }}
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        {%- if layer_blocks.size > 0 -%}
+          <div class="nw-layer-v2__content-col">
+            <div class="nw-layer-v2__swiper-wrap">
+              <div class="swiper nw-layer-v2__swiper" id="NwLayerV2Swiper-{{ section.id }}">
+                <div class="swiper-wrapper">
+                  {%- for block in layer_blocks -%}
+                    {%- liquid
+                      assign card_title = block.settings.title
+                      assign card_desc = block.settings.description
+                      assign card_icon = block.settings.icon
+                    -%}
+                    <div
+                      class="swiper-slide"
+                      {{ block.shopify_attributes }}
+                      data-slide-index="{{ forloop.index0 }}"
+                    >
+                      <article class="nw-layer-v2__card">
+                        <div class="nw-layer-v2__card-header">
+                          {%- if card_title != blank -%}
+                            <h3 class="nw-layer-v2__card-title">{{ card_title }}</h3>
+                          {%- endif -%}
+                          {%- if card_icon != blank -%}
+                            <img
+                              src="{{ card_icon | image_url: width: 120 }}"
+                              alt="{{ card_title | escape }}"
+                              width="50"
+                              height="50"
+                              loading="lazy"
+                              class="nw-layer-v2__card-icon"
+                            >
+                          {%- endif -%}
+                        </div>
+                        {%- if card_desc != blank -%}
+                          <div class="nw-layer-v2__card-desc rte">{{ card_desc }}</div>
+                        {%- endif -%}
+                      </article>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+
+              {%- if section.settings.show_arrows and layer_blocks.size > 1 -%}
+                {% render 'nw-swiper-arrows' %}
+              {%- endif -%}
+
+              {%- if section.settings.show_dots and layer_blocks.size > 1 -%}
+                {%- assign lv2_pagination_id = 'NwLayerV2Pagination-' | append: section.id -%}
+                {% render 'nw-swiper-pagination', id: lv2_pagination_id %}
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</nw-layer-v2>
+
+{% schema %}
+{
+  "name": "t:sections.nw-layer-v2.name",
+  "tag": "section",
+  "class": "section-nw-layer-v2",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Every Layer Inside the Snooze Nest, Explained"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>4 certified organic layers. Flippable dual-sided design. 5\" total height.</p><p>Standard crib size (28\" x 52\").</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "header",
+      "content": "MAIN DIAGRAM IMAGE"
+    },
+    {
+      "type": "image_picker",
+      "id": "diagram_image",
+      "label": "Diagram Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "diagram_image_mobile",
+      "label": "Diagram Image (Mobile Optional)"
+    },
+    {
+      "type": "header",
+      "content": "SAFETY BOX"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_safety_box",
+      "label": "Show Safety Box",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "safety_title",
+      "label": "Safety Box Title",
+      "default": "Safety First",
+      "visible_if": "{{ section.settings.show_safety_box == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "safety_bg_color",
+      "label": "Safety Box Background",
+      "default": "#F5FAF5",
+      "visible_if": "{{ section.settings.show_safety_box == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "safety_border_color",
+      "label": "Safety Box Border",
+      "default": "#CCE5CC",
+      "visible_if": "{{ section.settings.show_safety_box == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "safety_title_color",
+      "label": "Safety Title Color",
+      "default": "#261F1A",
+      "visible_if": "{{ section.settings.show_safety_box == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "safety_text_color",
+      "label": "Safety Item Color",
+      "default": "#407340",
+      "visible_if": "{{ section.settings.show_safety_box == true }}"
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Pagination Dots",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination Dot Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_dots == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Navigation Arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay Speed (Seconds)",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.autoplay == true }}"
+    },
+    {
+      "type": "header",
+      "content": "CARD & HOTSPOT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_active_color",
+      "label": "Hotspot Active Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_inactive_color",
+      "label": "Hotspot Inactive Color",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_text_color",
+      "label": "Hotspot Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#FFFAF2"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "rgba(97, 57, 22, 0.15)"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card Title Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card Description Color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "layer_slide",
+      "name": "Layer Slide",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Layer Title",
+          "default": "Organic Cotton Cover"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>A soft, breathable woven cover that surrounds the mattress in clean, natural comfort. Free from synthetic treatments, it allows airflow while keeping every layer toxin-free.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Card Thumbnail / Icon"
+        },
+        {
+          "type": "text",
+          "id": "pin_label",
+          "label": "Hotspot Number / Label",
+          "info": "Leave blank to use block order number"
+        },
+        {
+          "type": "header",
+          "content": "HOTSPOT POSITION (DESKTOP)"
+        },
+        {
+          "type": "range",
+          "id": "pos_x_desktop",
+          "label": "Horizontal Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y_desktop",
+          "label": "Vertical Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "HOTSPOT POSITION (MOBILE)"
+        },
+        {
+          "type": "range",
+          "id": "pos_x_mobile",
+          "label": "Horizontal Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y_mobile",
+          "label": "Vertical Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        }
+      ]
+    },
+    {
+      "type": "safety_item",
+      "name": "Safety Item",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Item Text",
+          "default": "No chemical flame retardants"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-layer-v2.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "layer_slide",
+          "settings": {
+            "title": "Organic Cotton Cover",
+            "pin_label": "1",
+            "pos_x_desktop": 50,
+            "pos_y_desktop": 18,
+            "pos_x_mobile": 50,
+            "pos_y_mobile": 18
+          }
+        },
+        {
+          "type": "layer_slide",
+          "settings": {
+            "title": "Organic Coconut Coir",
+            "pin_label": "3",
+            "pos_x_desktop": 50,
+            "pos_y_desktop": 62,
+            "pos_x_mobile": 50,
+            "pos_y_mobile": 62
+          }
+        },
+        {
+          "type": "layer_slide",
+          "settings": {
+            "title": "Natural Latex",
+            "pin_label": "2",
+            "pos_x_desktop": 50,
+            "pos_y_desktop": 42,
+            "pos_x_mobile": 50,
+            "pos_y_mobile": 42
+          }
+        },
+        {
+          "type": "layer_slide",
+          "settings": {
+            "title": "Organic Wool",
+            "pin_label": "4",
+            "pos_x_desktop": 50,
+            "pos_y_desktop": 82,
+            "pos_x_mobile": 50,
+            "pos_y_mobile": 82
+          }
+        },
+        {
+          "type": "safety_item",
+          "settings": { "text": "No chemical flame retardants" }
+        },
+        {
+          "type": "safety_item",
+          "settings": { "text": "No polyurethane foams" }
+        },
+        {
+          "type": "safety_item",
+          "settings": { "text": "No synthetic adhesives or glues" }
+        },
+        {
+          "type": "safety_item",
+          "settings": { "text": "No VOCs" }
+        },
+        {
+          "type": "safety_item",
+          "settings": { "text": "Pressure Tested for Safety" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

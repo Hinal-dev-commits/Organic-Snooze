@@ -53,8 +53,22 @@
             "margin_bottom_mobile": 16
           }
         },
+        "nw_benifits_list_fYL9X3": {
+          "type": "nw_benifits_list",
+          "settings": {
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 10,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
         "icon_text_KzjrVr": {
           "type": "icon_text",
+          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Breathable Latex and Wool Material",
@@ -74,6 +88,7 @@
         },
         "icon_text_ykzhxB": {
           "type": "icon_text",
+          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Naturally Flame Resistant without chemicals",
@@ -93,6 +108,7 @@
         },
         "icon_text_tRPNk9": {
           "type": "icon_text",
+          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Deep Sleep Cycles",
@@ -112,6 +128,7 @@
         },
         "icon_text_cKXLDG": {
           "type": "icon_text",
+          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Naturally disperses heat for cool sleep",
@@ -131,6 +148,7 @@
         },
         "icon_text_3FhWzM": {
           "type": "icon_text",
+          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Handcrafted in the USA",
@@ -145,20 +163,6 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "sleepers_UPVWMw": {
-          "type": "sleepers",
-          "settings": {
-            "label": "Best for:",
-            "label_color": "#613916",
-            "chip_bg_color": "#f4efe8",
-            "chip_text_color": "#613916",
-            "chip_icon_color": "#613916",
-            "margin_top": 32,
-            "margin_bottom": 0,
-            "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
         },
@@ -403,6 +407,7 @@
         "icon_text_v2_JFUz9t": {
           "type": "icon_text_v2",
           "settings": {
+            "text_case": "uppercase",
             "item_1_text": "Made in USA",
             "item_1_icon": "usamap",
             "item_1_use_custom_icon": true,
@@ -481,12 +486,12 @@
         "title",
         "description",
         "price",
+        "nw_benifits_list_fYL9X3",
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
-        "sleepers_UPVWMw",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
@@ -506,6 +511,16 @@
         "share"
       ],
       "settings": {
+        "product": "",
+        "show_section_header": false,
+        "section_header_heading": "",
+        "section_header_description": "",
+        "hide_media_slider": false,
+        "use_custom_media_images": false,
+        "custom_media_range_start": 1,
+        "custom_media_range_end": 1,
+        "media_badge_left": "",
+        "media_badge_right": "",
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
         "media_size": "large",
@@ -697,11 +712,17 @@
         "direction": "right_to_left",
         "speed": 25,
         "pause_on_hover": true,
+        "font_weight": 600,
+        "font_size": 20,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
         "gap_desktop": 28,
         "gap_mobile": 12,
         "icon_size_desktop": 28,
         "icon_size_mobile": 20,
         "gap_icon_text": 4,
+        "marquee_height_desktop": 60,
+        "marquee_height_mobile": 44,
         "padding_desktop": 16,
         "padding_mobile": 12,
         "bg_type": "color",
@@ -759,6 +780,7 @@
         "eyebrow": "",
         "heading": "Join the Recovery Movement",
         "subheading": "<p>From busy parents to entrepreneurs, athletes, and everyday people, thousands are making sleep one of the healthiest investments they make every day.</p>",
+        "header_max_width_desktop": 1200,
         "heading_color": "#613916",
         "description_color": "#613916",
         "eyebrow_color": "",
@@ -1016,6 +1038,11 @@
         "heading_color": "#613916",
         "description_color": "#613916",
         "cell_text_color": "#613916",
+        "table_bg": "",
+        "layout_width": "page_width",
+        "content_panel_bg": "linear-gradient(132deg, rgba(169, 107, 62, 1) 0.9%, rgba(78, 47, 20, 1) 57.786%)",
+        "content_panel_heading_color": "#ffffff",
+        "content_panel_description_color": "#ffffff",
         "media_type": "image",
         "video_autoplay": false,
         "show_play_icon": true,

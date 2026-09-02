@@ -335,8 +335,8 @@
 }
 
 .nw-founder-story__stat {
-  flex: 1 1 0;
-  min-width: 0;
+  flex: 1 1 266px;
+  min-width: 266px;
   padding: 20px;
 }
 
@@ -491,7 +491,9 @@
   }
 
   .nw-founder-story__stat {
-    padding: 12px
+    padding: 12px;
+    min-width: 0;
+    flex: 1 1;
   }
 
   .nw-founder-story__stat-value {

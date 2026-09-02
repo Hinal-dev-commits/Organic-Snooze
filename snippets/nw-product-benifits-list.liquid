@@ -1,0 +1,96 @@
+{% doc %}
+  Product benefits list from custom.benefits metaobject list.
+  Uses the same icon + text layout as the icon text block.
+  @param {object} block - Block settings
+  @param {object} product - Product object
+{% enddoc %}
+
+{%- liquid
+  assign benefits = product.metafields.custom.benefits.value
+  if benefits == blank
+    assign benefits = product.metafields.custom.benefits
+  endif
+-%}
+
+{%- if benefits != blank -%}
+  {%- if benefits.count > 0 or benefits.size > 0 or benefits.first != blank -%}
+    <div
+      class="nw-product-benifits-list"
+      style="
+        --nw-pit-icon-color: {{ block.settings.icon_color | default: '#CC926A' }};
+        --nw-pit-text-color: {{ block.settings.text_color | default: '#613916' }};
+        --nw-pit-icon-size: {{ block.settings.icon_size | default: 18 }}px;
+        --nw-pit-gap: {{ block.settings.icon_gap | default: 8 }}px;
+      "
+    >
+      <ul class="nw-product-benifits-list__items" role="list">
+        {%- for benefit in benefits -%}
+          {%- liquid
+            assign benefit_icon = benefit.icon.value | default: benefit.icon
+            if benefit_icon == blank
+              assign benefit_icon = benefit.Icon.value | default: benefit.Icon
+            endif
+            if benefit_icon == blank
+              assign benefit_icon = benefit.image.value | default: benefit.image
+            endif
+
+            assign benefit_text = blank
+            if benefit.label != blank
+              if benefit.label.type == 'rich_text_field'
+                capture benefit_text
+                  echo benefit.label | metafield_tag
+                endcapture
+              elsif benefit.label.value != blank
+                assign benefit_text = benefit.label.value
+              else
+                assign benefit_text = benefit.label
+              endif
+            elsif benefit.Label != blank
+              if benefit.Label.type == 'rich_text_field'
+                capture benefit_text
+                  echo benefit.Label | metafield_tag
+                endcapture
+              elsif benefit.Label.value != blank
+                assign benefit_text = benefit.Label.value
+              else
+                assign benefit_text = benefit.Label
+              endif
+            elsif benefit.title != blank
+              assign benefit_text = benefit.title.value | default: benefit.title
+            elsif benefit.name != blank
+              assign benefit_text = benefit.name.value | default: benefit.name
+            endif
+          -%}
+
+          {%- if benefit_text != blank -%}
+            <li class="nw-product-benifits-list__item">
+              <div class="nw-product-icon-text nw-product-icon-text--inline">
+                <div class="nw-product-icon-text__inner">
+                  {%- if benefit_icon != blank -%}
+                    <span class="nw-product-icon-text__icon" aria-hidden="true">
+                      {{
+                        benefit_icon
+                        | image_url: width: 60
+                        | image_tag:
+                          class: 'nw-product-icon-text__icon-img',
+                          widths: '30, 60',
+                          sizes: '20px',
+                          loading: 'lazy',
+                          alt: ''
+                      }}
+                    </span>
+                  {%- endif -%}
+                  <span class="nw-product-icon-text__text">{{ benefit_text }}</span>
+                </div>
+              </div>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+{%- elsif request.design_mode -%}
+  <div class="nw-product-benifits-list nw-product-benifits-list--empty">
+    <p class="nw-product-benifits-list__empty">Add product benefits in metafield custom.benefits.</p>
+  </div>
+{%- endif -%}
