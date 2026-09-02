@@ -29,6 +29,27 @@
     {% else %}
       background-color: {{ section.settings.bg_color | default: '#F4EFE8' }};
     {% endif %}
+    min-height: {{ section.settings.marquee_height_desktop }}px;
+  }
+  #NwMarquee-{{ section.id }} .nw-marquee-v2__text{
+    font-weight: {{ section.settings.font_weight }};
+    font-size: {{ section.settings.font_size }}px;
+    {% if section.settings.font_size >= 18 %}
+      line-height: 130%;
+    {% endif %}
+  }
+  @media screen and (max-width: 1199px) {
+    #NwMarquee-{{ section.id }} .nw-marquee-v2__text{
+      font-size: {{ section.settings.font_size_tablet }}px;
+    }
+  }
+  @media screen and (max-width: 749px) {
+    #NwMarquee-{{ section.id }} .nw-marquee-v2__text{
+      font-size: {{ section.settings.font_size_mobile }}px;
+    }
+    #NwMarquee-{{ section.id }} {
+      min-height: {{ section.settings.marquee_height_mobile }}px;
+    }
   }
 </style>
 
@@ -129,6 +150,45 @@
     },
     {
       "type": "range",
+      "id": "font_weight",
+      "label": "Font Weight",
+      "min": 400,
+      "max": 700,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font Size (Desktop)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "font_size_tablet",
+      "label": "Font Size (Tablet)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Font Size (Mobile)",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
       "id": "gap_desktop",
       "label": "Item Gap (Desktop)",
       "min": 8,
@@ -179,6 +239,26 @@
     },
     {
       "type": "range",
+      "id": "marquee_height_desktop",
+      "label": "Marquee Height (Desktop)",
+      "min": 24,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "marquee_height_mobile",
+      "label": "Marquee Height (Mobile)",
+      "min": 16,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
       "id": "padding_desktop",
       "label": "Padding Top/bottom (Desktop)",
       "min": 0,
@@ -193,7 +273,7 @@
       "label": "Padding Top/bottom (Mobile)",
       "min": 0,
       "max": 40,
-      "step": 2,
+      "step": 1,
       "unit": "px",
       "default": 12
     },

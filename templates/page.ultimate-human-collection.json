@@ -23,12 +23,14 @@
       "settings": {
         "tag_text": "The Ultimate Human Collection | By Gary Brecka",
         "heading": "The Organic Sleep System Gary Brecka Built For Recovery",
+        "heading_max_width": 100,
         "description": "<p>Chemical-free, science-backed sleep, engineered for the recovery and performance your body is built for</p>",
+        "text_position_mobile": "bottom",
         "button_text": "EXPLORE THE COLLECTION",
         "button_link": "",
         "button_style": "primary",
+        "show_rating_bottom": true,
         "show_rating": true,
-        "rating_at_top": false,
         "star_rating": 5,
         "rating_text": "98% Satisfactory rating among sleepers",
         "bg_type": "image",
@@ -42,6 +44,7 @@
         "tag_text_color": "#fffcf0",
         "tag_bg_color": "#ffffff33",
         "rating_text_color": "#ffffff",
+        "eyebrow_color": "#ffffff",
         "star_color": "#e57b1e",
         "star_inactive_color": "#ffffff4d",
         "button_bg_color": "#a96b3e",
@@ -94,9 +97,13 @@
         "logo_8kT4nB",
         "logo_dgWiWR"
       ],
+      "custom_css": [
+        ".nw-featured-marquee {border-bottom: 1px solid #4e2f1466;}"
+      ],
       "name": "NW Featured Marquee",
       "settings": {
         "heading": "as seen in",
+        "text_color": "#613916",
         "enable_animation_desktop": false,
         "enable_animation_mobile": false,
         "direction": "rtl",
@@ -813,7 +820,7 @@
         "use_custom_media_images": true,
         "custom_media_range_start": 1,
         "custom_media_range_end": 5,
-        "custom_media_image_1": "shopify://shop_images/main-photo_1.png",
+        "custom_media_image_1": "shopify://shop_images/main-photo_2_1.png",
         "media_badge_left": "",
         "media_badge_right": "",
         "enable_sticky_info": true,
@@ -1344,6 +1351,7 @@
         "feature_MXtLUj",
         "feature_Chpqr6"
       ],
+      "custom_css": [],
       "name": "NW Guarantee Offer",
       "settings": {
         "show_rating": false,
@@ -1360,6 +1368,8 @@
         "bg_color": "#ffffffc4",
         "bg_color_image": "#ffffff29",
         "bg_gradient": "",
+        "border_show": false,
+        "border_shoe_color": "#4e2f1466",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,
@@ -1375,6 +1385,7 @@
             "video": "shopify://files/videos/instagram-video_084d28ca-cd56-4532-afad-b28082c9480c.mp4",
             "poster": "shopify://shop_images/image_19_1.png",
             "overlay_text": "",
+            "review_text": "",
             "author": "Katherine",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -1388,6 +1399,7 @@
           "settings": {
             "video": "shopify://files/videos/UGC-Katherine-June-1.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Katherine",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -1403,6 +1415,7 @@
             "video": "shopify://files/videos/designed-to-work-togetther (1).mp4",
             "poster": "shopify://shop_images/image_17_1.png",
             "overlay_text": "",
+            "review_text": "",
             "author": "Courtney",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -1417,6 +1430,7 @@
           "settings": {
             "video": "shopify://files/videos/instagram-video_a03621c5-146a-43c2-a998-2db92a74a17b.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Katherine",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -1431,6 +1445,7 @@
           "settings": {
             "video": "shopify://files/videos/instagram-video_8e990a33-eb47-475b-a442-768cc8ca7bbc.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Rivera",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -1461,6 +1476,8 @@
         "description_color": "",
         "eyebrow_color": "",
         "text_color": "",
+        "card_style": "style-1",
+        "enable_video_loop": true,
         "show_arrows": true,
         "show_dots": true,
         "enable_autoplay": true,
@@ -1468,6 +1485,12 @@
         "bg_type": "color",
         "bg_color": "#ffffff",
         "bg_gradient": "",
+        "show_button": false,
+        "button_text": "SHOP NOW",
+        "button_link": "",
+        "button_style": "primary",
+        "badge_icon_color": "#cc926a",
+        "badge_text_color": "#613916",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,
@@ -1507,6 +1530,9 @@
         "step_eBbPxW",
         "step_VEPcFG"
       ],
+      "custom_css": [
+        ".nw-warranty-timeline::after {background-position: top;}"
+      ],
       "name": "NW Warranty Timeline",
       "settings": {
         "show_rating": false,
@@ -1528,6 +1554,7 @@
         "step_dot_active_border_color": "#ffffff",
         "step_line_color": "#ffffff59",
         "step_line_fill_color": "#ffffff",
+        "video_icon_color": "#ffffff",
         "media_type": "video",
         "video": "shopify://files/videos/instagram-video-aafb2799-a059-45f5-9429-fa45e96250dc.mp4",
         "video_autoplay": false,
@@ -1544,10 +1571,10 @@
         "button_text_color": "#ffffff",
         "bg_type": "image",
         "bg_color": "#ffffff",
-        "bg_image": "shopify://shop_images/ResultsTimeline-02_1.png",
-        "bg_image_mobile": "shopify://shop_images/ResultsTimeline-04_1.png",
+        "bg_image": "shopify://shop_images/6909a854a34d4788e4f94d3aadfa889e37f9d7c0_1_1.png",
+        "bg_image_mobile": "shopify://shop_images/6909a854a34d4788e4f94d3aadfa889e37f9d7c0_1.png",
         "bg_color_image": "#ffffff29",
-        "bg_gradient": "",
+        "bg_gradient": "radial-gradient(\n  circle at 18% 75%,\n  #d5ad86 0%,\n  #b47b4d 28%,\n  #75451f 55%,\n  #3d240b 78%,\n  #251701 100%\n)",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,
@@ -1564,7 +1591,7 @@
             "quote": "<p>“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”</p>",
             "author": "Phillip Page",
             "verified": true,
-            "verified_text": "Verified"
+            "verified_text": "Verified Customer"
           }
         },
         "testimonial_QXrgCr": {
@@ -1574,7 +1601,7 @@
             "quote": "<p>\"Love my sheets and pillows from Ultimate Snooze. They keep me fresh all night, a plus for us who live in FL.  And no more headaches and allergies caused by polyester.</p>",
             "author": "Clara",
             "verified": true,
-            "verified_text": "Verified"
+            "verified_text": "Verified Customer"
           }
         },
         "testimonial_gWdU8P": {
@@ -1584,7 +1611,7 @@
             "quote": "<p>“After just 5 nights with my pillow... my sleep scores went from 85% to a 100%...\"</p>",
             "author": "Chad Finchum",
             "verified": true,
-            "verified_text": "Verified"
+            "verified_text": "Verified Customer"
           }
         },
         "testimonial_4hmN7U": {
@@ -1594,7 +1621,7 @@
             "quote": "<p>“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”</p>",
             "author": "Marcello Delle Grotti",
             "verified": true,
-            "verified_text": "Verified"
+            "verified_text": "Verified Customer"
           }
         }
       },
@@ -1622,7 +1649,7 @@
         "card_text_color": "",
         "card_star_color": "",
         "card_star_empty_color": "",
-        "verified_text_color": "",
+        "verified_text_color": "#4e2f14",
         "verified_icon_color": "",
         "full_width": true,
         "enable_loop": true,
@@ -1650,7 +1677,7 @@
             "seal_number": "100",
             "seal_label": "NIGHTS",
             "heading": "Sleep On It for 100 Nights. Risk-Free.",
-            "text": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a 30-year warranty because it’s built to last.</p>"
+            "text": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a <strong>30-year warranty </strong>because it’s built to last.</p>"
           }
         },
         "card_xEQzg6": {
@@ -1888,6 +1915,15 @@
       ],
       "name": "NW Collection Tabs",
       "settings": {
+        "show_rating_header": false,
+        "star_rating": 5,
+        "star_color": "",
+        "star_color_inactive": "",
+        "eyebrow": "",
+        "heading": "Start With the Mattress. Build the Rest Around It",
+        "subheading": "<p>Add organic pillows, protectors, and covers. Mix, match, and save on your full sleep system.</p>",
+        "heading_color": "",
+        "description_color": "",
         "full_width": true,
         "hide_shadow": true,
         "show_arrows": true,
@@ -1902,9 +1938,9 @@
         "shop_all_text": "Shop All",
         "shop_all_link": "shopify://collections",
         "shop_all_style": "outline",
-        "tab_bg": "#fffcf0",
+        "tab_bg": "#ffffff",
         "tab_text": "#613916",
-        "tab_border": "#e8ddd4",
+        "tab_border": "#61391633",
         "tab_active_bg": "#cc926a",
         "tab_active_text": "#ffffff",
         "sidebar_bg": "#f4efe8",
@@ -1923,6 +1959,14 @@
         "promo_status_bg": "#cc926a",
         "promo_timer_bg": "#cc926a",
         "promo_sep_color": "#cc926a",
+        "product_card_bg": "",
+        "product_card_text": "",
+        "firmness_bg": "#f4efe8",
+        "firmness_text": "#613916",
+        "firmness_active_border": "#cc926a",
+        "firmness_border": "#e8ddd4",
+        "firmness_active_bg": "#cc926a",
+        "firmness_active_text": "#ffffff",
         "bg_type": "image",
         "bg_color": "#ffffff",
         "bg_gradient": "",
@@ -2001,12 +2045,18 @@
         "direction": "right_to_left",
         "speed": 30,
         "pause_on_hover": true,
+        "font_weight": 500,
+        "font_size": 18,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
         "gap_desktop": 18,
         "gap_mobile": 12,
         "icon_size_desktop": 24,
         "icon_size_mobile": 20,
         "gap_icon_text": 10,
-        "padding_desktop": 16,
+        "marquee_height_desktop": 56,
+        "marquee_height_mobile": 44,
+        "padding_desktop": 12,
         "padding_mobile": 12,
         "bg_type": "color",
         "bg_color": "#fffcf0",

@@ -57,16 +57,7 @@ Renders product page media wrapper with badges and gallery for non-product templ
 
 <div class="nw-product-page-media{% unless show_gallery %} nw-product-page-media--static{% endunless %}">
   <div class="nw-product-page-media__main">
-    {%- if section.settings.media_badge_left != blank -%}
-      <span class="nw-product-page-media__badge nw-product-page-media__badge--left">
-        {{ section.settings.media_badge_left }}
-      </span>
-    {%- endif -%}
-    {%- if section.settings.media_badge_right != blank -%}
-      <span class="nw-product-page-media__badge nw-product-page-media__badge--right">
-        {{ section.settings.media_badge_right }}
-      </span>
-    {%- endif -%}
+    {% render 'nw-product-media-tags', product: product %}
 
     {%- if slide_count == 0 -%}
       <div class="nw-product-page-media__placeholder">

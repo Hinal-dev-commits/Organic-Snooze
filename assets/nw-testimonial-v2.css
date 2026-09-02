@@ -51,7 +51,8 @@ nw-testimonial-v2 {
   justify-content: center;
   flex-wrap: wrap;
   gap: 12px;
-  min-width: max-content;
+  width: max-content;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0;
 }
@@ -80,13 +81,29 @@ nw-testimonial-v2 {
   font-weight: 600;
 }
 
-.nw-testimonial-v2__panels,
-.nw-testimonial-v2__cards {
+.nw-testimonial-v2__panels {
+  display: block;
   width: 100%;
+  position: relative;
 }
 
-.nw-testimonial-v2__panel[hidden] {
-  display: none !important;
+.nw-testimonial-v2__panel {
+  grid-area: 1 / 1;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.nw-testimonial-v2__panel.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  position: relative;
 }
 
 .nw-testimonial-v2__cards {
@@ -94,6 +111,34 @@ nw-testimonial-v2 {
   gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.nw-testimonial-v2__panel-slider-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.nw-testimonial-v2__swiper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.nw-testimonial-v2__swiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+.nw-testimonial-v2__swiper .swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.nw-testimonial-v2__swiper .nw-testimonial-v2__card {
+  max-width: none;
+  width: 100%;
+}
+
+.nw-testimonial-v2__panel-slider-wrap .nw-swiper-btn {
+  top: 42%;
 }
 
 .nw-testimonial-v2__card {
@@ -247,6 +292,7 @@ nw-testimonial-v2 {
   font-size: 14px;
   line-height: 1.22;
   color: var(--nw-tv2-verified-text, #878735);
+  font-style: italic;
 }
 
 .nw-testimonial-v2__product {
@@ -368,7 +414,13 @@ nw-testimonial-v2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .nw-testimonial-v2__card{
-    max-width: 340px;
+    max-width: calc(50% - 16px);
+  }
+  .nw-testimonial-v2__panels{
+    display: block;
+  }
+  .nw-testimonial-v2__tabs{
+    justify-content: left;
   }
 }
 
@@ -376,6 +428,7 @@ nw-testimonial-v2 {
   .nw-testimonial-v2 .page-width {
     padding: 0 16px;
   }
+  
 
   .nw-testimonial-v2__wrapper {
     gap: 24px;
@@ -413,6 +466,7 @@ nw-testimonial-v2 {
 
   .nw-testimonial-v2__card {
     padding: 16px;
+    max-width: 100%;
   }
 
   .nw-testimonial-v2__quote{
@@ -458,5 +512,8 @@ nw-testimonial-v2 {
   }
   .nw-testimonial-v2__footer {
     max-width: 100%;
+  }
+  .nw-testimonial-v2__panels{
+    display: block;
   }
 }

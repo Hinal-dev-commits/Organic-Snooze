@@ -121,6 +121,7 @@
   width: 14px;
   height: 14px;
   flex-shrink: 0;
+  margin-top: 3px;
 }
 
 .nw-recovery-v2__verified svg {
@@ -205,7 +206,7 @@
 
   .nw-recovery-v2__main {
     gap: 16px;
-    max-width: 343px;
+    /* max-width: 343px; */
   }
 
   .nw-recovery-v2 .nw-section-heading .h2 {
@@ -234,7 +235,7 @@
   }
 
   .nw-recovery-v2__author {
-    max-width: 187px;
+    max-width: calc(100% - 160px);
     padding-bottom: 0;
   }
 
@@ -244,7 +245,7 @@
 
   .nw-recovery-v2__role {
     font-size: 14px;
-    max-width: 140px;
+    /* max-width: 140px; */
   }
 
   .nw-recovery-v2__role--desktop {

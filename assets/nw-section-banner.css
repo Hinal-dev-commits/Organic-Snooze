@@ -11,7 +11,9 @@
   overflow: hidden;
   pointer-events: none;
 }
-
+.nw-section-banner .nw-eyebrow{
+  color: var(--nw-sb-eyebrow-color, #613916);
+}
 .nw-section-banner__image {
   display: block;
   max-width: none;
@@ -173,6 +175,10 @@
   margin: 0;
 }
 
+.nw-section-banner__copy--rating {
+  margin-top: 16px;
+}
+
 @media screen and (max-width: 989px) {
   .nw-section-banner__aside {
     flex: 0 0 42%;
@@ -184,9 +190,31 @@
   .nw-section-banner__inner {
     padding: 48px 0px;
   }
+  .nw-section-banner__content{
+    max-width: 49%;
+  }
+  .nw-section-banner__heading .h1{
+    font-size: 36px;
+  }
+  .nw-section-banner .nw-eyebrow{
+    font-size: 13px;
+  }
+  .nw-section-banner__tag{
+    font-size: 13px;
+  }
+  .nw-section-banner__layout{
+    padding: 0px 18px;
+    left: 0%;
+  }
+  .nw-section-banner__copy{
+    gap: 10px;
+  }
+  .nw-section-banner .nw-section-description{
+    font-size: 18px;
+  }
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: 767px) {
   .nw-section-banner__layout {
     align-items: flex-end;
     justify-content: center;
@@ -194,15 +222,7 @@
     bottom: 48px;
     left: 0;
     transform: unset;
-  }
-
-  .nw-section-banner__layout {
-    align-items: flex-end;
-    justify-content: center;
-    top: 0;
-    bottom: 48px;
-    left: 0;
-    transform: unset;
+    padding: 0px 0px;
   }
 
   .nw-section-banner__layout.nw-section-banner__layout--top {
@@ -226,6 +246,7 @@
   .nw-section-banner__content {
     align-items: center;
     text-align: center;
+    max-width: 100%;
   }
 
   .nw-section-banner__tag {

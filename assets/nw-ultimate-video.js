@@ -5,12 +5,55 @@ if (!customElements.get('nw-ultimate-video')) {
       this._onResize = this._handleResize.bind(this);
       window.addEventListener('resize', this._onResize);
       window.nwWhenSwiperReady(() => this._initSwiper());
+      this._bindEditorEvents();
       this._bindVideoPlay();
     }
 
     disconnectedCallback() {
       window.removeEventListener('resize', this._onResize);
+      this._unbindEditorEvents();
       this._destroySwiper();
+    }
+
+    _getBlockCount() {
+      return parseInt(this.dataset.blockCount, 10) || 0;
+    }
+
+
+    _getOriginalIndex(swiper) {
+      var activeSlide = swiper.slides && swiper.slides[swiper.activeIndex];
+      if (activeSlide && activeSlide.dataset.slideIndex !== undefined) {
+        return parseInt(activeSlide.dataset.slideIndex, 10) || 0;
+      }
+
+      return swiper.activeIndex;
+    }
+
+    _updateCustomPagination(swiper) {
+      var totalBlocks = this._getBlockCount();
+      if (totalBlocks <= 1) return;
+
+      var currentIndex = this._getOriginalIndex(swiper);
+      var bullets = this.querySelectorAll('[data-nw-ultimate-video-pagination] .swiper-pagination-bullet');
+      bullets.forEach(function (bullet, idx) {
+        bullet.classList.toggle('swiper-pagination-bullet-active', idx === currentIndex);
+      });
+    }
+
+    _bindCustomPagination() {
+      var paginationEl = this.querySelector('[data-nw-ultimate-video-pagination]');
+      if (!paginationEl || paginationEl._bound) return;
+
+      paginationEl._bound = true;
+      paginationEl.addEventListener('click', (e) => {
+        var bullet = e.target.closest('.swiper-pagination-bullet');
+        if (!bullet || !this._swiper) return;
+
+        var targetIndex = parseInt(bullet.getAttribute('data-bullet-index'), 10);
+        if (Number.isNaN(targetIndex)) return;
+
+        this._swiper.slideTo(targetIndex, 500);
+      });
     }
 
     _handleResize() {
@@ -19,6 +62,7 @@ if (!customElements.get('nw-ultimate-video')) {
       if (this._swiper.navigation) {
         this._swiper.navigation.update();
       }
+      this._updateCustomPagination(this._swiper);
     }
 
     _initSwiper() {
@@ -29,23 +73,29 @@ if (!customElements.get('nw-ultimate-video')) {
 
       var showPagination = this.dataset.showPagination === 'true';
       var showArrows = this.dataset.showArrows === 'true';
-      var paginationId = this.dataset.paginationId;
       var enableAutoplay = this.dataset.enableAutoplay === 'true';
       var autoplayDelay = parseInt(this.dataset.autoplayDelay, 10) || 4000;
+      var blockCount = this._getBlockCount();
       var prevBtn = this.querySelector('.nw-swiper-btn--prev');
       var nextBtn = this.querySelector('.nw-swiper-btn--next');
+
       var options = {
-        slidesPerView: 'auto',
+        slidesPerView: 1,
         spaceBetween: 10,
-        centeredSlides: true,
-        grabCursor: true,
-        watchOverflow: true,
         speed: 500,
+        watchOverflow: true,
+        grabCursor: blockCount > 1,
+        simulateTouch: blockCount > 1,
+        allowTouchMove: blockCount > 1,
+        watchSlidesProgress: true,
         breakpoints: {
-          990: {
-            spaceBetween: 20,
-            slidesPerView: 'auto',
-            centeredSlides: true
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20
           }
         }
       };
@@ -58,26 +108,44 @@ if (!customElements.get('nw-ultimate-video')) {
         };
       }
 
-      if (showPagination && paginationId) {
-        options.pagination = {
-          el: '#' + paginationId,
-          clickable: true
-        };
-      }
-
-      if (enableAutoplay) {
+      if (enableAutoplay && blockCount > 1) {
         options.autoplay = {
           delay: autoplayDelay,
           disableOnInteraction: false,
-          pauseOnMouseEnter: true
+          pauseOnMouseEnter: true,
+          stopOnLastSlide: true
         };
       }
 
       this._swiper = new Swiper(sliderEl, options);
 
+      this._swiper.slideTo(0, 0);
+
+      if (showPagination) {
+        this._swiper.on('slideChange', () => {
+          this._updateCustomPagination(this._swiper);
+        });
+        this._swiper.on('init', () => {
+          this._updateCustomPagination(this._swiper);
+        });
+        this._bindCustomPagination();
+        this._updateCustomPagination(this._swiper);
+      }
+
       if (showArrows && this._swiper.navigation) {
         this._swiper.navigation.update();
       }
+
+      requestAnimationFrame(() => {
+        if (!this._swiper) return;
+        this._swiper.update();
+        if (this._swiper.navigation) {
+          this._swiper.navigation.update();
+        }
+        if (showPagination) {
+          this._updateCustomPagination(this._swiper);
+        }
+      });
     }
 
     _destroySwiper() {
@@ -145,6 +213,21 @@ if (!customElements.get('nw-ultimate-video')) {
         if (!e.target || e.target.tagName !== 'VIDEO') return;
         self._setVideoControlState(e.target.closest('.nw-ultimate-video__card'), false);
       }, true);
+    }
+
+    _onSectionLoad = (e) => {
+      var section = this.closest('.shopify-section');
+      if (!section || e.target !== section) return;
+      window.nwWhenSwiperReady(() => this._initSwiper());
+    };
+
+    _bindEditorEvents() {
+      if (!Shopify || !Shopify.designMode) return;
+      document.addEventListener('shopify:section:load', this._onSectionLoad);
+    }
+
+    _unbindEditorEvents() {
+      document.removeEventListener('shopify:section:load', this._onSectionLoad);
     }
   }
 

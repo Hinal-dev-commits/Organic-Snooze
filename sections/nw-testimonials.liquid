@@ -23,7 +23,7 @@
 
 <nw-testimonials
   id="NwTestimonials-{{ section.id }}"
-  class="nw-testimonials{% if section.settings.full_width %} nw-testimonials--full-width{% endif %}{% if section.settings.enable_edge_shadow %} nw-testimonials--edge-shadow{% endif %}"
+  class="nw-testimonials{% if section.settings.full_width %} nw-testimonials--full-width{% endif %}{% if section.settings.enable_edge_shadow %} nw-testimonials--edge-shadow{% endif %}{% if section.settings.show_pagination %} nw-testimonials--show-pagination{% endif %}"
   data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
   data-pagination-id="NwTestimonialsPagination-{{ section.id }}"

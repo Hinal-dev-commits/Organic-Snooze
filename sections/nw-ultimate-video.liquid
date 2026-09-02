@@ -17,12 +17,12 @@
 <nw-ultimate-video
   id="NwUltimateVideo-{{ section.id }}"
   class="nw-ultimate-video section-{{ section.id }}"
+  data-block-count="{{ video_blocks.size | default: 4 }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
   data-pagination-id="{{ pagination_id }}"
   data-enable-autoplay="{{ section.settings.enable_autoplay }}"
   data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
-  data-slides-desktop="{{ slides_desktop }}"
   style="
     --nw-uv-heading-color: {{ section.settings.heading_color }};
     --nw-uv-rating-text-color: {{ section.settings.rating_text_color }};
@@ -90,55 +90,97 @@
         <div class="swiper nw-ultimate-video__swiper" id="NwUltimateVideoSwiper-{{ section.id }}">
           <div class="swiper-wrapper">
             {%- if video_blocks.size > 0 -%}
-              {%- for block in video_blocks -%}
-                <div class="swiper-slide">
-                  {% render 'nw-ultimate-video-card', block: block %}
-                </div>
+              {%- liquid
+                assign repeat_times = 1
+                if section.settings.enable_slider_loop and video_blocks.size > 1
+                  assign repeat_times = 2
+                  if video_blocks.size <= 4
+                    assign repeat_times = 3
+                  endif
+                  if video_blocks.size == 1
+                    assign repeat_times = 8
+                  endif
+                endif
+              -%}
+              {%- for r in (1..repeat_times) -%}
+                {%- for block in video_blocks -%}
+                  <div class="swiper-slide" data-slide-index="{{ forloop.index0 }}">
+                    {% render 'nw-ultimate-video-card', block: block %}
+                  </div>
+                {%- endfor -%}
               {%- endfor -%}
             {%- else -%}
-              {%- for i in (1..4) -%}
-                <div class="swiper-slide">
-                  <article class="nw-ultimate-video__card">
-                    <div class="nw-ultimate-video__media">
-                      <div class="nw-ultimate-video__placeholder" aria-hidden="true">
-                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                      </div>
-                      <span class="nw-ultimate-video__play nw-ultimate-video__play--link" aria-hidden="true">
-                        <span class="nw-ultimate-video__play-icon">
-                          {% render 'nw-icon', icon: 'play' %}
-                        </span>
-                      </span>
-                    </div>
-                    <div class="nw-ultimate-video__body">
-                      <p class="nw-ultimate-video__tag">Expert insights</p>
-                      <div class="nw-ultimate-video__description rte">
-                        <p>Add video cards in the theme editor to showcase your podcast episodes.</p>
-                      </div>
-                      <div class="nw-ultimate-video__footer">
-                        <div class="nw-ultimate-video__author">
-                          <span class="nw-ultimate-video__handle">@theultimatehuman</span>
-                          <span class="nw-ultimate-video__meta-dot" aria-hidden="true">&bull;</span>
-                          <span class="nw-ultimate-video__followers">162K followers</span>
+              {%- for r in (1..2) -%}
+                {%- for i in (1..4) -%}
+                  <div class="swiper-slide" data-slide-index="{{ forloop.index0 }}">
+                    <article class="nw-ultimate-video__card">
+                      <div class="nw-ultimate-video__media">
+                        <div class="nw-ultimate-video__placeholder" aria-hidden="true">
+                          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                         </div>
-                        <span class="nw-ultimate-video__social" aria-hidden="true">
-                          {% render 'nw-icon', icon: 'instagram' %}
+                        <span class="nw-ultimate-video__play nw-ultimate-video__play--link" aria-hidden="true">
+                          <span class="nw-ultimate-video__play-icon">
+                            {% render 'nw-icon', icon: 'play' %}
+                          </span>
                         </span>
                       </div>
-                    </div>
-                  </article>
-                </div>
+                      <div class="nw-ultimate-video__body">
+                        <p class="nw-ultimate-video__tag">Expert insights</p>
+                        <div class="nw-ultimate-video__description rte">
+                          <p>Add video cards in the theme editor to showcase your podcast episodes.</p>
+                        </div>
+                        <div class="nw-ultimate-video__footer">
+                          <div class="nw-ultimate-video__author">
+                            <span class="nw-ultimate-video__handle">@theultimatehuman</span>
+                            <span class="nw-ultimate-video__meta-dot" aria-hidden="true">&bull;</span>
+                            <span class="nw-ultimate-video__followers">162K followers</span>
+                          </div>
+                          <span class="nw-ultimate-video__social" aria-hidden="true">
+                            {% render 'nw-icon', icon: 'instagram' %}
+                          </span>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                {%- endfor -%}
               {%- endfor -%}
             {%- endif -%}
           </div>
         </div>
       </div>
 
-      {%- if section.settings.show_pagination -%}
+      {%- if section.settings.show_pagination and video_blocks.size > 1 -%}
         <div
           id="{{ pagination_id }}"
-          class="swiper-pagination nw-ultimate-video__pagination nw-swiper-pagination"
+          class="nw-swiper-pagination nw-ultimate-video__pagination"
+          data-nw-ultimate-video-pagination
           aria-label="Video slider pagination"
-        ></div>
+        >
+          {%- for block in video_blocks -%}
+            <button
+              type="button"
+              class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+              data-bullet-index="{{ forloop.index0 }}"
+              aria-label="Go to slide {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      {%- elsif section.settings.show_pagination and video_blocks.size == 0 -%}
+        <div
+          id="{{ pagination_id }}"
+          class="nw-swiper-pagination nw-ultimate-video__pagination"
+          data-nw-ultimate-video-pagination
+          aria-label="Video slider pagination"
+        >
+          {%- for i in (1..4) -%}
+            <button
+              type="button"
+              class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+              data-bullet-index="{{ forloop.index0 }}"
+              aria-label="Go to slide {{ forloop.index }}"
+            ></button>
+          {%- endfor -%}
+        </div>
       {%- endif -%}
     </div>
   </div>
@@ -216,6 +258,12 @@
         { "value": "circle", "label": "Circle" },
         { "value": "square", "label": "Square" }
       ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_loop",
+      "label": "Enable Slider Loop",
+      "default": true
     },
     {
       "type": "checkbox",
@@ -542,6 +590,7 @@
         "show_rating": true,
         "star_rating": 5,
         "show_pagination": true,
+        "enable_slider_loop": true,
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,

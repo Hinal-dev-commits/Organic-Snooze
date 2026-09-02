@@ -32,7 +32,7 @@
       height: 100%;
       background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
       background-size: cover;
-      background-position: center;
+      background-position: top right;
       background-repeat: no-repeat;
       z-index: 0;
       pointer-events: none;
@@ -89,8 +89,9 @@
     --nw-wt-step-dot-active-border-color: {{ section.settings.step_dot_active_border_color }};
     --nw-wt-step-line-color: {{ section.settings.step_line_color }};
     --nw-wt-step-line-fill-color: {{ section.settings.step_line_fill_color }};
+    --nw-wt-video-icon-color: {{ section.settings.video_icon_color }};
     --nw-wt-button-bg-color: {{ section.settings.button_bg_color }};
-    --nw-wt-button-text-color: {{ section.settings.button_text_color }};
+    --nw-wt-button-text-color: {{ section.settings.button_text_color }}; 
   "
 >
   <div class="page-width">
@@ -433,6 +434,13 @@
       "alpha": true,
       "id": "step_line_fill_color",
       "label": "Timeline Line Fill Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "video_icon_color",
+      "label": "Video Icon Color",
       "default": "#FFFFFF"
     },
     {

@@ -38,11 +38,11 @@ Video card for NW Ultimate Video.
 
     {%- if poster != blank -%}
       <img
-        src="{{ poster | image_url: width: 1040 }}"
+        src="{{ poster | image_url }}"
         alt="{{ poster_alt | escape }}"
         loading="lazy"
-        width="{{ poster.width }}"
-        height="{{ poster.height }}"
+        width=""
+        height=""
         class="nw-ultimate-video__poster"
       >
     {%- else -%}
@@ -102,18 +102,21 @@ Video card for NW Ultimate Video.
               class="nw-ultimate-video__avatar"
             >
           {%- endif -%}
-
-          {%- if block.settings.social_handle != blank -%}
-            <span class="nw-ultimate-video__handle">{{ block.settings.social_handle }}</span>
-          {%- endif -%}
-
-          {%- if block.settings.social_handle != blank and block.settings.followers != blank -%}
-            <span class="nw-ultimate-video__meta-dot" aria-hidden="true">&bull;</span>
-          {%- endif -%}
-
-          {%- if block.settings.followers != blank -%}
-            <span class="nw-ultimate-video__followers">{{ block.settings.followers }}</span>
-          {%- endif -%}
+          <div class="nw-ultimate-video__author-inner">
+            {%- if block.settings.social_handle != blank -%}
+              <span class="nw-ultimate-video__handle">{{ block.settings.social_handle }}</span>
+            {%- endif -%}
+  
+            
+            {%- if block.settings.followers != blank -%}
+              <span class="nw-ultimate-video__followers">
+                {%- if block.settings.social_handle != blank and block.settings.followers != blank -%}
+                  <span class="nw-ultimate-video__meta-dot" aria-hidden="true">&bull;</span>
+                {%- endif -%} &nbsp;
+                {{ block.settings.followers }}
+              </span>
+            {%- endif -%}
+          </div>
         </div>
 
         {%- if block.settings.show_social_icon != blank -%}

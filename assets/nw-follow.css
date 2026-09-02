@@ -67,14 +67,10 @@ nw-follow {
 
 .nw-follow__social svg {
   display: block;
-  width: 18px;
-  height: 18px;
+  width: 28px;
+  height: 28px;
 }
 
-.nw-follow__social--facebook svg {
-  width: 16px;
-  height: 16px;
-}
 
 .nw-follow__text {
   display: flex;
@@ -329,11 +325,6 @@ nw-follow {
   }
 
   .nw-follow__social svg {
-    width: 32px;
-    height: 32px;
-  }
-
-  .nw-follow__social--facebook svg {
     width: 30px;
     height: 30px;
   }
@@ -359,8 +350,17 @@ nw-follow {
   .nw-follow__slider-wrap--fade::after {
     display: none;
   }
-
+  
   .nw-follow__slider-wrap .nw-swiper-btn {
     display: none;
+  }
+}
+@media screen and (max-width: 749px) {
+  .nw-follow__social svg{
+    width: 15px;
+    height: 15px;
+  }
+  .nw-follow__social.nw-follow__social--instagram  svg {
+    margin-left: 1px;
   }
 }

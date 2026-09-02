@@ -53,6 +53,7 @@
   gap: 48px;
   width: 100%;
   box-sizing: border-box;
+  max-width: 1240px;
 }
 
 .nw-warranty-timeline--image-right .nw-warranty-timeline__main {
@@ -61,8 +62,7 @@
 
 /* Media Column - No Fixed Height! Aspect Ratio Defined */
 .nw-warranty-timeline__media-col {
-  flex: 1 1 608px;
-  max-width: 608px;
+  flex: 1 1;
   width: 100%;
   border-radius: 12px;
   overflow: hidden;
@@ -102,8 +102,7 @@
 
 /* Content Column */
 .nw-warranty-timeline__content-col {
-  flex: 1 1 520px;
-  max-width: 520px;
+  flex: 1 1 ;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -492,18 +491,29 @@
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(2.8px);
   -webkit-backdrop-filter: blur(2.8px);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease;
+  color: var(--nw-wt-video-icon-color, #ffffff);
 }
-
-.nw-warranty-timeline__play:hover > *,
-.nw-warranty-timeline__pause:hover > * {
-  transform: scale(1.06);
+.nw-warranty-timeline__play svg > *{
+  fill: var(--nw-wt-video-icon-color, #ffffff);
+}
+.nw-warranty-timeline__play .nw-warranty-timeline__control-icon svg,
+.nw-warranty-timeline__pause .nw-warranty-timeline__control-icon svg{
+  width: 24px;
+  height: 24px;
+}
+.nw-warranty-timeline__media-col--video.is-playing .nw-warranty-timeline__pause{
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.nw-warranty-timeline__media-col--video.is-playing:hover .nw-warranty-timeline__pause{
+  opacity: 1;
 }
 
 .nw-warranty-timeline__play[hidden],

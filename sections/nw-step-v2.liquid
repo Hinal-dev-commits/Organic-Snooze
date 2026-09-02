@@ -154,10 +154,10 @@
               </div>
             </div>
 
-            {%- if section.settings.show_pagination -%}
-              {% render 'nw-swiper-pagination', id: pagination_id, class: 'nw-step-v2__pagination' %}
-            {%- endif -%}
-          </div>
+            </div>
+          {%- if section.settings.show_pagination -%}
+            {% render 'nw-swiper-pagination', id: pagination_id, class: 'nw-step-v2__pagination' %}
+          {%- endif -%}
         </div>
       {%- endif -%}
     </div>

@@ -42,9 +42,9 @@ if (!customElements.get('nw-step-v2')) {
       var nextBtn = this.querySelector('.nw-swiper-btn--next');
 
       var options = {
-        slidesPerView: 1.15,
+        slidesPerView: 1,
         spaceBetween: 12,
-        centeredSlides: false,
+        centeredSlides: true,
         grabCursor: true,
         watchOverflow: true,
         speed: 500,

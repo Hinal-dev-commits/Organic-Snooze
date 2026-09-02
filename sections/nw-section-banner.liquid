@@ -28,11 +28,17 @@
     {{ nw_shell_selector }} {
       background-image: none !important;
     }
+    {{ nw_shell_selector }} .nw-section-heading.nw-section-banner__heading{
+      max-width: {{ section.settings.heading_max_width }}%;
+    }
 
     @media screen and (max-width: 750px) {
       {{ nw_shell_selector }} {
         padding-top: 0 !important;
         padding-bottom: 0 !important;
+      }
+      {{ nw_shell_selector }} .nw-section-heading.nw-section-banner__heading{
+        max-width: 100%;
       }
     }
   </style>
@@ -52,6 +58,7 @@
     --nw-sb-btn-bg: {{ section.settings.button_bg_color }};
     --nw-sb-btn-text: {{ section.settings.button_text_color }};
     --nw-sb-overlay: {{ banner_overlay }};
+    --nw-sb-eyebrow-color: {{ section.settings.eyebrow_color }};
     --nw-sb-overlay-opacity: {{ banner_overlay_opacity }};
   "
 >
@@ -120,12 +127,20 @@
           <div class="nw-section-banner__copy">
             {%- liquid
               assign header_eyebrow = blank
+              assign show_rating_top = false
+              assign show_rating_at_bottom = false
+
               if section.settings.show_rating
-                assign header_eyebrow = section.settings.rating_text
+                if section.settings.show_rating_bottom
+                  assign show_rating_at_bottom = true
+                else
+                  assign show_rating_top = true
+                  assign header_eyebrow = section.settings.rating_text
+                endif
               endif
             -%}
             {% render 'nw-section-header',
-              show_rating: section.settings.show_rating,
+              show_rating: show_rating_top,
               rating: section.settings.star_rating,
               eyebrow: header_eyebrow,
               heading: section.settings.heading,
@@ -157,6 +172,17 @@
               %}
             {%- endif -%}
           </div>
+          {%- if show_rating_at_bottom -%}
+            <div class="nw-section-banner__copy nw-section-banner__copy--rating">
+              {% render 'nw-section-header',
+                show_rating: true,
+                rating: section.settings.star_rating,
+                eyebrow: section.settings.rating_text,
+                section_index: section.index,
+                star_class: 'nw-section-banner__star'
+              %}
+            </div>
+          {%- endif -%}
         </div>
       </div>
     </div>
@@ -202,6 +228,16 @@
       "default": "The Organic Sleep System Gary Brecka Built For Recovery"
     },
     {
+      "type": "range",
+      "id": "heading_max_width",
+      "label": "Heading Max Width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
       "type": "richtext",
       "id": "description",
       "label": "Description",
@@ -242,6 +278,12 @@
     {
       "type": "header",
       "content": "RATING"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_bottom",
+      "label": "Show Rating at Bottom",
+      "default": false
     },
     {
       "type": "checkbox",
@@ -346,6 +388,13 @@
       "id": "rating_text_color",
       "label": "Rating Text Color",
       "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "EyebrowColor",
+      "default": "#613916",
       "alpha": true
     },
     {

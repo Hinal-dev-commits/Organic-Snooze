@@ -176,6 +176,12 @@
 .nw-organic__inner.full-width .nw-organic__cell--head-other {
   border-top-right-radius: 12px;
 }
+.nw-organic__inner.full-width .nw-organic__cell--brand{
+  border-width: 0 1px 0px 1px;
+}
+.nw-organic__inner.full-width .nw-organic__cell{
+  border-bottom: none;
+}
 .nw-organic__inner.full-width .nw-organic__table-row:nth-child(2) .nw-organic__cell--feature {
   border-top-left-radius: 12px;
 }

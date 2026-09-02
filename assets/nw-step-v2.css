@@ -6,6 +6,7 @@ nw-step-v2 {
 .nw-step-v2 {
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .nw-step-v2 .page-width {
@@ -216,6 +217,10 @@ nw-step-v2 {
     padding: 0 16px;
   }
 
+  .nw-step-v2__slider-wrap{
+    max-width: 78%;
+  }
+
   .nw-step-v2__image-mobile {
     display: block;
   }
@@ -226,6 +231,9 @@ nw-step-v2 {
 
   .nw-step-v2__media {
     margin-bottom: 12px;
+  }
+  .nw-step-v2__swiper{
+    overflow: visible !important;
   }
 
   .nw-step-v2__source {

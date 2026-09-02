@@ -1,0 +1,30 @@
+{% doc %}
+Renders save and seller tags over NW product media images.
+@param {object} product - Product object
+{% enddoc %}
+
+{%- liquid
+  assign price_variant = product.selected_or_first_available_variant
+  assign compare_at_price = price_variant.compare_at_price
+  assign current_price = price_variant.price
+  assign save_percent = 0
+
+  if compare_at_price > current_price and compare_at_price > 0
+    assign savings_amount = compare_at_price | minus: current_price
+    assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round
+  endif
+
+  assign seller_tag = product.metafields.custom.seller_tag.value | default: product.metafields.custom.seller_tag
+-%}
+
+{%- if save_percent > 0 -%}
+  <span class="nw-product-page-media__badge nw-product-page-media__badge--left">
+    SAVE {{ save_percent }}%
+  </span>
+{%- endif -%}
+
+{%- if seller_tag != blank -%}
+  <span class="nw-product-page-media__badge nw-product-page-media__badge--right">
+    {{ seller_tag | escape }}
+  </span>
+{%- endif -%}

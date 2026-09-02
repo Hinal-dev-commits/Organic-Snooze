@@ -10,7 +10,7 @@ nw-featured-articles {
 
 .nw-featured-articles .page-width {
   width: 100%;
-  max-width: 1440px;
+  /* max-width: 1440px; */
   margin: 0 auto;
   padding: 0 0px;
   box-sizing: border-box;
@@ -83,7 +83,7 @@ nw-featured-articles {
 
 .nw-featured-articles__swiper {
   width: 100%;
-  overflow: hidden;
+  overflow: visible !important;
 }
 
 .nw-featured-articles__swiper .swiper-wrapper {

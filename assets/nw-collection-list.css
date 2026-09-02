@@ -186,6 +186,30 @@
   margin-top: 0;
 }
 
+.nw-collection-list--all-visible .nw-swiper-pagination,
+.nw-collection-list--all-visible [data-nw-collection-pagination] {
+  display: none !important;
+}
+
+.nw-collection-list--all-visible .nw-swiper-btn {
+  display: none !important;
+}
+
+.nw-collection-list--all-visible .nw-collection-list__slider-wrap .swiper {
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.nw-collection-list--all-visible .nw-collection-list__slider-wrap .swiper-wrapper {
+  justify-content: center;
+}
+
+.nw-collection-list--all-visible .nw-collection-list__slider-wrap::before,
+.nw-collection-list--all-visible .nw-collection-list__slider-wrap::after {
+  display: none !important;
+}
+
 .nw-collection-list__actions {
   display: flex;
   flex-direction: column;

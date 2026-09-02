@@ -25,6 +25,9 @@
 <nw-testimonial-v2
   id="NwTestimonialV2-{{ section.id }}"
   class="nw-testimonial-v2 section-{{ section.id }}"
+  data-show-slider-arrows="{{ section.settings.show_slider_arrows }}"
+  data-show-slider-pagination="{{ section.settings.show_slider_pagination }}"
+  data-slides-desktop="{{ section.settings.slides_desktop | default: 3 }}"
   style="
     --nw-tv2-tab-bg: {{ section.settings.tab_bg_color }};
     --nw-tv2-tab-text: {{ section.settings.tab_text_color }};
@@ -114,24 +117,56 @@
               endif
             -%}
             <div
-              class="nw-testimonial-v2__panel"
+              class="nw-testimonial-v2__panel{% if panel_index == default_tab_index %} is-active{% endif %}"
               id="NwTestimonialV2TabPanel-{{ section.id }}-{{ panel_index }}"
               data-nw-tv2-panel="{{ panel_index }}"
               role="tabpanel"
               aria-labelledby="NwTestimonialV2TabBtn-{{ section.id }}-{{ panel_index }}"
-              {% unless panel_index == default_tab_index %}
-                hidden
-              {% endunless %}
+              aria-hidden="{% if panel_index == default_tab_index %}false{% else %}true{% endif %}"
             >
-              <div class="nw-testimonial-v2__cards">
-                {%- for card_index in (1..cards_to_show) -%}
-                  {% render 'nw-testimonial-v2-card',
-                    block: block,
-                    card_index: card_index,
-                    category_tag: category_tag
-                  %}
-                {%- endfor -%}
-              </div>
+              {%- if block.settings.enable_slider -%}
+                {%- assign slider_pagination_id = 'NwTestimonialV2Pagination-' | append: section.id | append: '-' | append: panel_index -%}
+                <div class="nw-testimonial-v2__panel-slider-wrap">
+                  {%- if section.settings.show_slider_arrows -%}
+                    {% render 'nw-swiper-arrows', arrow_style: section.settings.slider_arrow_style %}
+                  {%- endif -%}
+
+                  <div
+                    class="swiper nw-testimonial-v2__swiper"
+                    id="NwTestimonialV2Swiper-{{ section.id }}-{{ panel_index }}"
+                    data-nw-tv2-swiper
+                  >
+                    <div class="swiper-wrapper">
+                      {%- for card_index in (1..cards_to_show) -%}
+                        <div class="swiper-slide">
+                          {% render 'nw-testimonial-v2-card',
+                            block: block,
+                            card_index: card_index,
+                            category_tag: category_tag
+                          %}
+                        </div>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+
+                  {%- if section.settings.show_slider_pagination -%}
+                    {% render 'nw-swiper-pagination',
+                      id: slider_pagination_id,
+                      class: 'nw-testimonial-v2__pagination'
+                    %}
+                  {%- endif -%}
+                </div>
+              {%- else -%}
+                <div class="nw-testimonial-v2__cards">
+                  {%- for card_index in (1..cards_to_show) -%}
+                    {% render 'nw-testimonial-v2-card',
+                      block: block,
+                      card_index: card_index,
+                      category_tag: category_tag
+                    %}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
             </div>
             {%- assign panel_index = panel_index | plus: 1 -%}
           {%- endfor -%}
@@ -245,6 +280,46 @@
       "label": "Active Tab Border Color",
       "default": "#613916",
       "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "TAB SLIDER"
+    },
+    {
+      "type": "paragraph",
+      "content": "Enable slider on individual tab blocks. These settings apply when a tab has slider enabled."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_slider_arrows",
+      "label": "Show Slider Arrows",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "slider_arrow_style",
+      "label": "Slider Arrow Style",
+      "default": "style_1",
+      "options": [
+        { "value": "style_1", "label": "Style 1" },
+        { "value": "style_2", "label": "Style 2" }
+      ],
+      "visible_if": "{{ section.settings.show_slider_arrows == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_slider_pagination",
+      "label": "Show Slider Pagination",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Slides Per View (Desktop)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 3
     },
     {
       "type": "header",
@@ -571,6 +646,13 @@
           "info": "Number of review cards to display for this tab (max 15)."
         },
         {
+          "type": "checkbox",
+          "id": "enable_slider",
+          "label": "Enable Slider",
+          "default": false,
+          "info": "Display this tab's cards in a slider instead of a grid."
+        },
+        {
           "type": "header",
           "content": "REVIEW CARD 1",
           "visible_if": "{{ block.settings.cards_to_show >= 1 }}"
@@ -646,6 +728,13 @@
           "type": "text",
           "id": "card_1_product_title",
           "label": "Product Title",
+          "visible_if": "{{ block.settings.card_1_show_product == true and block.settings.cards_to_show >= 1 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_1_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
           "visible_if": "{{ block.settings.card_1_show_product == true and block.settings.cards_to_show >= 1 }}"
         },
         {
@@ -727,6 +816,13 @@
           "visible_if": "{{ block.settings.card_2_show_product == true and block.settings.cards_to_show >= 2 }}"
         },
         {
+          "type": "image_picker",
+          "id": "card_2_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
+          "visible_if": "{{ block.settings.card_2_show_product == true and block.settings.cards_to_show >= 2 }}"
+        },
+        {
           "type": "header",
           "content": "REVIEW CARD 3",
           "visible_if": "{{ block.settings.cards_to_show >= 3 }}"
@@ -802,6 +898,13 @@
           "type": "text",
           "id": "card_3_product_title",
           "label": "Product Title",
+          "visible_if": "{{ block.settings.card_3_show_product == true and block.settings.cards_to_show >= 3 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_3_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
           "visible_if": "{{ block.settings.card_3_show_product == true and block.settings.cards_to_show >= 3 }}"
         },
         {
@@ -881,6 +984,13 @@
           "visible_if": "{{ block.settings.card_4_show_product == true and block.settings.cards_to_show >= 4 }}"
         },
         {
+          "type": "image_picker",
+          "id": "card_4_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
+          "visible_if": "{{ block.settings.card_4_show_product == true and block.settings.cards_to_show >= 4 }}"
+        },
+        {
           "type": "header",
           "content": "REVIEW CARD 5",
           "visible_if": "{{ block.settings.cards_to_show >= 5 }}"
@@ -954,6 +1064,13 @@
           "type": "text",
           "id": "card_5_product_title",
           "label": "Product Title",
+          "visible_if": "{{ block.settings.card_5_show_product == true and block.settings.cards_to_show >= 5 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_5_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
           "visible_if": "{{ block.settings.card_5_show_product == true and block.settings.cards_to_show >= 5 }}"
         },
         {
@@ -1033,6 +1150,13 @@
           "visible_if": "{{ block.settings.card_6_show_product == true and block.settings.cards_to_show >= 6 }}"
         },
         {
+          "type": "image_picker",
+          "id": "card_6_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
+          "visible_if": "{{ block.settings.card_6_show_product == true and block.settings.cards_to_show >= 6 }}"
+        },
+        {
           "type": "header",
           "content": "REVIEW CARD 7",
           "visible_if": "{{ block.settings.cards_to_show >= 7 }}"
@@ -1106,6 +1230,13 @@
           "type": "text",
           "id": "card_7_product_title",
           "label": "Product Title",
+          "visible_if": "{{ block.settings.card_7_show_product == true and block.settings.cards_to_show >= 7 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_7_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
           "visible_if": "{{ block.settings.card_7_show_product == true and block.settings.cards_to_show >= 7 }}"
         },
         {
@@ -1185,6 +1316,13 @@
           "visible_if": "{{ block.settings.card_8_show_product == true and block.settings.cards_to_show >= 8 }}"
         },
         {
+          "type": "image_picker",
+          "id": "card_8_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
+          "visible_if": "{{ block.settings.card_8_show_product == true and block.settings.cards_to_show >= 8 }}"
+        },
+        {
           "type": "header",
           "content": "REVIEW CARD 9",
           "visible_if": "{{ block.settings.cards_to_show >= 9 }}"
@@ -1253,6 +1391,13 @@
           "type": "product",
           "id": "card_9_product",
           "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_9_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
+          "visible_if": "{{ block.settings.card_9_show_product == true and block.settings.cards_to_show >= 9 }}"
         },
         {
           "type": "header",
@@ -1328,6 +1473,13 @@
           "type": "text",
           "id": "card_10_product_title",
           "label": "Product Title",
+          "visible_if": "{{ block.settings.card_10_show_product == true and block.settings.cards_to_show >= 10 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_10_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
           "visible_if": "{{ block.settings.card_10_show_product == true and block.settings.cards_to_show >= 10 }}"
         },
         {
@@ -1407,6 +1559,13 @@
           "visible_if": "{{ block.settings.card_11_show_product == true and block.settings.cards_to_show >= 11 }}"
         },
         {
+          "type": "image_picker",
+          "id": "card_11_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
+          "visible_if": "{{ block.settings.card_11_show_product == true and block.settings.cards_to_show >= 11 }}"
+        },
+        {
           "type": "header",
           "content": "REVIEW CARD 12",
           "visible_if": "{{ block.settings.cards_to_show >= 12 }}"
@@ -1480,6 +1639,13 @@
           "type": "text",
           "id": "card_12_product_title",
           "label": "Product Title",
+          "visible_if": "{{ block.settings.card_12_show_product == true and block.settings.cards_to_show >= 12 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_12_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
           "visible_if": "{{ block.settings.card_12_show_product == true and block.settings.cards_to_show >= 12 }}"
         },
         {
@@ -1559,6 +1725,13 @@
           "visible_if": "{{ block.settings.card_13_show_product == true and block.settings.cards_to_show >= 13 }}"
         },
         {
+          "type": "image_picker",
+          "id": "card_13_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
+          "visible_if": "{{ block.settings.card_13_show_product == true and block.settings.cards_to_show >= 13 }}"
+        },
+        {
           "type": "header",
           "content": "REVIEW CARD 14",
           "visible_if": "{{ block.settings.cards_to_show >= 14 }}"
@@ -1635,6 +1808,13 @@
           "visible_if": "{{ block.settings.card_14_show_product == true and block.settings.cards_to_show >= 14 }}"
         },
         {
+          "type": "image_picker",
+          "id": "card_14_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
+          "visible_if": "{{ block.settings.card_14_show_product == true and block.settings.cards_to_show >= 14 }}"
+        },
+        {
           "type": "header",
           "content": "REVIEW CARD 15",
           "visible_if": "{{ block.settings.cards_to_show >= 15 }}"
@@ -1708,6 +1888,13 @@
           "type": "text",
           "id": "card_15_product_title",
           "label": "Product Title",
+          "visible_if": "{{ block.settings.card_15_show_product == true and block.settings.cards_to_show >= 15 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_15_product_image",
+          "label": "Custom Product Image",
+          "info": "Overrides the selected product image when set.",
           "visible_if": "{{ block.settings.card_15_show_product == true and block.settings.cards_to_show >= 15 }}"
         }
       ]

@@ -33,6 +33,17 @@
     display: none !important;
   }
   {% endif %}
+  {% if section.settings.product_card_bg != blank or section.settings.product_card_text != blank %}
+    .nw-product-card__body{
+      background-color: {{ section.settings.product_card_bg }};
+      --nw-brown: {{ section.settings.product_card_text }};
+      --nw-pcard-text: {{ section.settings.product_card_text }};
+      {% if section.settings.product_card_bg != blank %}
+        padding: 10px;
+        border-radius: 4px;
+      {% endif %}
+    }
+  {% endif %}
 </style>
 <nw-collection-tabs
   id="NwCollectionTabs-{{ section.id }}"
@@ -61,10 +72,28 @@
     --nw-collection-tabs-promo-status-bg: {{ section.settings.promo_status_bg }};
     --nw-collection-tabs-promo-timer-bg: {{ section.settings.promo_timer_bg }};
     --nw-collection-tabs-promo-sep: {{ section.settings.promo_sep_color }};
+    --nw-pcard-firmness-bg: {{ section.settings.firmness_bg }};
+    --nw-pcard-firmness-text: {{ section.settings.firmness_text }};
+    --nw-pcard-firmness-border: {{ section.settings.firmness_border }};
+    --nw-pcard-firmness-active-bg: {{ section.settings.firmness_active_bg }};
+    --nw-pcard-firmness-active-text: {{ section.settings.firmness_active_text }};
+    --nw-pcard-firmness-active-border: {{ section.settings.firmness_active_border }};
   "
 >
 
   <div class="{% if section.settings.full_width == false %}page-width {% else %} nw-collection-full-width {% endif %}">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="nw-collection-tabs__header">
+        {% render 'nw-section-header',
+          show_rating: section.settings.show_rating_header,
+          rating: section.settings.star_rating,
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index
+        %}
+      </div>
+    {%- endif -%}
     <div class="nw-collection-tabs__inner">
       {%- if sidebar_block -%}
         <div class="nw-collection-tabs__mobile-heading">
@@ -202,6 +231,71 @@
   "tag": "section",
   "class": "section-nw-collection-tabs",
   "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_header",
+      "label": "Show Rating Stars",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating (Active Stars)",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color",
+      "label": "Active Star Color",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color_inactive",
+      "label": "Inactive Star Color",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow Text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
     {
       "type": "header",
       "content": "PRODUCT SLIDER"
@@ -473,6 +567,68 @@
       "id": "promo_sep_color",
       "label": "Timer Separator",
       "default": "#CC926A"
+    },
+    {
+      "type": "header",
+      "content": "PRODUCT CARD COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "product_card_bg",
+      "label": "Product Card Background",
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "product_card_text",
+      "label": "Product Card Text",
+    },
+    {
+      "type": "header",
+      "content": "FIRMNESS COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "firmness_bg",
+      "label": "Firmness Background",
+      "default": "#F4EFE8"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "firmness_text",
+      "label": "Firmness Text",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "firmness_active_border",
+      "label": "Firmness Active Border",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "firmness_border",
+      "label": "Firmness Border",
+      "default": "#E8DDD4"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "firmness_active_bg",
+      "label": "Firmness Active Background",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "firmness_active_text",
+      "label": "Firmness Active Text",
+      "default": "#FFFFFF"
     },
     {
       "type": "header",

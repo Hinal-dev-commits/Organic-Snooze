@@ -57,6 +57,11 @@
     position: relative;
     z-index: 1;
   }
+  {% if section.settings.border_show %}
+    #NwGuaranteeOffer-{{ section.id }}{
+      border-bottom: 1px solid {{ section.settings.border_show_color }};
+    }
+  {% endif %}
 
   @media screen and (max-width: 749px) {
     #NwGuaranteeOffer-{{ section.id }} {
@@ -376,6 +381,21 @@
       "id": "bg_gradient",
       "label": "Background Gradient",
       "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    
+    {
+      "type": "checkbox",
+      "id": "border_show",
+      "label": "Border Show",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "border_shoe_color",
+      "label": "Border Shoe Color",
+      "default": "#4E2F1466",
+      "alpha": true,
+      "visible_if": "{{ section.settings.border_shoe == true }}"
     },
     {
       "type": "header",

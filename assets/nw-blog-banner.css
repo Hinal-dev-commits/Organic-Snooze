@@ -73,6 +73,10 @@ nw-blog-banner {
   max-width: 1380px;
   margin: auto;
   padding: 0 50px;
+  margin-top: calc(var(--header-height)/4);
+}
+.nw-cta-badges.nw-blog-banner__actions .nw-cta-badges__list{
+  justify-content: flex-start;
 }
 
 .nw-blog-banner__layout--align-center {

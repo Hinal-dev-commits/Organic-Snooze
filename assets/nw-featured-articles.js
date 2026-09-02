@@ -44,7 +44,6 @@ if (!customElements.get('nw-featured-articles')) {
       var options = {
         slidesPerView: '1.2',
         spaceBetween: 10,
-        slidesOffsetAfter: 32,
         centeredSlides: false,
         grabCursor: true,
         watchOverflow: true,
@@ -52,15 +51,13 @@ if (!customElements.get('nw-featured-articles')) {
         breakpoints: {
           750: {
             spaceBetween: 16,
-            slidesPerView: '2.7',
+            slidesPerView: '2',
             centeredSlides: true,
-            slidesOffsetAfter: 0
           },
           990: {
             spaceBetween: 20,
-            slidesPerView: '2.7',
-            centeredSlides: true,
-            slidesOffsetAfter: 0
+            slidesPerView: '2',
+            centeredSlides: true
           }
         }
       };

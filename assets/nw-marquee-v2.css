@@ -9,6 +9,7 @@
   color: var(--nw-mq-text, #432818);
   min-height: 60px;
   padding: var(--nw-mq-pad-dt, 16px) 0;
+  display: flex;
 }
 
 .nw-marquee-v2__wrapper {

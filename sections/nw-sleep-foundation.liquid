@@ -212,6 +212,9 @@
                   {%- endif -%}
                 </div>
 
+                {%- if card_link != blank -%}
+                  <a href="{{ card_link }}" class="nw-sleep-foundation__card-link">
+                {%- endif -%}
                 <div class="nw-sleep-foundation__body">
                   {%- if card_label != blank -%}
                     <p class="nw-sleep-foundation__label">{{ card_label }}</p>
@@ -223,9 +226,6 @@
 
                   {%- if card_title != blank or block.settings.show_arrow -%}
                     <div class="nw-sleep-foundation__title-row">
-                      {%- if card_link != blank -%}
-                        <a href="{{ card_link }}" class="nw-sleep-foundation__card-link">
-                      {%- endif -%}
                       {%- if card_title != blank -%}
                         <h3 class="nw-sleep-foundation__title">{{ card_title }}</h3>
                       {%- endif -%}
@@ -234,12 +234,12 @@
                           {% render 'nw-icon', icon: 'arrow-right' %}
                         </span>
                       {%- endif -%}
-                      {%- if card_link != blank -%}
-                        </a>
-                      {%- endif -%}
+                      </div>
+                    {%- endif -%}
                     </div>
-                  {%- endif -%}
-                </div>
+                    {%- if card_link != blank -%}
+                      </a>
+                    {%- endif -%}
               </article>
             {%- endif -%}
           {%- endfor -%}
