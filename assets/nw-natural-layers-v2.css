@@ -12,7 +12,7 @@ nw-natural-layers-v2,
 .nw-natural-layers-v2 .page-width {
     position: relative;
     width: 100%;
-    max-width: 1440px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 80px;
     box-sizing: border-box;
@@ -24,7 +24,6 @@ nw-natural-layers-v2,
     align-items: center;
     gap: 40px;
     width: 100%;
-    max-width: 1280px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -61,7 +60,6 @@ nw-natural-layers-v2,
     padding: 0;
     gap: 20px;
     width: 100%;
-    max-width: 1280px;
     box-sizing: border-box;
 }
 
@@ -82,8 +80,7 @@ nw-natural-layers-v2,
 
 .nw-natural-layers-v2__card-media {
     width: 100%;
-    height: 238.7px;
-    aspect-ratio: 305 / 238.7;
+    aspect-ratio: 16 / 9;
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
@@ -470,6 +467,14 @@ nw-natural-layers-v2,
     border-radius: 6px;
 }
 
+.nw-natural-layers-v2 {
+    overflow-x: hidden;
+}
+
+.nw-natural-layers-v2__slider-wrap .swiper {
+    overflow: visible;
+}
+
 @media screen and (max-width: 1199px) {
     .nw-natural-layers-v2 .page-width {
         padding: 0 40px;
@@ -537,8 +542,6 @@ nw-natural-layers-v2,
     }
 
     .nw-natural-layers-v2__card-media {
-        height: 195px;
-        aspect-ratio: 260 / 195;
         border-radius: 10px 10px 0 0;
     }
 
@@ -582,16 +585,20 @@ nw-natural-layers-v2,
         padding: 0;
     }
 
-    .nw-natural-layers-v2__header{
+    .nw-natural-layers-v2__header {
         padding: 0 16px;
     }
 
-    .nw-natural-layers-v2__cta-wrap{
+    .nw-natural-layers-v2__cta-wrap {
         padding: 0 16px;
     }
 
-    .nw-natural-layers-v2__header .nw-section-description{
-        max-width: 230px;
+    .nw-natural-layers-v2__header .nw-section-description {
+        width: 100%;
+    }
+
+    .nw-natural-layers-v2__card-media {
+        aspect-ratio: 16 / 13;
     }
 
     .nw-natural-layers-v2__wrapper {
@@ -629,7 +636,7 @@ nw-natural-layers-v2,
         margin-right: 12px !important;
     }
 
-    .nw-natural-layers-v2__swiper .swiper-wrapper.nw-natural-layers-v2__cards .nw-natural-layers-v2__card:last-child{
+    .nw-natural-layers-v2__swiper .swiper-wrapper.nw-natural-layers-v2__cards .nw-natural-layers-v2__card:last-child {
         margin-left: 0 !important;
         margin-right: 0px !important;
     }
@@ -664,24 +671,24 @@ nw-natural-layers-v2,
     }
 
     .nw-natural-layers-v2__card {
-        width: 230px;
-        height: 371px;
-        flex: 0 0 230px;
+        width: 280px;
+        height: auto;
+        min-height: 350px;
+        flex: 0 0 280px;
         border-radius: 10px;
         scroll-snap-align: start;
     }
 
     .nw-natural-layers-v2__card-media {
-        width: 230px;
-        height: 180px;
-        aspect-ratio: 230 / 180;
+        width: 100%;
+        aspect-ratio: 16 / 9;
         border-radius: 10px 10px 0 0;
     }
 
     .nw-natural-layers-v2__card-body {
         padding: 16px;
         gap: 10px;
-        width: 230px;
+        width: 100%;
         height: auto;
         border-radius: 0 0 10px 10px;
     }
@@ -796,24 +803,23 @@ nw-natural-layers-v2,
 .nw-natural-layers-v2__slider-wrap {
     position: relative;
     width: 100%;
-    max-width: 1280px;
     margin: 0 auto;
     box-sizing: border-box;
 }
 
-.nw-natural-layers-v2__slider-wrap .nw-swiper-pagination .swiper-pagination-bullet{
+.nw-natural-layers-v2__slider-wrap .nw-swiper-pagination .swiper-pagination-bullet {
     width: 5px;
     height: 5px;
 }
 
-.nw-natural-layers-v2__slider-wrap .nw-swiper-pagination .swiper-pagination-bullet-active{
+.nw-natural-layers-v2__slider-wrap .nw-swiper-pagination .swiper-pagination-bullet-active {
     width: 30px;
     height: 5px;
 }
 
 .nw-natural-layers-v2__swiper {
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
 }
 
@@ -831,16 +837,15 @@ nw-natural-layers-v2,
 
 @media screen and (min-width: 990px) {
     .nw-natural-layers-v2--slider-desktop .nw-natural-layers-v2__card.swiper-slide {
-        width: 350px !important;
-        flex: 0 0 350px !important;
+        width: 330px !important;
+        flex: 0 0 330px !important;
         height: auto;
         box-sizing: border-box;
     }
 
     .nw-natural-layers-v2--slider-desktop .nw-natural-layers-v2__card.swiper-slide .nw-natural-layers-v2__card-media {
         width: 100%;
-        height: 274px;
-        aspect-ratio: 350 / 274;
+        aspect-ratio: 16 / 9;
     }
 }
 
@@ -848,12 +853,13 @@ nw-natural-layers-v2,
     .nw-natural-layers-v2--slider-desktop .nw-natural-layers-v2__card.swiper-slide {
         width: 300px !important;
         flex: 0 0 300px !important;
+        height: auto;
+        box-sizing: border-box;
     }
 
     .nw-natural-layers-v2--slider-desktop .nw-natural-layers-v2__card.swiper-slide .nw-natural-layers-v2__card-media {
         width: 100%;
-        height: 235px;
-        aspect-ratio: 300 / 235;
+        aspect-ratio: 16 / 9;
     }
 }
 

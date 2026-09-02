@@ -50,12 +50,12 @@
   line-height: 140%;
 }
 
-.nw-terms-of-service-content__body.rte > *:first-child {
+.nw-terms-of-service-content__body.rte>*:first-child {
   margin-top: 0;
   text-align: left;
 }
 
-.nw-terms-of-service-content__body.rte > *:last-child {
+.nw-terms-of-service-content__body.rte>*:last-child {
   margin-bottom: 0;
 }
 
@@ -68,11 +68,11 @@
 }
 
 
-.nw-terms-of-service-content__body.rte ul li{
+.nw-terms-of-service-content__body.rte ul li {
   margin-bottom: 15px;
 }
-  
-.nw-terms-of-service-content__body.rte ul li:last-child{
+
+.nw-terms-of-service-content__body.rte ul li:last-child {
   margin-bottom: 0;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .nw-terms-of-service-content__body.rte a {
-  text-decoration: underline;
+  text-decoration: none;
   text-underline-offset: 2px;
 }
 

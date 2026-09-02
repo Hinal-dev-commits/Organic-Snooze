@@ -58,7 +58,10 @@
   {%- if banner_bg_type == 'image' -%}
     <div class="nw-section-banner__media" aria-hidden="true">
       {%- if banner_desktop_image != blank or banner_mobile_image != blank -%}
-        {%- if banner_desktop_image != blank and banner_mobile_image != blank and banner_desktop_image != banner_mobile_image -%}
+        {%- if banner_desktop_image != blank
+          and banner_mobile_image != blank
+          and banner_desktop_image != banner_mobile_image
+        -%}
           <img
             src="{{ banner_mobile_image | image_url: width: 1200 }}"
             class="nw-section-banner__image nw-section-banner__image--mobile"
@@ -110,78 +113,52 @@
     <div class="nw-section-banner__layout nw-section-banner__layout--{{ section.settings.text_position_mobile }}">
       <div class="nw-section-banner__inner{%- render 'nw-scroll-animation' -%}">
         <div class="nw-section-banner__content">
-        {%- if section.settings.tag_text != blank -%}
-          <p class="nw-section-banner__tag">{{ section.settings.tag_text }}</p>
-        {%- endif -%}
-
-        <div class="nw-section-banner__copy">
-          {%- if section.settings.show_rating and section.settings.rating_at_top -%}
-            <div class="nw-section-banner__rating nw-section-banner__rating--top">
-              {% render 'nw-stars',
-                rating: section.settings.star_rating,
-                class: 'nw-section-banner__stars',
-                star_class: 'nw-section-banner__star',
-                icon: 'star-rating'
-              %}
-              {%- if section.settings.rating_text != blank -%}
-                <p class="nw-section-banner__rating-text">{{ section.settings.rating_text }}</p>
-              {%- endif -%}
-            </div>
+          {%- if section.settings.tag_text != blank -%}
+            <p class="nw-section-banner__tag">{{ section.settings.tag_text }}</p>
           {%- endif -%}
 
-          {%- if section.settings.heading != blank -%}
-            {% render 'nw-section-heading',
-              text: section.settings.heading,
+          <div class="nw-section-banner__copy">
+            {%- liquid
+              assign header_eyebrow = blank
+              if section.settings.show_rating
+                assign header_eyebrow = section.settings.rating_text
+              endif
+            -%}
+            {% render 'nw-section-header',
+              show_rating: section.settings.show_rating,
+              rating: section.settings.star_rating,
+              eyebrow: header_eyebrow,
+              heading: section.settings.heading,
+              description: section.settings.description,
               section_index: section.index,
-              class: 'nw-section-banner__heading'
+              heading_class: 'nw-section-banner__heading',
+              star_class: 'nw-section-banner__star'
             %}
-          {%- endif -%}
+          </div>
 
-          {%- if section.settings.description != blank -%}
-            {% render 'nw-section-description',
-              text: section.settings.description,
-              class: 'nw-section-banner__description'
-            %}
-          {%- endif -%}
-        </div>
+          <div class="nw-section-banner__actions">
+            {%- if section.settings.button_text != blank -%}
+              <div class="nw-section-banner__cta">
+                {% render 'nw-button',
+                  text: section.settings.button_text,
+                  link: section.settings.button_link,
+                  style: section.settings.button_style,
+                  btn_class: 'nw-section-banner__btn'
+                %}
+              </div>
+            {%- endif -%}
 
-        <div class="nw-section-banner__actions">
-          {%- if section.settings.button_text != blank -%}
-            <div class="nw-section-banner__cta">
-              {% render 'nw-button',
-                text: section.settings.button_text,
-                link: section.settings.button_link,
-                style: section.settings.button_style,
-                btn_class: 'nw-section-banner__btn'
+            {%- if trust_badge_blocks.size > 0 -%}
+              {% render 'nw-cta-badges',
+                settings: section.settings,
+                blocks: trust_badge_blocks,
+                class: 'nw-section-banner__badges',
+                show_cta_button: false
               %}
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.show_rating and section.settings.rating_at_top == false -%}
-            <div class="nw-section-banner__rating">
-              {% render 'nw-stars',
-                rating: section.settings.star_rating,
-                class: 'nw-section-banner__stars',
-                star_class: 'nw-section-banner__star',
-                icon: 'star-rating'
-              %}
-              {%- if section.settings.rating_text != blank -%}
-                <p class="nw-section-banner__rating-text">{{ section.settings.rating_text }}</p>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-
-          {%- if trust_badge_blocks.size > 0 -%}
-            {% render 'nw-cta-badges',
-              settings: section.settings,
-              blocks: trust_badge_blocks,
-              class: 'nw-section-banner__badges',
-              show_cta_button: false
-            %}
-          {%- endif -%}
+            {%- endif -%}
+          </div>
         </div>
       </div>
-    </div>
     </div>
 
     <div class="nw-section-banner__aside" aria-hidden="true"></div>
@@ -189,21 +166,18 @@
 </nw-section-banner>
 <script>
   function setBannerLayoutHeight() {
-  const layout = document.querySelector('.nw-section-banner__layout');
+    const layout = document.querySelector('.nw-section-banner__layout');
 
-  if (!layout) return;
+    if (!layout) return;
 
-  const height = layout.offsetHeight;
+    const height = layout.offsetHeight;
 
-  document.documentElement.style.setProperty(
-    '--nw-section-banne-content',
-    `${height}px`
-  );
-}
+    document.documentElement.style.setProperty('--nw-section-banne-content', `${height}px`);
+  }
 
-setBannerLayoutHeight();
+  setBannerLayoutHeight();
 
-window.addEventListener('resize', setBannerLayoutHeight);
+  window.addEventListener('resize', setBannerLayoutHeight);
 </script>
 {% schema %}
 {
@@ -273,32 +247,21 @@ window.addEventListener('resize', setBannerLayoutHeight);
       "type": "checkbox",
       "id": "show_rating",
       "label": "Show Rating",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "rating_at_top",
-      "label": "Show Rating Above Title",
-      "default": false,
-      "info": "When enabled, stars and rating text appear after the tag and before the heading. When disabled, they appear below the button.",
-      "visible_if": "{{ section.settings.show_rating == true }}"
+      "default": false
     },
     {
       "type": "range",
       "id": "star_rating",
       "label": "Star Rating",
-      "min": 0,
+      "min": 1,
       "max": 5,
       "step": 1,
-      "default": 5,
-      "visible_if": "{{ section.settings.show_rating == true }}"
+      "default": 5
     },
     {
       "type": "text",
       "id": "rating_text",
-      "label": "Rating Text",
-      "default": "98% Satisfactory rating among sleepers",
-      "visible_if": "{{ section.settings.show_rating == true }}"
+      "label": "Rating Text"
     },
     {
       "type": "header",
@@ -321,35 +284,30 @@ window.addEventListener('resize', setBannerLayoutHeight);
       "id": "bg_color",
       "label": "Background Color",
       "default": "#8B5E3C",
-      "alpha": true,
-      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+      "alpha": true
     },
     {
       "type": "image_picker",
       "id": "bg_image",
-      "label": "Background Image (Desktop)",
-      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+      "label": "Background Image (Desktop)"
     },
     {
       "type": "image_picker",
       "id": "bg_image_mobile",
       "label": "Background Image (Mobile Optional)",
-      "info": "Uses desktop image when empty.",
-      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+      "info": "Uses desktop image when empty."
     },
     {
       "type": "color",
       "id": "bg_color_image",
       "label": "Overlay Color",
       "default": "#00000000",
-      "alpha": true,
-      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+      "alpha": true
     },
     {
       "type": "color_background",
       "id": "bg_gradient",
-      "label": "Background Gradient",
-      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+      "label": "Background Gradient"
     },
     {
       "type": "header",
@@ -388,24 +346,21 @@ window.addEventListener('resize', setBannerLayoutHeight);
       "id": "rating_text_color",
       "label": "Rating Text Color",
       "default": "#FFFFFF",
-      "alpha": true,
-      "visible_if": "{{ section.settings.show_rating == true }}"
+      "alpha": true
     },
     {
       "type": "color",
       "id": "star_color",
       "label": "Star Color",
       "default": "#E57B1E",
-      "alpha": true,
-      "visible_if": "{{ section.settings.show_rating == true }}"
+      "alpha": true
     },
     {
       "type": "color",
       "id": "star_inactive_color",
       "label": "Empty Star Color",
       "default": "rgba(255, 255, 255, 0.3)",
-      "alpha": true,
-      "visible_if": "{{ section.settings.show_rating == true }}"
+      "alpha": true
     },
     {
       "type": "color",

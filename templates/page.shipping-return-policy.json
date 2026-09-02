@@ -23,9 +23,6 @@
       "settings": {
         "image_desktop": "shopify://shop_images/shipping-policy-desktop.png",
         "image_mobile": "shopify://shop_images/shipping-mobile.png",
-        "enable_fixed_bg": false,
-        "height_desktop": 300,
-        "height_mobile": 167,
         "show_gradient": false,
         "gradient_color_start": "",
         "gradient_color_end": "#fffcf0",
@@ -182,7 +179,8 @@
             "heading": "Mattress Exchanges",
             "badge": "FREE",
             "intro": "<p>Want a different size or firmness? We make it simple with no exchange fees.</p>",
-            "table_layout": "two_column"
+            "table_layout": "two_column",
+            "show_scrollbar": true
           }
         },
         "table_row_ex_1": {
@@ -246,7 +244,8 @@
             "heading": "Mattress Returns & Refunds",
             "badge": "",
             "intro": "<p>If your mattress truly isn't working for you, we'll take it back between nights 31 and 100 — no runaround.</p>",
-            "table_layout": "two_column"
+            "table_layout": "two_column",
+            "show_scrollbar": false
           }
         },
         "table_row_ret_1": {
@@ -327,7 +326,8 @@
             "heading": "Accessories",
             "badge": "Sheets, Pillows & Protectors",
             "intro": "",
-            "table_layout": "four_column"
+            "table_layout": "four_column",
+            "show_scrollbar": true
           }
         },
         "table_row_acc_1": {
@@ -382,7 +382,8 @@
             "heading": "Mattress Exchanges",
             "badge": "FINAL SALE",
             "intro": "<p>All adjustable bases and frames are <strong>Final Sale</strong>. Due to their mechanical and electrical components, these items cannot be returned, exchanged, or cancelled once the order has been processed. We recommend confirming your selection before ordering — our team is happy to help.</p>",
-            "table_layout": "hidden"
+            "table_layout": "hidden",
+            "show_scrollbar": false
           }
         },
         "content_item_AGpdT9": {

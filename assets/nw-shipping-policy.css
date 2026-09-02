@@ -25,6 +25,13 @@
   width: 100%;
 }
 
+.nw-shipping-policy__header .nw-section-heading h1,
+.nw-shipping-policy__header .nw-section-heading .h1,
+.nw-shipping-policy__header .nw-section-heading h2,
+.nw-shipping-policy__header .nw-section-heading .h2 {
+  font-size: 36px;
+}
+
 .nw-shipping-policy__card,
 .nw-shipping-policy__trial {
   width: 100%;
@@ -236,8 +243,15 @@
     gap: 32px;
   }
 
-  .nw-shipping-policy__header{
+  .nw-shipping-policy__header {
     max-width: 265px; 
+  }
+
+  .nw-shipping-policy__header .nw-section-heading h1,
+  .nw-shipping-policy__header .nw-section-heading .h1,
+  .nw-shipping-policy__header .nw-section-heading h2,
+  .nw-shipping-policy__header .nw-section-heading .h2 {
+    font-size: 32px;
   }
 
   .nw-shipping-policy__card {

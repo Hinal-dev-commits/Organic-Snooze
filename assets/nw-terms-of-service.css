@@ -25,6 +25,13 @@
   width: 100%;
 }
 
+.nw-terms-of-service__header .nw-section-heading h1,
+.nw-terms-of-service__header .nw-section-heading .h1,
+.nw-terms-of-service__header .nw-section-heading h2,
+.nw-terms-of-service__header .nw-section-heading .h2 {
+  font-size: 36px;
+}
+
 .nw-terms-of-service__date {
   margin: 8px 0 0;
   font-family: var(--font-body-family, 'DM Sans');
@@ -57,11 +64,11 @@
   line-height: 140%;
 }
 
-.nw-terms-of-service__content.rte > *:first-child {
+.nw-terms-of-service__content.rte>*:first-child {
   margin-top: 0;
 }
 
-.nw-terms-of-service__content.rte > *:last-child {
+.nw-terms-of-service__content.rte>*:last-child {
   margin-bottom: 0;
 }
 
@@ -79,6 +86,14 @@
 }
 
 @media screen and (max-width: 749px) {
+
+  .nw-terms-of-service__header .nw-section-heading h1,
+  .nw-terms-of-service__header .nw-section-heading .h1,
+  .nw-terms-of-service__header .nw-section-heading h2,
+  .nw-terms-of-service__header .nw-section-heading .h2 {
+    font-size: 32px;
+  }
+
   .nw-terms-of-service__wrapper {
     gap: 32px;
   }

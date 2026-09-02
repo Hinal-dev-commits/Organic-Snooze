@@ -23,9 +23,6 @@
       "settings": {
         "image_desktop": "shopify://shop_images/terms-of-service.png",
         "image_mobile": "shopify://shop_images/terms-mobile.png",
-        "enable_fixed_bg": false,
-        "height_desktop": 300,
-        "height_mobile": 167,
         "show_gradient": false,
         "gradient_color_start": "",
         "gradient_color_end": "#fffcf0",
@@ -117,7 +114,7 @@
           "type": "content_item",
           "settings": {
             "heading": "Contact Information",
-            "content": "<p>If you have questions about these Terms of Service, please contact us:</p><p><strong>The Ultimate Snooze LLC</strong><br>102 Oneida Street Pueblo,<br>CO 81003</p><p><strong>Email:</strong> info@TheUltimateSnooze.com</p><p>We may contact you using the information you provide for customer support or transactional purposes, including order assistance or abandoned cart follow-ups.</p>"
+            "content": "<p>If you have questions about these Terms of Service, please contact us:</p><p><strong>The Ultimate Snooze LLC</strong><br>102 Oneida Street Pueblo,<br>CO 81003</p><p><strong>Email:</strong> <a href=\"mailto:info@theultimatesnooze.com\">info@TheUltimateSnooze.com</a></p><p>We may contact you using the information you provide for customer support or transactional purposes, including order assistance or abandoned cart follow-ups.</p>"
           }
         }
       },

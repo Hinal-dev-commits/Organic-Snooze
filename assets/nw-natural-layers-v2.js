@@ -44,6 +44,7 @@ if (!customElements.get('nw-natural-layers-v2')) {
           spaceBetween: 20,
           grabCursor: true,
           watchOverflow: true,
+          centerInsufficientSlides: true,
           breakpoints: {
             0: {
               slidesPerView: 'auto',

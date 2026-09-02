@@ -1,5 +1,6 @@
 {{ 'nw-button.css' | asset_url | stylesheet_tag }}
 {{ 'nw-shipping-content.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-shipping-content.js' | asset_url }}" defer="defer"></script>
 
 {%- assign nw_shell_selector = '#NwShippingContent-' | append: section.id -%}
 {%- assign nw_heading_color = section.settings.heading_color | default: '#613916' -%}
@@ -27,6 +28,7 @@
     --nw-sc-divider-heavy: {{ nw_divider_heavy }};
     --nw-sc-table-border-color: {{ nw_table_border }};
     --nw-sc-table-stripe-color: {{ nw_table_stripe }};
+    --nw-sc-scrollbar-thumb: {{ nw_body_color }};
   }
 
   @media screen and (max-width: 749px) {
@@ -75,6 +77,14 @@
   {{ nw_shell_selector }} .nw-shipping-content__cta-footer p {
     color: {{ nw_cta_text }};
   }
+
+  {{ nw_shell_selector }} .nw-shipping-content__scrollbar-track {
+    background-color: rgba(97, 57, 22, 0.1);
+  }
+
+  {{ nw_shell_selector }} .nw-shipping-content__scrollbar-thumb {
+    background-color: #613916;
+  }
 </style>
 
 <nw-shipping-content
@@ -87,6 +97,7 @@
         {%- liquid
           assign nw_table_open = false
           assign nw_table_layout = 'two_column'
+          assign nw_table_show_scrollbar = false
           assign nw_text_group_open = false
           assign nw_table_section_open = false
           assign nw_table_group_open = false
@@ -98,6 +109,11 @@
                     </tbody>
                   </table>
                 </div>
+                {%- if nw_table_show_scrollbar -%}
+                  <div class="nw-shipping-content__scrollbar-track" aria-hidden="true">
+                    <div class="nw-shipping-content__scrollbar-thumb"></div>
+                  </div>
+                {%- endif -%}
               {%- assign nw_table_open = false -%}
             {%- endif -%}
 
@@ -184,6 +200,10 @@
                 </div>
 
                 {%- assign nw_table_layout = block.settings.table_layout | default: 'two_column' -%}
+                {%- assign nw_table_show_scrollbar = false -%}
+                {%- if nw_table_layout == 'four_column' and block.settings.show_scrollbar -%}
+                  {%- assign nw_table_show_scrollbar = true -%}
+                {%- endif -%}
                 {%- assign nw_table_group_open = true -%}
                 {%- unless nw_table_layout == 'hidden' -%}
                   {%- assign nw_table_open = true -%}
@@ -257,6 +277,11 @@
                     </tbody>
                   </table>
                 </div>
+                {%- if nw_table_show_scrollbar -%}
+                  <div class="nw-shipping-content__scrollbar-track" aria-hidden="true">
+                    <div class="nw-shipping-content__scrollbar-thumb"></div>
+                  </div>
+                {%- endif -%}
         {%- endif -%}
 
         {%- if nw_table_group_open -%}
@@ -574,6 +599,14 @@
             { "value": "four_column", "label": "Four Column" },
             { "value": "hidden", "label": "Hidden" }
           ]
+        },
+        {
+          "type": "checkbox",
+          "id": "show_scrollbar",
+          "label": "Show scrollbar on overflow",
+          "default": false,
+          "info": "Displays a custom progress scrollbar below the table when it overflows.",
+          "visible_if": "{{ block.settings.table_layout == 'four_column' }}"
         }
       ]
     },

@@ -124,12 +124,15 @@
   text-align: left;
 }
 
+.nw-section-banner .nw-section-description,
+.nw-section-banner .nw-section-description *,
 .nw-section-banner__description,
 .nw-section-banner__description * {
   color: var(--nw-sb-desc-color, #ffffff);
   text-align: left;
 }
 
+.nw-section-banner .nw-section-description,
 .nw-section-banner__description {
   max-width: none;
   margin-top: 0;
@@ -137,6 +140,7 @@
   line-height: 1.5;
 }
 
+.nw-section-banner .nw-section-description.rte,
 .nw-section-banner__description .rte {
   text-align: left;
 }
@@ -150,53 +154,23 @@
   color: inherit;
 }
 
-.nw-section-banner__rating {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px;
-  width: 100%;
-  margin: 0;
-}
 
-.nw-section-banner__rating--top {
-  margin-bottom: 0;
-}
 
-.nw-section-banner__stars {
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
-  z-index: 2;
-}
-
-.nw-section-banner__star {
-  width: 16px;
-  height: 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--nw-sb-star-inactive, rgba(255, 255, 255, 0.3));
-}
-
+.nw-section-banner .nw-star--active,
 .nw-section-banner__star--active {
   color: var(--nw-sb-star-color, #e57b1e);
 }
 
+.nw-section-banner .nw-star svg,
 .nw-section-banner__star svg {
   width: 16px;
   height: 16px;
   display: block;
 }
 
-.nw-section-banner__rating-text {
+.nw-section-banner__copy .nw-rating {
+  justify-content: flex-start;
   margin: 0;
-  padding-left: 3px;
-  font-family: var(--font-body-family);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--nw-sb-rating-text, #ffffff);
 }
 
 @media screen and (max-width: 989px) {
@@ -221,6 +195,7 @@
     left: 0;
     transform: unset;
   }
+
   .nw-section-banner__layout {
     align-items: flex-end;
     justify-content: center;
@@ -229,7 +204,8 @@
     left: 0;
     transform: unset;
   }
-  .nw-section-banner__layout.nw-section-banner__layout--top{
+
+  .nw-section-banner__layout.nw-section-banner__layout--top {
     bottom: unset;
     top: 24px;
     transform: unset;
@@ -299,6 +275,8 @@
     text-align: center;
   }
 
+  .nw-section-banner .nw-section-description,
+  .nw-section-banner .nw-section-description *,
   .nw-section-banner__description,
   .nw-section-banner__description * {
     text-align: center;
@@ -306,6 +284,7 @@
     line-height: 1.4;
   }
 
+  .nw-section-banner .nw-section-description.rte,
   .nw-section-banner__description .rte {
     text-align: center;
   }
@@ -314,11 +293,14 @@
     font-size: 16px;
   }
 
+  .nw-section-banner .nw-rating,
   .nw-section-banner__rating {
     justify-content: center;
     width: auto;
+    margin-bottom: 0;
   }
 
+  .nw-section-banner .nw-eyebrow,
   .nw-section-banner__rating-text {
     font-size: 13px;
     font-weight: 400;

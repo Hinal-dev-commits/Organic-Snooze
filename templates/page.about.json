@@ -17,57 +17,59 @@
         "padding_bottom": 28
       }
     },
-    "nw_about_hero_XUGxWb": {
-      "type": "nw-about-hero",
+    "nw_section_banner_DzygzY": {
+      "type": "nw-section-banner",
       "blocks": {
-        "trust_badge_zF99XK": {
+        "trust_badge_xtxeDz": {
           "type": "trust_badge",
           "settings": {
-            "text": "30-Year Warranty",
+            "use_custom_icon": true,
             "icon": "shield",
-            "use_custom_icon": false,
-            "icon_color": "#613916"
+            "custom_icon": "shopify://shop_images/svg642_d7f161bd-e1c1-4277-a621-a7a438d88657.png",
+            "text": "30-Year Warranty"
           }
         },
-        "trust_badge_dt66H6": {
+        "trust_badge_FBiYXG": {
           "type": "trust_badge",
           "settings": {
-            "text": "100-Night Risk-Free Trial",
+            "use_custom_icon": true,
             "icon": "moneyback",
-            "use_custom_icon": false,
-            "icon_color": "#613916"
+            "custom_icon": "shopify://shop_images/Group.png",
+            "text": "100-Night Sleep Trial"
           }
         }
       },
       "block_order": [
-        "trust_badge_zF99XK",
-        "trust_badge_dt66H6"
+        "trust_badge_xtxeDz",
+        "trust_badge_FBiYXG"
       ],
-      "name": "NW About Hero",
+      "name": "t:sections.nw-section-banner.name",
       "settings": {
-        "show_rating": true,
-        "star_rating": 5,
-        "star_color": "#e57b1e",
-        "star_color_inactive": "#d1d5db",
-        "eyebrow": "4.8/5 from 100'S sleepers",
-        "content_position": "center",
-        "content_position_mobile": "top",
-        "heading": "Certified Organic. Not Just Called It.",
-        "subheading": "<p>GOTS textiles, GOLS latex, made in the USA. Every claim on this page is backed by proof you can verify.</p>",
-        "show_button": true,
+        "tag_text": "",
+        "heading": "Certified Organic.Not Just Called It.",
+        "description": "<p>GOTS textiles, GOLS latex, made in the USA. Every claim on this page is backed by proof you can verify.</p>",
+        "text_position_mobile": "top",
         "button_text": "SHOP THE MATTRESS",
         "button_link": "",
         "button_style": "primary",
-        "show_image": false,
-        "image_position": "right",
-        "show_gradient_blend": false,
-        "gradient_blend_color": "#ddd6cd",
+        "show_rating": true,
+        "star_rating": 5,
+        "rating_text": "4.8/5 from 100'S sleepers",
         "bg_type": "image",
-        "bg_color": "#ddd6cd",
+        "bg_color": "#8b5e3c",
         "bg_image": "shopify://shop_images/about-hero-desktop.png",
         "bg_image_mobile": "shopify://shop_images/about-hero-mobile.png",
         "bg_color_image": "rgba(0,0,0,0)",
         "bg_gradient": "",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "tag_text_color": "#fffcf0",
+        "tag_bg_color": "#ffffff33",
+        "rating_text_color": "#ffffff",
+        "star_color": "#e57b1e",
+        "star_inactive_color": "#ffffff4d",
+        "button_bg_color": "#a96b3e",
+        "button_text_color": "#ffffff",
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 0,
         "padding_top_mobile": 0,
@@ -267,10 +269,11 @@
       "type": "nw-image",
       "name": "NW Image",
       "settings": {
-        "image_desktop": "shopify://shop_images/desktop-image.png",
-        "enable_fixed_bg": false,
-        "height_desktop": 300,
-        "height_mobile": 167,
+        "image_desktop": "shopify://shop_images/image_18_cc76de36-7cf9-4ed7-8e4f-77a8793314c4.png",
+        "show_gradient": false,
+        "gradient_color_start": "",
+        "gradient_color_end": "#fffcf0",
+        "gradient_end_position": 91,
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 0,
         "padding_top_mobile": 0,
@@ -511,9 +514,10 @@
       "settings": {
         "image_desktop": "shopify://shop_images/image_12_f53c8169-b14f-4323-b3c2-b586e167e2b2.png",
         "image_mobile": "shopify://shop_images/mobile-image.png",
-        "enable_fixed_bg": false,
-        "height_desktop": 300,
-        "height_mobile": 167,
+        "show_gradient": false,
+        "gradient_color_start": "",
+        "gradient_color_end": "#fffcf0",
+        "gradient_end_position": 91,
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 0,
         "padding_top_mobile": 0,
@@ -686,6 +690,7 @@
         "description_color": "",
         "eyebrow_color": "",
         "text_color": "",
+        "no_loop": false,
         "show_arrows": true,
         "show_dots": true,
         "show_fade": true,
@@ -805,7 +810,7 @@
   },
   "order": [
     "main",
-    "nw_about_hero_XUGxWb",
+    "nw_section_banner_DzygzY",
     "nw_marquee_KA9xtN",
     "nw_about_us_zXNJqF",
     "nw_natural_layers_v2_Ezb37e",
