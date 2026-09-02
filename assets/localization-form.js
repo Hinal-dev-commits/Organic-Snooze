@@ -46,7 +46,7 @@ if (!customElements.get('localization-form')) {
           this.filterCountries();
           this.elements.search.setAttribute('aria-activedescendant', '');
         }
-        document.body.classList.remove('overflow-hidden-mobile');
+        document.documentElement.classList.remove('overflow-hidden-mobile');
         document.querySelector('.menu-drawer').classList.remove('country-selector-open');
         this.header.preventHide = false;
       }
@@ -116,8 +116,8 @@ if (!customElements.get('localization-form')) {
           'aria-expanded',
           (this.elements.button.getAttribute('aria-expanded') === 'false').toString()
         );
-        if (!document.body.classList.contains('overflow-hidden-tablet')) {
-          document.body.classList.add('overflow-hidden-mobile');
+        if (!document.documentElement.classList.contains('overflow-hidden-tablet')) {
+          document.documentElement.classList.add('overflow-hidden-mobile');
         }
         if (this.elements.search && this.mql.matches) {
           this.elements.search.focus();
