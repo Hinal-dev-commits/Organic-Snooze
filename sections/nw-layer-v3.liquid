@@ -1,0 +1,573 @@
+{{ 'nw-layer-v3.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-layer-v3.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign nw_shell_selector = '#NwLayerV3-' | append: section.id
+  assign layer_blocks = section.blocks | where: 'type', 'layer_slide'
+  assign other_layer_blocks = section.blocks | where: 'type', 'other_layer_item'
+  assign default_index = section.settings.default_active_layer | minus: 1
+  if default_index < 0 or default_index >= layer_blocks.size
+    assign default_index = 0
+  endif
+-%}
+
+{% capture nw_shell_extra %}
+  --nw-lv3-hotspot-active: {{ section.settings.hotspot_active_color | default: '#613916' }};
+  --nw-lv3-hotspot-inactive: {{ section.settings.hotspot_inactive_color | default: '#BB967C' }};
+  --nw-lv3-hotspot-text: {{ section.settings.hotspot_text_color | default: '#FFFFFF' }};
+  --nw-lv3-card-bg: {{ section.settings.card_bg_color | default: '#FFFFFF' }};
+  --nw-lv3-card-border: {{ section.settings.card_border_color | default: 'rgba(97, 57, 22, 0.15)' }};
+  --nw-lv3-card-title: {{ section.settings.card_title_color | default: '#613916' }};
+  --nw-lv3-card-subtitle: {{ section.settings.card_subtitle_color | default: '#CC926A' }};
+  --nw-lv3-card-desc: {{ section.settings.card_desc_color | default: '#613916' }};
+  --nw-lv3-other-title: {{ section.settings.other_layers_title_color | default: '#CC926A' }};
+  --nw-lv3-other-label: {{ section.settings.other_layers_label_color | default: '#613916' }};
+  --nw-lv3-other-value: {{ section.settings.other_layers_value_color | default: '#613916' }};
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', extra: nw_shell_extra, default_bg: '#F4EFE8' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  {%- for block in layer_blocks -%}
+    #NwLayerV3-{{ section.id }} [data-hotspot-index="{{ forloop.index0 }}"] {
+      left: {{ block.settings.pos_x_desktop | default: 50 }}%;
+      top: {{ block.settings.pos_y_desktop | default: 50 }}%;
+    }
+  {%- endfor -%}
+
+  @media screen and (max-width: 749px) {
+    {%- for block in layer_blocks -%}
+      #NwLayerV3-{{ section.id }} [data-hotspot-index="{{ forloop.index0 }}"] {
+        left: {{ block.settings.pos_x_mobile | default: block.settings.pos_x_desktop | default: 50 }}%;
+        top: {{ block.settings.pos_y_mobile | default: block.settings.pos_y_desktop | default: 50 }}%;
+      }
+    {%- endfor -%}
+  }
+</style>
+
+<nw-layer-v3
+  id="NwLayerV3-{{ section.id }}"
+  class="nw-layer-v3 section-{{ section.id }}"
+  data-default-layer="{{ default_index }}"
+>
+  <div class="page-width">
+    <div class="nw-layer-v3__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-layer-v3__header">
+        {% render 'nw-section-header',
+          heading: section.settings.heading,
+          description: section.settings.subheading,
+          section_index: section.index,
+          heading_class: 'nw-layer-v3__heading'
+        %}
+      </div>
+
+      {%- if layer_blocks.size > 0 -%}
+        <div class="nw-layer-v3__main{% unless section.settings.show_other_layers and other_layer_blocks.size > 0 %} nw-layer-v3__main--centered{% endunless %}">
+          {%- if section.settings.show_other_layers and other_layer_blocks.size > 0 -%}
+            <aside class="nw-layer-v3__other" data-nw-layer-other>
+              {%- if section.settings.other_layers_title != blank -%}
+                <h3 class="nw-layer-v3__other-title">{{ section.settings.other_layers_title }}</h3>
+              {%- endif -%}
+              <div class="nw-layer-v3__other-list">
+                {%- for block in other_layer_blocks -%}
+                  <div class="nw-layer-v3__other-row" {{ block.shopify_attributes }}>
+                    {%- if block.settings.label != blank -%}
+                      <span class="nw-layer-v3__other-label">{{ block.settings.label }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.value != blank -%}
+                      <span class="nw-layer-v3__other-value">{{ block.settings.value }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endfor -%}
+              </div>
+            </aside>
+          {%- endif -%}
+
+          <div class="nw-layer-v3__explorer">
+            <div class="nw-layer-v3__media">
+              {%- liquid
+                assign diagram_img = section.settings.diagram_image
+                assign diagram_img_mobile = section.settings.diagram_image_mobile
+              -%}
+              {%- if diagram_img != blank -%}
+                <picture>
+                  {%- if diagram_img_mobile != blank -%}
+                    <source media="(max-width: 749px)" srcset="{{ diagram_img_mobile | image_url: width: 900 }}">
+                  {%- endif -%}
+                  <img
+                    src="{{ diagram_img | image_url: width: 1100 }}"
+                    alt="{{ section.settings.heading | default: 'Layer diagram' | escape }}"
+                    width="437"
+                    height="437"
+                    loading="lazy"
+                    class="nw-layer-v3__img"
+                  >
+                </picture>
+              {%- else -%}
+                <div class="nw-layer-v3__placeholder" aria-hidden="true"></div>
+              {%- endif -%}
+
+              {%- for block in layer_blocks -%}
+                <button
+                  type="button"
+                  class="nw-layer-v3__hotspot{% if forloop.index0 == default_index %} is-active{% endif %}"
+                  data-hotspot-index="{{ forloop.index0 }}"
+                  aria-label="{{ block.settings.title | default: forloop.index | escape }}"
+                >
+                  {{ block.settings.pin_label | default: forloop.index }}
+                </button>
+              {%- endfor -%}
+            </div>
+
+            <div class="nw-layer-v3__detail-wrap">
+              {%- for block in layer_blocks -%}
+                <article
+                  class="nw-layer-v3__detail{% if forloop.index0 == default_index %} is-active{% endif %}"
+                  data-layer-panel="{{ forloop.index0 }}"
+                  data-slide-index="{{ forloop.index0 }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="nw-layer-v3__detail-title">{{ block.settings.title }}</h3>
+                  {%- endif -%}
+                  <div class="nw-layer-v3__detail-body">
+                    {%- if block.settings.subtitle != blank -%}
+                      <p class="nw-layer-v3__detail-subtitle">{{ block.settings.subtitle }}</p>
+                    {%- endif -%}
+                    {%- if block.settings.description != blank -%}
+                      <div class="nw-layer-v3__detail-desc rte">{{ block.settings.description }}</div>
+                    {%- endif -%}
+                  </div>
+                </article>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-layer-v3>
+
+{% schema %}
+{
+  "name": "t:sections.nw-layer-v3.name",
+  "tag": "section",
+  "class": "section-nw-layer-v3",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Your Dog is Really Sleeping on"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description",
+      "default": "<p>Tap each layer. No foam, no synthetics, nothing to off-gas.</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "header",
+      "content": "MAIN DIAGRAM IMAGE"
+    },
+    {
+      "type": "image_picker",
+      "id": "diagram_image",
+      "label": "Diagram Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "diagram_image_mobile",
+      "label": "Diagram Image (Mobile Optional)"
+    },
+    {
+      "type": "header",
+      "content": "OTHER LAYERS LIST"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_other_layers",
+      "label": "Show Other Layers List",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "other_layers_title",
+      "label": "Other Layers Title",
+      "default": "Other Layers",
+      "visible_if": "{{ section.settings.show_other_layers == true }}"
+    },
+    {
+      "type": "range",
+      "id": "default_active_layer",
+      "label": "Default Active Layer",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "info": "Which layer is selected on page load (matches block order)."
+    },
+    {
+      "type": "header",
+      "content": "COLORS"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_active_color",
+      "label": "Hotspot Active Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_inactive_color",
+      "label": "Hotspot Inactive Color",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "hotspot_text_color",
+      "label": "Hotspot Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Detail Card Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "rgba(97, 57, 22, 0.15)"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Detail Card Title Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "card_subtitle_color",
+      "label": "Detail Card Subtitle Color",
+      "default": "#CC926A"
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Detail Card Description Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "other_layers_title_color",
+      "label": "Other Layers Title Color",
+      "default": "#CC926A",
+      "visible_if": "{{ section.settings.show_other_layers == true }}"
+    },
+    {
+      "type": "color",
+      "id": "other_layers_label_color",
+      "label": "Other Layers Label Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_other_layers == true }}"
+    },
+    {
+      "type": "color",
+      "id": "other_layers_value_color",
+      "label": "Other Layers Value Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_other_layers == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F4EFE8",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "layer_slide",
+      "name": "Layer Slide",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Detail Card Title",
+          "default": "Orthopedic Core"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Detail Card Subtitle",
+          "default": "2\" COCONUT COIR"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Detail Card Description",
+          "default": "<p>Firm support that takes pressure off aging joints and resists flattening, unlike foam that sags.</p>"
+        },
+        {
+          "type": "text",
+          "id": "pin_label",
+          "label": "Hotspot Number / Label",
+          "info": "Leave blank to use block order number"
+        },
+        {
+          "type": "header",
+          "content": "HOTSPOT POSITION (DESKTOP)"
+        },
+        {
+          "type": "range",
+          "id": "pos_x_desktop",
+          "label": "Horizontal Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y_desktop",
+          "label": "Vertical Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "HOTSPOT POSITION (MOBILE)"
+        },
+        {
+          "type": "range",
+          "id": "pos_x_mobile",
+          "label": "Horizontal Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "pos_y_mobile",
+          "label": "Vertical Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        }
+      ]
+    },
+    {
+      "type": "other_layer_item",
+      "name": "Other Layer Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Cover"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "100% Organic Cotton Sateen"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-layer-v3.name",
+      "category": "NW Sections",
+      "settings": {
+        "default_active_layer": 4
+      },
+      "blocks": [
+        {
+          "type": "layer_slide",
+          "settings": {
+            "title": "Organic Cotton Cover",
+            "subtitle": "SOFT SATEEN WEAVE",
+            "description": "<p>A breathable organic cotton cover that keeps your dog cool and comfortable without synthetic treatments.</p>",
+            "pin_label": "1",
+            "pos_x_desktop": 66,
+            "pos_y_desktop": 27,
+            "pos_x_mobile": 81,
+            "pos_y_mobile": 27
+          }
+        },
+        {
+          "type": "layer_slide",
+          "settings": {
+            "title": "Wool Wrap",
+            "subtitle": "PURE SCOURRED WOOL",
+            "description": "<p>Natural wool regulates temperature and wicks moisture while adding a soft, resilient comfort layer.</p>",
+            "pin_label": "2",
+            "pos_x_desktop": 66,
+            "pos_y_desktop": 41,
+            "pos_x_mobile": 81,
+            "pos_y_mobile": 42
+          }
+        },
+        {
+          "type": "layer_slide",
+          "settings": {
+            "title": "Support Layer",
+            "subtitle": "INDUSTRIAL HEMP COIR",
+            "description": "<p>Durable hemp coir provides structured support that holds its shape over years of daily use.</p>",
+            "pin_label": "3",
+            "pos_x_desktop": 66,
+            "pos_y_desktop": 55,
+            "pos_x_mobile": 81,
+            "pos_y_mobile": 56
+          }
+        },
+        {
+          "type": "layer_slide",
+          "settings": {
+            "title": "Orthopedic Core",
+            "subtitle": "2\" COCONUT COIR",
+            "description": "<p>Firm support that takes pressure off aging joints and resists flattening, unlike foam that sags.</p>",
+            "pin_label": "4",
+            "pos_x_desktop": 66,
+            "pos_y_desktop": 71,
+            "pos_x_mobile": 81,
+            "pos_y_mobile": 70
+          }
+        },
+        {
+          "type": "other_layer_item",
+          "settings": {
+            "label": "Cover",
+            "value": "100% Organic Cotton Sateen"
+          }
+        },
+        {
+          "type": "other_layer_item",
+          "settings": {
+            "label": "Wool Wrap",
+            "value": "Pure Scoured Wool"
+          }
+        },
+        {
+          "type": "other_layer_item",
+          "settings": {
+            "label": "Support Layer",
+            "value": "Industrial Hemp Coir"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

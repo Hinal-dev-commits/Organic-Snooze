@@ -114,6 +114,7 @@
 {%- if is_nw_product_page -%}
 {% render 'nw-product-page' %}
 {%- endif -%}
+{{ 'nw-size-guide.css' | asset_url | stylesheet_tag }}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <product-component view-event-payload="{{ product | standard_event_data: 'view', context: 'page' | escape }}">
@@ -601,6 +602,8 @@
                   -%}
                 {%- when 'shipping_tag' -%}
                   {%- render 'nw-product-shipping-tag', block: block, product: product -%}
+                {%- when 'promo_banner' -%}
+                  {%- render 'nw-product-promo-banner', block: block, product: product, section_id: section.id -%}
                 {%- when 'setup_delivery' -%}
                   {%- render 'nw-product-setup-delivery', block: block -%}
                 {%- when 'whats_included' -%}
@@ -623,6 +626,7 @@
                   {%- render 'nw-product-quiz-button', block: block -%}
                 {%- when 'bundle_save' -%}
                   {%- render 'nw-product-bundle-save', block: block, product: product -%}
+                {%- when 'nw_size_popup' -%}
                 {%- when 'bundle_tabs' -%}
                   {%- render 'nw-product-bundle-tabs', block: block, section: section -%}
                 {%- when 'bundle_tab' -%}
@@ -841,6 +845,14 @@
       {%- unless is_nw_product_page -%}
         {% render 'product-media-modal', product: product, variant_images: variant_images %}
       {%- endunless -%}
+
+      {% assign size_popups = section.blocks | where: 'type', 'nw_size_popup' %}
+      {%- if size_popups.size > 0 -%}
+        {{ 'nw-size-guide.css' | asset_url | stylesheet_tag }}
+      {%- endif -%}
+      {%- for block in size_popups -%}
+        {% render 'nw-product-size-popup', block: block %}
+      {%- endfor -%}
 
       {% assign popups = section.blocks | where: 'type', 'popup' %}
       {%- for block in popups -%}
@@ -1394,13 +1406,20 @@
           "id": "show_size_guide",
           "label": "Show Size Guide",
           "default": true,
-          "info": "Shows a Size Guide link that opens the product metafield custom.size_guide image in a popup. Hides custom.select_size when enabled."
+          "info": "Shows a Size Guide link that opens the NW Size Popup block modal. Hides custom.select_size when enabled."
         },
         {
           "type": "text",
           "id": "size_guide_label",
           "label": "Size Guide Link Label",
           "default": "Size Guide",
+          "visible_if": "{{ block.settings.show_size_guide == true }}"
+        },
+        {
+          "type": "text",
+          "id": "size_guide_popup_id",
+          "label": "Size Guide Popup ID",
+          "info": "Optional. Enter the same Popup link ID set on an NW Size Popup block. Leave blank to open the first NW Size Popup block in this section.",
           "visible_if": "{{ block.settings.show_size_guide == true }}"
         },
         {
@@ -2763,6 +2782,152 @@
           "unit": "px",
           "label": "Margin Bottom Mobile",
           "default": 0
+        }
+      ]
+    },
+    {
+      "type": "promo_banner",
+      "name": "Promo Banner",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "When enabled, content is loaded from the Discount Message metaobject if this product is listed on an entry (message, percentage, products). Use {CODE} in the message for the code pill and [DiscountedPrice] for the variant discounted price. Block settings below are used as fallback or heading override."
+        },
+        {
+          "type": "checkbox",
+          "id": "use_discount_metaobject",
+          "label": "Use Discount Message metaobject",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Fallback heading when this product is not on a Discount Message metaobject entry.",
+          "default": "Save 15% on your first order!",
+          "visible_if": "{{ block.settings.use_discount_metaobject == false }}"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "info": "Fallback copy when this product is not on a Discount Message metaobject entry.",
+          "visible_if": "{{ block.settings.use_discount_metaobject == false }}"
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount code",
+          "info": "Fallback code when this product is not on a Discount Message metaobject entry.",
+          "visible_if": "{{ block.settings.use_discount_metaobject == false }}"
+        },
+        {
+          "type": "header",
+          "content": "Icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use custom icon image",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom icon",
+          "visible_if": "{{ block.settings.use_custom_icon }}"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background",
+          "default": "#EDF5EB"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border",
+          "default": "#613916",
+          "alpha": true
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text",
+          "default": "#454500"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon",
+          "default": "#454500"
+        },
+        {
+          "type": "color",
+          "id": "code_bg_color",
+          "label": "Code background",
+          "default": "#FFFCF0"
+        },
+        {
+          "type": "color",
+          "id": "code_border_color",
+          "label": "Code border",
+          "default": "#7F7F29"
+        },
+        {
+          "type": "color",
+          "id": "code_text_color",
+          "label": "Code text",
+          "default": "#434300"
+        },
+        {
+          "type": "header",
+          "content": "BLOCK SPACING"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom Mobile",
+          "default": 16
         }
       ]
     },
@@ -4732,6 +4897,422 @@
       ]
     },
     {
+      "type": "nw_size_popup",
+      "name": "NW Size Popup",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Size guide popup modal. Set a Popup link ID below and paste the same value in the Variant picker Size Guide Popup ID field. If both are blank, the first popup block in this section is used."
+        },
+        {
+          "type": "text",
+          "id": "link_id",
+          "label": "Popup link ID",
+          "info": "Optional custom ID (e.g. mattress-size-guide). Must match the Variant picker Size Guide Popup ID when linking a specific popup."
+        },
+        {
+          "type": "range",
+          "id": "items_count",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "label": "Number of size items",
+          "default": 6
+        },
+        {
+          "type": "header",
+          "content": "Header"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Size Guide"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Choose the perfect mattress dimensions for your bedroom."
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "content_heading",
+          "label": "Content heading",
+          "default": "Understanding Your Size"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<ul><li><strong>Twin / Twin XL:</strong> Ideal for kids, teens, or single adults in smaller rooms</li><li><strong>Full:</strong> Great for single adults who want more room to stretch</li><li><strong>Queen:</strong> Perfect for most couples and spacious enough for single sleepers</li><li><strong>King:</strong> Best for couples who want maximum personal space</li><li><strong>Cal King:</strong> Designed for taller sleepers who need extra length</li></ul>"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "subtext_color",
+          "label": "Subtext",
+          "default": "#9E7B5A"
+        },
+        {
+          "type": "color",
+          "id": "size_text_color",
+          "label": "Size text",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "size_subtext_color",
+          "label": "Size subtext",
+          "default": "#A08873"
+        },
+        {
+          "type": "color",
+          "id": "content_heading_color",
+          "label": "Content heading",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "content_color",
+          "label": "Content text",
+          "default": "#8C6A51"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border",
+          "default": "#EADDC9"
+        },
+        {
+          "type": "color",
+          "id": "close_bg_color",
+          "label": "Close button background",
+          "default": "#F4EFE8"
+        },
+        {
+          "type": "header",
+          "content": "Size items"
+        },
+        {
+          "type": "header",
+          "content": "Size 1",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "Text",
+          "default": "Twin",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_1_subtext",
+          "label": "Subtext",
+          "default": "38\" × 75\"",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 2",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "Text",
+          "default": "Twin XL",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_2_subtext",
+          "label": "Subtext",
+          "default": "38\" × 80\"",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 3",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_3_text",
+          "label": "Text",
+          "default": "Full",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_3_subtext",
+          "label": "Subtext",
+          "default": "54\" × 75\"",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_3_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_3_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 4",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_4_text",
+          "label": "Text",
+          "default": "Queen",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_4_subtext",
+          "label": "Subtext",
+          "default": "60\" × 80\"",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_4_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_4_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 5",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_5_text",
+          "label": "Text",
+          "default": "King",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_5_subtext",
+          "label": "Subtext",
+          "default": "76\" × 80\"",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_5_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_5_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 6",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_6_text",
+          "label": "Text",
+          "default": "Cal King",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_6_subtext",
+          "label": "Subtext",
+          "default": "72\" × 84\"",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_6_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_6_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 7",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_7_text",
+          "label": "Text",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_7_subtext",
+          "label": "Subtext",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_7_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_7_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 8",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_8_text",
+          "label": "Text",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_8_subtext",
+          "label": "Subtext",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_8_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_8_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 9",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_9_text",
+          "label": "Text",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_9_subtext",
+          "label": "Subtext",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_9_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_9_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 10",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_10_text",
+          "label": "Text",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_10_subtext",
+          "label": "Subtext",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_10_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_10_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        }
+      ]
+    },
+    {
       "type": "bundle_tabs",
       "name": "Product Bundle Tabs Main",
       "limit": 1,
@@ -6044,6 +6625,14 @@
     {
       "name": "t:sections.main-product.presets.name",
       "blocks": [
+        {
+          "type": "promo_banner",
+          "settings": {
+            "heading": "Save 15% on your first order!",
+            "description": "Use code SNOOZE15 at checkout for 15% off your organic mattress purchase.",
+            "discount_code": "SNOOZE15"
+          }
+        },
         {
           "type": "text",
           "settings": {

@@ -1,0 +1,144 @@
+{% doc %}
+  NW Size Popup modal for main product blocks.
+  @param {object} block - nw_size_popup block settings
+{% enddoc %}
+
+{%- liquid
+  assign modal_id = 'NwSizePopupModal-' | append: block.id
+  assign items_count = block.settings.items_count | default: 6
+  if items_count < 1
+    assign items_count = 1
+  endif
+  if items_count > 10
+    assign items_count = 10
+  endif
+-%}
+
+<modal-dialog id="{{ modal_id }}" class="product-popup-modal nw-size-guide" {{ block.shopify_attributes }}>
+  <div
+    role="dialog"
+    aria-label="{{ block.settings.heading | default: 'Size Guide' | escape }}"
+    aria-modal="true"
+    class="product-popup-modal__content nw-size-guide__dialog"
+    tabindex="-1"
+  >
+  
+  <div
+  class="nw-size-guide__inner"
+  style="
+        --nw-sg-heading-color: {{ block.settings.heading_color | default: '#613916' }};
+        --nw-sg-subtext-color: {{ block.settings.subtext_color | default: '#9E7B5A' }};
+        --nw-sg-size-text-color: {{ block.settings.size_text_color | default: '#613916' }};
+        --nw-sg-size-subtext-color: {{ block.settings.size_subtext_color | default: '#A08873' }};
+        --nw-sg-content-heading-color: {{ block.settings.content_heading_color | default: '#613916' }};
+        --nw-sg-content-color: {{ block.settings.content_color | default: '#8C6A51' }};
+        --nw-sg-border-color: {{ block.settings.border_color | default: '#EADDC9' }};
+        --nw-sg-close-bg: {{ block.settings.close_bg_color | default: '#F4EFE8' }};
+      "
+    >
+    {%- if block.settings.heading != blank or block.settings.subtext != blank -%}
+      <div class="nw-size-guide__header">
+        <div class="nw-size-guide__title-group">
+          {%- if block.settings.heading != blank -%}
+            <h2 class="nw-size-guide__heading">{{ block.settings.heading | escape }}</h2>
+          {%- endif -%}
+          {%- if block.settings.subtext != blank -%}
+            <p class="nw-size-guide__subtext">{{ block.settings.subtext | escape }}</p>
+          {%- endif -%}
+        </div>
+          <button
+            id="ModalClose-{{ block.id }}"
+            type="button"
+            class="product-popup-modal__toggle nw-size-guide__close"
+            aria-label="{{ 'accessibility.close' | t }}"
+          >
+            {% render 'nw-icon', icon: 'close' %}
+          </button>
+        </div>
+      {%- endif -%}
+
+      {%- assign visible_items = 0 -%}
+      {%- for i in (1..items_count) -%}
+        {%- liquid
+          assign text_key = 'item_' | append: i | append: '_text'
+          assign subtext_key = 'item_' | append: i | append: '_subtext'
+          assign image_key = 'item_' | append: i | append: '_image'
+          assign item_text = block.settings[text_key]
+          assign item_subtext = block.settings[subtext_key]
+          assign item_image = block.settings[image_key]
+        -%}
+        {%- if item_text != blank or item_subtext != blank or item_image != blank -%}
+          {%- assign visible_items = visible_items | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if visible_items > 0 -%}
+        <div class="nw-size-guide__sizes{% if visible_items > 3 %} nw-size-guide__sizes--grid{% endif %}">
+          {%- for i in (1..items_count) -%}
+            {%- liquid
+              assign text_key = 'item_' | append: i | append: '_text'
+              assign subtext_key = 'item_' | append: i | append: '_subtext'
+              assign image_key = 'item_' | append: i | append: '_image'
+              assign item_text = block.settings[text_key]
+              assign item_subtext = block.settings[subtext_key]
+              assign item_image = block.settings[image_key]
+            -%}
+            {%- if item_text != blank or item_subtext != blank or item_image != blank -%}
+              <div class="nw-size-guide__size">
+                <div class="nw-size-guide__size-visual">
+                  {%- liquid
+                    assign image_mobile_key = 'item_' | append: i | append: '_image_mobile'
+                    assign item_image_mobile = block.settings[image_mobile_key]
+                    assign size_image = item_image | default: item_image_mobile
+                    assign size_image_alt = item_text | default: 'Size illustration' | escape
+                  -%}
+                  {%- if size_image != blank -%}
+                    <picture>
+                      {%- if item_image_mobile != blank -%}
+                        <source
+                          media="(max-width: 749px)"
+                          srcset="
+                            {{- item_image_mobile | image_url }}
+                          "
+                        >
+                      {%- endif -%}
+                      <img
+                        class="nw-size-guide__size-image"
+                        src="{{ size_image | image_url }}"
+                        loading="lazy"
+                        alt="{{ size_image_alt }}"
+                        width=""
+                        height=""
+                      >
+                    </picture>
+                  {%- else -%}
+                    <div class="nw-size-guide__size-placeholder" aria-hidden="true"></div>
+                  {%- endif -%}
+                </div>
+                <div class="nw-size-guide__size-labels">
+                  {%- if item_text != blank -%}
+                    <p class="nw-size-guide__size-text">{{ item_text | escape }}</p>
+                  {%- endif -%}
+                  {%- if item_subtext != blank -%}
+                    <p class="nw-size-guide__size-subtext">{{ item_subtext | escape }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if block.settings.content_heading != blank or block.settings.content != blank -%}
+        <div class="nw-size-guide__content">
+          {%- if block.settings.content_heading != blank -%}
+            <h3 class="nw-size-guide__content-heading">{{ block.settings.content_heading | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.content != blank -%}
+            <div class="nw-size-guide__content-body rte">{{ block.settings.content }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</modal-dialog>

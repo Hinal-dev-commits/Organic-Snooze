@@ -25,8 +25,28 @@
     if show_size_guide == nil
       assign show_size_guide = true
     endif
-    assign size_guide_image = product.metafields.custom.size_guide.value | default: product.metafields.custom.size_guide
-    assign size_guide_modal_id = 'SizeGuideModal-' | append: section.id | append: '-' | append: block.id
+
+    assign size_guide_modal_id = blank
+    if show_size_guide
+      assign popup_block = blank
+      assign popup_id_setting = block.settings.size_guide_popup_id | strip
+      if popup_id_setting != blank
+        for popup_candidate in section.blocks
+          if popup_candidate.type == 'nw_size_popup'
+            assign popup_link_id = popup_candidate.settings.link_id | strip
+            if popup_link_id == popup_id_setting or popup_candidate.id == popup_id_setting
+              assign popup_block = popup_candidate
+              break
+            endif
+          endif
+        endfor
+      else
+        assign popup_block = section.blocks | where: 'type', 'nw_size_popup' | first
+      endif
+      if popup_block != blank
+        assign size_guide_modal_id = 'NwSizePopupModal-' | append: popup_block.id
+      endif
+    endif
   -%}
   <variant-selects
     id="variant-selects-{{ section.id }}"
@@ -75,7 +95,6 @@
               firmness_tag_text: firmness_tag_text,
               values_order: values_order,
               show_size_guide: show_size_guide,
-              size_guide_image: size_guide_image,
               size_guide_modal_id: size_guide_modal_id
             %}
             {%- break -%}
@@ -108,7 +127,6 @@
             firmness_tag_text: firmness_tag_text,
             values_order: values_order,
             show_size_guide: show_size_guide,
-            size_guide_image: size_guide_image,
             size_guide_modal_id: size_guide_modal_id
           %}
         {%- endunless -%}
@@ -137,18 +155,9 @@
           firmness_tag_text: firmness_tag_text,
           values_order: values_order,
           show_size_guide: show_size_guide,
-          size_guide_image: size_guide_image,
           size_guide_modal_id: size_guide_modal_id
         %}
       {%- endfor -%}
-    {%- endif -%}
-
-    {%- if show_size_guide and size_guide_image != blank -%}
-      {% render 'nw-product-size-guide-modal',
-        size_guide_image: size_guide_image,
-        modal_id: size_guide_modal_id,
-        size_guide_label: block.settings.size_guide_label
-      %}
     {%- endif -%}
 
     <script type="application/json" data-selected-variant>

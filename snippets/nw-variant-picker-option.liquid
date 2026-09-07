@@ -15,7 +15,6 @@
   - firmness_tag_text: {String}
   - values_order: {String}
   - show_size_guide: {Boolean}
-  - size_guide_image: {Object}
   - size_guide_modal_id: {String}
 {% endcomment %}
 {%- liquid
@@ -83,7 +82,10 @@
           <span class="nw-variant-picker__firmness-tag">{{ firmness_tag_text }}</span>
         {%- endif -%}
       {%- elsif is_size_option -%}
-        {%- if show_size_guide and size_guide_image != blank -%}
+        {%- liquid
+          assign size_guide_label = block.settings.size_guide_label | strip
+        -%}
+        {%- if show_size_guide and size_guide_modal_id != blank and size_guide_label != blank -%}
           <modal-opener
             class="nw-variant-picker__size-guide-opener"
             data-modal="#{{ size_guide_modal_id }}"
@@ -93,7 +95,7 @@
               class="nw-variant-picker__size-guide link"
               aria-haspopup="dialog"
             >
-              {{ block.settings.size_guide_label | default: 'Size Guide' | escape }}
+              {{ size_guide_label | escape }}
             </button>
           </modal-opener>
         {%- elsif show_size_guide == false and select_size_text != blank -%}

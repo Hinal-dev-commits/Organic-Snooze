@@ -691,13 +691,20 @@
           "id": "show_size_guide",
           "label": "Show size guide",
           "default": true,
-          "info": "Shows a Size Guide link that opens the product metafield custom.size_guide image in a popup. Hides custom.select_size when enabled."
+          "info": "Shows a Size Guide link that opens the NW Size Popup block modal. Hides custom.select_size when enabled."
         },
         {
           "type": "text",
           "id": "size_guide_label",
           "label": "Size guide link label",
           "default": "Size Guide",
+          "visible_if": "{{ block.settings.show_size_guide == true }}"
+        },
+        {
+          "type": "text",
+          "id": "size_guide_popup_id",
+          "label": "Size guide popup ID",
+          "info": "Optional. Enter the same Popup link ID set on an NW Size Popup block. Leave blank to open the first NW Size Popup block in this section.",
           "visible_if": "{{ block.settings.show_size_guide == true }}"
         },
         {

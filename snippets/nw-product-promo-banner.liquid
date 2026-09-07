@@ -1,0 +1,144 @@
+{% doc %}
+  Promo banner for main product blocks.
+  Uses discount_message metaobject (message, percentage, products) when the product matches.
+  Falls back to block settings when no metaobject entry applies.
+
+  @param {object} block - Block settings
+  @param {object} product - Product object
+  @param {string} section_id - Main product section id (product form id suffix)
+{% enddoc %}
+
+{%- liquid
+  assign placeholder_token = '[DiscountedPrice]'
+  assign use_metaobject = block.settings.use_discount_metaobject
+  if use_metaobject == nil
+    assign use_metaobject = true
+  endif
+
+  assign promo_heading = block.settings.heading | strip
+  assign promo_description = block.settings.description | strip
+  assign discount_code = block.settings.discount_code | strip
+  assign discount_pct = blank
+  assign discount_message_html = blank
+  assign use_dynamic_promo = false
+
+  if use_metaobject
+    assign discount_message_entries = shop.metaobjects.discount_message.values
+    if discount_message_entries != blank
+      for discount_entry in discount_message_entries
+        unless use_dynamic_promo
+          assign discount_products = discount_entry.products.value
+          if discount_products != blank
+            for listed_product in discount_products
+              if listed_product.id == product.id
+                assign discount_message_html = discount_entry.message | metafield_tag
+                assign discount_pct = discount_entry.percentage.value | default: discount_entry.percentage
+                assign use_dynamic_promo = true
+              endif
+            endfor
+          endif
+        endunless
+      endfor
+    endif
+  endif
+
+  if use_dynamic_promo
+    assign promo_heading = blank
+    assign promo_description = blank
+    assign discount_code = blank
+    if discount_pct != blank
+      assign promo_heading = 'Save ' | append: discount_pct | append: '% on your first order!'
+    endif
+  endif
+
+  assign show_promo_banner = false
+  if use_dynamic_promo
+    assign show_promo_banner = true
+  elsif promo_heading != blank or promo_description != blank or discount_code != blank
+    assign show_promo_banner = true
+  endif
+-%}
+{%- if use_dynamic_promo != blank or promo_description != blank -%}
+  {%- if show_promo_banner -%}
+    <div
+      class="nw-product-promo-banner{% if use_dynamic_promo %} nw-product-promo-banner--dynamic{% endif %}"
+      style="
+        --nw-ppb-bg: {{ block.settings.bg_color | default: '#EDF5EB' }};
+        --nw-ppb-border: {{ block.settings.border_color | default: 'rgba(97, 57, 22, 0.2)' }};
+        --nw-ppb-text: {{ block.settings.text_color | default: '#454500' }};
+        --nw-ppb-icon: {{ block.settings.icon_color | default: '#454500' }};
+        --nw-ppb-code-bg: {{ block.settings.code_bg_color | default: '#FFFCF0' }};
+        --nw-ppb-code-border: {{ block.settings.code_border_color | default: '#7F7F29' }};
+        --nw-ppb-code-text: {{ block.settings.code_text_color | default: '#434300' }};
+      "
+      {% if use_dynamic_promo %}
+        data-promo-banner
+        data-section-id="{{ section_id }}"
+        data-block-id="{{ block.id }}"
+        data-placeholder="{{ placeholder_token | escape }}"
+      {% endif %}
+    >
+      <div class="nw-product-promo-banner__content">
+        {%- if promo_heading != blank -%}
+          <div class="nw-product-promo-banner__heading-row">
+            <span class="nw-product-promo-banner__icon" aria-hidden="true">
+              {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
+                {%- render 'nw-icon', icon: 'custom', custom_icon: block.settings.custom_icon, img_class: 'nw-product-promo-banner__icon-img' -%}
+              {%- else -%}
+                {% render 'nw-icon', icon: 'gift' %}
+              {%- endif -%}
+            </span>
+            <p class="nw-product-promo-banner__heading">{{ promo_heading | escape }}</p>
+          </div>
+        {%- endif -%}
+  
+        {%- if use_dynamic_promo -%}
+          <div class="nw-product-promo-banner__description nw-product-promo-banner__message" data-promo-banner-message hidden></div>
+        {%- elsif promo_description != blank -%}
+          <p class="nw-product-promo-banner__description">{{ promo_description | escape }}</p>
+        {%- endif -%}
+      </div>
+  
+      {%- if use_dynamic_promo or discount_code != blank -%}
+        <div
+          class="nw-product-promo-banner__code{% if use_dynamic_promo %} nw-product-promo-banner__code--copy{% endif %}"
+          {% if use_dynamic_promo %}
+            data-promo-banner-code
+            hidden
+            role="button"
+            tabindex="0"
+          {% endif %}
+        >
+          <span class="nw-product-promo-banner__code-text" data-promo-banner-code-text>
+            {%- unless use_dynamic_promo -%}
+              {{ discount_code | escape }}
+            {%- endunless -%}
+          </span>
+          {%- if use_dynamic_promo -%}
+            <span class="nw-product-promo-banner__toast" data-promo-banner-toast role="status" aria-live="polite" hidden></span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  
+    {%- if use_dynamic_promo -%}
+      <script type="application/json" id="promo-banner-data-{{ section_id }}-{{ block.id }}">
+        {
+          "sectionId": {{ section_id | json }},
+          "blockId": {{ block.id | json }},
+          "placeholder": {{ placeholder_token | json }},
+          "percentage": {% if discount_pct != blank %}{{ discount_pct | json }}{% else %}null{% endif %},
+          "message": {{ discount_message_html | json }},
+          "moneyFormat": {{ shop.money_format | strip_html | json }},
+          "variants": [
+            {%- for variant in product.variants -%}
+              {%- unless forloop.first -%},{%- endunless -%}
+              { "id": {{ variant.id }}, "price": {{ variant.price }} }
+            {%- endfor -%}
+          ]
+        }
+      </script>
+      <script src="{{ 'nw-product-promo-banner.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
