@@ -76,6 +76,7 @@
             "size_option_name": "Select Size",
             "show_size_guide": true,
             "size_guide_label": "Size Guide",
+            "size_guide_popup_id": "",
             "quantity_option_name": "Select Quantity",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
@@ -103,11 +104,22 @@
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
-            "show_affirm_button": true,
+            "show_affirm_button": false,
             "margin_top": 16,
-            "margin_bottom": 16,
+            "margin_bottom": 8,
             "margin_top_mobile": 32,
-            "margin_bottom_mobile": 0
+            "margin_bottom_mobile": 8
+          }
+        },
+        "affirm_pay_over_time_messaging_product_block_3zmbgt": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "settings": {
+            "logo_align": "left",
+            "font_size": 14,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "",
+            "price_selector": ""
           }
         },
         "payment_logos_aAAW97": {
@@ -263,6 +275,7 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "affirm_pay_over_time_messaging_product_block_3zmbgt",
         "payment_logos_aAAW97",
         "collapsible_tab_W7etYx",
         "collapsible_tab_THr6Kx",
@@ -830,7 +843,7 @@
         "star_color": "#e57b1e",
         "star_color_inactive": "#d1d5db",
         "card_border_color": "#61391633",
-        "card_bg_color": "#FFFFFF",
+        "card_bg_color": "#ffffff",
         "quote_color": "#613916",
         "name_color": "#613916",
         "role_color": "#613916",
@@ -841,7 +854,7 @@
         "footer_heading_color": "#613916",
         "footer_description_color": "#613916",
         "bg_type": "color",
-        "bg_color": "#FBF9F6",
+        "bg_color": "#fbf9f6",
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -977,6 +990,7 @@
         "open_first_faq": false,
         "initial_faq_count": 4,
         "more_label": "",
+        "less_label": "SEE LESS FAQ'S",
         "contact_heading": "",
         "show_call_btn": false,
         "call_label": "CALL (443) 333-1213",
@@ -1000,6 +1014,26 @@
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
+    },
+    "178886568216691c0d": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_aRHn4E": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_aRHn4E"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -1012,6 +1046,7 @@
     "nw_organic_gcGNTr",
     "nw_founder_story_RhHRer",
     "nw_product_list_Ej8ReJ",
-    "nw_faq_VygLpj"
+    "nw_faq_VygLpj",
+    "178886568216691c0d"
   ]
 }
