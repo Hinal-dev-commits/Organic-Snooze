@@ -44,9 +44,13 @@ Blog grid card for NW Blog And Video.
 -%}
 
 <article
-  class="nw-blog-video__blog-card{% if hidden %} nw-blog-video__blog-card--hidden{% endif %}"
+  class="nw-blog-video__blog-card{% if hidden %} nw-blog-video__blog-card--hidden{% endif %} {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
   data-blog-video-blog-card
   {% if blog_tag != blank %}data-topic-tag="{{ blog_tag | strip | escape }}"{% endif %}
+  {% if settings.animations_reveal_on_scroll %}
+    data-cascade
+    style="--animation-order: {{ forloop.index }};"
+  {% endif %}
 >
   <div class="nw-blog-video__blog-media">
     {%- if article.image != blank -%}

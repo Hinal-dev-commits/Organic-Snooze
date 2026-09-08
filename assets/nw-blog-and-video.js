@@ -12,6 +12,7 @@ if (!customElements.get('nw-blog-and-video')) {
       this._bindLoadMore();
       this._bindFilters();
       this._bindVideoPlay();
+      this._saveVideoCardOrigins();
       this._mobileQuery.addEventListener('change', this._onMobileChange);
       this._syncPanelVisibility();
     }
@@ -121,6 +122,21 @@ if (!customElements.get('nw-blog-and-video')) {
       return !!card.closest('[data-blog-video-featured]');
     }
 
+    _saveVideoCardOrigins() {
+      var panel = this.querySelector('[data-blog-video-panel="video"]');
+      if (!panel) return;
+
+      panel.querySelectorAll('[data-blog-video-card]').forEach(function (card) {
+        if (this._isFeaturedVideoCard(card) || card._nwOriginalParent) return;
+        card._nwOriginalParent = card.parentElement;
+        card._nwOriginalHidden = card.classList.contains('nw-blog-video__video-card--hidden');
+      }, this);
+    }
+
+    _getVideoSidebarCount() {
+      return Math.min(2, this._videoInitialCount);
+    }
+
     _applyFilters(panelType) {
       if (panelType === 'blog') {
         this._applyBlogFilters();
@@ -174,42 +190,83 @@ if (!customElements.get('nw-blog-and-video')) {
       var topicValue = topicSelect ? topicSelect.value : 'all';
       var query = this._normalize(searchInput ? searchInput.value : '');
       var isFiltering = this._isPanelFiltering(panel);
-      var cards = panel.querySelectorAll('[data-blog-video-card]');
-      var pool = panel.querySelector('[data-blog-video-pool]');
 
       panel.classList.toggle('is-filter-active', isFiltering);
 
-      if (pool) {
-        if (isFiltering) {
-          pool.removeAttribute('hidden');
-        } else {
-          pool.setAttribute('hidden', '');
-        }
+      if (isFiltering) {
+        this._layoutFilteredVideos(panel, topicValue, query);
+        return;
       }
 
-      cards.forEach(function (card) {
+      this._restoreVideoLayout();
+      this._restoreVideoLimit();
+    }
+
+    _layoutFilteredVideos(panel, topicValue, query) {
+      var grid = panel.querySelector('[data-blog-video-grid]');
+      var wrapper = panel.querySelector('[data-blog-video-grid-wrapper]');
+      var pool = panel.querySelector('[data-blog-video-pool]');
+      if (!grid || !wrapper) return;
+
+      var sidebarCount = this._getVideoSidebarCount();
+      var visibleCards = [];
+
+      panel.querySelectorAll('[data-blog-video-card]').forEach(function (card) {
         if (this._isFeaturedVideoCard(card)) {
           card.classList.remove('nw-blog-video__video-card--filter-hidden');
           card.classList.remove('nw-blog-video__video-card--hidden');
           return;
         }
 
-        card.classList.remove('nw-blog-video__video-card--filter-hidden');
+        var matches = this._cardMatchesFilters(card, topicValue, query);
+        card.classList.toggle('nw-blog-video__video-card--filter-hidden', !matches);
 
-        if (isFiltering) {
-          var visible = this._cardMatchesFilters(card, topicValue, query);
-          card.classList.toggle('nw-blog-video__video-card--filter-hidden', !visible);
-          if (visible) {
-            card.classList.remove('nw-blog-video__video-card--hidden');
-          }
+        if (matches) {
+          visibleCards.push(card);
+        }
+      }, this);
+
+      if (pool) {
+        pool.setAttribute('hidden', '');
+      }
+
+      visibleCards.forEach(function (card, index) {
+        card.classList.remove('nw-blog-video__video-card--hidden');
+
+        if (index < sidebarCount) {
+          grid.appendChild(card);
           return;
         }
 
+        wrapper.appendChild(card);
+      });
+
+      wrapper.hidden = visibleCards.length <= sidebarCount;
+    }
+
+    _restoreVideoLayout() {
+      var panel = this.querySelector('[data-blog-video-panel="video"]');
+      if (!panel) return;
+
+      panel.querySelectorAll('[data-blog-video-card]').forEach(function (card) {
+        if (this._isFeaturedVideoCard(card)) return;
+
+        if (card._nwOriginalParent) {
+          card._nwOriginalParent.appendChild(card);
+        }
+
         card.classList.remove('nw-blog-video__video-card--filter-hidden');
+
+        if (card._nwOriginalHidden) {
+          card.classList.add('nw-blog-video__video-card--hidden');
+        } else {
+          card.classList.remove('nw-blog-video__video-card--hidden');
+        }
       }, this);
 
-      if (!isFiltering) {
-        this._restoreVideoLimit();
+      var wrapper = panel.querySelector('[data-blog-video-grid-wrapper]');
+      if (wrapper) {
+        wrapper.hidden = false;
       }
     }
 
@@ -231,7 +288,7 @@ if (!customElements.get('nw-blog-and-video')) {
       var videoBtn = this.querySelector('[data-blog-video-load-video]');
       var isExpanded = videoBtn && videoBtn.classList.contains('is-expanded');
       var panel = this.querySelector('[data-blog-video-panel="video"]');
-      if (!panel) return;
+      if (!panel || this._isPanelFiltering(panel)) return;
 
       var pool = panel.querySelector('[data-blog-video-pool]');
       var wrapper = panel.querySelector('[data-blog-video-grid-wrapper]');
@@ -246,6 +303,10 @@ if (!customElements.get('nw-blog-and-video')) {
       panel.querySelectorAll('[data-blog-video-grid] [data-blog-video-card]').forEach(function (card) {
         card.classList.remove('nw-blog-video__video-card--hidden');
       });
+
+      if (pool) {
+        pool.setAttribute('hidden', '');
+      }
 
       if (isExpanded && pool && wrapper) {
         Array.from(pool.querySelectorAll('[data-blog-video-card]')).forEach(function (card) {

@@ -344,8 +344,10 @@ nw-featured-articles {
   .nw-featured-articles__header{
     padding: 0 16px;
   }
-  .nw-featured-articles__swiper .swiper-wrapper{
-    padding: 0 16px;
+
+  .swiper.nw-featured-articles__swiper {
+    padding-left: 16px;
+    padding-right: 16px; 
   }
 
   .nw-featured-articles__wrapper {
