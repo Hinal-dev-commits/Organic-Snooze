@@ -1,29 +1,34 @@
-class NwProductAffirmButton extends HTMLElement {
+class NwProductAffirm extends HTMLElement {
   connectedCallback() {
     if (this.dataset.bound === 'true') return;
     this.dataset.bound = 'true';
-    this.addEventListener('click', this.onClick.bind(this));
+
+    this.affirmEl = this.querySelector('.affirm-as-low-as');
+    if (!this.affirmEl) return;
+
+    if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+      this.variantChangeUnsubscriber = subscribe(PUB_SUB_EVENTS.variantChange, (event) => {
+        this.onVariantChange(event);
+      });
+    }
   }
 
-  onClick(event) {
-    const terms = this.querySelector('shopify-payment-terms, .shopify-payment-terms');
-    if (!terms) return;
+  disconnectedCallback() {
+    this.variantChangeUnsubscriber?.();
+  }
 
-    const link =
-      terms.querySelector('a') ||
-      terms.shadowRoot?.querySelector('a') ||
-      terms.querySelector('[role="button"]') ||
-      terms.shadowRoot?.querySelector('[role="button"]');
+  onVariantChange(event) {
+    const { sectionId, variant } = event.data || {};
+    if (!variant?.price || sectionId !== this.dataset.sectionId) return;
 
-    if (!link) return;
+    this.affirmEl.setAttribute('data-amount', variant.price);
 
-    if (event.target === link || link.contains(event.target)) return;
-
-    event.preventDefault();
-    link.click();
+    if (typeof affirm !== 'undefined' && affirm.ui?.refresh) {
+      affirm.ui.refresh();
+    }
   }
 }
 
-if (!customElements.get('nw-product-affirm-button')) {
-  customElements.define('nw-product-affirm-button', NwProductAffirmButton);
+if (!customElements.get('nw-product-affirm')) {
+  customElements.define('nw-product-affirm', NwProductAffirm);
 }

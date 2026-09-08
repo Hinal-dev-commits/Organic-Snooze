@@ -318,7 +318,10 @@
 
     .nw-organic-standards-v2__featured-card {
         flex-direction: column;
-        max-width: 343px;
+        max-width: 100%;
+        width: calc(100% - 32px);
+        margin-left: 16px;
+        margin-right: 16px;
         height: auto;
         border-radius: 10px;
     }
