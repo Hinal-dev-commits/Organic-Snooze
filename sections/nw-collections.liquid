@@ -5,9 +5,47 @@
 {%- assign nw_shell_selector = '#NwCollections-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
 
+{%- assign collection_blocks = section.blocks | where: 'type', 'collection' -%}
+{%- liquid
+  assign active_tab_index = 0
+  assign tab_mode = section.settings.active_tab_mode | default: 'page'
+
+  if tab_mode == 'page' and collection != blank
+    for block in collection_blocks
+      if block.settings.collection != blank and block.settings.collection.id == collection.id
+        assign active_tab_index = forloop.index0
+        break
+      endif
+    endfor
+  endif
+
+  assign prod_limit = section.settings.products_to_show
+  if prod_limit == blank
+    assign prod_limit = 8
+  endif
+
+  assign pagination_size = section.settings.products_per_page | default: 50
+  assign pagination_anchor = '#NwCollections-' | append: section.id
+  assign active_collection = nil
+
+  for block in collection_blocks
+    if forloop.index0 == active_tab_index and block.settings.collection != blank
+      assign active_collection = block.settings.collection
+      break
+    endif
+  endfor
+
+  assign use_pagination = false
+  if prod_limit == 0 and active_collection != blank and active_collection.products_count > pagination_size
+    assign use_pagination = true
+  endif
+-%}
+
 <nw-collections
   id="NwCollections-{{ section.id }}"
   class="nw-collections section-{{ section.id }}"
+  data-active-tab-mode="{{ tab_mode }}"
+  data-initial-tab="{{ active_tab_index }}"
 >
   <div class="nw-collections__container">
     {%- if section.settings.heading != blank
@@ -26,8 +64,6 @@
       </div>
     {%- endif -%}
 
-    {%- assign collection_blocks = section.blocks | where: 'type', 'collection' -%}
-
     {%- if collection_blocks.size > 0 -%}
       <div class="nw-collections__tabs-wrap">
         <div class="nw-collections__tabs" role="tablist" aria-label="Collections">
@@ -43,12 +79,12 @@
             -%}
             <button
               type="button"
-              class="nw-collections__tab{% if forloop.first %} is-active{% endif %}"
+              class="nw-collections__tab{% if forloop.index0 == active_tab_index %} is-active{% endif %}"
               id="NwCollectionTabBtn-{{ section.id }}-{{ forloop.index0 }}"
               role="tab"
-              aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              aria-selected="{% if forloop.index0 == active_tab_index %}true{% else %}false{% endif %}"
               aria-controls="NwCollectionTabPanel-{{ section.id }}-{{ forloop.index0 }}"
-              tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+              tabindex="{% if forloop.index0 == active_tab_index %}0{% else %}-1{% endif %}"
               data-nw-collection-tab="{{ forloop.index0 }}"
               data-collection-url="{% if block.settings.collection != blank %}{{ block.settings.collection.url }}{% endif %}"
               {{ block.shopify_attributes }}
@@ -60,72 +96,147 @@
       </div>
 
       <div class="nw-collections__panels">
-        {%- for block in collection_blocks -%}
-          {%- liquid
-            assign current_collection = block.settings.collection
-            assign prod_limit = section.settings.products_to_show
-            if prod_limit == blank
-              assign prod_limit = 8
-            endif
-          -%}
-          <div
-            class="nw-collections__panel"
-            id="NwCollectionTabPanel-{{ section.id }}-{{ forloop.index0 }}"
-            data-nw-collection-panel="{{ forloop.index0 }}"
-            role="tabpanel"
-            aria-labelledby="NwCollectionTabBtn-{{ section.id }}-{{ forloop.index0 }}"
-            {% unless forloop.first %}
-              hidden
-            {% endunless %}
-          >
-            {%- if current_collection != blank and current_collection.products_count > 0 -%}
-              {%- if section.settings.show_product_count -%}
-                <div class="nw-collections__count-bar">
-                  <span>
-                    {{- current_collection.products_count }}
-                    {{ current_collection.products_count | pluralize: 'Product', 'Products' -}}
-                  </span>
-                </div>
-              {%- endif -%}
+        {%- if use_pagination -%}
+          {%- paginate active_collection.products by pagination_size -%}
+            {%- for block in collection_blocks -%}
+              {%- liquid
+                assign current_collection = block.settings.collection
+                assign is_active_panel = false
+                assign is_paginated_panel = false
+                if forloop.index0 == active_tab_index
+                  assign is_active_panel = true
+                endif
+                if current_collection != blank and current_collection.id == active_collection.id
+                  assign is_paginated_panel = true
+                endif
+              -%}
+              <div
+                class="nw-collections__panel"
+                id="NwCollectionTabPanel-{{ section.id }}-{{ forloop.index0 }}"
+                data-nw-collection-panel="{{ forloop.index0 }}"
+                role="tabpanel"
+                aria-labelledby="NwCollectionTabBtn-{{ section.id }}-{{ forloop.index0 }}"
+                {% unless is_active_panel %}
+                  hidden
+                {% endunless %}
+              >
+                {%- if current_collection != blank and current_collection.products_count > 0 -%}
+                  {%- if section.settings.show_product_count -%}
+                    <div class="nw-collections__count-bar">
+                      <span>
+                        {{- current_collection.products_count }}
+                        {{ current_collection.products_count | pluralize: 'Product', 'Products' -}}
+                      </span>
+                    </div>
+                  {%- endif -%}
 
-              <div class="nw-collections__grid">
-                {%- if prod_limit == 0 -%}
-                  {%- for product in current_collection.products -%}
-                    {% render 'nw-product-card',
-                      product: product,
-                      section_id: section.id,
-                      show_rating: section.settings.show_rating_on_card,
-                      show_firmness: section.settings.show_firmness,
-                      show_seller_tag: section.settings.show_seller_tag,
-                      show_best_for: section.settings.show_best_for,
-                      button_text: section.settings.pcard_button_text,
-                      button_style: section.settings.pcard_button_style,
-                      lazy_load: true
-                    %}
-                  {%- endfor -%}
+                  <div class="nw-collections__grid">
+                    {%- if is_paginated_panel -%}
+                      {%- for product in paginate.products -%}
+                        {% render 'nw-product-card',
+                          product: product,
+                          section_id: section.id,
+                          show_rating: section.settings.show_rating_on_card,
+                          show_firmness: section.settings.show_firmness,
+                          show_seller_tag: section.settings.show_seller_tag,
+                          show_best_for: section.settings.show_best_for,
+                          button_text: section.settings.pcard_button_text,
+                          button_style: section.settings.pcard_button_style,
+                          lazy_load: true
+                        %}
+                      {%- endfor -%}
+                    {%- else -%}
+                      {%- for product in current_collection.products limit: pagination_size -%}
+                        {% render 'nw-product-card',
+                          product: product,
+                          section_id: section.id,
+                          show_rating: section.settings.show_rating_on_card,
+                          show_firmness: section.settings.show_firmness,
+                          show_seller_tag: section.settings.show_seller_tag,
+                          show_best_for: section.settings.show_best_for,
+                          button_text: section.settings.pcard_button_text,
+                          button_style: section.settings.pcard_button_style,
+                          lazy_load: true
+                        %}
+                      {%- endfor -%}
+                    {%- endif -%}
+                  </div>
+
+                  {%- if is_paginated_panel and is_active_panel and paginate.pages > 1 -%}
+                    <div class="nw-collections__pagination">
+                      {% render 'pagination', paginate: paginate, anchor: pagination_anchor %}
+                    </div>
+                  {%- endif -%}
+                {%- elsif current_collection != blank -%}
+                  <div class="nw-collections__empty">No products found in this collection.</div>
                 {%- else -%}
-                  {%- for product in current_collection.products limit: prod_limit -%}
-                    {% render 'nw-product-card',
-                      product: product,
-                      section_id: section.id,
-                      show_rating: section.settings.show_rating_on_card,
-                      show_firmness: section.settings.show_firmness,
-                      show_seller_tag: section.settings.show_seller_tag,
-                      show_best_for: section.settings.show_best_for,
-                      button_text: section.settings.pcard_button_text,
-                      button_style: section.settings.pcard_button_style,
-                      lazy_load: true
-                    %}
-                  {%- endfor -%}
+                  <div class="nw-collections__empty">Select a collection to display products.</div>
                 {%- endif -%}
               </div>
-            {%- elsif current_collection != blank -%}
-              <div class="nw-collections__empty">No products found in this collection.</div>
-            {%- else -%}
-              <div class="nw-collections__empty">Select a collection to display products.</div>
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
+            {%- endfor -%}
+          {%- endpaginate -%}
+        {%- else -%}
+          {%- for block in collection_blocks -%}
+            {%- assign current_collection = block.settings.collection -%}
+            <div
+              class="nw-collections__panel"
+              id="NwCollectionTabPanel-{{ section.id }}-{{ forloop.index0 }}"
+              data-nw-collection-panel="{{ forloop.index0 }}"
+              role="tabpanel"
+              aria-labelledby="NwCollectionTabBtn-{{ section.id }}-{{ forloop.index0 }}"
+              {% unless forloop.index0 == active_tab_index %}
+                hidden
+              {% endunless %}
+            >
+              {%- if current_collection != blank and current_collection.products_count > 0 -%}
+                {%- if section.settings.show_product_count -%}
+                  <div class="nw-collections__count-bar">
+                    <span>
+                      {{- current_collection.products_count }}
+                      {{ current_collection.products_count | pluralize: 'Product', 'Products' -}}
+                    </span>
+                  </div>
+                {%- endif -%}
+
+                <div class="nw-collections__grid">
+                  {%- if prod_limit == 0 -%}
+                    {%- for product in current_collection.products limit: pagination_size -%}
+                      {% render 'nw-product-card',
+                        product: product,
+                        section_id: section.id,
+                        show_rating: section.settings.show_rating_on_card,
+                        show_firmness: section.settings.show_firmness,
+                        show_seller_tag: section.settings.show_seller_tag,
+                        show_best_for: section.settings.show_best_for,
+                        button_text: section.settings.pcard_button_text,
+                        button_style: section.settings.pcard_button_style,
+                        lazy_load: true
+                      %}
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- for product in current_collection.products limit: prod_limit -%}
+                      {% render 'nw-product-card',
+                        product: product,
+                        section_id: section.id,
+                        show_rating: section.settings.show_rating_on_card,
+                        show_firmness: section.settings.show_firmness,
+                        show_seller_tag: section.settings.show_seller_tag,
+                        show_best_for: section.settings.show_best_for,
+                        button_text: section.settings.pcard_button_text,
+                        button_style: section.settings.pcard_button_style,
+                        lazy_load: true
+                      %}
+                    {%- endfor -%}
+                  {%- endif -%}
+                </div>
+              {%- elsif current_collection != blank -%}
+                <div class="nw-collections__empty">No products found in this collection.</div>
+              {%- else -%}
+                <div class="nw-collections__empty">Select a collection to display products.</div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     {%- endif -%}
 
@@ -133,9 +244,17 @@
       {%- liquid
         assign action_btn_link = section.settings.button_link
         if action_btn_link == blank and collection_blocks.size > 0
-          assign first_block = collection_blocks | first
-          if first_block.settings.collection != blank
-            assign action_btn_link = first_block.settings.collection.url
+          for block in collection_blocks
+            if forloop.index0 == active_tab_index and block.settings.collection != blank
+              assign action_btn_link = block.settings.collection.url
+              break
+            endif
+          endfor
+          if action_btn_link == blank
+            assign first_block = collection_blocks | first
+            if first_block.settings.collection != blank
+              assign action_btn_link = first_block.settings.collection.url
+            endif
           endif
         endif
       -%}
@@ -195,6 +314,27 @@
     },
     {
       "type": "header",
+      "content": "TAB SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "active_tab_mode",
+      "label": "Active Tab Mode",
+      "default": "page",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "tab",
+          "label": "Tab"
+        }
+      ],
+      "info": "Page mode highlights the current collection on collection pages and navigates when a tab is clicked. Tab mode keeps the first tab active and switches products in place."
+    },
+    {
+      "type": "header",
       "content": "PRODUCT SETTINGS"
     },
     {
@@ -205,7 +345,18 @@
       "max": 24,
       "step": 1,
       "default": 8,
-      "info": "0 = Show all products"
+      "info": "0 = Show all products. Pagination is added automatically when a collection has more products than the per-page limit below."
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products Per Page",
+      "min": 12,
+      "max": 50,
+      "step": 2,
+      "default": 50,
+      "info": "Used when showing all products and the collection has more than this many items.",
+      "visible_if": "{{ section.settings.products_to_show == 0 }}"
     },
     {
       "type": "checkbox",

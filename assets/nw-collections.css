@@ -131,6 +131,15 @@ nw-collections {
   color: var(--primary-color, var(--nw-brown));
 }
 
+.nw-collections__pagination {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.nw-collections__pagination .pagination-wrapper {
+  margin-top: 0;
+}
+
 .nw-collections__footer {
   display: flex;
   justify-content: center;

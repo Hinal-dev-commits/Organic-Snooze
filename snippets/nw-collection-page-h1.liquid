@@ -1,0 +1,8 @@
+{% doc %}
+  Renders the page-level collection title as a visually hidden h1 on collection templates.
+  Section headings on collection pages should use h2 with h1 styling instead.
+{% enddoc %}
+
+{%- if template.name == 'collection' and collection != blank -%}
+  <h1 class="visually-hidden">{{ collection.title | escape }}</h1>
+{%- endif -%}

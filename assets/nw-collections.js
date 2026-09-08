@@ -1,7 +1,13 @@
 if (!customElements.get('nw-collections')) {
   class NwCollections extends HTMLElement {
     connectedCallback() {
+      this._mode = this.dataset.activeTabMode || 'page';
       this._bindTabs();
+
+      const initialTab = this.dataset.initialTab;
+      if (initialTab !== undefined && initialTab !== '') {
+        this._setActiveTab(initialTab);
+      }
     }
 
     disconnectedCallback() {
@@ -19,6 +25,15 @@ if (!customElements.get('nw-collections')) {
         const tabBtn = event.target.closest('[data-nw-collection-tab]');
         if (!tabBtn || !this.contains(tabBtn)) return;
         event.preventDefault();
+
+        if (this._mode === 'page') {
+          const collectionUrl = tabBtn.getAttribute('data-collection-url');
+          if (collectionUrl) {
+            window.location.assign(collectionUrl);
+            return;
+          }
+        }
+
         const tabIndex = tabBtn.getAttribute('data-nw-collection-tab');
         this._setActiveTab(tabIndex);
       };

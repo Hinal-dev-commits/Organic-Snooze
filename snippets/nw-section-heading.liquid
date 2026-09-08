@@ -1,9 +1,10 @@
 {% doc %}
 Renders a section heading using global heading styles.
 Uses h1 when section_index is 1, otherwise h2.
+On collection pages, section headings never use an h1 tag; they keep h1 styling via class="h1".
 @param {string} text - Heading content
-@param {number} [section_index] - Section position in the template (1 = h1)
-@param {string} [tag] - Optional tag override (h1 or h2)
+@param {number} [section_index] - Section position in the template (1 = h1 styling)
+@param {string} [tag] - Optional tag override (h1 or h2 styling)
 @param {string} [class] - Optional wrapper class
 @example
 {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
@@ -11,19 +12,26 @@ Uses h1 when section_index is 1, otherwise h2.
 
 {%- if text != blank -%}
   {%- liquid
+    assign heading_tag = 'h2'
+    assign heading_class = 'h2'
+
     if tag != blank
-      assign heading_tag = tag
+      if tag == 'h1' or tag == 'h2'
+        assign heading_class = tag
+      endif
     elsif section_index == 1
+      assign heading_class = 'h1'
+    endif
+
+    if template.name != 'collection' and heading_class == 'h1'
       assign heading_tag = 'h1'
-    else
-      assign heading_tag = 'h2'
     endif
   -%}
   <div class="nw-section-heading{% if class != blank %} {{ class }}{% endif %}">
     {%- if text contains '<p>' or text contains '<p ' or text contains '<h1' or text contains '<h2' or text contains '<h3' -%}
       {{ text }}
     {%- else -%}
-      <{{ heading_tag }} class="{{ heading_tag }}">{{ text }}</{{ heading_tag }}>
+      <{{ heading_tag }} class="{{ heading_class }}">{{ text }}</{{ heading_tag }}>
     {%- endif -%}
   </div>
 {%- endif -%}
