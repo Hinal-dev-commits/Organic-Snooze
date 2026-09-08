@@ -1,10 +1,8 @@
-{% comment %}
+{% doc %}
   Explore what's included — tabbed bundle product block.
-
-  Accepts:
-  - block: {Object} bundle_tabs settings block
-  - section: {Object} main product section
-{% endcomment %}
+  @param {object} block - bundle_tabs settings block
+  @param {object} section - Main product section
+{% enddoc %}
 {%- liquid
   assign tab_blocks = section.blocks | where: 'type', 'bundle_tab'
   assign tab_count = 0

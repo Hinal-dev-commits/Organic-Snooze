@@ -12,6 +12,27 @@ if (!customElements.get('nw-hero')) {
       }
     }
 
+    _getIframeMessageOrigin(src) {
+      if (!src) return null;
+
+      if (src.indexOf('youtube.com') !== -1 || src.indexOf('youtu.be') !== -1) {
+        return 'https://www.youtube.com';
+      }
+
+      if (src.indexOf('vimeo.com') !== -1) {
+        return 'https://player.vimeo.com';
+      }
+
+      return null;
+    }
+
+    _postIframeCommand(iframe, message) {
+      const origin = this._getIframeMessageOrigin(iframe.src);
+      if (!origin || !iframe.contentWindow) return;
+
+      iframe.contentWindow.postMessage(message, origin);
+    }
+
     _initCountdown() {
       var countdownEl = this.querySelector('[data-countdown-date]');
       if (!countdownEl || typeof window.nwStartCountdown !== 'function') return;
@@ -45,16 +66,16 @@ if (!customElements.get('nw-hero')) {
         } else if (bgVideo.tagName === 'IFRAME') {
           if (this.classList.contains('is-video-playing')) {
             if (bgVideo.src.indexOf('youtube.com') !== -1) {
-              bgVideo.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+              this._postIframeCommand(bgVideo, '{"event":"command","func":"pauseVideo","args":""}');
             } else if (bgVideo.src.indexOf('vimeo.com') !== -1) {
-              bgVideo.contentWindow.postMessage('{"method":"pause"}', '*');
+              this._postIframeCommand(bgVideo, '{"method":"pause"}');
             }
             this.classList.remove('is-video-playing');
           } else {
             if (bgVideo.src.indexOf('youtube.com') !== -1) {
-              bgVideo.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+              this._postIframeCommand(bgVideo, '{"event":"command","func":"playVideo","args":""}');
             } else if (bgVideo.src.indexOf('vimeo.com') !== -1) {
-              bgVideo.contentWindow.postMessage('{"method":"play"}', '*');
+              this._postIframeCommand(bgVideo, '{"method":"play"}');
             }
             this.classList.add('is-video-playing');
           }

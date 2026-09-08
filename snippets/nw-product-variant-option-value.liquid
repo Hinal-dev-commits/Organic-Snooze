@@ -1,14 +1,12 @@
-{% comment %}
+{% doc %}
   Renders a single variant option value.
-
-  Accepts:
-  - product: {Object}
-  - option: {Object}
-  - block: {Object}
-  - picker_type: {String}
-  - value: {Object}
-  - value_index: {Number}
-{% endcomment %}
+  @param {object} product - Product object
+  @param {object} option - Current product option
+  @param {object} block - Block object
+  @param {string} picker_type - Picker display type
+  @param {object} value - Option value
+  @param {number} value_index - Value index
+{% enddoc %}
 {%- liquid
   assign product_form_id = 'product-form-' | append: section.id
 

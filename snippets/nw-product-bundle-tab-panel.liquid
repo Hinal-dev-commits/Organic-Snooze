@@ -1,12 +1,10 @@
-{% comment %}
+{% doc %}
   Renders one bundle tab panel.
-
-  Accepts:
-  - tab_block: {Object} nested block
-  - block: {Object} parent block
-  - tab_index: {Number}
-  - is_active: {Boolean}
-{% endcomment %}
+  @param {object} tab_block - Nested bundle_tab block
+  @param {object} block - Parent bundle_tabs block
+  @param {number} tab_index - Tab index
+  @param {boolean} is_active - Whether this panel is active
+{% enddoc %}
 {%- liquid
   assign tab_product = tab_block.settings.product
   assign panel_id = 'NwBundleTabsPanel-' | append: block.id | append: '-' | append: tab_index

@@ -1,12 +1,10 @@
-{% comment %}
+{% doc %}
   Renders quantity variant option buttons with save tags.
-
-  Accepts:
-  - product: {Object} product object.
-  - option: {Object} current product_option object.
-  - block: {Object} block object.
-  - values_order: {String} optional comma-separated value order
-{% endcomment %}
+  @param {object} product - Product object
+  @param {object} option - Current product option
+  @param {object} block - Block object
+  @param {string} [values_order] - Comma-separated value order
+{% enddoc %}
 {%- liquid
   assign values_order = values_order | default: '' | strip
 -%}

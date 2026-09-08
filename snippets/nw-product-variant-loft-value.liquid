@@ -1,12 +1,10 @@
-{% comment %}
+{% doc %}
   Renders a single loft variant option card.
-
-  Accepts:
-  - product: {Object}
-  - option: {Object}
-  - value: {Object}
-  - value_index: {Number}
-{% endcomment %}
+  @param {object} product - Product object
+  @param {object} option - Current product option
+  @param {object} value - Option value
+  @param {number} value_index - Value index
+{% enddoc %}
 {%- liquid
   assign product_form_id = 'product-form-' | append: section.id
   assign option_index = option.position | minus: 1

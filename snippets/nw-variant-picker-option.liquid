@@ -1,22 +1,20 @@
-{% comment %}
+{% doc %}
   Renders one product variant option picker.
-
-  Accepts:
-  - product: {Object}
-  - option: {Object}
-  - block: {Object}
-  - product_form_id: {String}
-  - firmness_option_name: {String}
-  - loft_option_name: {String}
-  - size_option_name: {String}
-  - quantity_option_name: {String}
-  - select_size_text: {String}
-  - variant_tag_text: {String}
-  - firmness_tag_text: {String}
-  - values_order: {String}
-  - show_size_guide: {Boolean}
-  - size_guide_modal_id: {String}
-{% endcomment %}
+  @param {object} product - Product object
+  @param {object} option - Current product option
+  @param {object} block - Variant picker block
+  @param {string} product_form_id - Product form element id
+  @param {string} [firmness_option_name] - Firmness option name match
+  @param {string} [loft_option_name] - Loft option name match
+  @param {string} [size_option_name] - Size option name match
+  @param {string} [quantity_option_name] - Quantity option name match
+  @param {string} [select_size_text] - Size guide link label
+  @param {string} [variant_tag_text] - Variant tag label
+  @param {string} [firmness_tag_text] - Firmness tag label
+  @param {string} [values_order] - Comma-separated value order
+  @param {boolean} [show_size_guide] - Show size guide trigger
+  @param {string} [size_guide_modal_id] - Modal id for size popup
+{% enddoc %}
 {%- liquid
   assign swatch_count = option.values | map: 'swatch' | compact | size
   assign picker_type = block.settings.picker_type

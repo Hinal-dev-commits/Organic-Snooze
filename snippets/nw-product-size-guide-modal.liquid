@@ -1,11 +1,9 @@
-{% comment %}
-  Renders the size guide popup modal.
-
-  Accepts:
-  - size_guide_image: {Object} product metafield custom.size_guide image
-  - modal_id: {String} unique modal element id
-  - size_guide_label: {String} accessible label for the dialog
-{% endcomment %}
+{% doc %}
+  Legacy image-only size guide modal. Prefer nw-product-size-popup for PDP size guides.
+  @param {object} size_guide_image - Product metafield custom.size_guide image
+  @param {string} modal_id - Unique modal element id
+  @param {string} [size_guide_label] - Accessible label for the dialog
+{% enddoc %}
 {%- if size_guide_image != blank and modal_id != blank -%}
   {%- liquid
     assign size_guide_dialog_label = size_guide_label | default: 'Size Guide' | escape

@@ -96,8 +96,28 @@ if (!customElements.get('nw-faq')) {
 
   class NwFaq extends HTMLElement {
     connectedCallback() {
+      if (this._initialized) return;
+      this._initialized = true;
+
       this._initAccordions();
       this._initSearchAndLimit();
+    }
+
+    disconnectedCallback() {
+      if (this._moreBtn && this._onMoreClick) {
+        this._moreBtn.removeEventListener('click', this._onMoreClick);
+      }
+
+      if (this._searchInput && this._onSearchInput) {
+        this._searchInput.removeEventListener('input', this._onSearchInput);
+      }
+
+      this.accordions = [];
+      this._moreBtn = null;
+      this._searchInput = null;
+      this._onMoreClick = null;
+      this._onSearchInput = null;
+      this._initialized = false;
     }
 
     _initAccordions() {
@@ -124,12 +144,15 @@ if (!customElements.get('nw-faq')) {
       const moreBtn = this.querySelector('.nw-faq__more');
       const initialLimit = parseInt(faqList.getAttribute('data-initial-limit') || '6', 10);
 
+      this._searchInput = searchInput;
+      this._moreBtn = moreBtn;
+
       if (moreBtn && faqItems.length > initialLimit) {
         faqItems.forEach((item, index) => {
           if (index >= initialLimit) item.classList.add('is-hidden-by-limit');
         });
 
-        moreBtn.addEventListener('click', (e) => {
+        this._onMoreClick = (e) => {
           if (moreBtn.getAttribute('data-toggle') !== 'true') return;
 
           e.preventDefault();
@@ -146,12 +169,14 @@ if (!customElements.get('nw-faq')) {
             moreBtn.classList.add('is-expanded');
             moreBtn.textContent = moreBtn.getAttribute('data-less-text') || "SEE LESS FAQ'S";
           }
-        });
+        };
+
+        moreBtn.addEventListener('click', this._onMoreClick);
       }
 
       if (!searchInput) return;
 
-      searchInput.addEventListener('input', () => {
+      this._onSearchInput = () => {
         const query = searchInput.value.trim().toLowerCase();
 
         if (!query) {
@@ -176,7 +201,9 @@ if (!customElements.get('nw-faq')) {
           const text = ((qEl ? qEl.textContent : '') + ' ' + (aEl ? aEl.textContent : '')).toLowerCase();
           item.style.display = text.indexOf(query) !== -1 ? '' : 'none';
         });
-      });
+      };
+
+      searchInput.addEventListener('input', this._onSearchInput);
     }
   }
 
