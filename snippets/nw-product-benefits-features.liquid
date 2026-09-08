@@ -1,0 +1,114 @@
+{% doc %}
+  Renders product benefit feature items from custom.benefits metaobject list.
+  @param {object} product - Product object
+  @param {string} [features_class] - Wrapper class
+  @param {string} [item_class] - Item class
+  @param {string} [icon_class] - Icon wrapper class
+  @param {string} [text_class] - Text class
+  @param {boolean} [use_list] - Use ul/li markup when true
+{% enddoc %}
+
+{%- liquid
+  assign benefits = product.metafields.custom.benefits.value
+  if benefits == blank
+    assign benefits = product.metafields.custom.benefits
+  endif
+
+  assign features_class = features_class | default: 'nw-product-benefits-features'
+  assign item_class = item_class | default: 'nw-product-benefits-features__item'
+  assign icon_class = icon_class | default: 'nw-product-benefits-features__icon'
+  assign text_class = text_class | default: 'nw-product-benefits-features__text'
+  assign use_list = use_list | default: false
+-%}
+
+{%- if benefits != blank -%}
+  {%- if benefits.count > 0 or benefits.size > 0 or benefits.first != blank -%}
+    {%- if use_list -%}
+      <ul class="{{ features_class }}" role="list">
+    {%- else -%}
+      <div class="{{ features_class }}">
+    {%- endif -%}
+
+    {%- for benefit in benefits -%}
+      {%- liquid
+        assign benefit_icon = benefit.icon.value | default: benefit.icon
+        if benefit_icon == blank
+          assign benefit_icon = benefit.Icon.value | default: benefit.Icon
+        endif
+        if benefit_icon == blank
+          assign benefit_icon = benefit.image.value | default: benefit.image
+        endif
+
+        assign benefit_text = blank
+        if benefit.label != blank
+          if benefit.label.type == 'rich_text_field'
+            capture benefit_text
+              echo benefit.label | metafield_tag
+            endcapture
+          elsif benefit.label.value != blank
+            assign benefit_text = benefit.label.value
+          else
+            assign benefit_text = benefit.label
+          endif
+        elsif benefit.Label != blank
+          if benefit.Label.type == 'rich_text_field'
+            capture benefit_text
+              echo benefit.Label | metafield_tag
+            endcapture
+          elsif benefit.Label.value != blank
+            assign benefit_text = benefit.Label.value
+          else
+            assign benefit_text = benefit.Label
+          endif
+        elsif benefit.title != blank
+          assign benefit_text = benefit.title.value | default: benefit.title
+        elsif benefit.name != blank
+          assign benefit_text = benefit.name.value | default: benefit.name
+        endif
+      -%}
+
+      {%- if benefit_text != blank -%}
+        {%- if use_list -%}
+          <li class="{{ item_class }}">
+        {%- else -%}
+          <div class="{{ item_class }}">
+        {%- endif -%}
+          <span class="{{ icon_class }}" aria-hidden="true">
+            {%- if benefit_icon != blank -%}
+              {{
+                benefit_icon
+                | image_url: width: 60
+                | image_tag:
+                  width: 24,
+                  height: 24,
+                  loading: 'lazy',
+                  alt: ''
+              }}
+            {%- else -%}
+              {% render 'nw-icon', icon: 'leaf' %}
+            {%- endif -%}
+          </span>
+          <span class="{{ text_class }}">{{ benefit_text }}</span>
+        {%- if use_list -%}
+          </li>
+        {%- else -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if use_list -%}
+      </ul>
+    {%- else -%}
+      </div>
+    {%- endif -%}
+  {%- elsif request.design_mode -%}
+    <div class="{{ features_class }} {{ features_class }}--empty">
+      <p class="{{ text_class }}">{{ 'nw.product.benefits_empty' | t }}</p>
+    </div>
+  {%- endif -%}
+{%- elsif request.design_mode -%}
+  <div class="{{ features_class }} {{ features_class }}--empty">
+    <p class="{{ text_class }}">{{ 'nw.product.benefits_empty' | t }}</p>
+  </div>
+{%- endif -%}

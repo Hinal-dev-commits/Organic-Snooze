@@ -192,28 +192,17 @@
             </div>
           </div>
 
-          {%- if section.blocks.size > 0 -%}
-            <div class="nw-guarantee-offer__features">
-              {%- for block in section.blocks -%}
-                <div class="nw-guarantee-offer__feature-item" {{ block.shopify_attributes }}>
-                  <span class="nw-guarantee-offer__feature-icon">
-                    {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
-                      <img
-                        src="{{ block.settings.custom_icon | image_url: width: 48 }}"
-                        alt="{{ block.settings.feature_text | strip_html | escape }}"
-                        width="24"
-                        height="24"
-                        loading="lazy"
-                      >
-                    {%- else -%}
-                      {% render 'nw-icon', icon: block.settings.icon %}
-                    {%- endif -%}
-                  </span>
-                  {%- if block.settings.feature_text != blank -%}
-                    <span class="nw-guarantee-offer__feature-text">{{ block.settings.feature_text }}</span>
-                  {%- endif -%}
-                </div>
-              {%- endfor -%}
+          {%- if product != blank -%}
+            {% render 'nw-product-benefits-features',
+              product: product,
+              features_class: 'nw-guarantee-offer__features',
+              item_class: 'nw-guarantee-offer__feature-item',
+              icon_class: 'nw-guarantee-offer__feature-icon',
+              text_class: 'nw-guarantee-offer__feature-text'
+            %}
+          {%- elsif request.design_mode -%}
+            <div class="nw-guarantee-offer__features nw-guarantee-offer__features--empty">
+              <p class="nw-guarantee-offer__feature-text">{{ 'nw.product.benefits_empty' | t }}</p>
             </div>
           {%- endif -%}
 
@@ -295,6 +284,10 @@
       "type": "product",
       "id": "product",
       "label": "Select Product"
+    },
+    {
+      "type": "paragraph",
+      "content": "Feature items are loaded from the selected product metafield custom.benefits (Product benefits metaobjects), same as the product benefits block."
     },
     {
       "type": "checkbox",
@@ -441,87 +434,10 @@
       "default": 48
     }
   ],
-  "blocks": [
-    {
-      "type": "feature",
-      "name": "Feature Item",
-      "settings": [
-        {
-          "type": "inline_richtext",
-          "id": "feature_text",
-          "label": "Feature Text",
-          "default": "Breathable mattress protection"
-        },
-        {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "default": "breathable",
-          "options": [
-            { "value": "breathable", "label": "Breathable" },
-            { "value": "silent", "label": "Silent" },
-            { "value": "guards", "label": "Guards" },
-            { "value": "preserve", "label": "Preserve" },
-            { "value": "handcrafted", "label": "Handcrafted" }
-          ],
-          "visible_if": "{{ block.settings.use_custom_icon == false }}"
-        },
-        {
-          "type": "checkbox",
-          "id": "use_custom_icon",
-          "label": "Use Custom Icon Image",
-          "default": false
-        },
-        {
-          "type": "image_picker",
-          "id": "custom_icon",
-          "label": "Custom Icon Image",
-          "visible_if": "{{ block.settings.use_custom_icon == true }}"
-        }
-      ]
-    }
-  ],
   "presets": [
     {
       "name": "NW Guarantee Offer",
-      "category": "NW Sections",
-      "blocks": [
-        {
-          "type": "feature",
-          "settings": {
-            "feature_text": "Breathable mattress protection",
-            "icon": "breathable"
-          }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "feature_text": "Silent, flexible barrier",
-            "icon": "silent"
-          }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "feature_text": "Guards against spills & sweat",
-            "icon": "guards"
-          }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "feature_text": "Preserves mattress performance",
-            "icon": "preserve"
-          }
-        },
-        {
-          "type": "feature",
-          "settings": {
-            "feature_text": "Handcrafted in the USA",
-            "icon": "handcrafted"
-          }
-        }
-      ]
+      "category": "NW Sections"
     }
   ]
 }
