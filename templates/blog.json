@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "main": {
       "type": "main-blog",
@@ -190,6 +190,14 @@
         "button_style": "primary",
         "badge_icon_color": "#cc926a",
         "badge_text_color": "#ffffff",
+        "badge_1_icon": "none",
+        "badge_1_text": "100-Night Risk-Free Trial",
+        "badge_2_icon": "none",
+        "badge_2_text": "",
+        "badge_3_icon": "none",
+        "badge_3_text": "",
+        "badge_4_icon": "none",
+        "badge_4_text": "",
         "show_arrows": false,
         "arrow_style": "style_1",
         "swiper_arrow_bg": "#613916",
@@ -265,6 +273,7 @@
         ],
         "post_limit": 8,
         "slides_desktop": 4,
+        "show_read_time": false,
         "show_card_button": false,
         "show_editors_pick": false,
         "show_author": false,
@@ -276,6 +285,14 @@
         "button_style": "primary",
         "badge_icon_color": "#cc926a",
         "badge_text_color": "#613916",
+        "badge_1_icon": "none",
+        "badge_1_text": "100-Night Risk-Free Trial",
+        "badge_2_icon": "none",
+        "badge_2_text": "",
+        "badge_3_icon": "none",
+        "badge_3_text": "",
+        "badge_4_icon": "none",
+        "badge_4_text": "",
         "show_arrows": false,
         "arrow_style": "style_1",
         "swiper_arrow_bg": "#613916",
@@ -675,8 +692,8 @@
         "button_style": "primary",
         "show_edge_fade": true,
         "show_pagination": false,
-        "show_arrows": false,
-        "arrow_style": "style_1",
+        "show_arrows": true,
+        "arrow_style": "style_2",
         "enable_slider_loop": true,
         "enable_autoplay": false,
         "autoplay_delay": 4,
