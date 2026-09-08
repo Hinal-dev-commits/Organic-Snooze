@@ -254,46 +254,6 @@
     },
     "nw_blog_latest_xDVFWz": {
       "type": "nw-blog-latest",
-      "blocks": {
-        "trust_badge_3rx8Dz": {
-          "type": "trust_badge",
-          "settings": {
-            "use_custom_icon": false,
-            "icon": "moneyback",
-            "text": "100-Night Risk-Free Trial"
-          }
-        },
-        "trust_badge_wYbEfb": {
-          "type": "trust_badge",
-          "settings": {
-            "use_custom_icon": false,
-            "icon": "shipping",
-            "text": "free shipping"
-          }
-        },
-        "trust_badge_D7zfW8": {
-          "type": "trust_badge",
-          "settings": {
-            "use_custom_icon": false,
-            "icon": "shield",
-            "text": "30-Year Warranty"
-          }
-        },
-        "trust_badge_B39LjX": {
-          "type": "trust_badge",
-          "settings": {
-            "use_custom_icon": false,
-            "icon": "financing",
-            "text": "0% Interest financing options"
-          }
-        }
-      },
-      "block_order": [
-        "trust_badge_3rx8Dz",
-        "trust_badge_wYbEfb",
-        "trust_badge_D7zfW8",
-        "trust_badge_B39LjX"
-      ],
       "name": "t:sections.nw-blog-latest.name",
       "settings": {
         "show_rating": false,
@@ -318,6 +278,14 @@
         "button_style": "primary",
         "badge_icon_color": "#cc926a",
         "badge_text_color": "#613916",
+        "badge_1_icon": "moneyback",
+        "badge_1_text": "100-Night Risk-Free Trial",
+        "badge_2_icon": "shipping",
+        "badge_2_text": "free shipping",
+        "badge_3_icon": "shield",
+        "badge_3_text": "30-Year Warranty",
+        "badge_4_icon": "financing",
+        "badge_4_text": "0% Interest financing options",
         "show_arrows": false,
         "arrow_style": "style_1",
         "swiper_arrow_bg": "#613916",
