@@ -39,9 +39,17 @@ Renders the NW product card used across collection sliders and grids.
     assign show_best_for_enabled = true
   endif
 
-  assign firmness_label_soft = firmness_label_soft | default: 'Soft'
-  assign firmness_label_firm = firmness_label_firm | default: 'Firm'
-  assign button_text = button_text | default: 'Shop Now'
+  if firmness_label_soft == blank
+    assign firmness_label_soft = 'nw.product_card.soft' | t
+  endif
+
+  if firmness_label_firm == blank
+    assign firmness_label_firm = 'nw.product_card.firm' | t
+  endif
+
+  if button_text == blank
+    assign button_text = 'nw.product_card.shop_now' | t
+  endif
   assign button_style = button_style | default: 'primary'
   assign lazy_load = lazy_load | default: true
   assign display_description = false
@@ -117,7 +125,7 @@ Renders the NW product card used across collection sliders and grids.
     </a>
 
     {%- if save_percent > 0 -%}
-      <span class="nw-product-card__tag nw-product-card__tag--save">Save {{ save_percent }}%</span>
+      <span class="nw-product-card__tag nw-product-card__tag--save">{{ 'nw.product_card.save_percent' | t: percent: save_percent }}</span>
     {%- endif -%}
 
     {%- if display_seller_tag and seller_tag != blank -%}
@@ -186,7 +194,7 @@ Renders the NW product card used across collection sliders and grids.
             assign best_for_lower = best_for_text | downcase
           -%}
           {%- unless best_for_lower contains 'best for' -%}
-            <span class="nw-product-card__best-for-label">Best for:</span>
+            <span class="nw-product-card__best-for-label">{{ 'nw.product_card.best_for' | t }}</span>
           {%- endunless -%}
           <span class="nw-product-card__best-for-value">{{ best_for_text }}</span>
         {%- else -%}
@@ -212,7 +220,7 @@ Renders the NW product card used across collection sliders and grids.
 
     <div class="nw-product-card__footer">
       <div class="nw-product-card__price">
-        <span class="nw-product-card__price-from">from</span>
+        <span class="nw-product-card__price-from">{{ 'nw.product_card.from' | t }}</span>
         <span class="nw-product-card__price-current">{{ card_price | money }}</span>
         {%- if card_compare_at > card_price -%}
           <span class="nw-product-card__price-compare">{{ card_compare_at | money }}</span>

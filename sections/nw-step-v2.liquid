@@ -70,6 +70,9 @@
                   if card_button_style == blank
                     assign card_button_style = section.settings.card_button_style
                   endif
+                  assign card_image_alt = block.settings.image_card.alt | default: block.settings.title | strip_html | escape
+                  assign card_image_mobile_alt = block.settings.image_card_mobile.alt | default: block.settings.title | strip_html | escape
+                  assign source_logo_alt = block.settings.source_logo.alt | default: block.settings.source_text | default: 'Source logo' | escape
                 -%}
                 <div class="swiper-slide" {{ block.shopify_attributes }}>
                   <article class="nw-step-v2__card">
@@ -78,7 +81,7 @@
                         {{
                           block.settings.image_card
                           | image_tag:
-                            alt: block.settings.image_card.alt | default: block.settings.title | strip_html | escape,
+                            alt: card_image_alt,
                             loading: 'lazy',
                             class: 'nw-step-v2__image nw-step-v2__image-desktop',
                             sizes: '(min-width: 750px) 400px, 90vw'
@@ -87,7 +90,7 @@
                         {{
                           block.settings.image_card_mobile
                           | image_tag:
-                            alt: block.settings.image_card_mobile.alt | default: block.settings.title | strip_html | escape,
+                            alt: card_image_mobile_alt,
                             loading: 'lazy',
                             class: 'nw-step-v2__image nw-step-v2__image-mobile',
                             sizes: '100vw'
@@ -96,7 +99,7 @@
                           {{
                             block.settings.image_card
                             | image_tag:
-                              alt: block.settings.image_card.alt | default: block.settings.title | strip_html | escape,
+                              alt: card_image_alt,
                               loading: 'lazy',
                               class: 'nw-step-v2__image nw-step-v2__image-mobile',
                               sizes: '100vw'
@@ -116,7 +119,7 @@
                             {{
                               block.settings.source_logo
                               | image_tag:
-                                alt: block.settings.source_logo.alt | default: block.settings.source_text | default: 'Source logo' | escape,
+                                alt: source_logo_alt,
                                 loading: 'lazy',
                                 class: 'nw-step-v2__source-logo',
                                 sizes: '120px'

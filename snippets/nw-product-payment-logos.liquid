@@ -38,6 +38,7 @@
         assign item_text = block.settings[text_key]
         assign item_link = block.settings[link_key]
         assign item_layout = block.settings[layout_key] | default: 'simple'
+        assign item_image_alt = item_heading | default: item_text | default: 'Payment option' | escape
       -%}
       {%- if item_image != blank -%}
         {%- unless forloop.first -%}
@@ -54,7 +55,7 @@
                 sizes: '149px',
                 loading: 'lazy',
                 class: 'nw-product-payment-logos__image',
-                alt: item_heading | default: item_text | default: 'Payment option' | escape
+                alt: item_image_alt
             }}
             {%- if item_layout == 'inline' -%}
               {%- if item_heading != blank or item_subheading != blank -%}

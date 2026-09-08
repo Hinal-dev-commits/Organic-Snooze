@@ -48,11 +48,12 @@
         {%- endif -%}
       </div>
       {%- if block.settings.author_image != blank -%}
+        {%- assign author_image_alt = block.settings.author_name | escape -%}
         <div class="nw-collection-tabs__quote-image">
           {{
             block.settings.author_image
             | image_url: width: 360
-            | image_tag: loading: 'lazy', alt: block.settings.author_name | escape
+            | image_tag: loading: 'lazy', alt: author_image_alt
           }}
         </div>
       {%- endif -%}

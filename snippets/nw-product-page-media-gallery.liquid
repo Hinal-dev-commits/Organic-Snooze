@@ -124,6 +124,7 @@ Duplicate of product-media-gallery for page templates using custom section image
                 when 10
                   assign media_image = section.settings.custom_media_image_10
               endcase
+              assign media_alt = media_image.alt | default: product.title | escape
             -%}
             {%- if i >= range_start and i <= range_end and media_image != blank -%}
               {%- if limit != null and media_position >= limit -%}
@@ -144,7 +145,7 @@ Duplicate of product-media-gallery for page templates using custom section image
                   media_fit: section.settings.media_fit,
                   constrain_to_viewport: section.settings.constrain_to_viewport,
                   lazy_load: media_position > 1,
-                  alt: media_image.alt | default: product.title,
+                  alt: media_alt,
                   image_zoom: section.settings.image_zoom
                 %}
               </li>
@@ -291,6 +292,7 @@ Duplicate of product-media-gallery for page templates using custom section image
                 when 10
                   assign media_image = section.settings.custom_media_image_10
               endcase
+              assign media_alt = media_image.alt | default: product.title | escape
             -%}
             {%- if i >= range_start and i <= range_end and media_image != blank -%}
               {%- assign image_index = image_index | plus: 1 -%}
@@ -320,7 +322,7 @@ Duplicate of product-media-gallery for page templates using custom section image
                       sizes: sizes,
                       widths: '54, 74, 104, 162, 208, 324, 416',
                       id: thumbnail_id,
-                      alt: media_image.alt | default: product.title | escape
+                      alt: media_alt
                   }}
                 </button>
               </li>

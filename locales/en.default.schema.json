@@ -457,7 +457,118 @@
     "nw-guarantee": { "name": "NW Guarantee" },
     "nw-guarantee-v2": { "name": "NW Guarantee V2" },
     "nw-product-list": { "name": "NW Product List" },
-    "nw-faq": { "name": "NW FAQ" },
+    "nw-faq": {
+      "name": "NW FAQ",
+      "settings": {
+        "header_section": {
+          "content": "SECTION HEADER"
+        },
+        "show_rating": {
+          "label": "Show Rating Stars"
+        },
+        "star_rating": {
+          "label": "Star Rating (Active Stars)"
+        },
+        "star_color": {
+          "label": "Active Star Color"
+        },
+        "star_color_inactive": {
+          "label": "Inactive Star Color"
+        },
+        "eyebrow": {
+          "label": "Eyebrow Text",
+          "default": "Real sleepers, real mornings"
+        },
+        "heading": {
+          "label": "Heading",
+          "default": "Frequently Asked Questions"
+        },
+        "subheading": {
+          "label": "Description"
+        },
+        "header_text_colors": {
+          "content": "TEXT COLORS"
+        },
+        "heading_color": {
+          "label": "Heading Color"
+        },
+        "description_color": {
+          "label": "Description Color"
+        },
+        "eyebrow_color": {
+          "label": "Eyebrow Color"
+        },
+        "text_color": {
+          "label": "Body Text Color"
+        },
+        "header_faq_settings": {
+          "content": "FAQ SETTINGS"
+        },
+        "show_search": {
+          "label": "Show Live Search"
+        },
+        "search_placeholder": {
+          "label": "Search Placeholder",
+          "default": "What can we help with?"
+        },
+        "open_first_faq": {
+          "label": "Open First FAQ By Default"
+        },
+        "initial_faq_count": {
+          "label": "Initial Faqs To Show Before Expand"
+        },
+        "more_label": {
+          "label": "See More Button Label",
+          "default": "SEE MORE FAQ'S"
+        },
+        "less_label": {
+          "label": "See Less Button Label",
+          "default": "SEE LESS FAQ'S"
+        },
+        "header_contact": {
+          "content": "CONTACT SETTINGS"
+        },
+        "contact_heading": {
+          "label": "Contact Heading",
+          "default": "Speak with Our Live Sleep Experts."
+        },
+        "show_call_btn": {
+          "label": "Show Call Button"
+        },
+        "call_label": {
+          "label": "Call Button Label",
+          "default": "Call Us"
+        },
+        "call_link": {
+          "label": "Call Button Link"
+        },
+        "show_text_btn": {
+          "label": "Show Text Button"
+        },
+        "text_label": {
+          "label": "Text Button Label",
+          "default": "Text Us"
+        },
+        "text_link": {
+          "label": "Text Button Link"
+        }
+      },
+      "blocks": {
+        "faq_item": {
+          "name": "FAQ Item",
+          "settings": {
+            "question": {
+              "label": "Question",
+              "default": "What makes the Ultimate Snooze different from other organic mattresses?"
+            },
+            "answer": {
+              "label": "Answer",
+              "default": "<p>Ultimate Snooze combines certified organic latex, organic wool, and pocket coils with zero toxic chemicals, glues, or fiberglass for restorative, clean sleep.</p>"
+            }
+          }
+        }
+      }
+    },
     "nw-collection-list": { "name": "NW Collection List" },
     "nw-layer-product": { "name": "NW Layer Product" },
     "nw-layer-v2": { "name": "NW Layer V2" },

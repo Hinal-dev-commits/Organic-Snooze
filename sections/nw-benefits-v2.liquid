@@ -109,11 +109,12 @@
               {{ block.shopify_attributes }}
             >
               {%- if block.settings.use_custom_image and block.settings.image != blank -%}
+                {%- assign benefits_v2_logo_alt = block.settings.text | escape -%}
                 {{
                   block.settings.image
                   | image_url: width: 320
                   | image_tag:
-                    alt: block.settings.text | escape,
+                    alt: benefits_v2_logo_alt,
                     loading: 'lazy',
                     class: 'nw-benefits-v2__logo-img',
                     widths: '160, 240, 320',

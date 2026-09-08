@@ -8,6 +8,7 @@
   else
     assign role_mobile_text = role_text
   endif
+  assign recovery_photo_alt = section.settings.photo.alt | default: section.settings.name | default: section.settings.heading | strip_html | escape
 -%}
 
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
@@ -81,7 +82,7 @@
                   {{
                     section.settings.photo
                     | image_tag:
-                      alt: section.settings.photo.alt | default: section.settings.name | default: section.settings.heading | strip_html | escape,
+                      alt: recovery_photo_alt,
                       class: 'nw-recovery-v2__photo-img',
                       loading: 'lazy'
                   }}

@@ -57,6 +57,9 @@
               if mobile_image == blank
                 assign mobile_image = desktop_image
               endif
+              assign card_alt = card_title | default: card_label | escape
+              assign desktop_alt = desktop_image.alt | default: card_title | default: card_label | escape
+              assign mobile_alt = mobile_image.alt | default: card_title | default: card_label | escape
             -%}
 
             {%- if card_style == 'gift' -%}
@@ -88,7 +91,7 @@
                           poster
                           | image_url: width: 900
                           | image_tag:
-                            alt: card_title | default: card_label | escape,
+                            alt: card_alt,
                             class: 'nw-sleep-foundation__poster',
                             loading: 'lazy',
                             sizes: '(min-width: 750px) 400px, 100vw'
@@ -105,7 +108,7 @@
                       {{
                         desktop_image
                         | image_tag:
-                          alt: desktop_image.alt | default: card_title | escape,
+                          alt: desktop_alt,
                           class: 'nw-sleep-foundation__img nw-sleep-foundation__img--desktop',
                           loading: 'lazy',
                           sizes: '(min-width: 750px) 400px, 100vw'
@@ -113,7 +116,7 @@
                       {{
                         mobile_image
                         | image_tag:
-                          alt: mobile_image.alt | default: card_title | escape,
+                          alt: mobile_alt,
                           class: 'nw-sleep-foundation__img nw-sleep-foundation__img--mobile',
                           loading: 'lazy',
                           sizes: '100vw'

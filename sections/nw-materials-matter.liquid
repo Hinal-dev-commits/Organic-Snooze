@@ -44,6 +44,7 @@
                 <div class="swiper-slide" {{ block.shopify_attributes }}>
                   <article class="nw-materials-matter__card">
                     {%- if block.settings.icon != blank -%}
+                      {%- assign materials_icon_alt = block.settings.title | escape -%}
                       <div class="nw-materials-matter__icon">
                         {{
                           block.settings.icon
@@ -51,7 +52,7 @@
                           | image_tag:
                             loading: 'lazy',
                             class: 'nw-materials-matter__icon-img',
-                            alt: block.settings.title | escape
+                            alt: materials_icon_alt
                         }}
                       </div>
                     {%- endif -%}

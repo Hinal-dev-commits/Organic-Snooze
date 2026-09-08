@@ -105,6 +105,10 @@
               <div class="nw-human-biologist__featured-marquee">
                 <div class="nw-human-biologist__featured-track">
                   {%- for block in featured_logos -%}
+                    {%- liquid
+                      assign featured_logo_alt = block.settings.image.alt | default: 'Featured logo' | escape
+                      assign featured_logo_width = block.settings.logo_width | default: 120
+                    -%}
                     <div class="nw-human-biologist__featured-item" {{ block.shopify_attributes }}>
                       {%- if block.settings.image != blank -%}
                         {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" target="_blank" rel="noopener">{%- endif -%}
@@ -112,9 +116,9 @@
                           block.settings.image
                           | image_url: width: 400
                           | image_tag:
-                            alt: block.settings.image.alt | default: 'Featured logo' | escape,
+                            alt: featured_logo_alt,
                             class: 'nw-human-biologist__featured-img',
-                            width: block.settings.logo_width | default: 120,
+                            width: featured_logo_width,
                             sizes: '120px'
                         }}
                         {%- if block.settings.link != blank -%}</a>{%- endif -%}
@@ -124,15 +128,19 @@
                 </div>
                 <div class="nw-human-biologist__featured-track" aria-hidden="true">
                   {%- for block in featured_logos -%}
+                    {%- liquid
+                      assign featured_logo_alt = block.settings.image.alt | default: 'Featured logo' | escape
+                      assign featured_logo_width = block.settings.logo_width | default: 120
+                    -%}
                     <div class="nw-human-biologist__featured-item">
                       {%- if block.settings.image != blank -%}
                         {{
                           block.settings.image
                           | image_url: width: 400
                           | image_tag:
-                            alt: block.settings.image.alt | default: 'Featured logo' | escape,
+                            alt: featured_logo_alt,
                             class: 'nw-human-biologist__featured-img',
-                            width: block.settings.logo_width | default: 120,
+                            width: featured_logo_width,
                             sizes: '120px'
                         }}
                       {%- endif -%}

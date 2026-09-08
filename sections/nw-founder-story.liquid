@@ -12,6 +12,8 @@
   if media_poster_mobile == blank and media_poster != blank
     assign media_poster_mobile = media_poster
   endif
+  assign founder_name_alt = section.settings.name | escape
+  assign founder_image_alt = section.settings.image.alt | default: section.settings.name | escape
 -%}
 
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
@@ -76,7 +78,7 @@
                     media_poster
                     | image_url: width: 1200
                     | image_tag:
-                      alt: section.settings.name | escape,
+                      alt: founder_name_alt,
                       class: 'nw-founder-story__media-poster nw-founder-story__media-poster--desktop',
                       loading: 'lazy',
                       widths: '600, 900, 1200',
@@ -86,7 +88,7 @@
                     media_poster_mobile
                     | image_url: width: 800
                     | image_tag:
-                      alt: section.settings.name | escape,
+                      alt: founder_name_alt,
                       class: 'nw-founder-story__media-poster nw-founder-story__media-poster--mobile',
                       loading: 'lazy',
                       widths: '400, 600, 800',
@@ -97,7 +99,7 @@
                     media_poster
                     | image_url: width: 1200
                     | image_tag:
-                      alt: section.settings.name | escape,
+                      alt: founder_name_alt,
                       class: 'nw-founder-story__media-poster',
                       loading: 'lazy',
                       widths: '600, 900, 1200',
@@ -108,7 +110,7 @@
                     media_poster_mobile
                     | image_url: width: 800
                     | image_tag:
-                      alt: section.settings.name | escape,
+                      alt: founder_name_alt,
                       class: 'nw-founder-story__media-poster',
                       loading: 'lazy',
                       widths: '400, 600, 800',
@@ -135,7 +137,7 @@
               {{
                 section.settings.image
                 | image_tag:
-                  alt: section.settings.image.alt | default: section.settings.name | escape,
+                  alt: founder_image_alt,
                   class: 'nw-founder-story__media-image',
                   loading: 'lazy',
                   sizes: '(min-width: 750px) 712px, 100vw'
@@ -159,7 +161,7 @@
                     {{
                       section.settings.avatar
                       | image_tag:
-                        alt: section.settings.name | escape,
+                        alt: founder_name_alt,
                         class: 'nw-founder-story__avatar-img',
                         loading: 'lazy',
                         width: 96,

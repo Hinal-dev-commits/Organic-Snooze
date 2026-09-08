@@ -113,9 +113,10 @@ if (!customElements.get('nw-product-promo-banner')) {
       const showCopiedToast = (code) => {
         if (!toastEl || !codeEl) return;
 
+        const copiedTemplate = this.getAttribute('data-copied-message') || 'Copied! "{{ code }}" is in your clipboard.';
         codeEl.classList.add('nw-product-promo-banner__code--copied');
         toastEl.hidden = false;
-        toastEl.textContent = 'Copied! "' + code + '" is in your clipboard.';
+        toastEl.textContent = copiedTemplate.replace('__CODE__', code);
         toastEl.classList.add('is-visible');
 
         window.clearTimeout(this._copyToastTimer);

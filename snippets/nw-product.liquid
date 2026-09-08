@@ -558,39 +558,6 @@
         color: var(--nw-brown, #613916);
     }
 
-    .nw-variant-picker__size-desc,
-    .nw-variant-picker__size-guide {
-        font-family: var(--font-body-family);
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 125%;
-        color: rgba(97, 57, 22, 0.65);
-        text-decoration: underline;
-        text-underline-offset: 2px;
-    }
-
-    .nw-variant-picker__size-guide-opener {
-        display: inline-flex;
-    }
-
-    .nw-variant-picker__size-guide {
-        background: none;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-    }
-
-    .nw-size-guide-modal__body {
-        padding: 0;
-    }
-
-    .nw-size-guide-modal__image {
-        display: block;
-        width: auto;
-        height: auto;
-        margin: 0 auto;
-    }
-
     .nw-variant-picker__options {
         display: flex;
         flex-wrap: wrap;
@@ -895,11 +862,6 @@
     }
 
     /* Bundle tabs */
-    .product__block--bundle_tab,
-    .product__block--nw-size-popup {
-        display: none;
-    }
-
     .nw-bundle-tabs {
         display: flex;
         flex-direction: column;
@@ -1244,153 +1206,6 @@
         font-size: 13px;
         line-height: 140%;
         color: rgba(97, 57, 22, 0.65);
-    }
-
-    /* Promo banner */
-    .nw-product-promo-banner {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        width: 100%;
-        padding: 16px 16px 16px 20px;
-        border: 1px dashed var(--nw-ppb-border, rgba(97, 57, 22, 0.2));
-        border-radius: 12px;
-        background: var(--nw-ppb-bg, #EDF5EB);
-        box-sizing: border-box;
-    }
-
-    .nw-product-promo-banner__content {
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        gap: 4px;
-        min-width: 0;
-    }
-
-    .nw-product-promo-banner__heading-row {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        width: 100%;
-    }
-
-    .nw-product-promo-banner__icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-        color: var(--nw-ppb-icon, #454500);
-    }
-
-    .nw-product-promo-banner__icon svg,
-    .nw-product-promo-banner__icon-img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: contain;
-    }
-    .nw-product-promo-banner__icon svg path{
-        fill: currentColor;
-    }
-
-    .nw-product-promo-banner__heading {
-        margin: 0;
-        font-family: var(--font-body-family);
-        font-size: 16px;
-        font-weight: 600;
-        line-height: normal;
-        color: var(--nw-ppb-text, #454500);
-    }
-
-    .nw-product-promo-banner__description {
-        margin: 0;
-        font-family: var(--font-body-family);
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 1.5;
-        color: var(--nw-ppb-text, #454500);
-        opacity: 0.85;
-    }
-
-    .nw-product-promo-banner__code {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        padding: 8px 14px;
-        border: 1px dashed var(--nw-ppb-code-border, #7F7F29);
-        border-radius: 6px;
-        background: var(--nw-ppb-code-bg, #FFFCF0);
-        position: relative;
-    }
-
-    .nw-product-promo-banner__code-text {
-        font-family: var(--font-body-family);
-        font-size: 16px;
-        font-weight: 600;
-        line-height: normal;
-        color: var(--nw-ppb-code-text, #434300);
-        white-space: nowrap;
-    }
-
-    .nw-product-promo-banner__code--copy {
-        cursor: pointer;
-    }
-
-    .nw-product-promo-banner__code--copy:hover,
-    .nw-product-promo-banner__code--copy:focus-visible {
-        outline: 2px solid var(--nw-ppb-code-border, #7F7F29);
-        outline-offset: 2px;
-    }
-
-    .nw-product-promo-banner__code--copied {
-        outline: 2px solid #2e7d32 !important;
-        outline-offset: 2px;
-    }
-
-    .nw-product-promo-banner__message p {
-        margin: 0;
-    }
-
-    .nw-product-promo-banner__toast {
-        position: absolute;
-        left: 50%;
-        bottom: calc(100% + 8px);
-        transform: translateX(-50%) translateY(4px);
-        padding: 10px 16px;
-        background: #1a1a1a;
-        color: #fff;
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 1.35;
-        text-align: center;
-        border-radius: 10px;
-        max-width: min(320px, 90vw);
-        white-space: normal;
-        pointer-events: none;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
-        z-index: 5;
-    }
-
-    .nw-product-promo-banner__toast.is-visible {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(0);
-    }
-
-    .nw-product-promo-banner__toast::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -7px;
-        border: 7px solid transparent;
-        border-top-color: #1a1a1a;
     }
 
     /* Shipping tag */
@@ -2703,15 +2518,6 @@
         }
         .nw-product-shipping-tag{
             padding: 5px 12px;
-        }
-        .nw-product-promo-banner {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 16px;
-            padding: 16px;
-        }
-        .nw-product-promo-banner__code {
-            align-self: flex-start;
         }
         .nw-product-setup-delivery {
             padding: 24px 20px;

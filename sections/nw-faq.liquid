@@ -1,6 +1,23 @@
 {{ 'nw-faq.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'nw-faq.js' | asset_url }}" defer="defer"></script>
 
+{%- liquid
+  assign faq_search_placeholder = section.settings.search_placeholder
+  if faq_search_placeholder == blank
+    assign faq_search_placeholder = 'nw.faq.search_placeholder' | t
+  endif
+
+  assign faq_more_label = section.settings.more_label
+  if faq_more_label == blank
+    assign faq_more_label = 'nw.faq.more_label' | t
+  endif
+
+  assign faq_less_label = section.settings.less_label
+  if faq_less_label == blank
+    assign faq_less_label = 'nw.faq.less_label' | t
+  endif
+-%}
+
 {%- assign nw_faq_selector = '.nw-faq.section-' | append: section.id -%}
 <style>
   .nw-faq.section-{{ section.id }} {
@@ -86,8 +103,8 @@
             <input
               type="text"
               class="nw-faq__search-input"
-              placeholder="{{ section.settings.search_placeholder | default: 'What can we help with?' }}"
-              aria-label="{{ section.settings.search_placeholder | default: 'What can we help with?' }}"
+              placeholder="{{ faq_search_placeholder }}"
+              aria-label="{{ faq_search_placeholder }}"
             >
             <span class="nw-faq__search-icon" aria-hidden="true">
               {% render 'nw-icon', icon: 'search-sm' %}
@@ -130,16 +147,16 @@
           </div>
         {%- endif -%}
 
-        {%- if section.settings.more_label != blank -%}
+        {%- if faq_more_label != blank -%}
           <div class="nw-faq__more-wrap">
             <button
               type="button"
               class="nw-faq__more"
               data-toggle="true"
-              data-more-text="{{ section.settings.more_label | default: "SEE MORE FAQ'S" }}"
-              data-less-text="SEE LESS FAQ'S"
+              data-more-text="{{ faq_more_label }}"
+              data-less-text="{{ faq_less_label }}"
             >
-              {{ section.settings.more_label }}
+              {{ faq_more_label }}
             </button>
           </div>
         {%- endif -%}
@@ -214,18 +231,18 @@
   "settings": [
     {
       "type": "header",
-      "content": "SECTION HEADER"
+      "content": "t:sections.nw-faq.settings.header_section.content"
     },
     {
       "type": "checkbox",
       "id": "show_rating",
-      "label": "Show Rating Stars",
+      "label": "t:sections.nw-faq.settings.show_rating.label",
       "default": true
     },
     {
       "type": "range",
       "id": "star_rating",
-      "label": "Star Rating (Active Stars)",
+      "label": "t:sections.nw-faq.settings.star_rating.label",
       "min": 1,
       "max": 5,
       "step": 1,
@@ -236,88 +253,88 @@
       "type": "color",
       "alpha": true,
       "id": "star_color",
-      "label": "Active Star Color",
+      "label": "t:sections.nw-faq.settings.star_color.label",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "star_color_inactive",
-      "label": "Inactive Star Color",
+      "label": "t:sections.nw-faq.settings.star_color_inactive.label",
       "visible_if": "{{ section.settings.show_rating == true }}"
     },
     {
       "type": "inline_richtext",
       "id": "eyebrow",
-      "label": "Eyebrow Text",
-      "default": "Real sleepers, real mornings"
+      "label": "t:sections.nw-faq.settings.eyebrow.label",
+      "default": "t:sections.nw-faq.settings.eyebrow.default"
     },
     {
       "type": "inline_richtext",
       "id": "heading",
-      "label": "Heading",
-      "default": "Frequently Asked Questions"
+      "label": "t:sections.nw-faq.settings.heading.label",
+      "default": "t:sections.nw-faq.settings.heading.default"
     },
     {
       "type": "richtext",
       "id": "subheading",
-      "label": "Description"
+      "label": "t:sections.nw-faq.settings.subheading.label"
     },
     {
       "type": "header",
-      "content": "TEXT COLORS"
+      "content": "t:sections.nw-faq.settings.header_text_colors.content"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "heading_color",
-      "label": "Heading Color"
+      "label": "t:sections.nw-faq.settings.heading_color.label"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "description_color",
-      "label": "Description Color"
+      "label": "t:sections.nw-faq.settings.description_color.label"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "eyebrow_color",
-      "label": "Eyebrow Color"
+      "label": "t:sections.nw-faq.settings.eyebrow_color.label"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "text_color",
-      "label": "Body Text Color"
+      "label": "t:sections.nw-faq.settings.text_color.label"
     },
     {
       "type": "header",
-      "content": "FAQ SETTINGS"
+      "content": "t:sections.nw-faq.settings.header_faq_settings.content"
     },
     {
       "type": "checkbox",
       "id": "show_search",
-      "label": "Show Live Search",
+      "label": "t:sections.nw-faq.settings.show_search.label",
       "default": true
     },
     {
       "type": "text",
       "id": "search_placeholder",
-      "label": "Search Placeholder",
-      "default": "What can we help with?",
+      "label": "t:sections.nw-faq.settings.search_placeholder.label",
+      "default": "t:sections.nw-faq.settings.search_placeholder.default",
       "visible_if": "{{ section.settings.show_search == true }}"
     },
     {
       "type": "checkbox",
       "id": "open_first_faq",
-      "label": "Open First FAQ By Default",
+      "label": "t:sections.nw-faq.settings.open_first_faq.label",
       "default": false
     },
     {
       "type": "range",
       "id": "initial_faq_count",
-      "label": "Initial Faqs To Show Before Expand",
+      "label": "t:sections.nw-faq.settings.initial_faq_count.label",
       "min": 1,
       "max": 20,
       "step": 1,
@@ -326,23 +343,29 @@
     {
       "type": "text",
       "id": "more_label",
-      "label": "See More Button Label",
-      "default": "SEE MORE FAQ’S"
+      "label": "t:sections.nw-faq.settings.more_label.label",
+      "default": "t:sections.nw-faq.settings.more_label.default"
+    },
+    {
+      "type": "text",
+      "id": "less_label",
+      "label": "t:sections.nw-faq.settings.less_label.label",
+      "default": "t:sections.nw-faq.settings.less_label.default"
     },
     {
       "type": "header",
-      "content": "CONTACT SETTINGS"
+      "content": "t:sections.nw-faq.settings.header_contact.content"
     },
     {
       "type": "inline_richtext",
       "id": "contact_heading",
-      "label": "Contact Heading",
-      "default": "Speak with Our Live Sleep Experts."
+      "label": "t:sections.nw-faq.settings.contact_heading.label",
+      "default": "t:sections.nw-faq.settings.contact_heading.default"
     },
     {
       "type": "checkbox",
       "id": "show_call_btn",
-      "label": "Show Call Button",
+      "label": "t:sections.nw-faq.settings.show_call_btn.label",
       "default": true
     },
     {
@@ -535,19 +558,19 @@
   "blocks": [
     {
       "type": "faq_item",
-      "name": "FAQ Item",
+      "name": "t:sections.nw-faq.blocks.faq_item.name",
       "settings": [
         {
           "type": "text",
           "id": "question",
-          "label": "Question",
-          "default": "What makes the Ultimate Snooze different from other organic mattresses?"
+          "label": "t:sections.nw-faq.blocks.faq_item.settings.question.label",
+          "default": "t:sections.nw-faq.blocks.faq_item.settings.question.default"
         },
         {
           "type": "richtext",
           "id": "answer",
-          "label": "Answer",
-          "default": "<p>Ultimate Snooze combines certified organic latex, organic wool, and pocket coils with zero toxic chemicals, glues, or fiberglass for restorative, clean sleep.</p>"
+          "label": "t:sections.nw-faq.blocks.faq_item.settings.answer.label",
+          "default": "t:sections.nw-faq.blocks.faq_item.settings.answer.default"
         }
       ]
     }

@@ -1,6 +1,10 @@
 {{ 'nw-image-with-text.css' | asset_url | stylesheet_tag }}
 
 {%- assign nw_shell_selector = '#NwImageWithText-' | append: section.id -%}
+{%- liquid
+  assign iwt_image_alt = section.settings.image.alt | default: section.settings.heading
+  assign iwt_image_mobile_alt = section.settings.image_mobile.alt | default: section.settings.heading
+-%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
 <section
@@ -38,7 +42,7 @@
                 class: 'nw-image-with-text__image nw-image-with-text__image--mobile',
                 widths: '375, 550, 750',
                 sizes: '100vw',
-                alt: section.settings.image_mobile.alt | default: section.settings.heading
+                alt: iwt_image_mobile_alt
             }}
             {{
               section.settings.image
@@ -48,7 +52,7 @@
                 class: 'nw-image-with-text__image nw-image-with-text__image--desktop',
                 widths: '375, 550, 750, 900, 1200',
                 sizes: '(min-width: 750px) 50vw, 100vw',
-                alt: section.settings.image.alt | default: section.settings.heading
+                alt: iwt_image_alt
             }}
           {%- elsif section.settings.image != blank -%}
             {{
@@ -59,7 +63,7 @@
                 class: 'nw-image-with-text__image',
                 widths: '375, 550, 750, 900, 1200',
                 sizes: '(min-width: 750px) 50vw, 100vw',
-                alt: section.settings.image.alt | default: section.settings.heading
+                alt: iwt_image_alt
             }}
           {%- elsif section.settings.image_mobile != blank -%}
             {{
@@ -70,7 +74,7 @@
                 class: 'nw-image-with-text__image',
                 widths: '375, 550, 750',
                 sizes: '100vw',
-                alt: section.settings.image_mobile.alt | default: section.settings.heading
+                alt: iwt_image_mobile_alt
             }}
           {%- else -%}
             {{ 'hero-apparel-1' | placeholder_svg_tag: 'nw-image-with-text__placeholder placeholder-svg' }}

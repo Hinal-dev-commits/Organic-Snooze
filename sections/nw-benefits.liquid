@@ -55,11 +55,12 @@
                               image_size: '800x'
                           }}
                         {%- elsif block.settings.image != blank -%}
+                          {%- assign benefits_card_alt = block.settings.title | escape -%}
                           {{
                             block.settings.image
                             | image_url: width: 800
                             | image_tag:
-                              alt: block.settings.title | escape,
+                              alt: benefits_card_alt,
                               class: 'nw-benefits__card-img',
                               loading: 'lazy',
                               widths: '400, 600, 800',

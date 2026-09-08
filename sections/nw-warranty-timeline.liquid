@@ -132,6 +132,7 @@
               if media_poster_mobile == blank and media_poster != blank
                 assign media_poster_mobile = media_poster
               endif
+              assign warranty_media_alt = section.settings.heading | strip_html | escape
             -%}
 
             {{
@@ -154,7 +155,7 @@
                   media_poster
                   | image_url: width: 1400
                   | image_tag:
-                    alt: section.settings.heading | strip_html | escape,
+                    alt: warranty_media_alt,
                     class: 'nw-warranty-timeline__img nw-warranty-timeline__img--desktop nw-warranty-timeline__poster',
                     loading: 'lazy',
                     widths: '700, 1000, 1400',
@@ -164,7 +165,7 @@
                   media_poster_mobile
                   | image_url: width: 800
                   | image_tag:
-                    alt: section.settings.heading | strip_html | escape,
+                    alt: warranty_media_alt,
                     class: 'nw-warranty-timeline__img nw-warranty-timeline__img--mobile nw-warranty-timeline__poster',
                     loading: 'lazy',
                     widths: '400, 600, 800',
@@ -175,7 +176,7 @@
                   media_poster
                   | image_url: width: 1400
                   | image_tag:
-                    alt: section.settings.heading | strip_html | escape,
+                    alt: warranty_media_alt,
                     class: 'nw-warranty-timeline__img nw-warranty-timeline__poster',
                     loading: 'lazy',
                     widths: '700, 1000, 1400',
@@ -186,7 +187,7 @@
                   media_poster_mobile
                   | image_url: width: 800
                   | image_tag:
-                    alt: section.settings.heading | strip_html | escape,
+                    alt: warranty_media_alt,
                     class: 'nw-warranty-timeline__img nw-warranty-timeline__poster',
                     loading: 'lazy',
                     widths: '400, 600, 800',
@@ -232,11 +233,12 @@
                 }}
               </picture>
             {%- else -%}
+              {%- assign warranty_timeline_alt = section.settings.image.alt | default: section.settings.heading | strip_html | escape -%}
               {{
                 section.settings.image
                 | image_url: width: 1400
                 | image_tag:
-                  alt: section.settings.image.alt | default: section.settings.heading | strip_html | escape,
+                  alt: warranty_timeline_alt,
                   loading: 'lazy',
                   class: 'nw-warranty-timeline__img',
                   widths: '700, 1000, 1400',

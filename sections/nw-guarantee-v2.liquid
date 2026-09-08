@@ -1,6 +1,7 @@
 {{ 'nw-guarantee-v2.css' | asset_url | stylesheet_tag }}
 
 {%- assign nw_shell_selector = '.nw-guarantee-v2.section-' | append: section.id -%}
+{%- assign guarantee_badge_alt = section.settings.heading | strip_html | escape -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFCF0' %}
 <section
   class="nw-guarantee-v2 section-{{ section.id }}"
@@ -25,7 +26,7 @@
               {{
                 section.settings.badge_image
                 | image_tag:
-                  alt: section.settings.heading | strip_html | escape,
+                  alt: guarantee_badge_alt,
                   class: 'nw-guarantee-v2__badge-img',
                   loading: 'lazy'
               }}

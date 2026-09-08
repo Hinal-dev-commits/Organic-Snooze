@@ -4,6 +4,8 @@
 {%- liquid
   assign layout_width = section.settings.layout_width | default: 'page_width'
   assign nw_shell_selector = '#NwOrganic-' | append: section.id
+  assign col1_head_alt = section.settings.col1_head_title | default: 'Organic Snooze' | escape
+  assign col2_head_alt = section.settings.col2_head_title | default: 'Conventional Foam' | escape
 -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 
@@ -67,7 +69,7 @@
                   {{
                     section.settings.col1_head_image
                     | image_tag:
-                      alt: section.settings.col1_head_title | default: 'Organic Snooze' | escape,
+                      alt: col1_head_alt,
                       class: 'nw-organic__head-floating-img',
                       loading: 'lazy',
                       sizes: '120px'
@@ -78,7 +80,7 @@
                   {{
                     section.settings.col1_head_logo
                     | image_tag:
-                      alt: section.settings.col1_head_title | default: 'Organic Snooze' | escape,
+                      alt: col1_head_alt,
                       class: 'nw-organic__brand-logo',
                       loading: 'lazy',
                       sizes: '160px'
@@ -93,7 +95,7 @@
                   {{
                     section.settings.col2_head_image
                     | image_tag:
-                      alt: section.settings.col2_head_title | default: 'Conventional Foam' | escape,
+                      alt: col2_head_alt,
                       class: 'nw-organic__head-floating-img nw-organic__head-floating-img--other',
                       loading: 'lazy',
                       sizes: '120px'
