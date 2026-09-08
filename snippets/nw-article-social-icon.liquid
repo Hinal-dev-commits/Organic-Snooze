@@ -1,0 +1,130 @@
+{%- comment -%}
+  Renders a social share icon for NW Article Content.
+
+  @param {object} social_block - social_icon block
+  @param {string} share_permalink - Full article URL
+  @param {string} share_title - Article title
+  @param {string} share_image - Article image URL
+{%- endcomment -%}
+
+{%- liquid
+  assign nw_icon_key = social_block.settings.icon
+  assign nw_icon_label = social_block.settings.aria_label
+  assign nw_custom_icon = social_block.settings.custom_icon
+  assign nw_custom_url = social_block.settings.url
+  assign nw_share_article = social_block.settings.share_article
+
+  if nw_icon_key == 'x'
+    assign nw_icon_key = 'twitter'
+  endif
+
+  if nw_share_article == nil
+    assign nw_share_article = true
+  endif
+
+  assign nw_encoded_url = share_permalink | url_param_escape
+  assign nw_encoded_title = share_title | url_param_escape
+  assign nw_encoded_image = share_image | url_param_escape
+
+  assign nw_social_url = ''
+  assign nw_is_share_link = false
+  assign nw_is_copy_link = false
+
+  if nw_share_article or nw_custom_url == blank
+    case nw_icon_key
+      when 'facebook'
+        assign nw_social_url = 'https://www.facebook.com/sharer/sharer.php?u=' | append: nw_encoded_url
+        assign nw_is_share_link = true
+      when 'twitter'
+        assign nw_social_url = 'https://x.com/intent/tweet?text=' | append: nw_encoded_title | append: '&url=' | append: nw_encoded_url
+        assign nw_is_share_link = true
+      when 'pinterest'
+        assign nw_social_url = 'https://pinterest.com/pin/create/button/?url=' | append: nw_encoded_url | append: '&media=' | append: nw_encoded_image | append: '&description=' | append: nw_encoded_title
+        assign nw_is_share_link = true
+      when 'linkedin'
+        assign nw_social_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' | append: nw_encoded_url
+        assign nw_is_share_link = true
+      when 'tumblr'
+        assign nw_social_url = 'https://www.tumblr.com/widgets/share/tool?posttype=link&title=' | append: nw_encoded_title | append: '&caption=' | append: nw_encoded_title | append: '&content=' | append: nw_encoded_url
+        assign nw_is_share_link = true
+      when 'whatsapp'
+        assign nw_social_url = 'https://api.whatsapp.com/send?text=' | append: nw_encoded_title | append: '%20' | append: nw_encoded_url
+        assign nw_is_share_link = true
+      when 'email'
+        assign nw_social_url = 'mailto:?subject=' | append: nw_encoded_title | append: '&body=' | append: nw_encoded_url
+        assign nw_is_share_link = true
+      when 'link'
+        assign nw_social_url = share_permalink
+        assign nw_is_copy_link = true
+      else
+        assign nw_social_url = share_permalink
+        assign nw_is_copy_link = true
+    endcase
+  else
+    assign nw_social_url = nw_custom_url
+  endif
+
+  if nw_icon_label == blank
+    case nw_icon_key
+      when 'facebook'
+        assign nw_icon_label = 'general.social.alt_text.share_on_facebook' | t
+      when 'twitter'
+        assign nw_icon_label = 'general.social.alt_text.share_on_twitter' | t
+      when 'pinterest'
+        assign nw_icon_label = 'general.social.alt_text.share_on_pinterest' | t
+      when 'instagram'
+        assign nw_icon_label = 'general.social.links.instagram' | t
+      when 'youtube'
+        assign nw_icon_label = 'general.social.links.youtube' | t
+      when 'tiktok'
+        assign nw_icon_label = 'general.social.links.tiktok' | t
+      when 'linkedin'
+        assign nw_icon_label = 'Share on LinkedIn'
+      when 'snapchat'
+        assign nw_icon_label = 'general.social.links.snapchat' | t
+      when 'tumblr'
+        assign nw_icon_label = 'Share on Tumblr'
+      when 'vimeo'
+        assign nw_icon_label = 'general.social.links.vimeo' | t
+      when 'whatsapp'
+        assign nw_icon_label = 'Share on WhatsApp'
+      when 'email'
+        assign nw_icon_label = 'Share by Email'
+      when 'link'
+        assign nw_icon_label = 'general.share.copy_to_clipboard' | t
+      else
+        assign nw_icon_label = 'Share this article'
+    endcase
+  endif
+
+  assign nw_open_new_tab = social_block.settings.open_new_tab
+  if nw_is_share_link and nw_icon_key != 'email'
+    assign nw_open_new_tab = true
+  endif
+-%}
+
+<li
+  class="nw-article-content__share-item"
+  {{ social_block.shopify_attributes }}
+>
+  <a
+    href="{{ nw_social_url }}"
+    class="nw-article-content__share-link{% if nw_is_copy_link %} nw-article-content__share-link--copy{% endif %}"
+    {% if nw_open_new_tab %}
+      target="_blank"
+      rel="noopener noreferrer"
+    {% endif %}
+    {% if nw_is_copy_link %}
+      data-nw-article-share-copy="{{ share_permalink | escape }}"
+    {% endif %}
+    aria-label="{{ nw_icon_label | escape }}"
+  >
+    <span class="nw-article-content__share-icon" aria-hidden="true">
+      {%- if social_block.settings.use_custom_icon and nw_custom_icon != blank -%}
+        {%- render 'nw-icon', custom_icon: nw_custom_icon, img_width: 48 -%}
+      {%- else -%}
+        {%- render 'nw-icon', icon: nw_icon_key -%}
+      {%- endif -%}
+    </span>
+  </a>
+</li>

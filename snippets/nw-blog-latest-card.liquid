@@ -74,6 +74,7 @@
 <article class="nw-blog-latest__card">
   <div class="nw-blog-latest__media">
     {%- if article.image != blank -%}
+      <a href="{{ article.url }}" class="nw-blog-latest__media-link">
       <img
         src="{{ article.image | image_url: width: 1040 }}"
         alt="{{ article.image.alt | default: article.title | escape }}"
@@ -82,6 +83,7 @@
         loading="lazy"
         class="nw-blog-latest__image"
       >
+      </a>
     {%- else -%}
       <div class="nw-blog-latest__placeholder" aria-hidden="true">
         {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
