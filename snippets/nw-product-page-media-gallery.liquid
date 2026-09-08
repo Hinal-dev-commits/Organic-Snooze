@@ -83,6 +83,16 @@ Duplicate of product-media-gallery for page templates using custom section image
       if section.settings.show_media_arrows or section.settings.show_media_dots
         assign nw_custom_media_controls = true
       endif
+
+      assign nw_media_slider_desktop = false
+      if section.settings.gallery_layout == 'thumbnail' or section.settings.gallery_layout == 'thumbnail_slider'
+        assign nw_media_slider_desktop = true
+      endif
+
+      assign nw_media_slider_mobile = true
+      if section.settings.mobile_thumbnails == 'columns'
+        assign nw_media_slider_mobile = false
+      endif
     -%}
     <slider-component
       id="GalleryViewer-{{ section.id }}"
@@ -163,7 +173,12 @@ Duplicate of product-media-gallery for page templates using custom section image
             </button>
           {%- endif -%}
           {%- if section.settings.show_media_dots -%}
-            <div class="nw-swiper-pagination" data-nw-media-dots>
+            <div
+              class="nw-swiper-pagination nw-product-media__pagination"
+              data-nw-media-dots
+              data-slider-desktop="{{ nw_media_slider_desktop }}"
+              data-slider-mobile="{{ nw_media_slider_mobile }}"
+            >
               {%- for i in (1..media_count) -%}
                 <span
                   class="swiper-pagination-bullet{% if i == 1 %} swiper-pagination-bullet-active{% endif %}"

@@ -71,7 +71,7 @@
     </div>
   </fieldset>
 {%- elsif picker_type == 'button' -%}
-  <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness nw-variant-picker--card{% endif %}{% if is_loft_option %} nw-variant-picker--card nw-variant-picker--card-left{% endif %}{% if is_quantity_option %} nw-variant-picker--quantity{% endif %}">
+  <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness nw-variant-picker--card{% endif %}{% if is_loft_option %} nw-variant-picker--card nw-variant-picker--card-left{% endif %}{% if is_quantity_option %} nw-variant-picker--quantity{% endif %}{% if is_size_option %} nw-variant-picker--size{% endif %}">
     <legend class="visually-hidden">{{ option.name }}</legend>
     <div class="nw-variant-picker__header">
       <span class="nw-variant-picker__label">{{ option.name }}:</span>
@@ -101,7 +101,12 @@
         {%- endif -%}
       {%- endif -%}
     </div>
-    <div class="nw-variant-picker__options">
+    <div
+      class="nw-variant-picker__options"
+      {% if is_size_option %}
+        data-option-count="{{ option.values.size }}"
+      {% endif %}
+    >
       {%- if is_firmness_option -%}
         {% render 'nw-product-variant-options-firmness',
           product: product,
