@@ -119,7 +119,7 @@
         -%}
         {%- if layer_cards.size > 0 -%}
           {%- if use_slider_markup -%}
-            <div class="nw-natural-layers-v2__slider-wrap">
+            <div class="nw-natural-layers-v2__slider-wrap{% if section.settings.enable_slider_mobile and section.settings.enable_slider_desktop == false %} nw-natural-layers-v2__slider-wrap--mobile{% endif %}">
               <div class="swiper nw-natural-layers-v2__swiper" id="NwNaturalLayersSwiper-{{ section.id }}">
                 <div class="swiper-wrapper nw-natural-layers-v2__cards">
                   {%- for block in layer_cards -%}
