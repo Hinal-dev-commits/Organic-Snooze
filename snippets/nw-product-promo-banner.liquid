@@ -58,9 +58,9 @@
     assign show_promo_banner = true
   endif
 -%}
-{%- if use_dynamic_promo != blank or promo_description != blank -%}
-  {%- if show_promo_banner -%}
-    {%- if use_dynamic_promo -%}
+{%- if show_promo_banner -%}
+  {{ 'nw-product-promo-banner.css' | asset_url | stylesheet_tag }}
+  {%- if use_dynamic_promo -%}
     <nw-product-promo-banner
       class="nw-product-promo-banner nw-product-promo-banner--dynamic"
       style="
@@ -157,5 +157,4 @@
       </script>
       <script src="{{ 'nw-product-promo-banner.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-  {%- endif -%}
 {%- endif -%}

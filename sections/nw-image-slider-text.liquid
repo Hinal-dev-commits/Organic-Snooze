@@ -60,6 +60,7 @@
                       {%- if forloop.first -%}
                         {{
                           block.settings.image
+                          | image_url: width: 1424
                           | image_tag:
                             alt: slide_img_alt,
                             class: 'nw-image-slider-text__slide-img-desktop nw-image-slider-text__slide-img',
@@ -70,6 +71,7 @@
                       {%- else -%}
                         {{
                           block.settings.image
+                          | image_url: width: 1424
                           | image_tag:
                             alt: slide_img_alt,
                             class: 'nw-image-slider-text__slide-img-desktop nw-image-slider-text__slide-img',
@@ -81,6 +83,7 @@
                         {%- if forloop.first -%}
                           {{
                             block.settings.image_mobile
+                            | image_url: width: 1200
                             | image_tag:
                               alt: slide_img_mobile_alt,
                               class: 'nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img',
@@ -91,6 +94,7 @@
                         {%- else -%}
                           {{
                             block.settings.image_mobile
+                            | image_url: width: 1200
                             | image_tag:
                               alt: slide_img_mobile_alt,
                               class: 'nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img',
@@ -102,6 +106,7 @@
                         {%- if forloop.first -%}
                           {{
                             block.settings.image
+                            | image_url: width: 1200
                             | image_tag:
                               alt: slide_img_alt,
                               class: 'nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img',
@@ -112,6 +117,7 @@
                         {%- else -%}
                           {{
                             block.settings.image
+                            | image_url: width: 1200
                             | image_tag:
                               alt: slide_img_alt,
                               class: 'nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img',

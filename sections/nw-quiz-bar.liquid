@@ -28,11 +28,12 @@
             {%- if quiz_icon != blank -%}
               {{
                 quiz_icon
+                | image_url: width: 120
                 | image_tag:
-                  width: 120,
                   alt: '',
                   class: 'nw-quiz-bar__icon-img',
-                  loading: 'lazy'
+                  loading: 'lazy',
+                  width: 120
               }}
             {%- else -%}
               <img

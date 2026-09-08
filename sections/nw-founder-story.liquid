@@ -136,6 +136,7 @@
             {%- elsif section.settings.image != blank -%}
               {{
                 section.settings.image
+                | image_url: width: 1424
                 | image_tag:
                   alt: founder_image_alt,
                   class: 'nw-founder-story__media-image',
@@ -160,6 +161,7 @@
                   <div class="nw-founder-story__avatar">
                     {{
                       section.settings.avatar
+                      | image_url: width: 192
                       | image_tag:
                         alt: founder_name_alt,
                         class: 'nw-founder-story__avatar-img',

@@ -107,6 +107,7 @@
                     {%- elsif desktop_image != blank -%}
                       {{
                         desktop_image
+                        | image_url: width: 900
                         | image_tag:
                           alt: desktop_alt,
                           class: 'nw-sleep-foundation__img nw-sleep-foundation__img--desktop',
@@ -115,6 +116,7 @@
                       }}
                       {{
                         mobile_image
+                        | image_url: width: 750
                         | image_tag:
                           alt: mobile_alt,
                           class: 'nw-sleep-foundation__img nw-sleep-foundation__img--mobile',

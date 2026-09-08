@@ -68,10 +68,12 @@
                 {%- if section.settings.col1_head_image != blank -%}
                   {{
                     section.settings.col1_head_image
+                    | image_url: width: 240
                     | image_tag:
                       alt: col1_head_alt,
                       class: 'nw-organic__head-floating-img',
                       loading: 'lazy',
+                      widths: '120, 180, 240',
                       sizes: '120px'
                   }}
                 {%- endif -%}
@@ -79,10 +81,12 @@
                 {%- if section.settings.col1_head_logo != blank -%}
                   {{
                     section.settings.col1_head_logo
+                    | image_url: width: 320
                     | image_tag:
                       alt: col1_head_alt,
                       class: 'nw-organic__brand-logo',
                       loading: 'lazy',
+                      widths: '160, 240, 320',
                       sizes: '160px'
                   }}
                 {%- elsif section.settings.col1_head_title != blank -%}
@@ -94,10 +98,12 @@
                 {%- if section.settings.col2_head_image != blank -%}
                   {{
                     section.settings.col2_head_image
+                    | image_url: width: 240
                     | image_tag:
                       alt: col2_head_alt,
                       class: 'nw-organic__head-floating-img nw-organic__head-floating-img--other',
                       loading: 'lazy',
+                      widths: '120, 180, 240',
                       sizes: '120px'
                   }}
                 {%- endif -%}
@@ -120,10 +126,12 @@
                     <span class="nw-organic__icon">
                       {{
                         block.settings.col1_custom_icon
+                        | image_url: width: 80
                         | image_tag:
                           alt: '',
                           class: 'nw-organic__icon-img',
                           loading: 'lazy',
+                          widths: '40, 60, 80',
                           sizes: '24px'
                       }}
                     </span>
@@ -148,10 +156,12 @@
                     <span class="nw-organic__icon">
                       {{
                         block.settings.col2_custom_icon
+                        | image_url: width: 80
                         | image_tag:
                           alt: '',
                           class: 'nw-organic__icon-img',
                           loading: 'lazy',
+                          widths: '40, 60, 80',
                           sizes: '24px'
                       }}
                     </span>
@@ -284,36 +294,44 @@
               {%- if img_dt != blank and img_mb != blank -%}
                 {{
                   img_dt
+                  | image_url: width: 1200
                   | image_tag:
                     alt: organic_image_alt,
                     class: 'nw-organic__img nw-organic__img--desktop',
                     loading: 'lazy',
+                    widths: '600, 900, 1200',
                     sizes: '(min-width: 750px) 712px, 100vw'
                 }}
                 {{
                   img_mb
+                  | image_url: width: 800
                   | image_tag:
                     alt: organic_image_alt,
                     class: 'nw-organic__img nw-organic__img--mobile',
                     loading: 'lazy',
+                    widths: '400, 600, 800',
                     sizes: '100vw'
                 }}
               {%- elsif img_dt != blank -%}
                 {{
                   img_dt
+                  | image_url: width: 1200
                   | image_tag:
                     alt: organic_image_alt,
                     class: 'nw-organic__img',
                     loading: 'lazy',
+                    widths: '600, 900, 1200',
                     sizes: '(min-width: 750px) 712px, 100vw'
                 }}
               {%- else -%}
                 {{
                   img_mb
+                  | image_url: width: 800
                   | image_tag:
                     alt: organic_image_alt,
                     class: 'nw-organic__img',
                     loading: 'lazy',
+                    widths: '400, 600, 800',
                     sizes: '100vw'
                 }}
               {%- endif -%}

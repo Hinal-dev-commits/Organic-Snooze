@@ -86,8 +86,8 @@
       {%- if banner_desktop_image != blank and banner_mobile_image != blank and banner_desktop_image != banner_mobile_image -%}
         {{
           banner_mobile_image
+          | image_url: width: 1200
           | image_tag:
-            width: 1200,
             class: 'nw-blog-banner__image nw-blog-banner__image--mobile',
             loading: 'eager',
             fetchpriority: 'high',
@@ -96,8 +96,8 @@
         }}
         {{
           banner_desktop_image
+          | image_url: width: 2880
           | image_tag:
-            width: 2880,
             class: 'nw-blog-banner__image nw-blog-banner__image--desktop',
             loading: 'eager',
             fetchpriority: 'high',
@@ -107,8 +107,8 @@
       {%- elsif banner_desktop_image != blank -%}
         {{
           banner_desktop_image
+          | image_url: width: 2880
           | image_tag:
-            width: 2880,
             class: 'nw-blog-banner__image',
             loading: 'eager',
             fetchpriority: 'high',
@@ -118,8 +118,8 @@
       {%- else -%}
         {{
           banner_mobile_image
+          | image_url: width: 1200
           | image_tag:
-            width: 1200,
             class: 'nw-blog-banner__image',
             loading: 'eager',
             fetchpriority: 'high',

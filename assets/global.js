@@ -624,10 +624,32 @@ class ModalDialog extends HTMLElement {
     document.body.appendChild(this);
   }
 
+  _isNwSizeGuideModal() {
+    return this.classList.contains('nw-size-guide') || this.classList.contains('nw-size-guide-modal');
+  }
+
+  _lockPageScroll() {
+    if (this._isNwSizeGuideModal()) {
+      document.documentElement.classList.add('overflow-hidden');
+      return;
+    }
+
+    document.body.classList.add('overflow-hidden');
+  }
+
+  _unlockPageScroll() {
+    if (this._isNwSizeGuideModal()) {
+      document.documentElement.classList.remove('overflow-hidden');
+      return;
+    }
+
+    document.body.classList.remove('overflow-hidden');
+  }
+
   show(opener) {
     this.openedBy = opener;
     const popup = this.querySelector('.template-popup');
-    document.body.classList.add('overflow-hidden');
+    this._lockPageScroll();
     this.setAttribute('open', '');
     if (popup) popup.loadContent();
     trapFocus(this, this.querySelector('[role="dialog"]'));
@@ -635,7 +657,7 @@ class ModalDialog extends HTMLElement {
   }
 
   hide() {
-    document.body.classList.remove('overflow-hidden');
+    this._unlockPageScroll();
     document.body.dispatchEvent(new CustomEvent('modalClosed'));
     this.removeAttribute('open');
     removeTrapFocus(this.openedBy);

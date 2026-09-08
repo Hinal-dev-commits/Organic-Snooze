@@ -57,35 +57,49 @@
           assign recovery_image_mobile_alt = section.settings.image_mobile.alt | default: section.settings.heading
         -%}
         {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
-          {%- if section.settings.image != blank -%}
+          {%- if section.settings.image != blank and section.settings.image_mobile != blank -%}
+            {{
+              section.settings.image_mobile
+              | image_url: width: 800
+              | image_tag:
+                alt: recovery_image_mobile_alt,
+                class: 'nw-recovery__image nw-recovery__image--mobile',
+                loading: 'lazy',
+                widths: '375, 550, 750, 800',
+                sizes: '100vw'
+            }}
             {{
               section.settings.image
+              | image_url: width: 1400
               | image_tag:
                 alt: recovery_image_alt,
                 class: 'nw-recovery__image nw-recovery__image--desktop',
                 loading: 'lazy',
+                widths: '550, 750, 900, 1100, 1400',
                 sizes: '100vw'
             }}
-
-          {%- endif -%}
-          {%- if section.settings.image_mobile != blank -%}
-              {{
-                section.settings.image_mobile
-                | image_tag:
-                  alt: recovery_image_mobile_alt,
-                  class: 'nw-recovery__image nw-recovery__image--mobile',
-                  loading: 'lazy',
-                  sizes: '100vw'
-              }}
-              {% else %}
-              {{
-                section.settings.image
-                | image_tag:
-                  alt: recovery_image_alt,
-                  class: 'nw-recovery__image nw-recovery__image--mobile',
-                  loading: 'lazy',
-                  sizes: '100vw'
-              }}
+          {%- elsif section.settings.image != blank -%}
+            {{
+              section.settings.image
+              | image_url: width: 1400
+              | image_tag:
+                alt: recovery_image_alt,
+                class: 'nw-recovery__image nw-recovery__image--desktop',
+                loading: 'lazy',
+                widths: '550, 750, 900, 1100, 1400',
+                sizes: '100vw'
+            }}
+          {%- else -%}
+            {{
+              section.settings.image_mobile
+              | image_url: width: 800
+              | image_tag:
+                alt: recovery_image_mobile_alt,
+                class: 'nw-recovery__image nw-recovery__image--mobile',
+                loading: 'lazy',
+                widths: '375, 550, 750, 800',
+                sizes: '100vw'
+            }}
           {%- endif -%}
         {%- endif -%}
       </div>
