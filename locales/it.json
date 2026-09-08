@@ -218,9 +218,25 @@
       "show_more": "Mostra di più",
       "show_less": "Mostra di meno",
       "filter_and_operator_subtitle": "Seleziona tutte"
+    },
+    "bundle_save": {
+      "select": "Add {{ title }} to bundle",
+      "save_amount": "Save {{ amount }}",
+      "empty": "Add products to the custom.bundle metafield to show this block.",
+      "empty_product_list": "Select products in the block settings to show this block.",
+      "select_one": "Select at least one add-on to add to cart.",
+      "unavailable": "One or more selected items are unavailable."
+    },
+    "bundle_tabs": {
+      "empty": "Add Included product tab blocks and select a product for each tab.",
+      "empty_tab": "Select a product for this tab."
     }
   },
   "templates": {
+    "404": {
+      "title": "Pagina non trovata",
+      "subtext": "404"
+    },
     "search": {
       "no_results": "Nessun risultato per \"{{ terms }}\". Controlla l'ortografia o usa una parola o una frase diversa.",
       "page": "Pagina",
@@ -269,10 +285,6 @@
         "error_heading": "Correggi gli errori seguenti:",
         "title": "Modulo di contatto"
       }
-    },
-    "404": {
-      "title": "Pagina non trovata",
-      "subtext": "404"
     }
   },
   "sections": {

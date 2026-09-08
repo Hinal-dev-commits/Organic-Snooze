@@ -42,12 +42,6 @@
                 if actual_prod.value != blank
                   assign actual_prod = actual_prod.value
                 endif
-                if actual_prod.title == blank and actual_prod != blank
-                  assign handle_prod = all_products[actual_prod]
-                  if handle_prod != blank and handle_prod.title != blank
-                    assign actual_prod = handle_prod
-                  endif
-                endif
               -%}
 
               {%- if actual_prod.title != blank -%}

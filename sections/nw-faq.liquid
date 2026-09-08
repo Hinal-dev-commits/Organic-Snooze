@@ -165,7 +165,7 @@
       {%- if section.settings.contact_heading != blank or show_call or show_text or show_quiz -%}
         <div class="nw-faq__contact">
           {%- if section.settings.contact_heading != blank -%}
-            <div class="nw-faq__contact-heading-wrap" id="faq-heading">
+            <div class="nw-faq__contact-heading-wrap" id="faq-heading-{{ section.id }}">
               {% render 'nw-section-heading', text: section.settings.contact_heading, tag: 'h2' %}
             </div>
           {%- endif -%}

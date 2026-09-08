@@ -324,7 +324,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
-    {{ 'nw-swiper-bundle.min.js' | asset_url | script_tag }}
+    <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'nw-when-swiper-ready.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'nw-countdown.js' | asset_url }}" defer="defer"></script>
     {%- comment -%}

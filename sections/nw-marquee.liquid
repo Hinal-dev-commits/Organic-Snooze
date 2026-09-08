@@ -42,7 +42,7 @@
                   assign block_icon = 'verified'
                 endif
               -%}
-              <div class="nw-marquee__item" {{ block.shopify_attributes }}>
+              <div class="nw-marquee__item"{%- if forloop.parentloop.parentloop.first and forloop.parentloop.first %} {{ block.shopify_attributes }}{%- endif -%}>
                 {%- if block.settings.link != blank -%}
                   <a href="{{ block.settings.link }}" class="nw-marquee__link">
                 {%- endif -%}
