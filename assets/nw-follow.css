@@ -103,7 +103,7 @@ nw-follow {
 .nw-follow__slider-wrap {
   position: relative;
   width: 100%;
-  max-width: 1440px;
+  /* max-width: 1440px; */
   overflow: hidden;
   margin: 0 auto;
 }
@@ -289,6 +289,14 @@ nw-follow {
   z-index: 5;
 }
 
+.nw-follow__slider-wrap .nw-swiper-btn.nw-swiper-btn--next {
+  right: 50px;
+}
+
+.nw-follow__slider-wrap .nw-swiper-btn.nw-swiper-btn--prev {
+  left: 50px;
+}
+
 .nw-follow__slider-wrap .nw-swiper-btn.swiper-button-lock {
   display: none;
 }
@@ -350,8 +358,8 @@ nw-follow {
   .nw-follow__slider-wrap--fade::after {
     display: none;
   }
-  
-  .nw-follow__slider-wrap .nw-swiper-btn {
+
+  .nw-follow__arrows-desktop {
     display: none;
   }
 }

@@ -16,10 +16,10 @@
 
 <nw-follow
   id="NwFollow-{{ section.id }}"
-  class="nw-follow section-{{ section.id }}"
+  class="nw-follow section-{{ section.id }}{% if section.settings.show_arrows %} nw-follow--show-arrows-desktop{% endif %}{% if section.settings.show_pagination %} nw-follow--show-pagination-mobile{% endif %}"
   data-block-count="{{ image_blocks.size | default: 6 }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
-  data-show-pagination="{{ section.settings.show_pagination }}"
+  data-show-pagination-mobile="{{ section.settings.show_pagination }}"
   data-pagination-id="{{ pagination_id }}"
   data-enable-autoplay="{{ section.settings.enable_autoplay }}"
   data-autoplay-delay="{{ section.settings.autoplay_delay | default: 4 | times: 1000 }}"
@@ -102,7 +102,9 @@
     -%}
     <div class="nw-follow__slider-wrap{% if section.settings.show_edge_fade %} nw-follow__slider-wrap--fade{% endif %}">
       {%- if section.settings.show_arrows and image_blocks.size > 1 -%}
-        {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+        <div class="nw-follow__arrows-desktop">
+          {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+        </div>
       {%- endif -%}
 
       <div class="swiper nw-follow__swiper" id="NwFollowSwiper-{{ section.id }}">
@@ -153,7 +155,9 @@
   {%- else -%}
     <div class="nw-follow__slider-wrap{% if section.settings.show_edge_fade %} nw-follow__slider-wrap--fade{% endif %}">
       {%- if section.settings.show_arrows -%}
-        {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+        <div class="nw-follow__arrows-desktop">
+          {% render 'nw-swiper-arrows', arrow_style: section.settings.arrow_style %}
+        </div>
       {%- endif -%}
 
       <div class="swiper nw-follow__swiper" id="NwFollowSwiper-{{ section.id }}">
@@ -292,24 +296,13 @@
     },
     {
       "type": "header",
-      "content": "SLIDER SETTINGS"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_edge_fade",
-      "label": "Show Desktop Edge Fade",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_pagination",
-      "label": "Show Pagination Dots",
-      "default": true
+      "content": "SLIDER CONTROLS - DESKTOP"
     },
     {
       "type": "checkbox",
       "id": "show_arrows",
       "label": "Show Navigation Arrows",
+      "info": "Shown on desktop (990px and up) only.",
       "default": true
     },
     {
@@ -322,6 +315,27 @@
         { "value": "style_1", "label": "Style 1" },
         { "value": "style_2", "label": "Style 2" }
       ]
+    },
+    {
+      "type": "header",
+      "content": "SLIDER CONTROLS - MOBILE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show Pagination Dots",
+      "info": "Shown on mobile (below 990px) only.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "SLIDER BEHAVIOR"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_edge_fade",
+      "label": "Show Desktop Edge Fade",
+      "default": true
     },
     {
       "type": "checkbox",

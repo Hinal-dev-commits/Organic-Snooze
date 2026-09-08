@@ -15,7 +15,11 @@ Video card for NW Blog And Video.
 
   assign blog_tag = blank
   if blog_tag_metafield != blank
-    assign blog_tag = blog_tag_metafield.value
+    if blog_tag_metafield.value != blank
+      assign blog_tag = blog_tag_metafield.value | strip
+    else
+      assign blog_tag = blog_tag_metafield | strip
+    endif
   endif
 
   assign show_editors_pick = false
@@ -40,7 +44,11 @@ Video card for NW Blog And Video.
   assign blog_video_file = blog_video_metafield.value
 -%}
 
-<article class="nw-blog-video__video-card nw-blog-video__video-card--{{ card_variant }}{% if hidden %} nw-blog-video__video-card--hidden{% endif %}{% if has_video_metafield %} nw-blog-video__video-card--has-video{% endif %}" data-blog-video-card>
+<article
+  class="nw-blog-video__video-card nw-blog-video__video-card--{{ card_variant }}{% if hidden %} nw-blog-video__video-card--hidden{% endif %}{% if has_video_metafield %} nw-blog-video__video-card--has-video{% endif %}"
+  data-blog-video-card
+  {% if blog_tag != blank %}data-topic-tag="{{ blog_tag | strip | escape }}"{% endif %}
+>
   <div class="nw-blog-video__video-media">
     {%- if has_video_metafield -%}
       {{ blog_video_file | video_tag: controls: false, muted: true, loop: false, autoplay: false, playsinline: true, class: 'nw-blog-video__video-file', image_size: '800x' }}
@@ -48,6 +56,7 @@ Video card for NW Blog And Video.
 
     {%- unless use_video_media -%}
       {%- if article.image != blank -%}
+        <a href="{{ article.url }}" class="nw-blog-video__video-media-link">
         <img
           src="{{ article.image | image_url: width: 1040 }}"
           alt="{{ article.image.alt | default: article.title | escape }}"
@@ -56,6 +65,7 @@ Video card for NW Blog And Video.
           loading="lazy"
           class="nw-blog-video__video-image nw-blog-video__video-poster"
         >
+        </a>
       {%- elsif has_video_metafield == false -%}
         <div class="nw-blog-video__video-placeholder" aria-hidden="true">
           {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}

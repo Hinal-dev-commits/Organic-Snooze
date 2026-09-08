@@ -6,6 +6,7 @@ nw-featured-articles {
 .nw-featured-articles {
   width: 100%;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .nw-featured-articles .page-width {

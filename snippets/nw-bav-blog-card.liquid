@@ -12,7 +12,11 @@ Blog grid card for NW Blog And Video.
   assign read_time_metafield = article.metafields.custom.read_time
   assign blog_tag = blank
   if blog_tag_metafield != blank
-    assign blog_tag = blog_tag_metafield.value
+    if blog_tag_metafield.value != blank
+      assign blog_tag = blog_tag_metafield.value
+    else
+      assign blog_tag = blog_tag_metafield
+    endif
   endif
   assign read_time = blank
   if read_time_metafield != blank
@@ -39,21 +43,31 @@ Blog grid card for NW Blog And Video.
   endif
 -%}
 
-<article class="nw-blog-video__blog-card{% if hidden %} nw-blog-video__blog-card--hidden{% endif %}" data-blog-video-blog-card>
+<article
+  class="nw-blog-video__blog-card{% if hidden %} nw-blog-video__blog-card--hidden{% endif %}"
+  data-blog-video-blog-card
+  {% if blog_tag != blank %}data-topic-tag="{{ blog_tag | strip | escape }}"{% endif %}
+>
   <div class="nw-blog-video__blog-media">
     {%- if article.image != blank -%}
-      <img
-        src="{{ article.image | image_url: width: 800 }}"
-        alt="{{ article.image.alt | default: article.title | escape }}"
-        width=""
-        height=""
-        loading="lazy"
-        class="nw-blog-video__blog-image"
-      >
+      <a href="{{ article.url }}" class="nw-blog-video__blog-media-link"> 
+        <img
+          src="{{ article.image | image_url: width: 800 }}"
+          alt="{{ article.image.alt | default: article.title | escape }}"
+          width=""
+          height=""
+          loading="lazy"
+          class="nw-blog-video__blog-image"
+        >
+      </a>
     {%- else -%}
       <div class="nw-blog-video__blog-placeholder" aria-hidden="true">
         {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
       </div>
+    {%- endif -%}
+
+    {%- if blog_tag != blank -%}
+      <span class="nw-blog-video__blog-media-tag">{{ blog_tag }}</span>
     {%- endif -%}
   </div>
   <div class="nw-blog-video__blog-body">

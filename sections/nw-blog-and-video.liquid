@@ -65,6 +65,108 @@
   if video_latest_count > video_initial_count
     assign video_hidden_count = video_latest_count | minus: video_initial_count
   endif
+
+  assign blog_topic_tags = ''
+  if blog_articles != blank and blog_article_count > 0
+    for item in blog_articles
+      assign topic_article = item
+      if topic_article == blank or topic_article.title == blank
+        assign article_path = item | strip
+        if article_path contains '/'
+          assign article_path_parts = article_path | split: '/'
+          assign article_blog_handle = article_path_parts.first
+          assign article_handle = article_path_parts.last
+          if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+            assign topic_article = blogs[article_blog_handle].articles[article_handle]
+          endif
+        else
+          assign topic_article = articles[article_path]
+        endif
+      endif
+
+      if topic_article != blank
+        assign article_tag = blank
+        assign topic_tag_metafield = topic_article.metafields.custom.blog_tag
+        if topic_tag_metafield != blank
+          if topic_tag_metafield.value != blank
+            assign article_tag = topic_tag_metafield.value | strip
+          else
+            assign article_tag = topic_tag_metafield | strip
+          endif
+        endif
+
+        if article_tag != blank
+          assign tag_check = '|' | append: article_tag | append: '|'
+          assign tags_wrapped = '|' | append: blog_topic_tags | append: '|'
+          unless tags_wrapped contains tag_check
+            if blog_topic_tags != blank
+              assign blog_topic_tags = blog_topic_tags | append: '|'
+            endif
+            assign blog_topic_tags = blog_topic_tags | append: article_tag
+          endunless
+        endif
+      endif
+    endfor
+  endif
+  assign blog_topic_array = blog_topic_tags | split: '|'
+
+  assign video_topic_tags = ''
+  if featured_video_article != blank
+    assign topic_tag_metafield = featured_video_article.metafields.custom.blog_tag
+    if topic_tag_metafield != blank
+      if topic_tag_metafield.value != blank
+        assign article_tag = topic_tag_metafield.value | strip
+      else
+        assign article_tag = topic_tag_metafield | strip
+      endif
+      if article_tag != blank
+        assign video_topic_tags = article_tag
+      endif
+    endif
+  endif
+
+  if video_articles != blank and video_article_count > 0
+    for item in video_articles
+      assign topic_article = item
+      if topic_article == blank or topic_article.title == blank
+        assign article_path = item | strip
+        if article_path contains '/'
+          assign article_path_parts = article_path | split: '/'
+          assign article_blog_handle = article_path_parts.first
+          assign article_handle = article_path_parts.last
+          if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+            assign topic_article = blogs[article_blog_handle].articles[article_handle]
+          endif
+        else
+          assign topic_article = articles[article_path]
+        endif
+      endif
+
+      if topic_article != blank
+        assign article_tag = blank
+        assign topic_tag_metafield = topic_article.metafields.custom.blog_tag
+        if topic_tag_metafield != blank
+          if topic_tag_metafield.value != blank
+            assign article_tag = topic_tag_metafield.value | strip
+          else
+            assign article_tag = topic_tag_metafield | strip
+          endif
+        endif
+
+        if article_tag != blank
+          assign tag_check = '|' | append: article_tag | append: '|'
+          assign tags_wrapped = '|' | append: video_topic_tags | append: '|'
+          unless tags_wrapped contains tag_check
+            if video_topic_tags != blank
+              assign video_topic_tags = video_topic_tags | append: '|'
+            endif
+            assign video_topic_tags = video_topic_tags | append: article_tag
+          endunless
+        endif
+      endif
+    endfor
+  endif
+  assign video_topic_array = video_topic_tags | split: '|'
 -%}
 
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
@@ -75,6 +177,8 @@
   class="nw-blog-video section-{{ section.id }}"
   data-blog-load-more="{{ blog_load_more_count }}"
   data-video-load-more="{{ video_load_more_count }}"
+  data-blog-initial-count="{{ blog_initial_count }}"
+  data-video-initial-count="{{ video_initial_count }}"
   style="
     --nw-bav-heading-color: {{ section.settings.heading_color }};
     --nw-bav-label-color: {{ section.settings.label_color }};
@@ -139,14 +243,23 @@
           <h2 class="nw-blog-video__heading">{{ section.settings.blog_heading }}</h2>
         {%- endif -%}
 
-        <div class="nw-blog-video__filters">
+        <div class="nw-blog-video__filters" data-blog-video-filters="blog">
           <div class="nw-blog-video__filter nw-blog-video__filter--topic">
-            <label class="nw-blog-video__filter-label" for="NwBavTopic-{{ section.id }}">
+            <label class="nw-blog-video__filter-label" for="NwBavBlogTopic-{{ section.id }}">
               {{ section.settings.topic_label }}
             </label>
             <div class="nw-blog-video__filter-control">
-              <select id="NwBavTopic-{{ section.id }}" class="nw-blog-video__select" disabled aria-disabled="true">
-                <option>{{ section.settings.topic_default }}</option>
+              <select
+                id="NwBavBlogTopic-{{ section.id }}"
+                class="nw-blog-video__select"
+                data-blog-video-topic="blog"
+              >
+                <option value="all">{{ section.settings.topic_default }}</option>
+                {%- for tag in blog_topic_array -%}
+                  {%- if tag != blank -%}
+                    <option value="{{ tag | escape }}">{{ tag }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
               </select>
               <span class="nw-blog-video__select-icon" aria-hidden="true">
                 {% render 'nw-icon', icon: 'arrow-down-2' %}
@@ -155,17 +268,16 @@
           </div>
 
           <div class="nw-blog-video__filter nw-blog-video__filter--search">
-            <label class="nw-blog-video__filter-label visually-hidden" for="NwBavSearch-{{ section.id }}">
+            <label class="nw-blog-video__filter-label visually-hidden" for="NwBavBlogSearch-{{ section.id }}">
               {{ section.settings.search_placeholder }}
             </label>
             <div class="nw-blog-video__search">
               <input
-                id="NwBavSearch-{{ section.id }}"
+                id="NwBavBlogSearch-{{ section.id }}"
                 type="search"
                 class="nw-blog-video__search-input"
+                data-blog-video-search="blog"
                 placeholder="{{ section.settings.search_placeholder }}"
-                disabled
-                aria-disabled="true"
                 autocomplete="off"
               >
               <span class="nw-blog-video__search-btn" aria-hidden="true">
@@ -208,7 +320,13 @@
 
         {%- if blog_hidden_count > 0 and section.settings.blog_button_text != blank -%}
           <div class="nw-blog-video__actions">
-            <button type="button" class="nw-blog-video__load-more nw-btn nw-btn--{{ section.settings.blog_button_style | default: 'outline' }}" data-blog-video-load-blog>
+            <button
+              type="button"
+              class="nw-blog-video__load-more nw-btn nw-btn--{{ section.settings.blog_button_style | default: 'outline' }}"
+              data-blog-video-load-blog
+              data-more-text="{{ section.settings.blog_button_text | escape }}"
+              data-less-text="{{ section.settings.blog_button_less_text | escape }}"
+            >
               <span class="nw-btn__text">{{ section.settings.blog_button_text }}</span>
             </button>
           </div>
@@ -226,6 +344,50 @@
           <h2 class="nw-blog-video__heading">{{ section.settings.video_heading }}</h2>
         {%- endif -%}
 
+        <div class="nw-blog-video__filters nw-blog-video__filters--video" data-blog-video-filters="video">
+          <div class="nw-blog-video__filter nw-blog-video__filter--topic">
+            <label class="nw-blog-video__filter-label" for="NwBavVideoTopic-{{ section.id }}">
+              {{ section.settings.topic_label }}
+            </label>
+            <div class="nw-blog-video__filter-control">
+              <select
+                id="NwBavVideoTopic-{{ section.id }}"
+                class="nw-blog-video__select"
+                data-blog-video-topic="video"
+              >
+                <option value="all">{{ section.settings.topic_default }}</option>
+                {%- for tag in video_topic_array -%}
+                  {%- if tag != blank -%}
+                    <option value="{{ tag | escape }}">{{ tag }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+              <span class="nw-blog-video__select-icon" aria-hidden="true">
+                {% render 'nw-icon', icon: 'arrow-down-2' %}
+              </span>
+            </div>
+          </div>
+
+          <div class="nw-blog-video__filter nw-blog-video__filter--search">
+            <label class="nw-blog-video__filter-label visually-hidden" for="NwBavVideoSearch-{{ section.id }}">
+              {{ section.settings.search_placeholder }}
+            </label>
+            <div class="nw-blog-video__search">
+              <input
+                id="NwBavVideoSearch-{{ section.id }}"
+                type="search"
+                class="nw-blog-video__search-input"
+                data-blog-video-search="video"
+                placeholder="{{ section.settings.search_placeholder }}"
+                autocomplete="off"
+              >
+              <span class="nw-blog-video__search-btn" aria-hidden="true">
+                {{ 'search-2.svg' | inline_asset_content }}
+              </span>
+            </div>
+          </div>
+        </div>
+
         <div class="nw-blog-video__video-layout">
           <div class="nw-blog-video__video-featured">
             <p class="nw-blog-video__video-label">{{ section.settings.featured_label }}</p>
@@ -233,41 +395,6 @@
               {%- if featured_video_article != blank -%}
                 {% render 'nw-bav-video-card', article: featured_video_article, section: section, variant: 'featured' %}
               {%- endif -%}
-            </div>
-          </div>
-          <div class="nw-blog-video__filters nw-blog-video__filters--video">
-            <div class="nw-blog-video__filter nw-blog-video__filter--topic">
-              <label class="nw-blog-video__filter-label" for="NwBavTopic-{{ section.id }}">
-                {{ section.settings.topic_label }}
-              </label>
-              <div class="nw-blog-video__filter-control">
-                <select id="NwBavTopic-{{ section.id }}" class="nw-blog-video__select" disabled aria-disabled="true">
-                  <option>{{ section.settings.topic_default }}</option>
-                </select>
-                <span class="nw-blog-video__select-icon" aria-hidden="true">
-                  {% render 'nw-icon', icon: 'arrow-down-2' %}
-                </span>
-              </div>
-            </div>
-
-            <div class="nw-blog-video__filter nw-blog-video__filter--search">
-              <label class="nw-blog-video__filter-label visually-hidden" for="NwBavSearch-{{ section.id }}">
-                {{ section.settings.search_placeholder }}
-              </label>
-              <div class="nw-blog-video__search">
-                <input
-                  id="NwBavSearch-{{ section.id }}"
-                  type="search"
-                  class="nw-blog-video__search-input"
-                  placeholder="{{ section.settings.search_placeholder }}"
-                  disabled
-                  aria-disabled="true"
-                  autocomplete="off"
-                >
-                <span class="nw-blog-video__search-btn" aria-hidden="true">
-                  {{ 'search-2.svg' | inline_asset_content }}
-                </span>
-              </div>
             </div>
           </div>
 
@@ -361,7 +488,13 @@
 
         {%- if video_hidden_count > 0 and section.settings.video_button_text != blank -%}
           <div class="nw-blog-video__actions">
-            <button type="button" class="nw-blog-video__load-more nw-btn nw-btn--{{ section.settings.video_button_style | default: 'outline' }}" data-blog-video-load-video>
+            <button
+              type="button"
+              class="nw-blog-video__load-more nw-btn nw-btn--{{ section.settings.video_button_style | default: 'outline' }}"
+              data-blog-video-load-video
+              data-more-text="{{ section.settings.video_button_text | escape }}"
+              data-less-text="{{ section.settings.video_button_less_text | escape }}"
+            >
               <span class="nw-btn__text">{{ section.settings.video_button_text }}</span>
             </button>
           </div>
@@ -514,7 +647,8 @@
       "type": "text",
       "id": "topic_default",
       "label": "Topic Default Value",
-      "default": "All"
+      "default": "All",
+      "info": "Shown as the first topic option. Select All to show every article or video."
     },
     {
       "type": "text",
@@ -555,6 +689,12 @@
       "default": "VIEW MORE ARTICLES"
     },
     {
+      "type": "text",
+      "id": "blog_button_less_text",
+      "label": "View Less Articles Label",
+      "default": "VIEW LESS ARTICLES"
+    },
+    {
       "type": "select",
       "id": "blog_button_style",
       "label": "View More Articles Style",
@@ -579,6 +719,12 @@
       "id": "video_button_text",
       "label": "See More Videos Label",
       "default": "SEE MORE VIDEOS"
+    },
+    {
+      "type": "text",
+      "id": "video_button_less_text",
+      "label": "See Less Videos Label",
+      "default": "SEE LESS VIDEOS"
     },
     {
       "type": "select",
