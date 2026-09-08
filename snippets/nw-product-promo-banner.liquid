@@ -60,8 +60,9 @@
 -%}
 {%- if use_dynamic_promo != blank or promo_description != blank -%}
   {%- if show_promo_banner -%}
-    <div
-      class="nw-product-promo-banner{% if use_dynamic_promo %} nw-product-promo-banner--dynamic{% endif %}"
+    {%- if use_dynamic_promo -%}
+    <nw-product-promo-banner
+      class="nw-product-promo-banner nw-product-promo-banner--dynamic"
       style="
         --nw-ppb-bg: {{ block.settings.bg_color | default: '#EDF5EB' }};
         --nw-ppb-border: {{ block.settings.border_color | default: 'rgba(97, 57, 22, 0.2)' }};
@@ -71,13 +72,24 @@
         --nw-ppb-code-border: {{ block.settings.code_border_color | default: '#7F7F29' }};
         --nw-ppb-code-text: {{ block.settings.code_text_color | default: '#434300' }};
       "
-      {% if use_dynamic_promo %}
-        data-promo-banner
-        data-section-id="{{ section_id }}"
-        data-block-id="{{ block.id }}"
-        data-placeholder="{{ placeholder_token | escape }}"
-      {% endif %}
+      data-section-id="{{ section_id }}"
+      data-block-id="{{ block.id }}"
+      data-placeholder="{{ placeholder_token | escape }}"
     >
+    {%- else -%}
+    <div
+      class="nw-product-promo-banner"
+      style="
+        --nw-ppb-bg: {{ block.settings.bg_color | default: '#EDF5EB' }};
+        --nw-ppb-border: {{ block.settings.border_color | default: 'rgba(97, 57, 22, 0.2)' }};
+        --nw-ppb-text: {{ block.settings.text_color | default: '#454500' }};
+        --nw-ppb-icon: {{ block.settings.icon_color | default: '#454500' }};
+        --nw-ppb-code-bg: {{ block.settings.code_bg_color | default: '#FFFCF0' }};
+        --nw-ppb-code-border: {{ block.settings.code_border_color | default: '#7F7F29' }};
+        --nw-ppb-code-text: {{ block.settings.code_text_color | default: '#434300' }};
+      "
+    >
+    {%- endif -%}
       <div class="nw-product-promo-banner__content">
         {%- if promo_heading != blank -%}
           <div class="nw-product-promo-banner__heading-row">
@@ -119,7 +131,11 @@
           {%- endif -%}
         </div>
       {%- endif -%}
+    {%- if use_dynamic_promo -%}
+    </nw-product-promo-banner>
+    {%- else -%}
     </div>
+    {%- endif -%}
   
     {%- if use_dynamic_promo -%}
       <script type="application/json" id="promo-banner-data-{{ section_id }}-{{ block.id }}">

@@ -22,14 +22,13 @@
         <div class="nw-guarantee-v2__main">
           {%- if section.settings.badge_image != blank -%}
             <div class="nw-guarantee-v2__badge">
-              <img
-                src="{{ section.settings.badge_image | image_url }}"
-                alt="{{ section.settings.heading | strip_html | escape }}"
-                class="nw-guarantee-v2__badge-img"
-                width=""
-                height=""
-                loading="lazy"
-              >
+              {{
+                section.settings.badge_image
+                | image_tag:
+                  alt: section.settings.heading | strip_html | escape,
+                  class: 'nw-guarantee-v2__badge-img',
+                  loading: 'lazy'
+              }}
             </div>
           {%- endif -%}
 

@@ -17,7 +17,7 @@
   </style>
 {%- endif -%}
 
-<div
+<nw-organic
   id="NwOrganic-{{ section.id }}"
   class="nw-organic nw-organic--{{ layout_width }} section-{{ section.id }}"
   style="
@@ -64,25 +64,25 @@
               
               <div class="nw-organic__cell nw-organic__cell--head-brand">
                 {%- if section.settings.col1_head_image != blank -%}
-                  <img
-                    src="{{ section.settings.col1_head_image | image_url }}"
-                    alt="{{ section.settings.col1_head_title | default: 'Organic Snooze' | escape }}"
-                    class="nw-organic__head-floating-img"
-                    width=""
-                    height=""
-                    loading="lazy"
-                  >
+                  {{
+                    section.settings.col1_head_image
+                    | image_tag:
+                      alt: section.settings.col1_head_title | default: 'Organic Snooze' | escape,
+                      class: 'nw-organic__head-floating-img',
+                      loading: 'lazy',
+                      sizes: '120px'
+                  }}
                 {%- endif -%}
 
                 {%- if section.settings.col1_head_logo != blank -%}
-                  <img
-                    src="{{ section.settings.col1_head_logo | image_url }}"
-                    alt="{{ section.settings.col1_head_title | default: 'Organic Snooze' | escape }}"
-                    class="nw-organic__brand-logo"
-                    width=""
-                    height=""
-                    loading="lazy"
-                  >
+                  {{
+                    section.settings.col1_head_logo
+                    | image_tag:
+                      alt: section.settings.col1_head_title | default: 'Organic Snooze' | escape,
+                      class: 'nw-organic__brand-logo',
+                      loading: 'lazy',
+                      sizes: '160px'
+                  }}
                 {%- elsif section.settings.col1_head_title != blank -%}
                   <span class="nw-organic__brand-text">{{ section.settings.col1_head_title }}</span>
                 {%- endif -%}
@@ -90,14 +90,14 @@
 
               <div class="nw-organic__cell nw-organic__cell--head-other">
                 {%- if section.settings.col2_head_image != blank -%}
-                  <img
-                    src="{{ section.settings.col2_head_image | image_url }}"
-                    alt="{{ section.settings.col2_head_title | default: 'Conventional Foam' | escape }}"
-                    class="nw-organic__head-floating-img nw-organic__head-floating-img--other"
-                    width=""
-                    height=""
-                    loading="lazy"
-                  >
+                  {{
+                    section.settings.col2_head_image
+                    | image_tag:
+                      alt: section.settings.col2_head_title | default: 'Conventional Foam' | escape,
+                      class: 'nw-organic__head-floating-img nw-organic__head-floating-img--other',
+                      loading: 'lazy',
+                      sizes: '120px'
+                  }}
                 {%- endif -%}
 
                 {%- if section.settings.col2_head_title != blank -%}
@@ -116,14 +116,14 @@
                 <div class="nw-organic__cell nw-organic__cell--brand">
                   {%- if block.settings.col1_use_custom_icon and block.settings.col1_custom_icon != blank -%}
                     <span class="nw-organic__icon">
-                      <img
-                        src="{{ block.settings.col1_custom_icon | image_url }}"
-                        alt=""
-                        class="nw-organic__icon-img"
-                        width=""
-                        height=""
-                        loading="lazy"
-                      >
+                      {{
+                        block.settings.col1_custom_icon
+                        | image_tag:
+                          alt: '',
+                          class: 'nw-organic__icon-img',
+                          loading: 'lazy',
+                          sizes: '24px'
+                      }}
                     </span>
                   {%- elsif block.settings.col1_icon != 'none' -%}
                     <span
@@ -144,14 +144,14 @@
                 <div class="nw-organic__cell nw-organic__cell--other">
                   {%- if block.settings.col2_use_custom_icon and block.settings.col2_custom_icon != blank -%}
                     <span class="nw-organic__icon">
-                      <img
-                        src="{{ block.settings.col2_custom_icon | image_url }}"
-                        alt=""
-                        class="nw-organic__icon-img"
-                        width=""
-                        height=""
-                        loading="lazy"
-                      >
+                      {{
+                        block.settings.col2_custom_icon
+                        | image_tag:
+                          alt: '',
+                          class: 'nw-organic__icon-img',
+                          loading: 'lazy',
+                          sizes: '24px'
+                      }}
                     </span>
                   {%- elsif block.settings.col2_icon != 'none' -%}
                     <span
@@ -207,41 +207,52 @@
             }}
 
             {%- if media_poster != blank or media_poster_mobile != blank -%}
+              {%- liquid
+                assign organic_poster_alt = section.settings.heading | default: 'Organic Snooze comparison' | escape
+              -%}
               {%- if media_poster != blank and media_poster_mobile != blank and media_poster != media_poster_mobile -%}
-                <img
-                  src="{{ media_poster | image_url: width: 1200 }}"
-                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                  class="nw-organic__img nw-organic__img--desktop nw-organic__poster"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
-                <img
-                  src="{{ media_poster_mobile | image_url: width: 800 }}"
-                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                  class="nw-organic__img nw-organic__img--mobile nw-organic__poster"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
+                {{
+                  media_poster
+                  | image_url: width: 1200
+                  | image_tag:
+                    alt: organic_poster_alt,
+                    class: 'nw-organic__img nw-organic__img--desktop nw-organic__poster',
+                    loading: 'lazy',
+                    widths: '600, 900, 1200',
+                    sizes: '(min-width: 750px) 712px, 100vw'
+                }}
+                {{
+                  media_poster_mobile
+                  | image_url: width: 800
+                  | image_tag:
+                    alt: organic_poster_alt,
+                    class: 'nw-organic__img nw-organic__img--mobile nw-organic__poster',
+                    loading: 'lazy',
+                    widths: '400, 600, 800',
+                    sizes: '100vw'
+                }}
               {%- elsif media_poster != blank -%}
-                <img
-                  src="{{ media_poster | image_url: width: 1200 }}"
-                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                  class="nw-organic__img nw-organic__poster"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
+                {{
+                  media_poster
+                  | image_url: width: 1200
+                  | image_tag:
+                    alt: organic_poster_alt,
+                    class: 'nw-organic__img nw-organic__poster',
+                    loading: 'lazy',
+                    widths: '600, 900, 1200',
+                    sizes: '(min-width: 750px) 712px, 100vw'
+                }}
               {%- else -%}
-                <img
-                  src="{{ media_poster_mobile | image_url: width: 800 }}"
-                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                  class="nw-organic__img nw-organic__poster"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
+                {{
+                  media_poster_mobile
+                  | image_url: width: 800
+                  | image_tag:
+                    alt: organic_poster_alt,
+                    class: 'nw-organic__img nw-organic__poster',
+                    loading: 'lazy',
+                    widths: '400, 600, 800',
+                    sizes: '100vw'
+                }}
               {%- endif -%}
             {%- endif -%}
 
@@ -265,41 +276,44 @@
               assign img_mb = section.settings.image_mobile
             -%}
             {%- if img_dt != blank or img_mb != blank -%}
+              {%- liquid
+                assign organic_image_alt = section.settings.heading | default: 'Organic Snooze comparison' | escape
+              -%}
               {%- if img_dt != blank and img_mb != blank -%}
-                <img
-                  src="{{ img_dt | image_url }}"
-                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                  class="nw-organic__img nw-organic__img--desktop"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
-                <img
-                  src="{{ img_mb | image_url }}"
-                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                  class="nw-organic__img nw-organic__img--mobile"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
+                {{
+                  img_dt
+                  | image_tag:
+                    alt: organic_image_alt,
+                    class: 'nw-organic__img nw-organic__img--desktop',
+                    loading: 'lazy',
+                    sizes: '(min-width: 750px) 712px, 100vw'
+                }}
+                {{
+                  img_mb
+                  | image_tag:
+                    alt: organic_image_alt,
+                    class: 'nw-organic__img nw-organic__img--mobile',
+                    loading: 'lazy',
+                    sizes: '100vw'
+                }}
               {%- elsif img_dt != blank -%}
-                <img
-                  src="{{ img_dt | image_url }}"
-                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                  class="nw-organic__img"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
+                {{
+                  img_dt
+                  | image_tag:
+                    alt: organic_image_alt,
+                    class: 'nw-organic__img',
+                    loading: 'lazy',
+                    sizes: '(min-width: 750px) 712px, 100vw'
+                }}
               {%- else -%}
-                <img
-                  src="{{ img_mb | image_url }}"
-                  alt="{{ section.settings.heading | default: 'Organic Snooze comparison' | escape }}"
-                  class="nw-organic__img"
-                  width=""
-                  height=""
-                  loading="lazy"
-                >
+                {{
+                  img_mb
+                  | image_tag:
+                    alt: organic_image_alt,
+                    class: 'nw-organic__img',
+                    loading: 'lazy',
+                    sizes: '100vw'
+                }}
               {%- endif -%}
             {%- else -%}
               <div class="nw-organic__placeholder"></div>
@@ -320,7 +334,7 @@
       {%- endif -%}
     </div>
   </div>
-</div>
+</nw-organic>
 
 {% schema %}
 {

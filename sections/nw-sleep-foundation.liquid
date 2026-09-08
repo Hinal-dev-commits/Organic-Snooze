@@ -84,14 +84,15 @@
                           image_size: '900x'
                       }}
                       {%- if poster != blank -%}
-                        <img
-                          src="{{ poster | image_url: width: 900 }}"
-                          alt="{{ card_title | default: card_label | escape }}"
-                          class="nw-sleep-foundation__poster"
-                          loading="lazy"
-                          width=""
-                          height=""
-                        >
+                        {{
+                          poster
+                          | image_url: width: 900
+                          | image_tag:
+                            alt: card_title | default: card_label | escape,
+                            class: 'nw-sleep-foundation__poster',
+                            loading: 'lazy',
+                            sizes: '(min-width: 750px) 400px, 100vw'
+                        }}
                       {%- endif -%}
                       {%- if block.settings.show_play_button -%}
                         <button type="button" class="nw-sleep-foundation__play" data-nw-sf-play aria-label="Play video">
@@ -101,22 +102,22 @@
                         </button>
                       {%- endif -%}
                     {%- elsif desktop_image != blank -%}
-                      <img
-                        src="{{ desktop_image | image_url }}"
-                        alt="{{ desktop_image.alt | default: card_title | escape }}"
-                        class="nw-sleep-foundation__img nw-sleep-foundation__img--desktop"
-                        loading="lazy"
-                        width=""
-                        height=""
-                      >
-                      <img
-                        src="{{ mobile_image | image_url }}"
-                        alt="{{ mobile_image.alt | default: card_title | escape }}"
-                        class="nw-sleep-foundation__img nw-sleep-foundation__img--mobile"
-                        loading="lazy"
-                        width=""
-                        height=""
-                      >
+                      {{
+                        desktop_image
+                        | image_tag:
+                          alt: desktop_image.alt | default: card_title | escape,
+                          class: 'nw-sleep-foundation__img nw-sleep-foundation__img--desktop',
+                          loading: 'lazy',
+                          sizes: '(min-width: 750px) 400px, 100vw'
+                      }}
+                      {{
+                        mobile_image
+                        | image_tag:
+                          alt: mobile_image.alt | default: card_title | escape,
+                          class: 'nw-sleep-foundation__img nw-sleep-foundation__img--mobile',
+                          loading: 'lazy',
+                          sizes: '100vw'
+                      }}
                     {%- else -%}
                       <div class="nw-sleep-foundation__placeholder" aria-hidden="true">
                         {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -126,14 +127,16 @@
                     {%- if block.settings.show_badge and block.settings.badge_text != blank -%}
                       <span class="nw-sleep-foundation__badge">
                         {%- if block.settings.badge_icon != blank -%}
-                          <img
-                            src="{{ block.settings.badge_icon | image_url: width: 28 }}"
-                            alt=""
-                            class="nw-sleep-foundation__badge-icon"
-                            loading="lazy"
-                            width=""
-                            height=""
-                          >
+                          {{
+                            block.settings.badge_icon
+                            | image_url: width: 28
+                            | image_tag:
+                              alt: '',
+                              class: 'nw-sleep-foundation__badge-icon',
+                              loading: 'lazy',
+                              width: 28,
+                              sizes: '28px'
+                          }}
                         {%- else -%}
                           {% render 'nw-icon', icon: 'gift' %}
                         {%- endif -%}

@@ -24,7 +24,7 @@
   }
 </style>
 
-<div class="nw-mattresses-timeline section-{{ section.id }}">
+<nw-mattresses-timeline class="nw-mattresses-timeline section-{{ section.id }}">
     <div class="nw-mattresses-timeline__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-mattresses-timeline__grid">
         <div class="nw-mattresses-timeline__media-col">
@@ -176,9 +176,14 @@
                 >
                   <div class="nw-mattresses-timeline__snooze-logo-wrap">
                     {%- if section.settings.snooze_logo != blank -%}
-                        <img src="{{ section.settings.snooze_logo | image_url}}" alt="{{ section.settings.snooze_brand | default: 'Organic Snooze' | escape }}" class="nw-mattresses-timeline__snooze-logo-img" width="" height=""
+                      <img
+                        src="{{ section.settings.snooze_logo | image_url: width: 400 }}"
+                        alt="{{ section.settings.snooze_brand | default: 'Organic Snooze' | escape }}"
+                        class="nw-mattresses-timeline__snooze-logo-img"
+                        width=""
+                        height=""
                         loading="lazy"
-                        >
+                      >
                      
                     {%- else -%}
                       <span class="nw-mattresses-timeline__snooze-logo-text">{{ section.settings.snooze_brand | default: 'ORGANIC SNOOZE' }}</span>
@@ -200,7 +205,7 @@
         </div>
       </div>
     </div>
-</div>
+</nw-mattresses-timeline>
 
 {% schema %}
 {

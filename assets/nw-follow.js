@@ -116,7 +116,7 @@ if (!customElements.get('nw-follow')) {
         };
       }
 
-      if (enableAutoplay && blockCount > 1) {
+      if (window.nwAutoplayEnabled(enableAutoplay) && blockCount > 1) {
         options.autoplay = {
           delay: autoplayDelay,
           disableOnInteraction: false,

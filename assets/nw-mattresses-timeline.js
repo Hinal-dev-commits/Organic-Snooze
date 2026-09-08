@@ -1,54 +1,42 @@
-(function () {
-  var sections = new WeakMap();
+if (!customElements.get('nw-mattresses-timeline')) {
+  class NwMattressesTimeline extends HTMLElement {
+    connectedCallback() {
+      if (this._initialized) return;
+      this._initialized = true;
 
-  function clamp(value, min, max) {
-    return Math.min(max, Math.max(min, value));
-  }
+      this._timeline = this.querySelector('.nw-mattresses-timeline__timeline');
+      if (!this._timeline) return;
 
-  function updateTimeline(timeline) {
-    var items = timeline.querySelectorAll('.nw-mattresses-timeline__layer-item');
-    if (!items.length) return;
+      this._onScroll = () => {
+        this._updateTimeline(this._timeline);
+      };
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      items.forEach(function (item) {
-        item.classList.add('is-filled');
-        item.classList.remove('is-active');
-        item.style.removeProperty('--line-fill');
-      });
-      return;
+      window.addEventListener('scroll', this._onScroll, { passive: true });
+      window.addEventListener('resize', this._onScroll);
+      this._onScroll();
     }
 
-    var trigger = window.innerHeight * 0.62;
-    var activeIndex = -1;
-    var lineFill = 0;
-
-    items.forEach(function (item, index) {
-      item.classList.remove('is-filled', 'is-active');
-      item.style.removeProperty('--line-fill');
-
-      var target = item.querySelector('.nw-mattresses-timeline__card-wrap') || item;
-      var rect = target.getBoundingClientRect();
-      var center = rect.top + rect.height * 0.35;
-
-      if (center <= trigger) {
-        activeIndex = index;
+    disconnectedCallback() {
+      if (this._onScroll) {
+        window.removeEventListener('scroll', this._onScroll);
+        window.removeEventListener('resize', this._onScroll);
+        this._onScroll = null;
       }
-    });
 
-    if (activeIndex === -1) {
-      var firstTarget = items[0].querySelector('.nw-mattresses-timeline__card-wrap') || items[0];
-      var firstRect = firstTarget.getBoundingClientRect();
-      if (firstRect.top < window.innerHeight * 0.9) {
-        activeIndex = 0;
-        lineFill = clamp((trigger - firstRect.top) / Math.max(firstRect.height, 1), 0, 1);
-      }
-    } else {
-      var lastItem = items[items.length - 1];
-      var lastTarget = lastItem.querySelector('.nw-mattresses-timeline__card-wrap') || lastItem;
-      var lastRect = lastTarget.getBoundingClientRect();
+      this._timeline = null;
+      this._initialized = false;
+    }
 
-      if (lastRect.bottom <= trigger) {
-        items.forEach(function (item) {
+    _clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    _updateTimeline(timeline) {
+      const items = timeline.querySelectorAll('.nw-mattresses-timeline__layer-item');
+      if (!items.length) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        items.forEach((item) => {
           item.classList.add('is-filled');
           item.classList.remove('is-active');
           item.style.removeProperty('--line-fill');
@@ -56,89 +44,77 @@
         return;
       }
 
-      var activeItem = items[activeIndex];
-      var activeTarget = activeItem.querySelector('.nw-mattresses-timeline__card-wrap') || activeItem;
-      var activeRect = activeTarget.getBoundingClientRect();
-      var nextItem = items[activeIndex + 1];
-      var segmentEnd = trigger;
+      const trigger = window.innerHeight * 0.62;
+      let activeIndex = -1;
+      let lineFill = 0;
 
-      if (nextItem) {
-        var nextTarget = nextItem.querySelector('.nw-mattresses-timeline__card-wrap') || nextItem;
-        var nextRect = nextTarget.getBoundingClientRect();
-        segmentEnd = nextRect.top + nextRect.height * 0.35;
-      }
+      items.forEach((item, index) => {
+        item.classList.remove('is-filled', 'is-active');
+        item.style.removeProperty('--line-fill');
 
-      var segmentStart = activeRect.top + activeRect.height * 0.35;
-      var segmentLength = Math.max(segmentEnd - segmentStart, 1);
-      lineFill = clamp((trigger - segmentStart) / segmentLength, 0, 1);
+        const target = item.querySelector('.nw-mattresses-timeline__card-wrap') || item;
+        const rect = target.getBoundingClientRect();
+        const center = rect.top + rect.height * 0.35;
 
-      if (!nextItem && lineFill >= 0.85) {
-        lineFill = 1;
-      }
-    }
+        if (center <= trigger) {
+          activeIndex = index;
+        }
+      });
 
-    items.forEach(function (item, index) {
-      if (index < activeIndex) {
-        item.classList.add('is-filled');
-      } else if (index === activeIndex) {
-        item.classList.add('is-active');
-        if (item.querySelector('.nw-mattresses-timeline__line-bottom')) {
-          item.style.setProperty('--line-fill', String(lineFill));
+      if (activeIndex === -1) {
+        const firstTarget = items[0].querySelector('.nw-mattresses-timeline__card-wrap') || items[0];
+        const firstRect = firstTarget.getBoundingClientRect();
+        if (firstRect.top < window.innerHeight * 0.9) {
+          activeIndex = 0;
+          lineFill = this._clamp((trigger - firstRect.top) / Math.max(firstRect.height, 1), 0, 1);
+        }
+      } else {
+        const lastItem = items[items.length - 1];
+        const lastTarget = lastItem.querySelector('.nw-mattresses-timeline__card-wrap') || lastItem;
+        const lastRect = lastTarget.getBoundingClientRect();
+
+        if (lastRect.bottom <= trigger) {
+          items.forEach((item) => {
+            item.classList.add('is-filled');
+            item.classList.remove('is-active');
+            item.style.removeProperty('--line-fill');
+          });
+          return;
+        }
+
+        const activeItem = items[activeIndex];
+        const activeTarget = activeItem.querySelector('.nw-mattresses-timeline__card-wrap') || activeItem;
+        const activeRect = activeTarget.getBoundingClientRect();
+        const nextItem = items[activeIndex + 1];
+        let segmentEnd = trigger;
+
+        if (nextItem) {
+          const nextTarget = nextItem.querySelector('.nw-mattresses-timeline__card-wrap') || nextItem;
+          const nextRect = nextTarget.getBoundingClientRect();
+          segmentEnd = nextRect.top + nextRect.height * 0.35;
+        }
+
+        const segmentStart = activeRect.top + activeRect.height * 0.35;
+        const segmentLength = Math.max(segmentEnd - segmentStart, 1);
+        lineFill = this._clamp((trigger - segmentStart) / segmentLength, 0, 1);
+
+        if (!nextItem && lineFill >= 0.85) {
+          lineFill = 1;
         }
       }
-    });
-  }
 
-  function bindTimeline(section) {
-    var timeline = section.querySelector('.nw-mattresses-timeline__timeline');
-    if (!timeline) return;
-
-    var state = sections.get(section);
-    if (state) {
-      window.removeEventListener('scroll', state.onScroll);
-      window.removeEventListener('resize', state.onScroll);
+      items.forEach((item, index) => {
+        if (index < activeIndex) {
+          item.classList.add('is-filled');
+        } else if (index === activeIndex) {
+          item.classList.add('is-active');
+          if (item.querySelector('.nw-mattresses-timeline__line-bottom')) {
+            item.style.setProperty('--line-fill', String(lineFill));
+          }
+        }
+      });
     }
-
-    var onScroll = function () {
-      updateTimeline(timeline);
-    };
-
-    sections.set(section, { onScroll: onScroll });
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    onScroll();
   }
 
-  function initSection(section) {
-    if (!section || !section.classList.contains('nw-mattresses-timeline')) return;
-    bindTimeline(section);
-  }
-
-  function bootAll() {
-    document.querySelectorAll('.nw-mattresses-timeline').forEach(initSection);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootAll);
-  } else {
-    bootAll();
-  }
-
-  window.addEventListener('load', bootAll);
-
-  if (window.Shopify && Shopify.designMode) {
-    document.addEventListener('shopify:section:load', function (event) {
-      var section = event.target.querySelector('.nw-mattresses-timeline');
-      initSection(section || event.target);
-    });
-
-    document.addEventListener('shopify:section:unload', function (event) {
-      var section = event.target.querySelector('.nw-mattresses-timeline') || event.target;
-      var state = sections.get(section);
-      if (!state) return;
-      window.removeEventListener('scroll', state.onScroll);
-      window.removeEventListener('resize', state.onScroll);
-      sections.delete(section);
-    });
-  }
-})();
+  customElements.define('nw-mattresses-timeline', NwMattressesTimeline);
+}

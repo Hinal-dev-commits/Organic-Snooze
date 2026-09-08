@@ -74,7 +74,12 @@ if (!customElements.get('nw-collection-list')) {
         } else {
           swiper.slideTo(0, 0);
         }
-      } else if (this.dataset.enableAutoplay === 'true' && swiper.autoplay && !swiper.autoplay.running) {
+      } else if (
+        window.nwAutoplayEnabled &&
+        window.nwAutoplayEnabled(this.dataset.enableAutoplay === 'true') &&
+        swiper.autoplay &&
+        !swiper.autoplay.running
+      ) {
         swiper.autoplay.start();
       }
 
@@ -156,7 +161,7 @@ if (!customElements.get('nw-collection-list')) {
           }
         };
 
-        if (enableAutoplay) {
+        if (window.nwAutoplayEnabled(enableAutoplay)) {
           swiperOptions.autoplay = {
             delay: autoplayDelay,
             disableOnInteraction: false,

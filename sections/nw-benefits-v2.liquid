@@ -109,14 +109,16 @@
               {{ block.shopify_attributes }}
             >
               {%- if block.settings.use_custom_image and block.settings.image != blank -%}
-                <img
-                  src="{{ block.settings.image | image_url: width: 320 }}"
-                  alt="{{ block.settings.text | escape }}"
-                  loading="lazy"
-                  class="nw-benefits-v2__logo-img"
-                  height=""
-                  width=""
-                >
+                {{
+                  block.settings.image
+                  | image_url: width: 320
+                  | image_tag:
+                    alt: block.settings.text | escape,
+                    loading: 'lazy',
+                    class: 'nw-benefits-v2__logo-img',
+                    widths: '160, 240, 320',
+                    sizes: '160px'
+                }}
               {%- elsif block.settings.logo_type == 'hsa_fsa' -%}
                 <svg
                   class="nw-benefits-v2__partner-svg"

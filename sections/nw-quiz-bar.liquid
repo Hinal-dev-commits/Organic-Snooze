@@ -1,4 +1,3 @@
-{{ 'nw-button.css' | asset_url | stylesheet_tag }}
 {{ 'nw-quiz-bar.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
@@ -27,21 +26,19 @@
         <div class="nw-quiz-bar__content">
           <div class="nw-quiz-bar__icon" aria-hidden="true">
             {%- if quiz_icon != blank -%}
-              <img
-                src="{{ quiz_icon | image_url: width: 120 }}"
-                alt=""
-                class="nw-quiz-bar__icon-img"
-                width=""
-                height=""
-                loading="lazy"
-              >
+              {{
+                quiz_icon
+                | image_tag:
+                  width: 120,
+                  alt: '',
+                  class: 'nw-quiz-bar__icon-img',
+                  loading: 'lazy'
+              }}
             {%- else -%}
               <img
                 src="{{ quiz_icon_asset }}"
                 alt=""
                 class="nw-quiz-bar__icon-img"
-                width=""
-                height=""
                 loading="lazy"
               >
             {%- endif -%}

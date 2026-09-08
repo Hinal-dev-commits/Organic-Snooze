@@ -91,7 +91,7 @@ Duplicate of product-media-gallery for page templates using custom section image
       <a class="skip-to-content-link button visually-hidden quick-add-hidden" href="#ProductInfo-{{ section.id }}">
         {{ 'accessibility.skip_to_product_info' | t }}
       </a>
-      <div class="nw-product-media__viewport">
+      <nw-product-media class="nw-product-media__viewport">
         <ul
           id="Slider-Gallery-{{ section.id }}"
           class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
@@ -175,7 +175,7 @@ Duplicate of product-media-gallery for page templates using custom section image
             </div>
           {%- endif -%}
         {%- endif -%}
-      </div>
+      </nw-product-media>
       {%- if nw_custom_media_controls -%}
         <div class="slider-buttons visually-hidden" aria-hidden="true">
           <button type="button" class="slider-button slider-button--prev" name="previous" tabindex="-1">

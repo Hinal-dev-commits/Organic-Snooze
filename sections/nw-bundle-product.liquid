@@ -4,7 +4,7 @@
 {%- assign nw_shell_selector = '#NwBundleProduct-' | append: section.id -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFAF3' %}
 
-<div id="NwBundleProduct-{{ section.id }}" class="nw-bundle-product section-{{ section.id }}">
+<nw-bundle-product id="NwBundleProduct-{{ section.id }}" class="nw-bundle-product section-{{ section.id }}">
   <div class="page-width">
     <div class="nw-bundle-product__wrapper{%- render 'nw-scroll-animation' -%}">
       <div class="nw-bundle-product__header">
@@ -116,7 +116,7 @@
       </div>
     </div>
   </div>
-</div>
+</nw-bundle-product>
 
 {% schema %}
 {

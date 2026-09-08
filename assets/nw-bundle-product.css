@@ -177,6 +177,11 @@
   box-sizing: border-box;
 }
 
+.nw-bundle-product__accordion-summary:focus-visible {
+  outline: 2px solid var(--primary-color, #613916);
+  outline-offset: 2px;
+}
+
 .nw-bundle-product__accordion-summary {
   display: flex;
   flex-direction: row;

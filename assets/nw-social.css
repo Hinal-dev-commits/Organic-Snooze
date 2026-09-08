@@ -76,6 +76,11 @@
   overflow: hidden;
 }
 
+.nw-social__input:focus-visible {
+  outline: 2px solid var(--nw-social-input-text, #613916);
+  outline-offset: 2px;
+}
+
 .nw-social__input {
   flex: 1 1 auto;
   min-width: 0;
@@ -116,6 +121,11 @@
 
 .nw-social__submit:hover {
   opacity: 0.9;
+}
+
+.nw-social__submit:focus-visible {
+  outline: 2px solid var(--nw-social-submit-icon, #ffffff);
+  outline-offset: 2px;
 }
 
 .nw-social__submit-icon {

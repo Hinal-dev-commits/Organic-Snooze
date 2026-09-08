@@ -77,7 +77,7 @@ if (!customElements.get('nw-featured-articles')) {
         };
       }
 
-      if (enableAutoplay) {
+      if (window.nwAutoplayEnabled(enableAutoplay)) {
         options.autoplay = {
           delay: autoplayDelay,
           disableOnInteraction: false,

@@ -54,13 +54,34 @@
       <div class="nw-recovery__media">
         {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
           {%- if section.settings.image != blank -%}
-            <img src="{{ section.settings.image | image_url }}" alt="{{ section.settings.image.alt | default: section.settings.heading }}" class="nw-recovery__image nw-recovery__image--desktop" loading="lazy" width="" height="">
-            
+            {{
+              section.settings.image
+              | image_tag:
+                alt: section.settings.image.alt | default: section.settings.heading,
+                class: 'nw-recovery__image nw-recovery__image--desktop',
+                loading: 'lazy',
+                sizes: '100vw'
+            }}
+
           {%- endif -%}
           {%- if section.settings.image_mobile != blank -%}
-              <img src="{{ section.settings.image_mobile | image_url }}" alt="{{ section.settings.image_mobile.alt | default: section.settings.heading }}" class="nw-recovery__image nw-recovery__image--mobile" loading="lazy" width="" height=""> 
+              {{
+                section.settings.image_mobile
+                | image_tag:
+                  alt: section.settings.image_mobile.alt | default: section.settings.heading,
+                  class: 'nw-recovery__image nw-recovery__image--mobile',
+                  loading: 'lazy',
+                  sizes: '100vw'
+              }}
               {% else %}
-              <img src="{{ section.settings.image | image_url }}" alt="{{ section.settings.image.alt | default: section.settings.heading }}" class="nw-recovery__image nw-recovery__image--mobile" loading="lazy" width="" height="">
+              {{
+                section.settings.image
+                | image_tag:
+                  alt: section.settings.image.alt | default: section.settings.heading,
+                  class: 'nw-recovery__image nw-recovery__image--mobile',
+                  loading: 'lazy',
+                  sizes: '100vw'
+              }}
           {%- endif -%}
         {%- endif -%}
       </div>

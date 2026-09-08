@@ -17,6 +17,18 @@ if (!customElements.get('nw-faq')) {
 
     onClick(e) {
       e.preventDefault();
+
+      if (window.nwPrefersReducedMotion && window.nwPrefersReducedMotion()) {
+        this.el.open = !this.el.open;
+        this.updateAriaExpanded(this.el.open);
+        if (!this.el.open) {
+          this.accordionGroup.currentAccordion = null;
+        } else {
+          this.accordionGroup.currentAccordion = this;
+        }
+        return;
+      }
+
       this.el.style.overflow = 'hidden';
       this.accordionGroup.closeAllExcept(this);
 

@@ -21,3 +21,11 @@ window.nwWhenSwiperReady = function (callback, timeoutMs) {
     window.setTimeout(poll, 50);
   })();
 };
+
+window.nwPrefersReducedMotion = function () {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+};
+
+window.nwAutoplayEnabled = function (requested) {
+  return !!requested && !window.nwPrefersReducedMotion();
+};

@@ -82,7 +82,7 @@ if (!customElements.get('nw-layer-product')) {
           }
         };
 
-        if (isAutoplay) {
+        if (window.nwAutoplayEnabled(isAutoplay)) {
           swiperConfig.autoplay = {
             delay: speedVal * 1000,
             disableOnInteraction: false,

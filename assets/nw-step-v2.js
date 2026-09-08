@@ -82,7 +82,7 @@ if (!customElements.get('nw-step-v2')) {
         };
       }
 
-      if (enableAutoplay) {
+      if (window.nwAutoplayEnabled(enableAutoplay)) {
         options.autoplay = {
           delay: autoplayDelay,
           disableOnInteraction: false,

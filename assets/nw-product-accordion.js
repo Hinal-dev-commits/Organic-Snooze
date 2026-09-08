@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     onClick(e) {
       e.preventDefault();
+
+      if (window.nwPrefersReducedMotion && window.nwPrefersReducedMotion()) {
+        this.el.open = !this.el.open;
+        this.updateAriaExpanded(this.el.open);
+        return;
+      }
+
       this.el.style.overflow = 'hidden';
       if (this.isClosing || !this.el.open) {
         this.open();

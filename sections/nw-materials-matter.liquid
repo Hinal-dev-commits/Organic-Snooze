@@ -1,7 +1,6 @@
 {{ 'nw-materials-matter.css' | asset_url | stylesheet_tag }}
 {%- if section.settings.mobile_slider -%}
-  {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
-  <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 <script src="{{ 'nw-materials-matter.js' | asset_url }}" defer="defer"></script>
 

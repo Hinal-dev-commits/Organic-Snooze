@@ -76,7 +76,7 @@ if (!customElements.get('nw-reviews')) {
           }
         };
 
-        if (enableAutoplay && slideCount > 1) {
+        if (window.nwAutoplayEnabled(enableAutoplay) && slideCount > 1) {
           reviewSwiperOptions.autoplay = {
             delay: autoplayDelay,
             disableOnInteraction: false,

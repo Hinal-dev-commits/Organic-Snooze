@@ -78,14 +78,13 @@
 
               {%- if section.settings.photo != blank -%}
                 <div class="nw-recovery-v2__photo">
-                  <img
-                    src="{{ section.settings.photo | image_url }}"
-                    alt="{{ section.settings.photo.alt | default: section.settings.name | default: section.settings.heading | strip_html | escape }}"
-                    class="nw-recovery-v2__photo-img"
-                    loading="lazy"
-                    width=""
-                    height=""
-                  >
+                  {{
+                    section.settings.photo
+                    | image_tag:
+                      alt: section.settings.photo.alt | default: section.settings.name | default: section.settings.heading | strip_html | escape,
+                      class: 'nw-recovery-v2__photo-img',
+                      loading: 'lazy'
+                  }}
                 </div>
               {%- endif -%}
             </div>

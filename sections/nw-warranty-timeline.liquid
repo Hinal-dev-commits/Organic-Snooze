@@ -1,4 +1,3 @@
-{{ 'nw-button.css' | asset_url | stylesheet_tag }}
 {{ 'nw-warranty-timeline.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'nw-warranty-timeline.js' | asset_url }}" defer="defer"></script>
 
@@ -151,40 +150,48 @@
 
             {%- if media_poster != blank or media_poster_mobile != blank -%}
               {%- if media_poster != blank and media_poster_mobile != blank and media_poster != media_poster_mobile -%}
-                <img
-                  src="{{ media_poster | image_url: width: 1400 }}"
-                  alt="{{ section.settings.heading | strip_html | escape }}"
-                  class="nw-warranty-timeline__img nw-warranty-timeline__img--desktop nw-warranty-timeline__poster"
-                  loading="lazy"
-                  width=""
-                  height=""
-                >
-                <img
-                  src="{{ media_poster_mobile | image_url: width: 800 }}"
-                  alt="{{ section.settings.heading | strip_html | escape }}"
-                  class="nw-warranty-timeline__img nw-warranty-timeline__img--mobile nw-warranty-timeline__poster"
-                  loading="lazy"
-                  width=""
-                  height=""
-                >
+                {{
+                  media_poster
+                  | image_url: width: 1400
+                  | image_tag:
+                    alt: section.settings.heading | strip_html | escape,
+                    class: 'nw-warranty-timeline__img nw-warranty-timeline__img--desktop nw-warranty-timeline__poster',
+                    loading: 'lazy',
+                    widths: '700, 1000, 1400',
+                    sizes: '(min-width: 750px) 712px, 100vw'
+                }}
+                {{
+                  media_poster_mobile
+                  | image_url: width: 800
+                  | image_tag:
+                    alt: section.settings.heading | strip_html | escape,
+                    class: 'nw-warranty-timeline__img nw-warranty-timeline__img--mobile nw-warranty-timeline__poster',
+                    loading: 'lazy',
+                    widths: '400, 600, 800',
+                    sizes: '100vw'
+                }}
               {%- elsif media_poster != blank -%}
-                <img
-                  src="{{ media_poster | image_url: width: 1400 }}"
-                  alt="{{ section.settings.heading | strip_html | escape }}"
-                  class="nw-warranty-timeline__img nw-warranty-timeline__poster"
-                  loading="lazy"
-                  width=""
-                  height=""
-                >
+                {{
+                  media_poster
+                  | image_url: width: 1400
+                  | image_tag:
+                    alt: section.settings.heading | strip_html | escape,
+                    class: 'nw-warranty-timeline__img nw-warranty-timeline__poster',
+                    loading: 'lazy',
+                    widths: '700, 1000, 1400',
+                    sizes: '(min-width: 750px) 712px, 100vw'
+                }}
               {%- else -%}
-                <img
-                  src="{{ media_poster_mobile | image_url: width: 800 }}"
-                  alt="{{ section.settings.heading | strip_html | escape }}"
-                  class="nw-warranty-timeline__img nw-warranty-timeline__poster"
-                  loading="lazy"
-                  width=""
-                  height=""
-                >
+                {{
+                  media_poster_mobile
+                  | image_url: width: 800
+                  | image_tag:
+                    alt: section.settings.heading | strip_html | escape,
+                    class: 'nw-warranty-timeline__img nw-warranty-timeline__poster',
+                    loading: 'lazy',
+                    widths: '400, 600, 800',
+                    sizes: '100vw'
+                }}
               {%- endif -%}
             {%- endif -%}
 
@@ -204,29 +211,37 @@
             {%- endif -%}
           {%- elsif section.settings.image != blank or section.settings.image_mobile != blank -%}
             {%- if section.settings.image_mobile != blank -%}
+              {%- liquid
+                assign warranty_timeline_image = section.settings.image | default: section.settings.image_mobile
+                assign warranty_timeline_alt = section.settings.image.alt | default: section.settings.heading | strip_html | escape
+              -%}
               <picture class="nw-warranty-timeline__picture">
                 <source
                   media="(max-width: 749px)"
                   srcset="{{ section.settings.image_mobile | image_url: width: 800 }}"
                 >
-                <img
-                  src="{{ section.settings.image | default: section.settings.image_mobile | image_url: width: 1400 }}"
-                  alt="{{ section.settings.image.alt | default: section.settings.heading | strip_html | escape }}"
-                  loading="lazy"
-                  class="nw-warranty-timeline__img"
-                  height=""
-                  width=""
-                >
+                {{
+                  warranty_timeline_image
+                  | image_url: width: 1400
+                  | image_tag:
+                    alt: warranty_timeline_alt,
+                    loading: 'lazy',
+                    class: 'nw-warranty-timeline__img',
+                    widths: '700, 1000, 1400',
+                    sizes: '(min-width: 750px) 712px, 100vw'
+                }}
               </picture>
             {%- else -%}
-              <img
-                src="{{ section.settings.image | image_url: width: 1400 }}"
-                alt="{{ section.settings.image.alt | default: section.settings.heading | strip_html | escape }}"
-                loading="lazy"
-                class="nw-warranty-timeline__img"
-                height=""
-                width=""
-              >
+              {{
+                section.settings.image
+                | image_url: width: 1400
+                | image_tag:
+                  alt: section.settings.image.alt | default: section.settings.heading | strip_html | escape,
+                  loading: 'lazy',
+                  class: 'nw-warranty-timeline__img',
+                  widths: '700, 1000, 1400',
+                  sizes: '(min-width: 750px) 712px, 100vw'
+              }}
             {%- endif -%}
           {%- else -%}
             <div class="nw-warranty-timeline__img-placeholder">

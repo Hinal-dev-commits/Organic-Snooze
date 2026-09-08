@@ -72,40 +72,48 @@
 
               {%- if media_poster != blank or media_poster_mobile != blank -%}
                 {%- if media_poster != blank and media_poster_mobile != blank and media_poster != media_poster_mobile -%}
-                  <img
-                    src="{{ media_poster | image_url: width: 1200 }}"
-                    alt="{{ section.settings.name | escape }}"
-                    class="nw-founder-story__media-poster nw-founder-story__media-poster--desktop"
-                    width=""
-                    height=""
-                    loading="lazy"
-                  >
-                  <img
-                    src="{{ media_poster_mobile | image_url: width: 800 }}"
-                    alt="{{ section.settings.name | escape }}"
-                    class="nw-founder-story__media-poster nw-founder-story__media-poster--mobile"
-                    width=""
-                    height=""
-                    loading="lazy"
-                  >
+                  {{
+                    media_poster
+                    | image_url: width: 1200
+                    | image_tag:
+                      alt: section.settings.name | escape,
+                      class: 'nw-founder-story__media-poster nw-founder-story__media-poster--desktop',
+                      loading: 'lazy',
+                      widths: '600, 900, 1200',
+                      sizes: '(min-width: 750px) 712px, 100vw'
+                  }}
+                  {{
+                    media_poster_mobile
+                    | image_url: width: 800
+                    | image_tag:
+                      alt: section.settings.name | escape,
+                      class: 'nw-founder-story__media-poster nw-founder-story__media-poster--mobile',
+                      loading: 'lazy',
+                      widths: '400, 600, 800',
+                      sizes: '100vw'
+                  }}
                 {%- elsif media_poster != blank -%}
-                  <img
-                    src="{{ media_poster | image_url: width: 1200 }}"
-                    alt="{{ section.settings.name | escape }}"
-                    class="nw-founder-story__media-poster"
-                    width=""
-                    height=""
-                    loading="lazy"
-                  >
+                  {{
+                    media_poster
+                    | image_url: width: 1200
+                    | image_tag:
+                      alt: section.settings.name | escape,
+                      class: 'nw-founder-story__media-poster',
+                      loading: 'lazy',
+                      widths: '600, 900, 1200',
+                      sizes: '(min-width: 750px) 712px, 100vw'
+                  }}
                 {%- else -%}
-                  <img
-                    src="{{ media_poster_mobile | image_url: width: 800 }}"
-                    alt="{{ section.settings.name | escape }}"
-                    class="nw-founder-story__media-poster"
-                    width=""
-                    height=""
-                    loading="lazy"
-                  >
+                  {{
+                    media_poster_mobile
+                    | image_url: width: 800
+                    | image_tag:
+                      alt: section.settings.name | escape,
+                      class: 'nw-founder-story__media-poster',
+                      loading: 'lazy',
+                      widths: '400, 600, 800',
+                      sizes: '100vw'
+                  }}
                 {%- endif -%}
               {%- endif -%}
 
@@ -124,14 +132,14 @@
                 </div>
               {%- endif -%}
             {%- elsif section.settings.image != blank -%}
-              <img
-                src="{{ section.settings.image | image_url }}"
-                alt="{{ section.settings.image.alt | default: section.settings.name | escape }}"
-                class="nw-founder-story__media-image"
-                width=""
-                height=""
-                loading="lazy"
-              >
+              {{
+                section.settings.image
+                | image_tag:
+                  alt: section.settings.image.alt | default: section.settings.name | escape,
+                  class: 'nw-founder-story__media-image',
+                  loading: 'lazy',
+                  sizes: '(min-width: 750px) 712px, 100vw'
+              }}
             {%- else -%}
               <div class="nw-founder-story__media-placeholder" aria-hidden="true">
                 {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -148,14 +156,15 @@
               <div class="nw-founder-story__quote-row">
                 {%- if section.settings.avatar != blank -%}
                   <div class="nw-founder-story__avatar">
-                    <img
-                      src="{{ section.settings.avatar | image_url }}"
-                      alt="{{ section.settings.name | escape }}"
-                      class="nw-founder-story__avatar-img"
-                      width=""
-                      height=""
-                      loading="lazy"
-                    >
+                    {{
+                      section.settings.avatar
+                      | image_tag:
+                        alt: section.settings.name | escape,
+                        class: 'nw-founder-story__avatar-img',
+                        loading: 'lazy',
+                        width: 96,
+                        sizes: '96px'
+                    }}
                   </div>
                 {%- endif -%}
 

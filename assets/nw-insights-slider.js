@@ -34,7 +34,7 @@ if (!customElements.get('nw-insights-slider')) {
           autoHeight: true
         };
 
-        if (enableAutoplay) {
+        if (window.nwAutoplayEnabled(enableAutoplay)) {
           swiperOptions.autoplay = {
             delay: autoplayDelay,
             disableOnInteraction: false,

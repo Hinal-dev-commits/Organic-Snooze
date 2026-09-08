@@ -1,4 +1,4 @@
-(function () {
+if (!customElements.get('nw-bundle-product')) {
   class NwBundleProductAccordion {
     constructor(el) {
       this.el = el;
@@ -16,6 +16,13 @@
 
     onClick(e) {
       e.preventDefault();
+
+      if (window.nwPrefersReducedMotion && window.nwPrefersReducedMotion()) {
+        this.el.open = !this.el.open;
+        this.updateAriaExpanded(this.el.open);
+        return;
+      }
+
       this.el.style.overflow = 'hidden';
 
       if (this.isClosing || !this.el.open) {
@@ -82,30 +89,25 @@
     }
   }
 
-  function initBundleProductAccordions(root) {
-    if (!root) return;
+  class NwBundleProduct extends HTMLElement {
+    connectedCallback() {
+      if (this._initialized) return;
+      this._initialized = true;
 
-    root.querySelectorAll('.accordion.smooth details, details.accordion.smooth').forEach((el) => {
-      if (el._nwBundleAccordion) return;
-      el._nwBundleAccordion = new NwBundleProductAccordion(el);
-    });
+      this.querySelectorAll('.accordion.smooth details, details.accordion.smooth').forEach((el) => {
+        if (el._nwBundleAccordion) return;
+        el._nwBundleAccordion = new NwBundleProductAccordion(el);
+      });
+    }
+
+    disconnectedCallback() {
+      this.querySelectorAll('.accordion.smooth details, details.accordion.smooth').forEach((el) => {
+        el._nwBundleAccordion = null;
+      });
+
+      this._initialized = false;
+    }
   }
 
-  function bootAll() {
-    document.querySelectorAll('.nw-bundle-product').forEach(initBundleProductAccordions);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootAll);
-  } else {
-    bootAll();
-  }
-
-  if (window.Shopify && Shopify.designMode) {
-    document.addEventListener('shopify:section:load', (e) => {
-      const section = e.target.querySelector('.nw-bundle-product') ||
-        (e.target.classList.contains('nw-bundle-product') ? e.target : null);
-      if (section) initBundleProductAccordions(section);
-    });
-  }
-})();
+  customElements.define('nw-bundle-product', NwBundleProduct);
+}

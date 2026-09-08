@@ -1,5 +1,3 @@
-{{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
-{{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
 {{ 'nw-image-slider-text.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-when-swiper-ready.js' | asset_url }}" defer="defer"></script>
@@ -50,35 +48,77 @@
                 <div class="swiper-slide" {{ block.shopify_attributes }}>
                   <div class="nw-image-slider-text__slide-media">
                     {%- if block.settings.image != blank -%}
-                      <img
-                        src="{{ block.settings.image | image_url }}"
-                        alt="{{ block.settings.image.alt | default: section.settings.heading | strip_html | escape }}"
-                        class="nw-image-slider-text__slide-img-desktop nw-image-slider-text__slide-img"
-                        loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                        {% if forloop.first %}fetchpriority="high"{% endif %}
-                        width=""
-                        height=""
-                      >
+                      {%- liquid
+                        assign slide_img_alt = block.settings.image.alt | default: section.settings.heading | strip_html | escape
+                        assign slide_img_mobile_alt = block.settings.image_mobile.alt | default: section.settings.heading | strip_html | escape
+                        if forloop.first
+                          assign slide_img_loading = 'eager'
+                        else
+                          assign slide_img_loading = 'lazy'
+                        endif
+                      -%}
+                      {%- if forloop.first -%}
+                        {{
+                          block.settings.image
+                          | image_tag:
+                            alt: slide_img_alt,
+                            class: 'nw-image-slider-text__slide-img-desktop nw-image-slider-text__slide-img',
+                            loading: slide_img_loading,
+                            fetchpriority: 'high',
+                            sizes: '(min-width: 750px) 712px, 100vw'
+                        }}
+                      {%- else -%}
+                        {{
+                          block.settings.image
+                          | image_tag:
+                            alt: slide_img_alt,
+                            class: 'nw-image-slider-text__slide-img-desktop nw-image-slider-text__slide-img',
+                            loading: slide_img_loading,
+                            sizes: '(min-width: 750px) 712px, 100vw'
+                        }}
+                      {%- endif -%}
                       {%- if block.settings.image_mobile != blank -%}
-                        <img
-                          src="{{ block.settings.image_mobile | image_url }}"
-                          alt="{{ block.settings.image_mobile.alt | default: section.settings.heading | strip_html | escape }}"
-                          class="nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img"
-                          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                          {% if forloop.first %}fetchpriority="high"{% endif %}
-                          width=""
-                          height=""
-                        >
+                        {%- if forloop.first -%}
+                          {{
+                            block.settings.image_mobile
+                            | image_tag:
+                              alt: slide_img_mobile_alt,
+                              class: 'nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img',
+                              loading: slide_img_loading,
+                              fetchpriority: 'high',
+                              sizes: '100vw'
+                          }}
+                        {%- else -%}
+                          {{
+                            block.settings.image_mobile
+                            | image_tag:
+                              alt: slide_img_mobile_alt,
+                              class: 'nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img',
+                              loading: slide_img_loading,
+                              sizes: '100vw'
+                          }}
+                        {%- endif -%}
                         {% else %}
-                        <img
-                          src="{{ block.settings.image | image_url }}"
-                          alt="{{ block.settings.image.alt | default: section.settings.heading | strip_html | escape }}"
-                          class="nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img"
-                          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                          {% if forloop.first %}fetchpriority="high"{% endif %}
-                          width=""
-                          height=""
-                        >
+                        {%- if forloop.first -%}
+                          {{
+                            block.settings.image
+                            | image_tag:
+                              alt: slide_img_alt,
+                              class: 'nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img',
+                              loading: slide_img_loading,
+                              fetchpriority: 'high',
+                              sizes: '100vw'
+                          }}
+                        {%- else -%}
+                          {{
+                            block.settings.image
+                            | image_tag:
+                              alt: slide_img_alt,
+                              class: 'nw-image-slider-text__slide-img-mobile nw-image-slider-text__slide-img',
+                              loading: slide_img_loading,
+                              sizes: '100vw'
+                          }}
+                        {%- endif -%}
                       {%- endif -%}
                     {%- else -%}
                       {{ 'lifestyle-2' | placeholder_svg_tag: 'nw-image-slider-text__slide-placeholder placeholder-svg' }}

@@ -178,7 +178,7 @@ if (!customElements.get('nw-review-video')) {
         }
       };
 
-      if (enableAutoplay && enableLoop) {
+      if (window.nwAutoplayEnabled(enableAutoplay) && enableLoop) {
         swiperOptions.autoplay = {
           delay: autoplayDelay,
           disableOnInteraction: false,
