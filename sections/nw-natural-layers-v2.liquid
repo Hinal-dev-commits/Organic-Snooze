@@ -72,6 +72,9 @@
     .nw-natural-layers-v2.section-{{ section.id }} {
       padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+      {%- if section.settings.enable_slider_mobile and section.settings.enable_slider_desktop == false and section.settings.show_dots_mobile -%}
+        --nw-swiper-bullet: {{ section.settings.pagination_color_mobile | default: '#613916' }};
+      {%- endif -%}
     }
 
     {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
@@ -85,10 +88,13 @@
 
 <nw-natural-layers-v2
   id="NwNaturalLayersV2-{{ section.id }}"
-  class="nw-natural-layers-v2 section-{{ section.id }}{% if section.settings.enable_slider_desktop %} nw-natural-layers-v2--slider-desktop{% endif %}"
+  class="nw-natural-layers-v2 section-{{ section.id }}{% if section.settings.enable_slider_desktop %} nw-natural-layers-v2--slider-desktop{% endif %}{% if section.settings.enable_slider_mobile and section.settings.enable_slider_desktop == false %} nw-natural-layers-v2--mobile-slider{% endif %}"
   data-enable-slider="{{ section.settings.enable_slider_desktop }}"
+  data-enable-slider-mobile="{{ section.settings.enable_slider_mobile }}"
   data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-dots="{{ section.settings.show_dots }}"
+  data-show-arrows-mobile="{{ section.settings.show_arrows_mobile }}"
+  data-show-dots-mobile="{{ section.settings.show_dots_mobile }}"
 >
   <div class="page-width">
     <div class="nw-natural-layers-v2__wrapper{%- render 'nw-scroll-animation' -%}">
@@ -105,115 +111,55 @@
 
       <div class="nw-natural-layers-v2__main">
         {%- assign layer_cards = section.blocks | where: 'type', 'layer_card' -%}
+        {%- liquid
+          assign use_slider_markup = false
+          if section.settings.enable_slider_desktop or section.settings.enable_slider_mobile
+            assign use_slider_markup = true
+          endif
+        -%}
         {%- if layer_cards.size > 0 -%}
-          {%- if section.settings.enable_slider_desktop -%}
+          {%- if use_slider_markup -%}
             <div class="nw-natural-layers-v2__slider-wrap">
               <div class="swiper nw-natural-layers-v2__swiper" id="NwNaturalLayersSwiper-{{ section.id }}">
                 <div class="swiper-wrapper nw-natural-layers-v2__cards">
                   {%- for block in layer_cards -%}
-                    <div class="swiper-slide nw-natural-layers-v2__card" {{ block.shopify_attributes }}>
-                      <div class="nw-natural-layers-v2__card-media">
-                        {%- if block.settings.image != blank -%}
-                          <img
-                            src="{{ block.settings.image | image_url: width: 700 }}"
-                            alt="{{ block.settings.title | escape }}"
-                            width="350"
-                            height="274"
-                            loading="lazy"
-                            class="nw-natural-layers-v2__card-img"
-                          >
-                        {%- else -%}
-                          <span class="nw-natural-layers-v2__card-placeholder" aria-hidden="true"></span>
-                        {%- endif -%}
-                      </div>
-                      <div class="nw-natural-layers-v2__card-body">
-                        {%- if block.settings.title != blank -%}
-                          <h3 class="nw-natural-layers-v2__card-title">{{ block.settings.title }}</h3>
-                        {%- endif -%}
-                        {%- if block.settings.feature_text != blank -%}
-                          <div class="nw-natural-layers-v2__card-feature">
-                            {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
-                              <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                                {% render 'nw-icon',
-                                  icon: 'none',
-                                  custom_icon: block.settings.custom_icon,
-                                  img_class: 'nw-natural-layers-v2__feature-icon-img',
-                                  img_width: 40
-                                %}
-                              </span>
-                            {%- elsif block.settings.icon == 'cross' -%}
-                              <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                                {% render 'nw-icon', icon: 'cross-circle' %}
-                              </span>
-                            {%- elsif block.settings.icon == 'check' -%}
-                              <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                                {% render 'nw-icon', icon: 'check-circle' %}
-                              </span>
-                            {%- endif -%}
-                            <div class="nw-natural-layers-v2__card-feature-text">{{ block.settings.feature_text }}</div>
-                          </div>
-                        {%- endif -%}
-                      </div>
-                    </div>
+                    {% render 'nw-natural-layers-v2-card',
+                      block: block,
+                      swiper_slide: true,
+                      image_width: 700
+                    %}
                   {%- endfor -%}
                 </div>
               </div>
 
-              {%- if section.settings.show_arrows -%}
+              {%- if section.settings.enable_slider_desktop and section.settings.show_arrows -%}
                 {% render 'nw-swiper-arrows' %}
+              {%- elsif section.settings.enable_slider_mobile
+                and section.settings.enable_slider_desktop == false
+                and section.settings.show_arrows_mobile
+              -%}
+                <div class="nw-natural-layers-v2__arrows-mobile">
+                  {% render 'nw-swiper-arrows' %}
+                </div>
               {%- endif -%}
 
-              {%- if section.settings.show_dots and layer_cards.size > 1 -%}
+              {%- if section.settings.enable_slider_desktop and section.settings.show_dots and layer_cards.size > 1 -%}
                 <div class="nw-swiper-pagination" id="NwNaturalLayersPagination-{{ section.id }}"></div>
+              {%- elsif section.settings.enable_slider_mobile
+                and section.settings.enable_slider_desktop == false
+                and section.settings.show_dots_mobile
+                and layer_cards.size > 1
+              -%}
+                <div
+                  class="nw-swiper-pagination nw-natural-layers-v2__pagination-mobile"
+                  id="NwNaturalLayersPaginationMobile-{{ section.id }}"
+                ></div>
               {%- endif -%}
             </div>
           {%- else -%}
             <div class="nw-natural-layers-v2__cards">
               {%- for block in layer_cards -%}
-                <div class="nw-natural-layers-v2__card" {{ block.shopify_attributes }}>
-                  <div class="nw-natural-layers-v2__card-media">
-                    {%- if block.settings.image != blank -%}
-                      <img
-                        src="{{ block.settings.image | image_url: width: 600 }}"
-                        alt="{{ block.settings.title | escape }}"
-                        width="305"
-                        height="239"
-                        loading="lazy"
-                        class="nw-natural-layers-v2__card-img"
-                      >
-                    {%- else -%}
-                      <span class="nw-natural-layers-v2__card-placeholder" aria-hidden="true"></span>
-                    {%- endif -%}
-                  </div>
-                  <div class="nw-natural-layers-v2__card-body">
-                    {%- if block.settings.title != blank -%}
-                      <h3 class="nw-natural-layers-v2__card-title">{{ block.settings.title }}</h3>
-                    {%- endif -%}
-                    {%- if block.settings.feature_text != blank -%}
-                      <div class="nw-natural-layers-v2__card-feature">
-                        {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
-                          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                            {% render 'nw-icon',
-                              icon: 'none',
-                              custom_icon: block.settings.custom_icon,
-                              img_class: 'nw-natural-layers-v2__feature-icon-img',
-                              img_width: 40
-                            %}
-                          </span>
-                        {%- elsif block.settings.icon == 'cross' -%}
-                          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                            {% render 'nw-icon', icon: 'cross-circle' %}
-                          </span>
-                        {%- elsif block.settings.icon == 'check' -%}
-                          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
-                            {% render 'nw-icon', icon: 'check-circle' %}
-                          </span>
-                        {%- endif -%}
-                        <div class="nw-natural-layers-v2__card-feature-text">{{ block.settings.feature_text }}</div>
-                      </div>
-                    {%- endif -%}
-                  </div>
-                </div>
+                {% render 'nw-natural-layers-v2-card', block: block, image_width: 600 %}
               {%- endfor -%}
             </div>
           {%- endif -%}
@@ -350,6 +296,39 @@
       "label": "Show Dots",
       "default": true,
       "visible_if": "{{ section.settings.enable_slider_desktop == true }}"
+    },
+    {
+      "type": "header",
+      "content": "MOBILE SLIDER"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_mobile",
+      "label": "Enable Slider On Mobile",
+      "default": false,
+      "info": "Swiper carousel on mobile when desktop slider is off. When desktop slider is enabled, these mobile settings are ignored."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Show Arrows On Mobile",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_slider_mobile == true and section.settings.enable_slider_desktop == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_mobile",
+      "label": "Show Dots On Mobile",
+      "default": true,
+      "visible_if": "{{ section.settings.enable_slider_mobile == true and section.settings.enable_slider_desktop == false }}"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color_mobile",
+      "label": "Pagination Color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.enable_slider_mobile == true and section.settings.show_dots_mobile == true and section.settings.enable_slider_desktop == false }}"
     },
     {
       "type": "header",

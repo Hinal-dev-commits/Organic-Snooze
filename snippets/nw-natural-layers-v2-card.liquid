@@ -1,0 +1,58 @@
+{% doc %}
+  Renders a single natural layer card.
+  @param {object} block - Section block
+  @param {boolean} [swiper_slide] - Add swiper-slide class
+  @param {number} [image_width] - Image width for image_url filter
+{% enddoc %}
+
+{%- liquid
+  assign card_image_width = image_width | default: 600
+-%}
+
+<div
+  class="nw-natural-layers-v2__card{% if swiper_slide %} swiper-slide{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  <div class="nw-natural-layers-v2__card-media">
+    {%- if block.settings.image != blank -%}
+      <img
+        src="{{ block.settings.image | image_url: width: card_image_width }}"
+        alt="{{ block.settings.title | escape }}"
+        width="350"
+        height="274"
+        loading="lazy"
+        class="nw-natural-layers-v2__card-img"
+      >
+    {%- else -%}
+      <span class="nw-natural-layers-v2__card-placeholder" aria-hidden="true"></span>
+    {%- endif -%}
+  </div>
+  <div class="nw-natural-layers-v2__card-body">
+    {%- if block.settings.title != blank -%}
+      <h3 class="nw-natural-layers-v2__card-title">{{ block.settings.title }}</h3>
+    {%- endif -%}
+    {%- if block.settings.feature_text != blank -%}
+      <div class="nw-natural-layers-v2__card-feature">
+        {%- if block.settings.icon == 'custom' and block.settings.custom_icon != blank -%}
+          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+            {% render 'nw-icon',
+              icon: 'none',
+              custom_icon: block.settings.custom_icon,
+              img_class: 'nw-natural-layers-v2__feature-icon-img',
+              img_width: 40
+            %}
+          </span>
+        {%- elsif block.settings.icon == 'cross' -%}
+          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+            {% render 'nw-icon', icon: 'cross-circle' %}
+          </span>
+        {%- elsif block.settings.icon == 'check' -%}
+          <span class="nw-natural-layers-v2__feature-icon" aria-hidden="true">
+            {% render 'nw-icon', icon: 'check-circle' %}
+          </span>
+        {%- endif -%}
+        <div class="nw-natural-layers-v2__card-feature-text">{{ block.settings.feature_text }}</div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
