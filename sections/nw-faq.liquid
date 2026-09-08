@@ -16,6 +16,13 @@
   if faq_less_label == blank
     assign faq_less_label = 'nw.faq.less_label' | t
   endif
+
+  assign faq_initial_count = section.settings.initial_faq_count | default: 6
+  assign faq_total_count = section.blocks.size
+  assign faq_show_more = false
+  if faq_more_label != blank and faq_total_count > faq_initial_count
+    assign faq_show_more = true
+  endif
 -%}
 
 {%- assign nw_faq_selector = '.nw-faq.section-' | append: section.id -%}
@@ -113,7 +120,7 @@
         {%- endif -%}
 
         {%- if section.blocks.size > 0 -%}
-          <div class="nw-faq__list" data-initial-limit="{{ section.settings.initial_faq_count | default: 6 }}">
+          <div class="nw-faq__list" data-initial-limit="{{ faq_initial_count }}">
             {%- for block in section.blocks -%}
               <div class="nw-faq__item accordion smooth" {{ block.shopify_attributes }}>
                 <details
@@ -147,7 +154,7 @@
           </div>
         {%- endif -%}
 
-        {%- if faq_more_label != blank -%}
+        {%- if faq_show_more -%}
           <div class="nw-faq__more-wrap">
             <button
               type="button"

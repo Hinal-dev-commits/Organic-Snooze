@@ -153,11 +153,16 @@ if (!customElements.get('nw-faq')) {
       if (!faqList) return;
 
       const faqItems = faqList.querySelectorAll('.nw-faq__item');
-      const moreBtn = this.querySelector('.nw-faq__more');
+      const moreWrap = this.querySelector('.nw-faq__more-wrap');
+      const moreBtn = moreWrap?.querySelector('.nw-faq__more');
       const initialLimit = parseInt(faqList.getAttribute('data-initial-limit') || '6', 10);
 
       this._searchInput = searchInput;
       this._moreBtn = moreBtn;
+
+      if (moreWrap && faqItems.length <= initialLimit) {
+        moreWrap.hidden = true;
+      }
 
       if (moreBtn && faqItems.length > initialLimit) {
         faqItems.forEach((item, index) => {
@@ -199,10 +204,11 @@ if (!customElements.get('nw-faq')) {
             }
           });
           if (moreBtn) moreBtn.style.display = '';
+          if (moreWrap && faqItems.length > initialLimit) moreWrap.hidden = false;
           return;
         }
 
-        if (moreBtn) moreBtn.style.display = 'none';
+        if (moreWrap) moreWrap.hidden = true;
 
         faqItems.forEach((item) => {
           item.classList.remove('is-hidden-by-limit');

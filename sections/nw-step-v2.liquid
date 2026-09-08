@@ -72,7 +72,10 @@
                   endif
                   assign card_image_alt = block.settings.image_card.alt | default: block.settings.title | strip_html | escape
                   assign card_image_mobile_alt = block.settings.image_card_mobile.alt | default: block.settings.title | strip_html | escape
-                  assign source_logo_alt = block.settings.source_logo.alt | default: block.settings.source_text | default: 'Source logo' | escape
+                  assign source_logo_alt = block.settings.source_text | default: 'Source logo' | escape
+                  if block.settings.source_logo.alt != blank
+                    assign source_logo_alt = block.settings.source_logo.alt | escape
+                  endif
                 -%}
                 <div class="swiper-slide" {{ block.shopify_attributes }}>
                   <article class="nw-step-v2__card">
@@ -119,15 +122,14 @@
                       {%- if block.settings.source_logo != blank or block.settings.source_text != blank -%}
                         <div class="nw-step-v2__source">
                           {%- if block.settings.source_logo != blank -%}
-                            {{
-                              block.settings.source_logo
-                              | image_url: width: 240
-                              | image_tag:
-                                alt: source_logo_alt,
-                                loading: 'lazy',
-                                class: 'nw-step-v2__source-logo',
-                                sizes: '120px'
-                            }}
+                            <img
+                              src="{{ block.settings.source_logo | image_url: width: 240 }}"
+                              alt="{{ source_logo_alt }}"
+                              loading="lazy"
+                              class="nw-step-v2__source-logo"
+                              width="120"
+                              height="auto"
+                            >
                           {%- elsif block.settings.source_text != blank -%}
                             <span class="nw-step-v2__source-text">{{ block.settings.source_text }}</span>
                           {%- endif -%}

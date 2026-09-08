@@ -6,6 +6,11 @@
   if desktop_img == blank and mobile_img != blank
     assign desktop_img = mobile_img
   endif
+
+  assign image_loading = 'lazy'
+  if section.index == 1
+    assign image_loading = 'eager'
+  endif
 -%}
 
 <style>
@@ -112,7 +117,8 @@
             alt="{{ desktop_img.alt | default: section.settings.heading | strip_html | default: 'Banner Image' | escape }}"
             width="{{ desktop_img.width | default: 1440 }}"
             height="{{ desktop_img.height | default: 800 }}"
-            loading="lazy"
+            loading="{{ image_loading }}"
+            {% if section.index == 1 %}fetchpriority="high"{% endif %}
             class="nw-image__img"
           >
         </picture>
