@@ -166,7 +166,9 @@
   "tag": "section",
   "class": "section",
   "enabled_on": {
-    "templates": ["article"]
+    "templates": [
+      "article"
+    ]
   },
   "settings": [
     {
@@ -200,7 +202,7 @@
     {
       "type": "range",
       "id": "excerpt_length",
-      "label": "Excerpt Length (fallback)",
+      "label": "Excerpt Length (Fallback)",
       "min": 80,
       "max": 400,
       "step": 20,
@@ -219,8 +221,14 @@
       "label": "Category Source",
       "default": "first_tag",
       "options": [
-        { "value": "first_tag", "label": "First article tag" },
-        { "value": "blog_title", "label": "Blog title" }
+        {
+          "value": "first_tag",
+          "label": "First Article Tag"
+        },
+        {
+          "value": "blog_title",
+          "label": "Blog Title"
+        }
       ]
     },
     {

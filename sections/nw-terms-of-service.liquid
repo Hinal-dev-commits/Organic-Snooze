@@ -70,7 +70,7 @@
 
 {% schema %}
 {
-  "name": "NW Terms of Service",
+  "name": "NW Terms Of Service",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -91,13 +91,13 @@
     {
       "type": "checkbox",
       "id": "show_updated_date",
-      "label": "Show last updated date",
+      "label": "Show Last Updated Date",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "use_page_updated_date",
-      "label": "Use page last updated date automatically",
+      "label": "Use Page Last Updated Date Automatically",
       "default": true,
       "info": "When enabled on a page template, uses that page's last saved date.",
       "visible_if": "{{ section.settings.show_updated_date == true }}"
@@ -105,14 +105,14 @@
     {
       "type": "text",
       "id": "date_prefix",
-      "label": "Date label",
+      "label": "Date Label",
       "default": "Last Updated:",
       "visible_if": "{{ section.settings.show_updated_date == true }}"
     },
     {
       "type": "text",
       "id": "last_updated",
-      "label": "Manual last updated date",
+      "label": "Manual Last Updated Date",
       "default": "January 29, 2026",
       "info": "Used when automatic page date is disabled or unavailable.",
       "visible_if": "{{ section.settings.show_updated_date == true }}"
@@ -124,7 +124,7 @@
     {
       "type": "richtext",
       "id": "content",
-      "label": "Terms content",
+      "label": "Terms Content",
       "default": "<p>These Terms of Service govern your use of the website and services provided by The Ultimate Snooze LLC (“The Ultimate Snooze,” “we,” “us,” or “our”).</p><p>By accessing or using https://theultimatesnooze.com, you agree to these Terms of Service. If you do not agree, please discontinue use of our website.</p><p>For information on how we collect, use, and protect your information, please review our Privacy Policy.</p>"
     },
     {
@@ -169,10 +169,22 @@
       "label": "Background Type",
       "default": "color",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {
@@ -259,7 +271,7 @@
   ],
   "presets": [
     {
-      "name": "NW Terms of Service",
+      "name": "NW Terms Of Service",
       "category": "NW Sections"
     }
   ]

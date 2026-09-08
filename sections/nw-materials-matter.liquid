@@ -211,9 +211,18 @@
       "label": "Button Style",
       "default": "primary",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "outline", "label": "Outline" }
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
       ],
       "visible_if": "{{ section.settings.show_button == true }}"
     },
@@ -243,10 +252,22 @@
       "label": "Background Type",
       "default": "image",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {
@@ -334,7 +355,7 @@
   "blocks": [
     {
       "type": "feature",
-      "name": "Feature card",
+      "name": "Feature Card",
       "settings": [
         {
           "type": "image_picker",
@@ -357,7 +378,7 @@
     },
     {
       "type": "trust_badge",
-      "name": "Trust badge",
+      "name": "Trust Badge",
       "settings": [
         {
           "type": "checkbox",
@@ -371,14 +392,38 @@
           "label": "Badge Icon",
           "default": "money",
           "options": [
-            { "value": "money", "label": "Moneyback / Trial" },
-            { "value": "warranty-2", "label": "Warranty" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "truck", "label": "Truck / Shipping" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "star", "label": "Star" },
-            { "value": "verified-3", "label": "Verified" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "money",
+              "label": "Moneyback / Trial"
+            },
+            {
+              "value": "warranty-2",
+              "label": "Warranty"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "truck",
+              "label": "Truck / Shipping"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "verified-3",
+              "label": "Verified"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "visible_if": "{{ block.settings.use_custom_icon == false }}"
         },

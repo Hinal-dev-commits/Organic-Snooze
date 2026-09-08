@@ -155,7 +155,10 @@
   "tag": "section",
   "class": "section-nw-social",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
     {
@@ -245,7 +248,7 @@
     {
       "type": "text",
       "id": "text_button_link",
-      "label": "Text Button Link (E.g. Sms:+14433331213)",
+      "label": "Text Button Link (E.g. SMS:+14433331213)",
       "default": "sms:+14433331213",
       "visible_if": "{{ section.settings.show_text_button == true }}"
     },
@@ -366,10 +369,22 @@
       "label": "Background Type",
       "default": "image",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "gradient", "label": "Gradient" },
-        { "value": "image", "label": "Image" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
       ]
     },
     {

@@ -19,6 +19,8 @@ html{
     overflow-x: hidden;
 }
 
+html.overflow-hidden,
+html.overflow-hidden-desktop,
 body.overflow-hidden,
 body.overflow-hidden-desktop {
     padding-right: var(--scrollbar-width);

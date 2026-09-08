@@ -347,8 +347,14 @@
       "label": "Card Style",
       "default": "style-1",
       "options": [
-        { "value": "style-1", "label": "Style 1" },
-        { "value": "style-2", "label": "Style 2" }
+        {
+          "value": "style-1",
+          "label": "Style 1"
+        },
+        {
+          "value": "style-2",
+          "label": "Style 2"
+        }
       ]
     },
     {
@@ -400,10 +406,22 @@
       "label": "Background Type",
       "default": "color",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {
@@ -460,9 +478,18 @@
       "label": "Button Style",
       "default": "primary",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "outline", "label": "Outline" }
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
       ],
       "visible_if": "{{ section.settings.show_button == true }}"
     },
@@ -541,7 +568,7 @@
         {
           "type": "video",
           "id": "video",
-          "label": "Shopify-hosted Video"
+          "label": "Shopify-Hosted Video"
         },
         {
           "type": "image_picker",
@@ -623,12 +650,30 @@
           "default": "none",
           "visible_if": "{{ block.settings.use_custom_icon == false }}",
           "options": [
-            { "value": "none", "label": "None" },
-            { "value": "moneyback", "label": "100-Night Trial / Moneyback" },
-            { "value": "warranty", "label": "Warranty" },
-            { "value": "shipping", "label": "Shipping / Truck" },
-            { "value": "financing", "label": "Financing / Offer" },
-            { "value": "shield", "label": "Shield" }
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "moneyback",
+              "label": "100-Night Trial / Moneyback"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "shipping",
+              "label": "Shipping / Truck"
+            },
+            {
+              "value": "financing",
+              "label": "Financing / Offer"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            }
           ]
         },
         {
@@ -651,10 +696,18 @@
       "name": "t:sections.nw-review-video.name",
       "category": "NW Sections",
       "blocks": [
-        { "type": "review" },
-        { "type": "review" },
-        { "type": "review" },
-        { "type": "review" }
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
       ]
     }
   ]

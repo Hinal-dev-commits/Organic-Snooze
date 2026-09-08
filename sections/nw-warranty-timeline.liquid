@@ -470,8 +470,14 @@
       "label": "Media Type",
       "default": "video",
       "options": [
-        { "value": "image", "label": "Image" },
-        { "value": "video", "label": "Video" }
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "video",
+          "label": "Video"
+        }
       ]
     },
     {
@@ -490,7 +496,7 @@
     {
       "type": "checkbox",
       "id": "show_play_icon",
-      "label": "Show Play/pause Controls",
+      "label": "Show Play/Pause Controls",
       "default": true,
       "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_autoplay == false }}"
     },
@@ -525,8 +531,14 @@
       "label": "Desktop Image Position",
       "default": "left",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ]
     },
     {
@@ -578,9 +590,18 @@
       "label": "Button Style",
       "default": "primary",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "outline", "label": "Outline" }
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
       ],
       "visible_if": "{{ section.settings.show_button == true }}"
     },
@@ -610,10 +631,22 @@
       "label": "Background Type",
       "default": "image",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {

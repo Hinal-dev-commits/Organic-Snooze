@@ -138,26 +138,17 @@ if (!customElements.get('cart-disclosure-modal')) {
     }
 
     lockScroll() {
-      this.bodyOverflowWasHidden = document.body.classList.contains('overflow-hidden');
-      this.previousBodyPaddingRight = document.body.style.paddingRight;
+      this.htmlOverflowWasHidden = document.documentElement.classList.contains('overflow-hidden');
 
-      if (this.bodyOverflowWasHidden) return;
+      if (this.htmlOverflowWasHidden) return;
 
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-
-      if (scrollbarWidth > 0) {
-        const currentPaddingRight = parseFloat(window.getComputedStyle(document.body).paddingRight) || 0;
-        document.body.style.paddingRight = `${currentPaddingRight + scrollbarWidth}px`;
-      }
-
-      document.body.classList.add('overflow-hidden');
+      document.documentElement.classList.add('overflow-hidden');
     }
 
     unlockScroll() {
-      if (this.bodyOverflowWasHidden) return;
+      if (this.htmlOverflowWasHidden) return;
 
-      document.body.classList.remove('overflow-hidden');
-      document.body.style.paddingRight = this.previousBodyPaddingRight;
+      document.documentElement.classList.remove('overflow-hidden');
     }
 
     restoreFocusTrap() {

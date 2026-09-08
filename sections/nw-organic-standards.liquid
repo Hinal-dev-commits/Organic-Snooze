@@ -236,7 +236,7 @@
     {
       "type": "text",
       "id": "stat_number",
-      "label": "Stat Number/percentage",
+      "label": "Stat Number/Percentage",
       "default": "96–98%"
     },
     {
@@ -288,9 +288,18 @@
       "label": "Button Style",
       "default": "primary",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "outline", "label": "Outline" }
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
       ],
       "visible_if": "{{ section.settings.show_button == true }}"
     },
@@ -304,10 +313,22 @@
       "label": "Background Type",
       "default": "color",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {

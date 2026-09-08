@@ -358,7 +358,7 @@
     {
       "type": "range",
       "id": "blocks_gap_desktop",
-      "label": "Space between blocks (Desktop)",
+      "label": "Space Between Blocks (Desktop)",
       "min": 0,
       "max": 80,
       "step": 4,
@@ -368,7 +368,7 @@
     {
       "type": "range",
       "id": "blocks_gap_mobile",
-      "label": "Space between blocks (Mobile)",
+      "label": "Space Between Blocks (Mobile)",
       "min": 0,
       "max": 80,
       "step": 4,
@@ -473,10 +473,22 @@
       "label": "Background Type",
       "default": "color",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {
@@ -569,12 +581,21 @@
         {
           "type": "select",
           "id": "divider_before",
-          "label": "Divider before block",
+          "label": "Divider Before Block",
           "default": "none",
           "options": [
-            { "value": "none", "label": "None" },
-            { "value": "light", "label": "Light" },
-            { "value": "heavy", "label": "Heavy" }
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "heavy",
+              "label": "Heavy"
+            }
           ]
         },
         {
@@ -589,8 +610,14 @@
           "label": "Heading Size",
           "default": "large",
           "options": [
-            { "value": "large", "label": "Large" },
-            { "value": "medium", "label": "Medium" }
+            {
+              "value": "large",
+              "label": "Large"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            }
           ]
         },
         {
@@ -608,12 +635,21 @@
         {
           "type": "select",
           "id": "divider_before",
-          "label": "Divider before block",
+          "label": "Divider Before Block",
           "default": "heavy",
           "options": [
-            { "value": "none", "label": "None" },
-            { "value": "light", "label": "Light" },
-            { "value": "heavy", "label": "Heavy" }
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "heavy",
+              "label": "Heavy"
+            }
           ]
         },
         {
@@ -640,15 +676,24 @@
           "label": "Table Layout",
           "default": "two_column",
           "options": [
-            { "value": "two_column", "label": "Two Column" },
-            { "value": "four_column", "label": "Four Column" },
-            { "value": "hidden", "label": "Hidden" }
+            {
+              "value": "two_column",
+              "label": "Two Column"
+            },
+            {
+              "value": "four_column",
+              "label": "Four Column"
+            },
+            {
+              "value": "hidden",
+              "label": "Hidden"
+            }
           ]
         },
         {
           "type": "checkbox",
           "id": "show_scrollbar",
-          "label": "Show scrollbar on overflow",
+          "label": "Show Scrollbar On Overflow",
           "default": false,
           "info": "Displays a custom progress scrollbar below the table when it overflows.",
           "visible_if": "{{ block.settings.table_layout == 'four_column' }}"
@@ -692,12 +737,21 @@
         {
           "type": "select",
           "id": "divider_before",
-          "label": "Divider before block",
+          "label": "Divider Before Block",
           "default": "none",
           "options": [
-            { "value": "none", "label": "None" },
-            { "value": "light", "label": "Light" },
-            { "value": "heavy", "label": "Heavy" }
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "heavy",
+              "label": "Heavy"
+            }
           ]
         },
         {
@@ -721,12 +775,21 @@
         {
           "type": "select",
           "id": "divider_before",
-          "label": "Divider before block",
+          "label": "Divider Before Block",
           "default": "none",
           "options": [
-            { "value": "none", "label": "None" },
-            { "value": "light", "label": "Light" },
-            { "value": "heavy", "label": "Heavy" }
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "heavy",
+              "label": "Heavy"
+            }
           ]
         },
         {
@@ -812,11 +875,17 @@
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Exchange Fee", "column_2": "$0 — always free" }
+          "settings": {
+            "column_1": "Exchange Fee",
+            "column_2": "$0 — always free"
+          }
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Upgrade to Higher Price", "column_2": "Customer pays the price difference only" }
+          "settings": {
+            "column_1": "Upgrade to Higher Price",
+            "column_2": "Customer pays the price difference only"
+          }
         },
         {
           "type": "table_row",
@@ -834,11 +903,17 @@
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Warranty", "column_2": "30-Year Limited Warranty from original purchase date" }
+          "settings": {
+            "column_1": "Warranty",
+            "column_2": "30-Year Limited Warranty from original purchase date"
+          }
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Availability", "column_2": "Subject to current product availability" }
+          "settings": {
+            "column_1": "Availability",
+            "column_2": "Subject to current product availability"
+          }
         },
         {
           "type": "table_group",
@@ -851,27 +926,45 @@
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Return Window", "column_2": "Night 31 – Night 100" }
+          "settings": {
+            "column_1": "Return Window",
+            "column_2": "Night 31 – Night 100"
+          }
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Return Processing Fee", "column_2": "$199 per mattress" }
+          "settings": {
+            "column_1": "Return Processing Fee",
+            "column_2": "$199 per mattress"
+          }
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Refund Amount", "column_2": "Purchase price less processing fee" }
+          "settings": {
+            "column_1": "Refund Amount",
+            "column_2": "Purchase price less processing fee"
+          }
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Original Shipping Charges", "column_2": "Non-refundable" }
+          "settings": {
+            "column_1": "Original Shipping Charges",
+            "column_2": "Non-refundable"
+          }
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Refund Timeline", "column_2": "3–5 business days after receipt & inspection" }
+          "settings": {
+            "column_1": "Refund Timeline",
+            "column_2": "3–5 business days after receipt & inspection"
+          }
         },
         {
           "type": "table_row",
-          "settings": { "column_1": "Refund Method", "column_2": "Original payment method" }
+          "settings": {
+            "column_1": "Refund Method",
+            "column_2": "Original payment method"
+          }
         },
         {
           "type": "callout",

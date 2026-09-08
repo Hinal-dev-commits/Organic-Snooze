@@ -262,7 +262,9 @@
   "tag": "section",
   "class": "section",
   "enabled_on": {
-    "templates": ["article"]
+    "templates": [
+      "article"
+    ]
   },
   "settings": [
     {
@@ -396,7 +398,7 @@
         {
           "type": "checkbox",
           "id": "use_custom_icon",
-          "label": "Use custom icon",
+          "label": "Use Custom Icon",
           "default": false
         },
         {
@@ -406,24 +408,60 @@
           "visible_if": "{{ block.settings.use_custom_icon == false }}",
           "default": "facebook",
           "options": [
-            { "value": "facebook", "label": "Facebook" },
-            { "value": "twitter", "label": "X (Twitter)" },
-            { "value": "pinterest", "label": "Pinterest" },
-            { "value": "instagram", "label": "Instagram" },
-            { "value": "youtube", "label": "YouTube" },
-            { "value": "tiktok", "label": "TikTok" },
-            { "value": "linkedin", "label": "LinkedIn" },
-            { "value": "snapchat", "label": "Snapchat" },
-            { "value": "tumblr", "label": "Tumblr" },
-            { "value": "vimeo", "label": "Vimeo" },
-            { "value": "email", "label": "Email" },
-            { "value": "link", "label": "Link" }
+            {
+              "value": "facebook",
+              "label": "Facebook"
+            },
+            {
+              "value": "twitter",
+              "label": "X (Twitter)"
+            },
+            {
+              "value": "pinterest",
+              "label": "Pinterest"
+            },
+            {
+              "value": "instagram",
+              "label": "Instagram"
+            },
+            {
+              "value": "youtube",
+              "label": "YouTube"
+            },
+            {
+              "value": "tiktok",
+              "label": "TikTok"
+            },
+            {
+              "value": "linkedin",
+              "label": "LinkedIn"
+            },
+            {
+              "value": "snapchat",
+              "label": "Snapchat"
+            },
+            {
+              "value": "tumblr",
+              "label": "Tumblr"
+            },
+            {
+              "value": "vimeo",
+              "label": "Vimeo"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "link",
+              "label": "Link"
+            }
           ]
         },
         {
           "type": "image_picker",
           "id": "custom_icon",
-          "label": "Custom icon image",
+          "label": "Custom Icon Image",
           "visible_if": "{{ block.settings.use_custom_icon == true }}"
         },
         {
@@ -435,13 +473,13 @@
         {
           "type": "checkbox",
           "id": "open_new_tab",
-          "label": "Open in new tab",
+          "label": "Open In New Tab",
           "default": true
         },
         {
           "type": "text",
           "id": "aria_label",
-          "label": "Accessibility label",
+          "label": "Accessibility Label",
           "info": "Optional. Used for screen readers when the icon name is not enough."
         }
       ]

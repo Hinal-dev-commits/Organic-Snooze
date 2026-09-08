@@ -191,10 +191,6 @@ if (!customElements.get('nw-mega-menu-item')) {
         this._setActiveTab(tab.getAttribute('data-nw-mega-tab'));
       };
       this._onTabKeydown = (event) => this._handleTabKeydown(event);
-      this._onTriggerClick = (event) => {
-        if (!this._isDesktop() || !this.classList.contains('is-open')) return;
-        event.preventDefault();
-      };
       this._onPanelPointerDown = () => this._keepOpen();
       this._onDocumentPointerDown = (event) => {
         if (!this.classList.contains('is-open')) return;
@@ -211,7 +207,6 @@ if (!customElements.get('nw-mega-menu-item')) {
       if (this.trigger) {
         this.trigger.addEventListener('mouseenter', this._onTriggerMouseEnter);
         this.trigger.addEventListener('mouseleave', this._onZoneMouseLeave);
-        this.trigger.addEventListener('click', this._onTriggerClick);
       }
 
       if (this.panel) {
@@ -251,7 +246,6 @@ if (!customElements.get('nw-mega-menu-item')) {
       if (this.trigger) {
         this.trigger.removeEventListener('mouseenter', this._onTriggerMouseEnter);
         this.trigger.removeEventListener('mouseleave', this._onZoneMouseLeave);
-        this.trigger.removeEventListener('click', this._onTriggerClick);
       }
 
       if (this.panel) {

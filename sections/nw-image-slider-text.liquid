@@ -230,8 +230,14 @@
       "label": "Image Position (Desktop)",
       "default": "left",
       "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ]
     },
     {
@@ -246,8 +252,14 @@
       "label": "Arrow Style",
       "default": "style_1",
       "options": [
-        { "value": "style_1", "label": "Style 1" },
-        { "value": "style_2", "label": "Style 2" }
+        {
+          "value": "style_1",
+          "label": "Style 1"
+        },
+        {
+          "value": "style_2",
+          "label": "Style 2"
+        }
       ],
       "visible_if": "{{ section.settings.show_arrows == true }}"
     },
@@ -307,10 +319,22 @@
       "label": "Background Type",
       "default": "color",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {
@@ -387,7 +411,7 @@
   "blocks": [
     {
       "type": "slide",
-      "name": "Slide image",
+      "name": "Slide Image",
       "settings": [
         {
           "type": "image_picker",
@@ -407,10 +431,18 @@
       "name": "t:sections.nw-image-slider-text.name",
       "category": "NW Sections",
       "blocks": [
-        { "type": "slide" },
-        { "type": "slide" },
-        { "type": "slide" },
-        { "type": "slide" }
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
       ]
     }
   ]

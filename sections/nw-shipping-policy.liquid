@@ -238,7 +238,7 @@
     {
       "type": "checkbox",
       "id": "show_buttons",
-      "label": "Show buttons",
+      "label": "Show Buttons",
       "default": true
     },
     {
@@ -258,9 +258,18 @@
       "label": "Button 1 Style",
       "default": "primary",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "outline", "label": "Outline" }
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
       ]
     },
     {
@@ -280,9 +289,18 @@
       "label": "Button 2 Style",
       "default": "outline",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "outline", "label": "Outline" }
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
       ]
     },
     {
@@ -292,7 +310,7 @@
     {
       "type": "checkbox",
       "id": "show_trial_section",
-      "label": "Show sleep trial section",
+      "label": "Show Sleep Trial Section",
       "default": true
     },
     {
@@ -363,10 +381,22 @@
       "label": "Background Type",
       "default": "color",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {
@@ -484,11 +514,26 @@
           "label": "Processing Icon",
           "default": "clock",
           "options": [
-            { "value": "clock", "label": "Clock" },
-            { "value": "check-v2", "label": "Check" },
-            { "value": "checkmark", "label": "Checkmark" },
-            { "value": "check-circle", "label": "Check Circle" },
-            { "value": "truck", "label": "Truck" }
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "check-v2",
+              "label": "Check"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            }
           ],
           "visible_if": "{{ block.settings.processing_use_custom_icon == false }}"
         },
@@ -520,11 +565,26 @@
           "label": "Delivery Icon",
           "default": "check-v2",
           "options": [
-            { "value": "check-v2", "label": "Check" },
-            { "value": "clock", "label": "Clock" },
-            { "value": "checkmark", "label": "Checkmark" },
-            { "value": "check-circle", "label": "Check Circle" },
-            { "value": "truck", "label": "Truck" }
+            {
+              "value": "check-v2",
+              "label": "Check"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "check-circle",
+              "label": "Check Circle"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            }
           ],
           "visible_if": "{{ block.settings.delivery_use_custom_icon == false }}"
         },

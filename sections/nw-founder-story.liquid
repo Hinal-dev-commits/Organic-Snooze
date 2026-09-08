@@ -281,8 +281,14 @@
       "label": "Media Type",
       "default": "video",
       "options": [
-        { "value": "video", "label": "Video" },
-        { "value": "image", "label": "Image" }
+        {
+          "value": "video",
+          "label": "Video"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
       ]
     },
     {
@@ -301,7 +307,7 @@
     {
       "type": "checkbox",
       "id": "show_play_icon",
-      "label": "Show Play/pause Controls",
+      "label": "Show Play/Pause Controls",
       "default": true,
       "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_autoplay == false }}"
     },
@@ -511,10 +517,22 @@
       "label": "Background Type",
       "default": "none",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {

@@ -1,0 +1,65 @@
+{% doc %}
+  NW brand tokens, font overrides, and self-hosted Optima LT Pro @font-face rules.
+  Render after DM Sans is loaded in the head.
+{% enddoc %}
+
+{% style %}
+  :root {
+    --nw-brown: #613916;
+    --nw-tan: #cc926a;
+    --nw-sand: #f4efe8;
+    --nw-olive: #70804a;
+    --nw-cream: #fffcf0;
+    --nw-white: #ffffff;
+    --nw-orange: #e57b1e;
+    --nw-gray: #e0e0e0;
+    --nw-moss: #878735;
+    --primary-color: var(--nw-brown);
+    --secondary-color: var(--nw-tan);
+    --tertiary-color: var(--nw-sand);
+    --quaternary-color: var(--nw-olive);
+    --quinary-color: var(--nw-cream);
+    --senary-color: var(--nw-white);
+    --septenary-color: var(--nw-orange);
+    --octonary-color: var(--nw-gray);
+    --nonary-color: var(--nw-moss);
+    --white: var(--nw-white);
+    --font-body-family: 'DM Sans', sans-serif;
+    --font-heading-family: 'Optima LT Pro', sans-serif;
+    --scrollbar-width: 0px;
+    --nw-pcard-text: {{ settings.nw_pcard_text }};
+    --nw-pcard-star: {{ settings.nw_pcard_star_color }};
+    --nw-pcard-star-empty: {{ settings.nw_pcard_star_empty_color }};
+    --nw-pcard-save-bg: {{ settings.nw_pcard_save_bg }};
+    --nw-pcard-save-text: {{ settings.nw_pcard_save_text }};
+    --nw-pcard-seller-bg: {{ settings.nw_pcard_seller_bg }};
+    --nw-pcard-seller-text: {{ settings.nw_pcard_seller_text }};
+    --nw-pcard-firmness-bg: {{ settings.nw_pcard_firmness_bg }};
+    --nw-pcard-firmness-dot: {{ settings.nw_pcard_firmness_dot }};
+    --nw-pcard-firmness-dot-active: {{ settings.nw_pcard_firmness_dot_active }};
+    --nw-pcard-firmness-line: {{ settings.nw_pcard_firmness_line }};
+    --nw-pcard-btn-bg: {{ settings.nw_pcard_btn_bg }};
+    --nw-pcard-btn-bg-hover: {{ settings.nw_pcard_btn_bg_hover }};
+    --nw-pcard-btn-text: {{ settings.nw_pcard_btn_text }};
+  }
+
+  @font-face {
+    font-family: 'Optima LT Pro';
+    src: url('{{ "OptimaLTPro-Medium.woff2" | asset_url }}') format('woff2'),
+      url('{{ "OptimaLTPro-Medium.woff" | asset_url }}') format('woff'),
+      url('{{ "OptimaLTPro-Medium.ttf" | asset_url }}') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Optima LT Pro';
+    src: url('{{ "OptimaLTPro-Bold.woff2" | asset_url }}') format('woff2'),
+      url('{{ "OptimaLTPro-Bold.woff" | asset_url }}') format('woff'),
+      url('{{ "OptimaLTPro-Bold.ttf" | asset_url }}') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+{% endstyle %}

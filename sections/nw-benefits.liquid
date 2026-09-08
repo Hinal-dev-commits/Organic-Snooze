@@ -174,8 +174,14 @@
       "label": "Card Style",
       "default": "style_1",
       "options": [
-        { "value": "style_1", "label": "Style 1" },
-        { "value": "style_2", "label": "Style 2" }
+        {
+          "value": "style_1",
+          "label": "Style 1"
+        },
+        {
+          "value": "style_2",
+          "label": "Style 2"
+        }
       ]
     },
     {
@@ -263,9 +269,18 @@
       "label": "Button Style",
       "default": "primary",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "outline", "label": "Outline" }
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
       ],
       "visible_if": "{{ section.settings.show_button == true }}"
     },
@@ -295,10 +310,22 @@
       "label": "Background Type",
       "default": "image",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {
@@ -386,7 +413,7 @@
   "blocks": [
     {
       "type": "benefit",
-      "name": "Benefit card",
+      "name": "Benefit Card",
       "settings": [
         {
           "type": "select",
@@ -394,8 +421,14 @@
           "label": "Media Type",
           "default": "image",
           "options": [
-            { "value": "image", "label": "Image" },
-            { "value": "video", "label": "Video" }
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "video",
+              "label": "Video"
+            }
           ]
         },
         {
@@ -449,7 +482,7 @@
     },
     {
       "type": "trust_badge",
-      "name": "Trust badge",
+      "name": "Trust Badge",
       "settings": [
         {
           "type": "checkbox",
@@ -463,14 +496,38 @@
           "label": "Badge Icon",
           "default": "money",
           "options": [
-            { "value": "money", "label": "Moneyback / Trial" },
-            { "value": "warranty-2", "label": "Warranty" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "truck", "label": "Truck / Shipping" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "star", "label": "Star" },
-            { "value": "verified-3", "label": "Verified" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "money",
+              "label": "Moneyback / Trial"
+            },
+            {
+              "value": "warranty-2",
+              "label": "Warranty"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "truck",
+              "label": "Truck / Shipping"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "verified-3",
+              "label": "Verified"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "visible_if": "{{ block.settings.use_custom_icon == false }}"
         },

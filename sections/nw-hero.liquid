@@ -519,7 +519,7 @@
         },
         {
           "value": "url",
-          "label": "Youtube / Vimeo / External URL"
+          "label": "YouTube / Vimeo / External URL"
         }
       ],
       "default": "shopify_hosted",
@@ -534,8 +534,11 @@
     {
       "type": "video_url",
       "id": "video_url",
-      "label": "Youtube / Vimeo URL",
-      "accept": ["youtube", "vimeo"],
+      "label": "YouTube / Vimeo URL",
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
       "visible_if": "{{ section.settings.media_type == 'video' and section.settings.video_source == 'url' }}"
     },
     {
@@ -791,7 +794,7 @@
         {
           "type": "text",
           "id": "countdown_end_date",
-          "label": "Countdown Target Date (Yyyy-mm-dd HH:MM:SS)",
+          "label": "Countdown Target Date (Yyyy-Mm-Dd HH:MM:SS)",
           "default": "2026-12-31 23:59:59"
         },
         {

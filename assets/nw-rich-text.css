@@ -1,0 +1,115 @@
+.nw-rich-text {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-rich-text__wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.nw-rich-text__wrapper--left {
+  justify-content: flex-start;
+}
+
+.nw-rich-text__wrapper--right {
+  justify-content: flex-end;
+}
+
+.nw-rich-text__blocks {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: var(--nw-rich-text-max-width, 78rem);
+}
+
+.nw-rich-text__blocks > * {
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.nw-rich-text__blocks > * + * {
+  margin-top: 24px;
+}
+
+.nw-rich-text__buttons {
+  display: inline-flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: auto;
+  max-width: 100%;
+}
+
+.nw-rich-text__buttons--auto .nw-btn {
+  width: auto;
+}
+
+.nw-rich-text__buttons--auto.nw-rich-text__buttons--multiple .nw-btn {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.nw-rich-text__buttons--full {
+  width: 100%;
+}
+
+.nw-rich-text__buttons--full .nw-btn {
+  width: 100%;
+}
+
+.nw-rich-text__buttons--full.nw-rich-text__buttons--multiple .nw-btn {
+  flex: 1 1 22rem;
+  min-width: min(100%, 22rem);
+}
+
+.nw-rich-text--align-left .nw-rich-text__blocks,
+.nw-rich-text--align-left .nw-section-heading,
+.nw-rich-text--align-left .nw-section-heading .h1,
+.nw-rich-text--align-left .nw-section-heading .h2,
+.nw-rich-text--align-left .nw-rich-text__text.rte,
+.nw-rich-text--align-left .nw-eyebrow,
+.nw-rich-text--align-left .nw-rating {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.nw-rich-text--align-left .nw-rich-text__buttons {
+  justify-content: flex-start;
+}
+
+.nw-rich-text--align-right .nw-rich-text__blocks,
+.nw-rich-text--align-right .nw-section-heading,
+.nw-rich-text--align-right .nw-section-heading .h1,
+.nw-rich-text--align-right .nw-section-heading .h2,
+.nw-rich-text--align-right .nw-rich-text__text.rte,
+.nw-rich-text--align-right .nw-eyebrow,
+.nw-rich-text--align-right .nw-rating {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.nw-rich-text--align-right .nw-rich-text__buttons {
+  justify-content: flex-end;
+}
+
+.nw-rich-text--align-center .nw-rating {
+  justify-content: center;
+}
+
+.nw-rich-text__text.rte a {
+  color: inherit;
+}
+
+@media screen and (max-width: 749px) {
+  .nw-rich-text__blocks > * + * {
+    margin-top: 20px;
+  }
+
+  .nw-rich-text__buttons--full.nw-rich-text__buttons--multiple .nw-btn {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+}

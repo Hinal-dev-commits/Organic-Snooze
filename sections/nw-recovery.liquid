@@ -157,8 +157,14 @@
       "label": "Section Width",
       "default": "full_width",
       "options": [
-        { "value": "full_width", "label": "Full Width" },
-        { "value": "page_width", "label": "Page Width" }
+        {
+          "value": "full_width",
+          "label": "Full Width"
+        },
+        {
+          "value": "page_width",
+          "label": "Page Width"
+        }
       ]
     },
     {
@@ -259,10 +265,22 @@
       "label": "Background Type",
       "default": "none",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "image", "label": "Image" },
-        { "value": "gradient", "label": "Gradient" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
       ]
     },
     {
@@ -341,7 +359,7 @@
   "blocks": [
     {
       "type": "box",
-      "name": "Recovery box",
+      "name": "Recovery Box",
       "settings": [
         {
           "type": "checkbox",
@@ -355,16 +373,46 @@
           "label": "Icon",
           "default": "leaf",
           "options": [
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "heart", "label": "Heart" },
-            { "value": "moon", "label": "Moon" },
-            { "value": "sun", "label": "Sun" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "wind", "label": "Wind" },
-            { "value": "thermometer", "label": "Thermometer" },
-            { "value": "sparkle", "label": "Sparkle" },
-            { "value": "checkmark", "label": "Checkmark" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "moon",
+              "label": "Moon"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "wind",
+              "label": "Wind"
+            },
+            {
+              "value": "thermometer",
+              "label": "Thermometer"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "visible_if": "{{ block.settings.use_custom_icon == false }}"
         },

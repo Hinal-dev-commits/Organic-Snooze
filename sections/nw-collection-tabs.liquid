@@ -397,9 +397,18 @@
       "id": "shop_all_style",
       "label": "Button Style",
       "options": [
-        { "value": "primary", "label": "Primary" },
-        { "value": "secondary", "label": "Secondary" },
-        { "value": "outline", "label": "Outline" }
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
       ],
       "default": "outline",
       "visible_if": "{{ section.settings.show_shop_all == true }}"
@@ -575,13 +584,13 @@
       "type": "color",
       "alpha": true,
       "id": "product_card_bg",
-      "label": "Product Card Background",
+      "label": "Product Card Background"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "product_card_text",
-      "label": "Product Card Text",
+      "label": "Product Card Text"
     },
     {
       "type": "header",
@@ -638,10 +647,22 @@
       "id": "bg_type",
       "label": "Background Type",
       "options": [
-        { "value": "none", "label": "None" },
-        { "value": "color", "label": "Color" },
-        { "value": "gradient", "label": "Gradient" },
-        { "value": "image", "label": "Image" }
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
       ],
       "default": "color"
     },
@@ -841,7 +862,7 @@
         {
           "type": "text",
           "id": "countdown_end_date",
-          "label": "Countdown Target Date (Yyyy-mm-dd HH:MM:SS)",
+          "label": "Countdown Target Date (Yyyy-Mm-Dd HH:MM:SS)",
           "default": "2026-12-31 23:59:59",
           "visible_if": "{{ block.settings.show_promo == true }}"
         },
@@ -861,11 +882,26 @@
           "id": "badge_1_icon",
           "label": "Icon",
           "options": [
-            { "value": "moneyback", "label": "Moneyback" },
-            { "value": "truck", "label": "Free Shipping" },
-            { "value": "warranty", "label": "Warranty" },
-            { "value": "financing", "label": "Financing" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "moneyback",
+              "label": "Moneyback"
+            },
+            {
+              "value": "truck",
+              "label": "Free Shipping"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "financing",
+              "label": "Financing"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "default": "moneyback"
         },
@@ -889,11 +925,26 @@
           "id": "badge_2_icon",
           "label": "Icon",
           "options": [
-            { "value": "moneyback", "label": "Moneyback" },
-            { "value": "truck", "label": "Free Shipping" },
-            { "value": "warranty", "label": "Warranty" },
-            { "value": "financing", "label": "Financing" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "moneyback",
+              "label": "Moneyback"
+            },
+            {
+              "value": "truck",
+              "label": "Free Shipping"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "financing",
+              "label": "Financing"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "default": "truck"
         },
@@ -917,11 +968,26 @@
           "id": "badge_3_icon",
           "label": "Icon",
           "options": [
-            { "value": "moneyback", "label": "Moneyback" },
-            { "value": "truck", "label": "Free Shipping" },
-            { "value": "warranty", "label": "Warranty" },
-            { "value": "financing", "label": "Financing" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "moneyback",
+              "label": "Moneyback"
+            },
+            {
+              "value": "truck",
+              "label": "Free Shipping"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "financing",
+              "label": "Financing"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "default": "warranty"
         },
@@ -945,11 +1011,26 @@
           "id": "badge_4_icon",
           "label": "Icon",
           "options": [
-            { "value": "moneyback", "label": "Moneyback" },
-            { "value": "truck", "label": "Free Shipping" },
-            { "value": "warranty", "label": "Warranty" },
-            { "value": "financing", "label": "Financing" },
-            { "value": "none", "label": "None" }
+            {
+              "value": "moneyback",
+              "label": "Moneyback"
+            },
+            {
+              "value": "truck",
+              "label": "Free Shipping"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            },
+            {
+              "value": "financing",
+              "label": "Financing"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
           ],
           "default": "financing"
         },
@@ -974,27 +1055,39 @@
       "blocks": [
         {
           "type": "tab",
-          "settings": { "label": "Ultimate Snooze" }
+          "settings": {
+            "label": "Ultimate Snooze"
+          }
         },
         {
           "type": "tab",
-          "settings": { "label": "Mattress" }
+          "settings": {
+            "label": "Mattress"
+          }
         },
         {
           "type": "tab",
-          "settings": { "label": "Bedding" }
+          "settings": {
+            "label": "Bedding"
+          }
         },
         {
           "type": "tab",
-          "settings": { "label": "Bundle & Save" }
+          "settings": {
+            "label": "Bundle & Save"
+          }
         },
         {
           "type": "tab",
-          "settings": { "label": "Bases" }
+          "settings": {
+            "label": "Bases"
+          }
         },
         {
           "type": "tab",
-          "settings": { "label": "Kids" }
+          "settings": {
+            "label": "Kids"
+          }
         },
         {
           "type": "sidebar"
