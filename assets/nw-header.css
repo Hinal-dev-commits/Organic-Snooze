@@ -64,6 +64,9 @@
 .header.nw-header-transparent .nw-mega-menu-item:hover .nw-mega-menu__trigger span {
     color: rgb(var(--color-foreground));
 }
+.cart-count-bubble{
+    background: #613916;
+}
 
 @media screen and (max-width: 989px) {
     .header-wrapper.nw-header-transparent:has(.menu-drawer-container[open]),
