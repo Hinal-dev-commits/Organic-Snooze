@@ -64,6 +64,9 @@
 .header.nw-header-transparent .nw-mega-menu-item:hover .nw-mega-menu__trigger span {
     color: rgb(var(--color-foreground));
 }
+.cart-count-bubble{
+    background: #613916;
+}
 
 @media screen and (max-width: 989px) {
     .header-wrapper.nw-header-transparent:has(.menu-drawer-container[open]),
@@ -273,13 +276,13 @@
         gap: 6px;
     }
     .header__heading-logo-wrapper {
-        max-width: 150px;
+        max-width: 100px;
     }
 }
 @media screen and (max-width: 989px) {
     .header.page-width{
-        padding-top: 16px;
-        padding-bottom: 16px;
+        padding-top: 11px;
+        padding-bottom: 11px;
     }
     summary.header__icon.header__icon--menu{
         width: 4rem;
