@@ -226,8 +226,15 @@
 .footer .list-social__link {
     border: 1px solid var(--white);
     border-radius: 1000px;
-    padding: 8px;
+    padding: 0px;
     color: var(--white);
+}
+.footer .list-social__link  svg{
+    width: 40px;
+    height: 40px;
+}
+.footer .list-social__link  svg > *{
+    fill: currentColor;
 }
 
 .footer .list-social__item .icon {
