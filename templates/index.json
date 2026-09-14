@@ -57,6 +57,8 @@
           "settings": {
             "show_icon": true,
             "icon_type": "us_flag",
+            "promo_link": "#",
+            "promo_link_open_new_tab": false,
             "promo_title": "<p>Fourth of July Celebration</p>",
             "status_text": "<p>LIVE</p>",
             "promo_subtext": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>",
@@ -186,7 +188,7 @@
       "name": "NW Marquee",
       "settings": {
         "direction": "right_to_left",
-        "speed": 45,
+        "speed": 161,
         "pause_on_hover": true,
         "enable_parallax": true,
         "repeat_count": 3,
@@ -220,6 +222,7 @@
           "settings": {
             "label": "Ultimate Snooze",
             "collection": "ultimate-pillows",
+            "products_to_show": 8,
             "default_selected": false
           }
         },
@@ -228,6 +231,7 @@
           "settings": {
             "label": "Mattress",
             "collection": "mattress",
+            "products_to_show": 8,
             "default_selected": true
           }
         },
@@ -236,6 +240,7 @@
           "settings": {
             "label": "Bedding",
             "collection": "family-organic-mattress-and-bedding-for-kids",
+            "products_to_show": 8,
             "default_selected": false
           }
         },
@@ -244,6 +249,7 @@
           "settings": {
             "label": "Bundle & Save",
             "collection": "bundles-ultimate-sleep-optimization-system",
+            "products_to_show": 8,
             "default_selected": false
           }
         },
@@ -252,6 +258,7 @@
           "settings": {
             "label": "Bases",
             "collection": "adjustable-bases-1",
+            "products_to_show": 8,
             "default_selected": false
           }
         },
@@ -260,6 +267,7 @@
           "settings": {
             "label": "Kids",
             "collection": "baby-snooze-nest",
+            "products_to_show": 8,
             "default_selected": false
           }
         },
@@ -306,6 +314,17 @@
       ],
       "name": "NW Collection Tabs",
       "settings": {
+        "show_rating_header": false,
+        "star_rating": 5,
+        "star_color": "",
+        "star_color_inactive": "",
+        "eyebrow": "",
+        "heading": "",
+        "subheading": "",
+        "heading_color": "",
+        "description_color": "",
+        "full_width": false,
+        "hide_shadow": false,
         "show_arrows": true,
         "show_pagination": true,
         "show_rating": true,
@@ -339,6 +358,14 @@
         "promo_status_bg": "#cc926a",
         "promo_timer_bg": "#cc926a",
         "promo_sep_color": "#cc926a",
+        "product_card_bg": "",
+        "product_card_text": "",
+        "firmness_bg": "#f4efe8",
+        "firmness_text": "#613916",
+        "firmness_active_border": "#cc926a",
+        "firmness_border": "#e8ddd4",
+        "firmness_active_bg": "#cc926a",
+        "firmness_active_text": "#ffffff",
         "bg_type": "color",
         "bg_color": "#ffffff",
         "bg_gradient": "",
@@ -356,6 +383,7 @@
           "settings": {
             "video": "shopify://files/videos/instagram-video-436b7f7b-2c5a-482d-9c5c-359b52678a40.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Katherine",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -369,6 +397,7 @@
           "settings": {
             "video": "shopify://files/videos/Recover while you sleep.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Katherine",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -382,6 +411,7 @@
           "settings": {
             "video": "shopify://files/videos/instagram-video_e8b26256-9aaa-4428-b2d4-b9640655d5ba.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Courtney",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -395,6 +425,7 @@
           "settings": {
             "video": "shopify://files/videos/instagram-video_f843f4ed-8cb5-43e5-8358-a9fbb7de1365.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Katherine",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -408,6 +439,7 @@
           "settings": {
             "video": "shopify://files/videos/UGC-Katherine-June-1.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Rivera",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -421,6 +453,7 @@
           "settings": {
             "video": "shopify://files/videos/instagram-video_2a2998f3-252a-4221-b6c8-7259dca9f071.mp4",
             "overlay_text": "",
+            "review_text": "",
             "author": "Katherine",
             "show_verified": true,
             "verified_text": "Verified Customer",
@@ -451,6 +484,8 @@
         "description_color": "",
         "eyebrow_color": "",
         "text_color": "",
+        "card_style": "style-1",
+        "enable_video_loop": true,
         "show_arrows": true,
         "show_dots": true,
         "enable_autoplay": true,
@@ -458,6 +493,12 @@
         "bg_type": "color",
         "bg_color": "#ffffff",
         "bg_gradient": "",
+        "show_button": false,
+        "button_text": "SHOP NOW",
+        "button_link": "",
+        "button_style": "primary",
+        "badge_icon_color": "#cc926a",
+        "badge_text_color": "#613916",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,
@@ -523,6 +564,7 @@
         "eyebrow": "",
         "heading": "In Their Own Words",
         "subheading": "",
+        "header_max_width_desktop": 1200,
         "heading_color": "",
         "description_color": "",
         "eyebrow_color": "",
@@ -1062,6 +1104,8 @@
           "settings": {
             "icon_type": "seal",
             "image": "shopify://shop_images/Vector_3.svg",
+            "icon_link": "shopify://pages/payments",
+            "icon_link_open_new_tab": false,
             "seal_ring": "",
             "seal_number": "",
             "seal_label": "",
@@ -1074,6 +1118,8 @@
           "settings": {
             "icon_type": "logo",
             "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
+            "icon_link": "shopify://pages/payments",
+            "icon_link_open_new_tab": false,
             "seal_ring": "",
             "seal_number": "",
             "seal_label": "",
@@ -1235,6 +1281,7 @@
         "open_first_faq": true,
         "initial_faq_count": 4,
         "more_label": "SEE MORE FAQ’S",
+        "less_label": "SEE LESS FAQ'S",
         "contact_heading": "Speak With Our Live Sleep Experts.",
         "show_call_btn": true,
         "call_label": "CALL (443) 333-1213",
@@ -1374,6 +1421,7 @@
         "description_color": "",
         "eyebrow_color": "",
         "text_color": "",
+        "no_loop": false,
         "show_arrows": true,
         "show_dots": true,
         "show_fade": true,
