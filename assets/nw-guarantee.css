@@ -77,6 +77,12 @@
   width: 100%;
 }
 
+a.nw-guarantee__card--linked {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 .nw-guarantee__icon-img {
   width: auto;
   max-width: 160px;

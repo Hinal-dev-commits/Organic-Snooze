@@ -56,7 +56,27 @@
       {%- if section.blocks.size > 0 -%}
         <div class="nw-guarantee__grid">
           {%- for block in section.blocks -%}
-            <article class="nw-guarantee__card" {{ block.shopify_attributes }}>
+            {%- liquid
+              assign card_link = block.settings.icon_link
+              assign card_link_label = block.settings.heading | strip_html | escape
+              if card_link_label == blank
+                assign card_link_label = 'Guarantee card'
+              endif
+            -%}
+            {%- if card_link != blank -%}
+              <a
+                href="{{ card_link }}"
+                class="nw-guarantee__card nw-guarantee__card--linked"
+                {% if block.settings.icon_link_open_new_tab %}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                {% endif %}
+                aria-label="{{ card_link_label }}"
+                {{ block.shopify_attributes }}
+              >
+            {%- else -%}
+              <article class="nw-guarantee__card" {{ block.shopify_attributes }}>
+            {%- endif -%}
               <div class="nw-guarantee__icon">
                 {%- if block.settings.image != blank -%}
                   <img
@@ -97,7 +117,11 @@
                   <div class="nw-guarantee__text rte">{{ block.settings.text }}</div>
                 {%- endif -%}
               </div>
-            </article>
+            {%- if card_link != blank -%}
+              </a>
+            {%- else -%}
+              </article>
+            {%- endif -%}
           {%- endfor -%}
         </div>
       {%- endif -%}
@@ -370,6 +394,19 @@
           "type": "image_picker",
           "id": "image",
           "label": "Custom Icon / Logo"
+        },
+        {
+          "type": "url",
+          "id": "icon_link",
+          "label": "Card Link",
+          "info": "Optional. Makes the entire guarantee card clickable."
+        },
+        {
+          "type": "checkbox",
+          "id": "icon_link_open_new_tab",
+          "label": "Open Card Link In New Tab",
+          "default": false,
+          "visible_if": "{{ block.settings.icon_link != blank }}"
         },
         {
           "type": "text",

@@ -57,6 +57,8 @@
           "settings": {
             "show_icon": true,
             "icon_type": "us_flag",
+            "promo_link": "#",
+            "promo_link_open_new_tab": false,
             "promo_title": "<p>Fourth of July Celebration</p>",
             "status_text": "<p>LIVE</p>",
             "promo_subtext": "<p>20% OFF + 2 FREE PILLOWS | USE CODE FREEDOM</p>",
@@ -186,7 +188,7 @@
       "name": "NW Marquee",
       "settings": {
         "direction": "right_to_left",
-        "speed": 80,
+        "speed": 161,
         "pause_on_hover": true,
         "enable_parallax": true,
         "repeat_count": 3,
@@ -410,7 +412,7 @@
             "video": "shopify://files/videos/instagram-video_e8b26256-9aaa-4428-b2d4-b9640655d5ba.mp4",
             "overlay_text": "",
             "review_text": "",
-            "author": "Gary Brecka",
+            "author": "Courtney",
             "show_verified": true,
             "verified_text": "Founder",
             "product": "the-organic-snooze-kloud-pillow",
@@ -1105,6 +1107,8 @@
           "settings": {
             "icon_type": "seal",
             "image": "shopify://shop_images/Vector_3.svg",
+            "icon_link": "shopify://pages/payments",
+            "icon_link_open_new_tab": false,
             "seal_ring": "",
             "seal_number": "",
             "seal_label": "",
@@ -1117,6 +1121,8 @@
           "settings": {
             "icon_type": "logo",
             "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
+            "icon_link": "shopify://pages/payments",
+            "icon_link_open_new_tab": false,
             "seal_ring": "",
             "seal_number": "",
             "seal_label": "",
