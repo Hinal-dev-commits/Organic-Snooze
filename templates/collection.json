@@ -202,7 +202,7 @@
             "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
             "logo_type": "affirm",
             "text": "Pay over time",
-            "link": ""
+            "link": "shopify://pages/payments"
           }
         },
         "logo_7PtUNj": {
@@ -212,7 +212,7 @@
             "image": "shopify://shop_images/hsa-fsa-logo.png",
             "logo_type": "hsa_fsa",
             "text": "Use your benefits",
-            "link": ""
+            "link": "shopify://pages/hsa-fsa"
           }
         }
       },
@@ -360,7 +360,7 @@
         "logo_UxDJnn": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/featured_logo.png",
+            "image": "shopify://shop_images/Inc_Logo.png",
             "svg_code": "",
             "link": ""
           }
@@ -368,7 +368,7 @@
         "logo_hNqw3h": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/fox-logo.png",
+            "image": "shopify://shop_images/wellworth-2.png",
             "svg_code": "",
             "link": ""
           }
@@ -376,15 +376,7 @@
         "logo_DjHUH8": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/new-york-logo_91437c04-279e-4087-8a1f-b8afd101a548.png",
-            "svg_code": "",
-            "link": ""
-          }
-        },
-        "logo_BFabGA": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/image_1248_1.png",
+            "image": "shopify://shop_images/blog-logo.png",
             "svg_code": "",
             "link": ""
           }
@@ -393,8 +385,7 @@
       "block_order": [
         "logo_UxDJnn",
         "logo_hNqw3h",
-        "logo_DjHUH8",
-        "logo_BFabGA"
+        "logo_DjHUH8"
       ],
       "name": "NW Featured Marquee",
       "settings": {
@@ -403,7 +394,7 @@
         "enable_animation_desktop": true,
         "enable_animation_mobile": true,
         "direction": "rtl",
-        "speed": 36,
+        "speed": 12,
         "pause_on_hover": true,
         "show_edge_fade": false,
         "gap_desktop": 56,
@@ -453,7 +444,7 @@
             "show_info_icon": false,
             "info_tooltip": "",
             "product_1_type": "text",
-            "product_1_text": "Organic Latex",
+            "product_1_text": "1\" Organic Latex",
             "product_2_type": "text",
             "product_2_text": "4\" organic latex"
           }
@@ -465,7 +456,7 @@
             "show_info_icon": false,
             "info_tooltip": "",
             "product_1_type": "text",
-            "product_1_text": "800 Pocketed Steel Coil, Support System",
+            "product_1_text": "800 Pocketed Steel Coil, Zoned System",
             "product_2_type": "text",
             "product_2_text": "1,100 Pocketed Steel Coil, Zoned System"
           }
@@ -475,7 +466,7 @@
           "settings": {
             "feature_name": "100% Organic Build",
             "show_info_icon": true,
-            "info_tooltip": "GOTS and GOLS certified organic materials",
+            "info_tooltip": "Made with GOTS and GOLS certified organic materials",
             "product_1_type": "check",
             "product_1_text": "Firm",
             "product_2_type": "check",
@@ -497,7 +488,7 @@
         "row_Jrepf6": {
           "type": "row",
           "settings": {
-            "feature_name": "100-night trial",
+            "feature_name": "100-night risk-free trial",
             "show_info_icon": false,
             "info_tooltip": "",
             "product_1_type": "check",
@@ -509,13 +500,13 @@
         "row_PKthw7": {
           "type": "row",
           "settings": {
-            "feature_name": "From /mo (Affirm)",
+            "feature_name": "Monthly Financing",
             "show_info_icon": false,
             "info_tooltip": "",
             "product_1_type": "text",
-            "product_1_text": "$80/mo",
+            "product_1_text": "$80/mo<em> (Rate Varies)</em>",
             "product_2_type": "text",
-            "product_2_text": "$100/mo"
+            "product_2_text": "$100/mo <em>(Rate Varies)</em>"
           }
         }
       },
@@ -538,15 +529,15 @@
         "product_1_bg_color": "#fffcf0",
         "product_1_show_btn": true,
         "product_1_btn_text": "SHOP NOW",
-        "product_1_btn_link": "",
-        "product_1_btn_style": "primary",
+        "product_1_btn_link": "shopify://products/the-ultimate-snooze-pure-organic-mattress",
+        "product_1_btn_style": "secondary",
         "product_2_tag": "Gary Brecka Collection",
         "product_2_image": "shopify://shop_images/pillow-top.png",
         "product_2_title": "Pillowtop Mattress",
         "product_2_bg_color": "#f4efe8",
         "product_2_show_btn": true,
         "product_2_btn_text": "SHOP NOW",
-        "product_2_btn_link": "",
+        "product_2_btn_link": "shopify://products/the-ultimate-snooze-pillowtop-organic-mattress",
         "product_2_btn_style": "primary",
         "bg_type": "none",
         "bg_color": "#ffffff",
