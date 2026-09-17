@@ -624,29 +624,6 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_quiz_TCEHL9": {
-      "type": "nw-quiz",
-      "name": "NW Quiz",
-      "settings": {
-        "image": "shopify://shop_images/quiz.png",
-        "image_position": "left",
-        "heading": "Not sure which mattress to pick?",
-        "subheading": "<p>Answer a few quick questions and we'll match you to your feel.</p>",
-        "show_button": true,
-        "button_label": "TAKE THE 60-SECOND QUIZ",
-        "button_link": "shopify://pages/quiz",
-        "button_style": "primary",
-        "bg_type": "image",
-        "bg_color": "#fffcf0",
-        "bg_gradient": "",
-        "bg_image": "shopify://shop_images/benifit-desktop.png",
-        "bg_overlay_color": "#fffcf0a6",
-        "padding_top_desktop": 48,
-        "padding_bottom_desktop": 48,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
     "nw_natural_layers_v2_rApkFF": {
       "type": "nw-natural-layers-v2",
       "blocks": {
@@ -797,7 +774,7 @@
           "type": "faq_item",
           "settings": {
             "question": "What is an organic latex mattress?",
-            "answer": "<p>An organic latex mattress uses latex tapped from rubber trees instead of petroleum-based foam, paired with organic cotton and wool. The result is a surface that breathes, responds to your body, and lasts for years without the chemical foams in most conventional mattresses. Ours are built with certified organic latex, wool, and cotton, with no polyurethane foam, fiberglass, or VOCs.</p>",
+            "answer": "<p>An organic latex mattress uses latex tapped from rubber trees instead of petroleum-based foam, paired with organic cotton and wool. The result is a surface that breathes, responds to your body, and lasts for years without the chemical foams in most conventional mattresses. Ours are built with certified organic latex, wool, and cotton, with no polyurethane foam, fiberglass, or VOCs. Everything you need, nothing you don't.</p>",
             "open_by_default": true
           }
         },
@@ -805,7 +782,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Organic latex vs. memory foam",
-            "answer": "<p>Memory foam is petroleum-based and softens with body heat, which traps warmth and creates that sinking feel. Natural latex lifts and contours, springs back when you move, and sleeps cooler because it breathes. Latex also skips the off-gassing new foam is known for. Contouring comfort, without the heat or the chemical smell.</p>",
+            "answer": "<p>Memory foam is often petroleum-based and softens with body heat, which traps warmth and creates that sinking feel. Natural latex lifts and contours, springs back when you move, and sleeps cooler because it breathes. Latex also skips the off-gassing new foam is known for. Contouring comfort, without the heat or the chemical smell. And superior longevity that lasts up to 30-years.</p>",
             "open_by_default": false
           }
         },
@@ -813,7 +790,7 @@
           "type": "faq_item",
           "settings": {
             "question": "How do I choose the right firmness?",
-            "answer": "<p>Go Medium Firm (Pure) if you sleep on your back or stomach and want firmer, grounded support. Go Medium Plush (Pillow Top) if you sleep on your side or want softer pressure relief with support underneath. Both work for combination sleepers. Still unsure? The 60-second quiz matches you to your feel.</p>",
+            "answer": "<p>Choose Firm (Pure) if you sleep on your back or stomach and want firmer, grounded support. Go Medium Plush (Pillow Top) if you often sleep on your side or want softer pressure relief with support underneath. Both work for combination sleepers. Still unsure? The 60-second quiz matches you to your feel.</p>",
             "open_by_default": false
           }
         }
@@ -838,6 +815,29 @@
         "bg_gradient": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_quiz_TCEHL9": {
+      "type": "nw-quiz",
+      "name": "NW Quiz",
+      "settings": {
+        "image": "shopify://shop_images/quiz.png",
+        "image_position": "right",
+        "heading": "Not sure which mattress to pick?",
+        "subheading": "<p>Answer a few quick questions and we'll match you to your feel.</p>",
+        "show_button": true,
+        "button_label": "TAKE THE 60-SECOND QUIZ",
+        "button_link": "shopify://pages/quiz",
+        "button_style": "primary",
+        "bg_type": "image",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "bg_image": "shopify://shop_images/benifit-desktop.png",
+        "bg_overlay_color": "#fffcf0a6",
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48,
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
@@ -902,6 +902,7 @@
         "standard_card_ARJCqd",
         "standard_card_fibKEf"
       ],
+      "disabled": true,
       "name": "NW Organic Standards",
       "settings": {
         "show_rating": false,
@@ -1298,9 +1299,9 @@
     "nw_featured_marquee_LEteBQ",
     "nw_compare_KpbLdt",
     "nw_reviews_kAHARa",
-    "nw_quiz_TCEHL9",
     "nw_natural_layers_v2_rApkFF",
     "nw_understand_mattress_Yat4zp",
+    "nw_quiz_TCEHL9",
     "nw_organic_standards_cGL9Tn",
     "nw_review_video_Vn3h38",
     "nw_guarantee_card_Uy9UGj",
