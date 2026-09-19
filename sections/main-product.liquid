@@ -182,9 +182,47 @@
                     assign price_variant = product.selected_or_first_available_variant
                     assign compare_at_price = price_variant.compare_at_price
                     assign current_price = price_variant.price
+                    assign price_override = blank
+                    assign compare_at_override = blank
                     assign show_affirm = block.settings.show_affirm
                     if show_affirm == nil
                       assign show_affirm = true
+                    endif
+
+                    assign apply_metaobject_discount = false
+                    for section_block in section.blocks
+                      if section_block.type == 'promo_banner'
+                        if section_block.settings.use_discount_metaobject != false
+                          assign apply_metaobject_discount = true
+                        endif
+                      endif
+                    endfor
+
+                    if apply_metaobject_discount
+                      assign discount_message_entries = shop.metaobjects.discount_message.values
+                      if discount_message_entries != blank
+                        for discount_entry in discount_message_entries
+                          assign discount_products = discount_entry.products.value
+                          if discount_products != blank
+                            for listed_product in discount_products
+                              if listed_product.id == product.id
+                                assign discount_pct = discount_entry.percentage.value | default: discount_entry.percentage | plus: 0
+                                if discount_pct > 0 and discount_pct < 100
+                                  assign remaining_pct = 100 | minus: discount_pct
+                                  assign price_override = current_price | times: remaining_pct | divided_by: 100.0 | round
+                                  assign compare_at_override = current_price
+                                  assign compare_at_price = current_price
+                                  assign current_price = price_override
+                                endif
+                                break
+                              endif
+                            endfor
+                          endif
+                          if price_override != blank
+                            break
+                          endif
+                        endfor
+                      endif
                     endif
                   -%}
                   <div class="nw-product-price">
@@ -193,20 +231,22 @@
                         product: product,
                         use_variant: true,
                         show_badges: false,
-                        price_class: 'price--large'
+                        price_class: 'price--large',
+                        price_override: price_override,
+                        compare_at_price_override: compare_at_override
                       -%}
+                      {%- if block.settings.show_sale_badge and compare_at_price > current_price -%}
+                        {%- assign savings_amount = compare_at_price | minus: current_price -%}
+                        <span class="nw-product-price__save-badge">
+                          {%- if block.settings.show_save_percentage -%}
+                            {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
+                            SAVE {{ save_percent }}%
+                          {%- else -%}
+                            SAVE {{ savings_amount | money_without_trailing_zeros }}
+                          {%- endif -%}
+                        </span>
+                      {%- endif -%}
                     </div>
-                    {%- if block.settings.show_sale_badge and compare_at_price > current_price -%}
-                      {%- assign savings_amount = compare_at_price | minus: current_price -%}
-                      <span class="nw-product-price__save-badge">
-                        {%- if block.settings.show_save_percentage -%}
-                          {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
-                          SAVE {{ save_percent }}%
-                        {%- else -%}
-                          SAVE {{ savings_amount | money_without_trailing_zeros }}
-                        {%- endif -%}
-                      </span>
-                    {%- endif -%}
                   </div>
                   {% comment %} {%- if show_affirm -%}
                     <div class="nw-product-price__affirm">
@@ -2792,7 +2832,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "When enabled, content is loaded from the Discount Message metaobject if this product is listed on an entry (message, percentage, products). Use {CODE} in the message for the code pill and [DiscountedPrice] for the variant discounted price. Block settings below are used as fallback or heading override."
+          "content": "When enabled, content is loaded from the Discount Message metaobject if this product is listed on an entry (message, percentage, products). Use {CODE} in the message for the code pill. The entry percentage updates the product Price block for the selected variant. Block settings below are used as fallback when this product is not on an entry."
         },
         {
           "type": "checkbox",

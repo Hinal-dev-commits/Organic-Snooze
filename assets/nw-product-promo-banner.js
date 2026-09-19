@@ -39,7 +39,6 @@ if (!customElements.get('nw-product-promo-banner')) {
       const codeTextEl = this.querySelector('[data-promo-banner-code-text]');
       const toastEl = this.querySelector('[data-promo-banner-toast]');
       const productFormId = 'product-form-' + sectionId;
-      const placeholder = config.placeholder || '[DiscountedPrice]';
       let bindingsDone = false;
 
       const extractFirstDiscountCode = (value) => {
@@ -55,34 +54,11 @@ if (!customElements.get('nw-product-promo-banner')) {
 
       const getMessagePlain = () => stripHtml(config.message || '');
 
-      const getDisplayMessagePlain = (discountedPrice) => {
+      const getDisplayMessagePlain = () => {
         let text = getMessagePlain();
         text = text.replace(/\{([^}]*)\}/g, (match, inner) => String(inner).trim());
-        text = text.replace(/\s+/g, ' ').trim();
-
-        if (discountedPrice) {
-          text = text.split(placeholder).join(discountedPrice);
-        }
-
-        return text;
-      };
-
-      const formatMoney = (cents) => {
-        const amount = Number(cents);
-        if (!Number.isFinite(amount)) return '';
-
-        if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
-          return Shopify.formatMoney(amount, config.moneyFormat || '${{amount}}');
-        }
-
-        return (amount / 100).toFixed(2);
-      };
-
-      const getDiscountedPriceCents = (priceCents) => {
-        const pct = Number(config.percentage);
-        if (!Number.isFinite(pct) || pct <= 0 || pct >= 100) return null;
-        if (!Number.isFinite(Number(priceCents))) return null;
-        return Math.round(Number(priceCents) * (100 - pct) / 100);
+        text = text.replace(/\[DiscountedPrice\]/g, '');
+        return text.replace(/\s+/g, ' ').trim();
       };
 
       const getForm = () => document.getElementById(productFormId);
@@ -91,23 +67,6 @@ if (!customElements.get('nw-product-promo-banner')) {
         const form = getForm();
         if (!form) return null;
         return form.querySelector('input[name="id"], select[name="id"]');
-      };
-
-      const getActiveVariantId = () => {
-        const variantInput = getVariantInput();
-        if (variantInput && variantInput.value) {
-          return Number(variantInput.value);
-        }
-        return NaN;
-      };
-
-      const getActiveVariantRow = () => {
-        const variantId = getActiveVariantId();
-        const row = (config.variants || []).find((variant) => Number(variant.id) === variantId);
-        if (!row && config.variants?.length === 1) {
-          return config.variants[0];
-        }
-        return row || null;
       };
 
       const showCopiedToast = (code) => {
@@ -175,11 +134,8 @@ if (!customElements.get('nw-product-promo-banner')) {
       };
 
       const updatePromoBanner = () => {
-        const row = getActiveVariantRow();
         const code = extractFirstDiscountCode(getMessagePlain());
-        const discountedCents = row ? getDiscountedPriceCents(row.price) : null;
-        const discountedPrice = discountedCents != null ? formatMoney(discountedCents) : '';
-        const displayMessage = getDisplayMessagePlain(discountedPrice);
+        const displayMessage = getDisplayMessagePlain();
 
         if (messageEl) {
           if (displayMessage) {

@@ -8,6 +8,8 @@
   - show_badges: {Boolean} Renders 'Sale' and 'Sold Out' tags if the product matches the condition (optional)
   - price_class: {String} Adds a price class to the price element (optional)
   - show_compare_at_price: {Boolean} Renders the compare at price if the product matches the condition (optional)
+  - price_override: {Number} Optional price in cents to display instead of the variant price
+  - compare_at_price_override: {Number} Optional compare-at price in cents
 
   Usage:
   {% render 'price', product: product %}
@@ -23,6 +25,12 @@
 
   assign compare_at_price = target.compare_at_price
   assign price = target.price | default: 1999
+  if price_override != blank
+    assign price = price_override
+  endif
+  if compare_at_price_override != blank
+    assign compare_at_price = compare_at_price_override
+  endif
   assign price_min = product.price_min
   assign price_max = product.price_max
   assign available = target.available | default: false
