@@ -77,15 +77,15 @@ Renders the NW product card used across collection sliders and grids.
   assign firmness_key = firmness_value | downcase | strip
   assign firmness_index = 0
 
-  if firmness_key == 'soft'
+  if firmness_key == 'plush' or firmness_key == 'soft'
     assign firmness_index = 1
-  elsif firmness_key == 'medium soft' or firmness_key == 'medium-soft' or firmness_key == 'medium_soft'
+  elsif firmness_key == 'medium-plush' or firmness_key == 'medium plush' or firmness_key == 'medium_plush' or firmness_key == 'medium soft' or firmness_key == 'medium-soft' or firmness_key == 'medium_soft'
     assign firmness_index = 2
   elsif firmness_key == 'medium'
     assign firmness_index = 3
-  elsif firmness_key == 'firm'
+  elsif firmness_key == 'medium-firm' or firmness_key == 'medium firm' or firmness_key == 'medium_firm'
     assign firmness_index = 4
-  elsif firmness_key == 'extra firm' or firmness_key == 'extra-firm' or firmness_key == 'extra_firm'
+  elsif firmness_key == 'firm' or firmness_key == 'extra firm' or firmness_key == 'extra-firm' or firmness_key == 'extra_firm'
     assign firmness_index = 5
   endif
 
