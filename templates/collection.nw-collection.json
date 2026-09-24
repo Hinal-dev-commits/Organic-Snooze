@@ -933,6 +933,20 @@
     "nw_review_video_Vn3h38": {
       "type": "nw-review-video",
       "blocks": {
+        "review_8wM69j": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_TorrieC_PillOrgaLate_ffc2ec05.mov",
+            "overlay_text": "",
+            "review_text": "",
+            "author": "",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
+            "custom_title": "",
+            "custom_link": ""
+          }
+        },
         "review_LxWLHJ": {
           "type": "review",
           "settings": {
@@ -974,27 +988,13 @@
             "custom_title": "",
             "custom_link": ""
           }
-        },
-        "review_8wM69j": {
-          "type": "review",
-          "settings": {
-            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_TorrieC_PillOrgaLate_ffc2ec05.mov",
-            "overlay_text": "",
-            "review_text": "",
-            "author": "",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
-            "custom_title": "",
-            "custom_link": ""
-          }
         }
       },
       "block_order": [
+        "review_8wM69j",
         "review_LxWLHJ",
         "review_3NmP4J",
-        "review_dDHBCG",
-        "review_8wM69j"
+        "review_dDHBCG"
       ],
       "name": "t:sections.nw-review-video.name",
       "settings": {
