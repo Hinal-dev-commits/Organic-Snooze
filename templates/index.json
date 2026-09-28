@@ -348,20 +348,6 @@
     "nw_review_video_i4rgrQ": {
       "type": "nw-review-video",
       "blocks": {
-        "review_pqAPxE": {
-          "type": "review",
-          "settings": {
-            "video": "shopify://files/videos/instagram-video-436b7f7b-2c5a-482d-9c5c-359b52678a40.mp4",
-            "overlay_text": "",
-            "review_text": "",
-            "author": "Katherine",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "product": "the-ultimate-snooze-pure-organic-mattress",
-            "custom_title": "",
-            "custom_link": ""
-          }
-        },
         "review_kUBQmh": {
           "type": "review",
           "settings": {
@@ -372,6 +358,20 @@
             "show_verified": true,
             "verified_text": "Verified Customer",
             "product": "the-ultimate-snooze-complete-transformation-bundle",
+            "custom_title": "",
+            "custom_link": ""
+          }
+        },
+        "review_pqAPxE": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/instagram-video-436b7f7b-2c5a-482d-9c5c-359b52678a40.mp4",
+            "overlay_text": "",
+            "review_text": "",
+            "author": "Katherine",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "product": "the-ultimate-snooze-pure-organic-mattress",
             "custom_title": "",
             "custom_link": ""
           }
@@ -390,20 +390,6 @@
             "custom_link": ""
           }
         },
-        "review_HCRQgx": {
-          "type": "review",
-          "settings": {
-            "video": "shopify://files/videos/instagram-video_f843f4ed-8cb5-43e5-8358-a9fbb7de1365.mp4",
-            "overlay_text": "",
-            "review_text": "",
-            "author": "Katherine",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "product": "the-pure-mattress-complete-bundle",
-            "custom_title": "",
-            "custom_link": ""
-          }
-        },
         "review_AifAGb": {
           "type": "review",
           "settings": {
@@ -414,6 +400,20 @@
             "show_verified": true,
             "verified_text": "Verified Customer",
             "product": "the-ultimate-snooze-pillowtop-organic-mattress",
+            "custom_title": "",
+            "custom_link": ""
+          }
+        },
+        "review_HCRQgx": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/instagram-video_f843f4ed-8cb5-43e5-8358-a9fbb7de1365.mp4",
+            "overlay_text": "",
+            "review_text": "",
+            "author": "Katherine",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "product": "the-pure-mattress-complete-bundle",
             "custom_title": "",
             "custom_link": ""
           }
@@ -434,11 +434,11 @@
         }
       },
       "block_order": [
-        "review_pqAPxE",
         "review_kUBQmh",
+        "review_pqAPxE",
         "review_kaRtEy",
-        "review_HCRQgx",
         "review_AifAGb",
+        "review_HCRQgx",
         "review_9FTVW8"
       ],
       "name": "NW Review Videos",
