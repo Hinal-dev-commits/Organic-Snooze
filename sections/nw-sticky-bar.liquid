@@ -1,0 +1,400 @@
+{{ 'nw-button.css' | asset_url | stylesheet_tag }}
+{{ 'nw-sticky-bar.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-sticky-bar.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign sticky_product = product
+  if sticky_product == blank and request.design_mode and collections.all.products.first != blank
+    assign sticky_product = collections.all.products.first
+  endif
+
+  if sticky_product == blank
+    assign hide_sticky_bar = true
+  endif
+
+  assign current_variant = sticky_product.selected_or_first_available_variant
+  assign sticky_title = sticky_product.title
+  if section.settings.custom_title_override != blank
+    assign sticky_title = section.settings.custom_title_override
+  endif
+  assign sticky_excerpt = sticky_product.metafields.custom.card_description.value | default: sticky_product.metafields.custom.card_description | default: sticky_product.metafields.custom.short_description.value | default: sticky_product.metafields.custom.short_description
+
+  assign sticky_image = current_variant.featured_image | default: sticky_product.featured_image
+  assign sticky_variant_parts = current_variant.options | join: ' · '
+  if sticky_product.has_only_default_variant
+    assign sticky_variant_parts = blank
+  endif
+
+  assign sticky_price = current_variant.price
+  assign sticky_compare = current_variant.compare_at_price
+  assign sticky_save = 0
+  if sticky_compare > sticky_price
+    assign sticky_save = sticky_compare | minus: sticky_price
+  endif
+  assign sticky_available = current_variant.available
+
+  assign sticky_btn_label = section.settings.button_text
+  if sticky_btn_label == blank
+    assign sticky_btn_label = 'products.product.add_to_cart' | t
+  endif
+  if sticky_available == false
+    assign sticky_btn_label = 'products.product.sold_out' | t
+  endif
+-%}
+
+{%- unless hide_sticky_bar -%}
+  <nw-sticky-bar
+    id="NwStickyBar-{{ section.id }}"
+    class="nw-sticky-bar section-{{ section.id }}{% if request.design_mode %} is-visible{% endif %}"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ sticky_product.id }}"
+    data-visibility-mode="{{ section.settings.visibility_mode }}"
+    data-scroll-offset="{{ section.settings.scroll_offset }}"
+    style="
+      --nw-sticky-bar-bg: {{ section.settings.bar_bg_color }};
+      --nw-sticky-bar-border: {{ section.settings.bar_border_color }};
+      --nw-sticky-bar-title-color: {{ section.settings.title_color }};
+      --nw-sticky-bar-variant-color: {{ section.settings.variant_color }};
+      --nw-sticky-bar-price-color: {{ section.settings.price_color }};
+      --nw-sticky-bar-save-color: {{ section.settings.save_color }};
+      --nw-sticky-bar-z: {{ section.settings.z_index }};
+    "
+  >
+    <div class="nw-sticky-bar__backdrop" data-sticky-backdrop aria-hidden="true"></div>
+
+    <div class="nw-sticky-bar__shell">
+      <div class="nw-sticky-bar__drawer" data-sticky-drawer>
+        <div class="nw-sticky-bar__drawer-inner page-width">
+          <div class="nw-sticky-bar__drawer-scroll">
+            <div class="nw-sticky-bar__drawer-head">
+              <button
+                type="button"
+                class="nw-sticky-bar__drawer-close"
+                data-sticky-close
+                aria-label="{{ 'accessibility.close' | t | default: 'Close' | escape }}"
+              >
+                <span class="nw-sticky-bar__drawer-close-chevron" aria-hidden="true">
+                  <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                    <path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="nw-sticky-bar__drawer-close-text">{{ section.settings.drawer_close_label | default: 'Close' | upcase }}</span>
+              </button>
+            </div>
+            <div class="nw-sticky-bar__drawer-body">
+              <div class="nw-sticky-bar__variant-mount" data-sticky-variant-mount></div>
+              <div class="nw-sticky-bar__bundle-mount" data-sticky-bundle-mount hidden></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nw-sticky-bar__handle-row">
+        <button type="button" class="nw-sticky-bar__toggle" data-sticky-toggle aria-expanded="false">
+          <span class="nw-sticky-bar__chevron" aria-hidden="true">
+            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 9L7 5L11 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="nw-sticky-bar__toggle-text">{{ section.settings.change_options_label | default: 'Change options' | upcase }}</span>
+        </button>
+      </div>
+
+      <div class="nw-sticky-bar__bar">
+        <div class="page-width nw-sticky-bar__inner">
+          <div class="nw-sticky-bar__product desktop-only">
+            {%- if section.settings.show_image and sticky_image != blank -%}
+              <div class="nw-sticky-bar__media">
+                <img
+                  src="{{ sticky_image | image_url: width: 120 }}"
+                  alt="{{ sticky_image.alt | default: sticky_title | escape }}"
+                  width="56"
+                  height="56"
+                  loading="lazy"
+                  class="nw-sticky-bar__img"
+                  data-sticky-image
+                >
+              </div>
+            {%- endif -%}
+            <div class="nw-sticky-bar__info">
+              {%- if sticky_title != blank -%}
+                <p class="nw-sticky-bar__title" data-sticky-title>{{ sticky_title | escape }}</p>
+              {%- endif -%}
+              {%- if section.settings.show_variant -%}
+                <p class="nw-sticky-bar__variant" data-sticky-variant{% if sticky_variant_parts == blank %} hidden{% endif %}>{{ sticky_variant_parts | escape }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+
+          <div class="nw-sticky-bar__mobile-summary mobile-only">
+            {%- if section.settings.show_variant -%}
+              <p class="nw-sticky-bar__variant nw-sticky-bar__variant--mobile" data-sticky-variant-mobile{% if sticky_variant_parts == blank %} hidden{% endif %}>{{ sticky_variant_parts | escape }}</p>
+            {%- endif -%}
+            <div class="nw-sticky-bar__mobile-price-row">
+              <span class="nw-sticky-bar__price" data-sticky-price-mobile>{{ sticky_price | money }}</span>
+              {%- if section.settings.show_save and sticky_save > 0 -%}
+                <span class="nw-sticky-bar__save-badge" data-sticky-save-mobile>You save {{ sticky_save | money_without_trailing_zeros }}</span>
+              {%- elsif section.settings.show_save -%}
+                <span class="nw-sticky-bar__save-badge" data-sticky-save-mobile hidden></span>
+              {%- endif -%}
+            </div>
+            {%- if section.settings.show_affirm and sticky_product.available -%}
+              <p
+                class="affirm-as-low-as nw-sticky-bar__affirm nw-sticky-bar__affirm--mobile"
+                data-sticky-affirm-mobile
+                data-amount="{{ sticky_price }}"
+                data-page-type="product"
+                data-learnmore-show="true"
+              ></p>
+            {%- endif -%}
+          </div>
+
+          <div class="nw-sticky-bar__actions">
+            <div class="nw-sticky-bar__price-block desktop-only">
+              <div class="nw-sticky-bar__price-row">
+                <span class="nw-sticky-bar__price" data-sticky-price>{{ sticky_price | money }}</span>
+              </div>
+              <div class="nw-sticky-bar__meta">
+                {%- if section.settings.show_affirm and sticky_product.available -%}
+                  <span
+                    class="affirm-as-low-as nw-sticky-bar__affirm"
+                    data-sticky-affirm
+                    data-amount="{{ sticky_price }}"
+                    data-page-type="product"
+                    data-learnmore-show="true"
+                  ></span>
+                {%- endif -%}
+                {%- if section.settings.show_affirm and section.settings.show_save and sticky_save > 0 -%}
+                  <span class="nw-sticky-bar__meta-sep" aria-hidden="true">·</span>
+                {%- endif -%}
+                {%- if section.settings.show_save and sticky_save > 0 -%}
+                  <span class="nw-sticky-bar__save-badge" data-sticky-save>You save {{ sticky_save | money_without_trailing_zeros }}</span>
+                {%- elsif section.settings.show_save -%}
+                  <span class="nw-sticky-bar__save-badge" data-sticky-save hidden></span>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="nw-btn nw-btn--{{ section.settings.button_style }} nw-sticky-bar__cta"
+              data-sticky-submit
+              {% unless sticky_available %}
+                disabled
+              {% endunless %}
+            >
+              <span class="nw-btn__text" data-sticky-submit-text>{{ sticky_btn_label | upcase }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="application/json" data-sticky-bar-config>
+      {
+        "moneyFormat": {{ shop.money_format | json }},
+        "addToCartText": {{ 'products.product.add_to_cart' | t | json }},
+        "soldOutText": {{ 'products.product.sold_out' | t | json }},
+        "showSave": {{ section.settings.show_save | json }},
+        "showAffirm": {{ section.settings.show_affirm | json }},
+        "showVariant": {{ section.settings.show_variant | json }},
+        "showImage": {{ section.settings.show_image | json }},
+        "savePrefix": {{ section.settings.save_prefix | default: 'You save' | json }},
+        "initialVariantId": {{ current_variant.id | json }},
+        "variants": [
+          {%- for variant in sticky_product.variants -%}
+            {
+              "id": {{ variant.id | json }},
+              "price": {{ variant.price | json }},
+              "compare_at_price": {{ variant.compare_at_price | json }},
+              "available": {{ variant.available | json }},
+              "options": {{ variant.options | json }},
+              "title": {{ variant.title | json }},
+              "featured_image": {% if variant.featured_image %}{{ variant.featured_image | json }}{% else %}null{% endif %}
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+  </nw-sticky-bar>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "NW Sticky Bar",
+  "tag": "section",
+  "class": "section-nw-sticky-bar",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "text",
+      "id": "custom_title_override",
+      "label": "Custom Title Override",
+      "info": "Optional. Displays instead of the product title when set."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show Product Image (Desktop Bar)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant",
+      "label": "Show Selected Variant",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Description In Mobile Drawer",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_save",
+      "label": "Show Savings Text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "save_prefix",
+      "label": "Savings Prefix",
+      "default": "You save",
+      "visible_if": "{{ section.settings.show_save == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_affirm",
+      "label": "Show Affirm Messaging",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "change_options_label",
+      "label": "Change Options Label",
+      "default": "Change options"
+    },
+    {
+      "type": "text",
+      "id": "drawer_close_label",
+      "label": "Drawer Close Label",
+      "default": "Close"
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "info": "Leave blank to use the theme Add to cart label."
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "BEHAVIOR"
+    },
+    {
+      "type": "select",
+      "id": "visibility_mode",
+      "label": "When To Show Bar",
+      "default": "scroll",
+      "options": [
+        { "value": "scroll", "label": "After scrolling down" },
+        { "value": "always", "label": "Always visible" },
+        { "value": "buy_buttons", "label": "When buy box leaves viewport" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "scroll_offset",
+      "label": "Scroll Distance Before Show",
+      "min": 100,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 360,
+      "visible_if": "{{ section.settings.visibility_mode == 'scroll' }}"
+    },
+    {
+      "type": "range",
+      "id": "z_index",
+      "label": "Stacking Order (Z-Index)",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bar_bg_color",
+      "label": "Bar Background",
+      "default": "#FFFCF0"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bar_border_color",
+      "label": "Bar Border",
+      "default": "rgba(97, 57, 22, 0.15)"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "variant_color",
+      "label": "Variant / Meta Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "price_color",
+      "label": "Price Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "save_color",
+      "label": "Savings Text Color",
+      "default": "#454500"
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Sticky Bar",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

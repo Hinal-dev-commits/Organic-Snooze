@@ -181,6 +181,21 @@ Renders the NW product card used across collection sliders and grids.
       <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
     </h3>
 
+    {%- if show_firmness_bar -%}
+      <div class="nw-product-card__firmness">
+        <span class="nw-product-card__firmness-label">{{ firmness_label_soft }}</span>
+        <div class="nw-product-card__firmness-track" aria-hidden="true">
+          {%- for i in (1..5) -%}
+            <span class="nw-product-card__firmness-dot{% if i == firmness_index %} is-active{% endif %}"></span>
+            {%- unless forloop.last -%}
+              <span class="nw-product-card__firmness-line"></span>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+        <span class="nw-product-card__firmness-label">{{ firmness_label_firm }}</span>
+      </div>
+    {%- endif -%}
+    
     {%- if display_description and card_description != blank -%}
       <p class="nw-product-card__description">{{ card_description | escape }}</p>
     {% endif %}
@@ -202,21 +217,7 @@ Renders the NW product card used across collection sliders and grids.
         {%- endif -%}
       </div>
     {%- endif -%}
-
-    {%- if show_firmness_bar -%}
-      <div class="nw-product-card__firmness">
-        <span class="nw-product-card__firmness-label">{{ firmness_label_soft }}</span>
-        <div class="nw-product-card__firmness-track" aria-hidden="true">
-          {%- for i in (1..5) -%}
-            <span class="nw-product-card__firmness-dot{% if i == firmness_index %} is-active{% endif %}"></span>
-            {%- unless forloop.last -%}
-              <span class="nw-product-card__firmness-line"></span>
-            {%- endunless -%}
-          {%- endfor -%}
-        </div>
-        <span class="nw-product-card__firmness-label">{{ firmness_label_firm }}</span>
-      </div>
-    {%- endif -%}
+    
 
     <div class="nw-product-card__footer">
       <div class="nw-product-card__price">

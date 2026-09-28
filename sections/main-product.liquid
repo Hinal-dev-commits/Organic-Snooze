@@ -1464,6 +1464,12 @@
         },
         {
           "type": "text",
+          "id": "firmness_popup_modal_id",
+          "label": "Firmness Popup ID",
+          "info": "Optional. Match the Popup link ID on the NW Firmness Popup section (e.g. firmness-guide). Leave blank to use firmness-guide when the popup section is on the page."
+        },
+        {
+          "type": "text",
           "id": "quantity_option_name",
           "label": "Quantity Option Name",
           "default": "Select Quantity",
@@ -4453,6 +4459,138 @@
           "id": "show_verified",
           "label": "Show Verified Badge",
           "default": true
+        },
+        {
+          "type": "header",
+          "content": "Featured On marquee"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_marquee",
+          "label": "Marquee",
+          "default": false,
+          "info": "When enabled, shows a Featured On logo marquee below the quote (Figma layout)."
+        },
+        {
+          "type": "text",
+          "id": "marquee_heading",
+          "label": "Marquee heading",
+          "default": "Featured On",
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "select",
+          "id": "marquee_direction",
+          "label": "Marquee direction",
+          "default": "rtl",
+          "options": [
+            { "value": "rtl", "label": "Right to left" },
+            { "value": "ltr", "label": "Left to right" }
+          ],
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "range",
+          "id": "marquee_speed",
+          "label": "Marquee speed",
+          "min": 10,
+          "max": 80,
+          "step": 2,
+          "unit": "s",
+          "default": 30,
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "range",
+          "id": "marquee_gap",
+          "label": "Logo gap (desktop)",
+          "min": 16,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "default": 32,
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "range",
+          "id": "marquee_gap_mobile",
+          "label": "Logo gap (mobile)",
+          "min": 12,
+          "max": 48,
+          "step": 2,
+          "unit": "px",
+          "default": 32,
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "range",
+          "id": "marquee_logo_height",
+          "label": "Logo height (desktop)",
+          "min": 24,
+          "max": 64,
+          "step": 2,
+          "unit": "px",
+          "default": 40,
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "range",
+          "id": "marquee_logo_height_mobile",
+          "label": "Logo height (mobile)",
+          "min": 20,
+          "max": 48,
+          "step": 2,
+          "unit": "px",
+          "default": 32,
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "marquee_logo_1",
+          "label": "Logo 1",
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "marquee_logo_2",
+          "label": "Logo 2",
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "marquee_logo_3",
+          "label": "Logo 3",
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "marquee_logo_4",
+          "label": "Logo 4",
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "marquee_logo_5",
+          "label": "Logo 5",
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "marquee_logo_6",
+          "label": "Logo 6",
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "marquee_logo_7",
+          "label": "Logo 7",
+          "visible_if": "{{ block.settings.enable_marquee }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "marquee_logo_8",
+          "label": "Logo 8",
+          "visible_if": "{{ block.settings.enable_marquee }}"
         },
         {
           "type": "color",

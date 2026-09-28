@@ -28,7 +28,24 @@ if (!customElements.get('nw-bundle-save')) {
         });
 
         this.submitButton?.addEventListener('click', (event) => this.onSubmit(event));
+        this.initCollapseToggle();
         this.updateSubmitState();
+      }
+
+      initCollapseToggle() {
+        this.collapseToggle = this.querySelector('[data-bundle-collapse-toggle]');
+        this.collapsePanel = this.querySelector('[data-bundle-collapse-panel]');
+        if (!this.collapseToggle || !this.collapsePanel) return;
+
+        this.collapseToggle.addEventListener('click', () => this.toggleCollapsed());
+      }
+
+      toggleCollapsed() {
+        if (!this.collapseToggle) return;
+
+        const willCollapse = !this.classList.contains('is-collapsed');
+        this.classList.toggle('is-collapsed', willCollapse);
+        this.collapseToggle.setAttribute('aria-expanded', willCollapse ? 'false' : 'true');
       }
 
       toggleItem(item, selected) {

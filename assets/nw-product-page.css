@@ -336,25 +336,31 @@
 
 /* Variant picker — size guide trigger */
 .nw-variant-picker__size-desc,
-.nw-variant-picker__size-guide {
+.nw-variant-picker__size-guide,
+button.nw-variant-picker__size-guide.link,
+.nw-variant-picker__size-guide-opener button {
   font-family: var(--font-body-family);
   font-size: 14px;
   font-weight: 400;
   line-height: 125%;
-  color: rgba(97, 57, 22, 0.65);
+  color: #B5A291 !important;
   text-decoration: underline;
   text-underline-offset: 2px;
-}
-
-.nw-variant-picker__size-guide-opener {
-  display: inline-flex;
-}
-
-.nw-variant-picker__size-guide {
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
+}
+
+.nw-variant-picker__size-guide:hover,
+button.nw-variant-picker__size-guide.link:hover,
+.nw-variant-picker__size-guide-opener button:hover {
+  color: #B5A291 !important;
+  opacity: 0.85;
+}
+
+.nw-variant-picker__size-guide-opener {
+  display: inline-flex;
 }
 
 .nw-size-guide-modal__body {

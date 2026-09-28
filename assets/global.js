@@ -625,7 +625,11 @@ class ModalDialog extends HTMLElement {
   }
 
   _isNwSizeGuideModal() {
-    return this.classList.contains('nw-size-guide') || this.classList.contains('nw-size-guide-modal');
+    return (
+      this.classList.contains('nw-size-guide') ||
+      this.classList.contains('nw-size-guide-modal') ||
+      this.classList.contains('nw-firmness-popup')
+    );
   }
 
   _lockPageScroll() {

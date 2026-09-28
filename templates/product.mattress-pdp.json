@@ -210,8 +210,9 @@
             "loft_option_name": "Loft",
             "size_option_name": "Select Size",
             "show_size_guide": true,
-            "size_guide_label": "Size Guide",
+            "size_guide_label": "See Size Guide",
             "size_guide_popup_id": "",
+            "firmness_popup_modal_id": "firmness-guide",
             "quantity_option_name": "Select Quantity",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
@@ -231,6 +232,24 @@
             "margin_top": 0,
             "margin_bottom": 0,
             "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "bundle_save_K4nQ2p": {
+          "type": "bundle_save",
+          "settings": {
+            "product_source": "product_list",
+            "product_list": [
+              "organic-cooling-sheets",
+              "organic-waterproof-mattress-protector",
+              "signature-organic-cotton-pillows-combo-packs",
+              "snooze-btx4-adjustable-base-king-copy"
+            ],
+            "heading": "Bundle & save 30% on each add-on",
+            "button_label": "Add to cart",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
         },
@@ -433,24 +452,6 @@
             "margin_bottom_mobile": 0
           }
         },
-        "bundle_save_K4nQ2p": {
-          "type": "bundle_save",
-          "settings": {
-            "product_source": "product_list",
-            "product_list": [
-              "organic-cooling-sheets",
-              "organic-waterproof-mattress-protector",
-              "signature-organic-cotton-pillows-combo-packs",
-              "snooze-btx4-adjustable-base-king-copy"
-            ],
-            "heading": "Bundle & save 30% on each add-on",
-            "button_label": "Add to cart",
-            "margin_top": 32,
-            "margin_bottom": 0,
-            "margin_top_mobile": 24,
-            "margin_bottom_mobile": 0
-          }
-        },
         "icon_text_v2_JFUz9t": {
           "type": "icon_text_v2",
           "settings": {
@@ -488,6 +489,18 @@
             "name": "Gary Brecka",
             "role": "Longevity Expert & Founder of The Ultimate Human",
             "show_verified": true,
+            "enable_marquee": true,
+            "marquee_heading": "Featured On",
+            "marquee_direction": "rtl",
+            "marquee_speed": 30,
+            "marquee_gap": 32,
+            "marquee_gap_mobile": 32,
+            "marquee_logo_height": 40,
+            "marquee_logo_height_mobile": 32,
+            "marquee_logo_1": "shopify://shop_images/Inc_Mens_Health_Logo.png",
+            "marquee_logo_2": "shopify://shop_images/fox-logo.png",
+            "marquee_logo_3": "shopify://shop_images/new-york-logo_91437c04-279e-4087-8a1f-b8afd101a548.png",
+            "marquee_logo_4": "shopify://shop_images/DOAC-logo.png",
             "quote_color": "#613916",
             "name_color": "#613916",
             "role_color": "#613916",
@@ -594,6 +607,7 @@
         "sleepers_qg7fAY",
         "variant_picker",
         "quantity_selector",
+        "bundle_save_K4nQ2p",
         "buy_buttons",
         "affirm_pay_over_time_messaging_product_block_RzJw7G",
         "shipping_tag_Agd7QN",
@@ -605,7 +619,6 @@
         "collapsible_tab_wP3yAA",
         "complementary_dJ8CFV",
         "customer_videos_JijkkX",
-        "bundle_save_K4nQ2p",
         "icon_text_v2_JFUz9t",
         "founder_i4r3qP",
         "quiz_button_LNxxjE",
@@ -649,6 +662,63 @@
         "padding_bottom": 80,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 48
+      }
+    },
+    "nw_firmness_popup_guide": {
+      "type": "nw-firmness-popup",
+      "settings": {
+        "modal_link_id": "firmness-guide",
+        "heading": "Firmness Guide",
+        "subheading": "Find out how soft or firm your mattress should feel.",
+        "soft_label": "Soft",
+        "medium_label": "Medium",
+        "firm_label": "Firm",
+        "soft_illustration": "shopify://shop_images/Soft_illustration.svg",
+        "medium_illustration": "shopify://shop_images/Medium_illustration.svg",
+        "firm_illustration": "shopify://shop_images/Firm_illustration.svg",
+        "scale_label_left": "More Contour",
+        "scale_label_right": "More Support",
+        "soft_title": "Soft",
+        "soft_hint": "Best for side sleepers",
+        "soft_body": "<p>Great for side sleepers. Your shoulders and hips sink in a little, so they don't get sore. Also good for smaller or lighter sleepers.</p>",
+        "medium_title": "Medium",
+        "medium_hint": "Best for most people",
+        "medium_body": "<p>The best pick for most people. It feels cozy on top but still holds you up. Great for couples. Switch sides at night? Medium works well in every position.</p>",
+        "firm_title": "Firm",
+        "firm_hint": "Best for back & stomach",
+        "firm_body": "<p>Great for back and stomach sleepers. It keeps your body flat and straight, so your hips don't sag. Also good for bigger or heavier sleepers.</p>",
+        "recommend_heading": "Which One Is Right for You?",
+        "recommend_hint_desktop": "Click each one to learn more.",
+        "recommend_hint_mobile": "Tap each one to learn more.",
+        "quiz_url": "shopify://pages/quiz",
+        "quiz_label": "Take the Quiz",
+        "quiz_subtext": "Find out the perfect mattress for you"
+      }
+    },
+    "nw_sticky_bar_YhTzea": {
+      "type": "nw-sticky-bar",
+      "name": "NW Sticky Bar",
+      "settings": {
+        "custom_title_override": "",
+        "show_image": true,
+        "show_variant": true,
+        "show_description": true,
+        "show_save": true,
+        "save_prefix": "You save",
+        "show_affirm": true,
+        "change_options_label": "Change options",
+        "drawer_close_label": "Close",
+        "button_text": "",
+        "button_style": "primary",
+        "visibility_mode": "scroll",
+        "scroll_offset": 360,
+        "z_index": 5,
+        "bar_bg_color": "#fffcf0",
+        "bar_border_color": "#61391626",
+        "title_color": "#613916",
+        "variant_color": "#613916",
+        "price_color": "#613916",
+        "save_color": "#454500"
       }
     },
     "disclosures": {
@@ -1552,6 +1622,8 @@
   },
   "order": [
     "main",
+    "nw_firmness_popup_guide",
+    "nw_sticky_bar_YhTzea",
     "disclosures",
     "related-products",
     "nw_mattresses_timeline_KchVjw",
