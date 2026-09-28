@@ -223,7 +223,7 @@
 .nw-bundle-save__title {
   font-family: var(--font-heading-family);
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 120%;
   letter-spacing: -0.01em;
   color: var(--nw-brown, #613916);
@@ -364,27 +364,6 @@
   display: block;
 }
 
-.nw-bundle-save__error {
-  font-family: var(--font-body-family);
-  font-size: 14px;
-  line-height: 140%;
-  color: #9b2c2c;
-  margin: 0;
-}
-
-.nw-bundle-save__submit {
-  margin-top: 4px;
-}
-
-.nw-bundle-save__submit:disabled:not(.loading) {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.nw-bundle-save__submit[aria-disabled='true'] {
-  cursor: wait;
-}
-
 @media screen and (max-width: 749px) {
   .nw-bundle-save {
     padding: 16px;
@@ -405,7 +384,7 @@
   }
 
   .nw-bundle-save__title {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .nw-bundle-save__media,

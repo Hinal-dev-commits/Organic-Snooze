@@ -316,8 +316,7 @@ if (!customElements.get('nw-sticky-bar')) {
         }
 
         sourceItem.querySelectorAll('[data-option-position]').forEach((sourceControl) => {
-          const position = sourceControl.dataset.optionPosition;
-          const targetControl = targetItem.querySelector(`[data-option-position="${CSS.escape(position)}"]`);
+          const targetControl = this._findMatchingBundleOptionControl(targetItem, sourceControl);
           if (!targetControl) return;
 
           if (targetControl.type === 'radio') {
@@ -328,7 +327,53 @@ if (!customElements.get('nw-sticky-bar')) {
             targetControl.value = sourceControl.value;
           }
         });
+
+        this._syncBundleItemPresentation(sourceItem, targetItem);
       });
+    }
+
+    _findMatchingBundleOptionControl(item, control) {
+      if (!item || !control) return null;
+
+      const position = control.dataset.optionPosition;
+      if (!position) return null;
+
+      const matches = Array.from(
+        item.querySelectorAll(`[data-option-position="${CSS.escape(position)}"]`)
+      );
+
+      if (control.type === 'radio') {
+        return matches.find((el) => el.value === control.value) || null;
+      }
+
+      return matches[0] || null;
+    }
+
+    _syncBundleItemPresentation(sourceItem, targetItem) {
+      const copyContent = (selector) => {
+        const source = sourceItem.querySelector(selector);
+        const target = targetItem.querySelector(selector);
+        if (!source || !target) return;
+        target.textContent = source.textContent;
+        if (source.hasAttribute('hidden') || 'hidden' in source) {
+          target.hidden = source.hidden;
+        }
+      };
+
+      sourceItem.querySelectorAll('[data-selected-value]').forEach((sourceValue, index) => {
+        const targetValue = targetItem.querySelectorAll('[data-selected-value]')[index];
+        if (targetValue) targetValue.textContent = sourceValue.textContent;
+      });
+
+      copyContent('[data-bundle-price]');
+      copyContent('[data-bundle-compare]');
+      copyContent('[data-bundle-save]');
+
+      const sourceImg = sourceItem.querySelector('[data-bundle-image]');
+      const targetImg = targetItem.querySelector('[data-bundle-image]');
+      if (sourceImg && targetImg && sourceImg.src) {
+        targetImg.src = sourceImg.src;
+      }
     }
 
     _findMainBundleControlForDrawerControl(control, mainBundle) {
@@ -346,12 +391,7 @@ if (!customElements.get('nw-sticky-bar')) {
         return mainItem.querySelector('[data-bundle-check]');
       }
 
-      const position = control.dataset.optionPosition;
-      if (position) {
-        return mainItem.querySelector(`[data-option-position="${CSS.escape(position)}"]`);
-      }
-
-      return null;
+      return this._findMatchingBundleOptionControl(mainItem, control);
     }
 
     _syncDrawerBundleControlToMain(control) {
@@ -1111,15 +1151,71 @@ if (!customElements.get('nw-sticky-bar')) {
       const amount = Number(cents);
       if (!Number.isFinite(amount)) return '';
 
-      if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
-        let formatted = Shopify.formatMoney(amount, this.config.moneyFormat || '${{amount}}');
-        if (stripZeros) {
-          formatted = formatted.replace(/(\.|,)00(?=\D*$)/, '');
-        }
-        return formatted;
+      const format = this.config?.moneyFormat;
+      let formatted = '';
+
+      if (format) {
+        formatted = this._applyMoneyFormat(amount, format);
+      } else if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
+        formatted = Shopify.formatMoney(amount);
+      } else {
+        const currency = window.Shopify?.currency?.active;
+        const locale = document.documentElement.lang || window.Shopify?.locale || undefined;
+        formatted = currency
+          ? new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount / 100)
+          : (amount / 100).toFixed(2);
       }
 
-      return (amount / 100).toFixed(2);
+      if (stripZeros) {
+        formatted = formatted.replace(/(\.|,)00(?=\D*$)/, '');
+      }
+      return formatted;
+    }
+
+    _applyMoneyFormat(cents, format) {
+      const placeholder = /\{\{\s*(\w+)\s*\}\}/;
+      const template = String(format);
+      const match = template.match(placeholder);
+      if (!match) return template;
+
+      const formatWithDelimiters = (number, precision, thousands, decimal) => {
+        const prec = precision == null ? 2 : precision;
+        const thou = thousands == null ? ',' : thousands;
+        const dec = decimal == null ? '.' : decimal;
+        const parts = (Number(number) / 100).toFixed(prec).split('.');
+        const dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, `$1${thou}`);
+        const centsPart = parts[1] ? dec + parts[1] : '';
+        return dollars + centsPart;
+      };
+
+      let value;
+      switch (match[1]) {
+        case 'amount_no_decimals':
+          value = formatWithDelimiters(cents, 0);
+          break;
+        case 'amount_no_decimals_with_comma_separator':
+          value = formatWithDelimiters(cents, 0, '.', ',');
+          break;
+        case 'amount_no_decimals_with_space_separator':
+          value = formatWithDelimiters(cents, 0, ' ');
+          break;
+        case 'amount_with_comma_separator':
+          value = formatWithDelimiters(cents, 2, '.', ',');
+          break;
+        case 'amount_with_apostrophe_separator':
+          value = formatWithDelimiters(cents, 2, "'", '.');
+          break;
+        case 'amount_with_space_separator':
+          value = formatWithDelimiters(cents, 2, ' ', ',');
+          break;
+        case 'amount_with_period_and_space_separator':
+          value = formatWithDelimiters(cents, 2, ' ', '.');
+          break;
+        default:
+          value = formatWithDelimiters(cents, 2);
+      }
+
+      return template.replace(placeholder, value);
     }
 
     _refreshAffirm() {

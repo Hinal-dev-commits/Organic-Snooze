@@ -49,8 +49,6 @@
   {%- assign bundle_save_panel_id = 'NwBundleSavePanel-' | append: block.id -%}
   <nw-bundle-save
     class="nw-bundle-save{% if block.settings.heading != blank %} nw-bundle-save--collapsible{% endif %}"
-    data-select-error="{{ 'products.bundle_save.select_one' | t | escape }}"
-    data-unavailable-error="{{ 'products.bundle_save.unavailable' | t | escape }}"
   >
     {%- if block.settings.heading != blank -%}
       <div class="nw-bundle-save__header">
@@ -92,24 +90,6 @@
             {%- endfor -%}
           {%- endif -%}
         </ul>
-
-        <p class="nw-bundle-save__error" data-bundle-error role="alert" hidden></p>
-
-        <button
-          type="button"
-          class="nw-bundle-save__submit product-form__submit button button--full-width button--primary"
-          data-bundle-submit
-          disabled
-        >
-          <span>
-            {%- if block.settings.button_label != blank -%}
-              {{ block.settings.button_label }}
-            {%- else -%}
-              {{ 'products.product.add_to_cart' | t }}
-            {%- endif -%}
-          </span>
-          {%- render 'loading-spinner' -%}
-        </button>
       </div>
     </div>
   </nw-bundle-save>

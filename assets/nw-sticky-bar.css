@@ -358,6 +358,13 @@
   color: rgba(97, 57, 22, 0.65);
 }
 
+.nw-sticky-bar.is-drawer-open .nw-sticky-bar__drawer .nw-sticky-bar__drawer-inner .nw-bundle-save__swatches,
+.nw-sticky-bar.is-drawer-open .nw-sticky-bar__drawer .nw-sticky-bar__drawer-inner .nw-bundle-save__swatches .swatch-input__label {
+  pointer-events: auto;
+  position: relative;
+  z-index: 2;
+}
+
 .nw-sticky-bar__drawer-bundle .nw-bundle-save__list {
   max-height: none;
   overflow: visible;
@@ -516,10 +523,10 @@
 }
 
 .nw-sticky-bar__price {
-  font-family: var(--font-heading-family, 'Optima LT Pro', Optima, serif);
+  font-family: var(--font-body-family);
   font-size: 22px;
   line-height: 1.1;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--nw-sticky-bar-price-color, var(--primary-color, #613916));
 }

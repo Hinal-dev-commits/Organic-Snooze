@@ -192,7 +192,7 @@
 
     <script type="application/json" data-sticky-bar-config>
       {
-        "moneyFormat": {{ shop.money_format | json }},
+        "moneyFormat": {{ shop.money_format | strip_html | json }},
         "addToCartText": {{ 'products.product.add_to_cart' | t | json }},
         "soldOutText": {{ 'products.product.sold_out' | t | json }},
         "showSave": {{ section.settings.show_save | json }},

@@ -7,14 +7,33 @@
 {%- liquid
   assign current_variant = bundle_product.selected_or_first_available_variant
   assign item_image = current_variant.featured_media.preview_image | default: current_variant.image | default: bundle_product.featured_image
-  assign compare_price = current_variant.compare_at_price
-  assign sale_price = current_variant.price
+
+  assign discount_percent = block.settings.discount_percentage | plus: 0
+  if discount_percent < 0
+    assign discount_percent = 0
+  elsif discount_percent > 100
+    assign discount_percent = 100
+  endif
+
+  assign actual_price = current_variant.price | default: 0
+  assign discounted_price = actual_price
   assign save_cents = 0
   assign save_money = ''
-  if compare_price > sale_price
-    assign save_cents = compare_price | minus: sale_price
-    assign save_money = save_cents | money_without_trailing_zeros
+  assign has_bundle_discount = false
+
+  if discount_percent > 0 and actual_price > 0
+    assign discount_amount = actual_price | times: discount_percent | divided_by: 100.0 | round
+    assign discounted_price = actual_price | minus: discount_amount
+    if discounted_price < 0
+      assign discounted_price = 0
+    endif
+    assign save_cents = actual_price | minus: discounted_price
+    if save_cents > 0
+      assign has_bundle_discount = true
+      assign save_money = save_cents | money_without_trailing_zeros
+    endif
   endif
+
   assign check_id = 'BundleSave-' | append: block.id | append: '-' | append: bundle_product.id
   assign bundle_product_title = bundle_product.metafields.custom.product_title.value | default: bundle_product.metafields.custom.product_title
   if bundle_product_title == blank
@@ -77,17 +96,17 @@
         <s
           class="nw-bundle-save__compare"
           data-bundle-compare
-          {% if save_cents == 0 %}hidden{% endif %}
+          {% unless has_bundle_discount %}hidden{% endunless %}
         >
-          {%- if save_cents > 0 -%}{{ compare_price | money }}{%- endif -%}
+          {%- if has_bundle_discount -%}{{ actual_price | money }}{%- endif -%}
         </s>
-        <span class="nw-bundle-save__price" data-bundle-price>{{ sale_price | money }}</span>
+        <span class="nw-bundle-save__price" data-bundle-price>{{ discounted_price | money }}</span>
         <span
           class="nw-product-price__save-badge nw-bundle-save__save"
           data-bundle-save
-          {% if save_cents == 0 %}hidden{% endif %}
+          {% unless has_bundle_discount %}hidden{% endunless %}
         >
-          {%- if save_cents > 0 -%}
+          {%- if has_bundle_discount -%}
             {{ 'products.bundle_save.save_amount' | t: amount: save_money }}
           {%- endif -%}
         </span>
@@ -175,12 +194,25 @@
       "variants": [
         {%- for variant in bundle_product.variants -%}
           {%- liquid
+            assign variant_actual = variant.price | default: 0
+            assign variant_discounted = variant_actual
             assign variant_save = 0
             assign variant_save_money = ''
-            if variant.compare_at_price > variant.price
-              assign variant_save = variant.compare_at_price | minus: variant.price
-              assign variant_save_money = variant_save | money_without_trailing_zeros
+            assign variant_has_discount = false
+
+            if discount_percent > 0 and variant_actual > 0
+              assign variant_discount_amount = variant_actual | times: discount_percent | divided_by: 100.0 | round
+              assign variant_discounted = variant_actual | minus: variant_discount_amount
+              if variant_discounted < 0
+                assign variant_discounted = 0
+              endif
+              assign variant_save = variant_actual | minus: variant_discounted
+              if variant_save > 0
+                assign variant_has_discount = true
+                assign variant_save_money = variant_save | money_without_trailing_zeros
+              endif
             endif
+
             assign variant_image = variant.featured_media.preview_image | default: variant.image | default: bundle_product.featured_image
           -%}
           {
@@ -188,9 +220,9 @@
             "available": {{ variant.available | json }},
             "options": {{ variant.options | json }},
             "featured_image": {% if variant_image != blank %}{{ variant_image | image_url: width: 160 | json }}{% else %}null{% endif %},
-            "price": {{ variant.price | money | json }},
-            "compare_at_price": {% if variant_save > 0 %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},
-            "save_label": {% if variant_save > 0 %}{{ 'products.bundle_save.save_amount' | t: amount: variant_save_money | json }}{% else %}null{% endif %}
+            "price": {{ variant_discounted | money | json }},
+            "compare_at_price": {% if variant_has_discount %}{{ variant_actual | money | json }}{% else %}null{% endif %},
+            "save_label": {% if variant_has_discount %}{{ 'products.bundle_save.save_amount' | t: amount: variant_save_money | json }}{% else %}null{% endif %}
           }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
       ]
