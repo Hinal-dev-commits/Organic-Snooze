@@ -53,21 +53,9 @@
             "margin_bottom_mobile": 16
           }
         },
-        "nw_benifits_list_fYL9X3": {
-          "type": "nw_benifits_list",
-          "settings": {
-            "icon_color": "#cc926a",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 10,
-            "margin_top": 0,
-            "margin_bottom": 0,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
-          }
-        },
         "promo_banner_Q6znVP": {
           "type": "promo_banner",
+          "disabled": true,
           "settings": {
             "use_discount_metaobject": true,
             "heading": "Save 15% on your first order!",
@@ -85,6 +73,19 @@
             "margin_bottom": 16,
             "margin_top_mobile": 16,
             "margin_bottom_mobile": 16
+          }
+        },
+        "nw_benifits_list_fYL9X3": {
+          "type": "nw_benifits_list",
+          "settings": {
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 10,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
           }
         },
         "icon_text_KzjrVr": {
@@ -318,13 +319,13 @@
             "item_1_layout": "simple",
             "item_1_heading": "",
             "item_1_subheading": "",
-            "item_1_text": "Pay over time",
+            "item_1_text": "Pay over time with Affirm at checkout",
             "item_1_link": "",
             "item_2_image": "shopify://shop_images/image_1269.png",
             "item_2_layout": "simple",
             "item_2_heading": "HSA/FSA",
             "item_2_subheading": "Eligible",
-            "item_2_text": "Use your benefits",
+            "item_2_text": "Use your benefits with TrueMed at checkout",
             "item_2_link": "",
             "divider_color": "#d1ccc2",
             "heading_color": "#32323a",
@@ -597,8 +598,8 @@
         "title",
         "description",
         "price",
-        "nw_benifits_list_fYL9X3",
         "promo_banner_Q6znVP",
+        "nw_benifits_list_fYL9X3",
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
         "icon_text_tRPNk9",
