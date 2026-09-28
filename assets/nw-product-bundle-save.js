@@ -6,9 +6,6 @@ if (!customElements.get('nw-bundle-save')) {
         if (this.dataset.bound === 'true') return;
         this.dataset.bound = 'true';
 
-        this.submitButton = this.querySelector('[data-bundle-submit]');
-        this.errorEl = this.querySelector('[data-bundle-error]');
-        this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         this.items = Array.from(this.querySelectorAll('[data-bundle-item]'));
 
         this.items.forEach((item) => {
@@ -27,16 +24,29 @@ if (!customElements.get('nw-bundle-save')) {
           });
         });
 
-        this.submitButton?.addEventListener('click', (event) => this.onSubmit(event));
-        this.updateSubmitState();
+        this.initCollapseToggle();
+      }
+
+      initCollapseToggle() {
+        this.collapseToggle = this.querySelector('[data-bundle-collapse-toggle]');
+        this.collapsePanel = this.querySelector('[data-bundle-collapse-panel]');
+        if (!this.collapseToggle || !this.collapsePanel) return;
+
+        this.collapseToggle.addEventListener('click', () => this.toggleCollapsed());
+      }
+
+      toggleCollapsed() {
+        if (!this.collapseToggle) return;
+
+        const willCollapse = !this.classList.contains('is-collapsed');
+        this.classList.toggle('is-collapsed', willCollapse);
+        this.collapseToggle.setAttribute('aria-expanded', willCollapse ? 'false' : 'true');
       }
 
       toggleItem(item, selected) {
         item.classList.toggle('is-selected', selected);
         const options = item.querySelector('[data-bundle-options]');
         if (options) options.hidden = !selected;
-        this.clearError();
-        this.updateSubmitState();
       }
 
       onOptionChange(item, control) {
@@ -109,163 +119,6 @@ if (!customElements.get('nw-bundle-save')) {
         } else if (imageEl && imageEl.dataset.defaultSrc) {
           imageEl.src = imageEl.dataset.defaultSrc;
         }
-      }
-
-      getSelectedItems() {
-        return this.items.filter((item) => item.querySelector('[data-bundle-check]')?.checked);
-      }
-
-      getSectionsRequest() {
-        if (!this.cart) return null;
-
-        const sectionIds = this.cart.getSectionsToRender().map((section) => section.id);
-
-        return {
-          ids: sectionIds,
-          param: sectionIds.join(','),
-        };
-      }
-
-      hasRenderableSections(cartState) {
-        const sectionsRequest = this.getSectionsRequest();
-        if (!sectionsRequest || !cartState?.sections) return false;
-
-        return sectionsRequest.ids.every((sectionId) => Boolean(cartState.sections[sectionId]));
-      }
-
-      fetchCartSections() {
-        const sectionsRequest = this.getSectionsRequest();
-        if (!sectionsRequest) return Promise.resolve(null);
-
-        const url = `${window.routes.cart_url}.js?sections=${sectionsRequest.param}&sections_url=${encodeURIComponent(window.location.pathname)}`;
-
-        return fetch(url, {
-          headers: {
-            Accept: 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-          },
-        }).then((response) => response.json());
-      }
-
-      resolveCartState(response) {
-        if (this.hasRenderableSections(response)) return Promise.resolve(response);
-
-        return this.fetchCartSections().then((cartState) => {
-          if (!cartState?.sections) return response;
-
-          return {
-            ...cartState,
-            ...response,
-            sections: cartState.sections,
-            items: cartState.items ?? response.items,
-            item_count: cartState.item_count ?? response.item_count,
-          };
-        });
-      }
-
-      updateSubmitState() {
-        if (!this.submitButton || this.submitButton.classList.contains('loading')) return;
-
-        const hasSelection = this.getSelectedItems().length > 0;
-        this.submitButton.disabled = !hasSelection;
-        this.submitButton.toggleAttribute('aria-disabled', !hasSelection);
-      }
-
-      onSubmit(event) {
-        event.preventDefault();
-        if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
-
-        const selectedItems = this.getSelectedItems();
-        if (!selectedItems.length) {
-          this.showError(this.dataset.selectError || window.bundleSaveStrings?.selectOne || '');
-          return;
-        }
-
-        const unavailable = selectedItems.find((item) => item.dataset.available === 'false');
-        if (unavailable) {
-          this.showError(this.dataset.unavailableError || window.bundleSaveStrings?.unavailable || '');
-          return;
-        }
-
-        const items = selectedItems.map((item) => ({
-          id: Number(item.dataset.variantId),
-          quantity: 1,
-        }));
-
-        this.clearError();
-        this.setLoading(true);
-
-        const config = fetchConfig('javascript');
-        config.headers['X-Requested-With'] = 'XMLHttpRequest';
-
-        const body = { items };
-        const sectionsRequest = this.getSectionsRequest();
-
-        if (sectionsRequest) {
-          body.sections = sectionsRequest.param;
-          body.sections_url = window.location.pathname;
-          this.cart.setActiveElement(document.activeElement);
-        }
-
-        config.body = JSON.stringify(body);
-
-        fetch(`${window.routes.cart_add_url}`, config)
-          .then((response) => response.json())
-          .then((response) => {
-            if (response.status) {
-              this.showError(response.description || response.message || window.cartStrings?.error);
-              return null;
-            }
-
-            if (!this.cart) {
-              window.location = window.routes.cart_url;
-              return null;
-            }
-
-            return this.resolveCartState(response);
-          })
-          .then((cartState) => {
-            if (!cartState || !this.cart) return;
-
-            publish(PUB_SUB_EVENTS.cartUpdate, {
-              source: 'bundle-save',
-              cartData: cartState,
-            });
-
-            if (this.cart.classList.contains('is-empty')) {
-              this.cart.classList.remove('is-empty');
-            }
-
-            this.cart.renderContents(cartState);
-          })
-          .catch((error) => {
-            console.error(error);
-            this.showError(window.cartStrings?.error);
-          })
-          .finally(() => {
-            this.setLoading(false);
-          });
-      }
-
-      setLoading(isLoading) {
-        this.submitButton.classList.toggle('loading', isLoading);
-        this.submitButton.disabled = isLoading || !this.getSelectedItems().length;
-        this.submitButton.toggleAttribute('aria-disabled', isLoading);
-        this.querySelector('.loading__spinner')?.classList.toggle('hidden', !isLoading);
-
-        if (!isLoading) this.updateSubmitState();
-      }
-
-      showError(message) {
-        if (!this.errorEl || !message) return;
-        this.errorEl.hidden = false;
-        this.errorEl.textContent = message;
-      }
-
-      clearError() {
-        if (!this.errorEl) return;
-        this.errorEl.hidden = true;
-        this.errorEl.textContent = '';
       }
     }
   );

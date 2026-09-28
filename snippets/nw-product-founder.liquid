@@ -4,6 +4,35 @@
 {% enddoc %}
 
 {%- if block.settings.quote != blank or block.settings.name != blank -%}
+  {%- liquid
+    assign enable_marquee = block.settings.enable_marquee
+    assign marquee_heading = block.settings.marquee_heading | default: 'Featured On'
+    assign marquee_direction = block.settings.marquee_direction | default: 'rtl'
+    assign marquee_speed = block.settings.marquee_speed | default: 30
+    assign marquee_gap = block.settings.marquee_gap | default: 32
+    assign marquee_gap_mobile = block.settings.marquee_gap_mobile | default: 32
+    assign marquee_logo_height = block.settings.marquee_logo_height | default: 40
+    assign marquee_logo_height_mobile = block.settings.marquee_logo_height_mobile | default: 32
+
+    assign marquee_logo_count = 0
+    for logo_index in (1..8)
+      assign logo_key = 'marquee_logo_' | append: logo_index
+      assign logo_image = block.settings[logo_key]
+      if logo_image != blank
+        assign marquee_logo_count = marquee_logo_count | plus: 1
+      endif
+    endfor
+
+    assign show_marquee = false
+    if enable_marquee and marquee_logo_count > 0
+      assign show_marquee = true
+    endif
+  -%}
+
+  {%- if show_marquee -%}
+    {{ 'nw-product-founder-marquee.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+
   <div
     class="nw-product-founder"
     style="
@@ -11,6 +40,13 @@
       --nw-pf-name-color: {{ block.settings.name_color | default: '#613916' }};
       --nw-pf-role-color: {{ block.settings.role_color | default: '#613916' }};
       --nw-pf-bg: {{ block.settings.bg_color | default: 'transparent' }};
+      {%- if show_marquee -%}
+        --nw-pf-marquee-speed: {{ marquee_speed }}s;
+        --nw-pf-marquee-gap: {{ marquee_gap }}px;
+        --nw-pf-marquee-gap-mobile: {{ marquee_gap_mobile }}px;
+        --nw-pf-marquee-logo-height: {{ marquee_logo_height }}px;
+        --nw-pf-marquee-logo-height-mobile: {{ marquee_logo_height_mobile }}px;
+      {%- endif -%}
     "
   >
     {%- if block.settings.quote != blank -%}
@@ -45,6 +81,40 @@
           {%- if block.settings.role != blank -%}
             <p class="nw-product-founder__role">{{ block.settings.role }}</p>
           {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if show_marquee -%}
+      <div class="nw-product-founder__featured">
+        {%- if marquee_heading != blank -%}
+          <p class="nw-product-founder__featured-heading">{{ marquee_heading | escape }}</p>
+        {%- endif -%}
+        <div class="nw-product-founder__marquee-viewport">
+          <div
+            class="nw-product-founder__marquee-track{% if marquee_direction == 'ltr' %} nw-product-founder__marquee-track--ltr{% else %} nw-product-founder__marquee-track--rtl{% endif %}"
+            aria-label="{{ marquee_heading | escape }}"
+          >
+            {%- for group_index in (1..2) -%}
+              <div class="nw-product-founder__marquee-group"{% if group_index == 2 %} aria-hidden="true"{% endif %}>
+                {%- for logo_index in (1..8) -%}
+                  {%- assign logo_key = 'marquee_logo_' | append: logo_index -%}
+                  {%- assign logo_image = block.settings[logo_key] -%}
+                  {%- if logo_image != blank -%}
+                    <div class="nw-product-founder__marquee-logo">
+                      <img
+                        src="{{ logo_image | image_url: width: 400 }}"
+                        alt="{{ logo_image.alt | default: marquee_heading | escape }}"
+                        width="{{ logo_image.width }}"
+                        height="{{ logo_image.height }}"
+                        loading="lazy"
+                      >
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endfor -%}
+          </div>
         </div>
       </div>
     {%- endif -%}

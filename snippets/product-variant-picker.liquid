@@ -14,6 +14,10 @@
     assign select_size_text = selected_variant.metafields.custom.select_size.value | default: selected_variant.metafields.custom.select_size
     assign variant_tag_text = selected_variant.metafields.custom.variant_tag.value | default: selected_variant.metafields.custom.variant_tag
     assign firmness_tag_text = selected_variant.metafields.custom.firmness_tag.value | default: selected_variant.metafields.custom.firmness_tag
+    assign firmness_sub_text_metafield = selected_variant.metafields.custom.firmness_sub_text
+    if firmness_sub_text_metafield == blank or firmness_sub_text_metafield.value == blank
+      assign firmness_sub_text_metafield = product.metafields.custom.firmness_sub_text
+    endif
     assign firmness_option_name = block.settings.firmness_option_name | strip | downcase
     assign loft_option_name = block.settings.loft_option_name | strip | downcase
     assign size_option_name = block.settings.size_option_name | strip | downcase
@@ -27,6 +31,15 @@
     endif
 
     assign size_guide_modal_id = blank
+    assign firmness_popup_modal_id = blank
+    assign firmness_popup_ref = block.settings.firmness_popup_modal_id | strip
+    if firmness_popup_ref != blank
+      if firmness_popup_ref contains 'NwFirmnessPopupModal-'
+        assign firmness_popup_modal_id = firmness_popup_ref
+      else
+        assign firmness_popup_modal_id = 'NwFirmnessPopupModal-' | append: firmness_popup_ref
+      endif
+    endif
     if show_size_guide
       assign popup_block = blank
       assign popup_id_setting = block.settings.size_guide_popup_id | strip
@@ -95,7 +108,9 @@
               firmness_tag_text: firmness_tag_text,
               values_order: values_order,
               show_size_guide: show_size_guide,
-              size_guide_modal_id: size_guide_modal_id
+              size_guide_modal_id: size_guide_modal_id,
+              firmness_popup_modal_id: firmness_popup_modal_id,
+              firmness_sub_text_metafield: firmness_sub_text_metafield
             %}
             {%- break -%}
           {%- endif -%}
@@ -127,7 +142,9 @@
             firmness_tag_text: firmness_tag_text,
             values_order: values_order,
             show_size_guide: show_size_guide,
-            size_guide_modal_id: size_guide_modal_id
+            size_guide_modal_id: size_guide_modal_id,
+            firmness_popup_modal_id: firmness_popup_modal_id,
+            firmness_sub_text_metafield: firmness_sub_text_metafield
           %}
         {%- endunless -%}
       {%- endfor -%}
@@ -155,7 +172,9 @@
           firmness_tag_text: firmness_tag_text,
           values_order: values_order,
           show_size_guide: show_size_guide,
-          size_guide_modal_id: size_guide_modal_id
+          size_guide_modal_id: size_guide_modal_id,
+          firmness_popup_modal_id: firmness_popup_modal_id,
+          firmness_sub_text_metafield: firmness_sub_text_metafield
         %}
       {%- endfor -%}
     {%- endif -%}

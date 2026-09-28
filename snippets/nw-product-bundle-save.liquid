@@ -46,49 +46,51 @@
   {{ 'nw-product-bundle-save.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'nw-product-bundle-save.js' | asset_url }}" defer="defer"></script>
 
+  {%- assign bundle_save_panel_id = 'NwBundleSavePanel-' | append: block.id -%}
   <nw-bundle-save
-    class="nw-bundle-save"
-    data-select-error="{{ 'products.bundle_save.select_one' | t | escape }}"
-    data-unavailable-error="{{ 'products.bundle_save.unavailable' | t | escape }}"
+    class="nw-bundle-save{% if block.settings.heading != blank %} nw-bundle-save--collapsible{% endif %}"
   >
     {%- if block.settings.heading != blank -%}
-      <div class="nw-bundle-save__heading inline-richtext">{{ block.settings.heading }}</div>
+      <div class="nw-bundle-save__header">
+        <button
+          type="button"
+          class="nw-bundle-save__header-toggle"
+          data-bundle-collapse-toggle
+          aria-expanded="true"
+          aria-controls="{{ bundle_save_panel_id }}"
+        >
+          <span class="nw-bundle-save__heading inline-richtext">{{ block.settings.heading }}</span>
+          <span class="nw-bundle-save__collapse-icon svg-wrapper" aria-hidden="true">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
     {%- endif -%}
 
-    <ul class="nw-bundle-save__list" role="list">
-      {%- if bundle_products.id != blank -%}
-        {%- render 'nw-product-bundle-save-item',
-          bundle_product: bundle_products,
-          block: block
-        -%}
-      {%- else -%}
-        {%- for bundle_product in bundle_products -%}
-          {%- unless bundle_product == blank or bundle_product.id == blank or bundle_product.id == product.id -%}
+    <div
+      class="nw-bundle-save__collapsible"
+      id="{{ bundle_save_panel_id }}"
+      data-bundle-collapse-panel
+    >
+      <div class="nw-bundle-save__collapsible-inner">
+        <ul class="nw-bundle-save__list" role="list">
+          {%- if bundle_products.id != blank -%}
             {%- render 'nw-product-bundle-save-item',
-              bundle_product: bundle_product,
+              bundle_product: bundle_products,
               block: block
             -%}
-          {%- endunless -%}
-        {%- endfor -%}
-      {%- endif -%}
-    </ul>
-
-    <p class="nw-bundle-save__error" data-bundle-error role="alert" hidden></p>
-
-    <button
-      type="button"
-      class="nw-bundle-save__submit product-form__submit button button--full-width button--primary"
-      data-bundle-submit
-      disabled
-    >
-      <span>
-        {%- if block.settings.button_label != blank -%}
-          {{ block.settings.button_label }}
-        {%- else -%}
-          {{ 'products.product.add_to_cart' | t }}
-        {%- endif -%}
-      </span>
-      {%- render 'loading-spinner' -%}
-    </button>
+          {%- else -%}
+            {%- for bundle_product in bundle_products -%}
+              {%- unless bundle_product == blank or bundle_product.id == blank or bundle_product.id == product.id -%}
+                {%- render 'nw-product-bundle-save-item',
+                  bundle_product: bundle_product,
+                  block: block
+                -%}
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+      </div>
+    </div>
   </nw-bundle-save>
 {%- endif -%}
