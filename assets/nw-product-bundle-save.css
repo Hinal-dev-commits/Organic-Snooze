@@ -334,9 +334,31 @@
 
 .nw-bundle-save__prices {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.nw-bundle-save__prices-meta {
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+}
+
+.nw-bundle-save__prices-meta[hidden] {
+  display: none !important;
+}
+
+.nw-bundle-save__prices-sep {
+  flex-shrink: 0;
+  width: 1px;
+  height: 12px;
+  background: #c4bab0;
+}
+
+.nw-bundle-save__prices-sep[hidden] {
+  display: none !important;
 }
 
 .nw-bundle-save__compare {
@@ -357,18 +379,11 @@
 }
 
 .nw-bundle-save__save {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 8px;
-  border-radius: 3px;
-  background: #7f7f2e;
   font-family: var(--font-body-family);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 400;
   line-height: normal;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0;
+  color: #6f665e;
 }
 
 .nw-bundle-save__save[hidden],

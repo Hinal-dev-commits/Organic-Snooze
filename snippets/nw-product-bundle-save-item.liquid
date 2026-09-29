@@ -109,23 +109,35 @@
         <span class="nw-bundle-save__title">{{ bundle_product_title }}</span>
       </label>
       <div class="nw-bundle-save__prices">
-        <s
-          class="nw-bundle-save__compare"
-          data-bundle-compare
-          {% unless has_bundle_discount %}hidden{% endunless %}
-        >
-          {%- if has_bundle_discount -%}{{ actual_price | money }}{%- endif -%}
-        </s>
         <span class="nw-bundle-save__price" data-bundle-price>{{ discounted_price | money }}</span>
-        <span
-          class="nw-bundle-save__save"
-          data-bundle-save
+        <div
+          class="nw-bundle-save__prices-meta"
+          data-bundle-prices-meta
           {% unless has_bundle_discount %}hidden{% endunless %}
         >
-          {%- if has_bundle_discount -%}
-            {{ 'products.bundle_save.save_badge' | t: amount: save_money }}
-          {%- endif -%}
-        </span>
+          <s
+            class="nw-bundle-save__compare"
+            data-bundle-compare
+            {% unless has_bundle_discount %}hidden{% endunless %}
+          >
+            {%- if has_bundle_discount -%}{{ actual_price | money }}{%- endif -%}
+          </s>
+          <span
+            class="nw-bundle-save__prices-sep"
+            aria-hidden="true"
+            data-bundle-prices-sep
+            {% unless has_bundle_discount %}hidden{% endunless %}
+          ></span>
+          <span
+            class="nw-bundle-save__save"
+            data-bundle-save
+            {% unless has_bundle_discount %}hidden{% endunless %}
+          >
+            {%- if has_bundle_discount -%}
+              {{ 'products.bundle_save.save_badge' | t: amount: save_money }}
+            {%- endif -%}
+          </span>
+        </div>
       </div>
       <button
         type="button"

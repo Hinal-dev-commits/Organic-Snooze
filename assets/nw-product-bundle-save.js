@@ -174,6 +174,12 @@ if (!customElements.get('nw-bundle-save')) {
           }
         }
 
+        const metaEl = item.querySelector('[data-bundle-prices-meta]');
+        const sepEl = item.querySelector('[data-bundle-prices-sep]');
+        const showMeta = Boolean(variant.compare_at_price && variant.save_label);
+        if (metaEl) metaEl.hidden = !showMeta;
+        if (sepEl) sepEl.hidden = !showMeta;
+
         if (imageEl && variant.featured_image) {
           imageEl.src = variant.featured_image;
         } else if (imageEl && imageEl.dataset.defaultSrc) {
