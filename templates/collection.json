@@ -65,29 +65,29 @@
         "collection_tHJdeT": {
           "type": "collection",
           "settings": {
-            "collection": "accessories",
-            "label": "Bestsellers"
-          }
-        },
-        "collection_TpBRwr": {
-          "type": "collection",
-          "settings": {
-            "collection": "all",
-            "label": "All"
+            "collection": "best-sellers",
+            "label": "Best Sellers"
           }
         },
         "collection_6M9hdC": {
           "type": "collection",
           "settings": {
-            "collection": "baby-snooze-nest",
-            "label": "Ultimate Snooze"
+            "collection": "gary-breckas-collection",
+            "label": "Gary Brecka Collection"
           }
         },
         "collection_NWGL9w": {
           "type": "collection",
           "settings": {
             "collection": "mattress",
-            "label": "Matress"
+            "label": "Matresses"
+          }
+        },
+        "collection_RVVUf3": {
+          "type": "collection",
+          "settings": {
+            "collection": "ultimate-pillows",
+            "label": "Pillows"
           }
         },
         "collection_nXw8Q3": {
@@ -104,30 +104,30 @@
             "label": "Bundle & Save"
           }
         },
-        "collection_RVVUf3": {
-          "type": "collection",
-          "settings": {
-            "collection": "adjustable-bases-1",
-            "label": "Bases"
-          }
-        },
         "collection_mWGyLp": {
           "type": "collection",
           "settings": {
             "collection": "family-organic-mattress-and-bedding-for-kids",
-            "label": "Kids"
+            "label": "Kids and Family"
+          }
+        },
+        "collection_TpBRwr": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "label": "All"
           }
         }
       },
       "block_order": [
         "collection_tHJdeT",
-        "collection_TpBRwr",
         "collection_6M9hdC",
         "collection_NWGL9w",
+        "collection_RVVUf3",
         "collection_nXw8Q3",
         "collection_BH7My6",
-        "collection_RVVUf3",
-        "collection_mWGyLp"
+        "collection_mWGyLp",
+        "collection_TpBRwr"
       ],
       "name": "NW Collections",
       "settings": {
@@ -202,7 +202,7 @@
             "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
             "logo_type": "affirm",
             "text": "Pay over time",
-            "link": ""
+            "link": "shopify://pages/payments"
           }
         },
         "logo_7PtUNj": {
@@ -212,7 +212,7 @@
             "image": "shopify://shop_images/hsa-fsa-logo.png",
             "logo_type": "hsa_fsa",
             "text": "Use your benefits",
-            "link": ""
+            "link": "shopify://pages/hsa-fsa"
           }
         }
       },
@@ -360,7 +360,7 @@
         "logo_UxDJnn": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/featured_logo.png",
+            "image": "shopify://shop_images/Inc_Logo.png",
             "svg_code": "",
             "link": ""
           }
@@ -368,7 +368,15 @@
         "logo_hNqw3h": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/fox-logo.png",
+            "image": "shopify://shop_images/wellworth-2.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_9chdr7": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Inc_Mens_Health_Logo.png",
             "svg_code": "",
             "link": ""
           }
@@ -376,15 +384,7 @@
         "logo_DjHUH8": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/new-york-logo_91437c04-279e-4087-8a1f-b8afd101a548.png",
-            "svg_code": "",
-            "link": ""
-          }
-        },
-        "logo_BFabGA": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/image_1248_1.png",
+            "image": "shopify://shop_images/blog-logo.png",
             "svg_code": "",
             "link": ""
           }
@@ -393,8 +393,8 @@
       "block_order": [
         "logo_UxDJnn",
         "logo_hNqw3h",
-        "logo_DjHUH8",
-        "logo_BFabGA"
+        "logo_9chdr7",
+        "logo_DjHUH8"
       ],
       "name": "NW Featured Marquee",
       "settings": {
@@ -403,7 +403,7 @@
         "enable_animation_desktop": true,
         "enable_animation_mobile": true,
         "direction": "rtl",
-        "speed": 36,
+        "speed": 12,
         "pause_on_hover": true,
         "show_edge_fade": false,
         "gap_desktop": 56,
@@ -453,7 +453,7 @@
             "show_info_icon": false,
             "info_tooltip": "",
             "product_1_type": "text",
-            "product_1_text": "Organic Latex",
+            "product_1_text": "1\" Organic Latex",
             "product_2_type": "text",
             "product_2_text": "4\" organic latex"
           }
@@ -465,7 +465,7 @@
             "show_info_icon": false,
             "info_tooltip": "",
             "product_1_type": "text",
-            "product_1_text": "800 Pocketed Steel Coil, Support System",
+            "product_1_text": "800 Pocketed Steel Coil, Zoned System",
             "product_2_type": "text",
             "product_2_text": "1,100 Pocketed Steel Coil, Zoned System"
           }
@@ -475,7 +475,7 @@
           "settings": {
             "feature_name": "100% Organic Build",
             "show_info_icon": true,
-            "info_tooltip": "GOTS and GOLS certified organic materials",
+            "info_tooltip": "Made with GOTS and GOLS certified organic materials",
             "product_1_type": "check",
             "product_1_text": "Firm",
             "product_2_type": "check",
@@ -497,7 +497,7 @@
         "row_Jrepf6": {
           "type": "row",
           "settings": {
-            "feature_name": "100-night trial",
+            "feature_name": "100-night risk-free trial",
             "show_info_icon": false,
             "info_tooltip": "",
             "product_1_type": "check",
@@ -509,13 +509,13 @@
         "row_PKthw7": {
           "type": "row",
           "settings": {
-            "feature_name": "From /mo (Affirm)",
+            "feature_name": "Monthly Financing",
             "show_info_icon": false,
             "info_tooltip": "",
             "product_1_type": "text",
-            "product_1_text": "$80/mo",
+            "product_1_text": "$80/mo<em> (Rate Varies)</em>",
             "product_2_type": "text",
-            "product_2_text": "$100/mo"
+            "product_2_text": "$100/mo <em>(Rate Varies)</em>"
           }
         }
       },
@@ -538,15 +538,15 @@
         "product_1_bg_color": "#fffcf0",
         "product_1_show_btn": true,
         "product_1_btn_text": "SHOP NOW",
-        "product_1_btn_link": "",
-        "product_1_btn_style": "primary",
+        "product_1_btn_link": "shopify://products/the-ultimate-snooze-pure-organic-mattress",
+        "product_1_btn_style": "secondary",
         "product_2_tag": "Gary Brecka Collection",
         "product_2_image": "shopify://shop_images/pillow-top.png",
         "product_2_title": "Pillowtop Mattress",
         "product_2_bg_color": "#f4efe8",
         "product_2_show_btn": true,
         "product_2_btn_text": "SHOP NOW",
-        "product_2_btn_link": "",
+        "product_2_btn_link": "shopify://products/the-ultimate-snooze-pillowtop-organic-mattress",
         "product_2_btn_style": "primary",
         "bg_type": "none",
         "bg_color": "#ffffff",
@@ -558,51 +558,51 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_reviews_kAHARa": {
+    "nw_reviews_nCBHFz": {
       "type": "nw-reviews",
       "blocks": {
-        "review_YzwW4y": {
+        "review_KkNJiq": {
           "type": "review",
           "settings": {
-            "video": "shopify://files/videos/6195937-uhd_2160_3840_25fps.mp4",
+            "video": "shopify://files/videos/instagram-video-79236a04-cfbc-4929-8881-d9ac0af68060.mp4",
             "insight_tag": "Recovery Insight #1",
-            "insight_text": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>",
+            "insight_text": "<p>You spend nearly one-third of your life in bed. Your sleep environment deserves as much attention as your diet and exercise.</p>",
             "insight_icon": "none"
           }
         },
-        "review_pPLraB": {
+        "review_iPf3Ur": {
           "type": "review",
           "settings": {
-            "video": "shopify://files/videos/7234147-uhd_2160_3840_30fps.mp4",
-            "insight_tag": "Recovery Insight #1",
-            "insight_text": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>",
+            "video": "shopify://files/videos/SnapInsta.to_AQNBq0Ovf27Gn0_2l9P6blf_zc9aR3wwyOZ3Ec-WkS5cEStm6CIy7sffHBw_idr7FABx6ziaM-tPIT7BeVAXkc_S0DqiupBU8HyJA9g.mp4",
+            "insight_tag": "Recovery Insight #2",
+            "insight_text": "<p>Knowing what's inside your mattress is just as important as knowing what's in your food.</p>",
             "insight_icon": "none"
           }
         },
-        "review_D8anHb": {
+        "review_wPTpxT": {
           "type": "review",
           "settings": {
-            "video": "shopify://files/videos/4153241-uhd_2160_4096_25fps.mp4",
-            "insight_tag": "Recovery Insight #1",
-            "insight_text": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>",
+            "video": "shopify://files/videos/instagram-video-3fca1c1a-9512-49d9-a544-653ceebeebe4.mp4",
+            "insight_tag": "Recovery Insight #3",
+            "insight_text": "<p>The best recovery tool you'll ever own isn't a supplement, it's the place you sleep every night.</p>",
             "insight_icon": "none"
           }
         },
-        "review_BP7AzR": {
+        "review_rCgmry": {
           "type": "review",
           "settings": {
-            "video": "shopify://files/videos/6195941-uhd_2160_3840_25fps.mp4",
-            "insight_tag": "Recovery Insight #1",
-            "insight_text": "<p>Every layer in a mattress serves a purpose. Knowing what’s inside, and what’s intentionally left out, helps you choose beyond comfort alone.</p>",
+            "video": "shopify://files/videos/1-1080x1920-v2-G-Rivera-369822.mp4",
+            "insight_tag": "Recovery Insight #4",
+            "insight_text": "<p>Your mattress is one of the few products you'll spend over 25 years of your life on. Choose it intentionally.</p>",
             "insight_icon": "none"
           }
         }
       },
       "block_order": [
-        "review_YzwW4y",
-        "review_pPLraB",
-        "review_D8anHb",
-        "review_BP7AzR"
+        "review_KkNJiq",
+        "review_iPf3Ur",
+        "review_wPTpxT",
+        "review_rCgmry"
       ],
       "name": "NW Reviews",
       "settings": {
@@ -611,8 +611,8 @@
         "star_color": "#e57b1e",
         "star_color_inactive": "#d1d5db",
         "eyebrow": "Real sleepers, real mornings",
-        "heading": "Sleep Is Where Recovery Happens",
-        "subheading": "<p>Human biologist Gary Brecka helped design the Ultimate Snooze around one idea: your body recovers while you sleep. Clean, organic materials help it happen.</p>",
+        "heading": "Your mattress is the most important recovery tool.",
+        "subheading": "<p>Human biologist Gary Brecka helped shape Ultimate Snooze around one simple idea: what you sleep on matters. Every material is intentionally selected to create a cleaner sleep environment that supports recovery, performance, and healthier years ahead.</p>",
         "show_insight_card": true,
         "insight_bg_color": "#61391699",
         "show_arrows": true,
@@ -629,29 +629,6 @@
         "bg_image": "shopify://shop_images/review-bg.png",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_quiz_TCEHL9": {
-      "type": "nw-quiz",
-      "name": "NW Quiz",
-      "settings": {
-        "image": "shopify://shop_images/quiz.png",
-        "image_position": "left",
-        "heading": "Not sure which mattress to pick?",
-        "subheading": "<p>Answer a few quick questions and we'll match you to your feel.</p>",
-        "show_button": true,
-        "button_label": "TAKE THE 60-SECOND QUIZ",
-        "button_link": "shopify://pages/quiz",
-        "button_style": "primary",
-        "bg_type": "image",
-        "bg_color": "#fffcf0",
-        "bg_gradient": "",
-        "bg_image": "shopify://shop_images/benifit-desktop.png",
-        "bg_overlay_color": "#fffcf0a6",
-        "padding_top_desktop": 48,
-        "padding_bottom_desktop": 48,
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
@@ -674,23 +651,23 @@
             "image": "shopify://shop_images/New_Zealand_Wool.png",
             "title": "New Zealand Wool",
             "icon": "none",
-            "feature_text": "A natural temperature regulator that wicks moisture and keeps you cool. Naturally flame-resistant, so there's no need for chemical fire retardants."
+            "feature_text": "Ethically sourced wool acts as a natural flame-resistant layer. Wool naturally regulates temperature, keeping you cool when it’s hot and warm when it’s cold, while wicking away moisture."
           }
         },
         "layer_card_LFRRWU": {
           "type": "layer_card",
           "settings": {
             "image": "shopify://shop_images/Natural_Talalay_Latex.png",
-            "title": "Natural Talalay Latex",
+            "title": "Plant-Based Latex",
             "icon": "none",
-            "feature_text": "4\" of 100% natural latex sourced from Sri Lanka. Responsive, breathable, and durable, it lifts and contours without the heat-trapping sink of memory foam."
+            "feature_text": "100% Organic latex sourced from rubber tree sap, and processed without chemicals. Latex contours and supports the body without sinking or trapping heat, with breathable perforated air holes."
           }
         },
         "layer_card_LcxnLh": {
           "type": "layer_card",
           "settings": {
             "image": "shopify://shop_images/Steel_Coil_System.png",
-            "title": "Steel Coil System",
+            "title": "Pocketed Coil System",
             "icon": "none",
             "feature_text": "An 8\", 5-zone pocketed coil core with AdvantEdge support. Adapts to movement, reduces motion transfer, and gives targeted support where your body needs it."
           }
@@ -774,7 +751,7 @@
         "star_color_inactive": "#d1d5db",
         "eyebrow": "",
         "heading": "The Natural Layers Behind Better Rest",
-        "subheading": "",
+        "subheading": "<p>One-third of your life is spent sleeping. That's why every layer matters. We use certified organic materials to create a cleaner, more breathable sleep environment instead of relying on conventional synthetic foams and chemical treatments.</p>",
         "enable_slider_desktop": false,
         "show_arrows": true,
         "show_dots": true,
@@ -786,7 +763,7 @@
         "leave_out_title": "What We Leave Out Matters Too",
         "show_button": true,
         "btn_text": "Shop Clean Sleep",
-        "btn_link": "",
+        "btn_link": "shopify://collections/mattress",
         "btn_style": "primary",
         "bg_type": "image",
         "bg_color": "#ffffff",
@@ -799,38 +776,38 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_understand_mattress_Yat4zp": {
+    "nw_understand_mattress_ffb7VH": {
       "type": "nw-understand-mattress",
       "blocks": {
-        "faq_item_iGBNx8": {
+        "faq_item_6mgteC": {
           "type": "faq_item",
           "settings": {
             "question": "What is an organic latex mattress?",
-            "answer": "<p>An organic latex mattress uses latex tapped from rubber trees instead of petroleum-based foam, paired with organic cotton and wool. The result is a surface that breathes, responds to your body, and lasts for years without the chemical foams in most conventional mattresses. Ours are built with certified organic latex, wool, and cotton, with no polyurethane foam, fiberglass, or VOCs.</p>",
+            "answer": "<p>Organic latex comes from the sap of rubber trees rather than petroleum-based foam. It naturally contours to your body, springs back when you move, and promotes airflow for cooler sleep. Unlike conventional memory foam, certified organic latex is exceptionally durable and retains its support for years.</p>",
             "open_by_default": true
           }
         },
-        "faq_item_NeJr9k": {
+        "faq_item_aMWhEd": {
           "type": "faq_item",
           "settings": {
-            "question": "Organic latex vs. memory foam",
-            "answer": "<p>Memory foam is petroleum-based and softens with body heat, which traps warmth and creates that sinking feel. Natural latex lifts and contours, springs back when you move, and sleeps cooler because it breathes. Latex also skips the off-gassing new foam is known for. Contouring comfort, without the heat or the chemical smell.</p>",
+            "question": "Why is wool used in an organic mattress?",
+            "answer": "<p>Wool is one of nature's smartest performance materials. It naturally regulates temperature by wicking away moisture, helping you stay cooler in summer and warmer in winter. It also serves as a natural flame barrier, eliminating the need for chemical flame retardants found in many conventional mattresses.</p>",
             "open_by_default": false
           }
         },
-        "faq_item_ykd3mQ": {
+        "faq_item_4A8iWT": {
           "type": "faq_item",
           "settings": {
-            "question": "How do I choose the right firmness?",
-            "answer": "<p>Go Medium Firm (Pure) if you sleep on your back or stomach and want firmer, grounded support. Go Medium Plush (Pillow Top) if you sleep on your side or want softer pressure relief with support underneath. Both work for combination sleepers. Still unsure? The 60-second quiz matches you to your feel.</p>",
+            "question": "Organic materials vs. synthetic materials&nbsp;",
+            "answer": "<p>Conventional mattresses often rely on polyurethane foam, polyester fibers, fiberglass, and synthetic adhesives. We take a different approach, using certified organic cotton, wool, natural latex, and steel coils to create a cleaner, more breathable sleep environment. Every material is intentionally selected to support comfort, durability, and long-term performance.</p>",
             "open_by_default": false
           }
         }
       },
       "block_order": [
-        "faq_item_iGBNx8",
-        "faq_item_NeJr9k",
-        "faq_item_ykd3mQ"
+        "faq_item_6mgteC",
+        "faq_item_aMWhEd",
+        "faq_item_4A8iWT"
       ],
       "name": "NW Understand Mattress",
       "settings": {
@@ -847,6 +824,29 @@
         "bg_gradient": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_quiz_TCEHL9": {
+      "type": "nw-quiz",
+      "name": "NW Quiz",
+      "settings": {
+        "image": "shopify://shop_images/quiz.png",
+        "image_position": "right",
+        "heading": "Not sure which mattress to pick?",
+        "subheading": "<p>Answer a few quick questions and we'll match you to your feel.</p>",
+        "show_button": true,
+        "button_label": "TAKE THE 60-SECOND QUIZ",
+        "button_link": "shopify://pages/quiz",
+        "button_style": "primary",
+        "bg_type": "image",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "bg_image": "shopify://shop_images/benifit-desktop.png",
+        "bg_overlay_color": "#fffcf0a6",
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48,
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
@@ -911,6 +911,7 @@
         "standard_card_ARJCqd",
         "standard_card_fibKEf"
       ],
+      "disabled": true,
       "name": "NW Organic Standards",
       "settings": {
         "show_rating": false,
@@ -938,71 +939,71 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_review_video_Vn3h38": {
+    "nw_review_video_J8Wpw4": {
       "type": "nw-review-video",
       "blocks": {
-        "review_LxWLHJ": {
+        "review_ef6XHP": {
           "type": "review",
           "settings": {
-            "video": "shopify://files/videos/6195937-uhd_2160_3840_25fps.mp4",
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_TorrieC_PillOrgaLate_ffc2ec05.mov",
             "overlay_text": "",
             "review_text": "",
-            "author": "Katherine",
+            "author": "",
             "show_verified": true,
             "verified_text": "Verified Customer",
-            "product": "3554-medium-ept-gary-brecka",
+            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
             "custom_title": "",
             "custom_link": ""
           }
         },
-        "review_3NmP4J": {
+        "review_3DqJxR": {
           "type": "review",
           "settings": {
-            "video": "shopify://files/videos/4153241-uhd_2160_4096_25fps.mp4",
+            "video": "shopify://files/videos/UGC-Katherine-June-1.mp4",
+            "overlay_text": "",
+            "review_text": "",
+            "author": "",
+            "show_verified": true,
+            "verified_text": "Verified Customer",
+            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
+            "custom_title": "",
+            "custom_link": ""
+          }
+        },
+        "review_e4DUmV": {
+          "type": "review",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_TorrieC_PillOrgaLate_c5607b6c.mov",
             "overlay_text": "",
             "review_text": "",
             "author": "Courtney",
             "show_verified": true,
             "verified_text": "Verified Customer",
-            "product": "3556-eco-pure",
+            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
             "custom_title": "",
             "custom_link": ""
           }
         },
-        "review_dDHBCG": {
+        "review_B8R6Ai": {
           "type": "review",
           "settings": {
-            "video": "shopify://files/videos/7234147-uhd_2160_3840_30fps.mp4",
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_NicoleD_PillOrgaLate_290bd5a6.mov",
             "overlay_text": "",
             "review_text": "",
-            "author": "Rivera",
+            "author": "",
             "show_verified": true,
             "verified_text": "Verified Customer",
-            "product": "3557-topper-2-organic-latex",
-            "custom_title": "",
-            "custom_link": ""
-          }
-        },
-        "review_8wM69j": {
-          "type": "review",
-          "settings": {
-            "video": "shopify://files/videos/instagram-video-aafb2799-a059-45f5-9429-fa45e96250dc.mp4",
-            "overlay_text": "",
-            "review_text": "",
-            "author": "Gary Brecka",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "product": "3556-eco-pure",
+            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
             "custom_title": "",
             "custom_link": ""
           }
         }
       },
       "block_order": [
-        "review_LxWLHJ",
-        "review_3NmP4J",
-        "review_dDHBCG",
-        "review_8wM69j"
+        "review_ef6XHP",
+        "review_3DqJxR",
+        "review_e4DUmV",
+        "review_B8R6Ai"
       ],
       "name": "t:sections.nw-review-video.name",
       "settings": {
@@ -1048,7 +1049,7 @@
         "heading": "Sleep On It For 100 Nights. Risk-Free.",
         "description": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a <strong>30-year warranty</strong> because it’s built to last.</p>",
         "image_position": "left",
-        "image": "shopify://shop_images/guarantee-matress.png",
+        "image": "shopify://shop_images/2f626812bcd7d171aa49b362e89dbf4eca72bdff_1.png",
         "image_width": 360,
         "show_badge": true,
         "badge_image": "shopify://shop_images/Vector_3.svg",
@@ -1306,12 +1307,12 @@
     "nw_testimonials_PFYhEM",
     "nw_featured_marquee_LEteBQ",
     "nw_compare_KpbLdt",
-    "nw_reviews_kAHARa",
-    "nw_quiz_TCEHL9",
+    "nw_reviews_nCBHFz",
     "nw_natural_layers_v2_rApkFF",
-    "nw_understand_mattress_Yat4zp",
+    "nw_understand_mattress_ffb7VH",
+    "nw_quiz_TCEHL9",
     "nw_organic_standards_cGL9Tn",
-    "nw_review_video_Vn3h38",
+    "nw_review_video_J8Wpw4",
     "nw_guarantee_card_Uy9UGj",
     "nw_faq_CfP8mf",
     "nw_collection_list_fmeerp"
