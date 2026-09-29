@@ -13,7 +13,6 @@
     assign selected_variant = product.selected_or_first_available_variant
     assign select_size_text = selected_variant.metafields.custom.select_size.value | default: selected_variant.metafields.custom.select_size
     assign variant_tag_text = selected_variant.metafields.custom.variant_tag.value | default: selected_variant.metafields.custom.variant_tag
-    assign firmness_tag_text = selected_variant.metafields.custom.firmness_tag.value | default: selected_variant.metafields.custom.firmness_tag
     assign firmness_sub_text_metafield = selected_variant.metafields.custom.firmness_sub_text
     if firmness_sub_text_metafield == blank or firmness_sub_text_metafield.value == blank
       assign firmness_sub_text_metafield = product.metafields.custom.firmness_sub_text
@@ -29,6 +28,14 @@
     if show_size_guide == nil
       assign show_size_guide = true
     endif
+    assign show_firmness_guide = block.settings.show_firmness_guide
+    if show_firmness_guide == nil
+      assign show_firmness_guide = true
+    endif
+    assign firmness_guide_label = block.settings.firmness_guide_label | strip
+    if firmness_guide_label == blank
+      assign firmness_guide_label = 'Firmness Guide'
+    endif
 
     assign size_guide_modal_id = blank
     assign firmness_popup_modal_id = blank
@@ -39,6 +46,8 @@
       else
         assign firmness_popup_modal_id = 'NwFirmnessPopupModal-' | append: firmness_popup_ref
       endif
+    elsif show_firmness_guide
+      assign firmness_popup_modal_id = 'NwFirmnessPopupModal-firmness-guide'
     endif
     if show_size_guide
       assign popup_block = blank
@@ -105,10 +114,11 @@
               quantity_option_name: quantity_option_name,
               select_size_text: select_size_text,
               variant_tag_text: variant_tag_text,
-              firmness_tag_text: firmness_tag_text,
               values_order: values_order,
               show_size_guide: show_size_guide,
               size_guide_modal_id: size_guide_modal_id,
+              show_firmness_guide: show_firmness_guide,
+              firmness_guide_label: firmness_guide_label,
               firmness_popup_modal_id: firmness_popup_modal_id,
               firmness_sub_text_metafield: firmness_sub_text_metafield
             %}
@@ -139,10 +149,11 @@
             quantity_option_name: quantity_option_name,
             select_size_text: select_size_text,
             variant_tag_text: variant_tag_text,
-            firmness_tag_text: firmness_tag_text,
             values_order: values_order,
             show_size_guide: show_size_guide,
             size_guide_modal_id: size_guide_modal_id,
+            show_firmness_guide: show_firmness_guide,
+            firmness_guide_label: firmness_guide_label,
             firmness_popup_modal_id: firmness_popup_modal_id,
             firmness_sub_text_metafield: firmness_sub_text_metafield
           %}
@@ -169,10 +180,11 @@
           quantity_option_name: quantity_option_name,
           select_size_text: select_size_text,
           variant_tag_text: variant_tag_text,
-          firmness_tag_text: firmness_tag_text,
           values_order: values_order,
           show_size_guide: show_size_guide,
           size_guide_modal_id: size_guide_modal_id,
+          show_firmness_guide: show_firmness_guide,
+          firmness_guide_label: firmness_guide_label,
           firmness_popup_modal_id: firmness_popup_modal_id,
           firmness_sub_text_metafield: firmness_sub_text_metafield
         %}

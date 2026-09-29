@@ -1463,10 +1463,24 @@
           "visible_if": "{{ block.settings.show_size_guide == true }}"
         },
         {
+          "type": "checkbox",
+          "id": "show_firmness_guide",
+          "label": "Show Firmness Guide",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "firmness_guide_label",
+          "label": "Firmness Guide Link Label",
+          "default": "Firmness Guide",
+          "visible_if": "{{ block.settings.show_firmness_guide == true }}"
+        },
+        {
           "type": "text",
           "id": "firmness_popup_modal_id",
           "label": "Firmness Popup ID",
-          "info": "Optional. Match the Popup link ID on the NW Firmness Popup section (e.g. firmness-guide). Leave blank to use firmness-guide when the popup section is on the page."
+          "info": "Optional. Match the Popup link ID on the NW Firmness Popup section (e.g. firmness-guide). Leave blank to use firmness-guide when the popup section is on the page.",
+          "visible_if": "{{ block.settings.show_firmness_guide == true }}"
         },
         {
           "type": "text",

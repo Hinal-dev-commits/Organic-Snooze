@@ -412,8 +412,6 @@ if (!customElements.get('nw-bundle-save')) {
           }
         }
 
-        this.initQuickViewThumbs(modal, media);
-
         const addBtn = modal.querySelector('[data-quick-view-add]');
         if (addBtn) {
           const template = this.dataset.bundleAddTemplate || '';
@@ -429,6 +427,10 @@ if (!customElements.get('nw-bundle-save')) {
         } else {
           modal.setAttribute('open', '');
         }
+
+        window.requestAnimationFrame(() => {
+          this.initQuickViewThumbs(modal, media);
+        });
       }
 
       renderHighlights(modal, description) {

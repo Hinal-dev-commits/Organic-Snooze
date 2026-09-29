@@ -121,7 +121,13 @@ function trapFocus(container, elementToFocus = container) {
   document.addEventListener('focusout', trapFocusHandlers.focusout);
   document.addEventListener('focusin', trapFocusHandlers.focusin);
 
-  elementToFocus.focus();
+  if (typeof elementToFocus.focus === 'function') {
+    try {
+      elementToFocus.focus({ preventScroll: true });
+    } catch (error) {
+      elementToFocus.focus();
+    }
+  }
 
   if (
     elementToFocus.tagName === 'INPUT' &&
@@ -199,7 +205,13 @@ function removeTrapFocus(elementToFocus = null) {
   document.removeEventListener('focusout', trapFocusHandlers.focusout);
   document.removeEventListener('keydown', trapFocusHandlers.keydown);
 
-  if (elementToFocus) elementToFocus.focus();
+  if (elementToFocus && typeof elementToFocus.focus === 'function') {
+    try {
+      elementToFocus.focus({ preventScroll: true });
+    } catch (error) {
+      elementToFocus.focus();
+    }
+  }
 }
 
 function onKeyUpEscape(event) {
@@ -634,21 +646,11 @@ class ModalDialog extends HTMLElement {
   }
 
   _lockPageScroll() {
-    if (this._isNwSizeGuideModal()) {
-      document.documentElement.classList.add('overflow-hidden');
-      return;
-    }
-
-    document.body.classList.add('overflow-hidden');
+    document.documentElement.classList.add('overflow-hidden');
   }
 
   _unlockPageScroll() {
-    if (this._isNwSizeGuideModal()) {
-      document.documentElement.classList.remove('overflow-hidden');
-      return;
-    }
-
-    document.body.classList.remove('overflow-hidden');
+    document.documentElement.classList.remove('overflow-hidden');
   }
 
   show(opener) {

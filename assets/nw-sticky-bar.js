@@ -253,7 +253,8 @@ if (!customElements.get('nw-sticky-bar')) {
       if (!mount) return;
 
       if (!mainBundle) {
-        mount.replaceChildren();
+        mount.querySelector('[data-sticky-drawer-bundle]')?.remove();
+        this._updateDrawerBundleSelectionCount(null);
         mount.hidden = true;
         return;
       }
@@ -277,7 +278,8 @@ if (!customElements.get('nw-sticky-bar')) {
       this._drawerBundleAbort = new AbortController();
       const bundleSignal = this._drawerBundleAbort.signal;
 
-      mount.replaceChildren();
+      mount.querySelector('[data-sticky-drawer-bundle]')?.remove();
+      this._ensureDrawerBundleMountBar(mainBundle);
 
       const drawerBundle = document.createElement('div');
       drawerBundle.className = 'nw-bundle-save nw-sticky-bar__drawer-bundle';
@@ -298,6 +300,69 @@ if (!customElements.get('nw-sticky-bar')) {
 
       this._syncBundleState(mainBundle, drawerBundle);
       this._bindDrawerBundleSync(drawerBundle, bundleSignal);
+      this._updateDrawerBundleSelectionCount(mainBundle);
+    }
+
+    _ensureDrawerBundleMountBar(mainBundle) {
+      const mount = this.bundleMount;
+      if (!mount) return;
+
+      let bar = mount.querySelector('[data-sticky-bundle-mount-bar]');
+      if (!bar) {
+        bar = document.createElement('div');
+        bar.className = 'nw-sticky-bar__bundle-mount-bar';
+        bar.setAttribute('data-sticky-bundle-mount-bar', '');
+        bar.innerHTML =
+          '<p class="nw-sticky-bar__bundle-mount-title" data-sticky-bundle-mount-title></p>' +
+          '<p class="nw-sticky-bar__bundle-count" data-sticky-bundle-count aria-live="polite"></p>';
+        mount.prepend(bar);
+      }
+
+      const titleEl = bar.querySelector('[data-sticky-bundle-mount-title]');
+      const heading = mainBundle?.querySelector('.nw-bundle-save__heading');
+      if (titleEl) {
+        titleEl.textContent = heading?.textContent?.trim() || '';
+      }
+
+      bar.hidden = false;
+    }
+
+    _updateDrawerBundleSelectionCount(mainBundle) {
+      const mount = this.bundleMount;
+      const bar = mount?.querySelector('[data-sticky-bundle-mount-bar]');
+      const countEl = mount?.querySelector('[data-sticky-bundle-count]');
+      if (!mount || !bar || !countEl) return;
+
+      const bundle = mainBundle || this._getMainBundleSave();
+      if (!bundle || mount.hidden) {
+        bar.hidden = true;
+        countEl.hidden = true;
+        countEl.textContent = '';
+        return;
+      }
+
+      this._ensureDrawerBundleMountBar(bundle);
+
+      let count = 0;
+      if (typeof bundle.getSelectedItems === 'function') {
+        count = bundle.getSelectedItems().length;
+      } else {
+        bundle.querySelectorAll('[data-bundle-item]').forEach((item) => {
+          if (item.querySelector('[data-bundle-check]')?.checked || item.classList.contains('is-selected')) {
+            count += 1;
+          }
+        });
+      }
+
+      bar.hidden = false;
+      if (count > 0) {
+        const template = mount.dataset.stickyBundleCountTemplate || '__COUNT__ selected';
+        countEl.textContent = template.replace('__COUNT__', String(count));
+        countEl.hidden = false;
+      } else {
+        countEl.textContent = '';
+        countEl.hidden = true;
+      }
     }
 
     _syncBundleState(source, target) {
@@ -339,6 +404,8 @@ if (!customElements.get('nw-sticky-bar')) {
 
         this._syncBundleItemPresentation(sourceItem, targetItem);
       });
+
+      this._updateDrawerBundleSelectionCount(source);
     }
 
     _findMatchingBundleOptionControl(item, control) {
@@ -511,7 +578,7 @@ if (!customElements.get('nw-sticky-bar')) {
       if (drawerBundle) {
         this._syncBundleState(mainBundle, drawerBundle);
       }
-      this._updateStickySubmitPrice();
+      this._updateStickyBarPrice();
 
       return checkbox.checked;
     }
@@ -526,7 +593,7 @@ if (!customElements.get('nw-sticky-bar')) {
           if (mainBundle) {
             window.requestAnimationFrame(() => {
               this._syncBundleState(mainBundle, drawerBundle);
-              this._updateStickySubmitPrice();
+              this._updateStickyBarPrice();
             });
           }
         },
@@ -1157,7 +1224,10 @@ if (!customElements.get('nw-sticky-bar')) {
     }
 
     _bindAtcPriceSync(signal) {
-      const refresh = () => this._updateStickySubmitPrice();
+      const refresh = () => {
+        this._updateStickyBarPrice();
+        this._updateDrawerBundleSelectionCount();
+      };
 
       this.productInfo?.addEventListener('nw-bundle-selection-change', refresh, { signal });
       document.addEventListener('nw-bundle-selection-change', refresh, { signal });
@@ -1165,49 +1235,41 @@ if (!customElements.get('nw-sticky-bar')) {
       refresh();
     }
 
-    _getShowAtcPriceEnabled() {
-      return this.productInfo?.querySelector('product-form')?.dataset.showAtcPrice === 'true';
-    }
-
-    _updateStickySubmitPrice() {
-      if (!this.submitBtn || !this.submitPriceWrap || !this.submitPriceEl) return;
-
-      if (!this._getShowAtcPriceEnabled()) {
-        this.submitPriceWrap.hidden = true;
-        this.submitBtn.classList.remove('nw-sticky-bar__cta--with-price');
-        return;
-      }
-
-      if (this.submitBtn.disabled) {
-        this.submitPriceWrap.hidden = true;
-        this.submitBtn.classList.remove('nw-sticky-bar__cta--with-price');
-        return;
-      }
-
-      let totalCents = null;
+    _computeStickyBarTotalCents() {
       if (this.productInfo && typeof customElements.get('product-form') !== 'undefined') {
         const ProductFormClass = customElements.get('product-form');
         if (ProductFormClass?.computeCartTotalCents) {
-          totalCents = ProductFormClass.computeCartTotalCents(this.productInfo);
+          const total = ProductFormClass.computeCartTotalCents(this.productInfo);
+          if (total != null) return total;
         }
       }
 
-      if (totalCents == null) {
-        const mainCents = Number(this._selectedVariant?.price) || 0;
-        const bundle = this._getMainBundleSave();
-        let bundleCents = 0;
-        if (bundle?.getSelectedItems) {
-          bundle.getSelectedItems().forEach((item) => {
-            const variant = bundle.findVariant?.(item);
-            bundleCents += Number(variant?.price_cents) || 0;
-          });
-        }
-        totalCents = mainCents + bundleCents;
+      const mainCents = Number(this._selectedVariant?.price) || 0;
+      const bundle = this._getMainBundleSave();
+      let bundleCents = 0;
+      if (bundle?.getSelectedItems) {
+        bundle.getSelectedItems().forEach((item) => {
+          const variant = bundle.findVariant?.(item);
+          bundleCents += Number(variant?.price_cents) || 0;
+        });
+      }
+      return mainCents + bundleCents;
+    }
+
+    _updateStickyBarPrice() {
+      if (this.submitPriceWrap) {
+        this.submitPriceWrap.hidden = true;
+      }
+      if (this.submitBtn) {
+        this.submitBtn.classList.remove('nw-sticky-bar__cta--with-price');
       }
 
-      this.submitPriceEl.textContent = this._formatMoney(totalCents);
-      this.submitPriceWrap.hidden = false;
-      this.submitBtn.classList.add('nw-sticky-bar__cta--with-price');
+      if (!this.priceEl && !this.priceMobileEl) return;
+
+      const totalCents = this._computeStickyBarTotalCents();
+      const priceText = this._formatMoney(totalCents);
+      if (this.priceEl) this.priceEl.textContent = priceText;
+      if (this.priceMobileEl) this.priceMobileEl.textContent = priceText;
     }
 
     _bindVariantUpdates() {
@@ -1254,10 +1316,6 @@ if (!customElements.get('nw-sticky-bar')) {
           }
         });
       }
-
-      const priceText = this._formatMoney(variant.price);
-      if (this.priceEl) this.priceEl.textContent = priceText;
-      if (this.priceMobileEl) this.priceMobileEl.textContent = priceText;
 
       const compare = Number(variant.compare_at_price);
       const price = Number(variant.price);
@@ -1310,7 +1368,7 @@ if (!customElements.get('nw-sticky-bar')) {
         }
       }
 
-      this._updateStickySubmitPrice();
+      this._updateStickyBarPrice();
     }
 
     _getVariantLabel(variant) {
