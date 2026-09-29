@@ -1,0 +1,281 @@
+{% doc %}
+
+  Quick view modal shell for Bundle & Save add-on products.
+
+  @param {object} block - Parent block
+
+{% enddoc %}
+
+
+
+{%- liquid
+
+  assign modal_id = 'NwBundleQuickView-' | append: block.id
+
+  assign qv_title_override = block.settings.quick_view_title_override | strip
+
+  assign qv_description_override = block.settings.quick_view_description_override | strip_html | strip
+
+  assign qv_description_limit = block.settings.quick_view_description_limit | default: 220 | plus: 0
+
+  if qv_description_limit < 50
+
+    assign qv_description_limit = 50
+
+  elsif qv_description_limit > 500
+
+    assign qv_description_limit = 500
+
+  endif
+
+  assign qv_warranty_title = block.settings.quick_view_warranty_title | strip
+
+  assign qv_warranty_text = block.settings.quick_view_warranty_text | strip
+
+  assign qv_returns_title = block.settings.quick_view_returns_title | strip
+
+  assign qv_returns_text = block.settings.quick_view_returns_text | strip
+
+  assign qv_warranty_note = block.settings.quick_view_warranty_note | strip
+  if qv_warranty_note == blank
+    assign qv_warranty_note = 'Ships free with your mattress, est. __DATE__.'
+  endif
+
+  assign qv_shipping_days = block.settings.quick_view_shipping_days
+  if qv_shipping_days == blank
+    assign qv_shipping_days = 3
+  endif
+  assign qv_shipping_days = qv_shipping_days | plus: 0
+
+  if qv_shipping_days < 0
+
+    assign qv_shipping_days = 0
+
+  elsif qv_shipping_days > 60
+
+    assign qv_shipping_days = 60
+
+  endif
+
+-%}
+
+
+
+<modal-dialog
+
+  id="{{ modal_id }}"
+
+  class="product-popup-modal nw-bundle-quick-view"
+
+  data-nw-bundle-quick-view
+
+  data-qv-title-override="{{ qv_title_override | escape }}"
+
+  data-qv-description-override="{{ qv_description_override | escape }}"
+
+  data-qv-description-limit="{{ qv_description_limit }}"
+
+  data-qv-warranty-title="{{ qv_warranty_title | escape }}"
+
+  data-qv-warranty-text="{{ qv_warranty_text | escape }}"
+
+  data-qv-returns-title="{{ qv_returns_title | escape }}"
+
+  data-qv-returns-text="{{ qv_returns_text | escape }}"
+
+  data-qv-warranty-note="{{ qv_warranty_note | escape }}"
+
+  data-qv-shipping-days="{{ qv_shipping_days }}"
+
+>
+
+  <div
+
+    role="dialog"
+
+    aria-modal="true"
+
+    aria-labelledby="{{ modal_id }}-title"
+
+    class="product-popup-modal__content nw-bundle-quick-view__dialog"
+
+    tabindex="-1"
+
+  >
+
+    <div class="nw-bundle-quick-view__sheet">
+
+      <div class="nw-bundle-quick-view__sheet-chrome">
+
+        <div class="nw-bundle-quick-view__grabber" aria-hidden="true"></div>
+
+        <button
+
+          id="ModalClose-{{ modal_id }}"
+
+          type="button"
+
+          class="product-popup-modal__toggle nw-bundle-quick-view__close"
+
+          aria-label="{{ 'accessibility.close' | t }}"
+
+        >
+
+          {{- 'icon-close.svg' | inline_asset_content -}}
+
+        </button>
+
+      </div>
+
+
+
+      <div class="nw-bundle-quick-view__sheet-body">
+
+        <div class="nw-bundle-quick-view__layout">
+
+          <div class="nw-bundle-quick-view__gallery">
+
+            <div class="nw-bundle-quick-view__hero-wrap">
+
+              <img
+
+                class="nw-bundle-quick-view__hero"
+
+                data-quick-view-hero
+
+                alt=""
+
+                width="440"
+
+                height="440"
+
+                loading="lazy"
+
+              >
+
+            </div>
+
+            <div class="nw-bundle-quick-view__thumbs swiper" data-quick-view-thumbs hidden>
+
+              <div class="swiper-wrapper" data-quick-view-thumbs-wrapper></div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="nw-bundle-quick-view__info">
+
+            <div class="nw-bundle-quick-view__title-block">
+
+              <h2 class="nw-bundle-quick-view__title" id="{{ modal_id }}-title" data-quick-view-title></h2>
+
+              <div class="nw-bundle-quick-view__price-row" data-quick-view-price-row hidden>
+
+                <span class="nw-bundle-quick-view__price" data-quick-view-price></span>
+
+                <s class="nw-bundle-quick-view__compare" data-quick-view-compare></s>
+
+                <span class="nw-bundle-quick-view__badge" data-quick-view-badge hidden></span>
+
+              </div>
+
+              <div class="nw-bundle-quick-view__rating" data-quick-view-rating hidden>
+
+                <span class="nw-bundle-quick-view__stars" data-quick-view-stars aria-hidden="true"></span>
+
+                <span class="nw-bundle-quick-view__rating-value" data-quick-view-rating-value></span>
+
+                <span class="nw-bundle-quick-view__rating-count" data-quick-view-rating-count></span>
+
+              </div>
+
+              <p class="nw-bundle-quick-view__description" data-quick-view-description hidden></p>
+
+            </div>
+
+
+
+            <div class="nw-bundle-quick-view__section" data-quick-view-highlights-wrap hidden>
+
+              <p class="nw-bundle-quick-view__section-title">{{ 'products.bundle_save.why_love_it' | t }}</p>
+
+              <ul class="nw-bundle-quick-view__bullets" data-quick-view-highlights></ul>
+
+            </div>
+
+
+
+            <div class="nw-bundle-quick-view__section" data-quick-view-specs-wrap hidden>
+
+              <p class="nw-bundle-quick-view__section-title">{{ 'products.bundle_save.specs' | t }}</p>
+
+              <div class="nw-bundle-quick-view__spec-table" data-quick-view-specs></div>
+
+            </div>
+
+
+
+            <div class="nw-bundle-quick-view__section" data-quick-view-warranty-wrap hidden>
+
+              <p class="nw-bundle-quick-view__section-title">{{ 'products.bundle_save.warranty_returns' | t }}</p>
+
+              <div class="nw-bundle-quick-view__tiles">
+
+                <div class="nw-bundle-quick-view__tile" data-quick-view-warranty-tile hidden>
+
+                  <span class="nw-bundle-quick-view__tile-icon" aria-hidden="true">
+
+                    {{- 'shield-2.svg' | inline_asset_content -}}
+
+                  </span>
+
+                  <p class="nw-bundle-quick-view__tile-title" data-quick-view-warranty-title></p>
+
+                  <p class="nw-bundle-quick-view__tile-text" data-quick-view-warranty-text></p>
+
+                </div>
+
+                <div class="nw-bundle-quick-view__tile" data-quick-view-returns-tile hidden>
+
+                  <span class="nw-bundle-quick-view__tile-icon" aria-hidden="true">
+
+                    {{- 'box.svg' | inline_asset_content -}}
+
+                  </span>
+
+                  <p class="nw-bundle-quick-view__tile-title" data-quick-view-returns-title></p>
+
+                  <p class="nw-bundle-quick-view__tile-text" data-quick-view-returns-text></p>
+
+                </div>
+
+              </div>
+
+              <p class="nw-bundle-quick-view__shipping-note" data-quick-view-shipping-note hidden></p>
+
+            </div>
+
+
+
+            <div class="nw-bundle-quick-view__actions">
+
+              <button type="button" class="nw-bundle-quick-view__add" data-quick-view-add hidden></button>
+
+              <a class="nw-bundle-quick-view__full-link" data-quick-view-link href="#">{{ 'products.bundle_save.view_full_product' | t }}</a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</modal-dialog>
+

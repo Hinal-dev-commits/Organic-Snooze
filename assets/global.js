@@ -628,7 +628,8 @@ class ModalDialog extends HTMLElement {
     return (
       this.classList.contains('nw-size-guide') ||
       this.classList.contains('nw-size-guide-modal') ||
-      this.classList.contains('nw-firmness-popup')
+      this.classList.contains('nw-firmness-popup') ||
+      this.classList.contains('nw-bundle-quick-view')
     );
   }
 

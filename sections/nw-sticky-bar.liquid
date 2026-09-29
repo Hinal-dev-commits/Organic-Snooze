@@ -183,7 +183,13 @@
                 disabled
               {% endunless %}
             >
-              <span class="nw-btn__text" data-sticky-submit-text>{{ sticky_btn_label | upcase }}</span>
+              <span class="nw-btn__text nw-sticky-bar__submit-text" data-sticky-submit-text>
+                <span data-sticky-atc-label>{{ sticky_btn_label | upcase }}</span>
+                <span class="nw-sticky-bar__submit-price-wrap" data-sticky-atc-price-wrap hidden>
+                  <span class="nw-sticky-bar__submit-sep" aria-hidden="true">·</span>
+                  <span data-sticky-atc-price></span>
+                </span>
+              </span>
             </button>
           </div>
         </div>

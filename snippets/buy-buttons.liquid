@@ -28,6 +28,9 @@
       class="product-form"
       data-hide-errors="{{ gift_card_recipient_feature_active }}"
       data-section-id="{{ section.id }}"
+      data-show-atc-price="{{ block.settings.show_atc_price }}"
+      data-money-format="{{ shop.money_format | escape }}"
+      data-initial-variant-price="{{ product.selected_or_first_available_variant.price }}"
     >
       <div class="product-form__error-message-wrapper" role="alert" hidden>
         <span class="svg-wrapper">
@@ -82,14 +85,20 @@
               disabled
             {% endif %}
           >
-            <span>
-              {%- if product.selected_or_first_available_variant == null -%}
-                {{ 'products.product.unavailable' | t }}
-              {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-                {{ 'products.product.sold_out' | t }}
-              {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
-              {%- endif -%}
+            <span class="product-form__submit-text" data-atc-button-text>
+              <span data-atc-label>
+                {%- if product.selected_or_first_available_variant == null -%}
+                  {{ 'products.product.unavailable' | t }}
+                {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- else -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- endif -%}
+              </span>
+              <span class="product-form__submit-price-wrap" data-atc-price-wrap hidden>
+                <span class="product-form__submit-sep" aria-hidden="true">·</span>
+                <span class="product-form__submit-price" data-atc-price></span>
+              </span>
             </span>
             {%- render 'loading-spinner' -%}
           </button>

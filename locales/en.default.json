@@ -193,10 +193,23 @@
     "bundle_save": {
       "select": "Add {{ title }} to bundle",
       "save_amount": "Save {{ amount }}",
+      "save_badge": "Save {{ amount }}",
+      "bundle_price_badge": "Bundle price, save {{ amount }}",
       "empty": "Add products to the custom.bundle metafield to show this block.",
       "empty_product_list": "Select products in the block settings to show this block.",
       "select_one": "Select at least one add-on to add to cart.",
-      "unavailable": "One or more selected items are unavailable."
+      "unavailable": "One or more selected items are unavailable.",
+      "subtitle_optional": "Optional, Bundle & Save {{ percent }}%",
+      "added_summary": "__COUNT__ added, you save __AMOUNT__",
+      "preview_summary_default": "Sheets, protector, pillows & base",
+      "drawer_title_default": "Add-On Organic Bedding",
+      "details": "Details",
+      "quick_view": "Quick view",
+      "why_love_it": "Why you'll love it",
+      "specs": "Specs",
+      "warranty_returns": "Warranty & returns",
+      "view_full_product": "View full product page",
+      "add_to_bundle": "ADD TO BUNDLE · __PRICE__"
     },
     "bundle_tabs": {
       "empty": "Add Included product tab blocks and select a product for each tab.",
