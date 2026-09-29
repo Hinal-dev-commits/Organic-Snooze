@@ -42,6 +42,15 @@ html.cart-drawer-open body.overflow-hidden {
     padding-right: 0 !important;
 }
 
+body.upcartPopupShow {
+    overflow: unset !important;
+}
+
+html:has(body.upcartPopupShow){
+    overflow: hidden !important;
+    padding-right: var(--scrollbar-width) !important;
+}
+
 cart-drawer.drawer {
     z-index: 1000;
 }
