@@ -1463,10 +1463,24 @@
           "visible_if": "{{ block.settings.show_size_guide == true }}"
         },
         {
+          "type": "checkbox",
+          "id": "show_firmness_guide",
+          "label": "Show Firmness Guide",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "firmness_guide_label",
+          "label": "Firmness Guide Link Label",
+          "default": "Firmness Guide",
+          "visible_if": "{{ block.settings.show_firmness_guide == true }}"
+        },
+        {
           "type": "text",
           "id": "firmness_popup_modal_id",
           "label": "Firmness Popup ID",
-          "info": "Optional. Match the Popup link ID on the NW Firmness Popup section (e.g. firmness-guide). Leave blank to use firmness-guide when the popup section is on the page."
+          "info": "Optional. Match the Popup link ID on the NW Firmness Popup section (e.g. firmness-guide). Leave blank to use firmness-guide when the popup section is on the page.",
+          "visible_if": "{{ block.settings.show_firmness_guide == true }}"
         },
         {
           "type": "text",
@@ -1583,6 +1597,13 @@
           "id": "show_affirm_button",
           "label": "Show Affirm Monthly Payments Button",
           "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_atc_price",
+          "label": "Show price on Add to Cart button",
+          "default": false,
+          "info": "When enabled and bundle add-ons are selected, shows main product price plus discounted bundle total."
         },
         {
           "type": "header",
@@ -5020,7 +5041,14 @@
           "type": "inline_richtext",
           "id": "heading",
           "label": "Heading",
-          "default": "Bundle & save 30% on each add-on"
+          "default": "Add-On Organic Bedding"
+        },
+        {
+          "type": "text",
+          "id": "preview_summary",
+          "label": "Closed preview summary",
+          "default": "Sheets, protector, pillows & base",
+          "info": "Shown below the thumbnails when the drawer is collapsed and no add-ons are selected."
         },
         {
           "type": "number",
@@ -5028,6 +5056,78 @@
           "label": "Discount Percentage",
           "default": 30,
           "info": "Percent off each product's current price. Example: 30 applies a 30% discount. Set to 0 to show the regular price with no discount."
+        },
+        {
+          "type": "text",
+          "id": "optional_subtitle",
+          "label": "Optional subtitle",
+          "default": "Optional, Bundle & Save [percent]%",
+          "info": "Shown when no add-ons are selected. Use [percent] for the discount percentage."
+        },
+        {
+          "type": "header",
+          "content": "Details popup"
+        },
+        {
+          "type": "text",
+          "id": "quick_view_title_override",
+          "label": "Custom title override",
+          "info": "Replaces the add-on product title in the Details popup when set."
+        },
+        {
+          "type": "textarea",
+          "id": "quick_view_description_override",
+          "label": "Custom description override",
+          "info": "Replaces the add-on description in the Details popup when set."
+        },
+        {
+          "type": "range",
+          "id": "quick_view_description_limit",
+          "min": 50,
+          "max": 500,
+          "step": 10,
+          "unit": "ch",
+          "label": "Description character limit",
+          "default": 220,
+          "info": "Maximum characters shown in the popup description."
+        },
+        {
+          "type": "text",
+          "id": "quick_view_warranty_title",
+          "label": "Warranty tile title",
+          "default": "1-Year Warranty"
+        },
+        {
+          "type": "textarea",
+          "id": "quick_view_warranty_text",
+          "label": "Warranty tile description",
+          "default": "Covers defects in materials and workmanship"
+        },
+        {
+          "type": "text",
+          "id": "quick_view_returns_title",
+          "label": "Returns tile title",
+          "default": "30-Day Returns"
+        },
+        {
+          "type": "textarea",
+          "id": "quick_view_returns_text",
+          "label": "Returns tile description",
+          "default": "Unused and in original packaging"
+        },
+        {
+          "type": "text",
+          "id": "quick_view_warranty_note",
+          "label": "Warranty & returns note",
+          "default": "Ships free with your mattress, est.",
+          "info": "Use __DATE__ for the estimated ship date, or leave it out to append the date automatically."
+        },
+        {
+          "type": "number",
+          "id": "quick_view_shipping_days",
+          "label": "Estimated shipping days",
+          "default": 3,
+          "info": "Days added to today’s date for the shipping note in the Details popup."
         },
         {
           "type": "header",

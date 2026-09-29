@@ -83,7 +83,17 @@
             </div>
             <div class="nw-sticky-bar__drawer-body">
               <div class="nw-sticky-bar__variant-mount" data-sticky-variant-mount></div>
-              <div class="nw-sticky-bar__bundle-mount" data-sticky-bundle-mount hidden></div>
+              <div
+                class="nw-sticky-bar__bundle-mount"
+                data-sticky-bundle-mount
+                data-sticky-bundle-count-template="{{ 'products.bundle_save.mount_selected_count' | t | escape }}"
+                hidden
+              >
+                <div class="nw-sticky-bar__bundle-mount-bar" data-sticky-bundle-mount-bar hidden>
+                  <p class="nw-sticky-bar__bundle-mount-title" data-sticky-bundle-mount-title></p>
+                  <p class="nw-sticky-bar__bundle-count" data-sticky-bundle-count hidden aria-live="polite"></p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -183,7 +193,9 @@
                 disabled
               {% endunless %}
             >
-              <span class="nw-btn__text" data-sticky-submit-text>{{ sticky_btn_label | upcase }}</span>
+              <span class="nw-btn__text nw-sticky-bar__submit-text" data-sticky-submit-text>
+                <span data-sticky-atc-label>{{ sticky_btn_label | upcase }}</span>
+              </span>
             </button>
           </div>
         </div>

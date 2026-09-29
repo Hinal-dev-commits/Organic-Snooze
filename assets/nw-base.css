@@ -26,6 +26,35 @@ body.overflow-hidden-desktop {
     padding-right: var(--scrollbar-width);
 }
 
+html.cart-drawer-open,
+html.cart-drawer-open body,
+html.cart-drawer-open #nw-site-scroll {
+    overflow: visible !important;
+    height: auto;
+}
+
+html.cart-drawer-open {
+    padding-right: 0 !important;
+}
+
+html.cart-drawer-open body.overflow-hidden {
+    overflow: visible !important;
+    padding-right: 0 !important;
+}
+
+body.upcartPopupShow {
+    overflow: unset !important;
+}
+
+html:has(body.upcartPopupShow){
+    overflow: hidden !important;
+    padding-right: var(--scrollbar-width) !important;
+}
+
+cart-drawer.drawer {
+    z-index: 1000;
+}
+
 body {
     letter-spacing: 0;
 }

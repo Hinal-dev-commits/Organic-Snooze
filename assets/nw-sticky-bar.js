@@ -31,12 +31,17 @@ if (!customElements.get('nw-sticky-bar')) {
       this.affirmEls = this.querySelectorAll('[data-sticky-affirm], [data-sticky-affirm-mobile]');
       this.submitBtn = this.querySelector('[data-sticky-submit]');
       this.submitTextEl = this.querySelector('[data-sticky-submit-text]');
+      this.submitLabelEl = this.querySelector('[data-sticky-atc-label]');
+      this.submitPriceWrap = this.querySelector('[data-sticky-atc-price-wrap]');
+      this.submitPriceEl = this.querySelector('[data-sticky-atc-price]');
 
       this._clearLegacyScrollLock();
       this._bindSubmit(signal);
       this._bindDrawerControls(signal);
       this._bindVisibility(signal);
       this._bindVariantUpdates();
+      this._bindAtcPriceSync(signal);
+      this._bindDrawerQuickViewBundleAdd(signal);
       this._bindThemeEditor(signal);
       this._scheduleDrawerPickerPrep(signal);
       this._initSelectedVariantState();
@@ -248,7 +253,8 @@ if (!customElements.get('nw-sticky-bar')) {
       if (!mount) return;
 
       if (!mainBundle) {
-        mount.replaceChildren();
+        mount.querySelector('[data-sticky-drawer-bundle]')?.remove();
+        this._updateDrawerBundleSelectionCount(null);
         mount.hidden = true;
         return;
       }
@@ -272,7 +278,8 @@ if (!customElements.get('nw-sticky-bar')) {
       this._drawerBundleAbort = new AbortController();
       const bundleSignal = this._drawerBundleAbort.signal;
 
-      mount.replaceChildren();
+      mount.querySelector('[data-sticky-drawer-bundle]')?.remove();
+      this._ensureDrawerBundleMountBar(mainBundle);
 
       const drawerBundle = document.createElement('div');
       drawerBundle.className = 'nw-bundle-save nw-sticky-bar__drawer-bundle';
@@ -287,8 +294,75 @@ if (!customElements.get('nw-sticky-bar')) {
       this._isolateDrawerPicker(drawerBundle);
       mount.appendChild(drawerBundle);
 
+      drawerBundle.querySelectorAll('[data-bundle-details]').forEach((button) => {
+        button.setAttribute('aria-label', 'Product details');
+      });
+
       this._syncBundleState(mainBundle, drawerBundle);
       this._bindDrawerBundleSync(drawerBundle, bundleSignal);
+      this._updateDrawerBundleSelectionCount(mainBundle);
+    }
+
+    _ensureDrawerBundleMountBar(mainBundle) {
+      const mount = this.bundleMount;
+      if (!mount) return;
+
+      let bar = mount.querySelector('[data-sticky-bundle-mount-bar]');
+      if (!bar) {
+        bar = document.createElement('div');
+        bar.className = 'nw-sticky-bar__bundle-mount-bar';
+        bar.setAttribute('data-sticky-bundle-mount-bar', '');
+        bar.innerHTML =
+          '<p class="nw-sticky-bar__bundle-mount-title" data-sticky-bundle-mount-title></p>' +
+          '<p class="nw-sticky-bar__bundle-count" data-sticky-bundle-count aria-live="polite"></p>';
+        mount.prepend(bar);
+      }
+
+      const titleEl = bar.querySelector('[data-sticky-bundle-mount-title]');
+      const heading = mainBundle?.querySelector('.nw-bundle-save__heading');
+      if (titleEl) {
+        titleEl.textContent = heading?.textContent?.trim() || '';
+      }
+
+      bar.hidden = false;
+    }
+
+    _updateDrawerBundleSelectionCount(mainBundle) {
+      const mount = this.bundleMount;
+      const bar = mount?.querySelector('[data-sticky-bundle-mount-bar]');
+      const countEl = mount?.querySelector('[data-sticky-bundle-count]');
+      if (!mount || !bar || !countEl) return;
+
+      const bundle = mainBundle || this._getMainBundleSave();
+      if (!bundle || mount.hidden) {
+        bar.hidden = true;
+        countEl.hidden = true;
+        countEl.textContent = '';
+        return;
+      }
+
+      this._ensureDrawerBundleMountBar(bundle);
+
+      let count = 0;
+      if (typeof bundle.getSelectedItems === 'function') {
+        count = bundle.getSelectedItems().length;
+      } else {
+        bundle.querySelectorAll('[data-bundle-item]').forEach((item) => {
+          if (item.querySelector('[data-bundle-check]')?.checked || item.classList.contains('is-selected')) {
+            count += 1;
+          }
+        });
+      }
+
+      bar.hidden = false;
+      if (count > 0) {
+        const template = mount.dataset.stickyBundleCountTemplate || '__COUNT__ selected';
+        countEl.textContent = template.replace('__COUNT__', String(count));
+        countEl.hidden = false;
+      } else {
+        countEl.textContent = '';
+        countEl.hidden = true;
+      }
     }
 
     _syncBundleState(source, target) {
@@ -330,6 +404,8 @@ if (!customElements.get('nw-sticky-bar')) {
 
         this._syncBundleItemPresentation(sourceItem, targetItem);
       });
+
+      this._updateDrawerBundleSelectionCount(source);
     }
 
     _findMatchingBundleOptionControl(item, control) {
@@ -423,6 +499,90 @@ if (!customElements.get('nw-sticky-bar')) {
       return false;
     }
 
+    _bindDrawerQuickViewBundleAdd(signal) {
+      document.body.addEventListener(
+        'modalClosed',
+        () => {
+          window.requestAnimationFrame(() => {
+            if (!document.querySelector('modal-dialog.nw-bundle-quick-view[open]')) {
+              this._drawerQuickViewAddPending = false;
+            }
+          });
+        },
+        { signal }
+      );
+
+      document.addEventListener(
+        'click',
+        (event) => {
+          if (!this._drawerQuickViewAddPending || !this.classList.contains('is-drawer-open')) return;
+
+          const addBtn = event.target.closest('[data-quick-view-add]');
+          if (!addBtn || !addBtn.closest('modal-dialog.nw-bundle-quick-view')) return;
+
+          const mainBundle = this._getMainBundleSave();
+          if (!mainBundle?.activeQuickViewItem) return;
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          this._applyDrawerQuickViewBundleAdd(mainBundle);
+          this._drawerQuickViewAddPending = false;
+
+          if (typeof mainBundle.quickViewModal?.hide === 'function') {
+            mainBundle.quickViewModal.hide();
+          }
+        },
+        { capture: true, signal }
+      );
+    }
+
+    _applyDrawerQuickViewBundleAdd(mainBundle) {
+      const item = mainBundle.activeQuickViewItem;
+      if (!item) return false;
+
+      const drawerBundle = this._getDrawerBundle();
+      const productId = item.dataset.productId;
+      if (drawerBundle && productId) {
+        const drawerItem = drawerBundle.querySelector(
+          `[data-bundle-item][data-product-id="${CSS.escape(productId)}"]`
+        );
+        if (drawerItem) {
+          drawerItem.querySelectorAll('[data-option-position]').forEach((control) => {
+            this._syncDrawerBundleControlToMain(control);
+          });
+        }
+      }
+
+      const checkbox = item.querySelector('[data-bundle-check]');
+      if (!checkbox || checkbox.disabled) return false;
+
+      if (!checkbox.checked) {
+        checkbox.checked = true;
+      }
+
+      if (typeof mainBundle.toggleItem === 'function') {
+        mainBundle.toggleItem(item, true);
+      } else {
+        item.classList.add('is-selected');
+        const options = item.querySelector('[data-bundle-options]');
+        if (options) options.hidden = false;
+      }
+
+      if (typeof mainBundle.updateSummary === 'function') {
+        mainBundle.updateSummary();
+      } else {
+        checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      if (drawerBundle) {
+        this._syncBundleState(mainBundle, drawerBundle);
+      }
+      this._updateStickyBarPrice();
+
+      return checkbox.checked;
+    }
+
     _bindDrawerBundleSync(drawerBundle, signal) {
       drawerBundle.addEventListener(
         'change',
@@ -431,7 +591,10 @@ if (!customElements.get('nw-sticky-bar')) {
           this._syncDrawerBundleControlToMain(event.target);
           const mainBundle = this._getMainBundleSave();
           if (mainBundle) {
-            window.requestAnimationFrame(() => this._syncBundleState(mainBundle, drawerBundle));
+            window.requestAnimationFrame(() => {
+              this._syncBundleState(mainBundle, drawerBundle);
+              this._updateStickyBarPrice();
+            });
           }
         },
         { signal }
@@ -440,6 +603,24 @@ if (!customElements.get('nw-sticky-bar')) {
       drawerBundle.addEventListener(
         'click',
         (event) => {
+          const detailsBtn = event.target.closest('[data-bundle-details]');
+          if (detailsBtn && drawerBundle.contains(detailsBtn)) {
+            event.preventDefault();
+            event.stopPropagation();
+            const drawerItem = detailsBtn.closest('[data-bundle-item]');
+            const productId = drawerItem?.dataset.productId;
+            const mainBundle = this._getMainBundleSave();
+            if (!productId || !mainBundle) return;
+            const mainItem = mainBundle.querySelector(
+              `[data-bundle-item][data-product-id="${CSS.escape(productId)}"]`
+            );
+            if (mainItem && typeof mainBundle.openQuickView === 'function') {
+              this._drawerQuickViewAddPending = true;
+              mainBundle.openQuickView(mainItem, detailsBtn);
+            }
+            return;
+          }
+
           const collapseToggle = event.target.closest('[data-bundle-collapse-toggle]');
           if (collapseToggle && drawerBundle.contains(collapseToggle)) {
             event.preventDefault();
@@ -1042,6 +1223,55 @@ if (!customElements.get('nw-sticky-bar')) {
       this._visibilityObserver.observe(observeEl);
     }
 
+    _bindAtcPriceSync(signal) {
+      const refresh = () => {
+        this._updateStickyBarPrice();
+        this._updateDrawerBundleSelectionCount();
+      };
+
+      this.productInfo?.addEventListener('nw-bundle-selection-change', refresh, { signal });
+      document.addEventListener('nw-bundle-selection-change', refresh, { signal });
+
+      refresh();
+    }
+
+    _computeStickyBarTotalCents() {
+      if (this.productInfo && typeof customElements.get('product-form') !== 'undefined') {
+        const ProductFormClass = customElements.get('product-form');
+        if (ProductFormClass?.computeCartTotalCents) {
+          const total = ProductFormClass.computeCartTotalCents(this.productInfo);
+          if (total != null) return total;
+        }
+      }
+
+      const mainCents = Number(this._selectedVariant?.price) || 0;
+      const bundle = this._getMainBundleSave();
+      let bundleCents = 0;
+      if (bundle?.getSelectedItems) {
+        bundle.getSelectedItems().forEach((item) => {
+          const variant = bundle.findVariant?.(item);
+          bundleCents += Number(variant?.price_cents) || 0;
+        });
+      }
+      return mainCents + bundleCents;
+    }
+
+    _updateStickyBarPrice() {
+      if (this.submitPriceWrap) {
+        this.submitPriceWrap.hidden = true;
+      }
+      if (this.submitBtn) {
+        this.submitBtn.classList.remove('nw-sticky-bar__cta--with-price');
+      }
+
+      if (!this.priceEl && !this.priceMobileEl) return;
+
+      const totalCents = this._computeStickyBarTotalCents();
+      const priceText = this._formatMoney(totalCents);
+      if (this.priceEl) this.priceEl.textContent = priceText;
+      if (this.priceMobileEl) this.priceMobileEl.textContent = priceText;
+    }
+
     _bindVariantUpdates() {
       if (typeof subscribe !== 'function' || typeof PUB_SUB_EVENTS === 'undefined') return;
 
@@ -1087,10 +1317,6 @@ if (!customElements.get('nw-sticky-bar')) {
         });
       }
 
-      const priceText = this._formatMoney(variant.price);
-      if (this.priceEl) this.priceEl.textContent = priceText;
-      if (this.priceMobileEl) this.priceMobileEl.textContent = priceText;
-
       const compare = Number(variant.compare_at_price);
       const price = Number(variant.price);
       const saveAmount = compare > price ? compare - price : 0;
@@ -1128,14 +1354,21 @@ if (!customElements.get('nw-sticky-bar')) {
         this._refreshAffirm();
       }
 
-      if (this.submitBtn && this.submitTextEl) {
+      if (this.submitBtn) {
         const available = variant.available !== false;
         this.submitBtn.disabled = !available;
         const addText = (this.config.addToCartText || 'Add to cart').toUpperCase();
-        this.submitTextEl.textContent = available
+        const labelText = available
           ? addText
           : (this.config.soldOutText || window.variantStrings?.soldOut || 'Sold out').toUpperCase();
+        if (this.submitLabelEl) {
+          this.submitLabelEl.textContent = labelText;
+        } else if (this.submitTextEl) {
+          this.submitTextEl.textContent = labelText;
+        }
       }
+
+      this._updateStickyBarPrice();
     }
 
     _getVariantLabel(variant) {

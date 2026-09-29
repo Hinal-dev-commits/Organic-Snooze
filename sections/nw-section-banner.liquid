@@ -27,6 +27,9 @@
   <style>
     {{ nw_shell_selector }} {
       background-image: none !important;
+      background-color: {{ section.settings.bg_color }} !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
     }
     {{ nw_shell_selector }} .nw-section-heading.nw-section-banner__heading{
       max-width: {{ section.settings.heading_max_width }}%;
@@ -46,7 +49,7 @@
 
 <nw-section-banner
   id="NwSectionBanner-{{ section.id }}"
-  class="nw-section-banner section-{{ section.id }}"
+  class="nw-section-banner section-{{ section.id }}{% if banner_bg_type == 'image' %} nw-section-banner--split nw-section-banner--mobile-{{ section.settings.text_position_mobile }}{% endif %}"
   style="
     --nw-sb-heading-color: {{ section.settings.heading_color }};
     --nw-sb-desc-color: {{ section.settings.description_color }};
@@ -60,9 +63,83 @@
     --nw-sb-overlay: {{ banner_overlay }};
     --nw-sb-eyebrow-color: {{ section.settings.eyebrow_color }};
     --nw-sb-overlay-opacity: {{ banner_overlay_opacity }};
+    --nw-sb-panel-bg: {{ section.settings.bg_color }};
+    --nw-sb-panel-bg-transparent: {{ section.settings.bg_color | color_modify: 'alpha', 0 }};
   "
 >
   {%- if banner_bg_type == 'image' -%}
+    <div class="nw-section-banner__panel">
+      <div class="nw-section-banner__layout nw-section-banner__layout--{{ section.settings.text_position_mobile }}">
+        <div class="nw-section-banner__inner{%- render 'nw-scroll-animation' -%}">
+          <div class="nw-section-banner__content">
+            {%- if section.settings.tag_text != blank -%}
+              <p class="nw-section-banner__tag">{{ section.settings.tag_text }}</p>
+            {%- endif -%}
+
+            <div class="nw-section-banner__copy">
+              {%- liquid
+                assign header_eyebrow = blank
+                assign show_rating_top = false
+                assign show_rating_at_bottom = false
+
+                if section.settings.show_rating
+                  if section.settings.show_rating_bottom
+                    assign show_rating_at_bottom = true
+                  else
+                    assign show_rating_top = true
+                    assign header_eyebrow = section.settings.rating_text
+                  endif
+                endif
+              -%}
+              {% render 'nw-section-header',
+                show_rating: show_rating_top,
+                rating: section.settings.star_rating,
+                eyebrow: header_eyebrow,
+                heading: section.settings.heading,
+                description: section.settings.description,
+                section_index: section.index,
+                heading_class: 'nw-section-banner__heading',
+                star_class: 'nw-section-banner__star'
+              %}
+            </div>
+
+            <div class="nw-section-banner__actions">
+              {%- if section.settings.button_text != blank -%}
+                <div class="nw-section-banner__cta">
+                  {% render 'nw-button',
+                    text: section.settings.button_text,
+                    link: section.settings.button_link,
+                    style: section.settings.button_style,
+                    btn_class: 'nw-section-banner__btn'
+                  %}
+                </div>
+              {%- endif -%}
+
+              {%- if trust_badge_blocks.size > 0 -%}
+                {% render 'nw-cta-badges',
+                  settings: section.settings,
+                  blocks: trust_badge_blocks,
+                  class: 'nw-section-banner__badges',
+                  show_cta_button: false
+                %}
+              {%- endif -%}
+            </div>
+            {%- if show_rating_at_bottom -%}
+              <div class="nw-section-banner__copy nw-section-banner__copy--rating">
+                {% render 'nw-section-header',
+                  show_rating: true,
+                  rating: section.settings.star_rating,
+                  eyebrow: section.settings.rating_text,
+                  section_index: section.index,
+                  star_class: 'nw-section-banner__star'
+                %}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="nw-section-banner__media" aria-hidden="true">
       {%- if banner_desktop_image != blank or banner_mobile_image != blank -%}
         {%- if banner_desktop_image != blank
@@ -111,100 +188,82 @@
       {%- else -%}
         {{ 'hero-apparel-1' | placeholder_svg_tag: 'nw-section-banner__image nw-section-banner__image--placeholder' }}
       {%- endif -%}
+      <div class="nw-section-banner__overlay"></div>
     </div>
+  {%- else -%}
+    <div class="page-width">
+      <div class="nw-section-banner__layout nw-section-banner__layout--{{ section.settings.text_position_mobile }}">
+        <div class="nw-section-banner__inner{%- render 'nw-scroll-animation' -%}">
+          <div class="nw-section-banner__content">
+            {%- if section.settings.tag_text != blank -%}
+              <p class="nw-section-banner__tag">{{ section.settings.tag_text }}</p>
+            {%- endif -%}
 
-    <div class="nw-section-banner__overlay"></div>
-  {%- endif -%}
+            <div class="nw-section-banner__copy">
+              {%- liquid
+                assign header_eyebrow = blank
+                assign show_rating_top = false
+                assign show_rating_at_bottom = false
 
-  <div class="page-width">
-    <div class="nw-section-banner__layout nw-section-banner__layout--{{ section.settings.text_position_mobile }}">
-      <div class="nw-section-banner__inner{%- render 'nw-scroll-animation' -%}">
-        <div class="nw-section-banner__content">
-          {%- if section.settings.tag_text != blank -%}
-            <p class="nw-section-banner__tag">{{ section.settings.tag_text }}</p>
-          {%- endif -%}
-
-          <div class="nw-section-banner__copy">
-            {%- liquid
-              assign header_eyebrow = blank
-              assign show_rating_top = false
-              assign show_rating_at_bottom = false
-
-              if section.settings.show_rating
-                if section.settings.show_rating_bottom
-                  assign show_rating_at_bottom = true
-                else
-                  assign show_rating_top = true
-                  assign header_eyebrow = section.settings.rating_text
+                if section.settings.show_rating
+                  if section.settings.show_rating_bottom
+                    assign show_rating_at_bottom = true
+                  else
+                    assign show_rating_top = true
+                    assign header_eyebrow = section.settings.rating_text
+                  endif
                 endif
-              endif
-            -%}
-            {% render 'nw-section-header',
-              show_rating: show_rating_top,
-              rating: section.settings.star_rating,
-              eyebrow: header_eyebrow,
-              heading: section.settings.heading,
-              description: section.settings.description,
-              section_index: section.index,
-              heading_class: 'nw-section-banner__heading',
-              star_class: 'nw-section-banner__star'
-            %}
-          </div>
-
-          <div class="nw-section-banner__actions">
-            {%- if section.settings.button_text != blank -%}
-              <div class="nw-section-banner__cta">
-                {% render 'nw-button',
-                  text: section.settings.button_text,
-                  link: section.settings.button_link,
-                  style: section.settings.button_style,
-                  btn_class: 'nw-section-banner__btn'
-                %}
-              </div>
-            {%- endif -%}
-
-            {%- if trust_badge_blocks.size > 0 -%}
-              {% render 'nw-cta-badges',
-                settings: section.settings,
-                blocks: trust_badge_blocks,
-                class: 'nw-section-banner__badges',
-                show_cta_button: false
-              %}
-            {%- endif -%}
-          </div>
-          {%- if show_rating_at_bottom -%}
-            <div class="nw-section-banner__copy nw-section-banner__copy--rating">
+              -%}
               {% render 'nw-section-header',
-                show_rating: true,
+                show_rating: show_rating_top,
                 rating: section.settings.star_rating,
-                eyebrow: section.settings.rating_text,
+                eyebrow: header_eyebrow,
+                heading: section.settings.heading,
+                description: section.settings.description,
                 section_index: section.index,
+                heading_class: 'nw-section-banner__heading',
                 star_class: 'nw-section-banner__star'
               %}
             </div>
-          {%- endif -%}
+
+            <div class="nw-section-banner__actions">
+              {%- if section.settings.button_text != blank -%}
+                <div class="nw-section-banner__cta">
+                  {% render 'nw-button',
+                    text: section.settings.button_text,
+                    link: section.settings.button_link,
+                    style: section.settings.button_style,
+                    btn_class: 'nw-section-banner__btn'
+                  %}
+                </div>
+              {%- endif -%}
+
+              {%- if trust_badge_blocks.size > 0 -%}
+                {% render 'nw-cta-badges',
+                  settings: section.settings,
+                  blocks: trust_badge_blocks,
+                  class: 'nw-section-banner__badges',
+                  show_cta_button: false
+                %}
+              {%- endif -%}
+            </div>
+            {%- if show_rating_at_bottom -%}
+              <div class="nw-section-banner__copy nw-section-banner__copy--rating">
+                {% render 'nw-section-header',
+                  show_rating: true,
+                  rating: section.settings.star_rating,
+                  eyebrow: section.settings.rating_text,
+                  section_index: section.index,
+                  star_class: 'nw-section-banner__star'
+                %}
+              </div>
+            {%- endif -%}
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="nw-section-banner__aside" aria-hidden="true"></div>
-  </div>
+  {%- endif -%}
 </nw-section-banner>
-<script>
-  function setBannerLayoutHeight() {
-    const layout = document.querySelector('.nw-section-banner__layout');
-
-    if (!layout) return;
-
-    const height = layout.offsetHeight;
-
-    document.documentElement.style.setProperty('--nw-section-banne-content', `${height}px`);
-  }
-
-  setBannerLayoutHeight();
-
-  window.addEventListener('resize', setBannerLayoutHeight);
-</script>
 {% schema %}
 {
   "name": "t:sections.nw-section-banner.name",

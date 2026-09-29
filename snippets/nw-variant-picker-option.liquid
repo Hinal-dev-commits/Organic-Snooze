@@ -10,10 +10,11 @@
   @param {string} [quantity_option_name] - Quantity option name match
   @param {string} [select_size_text] - Size guide link label
   @param {string} [variant_tag_text] - Variant tag label
-  @param {string} [firmness_tag_text] - Firmness tag label
   @param {string} [values_order] - Comma-separated value order
   @param {boolean} [show_size_guide] - Show size guide trigger
   @param {string} [size_guide_modal_id] - Modal id for size popup
+  @param {boolean} [show_firmness_guide] - Show firmness guide trigger
+  @param {string} [firmness_guide_label] - Firmness guide link label
   @param {string} [firmness_popup_modal_id] - Modal id for firmness guide popup
   @param {object} [firmness_sub_text_metafield] - Subtext metafield below firmness picker (variant or product)
 {% enddoc %}
@@ -78,16 +79,19 @@
     <div class="nw-variant-picker__header">
       <span class="nw-variant-picker__label">{{ option.name }}:</span>
       {%- if is_firmness_option -%}
-        {%- if firmness_tag_text != blank -%}
-          {%- if firmness_popup_modal_id != blank -%}
-            <modal-opener class="nw-variant-picker__firmness-tag-opener" data-modal="#{{ firmness_popup_modal_id }}">
-              <button type="button" class="nw-variant-picker__firmness-tag" aria-haspopup="dialog">
-                {{ firmness_tag_text }}
-              </button>
-            </modal-opener>
-          {%- else -%}
-            <span class="nw-variant-picker__firmness-tag">{{ firmness_tag_text }}</span>
-          {%- endif -%}
+        {%- if show_firmness_guide and firmness_popup_modal_id != blank and firmness_guide_label != blank -%}
+          <modal-opener
+            class="nw-variant-picker__size-guide-opener"
+            data-modal="#{{ firmness_popup_modal_id }}"
+          >
+            <button
+              type="button"
+              class="nw-variant-picker__size-guide link"
+              aria-haspopup="dialog"
+            >
+              {{ firmness_guide_label | escape }}
+            </button>
+          </modal-opener>
         {%- endif -%}
       {%- elsif is_size_option -%}
         {%- liquid

@@ -29,6 +29,7 @@
        max-width: 53%;
        width: 100%;
     }
+
     .product--large:not(.product--no-media) .product__info-wrapper{
         max-width: unset;
         padding-left: 0px;
@@ -419,6 +420,51 @@
     .nw-product-icon-text{
         display: flex;
     }
+    .product-form__submit-text {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        max-width: 100%;
+        font-family: var(--font-body-family);
+        font-size: 18px;
+        font-weight: 600;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: 0.72px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .product-form__submit-text [data-atc-label],
+    .product-form__submit-price-wrap,
+    .product-form__submit-price {
+        font: inherit;
+        letter-spacing: inherit;
+        text-transform: inherit;
+    }
+
+    .product-form__submit-price-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .product-form__submit-sep {
+        font-weight: 600;
+        line-height: 1;
+    }
+
+    product-form[data-show-atc-price="false"] .product-form__submit-price-wrap,
+    .product-form__submit-price-wrap[hidden] .product-form__submit-sep {
+        display: none !important;
+    }
+
+    .product-form__submit--with-price {
+        padding: 20px 32px;
+        min-height: 0;
+    }
+
     .product-form__submit {
         display: inline-flex;
         justify-content: center;
@@ -430,7 +476,7 @@
         font-style: normal;
         font-weight: 600;
         font-size: 18px;
-        line-height: 135%;
+        line-height: normal;
         text-transform: uppercase;
         text-decoration: none;
         cursor: pointer;
@@ -456,6 +502,22 @@
         flex-direction: column;
         gap: 12px;
         max-width: 100%;
+    }
+
+    @media screen and (max-width: 749px) {
+        .product-form__submit-text,
+        .product-form__submit-price-wrap {
+            gap: 10px;
+        }
+
+        .product-form__submit-text {
+            font-size: 16px;
+            letter-spacing: 0.64px;
+        }
+
+        .product-form__submit--with-price {
+            padding: 18px 20px;
+        }
     }
 
     .nw-product-affirm {
@@ -629,7 +691,7 @@
         min-width: 0;
         padding: 12px;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         text-align: left;
     }
 
@@ -2221,7 +2283,7 @@
         right: 10px;
     }
     .product-popup-modal__toggle:hover{
-        background: var(--nw-white, #FFFFFF);
+        /* background: var(--nw-white, #FFFFFF); */
         color: var(--nw-brown, #613916);
         border-color: var(--nw-brown, #613916)
     }

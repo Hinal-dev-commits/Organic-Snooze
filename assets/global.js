@@ -121,7 +121,13 @@ function trapFocus(container, elementToFocus = container) {
   document.addEventListener('focusout', trapFocusHandlers.focusout);
   document.addEventListener('focusin', trapFocusHandlers.focusin);
 
-  elementToFocus.focus();
+  if (typeof elementToFocus.focus === 'function') {
+    try {
+      elementToFocus.focus({ preventScroll: true });
+    } catch (error) {
+      elementToFocus.focus();
+    }
+  }
 
   if (
     elementToFocus.tagName === 'INPUT' &&
@@ -199,7 +205,13 @@ function removeTrapFocus(elementToFocus = null) {
   document.removeEventListener('focusout', trapFocusHandlers.focusout);
   document.removeEventListener('keydown', trapFocusHandlers.keydown);
 
-  if (elementToFocus) elementToFocus.focus();
+  if (elementToFocus && typeof elementToFocus.focus === 'function') {
+    try {
+      elementToFocus.focus({ preventScroll: true });
+    } catch (error) {
+      elementToFocus.focus();
+    }
+  }
 }
 
 function onKeyUpEscape(event) {
@@ -628,31 +640,27 @@ class ModalDialog extends HTMLElement {
     return (
       this.classList.contains('nw-size-guide') ||
       this.classList.contains('nw-size-guide-modal') ||
-      this.classList.contains('nw-firmness-popup')
+      this.classList.contains('nw-firmness-popup') ||
+      this.classList.contains('nw-bundle-quick-view')
     );
   }
 
   _lockPageScroll() {
-    if (this._isNwSizeGuideModal()) {
-      document.documentElement.classList.add('overflow-hidden');
-      return;
-    }
-
-    document.body.classList.add('overflow-hidden');
+    document.documentElement.classList.add('overflow-hidden');
   }
 
   _unlockPageScroll() {
-    if (this._isNwSizeGuideModal()) {
-      document.documentElement.classList.remove('overflow-hidden');
-      return;
-    }
+    document.documentElement.classList.remove('overflow-hidden');
+  }
 
-    document.body.classList.remove('overflow-hidden');
+  _nwModalTransitionMs() {
+    return 340;
   }
 
   show(opener) {
     this.openedBy = opener;
     const popup = this.querySelector('.template-popup');
+    delete this.dataset.nwModalClosing;
     this._lockPageScroll();
     this.setAttribute('open', '');
     if (popup) popup.loadContent();
@@ -661,9 +669,26 @@ class ModalDialog extends HTMLElement {
   }
 
   hide() {
+    if (this.dataset.nwModalClosing === 'true') return;
+    if (!this.hasAttribute('open')) return;
+
+    if (this._isNwSizeGuideModal()) {
+      this.dataset.nwModalClosing = 'true';
+      this.removeAttribute('open');
+      window.setTimeout(() => {
+        delete this.dataset.nwModalClosing;
+        this._completeModalHide();
+      }, this._nwModalTransitionMs());
+      return;
+    }
+
+    this.removeAttribute('open');
+    this._completeModalHide();
+  }
+
+  _completeModalHide() {
     this._unlockPageScroll();
     document.body.dispatchEvent(new CustomEvent('modalClosed'));
-    this.removeAttribute('open');
     removeTrapFocus(this.openedBy);
     window.pauseAllMedia();
   }

@@ -16,7 +16,7 @@
           "type": "rating",
           "settings": {
             "margin_top": 0,
-            "margin_bottom": 15, 
+            "margin_bottom": 15,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 15
           }
@@ -48,9 +48,20 @@
             "show_sale_badge": true,
             "show_save_percentage": true,
             "margin_top": 0,
-            "margin_bottom": 20,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 16
+            "margin_bottom_mobile": 0
+          }
+        },
+        "affirm_pay_over_time_messaging_product_block_mrJq7J": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "settings": {
+            "logo_align": "left",
+            "font_size": 16,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "",
+            "price_selector": ""
           }
         },
         "nw_benifits_list_NGGwWJ": {
@@ -60,9 +71,9 @@
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 10,
-            "margin_top": 0,
+            "margin_top": 20,
             "margin_bottom": 0,
-            "margin_top_mobile": 0,
+            "margin_top_mobile": 16,
             "margin_bottom_mobile": 0
           }
         },
@@ -177,6 +188,9 @@
             "show_size_guide": true,
             "size_guide_label": "Size Guide",
             "size_guide_popup_id": "",
+            "show_firmness_guide": true,
+            "firmness_guide_label": "Firmness Guide",
+            "firmness_popup_modal_id": "",
             "quantity_option_name": "Select Quantity",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
@@ -220,21 +234,11 @@
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
             "show_affirm_button": false,
+            "show_atc_price": false,
             "margin_top": 16,
             "margin_bottom": 8,
             "margin_top_mobile": 32,
             "margin_bottom_mobile": 8
-          }
-        },
-        "affirm_pay_over_time_messaging_product_block_XPtrpw": {
-          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
-          "settings": {
-            "logo_align": "left",
-            "font_size": 14,
-            "logo_color": "blue",
-            "logo_type": "logo",
-            "public_api_key": "",
-            "price_selector": ""
           }
         },
         "trust_badges_UF8dKt": {
@@ -359,7 +363,18 @@
               "the-organic-snooze-pillow"
             ],
             "heading": "Bundle & save 30% on each add-on",
+            "preview_summary": "Sheets, protector, pillows & base",
             "discount_percentage": 30,
+            "optional_subtitle": "Optional, Bundle & Save [percent]%",
+            "quick_view_title_override": "",
+            "quick_view_description_override": "",
+            "quick_view_description_limit": 220,
+            "quick_view_warranty_title": "1-Year Warranty",
+            "quick_view_warranty_text": "Covers defects in materials and workmanship",
+            "quick_view_returns_title": "30-Day Returns",
+            "quick_view_returns_text": "Unused and in original packaging",
+            "quick_view_warranty_note": "Ships free with your mattress, est.",
+            "quick_view_shipping_days": 3,
             "margin_top": 32,
             "margin_bottom": 0,
             "margin_top_mobile": 24,
@@ -434,6 +449,7 @@
         "title",
         "description",
         "price",
+        "affirm_pay_over_time_messaging_product_block_mrJq7J",
         "nw_benifits_list_NGGwWJ",
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
@@ -444,7 +460,6 @@
         "whats_included_NYfjML",
         "quantity_selector",
         "buy_buttons",
-        "affirm_pay_over_time_messaging_product_block_XPtrpw",
         "trust_badges_UF8dKt",
         "payment_logos_aAAW97",
         "collapsible_tab_W7etYx",
