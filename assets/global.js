@@ -653,9 +653,14 @@ class ModalDialog extends HTMLElement {
     document.documentElement.classList.remove('overflow-hidden');
   }
 
+  _nwModalTransitionMs() {
+    return 340;
+  }
+
   show(opener) {
     this.openedBy = opener;
     const popup = this.querySelector('.template-popup');
+    delete this.dataset.nwModalClosing;
     this._lockPageScroll();
     this.setAttribute('open', '');
     if (popup) popup.loadContent();
@@ -664,9 +669,26 @@ class ModalDialog extends HTMLElement {
   }
 
   hide() {
+    if (this.dataset.nwModalClosing === 'true') return;
+    if (!this.hasAttribute('open')) return;
+
+    if (this._isNwSizeGuideModal()) {
+      this.dataset.nwModalClosing = 'true';
+      this.removeAttribute('open');
+      window.setTimeout(() => {
+        delete this.dataset.nwModalClosing;
+        this._completeModalHide();
+      }, this._nwModalTransitionMs());
+      return;
+    }
+
+    this.removeAttribute('open');
+    this._completeModalHide();
+  }
+
+  _completeModalHide() {
     this._unlockPageScroll();
     document.body.dispatchEvent(new CustomEvent('modalClosed'));
-    this.removeAttribute('open');
     removeTrapFocus(this.openedBy);
     window.pauseAllMedia();
   }
