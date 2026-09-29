@@ -34,7 +34,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>Minimalist comfort meets organic performance. Breathable latex and coils for naturally cool, responsive support.</p>",
+            "custom_description": "<p>Medium-firm support with a soft, breathable comfort layer on top. Made with clean organic materials and built for recovery. Everything you need, nothing you don't.</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -48,26 +48,25 @@
             "show_sale_badge": true,
             "show_save_percentage": false,
             "margin_top": 0,
-            "margin_bottom": 20,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 16
           }
         },
-        "nw_benifits_list_fYL9X3": {
-          "type": "nw_benifits_list",
+        "affirm_pay_over_time_messaging_product_block_RzJw7G": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
           "settings": {
-            "icon_color": "#cc926a",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 10,
-            "margin_top": 0,
-            "margin_bottom": 0,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
+            "logo_align": "left",
+            "font_size": 14,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "",
+            "price_selector": ""
           }
         },
         "promo_banner_Q6znVP": {
           "type": "promo_banner",
+          "disabled": true,
           "settings": {
             "use_discount_metaobject": true,
             "heading": "Save 15% on your first order!",
@@ -87,15 +86,47 @@
             "margin_bottom_mobile": 16
           }
         },
-        "icon_text_KzjrVr": {
-          "type": "icon_text",
+        "nw_benifits_list_fYL9X3": {
+          "type": "nw_benifits_list",
           "disabled": true,
           "settings": {
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 10,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_dGNAqm": {
+          "type": "icon_text",
+          "settings": {
             "style": "checklist",
-            "text": "Breathable Latex and Wool Material",
+            "text": "Made with Certified Organic Materials",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_1_ea96148e-6ba6-41d6-821a-7e14774caa5e.svg",
+            "custom_icon": "shopify://shop_images/icon-certified.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 17,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_KzjrVr": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Responsive Organic Latex Support",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/Icon_-_supportive.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -109,33 +140,12 @@
         },
         "icon_text_ykzhxB": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "Naturally Flame Resistant without chemicals",
+            "text": "No Chemical Flame Retardants",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_b600b181-eafe-42f3-835d-805ad38b3db9.svg",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 0,
-            "margin_bottom": 8,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "icon_text_tRPNk9": {
-          "type": "icon_text",
-          "disabled": true,
-          "settings": {
-            "style": "checklist",
-            "text": "Deep Sleep Cycles",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_2_41c1f7e2-93d5-4a58-b48f-f725df3d954b.svg",
+            "custom_icon": "shopify://shop_images/icon-no_chemical.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -149,13 +159,50 @@
         },
         "icon_text_cKXLDG": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "Naturally disperses heat for cool sleep",
+            "text": "Naturally Cool and Breathable&nbsp;",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_3.svg",
+            "custom_icon": "shopify://shop_images/icon-snowflake.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_tRPNk9": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Designed for Better Recovery",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/icon-recovery.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_hrkDMh": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "No Polyurethane or Fiberglass",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/No_Fiberglass.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -169,13 +216,12 @@
         },
         "icon_text_3FhWzM": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Handcrafted in the USA",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_4.svg",
+            "custom_icon": "shopify://shop_images/Icon-Handcrafted.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -279,17 +325,6 @@
             "margin_bottom_mobile": 8
           }
         },
-        "affirm_pay_over_time_messaging_product_block_RzJw7G": {
-          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
-          "settings": {
-            "logo_align": "left",
-            "font_size": 14,
-            "logo_color": "blue",
-            "logo_type": "logo",
-            "public_api_key": "",
-            "price_selector": ""
-          }
-        },
         "shipping_tag_Agd7QN": {
           "type": "shipping_tag",
           "settings": {
@@ -332,13 +367,13 @@
             "item_1_layout": "simple",
             "item_1_heading": "",
             "item_1_subheading": "",
-            "item_1_text": "Pay over time",
+            "item_1_text": "Pay over time with Affirm at checkout",
             "item_1_link": "",
             "item_2_image": "shopify://shop_images/image_1269.png",
             "item_2_layout": "simple",
             "item_2_heading": "HSA/FSA",
             "item_2_subheading": "Eligible",
-            "item_2_text": "Use your benefits",
+            "item_2_text": "Use your benefits with TrueMed at checkout",
             "item_2_link": "",
             "divider_color": "#d1ccc2",
             "heading_color": "#32323a",
@@ -611,19 +646,21 @@
         "title",
         "description",
         "price",
-        "nw_benifits_list_fYL9X3",
+        "affirm_pay_over_time_messaging_product_block_RzJw7G",
         "promo_banner_Q6znVP",
+        "nw_benifits_list_fYL9X3",
+        "icon_text_dGNAqm",
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
-        "icon_text_tRPNk9",
         "icon_text_cKXLDG",
+        "icon_text_tRPNk9",
+        "icon_text_hrkDMh",
         "icon_text_3FhWzM",
         "sleepers_qg7fAY",
         "variant_picker",
         "quantity_selector",
         "bundle_save_K4nQ2p",
         "buy_buttons",
-        "affirm_pay_over_time_messaging_product_block_RzJw7G",
         "shipping_tag_Agd7QN",
         "trust_badges_UF8dKt",
         "payment_logos_aAAW97",
