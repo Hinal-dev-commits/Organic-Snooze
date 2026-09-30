@@ -23,7 +23,7 @@
   assign threshold_days = block.settings.delivery_threshold_days | default: 2
   assign seconds_to_add = threshold_days | times: 86400
   assign delivery_timestamp = 'now' | date: '%s' | plus: seconds_to_add
-  assign delivery_date = delivery_timestamp | date: '%B %d, %Y' | replace: ' 0', ' '
+  assign delivery_date = delivery_timestamp | date: '%b %d, %Y' | replace: ' 0', ' '
 
   if tag_prefix != blank
     assign tag_text = tag_prefix | append: ' • Est. delivery ' | append: delivery_date
