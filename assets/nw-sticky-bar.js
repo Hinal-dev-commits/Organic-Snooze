@@ -794,8 +794,42 @@ if (!customElements.get('nw-sticky-bar')) {
       this._refreshVisibilityAfterDrawerClose();
     }
 
+    _getVisibilityObserveTarget() {
+      const root = this.productInfo;
+      if (!root) return null;
+
+      const sectionId = root.dataset?.section;
+      if (sectionId) {
+        const mainButtons = root.querySelector(`#product-form-${sectionId} .product-form__buttons`);
+        if (mainButtons) return mainButtons;
+      }
+
+      return (
+        root.querySelector('product-form .product-form__buttons:not(.product-form__buttons--affirm)') ||
+        root.querySelector('product-form .product-form__buttons') ||
+        root.querySelector('.product-form .product-form__buttons')
+      );
+    }
+
+    _hasScrolledPastBuyButtons(rect) {
+      return rect.bottom <= 0;
+    }
+
+    _syncBuyButtonsVisibility() {
+      if (this.classList.contains('is-drawer-open')) return;
+
+      const observeEl = this._getVisibilityObserveTarget();
+      if (!observeEl) {
+        this.classList.remove('is-visible');
+        return;
+      }
+
+      const rect = observeEl.getBoundingClientRect();
+      this.classList.toggle('is-visible', this._hasScrolledPastBuyButtons(rect));
+    }
+
     _refreshVisibilityAfterDrawerClose() {
-      const mode = this.dataset.visibilityMode || 'scroll';
+      const mode = this.dataset.visibilityMode || 'buy_buttons';
 
       if (mode === 'always') {
         this.classList.add('is-visible');
@@ -808,19 +842,7 @@ if (!customElements.get('nw-sticky-bar')) {
         return;
       }
 
-      const observeEl =
-        this.productInfo?.querySelector('.product-form__buttons') ||
-        this.productInfo?.querySelector('product-form') ||
-        this.productInfo;
-
-      if (!observeEl) {
-        this.classList.add('is-visible');
-        return;
-      }
-
-      const rect = observeEl.getBoundingClientRect();
-      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
-      this.classList.toggle('is-visible', !inView);
+      this._syncBuyButtonsVisibility();
     }
 
     _readCurrentVariantId() {
@@ -1182,7 +1204,7 @@ if (!customElements.get('nw-sticky-bar')) {
     }
 
     _bindVisibility(signal) {
-      const mode = this.dataset.visibilityMode || 'scroll';
+      const mode = this.dataset.visibilityMode || 'buy_buttons';
 
       if (mode === 'always') {
         this.classList.add('is-visible');
@@ -1200,27 +1222,29 @@ if (!customElements.get('nw-sticky-bar')) {
         return;
       }
 
-      const observeEl =
-        this.productInfo?.querySelector('.product-form__buttons') ||
-        this.productInfo?.querySelector('product-form') ||
-        this.productInfo;
+      const observeEl = this._getVisibilityObserveTarget();
 
       if (!observeEl) {
-        this.classList.add('is-visible');
+        this.classList.remove('is-visible');
         return;
       }
 
-      this._visibilityObserver = new IntersectionObserver(
-        (entries) => {
-          if (this.classList.contains('is-drawer-open')) return;
-          const entry = entries[0];
-          if (!entry) return;
-          this.classList.toggle('is-visible', !entry.isIntersecting);
-        },
-        { root: null, threshold: 0 }
-      );
+      this.classList.remove('is-visible');
 
+      const sync = () => this._syncBuyButtonsVisibility();
+      sync();
+      window.addEventListener('scroll', sync, { passive: true, signal });
+      window.addEventListener('resize', sync, { signal });
+
+      this._visibilityObserver = new IntersectionObserver(() => sync(), {
+        root: null,
+        threshold: [0, 0.01, 1],
+      });
       this._visibilityObserver.observe(observeEl);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(sync);
+      });
     }
 
     _bindAtcPriceSync(signal) {
