@@ -942,23 +942,8 @@ modal-dialog.product-popup-modal.nw-bundle-quick-view[open] {
   gap: 12px;
 }
 
-.nw-bundle-quick-view__add {
+.nw-bundle-quick-view__add.nw-btn {
   width: 100%;
-  padding: 18px 20px;
-  border: 0;
-  border-radius: 999px;
-  background: #c98a5e;
-  font-size: 17px;
-  letter-spacing: 0.68px;
-  text-transform: uppercase;
-  color: #ffffff;
-  cursor: pointer;
-  font-family: inherit
-}
-
-.nw-bundle-quick-view__add:focus-visible {
-  outline: 2px solid #6e4420;
-  outline-offset: 2px;
 }
 
 .nw-bundle-quick-view__full-link {
@@ -1026,10 +1011,6 @@ modal-dialog.product-popup-modal.nw-bundle-quick-view[open] {
     gap: 22px;
   }
 
-  .nw-bundle-quick-view__add {
-    font-size: 17px;
-    padding: 18px 20px;
-  }
 }
 
 @media screen and (max-width: 749px) {

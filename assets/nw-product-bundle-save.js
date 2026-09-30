@@ -421,7 +421,8 @@ if (!customElements.get('nw-bundle-save')) {
         const addBtn = modal.querySelector('[data-quick-view-add]');
         if (addBtn) {
           const template = this.dataset.bundleAddTemplate || '';
-          addBtn.textContent = template.replace('__PRICE__', variant.price || '');
+          const addBtnText = addBtn.querySelector('[data-quick-view-add-text]') || addBtn;
+          addBtnText.textContent = template.replace('__PRICE__', variant.price || '');
           addBtn.hidden = false;
         }
 
@@ -576,7 +577,7 @@ if (!customElements.get('nw-bundle-save')) {
         const date = new Date();
         date.setHours(12, 0, 0, 0);
         date.setDate(date.getDate() + offset);
-        return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       }
 
       renderSpecs(modal, product) {
