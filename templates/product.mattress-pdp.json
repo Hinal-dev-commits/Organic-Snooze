@@ -952,6 +952,96 @@
         "icon_color": "#432818"
       }
     },
+    "nw_benefits_J9TVzc": {
+      "type": "nw-benefits",
+      "blocks": {
+        "benefit_rzHW3b": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Mattress B-Roll - Cooling_175ea078-b669-4984-8736-fa8ac0ceb351.mp4",
+            "title": "Naturally Cooler Nights",
+            "description": "<p>Organic wool and breathable latex release heat instead of trapping it.</p><h3></h3>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_7fpBCW": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/hf_20261001_025551_e1da7d82-e1a8-4103-b869-657e170d0f55.mp4",
+            "title": "Pressure Relief",
+            "description": "<p>Responsive latex cushions hips and shoulders while keeping your spine aligned</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_RYkEmU": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Short WEB - Foam Comparison NO USDA Organic Final (2).mov",
+            "title": "Lower Your Toxic Load",
+            "description": "<p>A cleaner sleep environment starts with cleaner materials.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_fQ8cWe": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/hf_20260930_224222_07302e1b-cfc1-4a84-80c2-923c296a6a52.mp4",
+            "title": "Invest Once",
+            "description": "<p>Organic latex outlasts conventional foam for years to come.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_rzHW3b",
+        "benefit_7fpBCW",
+        "benefit_RYkEmU",
+        "benefit_fQ8cWe"
+      ],
+      "name": "Nw Benefits",
+      "settings": {
+        "heading": "The Difference You'll Feel&nbsp;",
+        "description": "<p>Four reasons people are replacing conventional mattresses with organic sleep.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_style": "style_1",
+        "card_bg_color": "#fbf9f6",
+        "card_border_color": "#61391633",
+        "card_title_color": "#613916",
+        "card_desc_color": "#613916",
+        "show_arrows": false,
+        "show_pagination": true,
+        "pagination_color": "#613916",
+        "show_button": false,
+        "button_text": "SHOP THE MATTRESS",
+        "button_link": "",
+        "button_style": "primary",
+        "badge_icon_color": "#cc926a",
+        "badge_text_color": "#613916",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/benifit-desktop.png",
+        "bg_image_mobile": "shopify://shop_images/benifit-mobile.png",
+        "bg_image_opacity": 21,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
     "nw_recovery_yYVmK7": {
       "type": "nw-recovery",
       "blocks": {
@@ -1288,89 +1378,36 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_benefits_J9TVzc": {
-      "type": "nw-benefits",
-      "blocks": {
-        "benefit_rzHW3b": {
-          "type": "benefit",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/Mattress B-Roll - Cooling_175ea078-b669-4984-8736-fa8ac0ceb351.mp4",
-            "title": "Naturally Cooler Nights",
-            "description": "<p>Organic wool and breathable latex release heat instead of trapping it.</p><h3></h3>",
-            "tag": "Side",
-            "tag_bg_color": "#613916",
-            "tag_text_color": "#ffffff"
-          }
-        },
-        "benefit_7fpBCW": {
-          "type": "benefit",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/hf_20260930_224222_07302e1b-cfc1-4a84-80c2-923c296a6a52.mp4",
-            "title": "Pressure Relief",
-            "description": "<p>Responsive latex cushions hips and shoulders while keeping your spine aligned</p>",
-            "tag": "Side",
-            "tag_bg_color": "#613916",
-            "tag_text_color": "#ffffff"
-          }
-        },
-        "benefit_RYkEmU": {
-          "type": "benefit",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/Short WEB - Foam Comparison NO USDA Organic Final (2).mov",
-            "title": "Lower Your Toxic Load",
-            "description": "<p>A cleaner sleep environment starts with cleaner materials.</p>",
-            "tag": "Side",
-            "tag_bg_color": "#613916",
-            "tag_text_color": "#ffffff"
-          }
-        },
-        "benefit_fQ8cWe": {
-          "type": "benefit",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/hf_20260930_224222_07302e1b-cfc1-4a84-80c2-923c296a6a52.mp4",
-            "title": "Invest Once",
-            "description": "<p>Organic latex outlasts conventional foam for years to come.</p>",
-            "tag": "Side",
-            "tag_bg_color": "#613916",
-            "tag_text_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_rzHW3b",
-        "benefit_7fpBCW",
-        "benefit_RYkEmU",
-        "benefit_fQ8cWe"
-      ],
-      "name": "Nw Benefits",
+    "nw_guarantee_v2_KGGbhN": {
+      "type": "nw-guarantee-v2",
+      "name": "t:sections.nw-guarantee-v2.name",
       "settings": {
-        "heading": "The Difference You'll Feel&nbsp;",
-        "description": "<p>Four reasons people are replacing conventional mattresses with organic sleep.</p>",
+        "badge_image": "shopify://shop_images/Vector_3.svg",
+        "heading": "Try It for 100 Nights. Keep It for 30 Years",
+        "description": "<p>We know buying a mattress online is a big decision. That's why we give you over 3 months to decide if it's the right fit for your body. If not, we'll pick it up for a full refund.</p>",
+        "cta_heading": "Still Deciding? Talk to a Sleep Expert",
+        "show_primary_button": true,
+        "primary_button_text": "Call (443) 333-1213",
+        "primary_button_link": "tel:+14433331213",
+        "show_text_button": true,
+        "text_button_label": "Text Us",
+        "text_button_link": "sms:+14433331213",
+        "show_quiz_button": true,
+        "quiz_button_label": "Sleep Quiz",
+        "quiz_button_link": "shopify://pages/quiz",
+        "card_bg_color": "#ffffff",
         "heading_color": "#613916",
-        "description_color": "#613916",
-        "card_style": "style_1",
-        "card_bg_color": "#fbf9f6",
-        "card_border_color": "#61391633",
-        "card_title_color": "#613916",
-        "card_desc_color": "#613916",
-        "show_arrows": false,
-        "show_pagination": true,
-        "pagination_color": "#613916",
-        "show_button": false,
-        "button_text": "SHOP THE MATTRESS",
-        "button_link": "",
-        "button_style": "primary",
-        "badge_icon_color": "#cc926a",
-        "badge_text_color": "#613916",
+        "text_color": "#613916",
+        "cta_heading_color": "#613916",
+        "primary_btn_bg_color": "#878735",
+        "primary_btn_text_color": "#ffffff",
+        "outline_btn_border_color": "#613916",
+        "outline_btn_text_color": "#613916",
+        "divider_color": "#61391633",
         "bg_type": "image",
-        "bg_color": "#ffffff",
-        "bg_image": "shopify://shop_images/benifit-desktop.png",
-        "bg_image_mobile": "shopify://shop_images/benifit-mobile.png",
-        "bg_image_opacity": 21,
+        "bg_color": "#fffcf0",
+        "bg_image": "shopify://shop_images/benifit-mobile.png",
+        "bg_image_opacity": 35,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -1445,43 +1482,6 @@
         "footer_description_color": "#613916",
         "bg_type": "none",
         "bg_color": "#ffffff",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_guarantee_v2_KGGbhN": {
-      "type": "nw-guarantee-v2",
-      "name": "t:sections.nw-guarantee-v2.name",
-      "settings": {
-        "badge_image": "shopify://shop_images/Vector_3.svg",
-        "heading": "Try It for 100 Nights. Keep It for 30 Years",
-        "description": "<p>We know buying a mattress online is a big decision. That's why we give you over 3 months to decide if it's the right fit for your body. If not, we'll pick it up for a full refund.</p>",
-        "cta_heading": "Still Deciding? Talk to a Sleep Expert",
-        "show_primary_button": true,
-        "primary_button_text": "Call (443) 333-1213",
-        "primary_button_link": "tel:+14433331213",
-        "show_text_button": true,
-        "text_button_label": "Text Us",
-        "text_button_link": "sms:+14433331213",
-        "show_quiz_button": true,
-        "quiz_button_label": "Sleep Quiz",
-        "quiz_button_link": "shopify://pages/quiz",
-        "card_bg_color": "#ffffff",
-        "heading_color": "#613916",
-        "text_color": "#613916",
-        "cta_heading_color": "#613916",
-        "primary_btn_bg_color": "#878735",
-        "primary_btn_text_color": "#ffffff",
-        "outline_btn_border_color": "#613916",
-        "outline_btn_text_color": "#613916",
-        "divider_color": "#61391633",
-        "bg_type": "image",
-        "bg_color": "#fffcf0",
-        "bg_image": "shopify://shop_images/benifit-mobile.png",
-        "bg_image_opacity": 35,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -1677,12 +1677,12 @@
     "related-products",
     "nw_mattresses_timeline_Aj3p4J",
     "nw_marquee_v2_UfXLdp",
+    "nw_benefits_J9TVzc",
     "nw_recovery_yYVmK7",
     "nw_testimonials_BU9rMk",
     "nw_organic_gcGNTr",
-    "nw_benefits_J9TVzc",
-    "nw_founder_story_RhHRer",
     "nw_guarantee_v2_KGGbhN",
+    "nw_founder_story_RhHRer",
     "nw_product_list_Ej8ReJ",
     "nw_faq_VygLpj",
     "1788863818f55e1e72"
