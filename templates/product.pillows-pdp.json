@@ -24,7 +24,7 @@
         "title": {
           "type": "title",
           "settings": {
-            "custom_title": "The Organic Snooze Pillow Dual Sided Firm or Plush",
+            "custom_title": "The Snooze Flip",
             "margin_top": 0,
             "margin_bottom": 14,
             "margin_top_mobile": 0,
@@ -34,7 +34,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>The Organic Snooze Pillow Dual Sided Firm or Plush</p>",
+            "custom_description": "<p>Soft where you want it. Support where you need it. Organic Kapok and shredded Organic Latex create a medium-plush feel that stays supportive without collapsing.</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -66,6 +66,7 @@
         },
         "nw_benifits_list_GaAXrh": {
           "type": "nw_benifits_list",
+          "disabled": true,
           "settings": {
             "icon_color": "#cc926a",
             "text_color": "#613916",
@@ -77,15 +78,14 @@
             "margin_bottom_mobile": 16
           }
         },
-        "icon_text_KzjrVr": {
+        "icon_text_ykzhxB": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "100% USDA Organic Cotton Fill",
+            "text": "Organic Wool and Latex blend",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-1.svg",
+            "custom_icon": "shopify://shop_images/icon-certified.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -97,15 +97,52 @@
             "margin_bottom_mobile": 0
           }
         },
-        "icon_text_ykzhxB": {
+        "icon_text_KzjrVr": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "Supports Neck and Spine",
+            "text": "Dual-Sided Soft or Firm",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_2_41c1f7e2-93d5-4a58-b48f-f725df3d954b.svg",
+            "custom_icon": "shopify://shop_images/Group_7ca18f21-1811-4948-b0c6-799e2834e577.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_xWiEjd": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Naturaly Disperses Heat",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/Group_3ed54a2f-e6dd-4a7c-9772-305480fb42ab.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_kaPYkD": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Supports Neck alignment",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/icon.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -119,13 +156,12 @@
         },
         "icon_text_tRPNk9": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Hypoallergenic & Dust-Mite Resistant",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-3.svg",
+            "custom_icon": "shopify://shop_images/icon_4d54313e-3181-4e6c-b82f-e6e7f8af6d19.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -139,13 +175,12 @@
         },
         "icon_text_cKXLDG": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Free Washable Protector Included",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-2.svg",
+            "custom_icon": "shopify://shop_images/icon_8730dd94-29db-42f3-bf2e-45976abafef5.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -159,13 +194,12 @@
         },
         "icon_text_3FhWzM": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Handcrafted in the USA",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_4.svg",
+            "custom_icon": "shopify://shop_images/Icon-Handcrafted.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -179,7 +213,6 @@
         },
         "sleepers_UPVWMw": {
           "type": "sleepers",
-          "disabled": true,
           "settings": {
             "label": "",
             "label_color": "#613916",
@@ -476,8 +509,10 @@
         "price",
         "affirm_pay_over_time_messaging_product_block_tNcRNt",
         "nw_benifits_list_GaAXrh",
-        "icon_text_KzjrVr",
         "icon_text_ykzhxB",
+        "icon_text_KzjrVr",
+        "icon_text_xWiEjd",
+        "icon_text_kaPYkD",
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
