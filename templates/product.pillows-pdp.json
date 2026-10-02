@@ -846,6 +846,79 @@
         "padding_bottom_mobile": 48
       }
     },
+    "nw_founder_story_aEPTg4": {
+      "type": "nw-founder-story",
+      "blocks": {
+        "stat_wnfU7P": {
+          "type": "stat",
+          "settings": {
+            "value": "8 Hours",
+            "description": "<p>Every Night</p>"
+          }
+        },
+        "stat_KKFzTM": {
+          "type": "stat",
+          "settings": {
+            "value": "56 Hours",
+            "description": "<p>Every week</p>"
+          }
+        },
+        "stat_G46PR8": {
+          "type": "stat",
+          "settings": {
+            "value": "26 Years",
+            "description": "<p>Of your lifetime</p>"
+          }
+        }
+      },
+      "block_order": [
+        "stat_wnfU7P",
+        "stat_KKFzTM",
+        "stat_G46PR8"
+      ],
+      "name": "t:sections.nw-founder-story.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "What’s Inside Your Pillow Matters.",
+        "media_type": "video",
+        "video": "shopify://files/videos/Gary horizontal pillow longform-WEB.mp4",
+        "video_autoplay": false,
+        "show_play_icon": true,
+        "poster": "shopify://shop_images/Frame_48101000.png",
+        "overlay_text": "",
+        "quote": "<p><em>\"We spend so much time thinking about what we eat, what we drink, and the air we breathe. Then we put our face on a synthetic filled pillow for eight hours every night. That just didn't make sense to me. An organic mattress deserves an organic pillow.\"</em></p>",
+        "name": "Gary Brecka",
+        "show_verified": true,
+        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "show_footer_content": true,
+        "footer_heading": "\"Don't overlook the pillow you spend hours breathing through every night.\"",
+        "footer_description": "",
+        "disclaimer": "",
+        "heading_color": "#613916",
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "card_border_color": "#61391633",
+        "card_bg_color": "#fbf9f6",
+        "quote_color": "#613916",
+        "name_color": "#613916",
+        "role_color": "#613916",
+        "stat_border_color": "#61391633",
+        "stat_value_color": "#613916",
+        "stat_desc_color": "#613916",
+        "disclaimer_color": "#563822",
+        "footer_heading_color": "#613916",
+        "footer_description_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 24
+      }
+    },
     "nw_organic_gcGNTr": {
       "type": "nw-organic",
       "blocks": {
@@ -1046,79 +1119,6 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_founder_story_aEPTg4": {
-      "type": "nw-founder-story",
-      "blocks": {
-        "stat_wnfU7P": {
-          "type": "stat",
-          "settings": {
-            "value": "8 Hours",
-            "description": "<p>Every Night</p>"
-          }
-        },
-        "stat_KKFzTM": {
-          "type": "stat",
-          "settings": {
-            "value": "56 Hours",
-            "description": "<p>Every week</p>"
-          }
-        },
-        "stat_G46PR8": {
-          "type": "stat",
-          "settings": {
-            "value": "26 Years",
-            "description": "<p>Of your lifetime</p>"
-          }
-        }
-      },
-      "block_order": [
-        "stat_wnfU7P",
-        "stat_KKFzTM",
-        "stat_G46PR8"
-      ],
-      "name": "t:sections.nw-founder-story.name",
-      "settings": {
-        "show_rating": false,
-        "star_rating": 5,
-        "eyebrow": "",
-        "heading": "What’s Inside Your Pillow Matters.",
-        "media_type": "video",
-        "video": "shopify://files/videos/Gary horizontal pillow longform-WEB.mp4",
-        "video_autoplay": false,
-        "show_play_icon": true,
-        "poster": "shopify://shop_images/Frame_48101000.png",
-        "overlay_text": "",
-        "quote": "<p><em>\"We spend so much time thinking about what we eat, what we drink, and the air we breathe. Then we put our face on a synthetic filled pillow for eight hours every night. That just didn't make sense to me. An organic mattress deserves an organic pillow.\"</em></p>",
-        "name": "Gary Brecka",
-        "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
-        "show_footer_content": true,
-        "footer_heading": "\"Don't overlook the pillow you spend hours breathing through every night.\"",
-        "footer_description": "",
-        "disclaimer": "",
-        "heading_color": "#613916",
-        "star_color": "#e57b1e",
-        "star_color_inactive": "#d1d5db",
-        "card_border_color": "#61391633",
-        "card_bg_color": "#fbf9f6",
-        "quote_color": "#613916",
-        "name_color": "#613916",
-        "role_color": "#613916",
-        "stat_border_color": "#61391633",
-        "stat_value_color": "#613916",
-        "stat_desc_color": "#613916",
-        "disclaimer_color": "#563822",
-        "footer_heading_color": "#613916",
-        "footer_description_color": "#613916",
-        "bg_type": "none",
-        "bg_color": "#ffffff",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 24
-      }
-    },
     "nw_product_list_Ej8ReJ": {
       "type": "nw-product-list",
       "name": "t:sections.nw-product-list.name",
@@ -1293,11 +1293,11 @@
     "custom_liquid_z7zdmm",
     "nw_testimonials_BU9rMk",
     "nw_benefits_J9TVzc",
-    "nw_organic_gcGNTr",
-    "nw_materials_matter_wH9DBk",
     "nw_founder_story_aEPTg4",
-    "nw_product_list_Ej8ReJ",
+    "nw_materials_matter_wH9DBk",
+    "nw_organic_gcGNTr",
     "nw_faq_VygLpj",
+    "nw_product_list_Ej8ReJ",
     "1788863647fd1fa831"
   ]
 }
