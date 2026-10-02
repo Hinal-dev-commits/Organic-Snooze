@@ -20,18 +20,18 @@
     "nw_general_customer_hero_XWRymr": {
       "type": "nw-general-customer-hero",
       "blocks": {
-        "pill_DDRMPC": {
-          "type": "pill",
-          "settings": {
-            "text": "30-Night Break-In Period",
-            "icon": "checkmark",
-            "use_custom_icon": false
-          }
-        },
         "pill_n8hjgw": {
           "type": "pill",
           "settings": {
             "text": "100-Night Sleep Trial",
+            "icon": "checkmark",
+            "use_custom_icon": false
+          }
+        },
+        "pill_DDRMPC": {
+          "type": "pill",
+          "settings": {
+            "text": "30-Night Break-In Period",
             "icon": "checkmark",
             "use_custom_icon": false
           }
@@ -54,8 +54,8 @@
         }
       },
       "block_order": [
-        "pill_DDRMPC",
         "pill_n8hjgw",
+        "pill_DDRMPC",
         "pill_iGWzTP",
         "pill_LtHpQE"
       ],
@@ -153,7 +153,7 @@
       "name": "t:sections.nw-marquee.name",
       "settings": {
         "direction": "right_to_left",
-        "speed": 35,
+        "speed": 150,
         "pause_on_hover": true,
         "enable_parallax": false,
         "repeat_count": 3,
@@ -181,6 +181,7 @@
     },
     "nw_mission_D74amU": {
       "type": "nw-mission",
+      "disabled": true,
       "name": "NW Mission",
       "settings": {
         "heading": "Gary Brecka's Mission for Cleaner Sleep",
@@ -213,7 +214,7 @@
             "step_badge": "STEP 1",
             "image": "shopify://shop_images/image-1.png",
             "title": "Sleep On It",
-            "text": "<p>Your 100-night trial starts the day your mattress is delivered. Set it up, settle in, and make yourself at home.</p>"
+            "text": "<p>Your 100-night trial starts the day your mattress is delivered. Allow the bed up to 6 hours to fully expand and take true shape.</p>"
           }
         },
         "step_BeRAVc": {
@@ -222,7 +223,7 @@
             "step_badge": "STEP 2",
             "image": "shopify://shop_images/image-2.png",
             "title": "Give It 30 Nights",
-            "text": "<p>Organic latex and wool need time to soften and break in, and your body needs time to adjust to real support.</p>"
+            "text": "<p>Organic latex and wool need time to soften and break in, and your body needs time to adjust to real support. You may not return it within the first 30-days.</p>"
           }
         },
         "step_9Pge3w": {
@@ -231,7 +232,7 @@
             "step_badge": "STEP 3",
             "image": "shopify://shop_images/image-3.png",
             "title": "Love It, Or Let Us Help",
-            "text": "<p>Still not the fit between night 31 and night 100? Request a free exchange or a return, and we'll coordinate the pickup.</p>"
+            "text": "<p>Request a free exchange or a return between night 31 and night 100. You will get a 100% refund. A pick up fee of $199 is reducted from the refund.</p>"
           }
         }
       },
@@ -244,13 +245,13 @@
       "settings": {
         "show_rating": false,
         "star_rating": 5,
-        "heading": "Three steps. No catch, no countdown pressure",
-        "subheading": "<p>Real customers, real results in their own words</p>",
+        "heading": "How the 100-Night Trial Works",
+        "subheading": "",
         "eyebrow": "",
         "show_button": true,
-        "button_text": "START MY 100-NIGHT TRIAL",
-        "button_link": "#",
-        "button_style": "primary",
+        "button_text": "SHOP MATTRESSES",
+        "button_link": "shopify://collections/mattress",
+        "button_style": "outline",
         "bg_type": "color",
         "bg_color": "#f7f5f3",
         "bg_color_image": "#ffffff29",
@@ -332,17 +333,17 @@
         "show_rating": false,
         "star_rating": 5,
         "eyebrow": "",
-        "heading": "Your Sleep Is Protected For 30 Years",
-        "subheading": "<p>Real materials earn a warranty this long. Organic, traceable, and built to last, which is why ours outlasts most other organic mattress brands</p>",
+        "heading": "30-Year Warranty explained",
+        "subheading": "<p>One of the longest warranties offered by an organic mattress brand.</p>",
         "covered_heading": "Covered",
         "not_covered_heading": "Not covered",
         "image": "shopify://shop_images/warrenty-desktop.png",
         "image_mobile": "shopify://shop_images/warranty-mobile.png",
         "image_position": "left",
         "show_button": true,
-        "button_text": "SEE WHAT'S COVERED",
-        "button_link": "#",
-        "button_style": "primary",
+        "button_text": "SHOP MATTRESSES",
+        "button_link": "shopify://collections/mattress",
+        "button_style": "outline",
         "bg_type": "none",
         "bg_color": "#ffffff",
         "bg_color_image": "#ffffff29",
@@ -360,24 +361,24 @@
           "type": "box",
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/mattress-image-1.png",
+            "image": "shopify://shop_images/organic-desktop.png",
             "autoplay_video": true,
             "loop_video": true,
             "badge_text": "Years 1–20",
             "title": "Non-prorated coverage",
-            "description": "<p>If there's a qualifying defect, we repair or replace the mattress at no cost to you.</p>"
+            "description": "<p>If your mattress experiences a qualifying manufacturing or structural defect during the first 20 years, we'll repair or replace it at no cost to you. <em>Terms Apply*</em></p>"
           }
         },
         "box_ttzc6p": {
           "type": "box",
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/matress-image-2.png",
+            "image": "shopify://shop_images/Frame_2147238694_1.png",
             "autoplay_video": true,
             "loop_video": true,
             "badge_text": "Years 21–30",
             "title": "Prorated coverage",
-            "description": "<p>If a defect occurs, you're still covered, just on a prorated basis. You receive a percentage credit toward a replacement, based on how many years remain. The older the mattress, the smaller that credit, but you always walk away with real value toward a new one.</p>"
+            "description": "<p>Beginning in year 21, your mattress continues to be protected. If a qualifying defect occurs, you'll receive a prorated credit toward a replacement mattress based on the number of years remaining in the warranty period. <em>Terms Apply*</em></p>"
           }
         }
       },
@@ -389,10 +390,10 @@
       "settings": {
         "show_rating": false,
         "star_rating": 5,
-        "eyebrow": "",
+        "eyebrow": "30-Year Warranty Explained",
         "heading": "Your Sleep Is Protected for 30 Years",
-        "subheading": "<p>Real materials earn a warranty this long. Organic, traceable, and built to last, which is why ours outlasts most other organic mattress brands</p>",
-        "show_button": true,
+        "subheading": "<p>Built with premium materials. Backed by one of the best warranties in the organic mattress industry.</p>",
+        "show_button": false,
         "button_text": "Read the Full Warranty",
         "button_link": "#",
         "button_style": "primary",
@@ -407,32 +408,6 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_guarantee_offer_xp6LVr": {
-      "type": "nw-guarantee-offer",
-      "name": "NW Guarantee Offer",
-      "settings": {
-        "show_rating": false,
-        "star_rating": 5,
-        "eyebrow": "",
-        "heading": "Protect Your Investment for 30 Years",
-        "subheading": "<p>Stains and spills aren't covered by the warranty. One simple layer keeps your mattress protected and your coverage intact.</p>",
-        "product": "sheet-set-breezeline™-air-100-organic-cotton-copy-1",
-        "show_card_rating": true,
-        "show_button": true,
-        "button_text": "SHOP NOW",
-        "button_style": "primary",
-        "bg_type": "none",
-        "bg_color": "#ffffffc4",
-        "bg_color_image": "#ffffff29",
-        "bg_gradient": "",
-        "border_show": false,
-        "border_shoe_color": "#4e2f1466",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
     "nw_materials_dHzFLr": {
       "type": "nw-materials",
       "blocks": {
@@ -441,7 +416,7 @@
           "settings": {
             "image": "shopify://shop_images/fiber.png",
             "title": "Fibers that last",
-            "description": "Wool and cotton last decades. Synthetics thin and flatten"
+            "description": "Natural fibers keep their shape longer. Synthetic fibers flatten over time."
           }
         },
         "material_YdDJVP": {
@@ -449,7 +424,7 @@
           "settings": {
             "image": "shopify://shop_images/latex.png",
             "title": "Latex outlasts foam",
-            "description": "Stays supportive 15–20+ years. Memory foam sags in 7–10"
+            "description": "Natural latex stays supportive for decades. Memory foam can soften and sag over time."
           }
         },
         "material_9eMKDE": {
@@ -457,7 +432,7 @@
           "settings": {
             "image": "shopify://shop_images/steel-coils.png",
             "title": "Steel coils",
-            "description": "Pocketed coils hold their shape. Glued foam does not"
+            "description": "Steel coils maintain support year after year. Foam cores can lose support over time."
           }
         }
       },
@@ -472,11 +447,11 @@
         "star_rating": 5,
         "eyebrow": "",
         "heading": "Materials Built To Last",
-        "subheading": "<p>Most brands offer 10–15 years. Leading organic competitors offer 25. We offer 30 years, because:</p>",
+        "subheading": "<p>Most brands offer 1–10 year warranties. Leading organic competitors offer 25. We offer 30 years, because we don't cut corners.</p>",
         "show_highlight": true,
         "highlight_title": "Why It Matters",
-        "highlight_text": "<p>This isn't a marketing stunt. It's a reflection of materials proven to age gracefully. We'd rather build a mattress that lasts decades, and stand behind it, than replace a cheap one every 7–8 years</p>",
-        "show_button": true,
+        "highlight_text": "<p>We don't offer a 30-year warranty because it sounds good. We offer it because we build our mattresses with materials designed to last for decades. We'd rather build one great mattress than have you replace it every 7–8 years.</p><p></p>",
+        "show_button": false,
         "button_text": "Explore Our Materials",
         "button_link": "#",
         "button_style": "primary",
@@ -503,7 +478,7 @@
         "heading": "Sleep On It For 100 Nights. Risk-Free.",
         "description": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a <strong>30-year warranty</strong> because it’s built to last.</p>",
         "image_position": "left",
-        "image": "shopify://shop_images/mattress-images.png",
+        "image": "shopify://shop_images/instagram-image_e1fea932-51d9-415a-8419-9928e6c5a9d2.jpg",
         "image_width": 540,
         "show_badge": false,
         "badge_image": "shopify://shop_images/money-back-icon.svg",
@@ -512,7 +487,7 @@
         "seal_ring": "MONEY BACK GUARANTEE",
         "show_button": true,
         "btn_text": "SHOP ORGANIC MATTRESSES",
-        "btn_link": "#",
+        "btn_link": "shopify://collections/mattress",
         "btn_style": "primary",
         "card_max_width": 1070,
         "card_bg_color": "#f7f5f3",
@@ -574,15 +549,6 @@
             "use_custom_icon": false,
             "icon": "verified"
           }
-        },
-        "item_xA4i7q": {
-          "type": "item",
-          "settings": {
-            "text": "FREE WHITE-GLOVE DELIVERY",
-            "link": "",
-            "use_custom_icon": false,
-            "icon": "verified"
-          }
         }
       },
       "block_order": [
@@ -590,13 +556,12 @@
         "item_qgnbMy",
         "item_GRUmA3",
         "item_ntKQ6c",
-        "item_dPzbHk",
-        "item_xA4i7q"
+        "item_dPzbHk"
       ],
       "name": "t:sections.nw-marquee.name",
       "settings": {
         "direction": "right_to_left",
-        "speed": 35,
+        "speed": 155,
         "pause_on_hover": true,
         "enable_parallax": false,
         "repeat_count": 3,
@@ -809,7 +774,7 @@
         "step_title_color": "#4e2f14",
         "step_text_color": "#4e2f14",
         "step_dot_bg_color": "rgba(0,0,0,0)",
-        "step_dot_border_color": "#0000004A",
+        "step_dot_border_color": "#0000004a",
         "step_dot_active_bg_color": "#613916",
         "step_dot_active_border_color": "#613916",
         "step_line_color": "#61391640",
@@ -998,6 +963,32 @@
         "padding_bottom_desktop": 16,
         "padding_top_mobile": 14,
         "padding_bottom_mobile": 14
+      }
+    },
+    "nw_guarantee_offer_xp6LVr": {
+      "type": "nw-guarantee-offer",
+      "name": "NW Guarantee Offer",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Protect Your Investment for 30 Years",
+        "subheading": "<p>Stains and spills aren't covered by the warranty. One simple layer keeps your mattress protected and your coverage intact.</p>",
+        "product": "sheet-set-breezeline™-air-100-organic-cotton-copy-1",
+        "show_card_rating": true,
+        "show_button": true,
+        "button_text": "SHOP NOW",
+        "button_style": "primary",
+        "bg_type": "none",
+        "bg_color": "#ffffffc4",
+        "bg_color_image": "#ffffff29",
+        "bg_gradient": "",
+        "border_show": false,
+        "border_shoe_color": "#4e2f1466",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
       }
     },
     "nw_collection_list_D3thQD": {
@@ -1230,7 +1221,6 @@
     "nw_steps_RNAkXE",
     "nw_warranty_9nxVnN",
     "nw_warranty_coverage_thPEtc",
-    "nw_guarantee_offer_xp6LVr",
     "nw_materials_dHzFLr",
     "nw_guarantee_card_ayPURn",
     "nw_marquee_zQYCFb",
@@ -1238,6 +1228,7 @@
     "nw_warranty_timeline_EgVNcf",
     "nw_explore_DRD37X",
     "nw_marquee_tf84tV",
+    "nw_guarantee_offer_xp6LVr",
     "nw_collection_list_D3thQD",
     "nw_faq_yTwkby"
   ]
