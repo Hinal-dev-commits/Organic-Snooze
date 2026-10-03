@@ -24,7 +24,7 @@
         "title": {
           "type": "title",
           "settings": {
-            "custom_title": "The Organic Snooze Pillow Dual Sided Firm or Plush",
+            "custom_title": "The Snooze Flip",
             "margin_top": 0,
             "margin_bottom": 14,
             "margin_top_mobile": 0,
@@ -34,7 +34,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>The Organic Snooze Pillow Dual Sided Firm or Plush</p>",
+            "custom_description": "<p>Soft where you want it. Support where you need it. Organic Kapok and shredded Organic Latex create a medium-plush feel that stays supportive without collapsing.</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -66,6 +66,7 @@
         },
         "nw_benifits_list_GaAXrh": {
           "type": "nw_benifits_list",
+          "disabled": true,
           "settings": {
             "icon_color": "#cc926a",
             "text_color": "#613916",
@@ -77,15 +78,33 @@
             "margin_bottom_mobile": 16
           }
         },
-        "icon_text_KzjrVr": {
+        "icon_text_ykzhxB": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "100% USDA Organic Cotton Fill",
+            "text": "Organic Wool and Latex blend",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-1.svg",
+            "custom_icon": "shopify://shop_images/icon-certified.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 15,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_KzjrVr": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Dual-Sided Soft or Firm",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/Group_7ca18f21-1811-4948-b0c6-799e2834e577.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -97,15 +116,33 @@
             "margin_bottom_mobile": 0
           }
         },
-        "icon_text_ykzhxB": {
+        "icon_text_kaPYkD": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "Supports Neck and Spine",
+            "text": "Supports Neck alignment",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_2_41c1f7e2-93d5-4a58-b48f-f725df3d954b.svg",
+            "custom_icon": "shopify://shop_images/icon.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_xWiEjd": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Naturaly Disperses Heat",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/Group_3ed54a2f-e6dd-4a7c-9772-305480fb42ab.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -119,13 +156,12 @@
         },
         "icon_text_tRPNk9": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Hypoallergenic & Dust-Mite Resistant",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-3.svg",
+            "custom_icon": "shopify://shop_images/icon_4d54313e-3181-4e6c-b82f-e6e7f8af6d19.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -139,13 +175,12 @@
         },
         "icon_text_cKXLDG": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Free Washable Protector Included",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-2.svg",
+            "custom_icon": "shopify://shop_images/icon_8730dd94-29db-42f3-bf2e-45976abafef5.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -159,13 +194,12 @@
         },
         "icon_text_3FhWzM": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Handcrafted in the USA",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_4.svg",
+            "custom_icon": "shopify://shop_images/Icon-Handcrafted.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -179,7 +213,6 @@
         },
         "sleepers_UPVWMw": {
           "type": "sleepers",
-          "disabled": true,
           "settings": {
             "label": "",
             "label_color": "#613916",
@@ -214,6 +247,35 @@
             "option_2_values_order": "",
             "margin_top": 32,
             "margin_bottom": 32,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "bundle_save_K4nQ2p": {
+          "type": "bundle_save",
+          "settings": {
+            "product_source": "product_list",
+            "product_list": [
+              "organic-cooling-sheets",
+              "cool-comfort-blended-natural-sheet-set-linen-and-cotton",
+              "100-linen-natural-cool-sheet-set",
+              "organic-waterproof-mattress-protector"
+            ],
+            "heading": "Bundle & save 10% on each add-on",
+            "preview_summary": "Sheets, protector, pillows & base",
+            "discount_percentage": 10,
+            "optional_subtitle": "Optional, Bundle & Save [percent]%",
+            "quick_view_title_override": "",
+            "quick_view_description_override": "",
+            "quick_view_description_limit": 220,
+            "quick_view_warranty_title": "1-Year Warranty",
+            "quick_view_warranty_text": "Covers defects in materials and workmanship",
+            "quick_view_returns_title": "30-Day Returns",
+            "quick_view_returns_text": "Unused and in original packaging",
+            "quick_view_warranty_note": "Ships free with your mattress, est.",
+            "quick_view_shipping_days": 3,
+            "margin_top": 32,
+            "margin_bottom": 0,
             "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
@@ -296,24 +358,11 @@
           "settings": {
             "heading": "Product Specifications",
             "icon": "none",
-            "content": "<ul><li>Available sizes: Queen (20\" x 30\"), King (20\" x 36\")</li><li>Dual-chamber design with two sides: Firm Wool and Plush Latex</li><li>One side filled with certified organic virgin wool, one side with shredded natural latex<br/>Organic cotton cover, soft and breathable against the skin</li><li>Naturally breathable and temperature regulating</li><li>Moisture-wicking for a drier sleep environment</li><li>Hypoallergenic and resistant to mold, mildew, and dust mites</li><li>Naturally flame resistant, no chemical retardants</li><li>Handcrafted in the USA</li></ul>",
+            "content": "<ul><li>Available sizes: Queen (20\" x 30\"), King (20\" x 36\")</li><li>Dual-chamber design with two sides: Firm Wool and Plush Latex</li><li>One side filled with certified organic &nbsp;wool, one side with shredded latex</li><li>Organic cotton cover, soft and breathable against the skin</li><li>Naturally breathable and temperature regulating</li><li>Moisture-wicking for a drier sleep environment</li><li>Hypoallergenic and resistant to mold, mildew, and dust mites</li><li>Naturally flame resistant, no chemical retardants</li><li>Handcrafted in the USA</li></ul>",
             "page": "",
             "margin_top": 40,
             "margin_bottom": 0,
             "margin_top_mobile": 32,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "collapsible_tab_THr6Kx": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Materials",
-            "icon": "none",
-            "content": "<ul><li><strong>Organic Wool (from sheep)</strong> — Certified organic, chemical-free virgin wool that regulates temperature, manages moisture, and naturally resists mold, mildew, dust mites, and flame. This is the firm, cooler side.</li><li><strong>Natural Latex (from trees)</strong> — Responsibly sourced shredded latex that's durable, breathable, and buoyant, adapting to your movement while holding consistent support. This is the plush, responsive side.</li><li><strong>Cover</strong> — Organic cotton for a soft, breathable feel against the skin.</li></ul>",
-            "page": "",
-            "margin_top": 0,
-            "margin_bottom": 0,
-            "margin_top_mobile": 0,
             "margin_bottom_mobile": 0
           }
         },
@@ -322,7 +371,20 @@
           "settings": {
             "heading": "Why you'll love it",
             "icon": "none",
-            "content": "<ul><li>One pillow, two feels: flip between Firm Wool and Plush Latex</li><li>Adjust to your night: firmer support or softer cushioning, no swapping pillows</li><li>Sleeps cool: breathable wool and latex stay temperature-neutral</li><li>100% chemical-free and organic, no off-gassing</li><li>Every pillow includes a free machine-washable protector</li></ul>",
+            "content": "<ul><li>One pillow, two feels: flip between Firm Wool and Plush Latex</li><li>Adjust to your night: firmer support or softer cushioning, no swapping pillows</li><li>Sleeps cool: breathable wool and latex stay temperature-neutral</li><li>100% chemical-free and organic, no off-gassing</li><li>Every pillow includes a free machine-washable protector</li><li>Adjustable loft - you can adjust the loft by adding or removing the stuffing via a zipper on the side</li></ul>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "collapsible_tab_THr6Kx": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Materials",
+            "icon": "none",
+            "content": "<ul><li><strong>Organic Wool (from sheep)</strong> — Nature's temperature regulator. It keeps sheep warm in the winter and cool in the summer by wicking away heat and moisture. That's why it creates a firmer, cooler, and more comfortable sleep surface.</li><li><strong>Organic Latex (from trees)</strong> — Harvested from the sap of rubber trees, organic latex is springy, breathable, and responsive. It gently lifts and supports your body instead of letting you sink into it.</li><li><strong>Organic Cotton (Cover)</strong> — The first thing your body touches should be soft, breathable, and natural. Organic cotton creates a cool, comfortable surface without synthetic fibers against your skin.</li></ul>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -335,7 +397,7 @@
           "settings": {
             "heading": "Warranty & Returns",
             "icon": "check_mark",
-            "content": "<p>Pillows may be returned within 30 days of delivery. Because the fill is adjustable and personal, we ask that the pillow and its protector are clean and undamaged. Stained or damaged items are not eligible for return. Confirm the current return window and any restocking fee at checkout.</p><p>Backed by Ultimate Snooze quality standards and handcrafted in the USA. For specific coverage terms on pillows, see our warranty page or contact support.</p>",
+            "content": "<p>Pillows may be returned within 30 days of delivery. Because the fill is adjustable and personal, we ask that the pillow and its protector are clean and undamaged. Stained or damaged items are not eligible for return. Confirm the current return window and any restocking fee at checkout. <a href=\"/policies/refund-policy\" title=\"Refund Policy\">Learn More</a></p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -360,43 +422,16 @@
             "margin_bottom_mobile": 0
           }
         },
-        "bundle_save_K4nQ2p": {
-          "type": "bundle_save",
-          "settings": {
-            "product_source": "product_list",
-            "product_list": [
-              "100-linen-natural-cool-sheet-set",
-              "the-ultimate-snooze-breezeline™-organic-cooling-sheet-set-3"
-            ],
-            "heading": "Bundle & save 30% on each add-on",
-            "preview_summary": "Sheets, protector, pillows & base",
-            "discount_percentage": 30,
-            "optional_subtitle": "Optional, Bundle & Save [percent]%",
-            "quick_view_title_override": "",
-            "quick_view_description_override": "",
-            "quick_view_description_limit": 220,
-            "quick_view_warranty_title": "1-Year Warranty",
-            "quick_view_warranty_text": "Covers defects in materials and workmanship",
-            "quick_view_returns_title": "30-Day Returns",
-            "quick_view_returns_text": "Unused and in original packaging",
-            "quick_view_warranty_note": "Ships free with your mattress, est.",
-            "quick_view_shipping_days": 3,
-            "margin_top": 32,
-            "margin_bottom": 0,
-            "margin_top_mobile": 24,
-            "margin_bottom_mobile": 0
-          }
-        },
         "customer_videos_JijkkX": {
           "type": "customer_videos",
           "settings": {
             "heading": "What Customers Are Saying",
             "show_pagination": true,
-            "video_1": "shopify://files/videos/UGC-Katherine-June-1.mp4",
+            "video_1": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_JessicaH_TheOrgaSnoo_40c39030.mov",
             "caption_1": "",
-            "video_2": "shopify://files/videos/instagram-video_a48594d2-3157-4b3d-9822-e4139a4b3c26.mp4",
+            "video_2": "shopify://files/videos/C33738_TUH_Snooze Pillow_S5V1_@JAV.mp4",
             "caption_2": "",
-            "video_3": "shopify://files/videos/instagram-video_8e990a33-eb47-475b-a442-768cc8ca7bbc.mp4",
+            "video_3": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_AdamW_TheOrgaSnoo_99a9807f.mov",
             "caption_3": "",
             "video_4": "shopify://files/videos/instagram-video_92d7ea93-a816-4e76-9019-afc7c1cfda07.mp4",
             "caption_4": "",
@@ -425,7 +460,7 @@
             "item_3_icon": "award",
             "item_3_use_custom_icon": true,
             "item_3_custom_icon": "shopify://shop_images/image_1254_Vectorized_2.svg",
-            "item_4_text": "1-Year Warranty",
+            "item_4_text": "Certified Organic",
             "item_4_icon": "warranty-check",
             "item_4_use_custom_icon": true,
             "item_4_custom_icon": "shopify://shop_images/image_1254_Vectorized_3.svg",
@@ -476,23 +511,25 @@
         "price",
         "affirm_pay_over_time_messaging_product_block_tNcRNt",
         "nw_benifits_list_GaAXrh",
-        "icon_text_KzjrVr",
         "icon_text_ykzhxB",
+        "icon_text_KzjrVr",
+        "icon_text_kaPYkD",
+        "icon_text_xWiEjd",
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
         "sleepers_UPVWMw",
         "variant_picker",
+        "bundle_save_K4nQ2p",
         "buy_buttons",
         "shipping_tag_Agd7QN",
         "trust_badges_UF8dKt",
         "payment_logos_aAAW97",
         "collapsible_tab_W7etYx",
-        "collapsible_tab_THr6Kx",
         "collapsible_tab_wP3yAA",
+        "collapsible_tab_THr6Kx",
         "collapsible_tab_qCn4mP",
         "complementary_dJ8CFV",
-        "bundle_save_K4nQ2p",
         "customer_videos_JijkkX",
         "icon_text_v2_JFUz9t",
         "quiz_button_LNxxjE",
@@ -590,7 +627,7 @@
         "item_66UMzf": {
           "type": "item",
           "settings": {
-            "text": "GOLS/GOTS CERTIFIED",
+            "text": "CERTIFIED ORGANIC",
             "icon": "verified",
             "link": ""
           }
@@ -643,6 +680,16 @@
         "bg_gradient": "",
         "text_color": "#432818",
         "icon_color": "#432818"
+      }
+    },
+    "custom_liquid_z7zdmm": {
+      "type": "custom-liquid",
+      "name": "JR-Cl-Liquid",
+      "settings": {
+        "custom_liquid": "{%- comment -%}\n  Pillow Flip (Custom Liquid version): paste this whole file into a Custom Liquid block.\n  To change text or colors, edit the assign lines below. Separate benefits with a | character.\n{%- endcomment -%}\n\n{%- liquid\n  assign s_wool_image = nil\n  assign s_latex_image = nil\n  assign s_eyebrow = \"One pillow, two feels\"\n  assign s_heading = \"Flip It to Fit Your Sleep\"\n  assign s_subheading = \"Two certified organic sides. Choose firm support or a softer cradle, then flip whenever your body asks for something different.\"\n  assign s_heading_font = \"Optima, 'Optima nova', Candara, 'Segoe UI', sans-serif\"\n  assign s_body_font = \"'DM Sans', system-ui, sans-serif\"\n  assign s_load_dm_sans = true\n  assign s_use_3d = true\n  assign s_fabric = \"#E8DCC2\"\n  assign s_blend_image = false\n  assign s_wool_stamp = \"Wool side\"\n  assign s_wool_side = \"Side 01\"\n  assign s_wool_chip = \"Firm\"\n  assign s_wool_title = \"Organic Wool\"\n  assign s_wool_text = \"Dense, springy organic wool creates a firmer surface designed to keep your neck in line with your spine. Made for side sleepers who want real support.\"\n  assign s_wool_points = \"Firmer, supportive feel|Helps keep your neck aligned|Naturally regulates temperature|Best for side sleepers\"\n  assign s_wool_step = \"Wool side\"\n  assign s_latex_stamp = \"Latex side\"\n  assign s_latex_side = \"Side 02\"\n  assign s_latex_chip = \"Cradle\"\n  assign s_latex_title = \"Organic Latex\"\n  assign s_latex_text = \"Responsive organic latex gently contours to your head, cradling it without the stuck, sinking feel of foam. Breathable, and it bounces right back.\"\n  assign s_latex_points = \"Softer, contouring feel|Cradles your head|Breathable and responsive|Great for back sleepers\"\n  assign s_latex_step = \"Latex side\"\n  assign s_note = \"Made without synthetic foam, chemical fillers, or fiberglass.\"\n  assign s_scroll_length = 260\n  assign s_bg = \"#F6F1EA\"\n  assign s_text = \"#3A3530\"\n  assign s_muted = \"#857B71\"\n  assign s_accent = \"#C08A5E\"\n  assign s_card = \"#FFFFFF\"\n  assign s_card_alt = \"#9C6B43\"\n  assign s_card_alt_text = \"#FBF6EE\"\n  assign s_card_alt_chip = \"#6F7346\"\n  assign s_badge = \"#8B8E5A\"\n-%}\n\n{%- liquid\n  assign sid = 'pillowflip'\n  assign latex_img = s_latex_image | default: s_wool_image\n  assign wool_pts = s_wool_points | split: '|'\n  assign latex_pts = s_latex_points | split: '|'\n-%}\n\n{%- if s_load_dm_sans -%}\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap\">\n{%- endif -%}\n{%- if s_heading_font_url != blank -%}\n  <style>@font-face { font-family: 'Optima'; src: url('{{ s_heading_font_url }}'); font-weight: 400; font-display: swap; }</style>\n{%- endif -%}\n\n<style>\n  .pf-flip {\n    background: var(--pf-bg);\n    color: var(--pf-text);\n  }\n  .pf-flip *, .pf-flip *::before, .pf-flip *::after { box-sizing: border-box; }\n  .pf-flip__track { position: relative; height: var(--pf-len, 260vh); }\n  .pf-flip__sticky {\n    position: sticky; top: 0;\n    height: 100vh; height: 100svh;\n    display: flex; flex-direction: column; justify-content: center;\n    gap: clamp(18px, 4vh, 44px);\n    padding: clamp(24px, 5vh, 64px) 20px;\n    overflow: hidden;\n  }\n  .pf-flip__head { text-align: center; max-width: 660px; margin: 0 auto; }\n  .pf-flip__eyebrow {\n    font-family: var(--pf-body); font-size: 12px; font-weight: 500;\n    letter-spacing: .2em; text-transform: uppercase;\n    color: var(--pf-accent); margin: 0 0 10px;\n  }\n  .pf-flip__heading {\n    font-family: var(--pf-heading); font-weight: 400;\n    font-size: clamp(28px, 4vw, 44px); line-height: 1.1;\n    margin: 0 0 12px; color: var(--pf-text);\n  }\n  .pf-flip__sub { font-family: var(--pf-body); font-size: 15px; line-height: 1.6; color: var(--pf-muted); margin: 0; }\n\n  .pf-flip__stage {\n    display: grid; grid-template-columns: 1.25fr 1fr; align-items: center;\n    gap: clamp(24px, 5vw, 72px);\n    max-width: 1120px; width: 100%; margin: 0 auto;\n  }\n\n  /* Pillow */\n  .pf-flip__visual {\n    position: relative; perspective: 1400px;\n    aspect-ratio: 3 / 2; display: flex; align-items: center; justify-content: center;\n  }\n  .pf-flip__shadow {\n    position: absolute; bottom: 7%; left: 16%; right: 16%; height: 10%;\n    border-radius: 50%;\n    background: radial-gradient(ellipse at center, rgba(70, 52, 34, .30), rgba(70, 52, 34, 0) 70%);\n    filter: blur(6px); transform-origin: center; will-change: transform, opacity;\n  }\n  .pf-flip__pillow {\n    position: relative; width: 88%; aspect-ratio: 3 / 2;\n    transform-style: preserve-3d; will-change: transform;\n  }\n  .pf-flip__face {\n    position: absolute; inset: 0;\n    backface-visibility: hidden; -webkit-backface-visibility: hidden;\n    display: flex; align-items: center; justify-content: center;\n  }\n  .pf-flip__face--back { transform: rotateX(180deg); }\n  .pf-flip__face img, .pf-flip__face svg { width: 100%; height: 100%; object-fit: contain; display: block; }\n  .pf-flip--blend .pf-flip__face img { mix-blend-mode: multiply; }\n  .pf-flip__three { position: absolute; inset: -14% -8% -6%; opacity: 0; transition: opacity .4s ease; pointer-events: none; }\n  .pf-flip__three canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }\n  .pf-flip.pf-3d .pf-flip__three { opacity: 1; }\n  .pf-flip.pf-3d .pf-flip__pillow, .pf-flip.pf-3d .pf-flip__shadow { visibility: hidden; }\n  .pf-flip__stamp {\n    position: absolute; bottom: 14%; left: 50%; transform: translateX(-50%);\n    font-family: var(--pf-body); font-size: 11px; font-weight: 600;\n    letter-spacing: .18em; text-transform: uppercase; white-space: nowrap;\n    color: var(--pf-text); background: rgba(255, 255, 255, .82);\n    padding: 7px 14px; border-radius: 999px;\n    box-shadow: 0 6px 18px -8px rgba(58, 45, 30, .35);\n  }\n\n  /* Cards */\n  .pf-flip__cards { perspective: 1600px; }\n  .pf-flip__cardflip { display: grid; transform-style: preserve-3d; will-change: transform; }\n  .pf-flip__card {\n    grid-area: 1 / 1;\n    background: var(--pf-card); border-radius: 14px;\n    border: 1px solid rgba(58, 53, 48, .07);\n    box-shadow: 0 24px 50px -28px rgba(58, 45, 30, .35);\n    padding: clamp(22px, 3vw, 36px);\n    backface-visibility: hidden; -webkit-backface-visibility: hidden;\n    pointer-events: none;\n  }\n  .pf-flip__card.is-active { pointer-events: auto; }\n  .pf-flip__card--back {\n    transform: rotateX(180deg);\n    background: var(--pf-card-alt); border-color: rgba(255, 255, 255, .06);\n    box-shadow: 0 28px 60px -26px rgba(70, 45, 20, .5);\n  }\n  .pf-flip__card--back .pf-flip__side { color: var(--pf-card-alt-text); opacity: .6; }\n  .pf-flip__card--back .pf-flip__chip { background: var(--pf-card-alt-chip); }\n  .pf-flip__card--back .pf-flip__check { background: rgba(255, 255, 255, .22); }\n  .pf-flip__card--back .pf-flip__title { color: var(--pf-card-alt-text); }\n  .pf-flip__card--back .pf-flip__text { color: var(--pf-card-alt-text); opacity: .86; }\n  .pf-flip__card--back .pf-flip__list { border-top-color: rgba(255, 255, 255, .12); }\n  .pf-flip__card--back .pf-flip__list li { color: var(--pf-card-alt-text); }\n  .pf-flip__meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }\n  .pf-flip__side {\n    font-family: var(--pf-body); font-size: 11px; letter-spacing: .18em;\n    text-transform: uppercase; color: var(--pf-muted);\n  }\n  .pf-flip__chip {\n    font-family: var(--pf-body); font-size: 11px; font-weight: 600;\n    letter-spacing: .12em; text-transform: uppercase;\n    background: var(--pf-badge); color: #fff; padding: 5px 10px; border-radius: 4px;\n  }\n  .pf-flip__title {\n    font-family: var(--pf-heading); font-weight: 400;\n    font-size: clamp(26px, 2.6vw, 34px); line-height: 1.15; margin: 0 0 10px; color: var(--pf-text);\n  }\n  .pf-flip__text { font-family: var(--pf-body); font-size: 15px; line-height: 1.65; color: var(--pf-muted); margin: 0 0 18px; }\n  .pf-flip__list { list-style: none; margin: 0; padding: 18px 0 0; border-top: 1px solid rgba(58, 53, 48, .08); display: grid; gap: 10px; }\n  .pf-flip__list li {\n    display: flex; align-items: flex-start; gap: 10px;\n    font-family: var(--pf-body); font-size: 14px; line-height: 1.45; color: var(--pf-text);\n  }\n  .pf-flip__check {\n    flex: none; width: 18px; height: 18px; margin-top: 1px; border-radius: 50%;\n    background: var(--pf-accent); display: inline-flex; align-items: center; justify-content: center;\n  }\n  .pf-flip__note {\n    font-family: var(--pf-body); font-size: 12px; color: var(--pf-muted);\n    text-align: center; margin: 14px 0 0; letter-spacing: .02em;\n  }\n\n  /* Progress */\n  .pf-flip__steps { display: flex; align-items: center; justify-content: center; gap: 14px; }\n  .pf-flip__step {\n    font-family: var(--pf-body); font-size: 12px; font-weight: 500;\n    letter-spacing: .16em; text-transform: uppercase;\n    background: none; border: 0; padding: 6px 2px; cursor: pointer;\n    color: var(--pf-muted); transition: color .3s ease;\n  }\n  .pf-flip__step.is-active { color: var(--pf-text); }\n  .pf-flip__step:focus-visible { outline: 2px solid var(--pf-accent); outline-offset: 3px; border-radius: 2px; }\n  .pf-flip__bar { width: min(200px, 28vw); height: 2px; background: rgba(58, 53, 48, .12); border-radius: 2px; overflow: hidden; }\n  .pf-flip__fill { display: block; height: 100%; background: var(--pf-accent); transform-origin: left; transform: scaleX(0); }\n\n  @media (max-width: 749px) {\n    .pf-flip__sticky { gap: 14px; padding: 20px 16px; }\n    .pf-flip__stage { grid-template-columns: 1fr; gap: 10px; }\n    .pf-flip__visual { width: 100%; max-width: 380px; margin: 0 auto; }\n    .pf-flip__card { padding: 18px 18px 16px; }\n    .pf-flip__text { font-size: 14px; margin-bottom: 12px; }\n    .pf-flip__list { grid-template-columns: 1fr 1fr; gap: 8px 12px; padding-top: 12px; }\n    .pf-flip__list li { font-size: 12.5px; }\n    .pf-flip__list li:last-child:nth-child(odd) { grid-column: 1 / -1; }\n    .pf-flip__note { display: none; }\n  }\n  @media (max-width: 749px) and (max-height: 760px) {\n    .pf-flip__sub { display: none; }\n    .pf-flip__text { display: none; }\n  }\n</style>\n\n<section\n  id=\"PillowFlip-{{ sid }}\"\n  class=\"pf-flip{% if s_blend_image %} pf-flip--blend{% endif %}\"\n  data-use3d=\"{{ s_use_3d }}\"\n  data-fabric=\"{{ s_fabric }}\"\n  data-label-bg=\"{{ s_badge }}\"\n  data-wool-label=\"{{ s_wool_stamp | escape }}\"\n  data-latex-label=\"{{ s_latex_stamp | escape }}\"\n  style=\"--pf-heading: {{ s_heading_font | replace: '\"', \"'\" }}; --pf-body: {{ s_body_font | replace: '\"', \"'\" }}; --pf-bg: {{ s_bg }}; --pf-text: {{ s_text }}; --pf-muted: {{ s_muted }}; --pf-accent: {{ s_accent }}; --pf-card: {{ s_card }}; --pf-badge: {{ s_badge }}; --pf-card-alt: {{ s_card_alt }}; --pf-card-alt-text: {{ s_card_alt_text }}; --pf-card-alt-chip: {{ s_card_alt_chip }}; --pf-len: {{ s_scroll_length }}vh;\"\n>\n  <div class=\"pf-flip__track\" data-track>\n    <div class=\"pf-flip__sticky\">\n      <div class=\"pf-flip__head\">\n        {%- if s_eyebrow != blank -%}<p class=\"pf-flip__eyebrow\">{{ s_eyebrow }}</p>{%- endif -%}\n        {%- if s_heading != blank -%}<h2 class=\"pf-flip__heading\">{{ s_heading }}</h2>{%- endif -%}\n        {%- if s_subheading != blank -%}<p class=\"pf-flip__sub\">{{ s_subheading }}</p>{%- endif -%}\n      </div>\n\n      <div class=\"pf-flip__stage\">\n        <div class=\"pf-flip__visual\" aria-hidden=\"true\">\n          <div class=\"pf-flip__three\" data-three></div>\n          <div class=\"pf-flip__shadow\" data-shadow></div>\n          <div class=\"pf-flip__pillow\" data-pillow>\n            <div class=\"pf-flip__face pf-flip__face--front\">\n              {%- if s_wool_image -%}\n                {{ s_wool_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', sizes: '(min-width: 990px) 600px, 90vw', alt: '' }}\n              {%- else -%}\n                <svg viewBox=\"0 0 600 400\" role=\"presentation\">\n                  <defs>\n                    <radialGradient id=\"pfW-{{ sid }}\" cx=\"48%\" cy=\"40%\" r=\"68%\"><stop offset=\"0\" stop-color=\"#FCF8EF\"/><stop offset=\".7\" stop-color=\"#EEE4D2\"/><stop offset=\"1\" stop-color=\"#D9CBB2\"/></radialGradient>\n                    <pattern id=\"pfWp-{{ sid }}\" width=\"14\" height=\"14\" patternUnits=\"userSpaceOnUse\"><circle cx=\"3\" cy=\"4\" r=\".9\" fill=\"#B9A685\" opacity=\".35\"/><circle cx=\"10\" cy=\"10\" r=\".7\" fill=\"#B09C7B\" opacity=\".3\"/></pattern>\n                  </defs>\n                  <path d=\"M48 70 C180 40 420 40 552 70 C578 160 578 240 552 330 C420 362 180 362 48 330 C22 240 22 160 48 70Z\" fill=\"url(#pfW-{{ sid }})\"/>\n                  <path d=\"M48 70 C180 40 420 40 552 70 C578 160 578 240 552 330 C420 362 180 362 48 330 C22 240 22 160 48 70Z\" fill=\"url(#pfWp-{{ sid }})\"/>\n                  <path d=\"M64 84 C185 58 415 58 536 84 C558 165 558 235 536 316 C415 342 185 342 64 316 C42 235 42 165 64 84Z\" fill=\"none\" stroke=\"#C7B494\" stroke-width=\"1.5\" stroke-dasharray=\"2 6\" opacity=\".7\"/>\n                </svg>\n              {%- endif -%}\n              <span class=\"pf-flip__stamp\">{{ s_wool_stamp }}</span>\n            </div>\n            <div class=\"pf-flip__face pf-flip__face--back\">\n              {%- if latex_img -%}\n                {{ latex_img | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', sizes: '(min-width: 990px) 600px, 90vw', alt: '' }}\n              {%- else -%}\n                <svg viewBox=\"0 0 600 400\" role=\"presentation\">\n                  <defs>\n                    <radialGradient id=\"pfL-{{ sid }}\" cx=\"48%\" cy=\"40%\" r=\"68%\"><stop offset=\"0\" stop-color=\"#F9F0DF\"/><stop offset=\".7\" stop-color=\"#E9D8B9\"/><stop offset=\"1\" stop-color=\"#D3BE99\"/></radialGradient>\n                    <pattern id=\"pfLp-{{ sid }}\" width=\"22\" height=\"22\" patternUnits=\"userSpaceOnUse\"><circle cx=\"11\" cy=\"11\" r=\"2.2\" fill=\"#BFA77E\" opacity=\".3\"/></pattern>\n                  </defs>\n                  <path d=\"M48 70 C180 40 420 40 552 70 C578 160 578 240 552 330 C420 362 180 362 48 330 C22 240 22 160 48 70Z\" fill=\"url(#pfL-{{ sid }})\"/>\n                  <path d=\"M48 70 C180 40 420 40 552 70 C578 160 578 240 552 330 C420 362 180 362 48 330 C22 240 22 160 48 70Z\" fill=\"url(#pfLp-{{ sid }})\"/>\n                  <path d=\"M64 84 C185 58 415 58 536 84 C558 165 558 235 536 316 C415 342 185 342 64 316 C42 235 42 165 64 84Z\" fill=\"none\" stroke=\"#C2AA82\" stroke-width=\"1.5\" stroke-dasharray=\"2 6\" opacity=\".7\"/>\n                </svg>\n              {%- endif -%}\n              <span class=\"pf-flip__stamp\">{{ s_latex_stamp }}</span>\n            </div>\n          </div>\n        </div>\n\n        <div>\n          <div class=\"pf-flip__cards\" aria-live=\"polite\">\n           <div class=\"pf-flip__cardflip\" data-cardflip>\n            <article class=\"pf-flip__card is-active\" data-card aria-hidden=\"false\">\n              <div class=\"pf-flip__meta\">\n                <span class=\"pf-flip__side\">{{ s_wool_side }}</span>\n                <span class=\"pf-flip__chip\">{{ s_wool_chip }}</span>\n              </div>\n              <h3 class=\"pf-flip__title\">{{ s_wool_title }}</h3>\n              <p class=\"pf-flip__text\">{{ s_wool_text }}</p>\n              <ul class=\"pf-flip__list\">\n                {%- for pt in wool_pts -%}{%- assign p = pt | strip -%}{%- if p != blank -%}\n                  <li><span class=\"pf-flip__check\"><svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M2.5 6.2l2.3 2.3 4.7-5\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span>{{ p }}</li>\n                {%- endif -%}{%- endfor -%}\n              </ul>\n            </article>\n            <article class=\"pf-flip__card pf-flip__card--back\" data-card aria-hidden=\"true\">\n              <div class=\"pf-flip__meta\">\n                <span class=\"pf-flip__side\">{{ s_latex_side }}</span>\n                <span class=\"pf-flip__chip\">{{ s_latex_chip }}</span>\n              </div>\n              <h3 class=\"pf-flip__title\">{{ s_latex_title }}</h3>\n              <p class=\"pf-flip__text\">{{ s_latex_text }}</p>\n              <ul class=\"pf-flip__list\">\n                {%- for pt in latex_pts -%}{%- assign p = pt | strip -%}{%- if p != blank -%}\n                  <li><span class=\"pf-flip__check\"><svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" fill=\"none\"><path d=\"M2.5 6.2l2.3 2.3 4.7-5\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span>{{ p }}</li>\n                {%- endif -%}{%- endfor -%}\n              </ul>\n            </article>\n           </div>\n          </div>\n          {%- if s_note != blank -%}<p class=\"pf-flip__note\">{{ s_note }}</p>{%- endif -%}\n        </div>\n      </div>\n\n      <div class=\"pf-flip__steps\">\n        <button type=\"button\" class=\"pf-flip__step is-active\" data-step=\"0\">{{ s_wool_step }}</button>\n        <span class=\"pf-flip__bar\"><span class=\"pf-flip__fill\" data-fill></span></span>\n        <button type=\"button\" class=\"pf-flip__step\" data-step=\"1\">{{ s_latex_step }}</button>\n      </div>\n    </div>\n  </div>\n</section>\n\n<script>\n  (function () {\n    var root = document.getElementById('PillowFlip-{{ sid }}');\n    if (!root) return;\n    var track = root.querySelector('[data-track]');\n    var pillow = root.querySelector('[data-pillow]');\n    var shadow = root.querySelector('[data-shadow]');\n    var cardFlip = root.querySelector('[data-cardflip]');\n    var fill = root.querySelector('[data-fill]');\n    var cards = root.querySelectorAll('[data-card]');\n    var steps = root.querySelectorAll('[data-step]');\n    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n    var START = 0.3, END = 0.7, current = 0, ticking = false;\n\n    function clamp(v) { return Math.min(1, Math.max(0, v)); }\n    function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }\n\n    function setSide(idx) {\n      if (idx === current) return;\n      current = idx;\n      cards.forEach(function (c, i) {\n        c.classList.toggle('is-active', i === idx);\n        c.setAttribute('aria-hidden', i === idx ? 'false' : 'true');\n      });\n      steps.forEach(function (s, i) { s.classList.toggle('is-active', i === idx); });\n    }\n\n    function update() {\n      ticking = false;\n      var total = track.offsetHeight - window.innerHeight;\n      var p = total > 0 ? clamp(-track.getBoundingClientRect().top / total) : 0;\n      var t = clamp((p - START) / (END - START));\n      var lift = Math.sin(Math.PI * t);\n      if (reduce) {\n        pillow.style.transform = 'rotateX(' + (t >= 0.5 ? 180 : 0) + 'deg)';\n      } else {\n        pillow.style.transform = 'translateY(' + (-lift * 9) + '%) rotateX(' + (ease(t) * 180) + 'deg) scale(' + (1 + lift * 0.04) + ')';\n        shadow.style.transform = 'scale(' + (1 - lift * 0.35) + ')';\n        shadow.style.opacity = 1 - lift * 0.55;\n      }\n      var cardTurn = reduce ? (t >= 0.5 ? 180 : 0) : ease(t) * 180;\n      cardFlip.style.transform = 'rotateX(' + cardTurn + 'deg) scale(' + (reduce ? 1 : 1 - lift * 0.05) + ')';\n      fill.style.transform = 'scaleX(' + p + ')';\n      root._pf = { t: t, p: p };\n      root.dispatchEvent(new CustomEvent('pf:progress', { detail: root._pf }));\n      setSide(t >= 0.5 ? 1 : 0);\n    }\n\n    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }\n    window.addEventListener('scroll', onScroll, { passive: true });\n    window.addEventListener('resize', onScroll);\n\n    steps.forEach(function (btn, i) {\n      btn.addEventListener('click', function () {\n        var total = track.offsetHeight - window.innerHeight;\n        var top = track.getBoundingClientRect().top + window.scrollY;\n        window.scrollTo({ top: top + total * (i === 0 ? 0.12 : 0.88), behavior: reduce ? 'auto' : 'smooth' });\n      });\n    });\n\n    update();\n  })();\n</script>\n\n<script type=\"module\">\n  const root = document.getElementById('PillowFlip-{{ sid }}');\n  const THREE_SRC = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';\n  if (root && root.dataset.use3d === 'true') {\n    Promise.all([import(THREE_SRC), document.fonts ? document.fonts.ready : null]).then(([THREE]) => { try { pillow3D(THREE, root); } catch (e) { console.warn('Pillow 3D fallback', e); } }).catch(() => {});\n  }\n\n  function pillow3D(THREE, root) {\n    const host = root.querySelector('[data-three]');\n    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n    const W = 3, H = 2, T = 0.5;                // pillow width, depth, half thickness\n    const fabric = new THREE.Color(root.dataset.fabric || '#E8DCC2');\n\n    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });\n    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));\n    renderer.outputColorSpace = THREE.SRGBColorSpace;\n    renderer.toneMapping = THREE.ACESFilmicToneMapping;\n    renderer.toneMappingExposure = 1.0;\n    host.appendChild(renderer.domElement);\n\n    const scene = new THREE.Scene();\n    const camera = new THREE.PerspectiveCamera(27, 1, 0.1, 50);\n    camera.position.set(0, 4.3, 7.2);\n    camera.lookAt(0, 0.4, 0);\n\n    scene.add(new THREE.HemisphereLight(0xfff4e4, 0x9c8668, 1.1));\n    const key = new THREE.DirectionalLight(0xffffff, 2.1); key.position.set(-3, 6, 4); scene.add(key);\n    const fillL = new THREE.DirectionalLight(0xfff1de, 0.7); fillL.position.set(4, 2, 3); scene.add(fillL);\n    const rim = new THREE.DirectionalLight(0xffffff, 0.8); rim.position.set(0, 3, -5); scene.add(rim);\n\n    // Pillow shape: puffy center, sagging edge midpoints, crisp corners, soft wrinkles\n    const pinchX = (v) => 0.07 * (1 - v * v);\n    const pinchZ = (u) => 0.11 * (1 - u * u);\n    function height(u, v) {\n      const a = Math.max(0, (1 - u * u) * (1 - v * v));\n      let h = T * Math.pow(a, 0.32);\n      const crease = Math.sin(u * 10.5 + v * 4.2) * Math.sin(v * 8.3 - u * 2.7) + 0.6 * Math.sin((u - v) * 15);\n      h += 0.02 * crease * Math.pow(a, 0.25) * (1 - a);\n      return h;\n    }\n    function pointAt(u, v, sign, lift) {\n      return [u * W / 2 * (1 - pinchX(v)), sign * (height(u, v) + (lift || 0)), v * H / 2 * (1 - pinchZ(u))];\n    }\n    function faceGeometry(sign, N, M) {\n      const pos = [], uv = [], idx = [];\n      for (let j = 0; j <= M; j++) {\n        const v = -1 + 2 * j / M;\n        for (let i = 0; i <= N; i++) {\n          const u = -1 + 2 * i / N;\n          pos.push(...pointAt(u, v, sign));\n          uv.push((u + 1) / 2, (v + 1) / 2);\n        }\n      }\n      for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) {\n        const a = j * (N + 1) + i, b = a + 1, c = a + N + 1, d = c + 1;\n        if (sign > 0) idx.push(a, c, b, b, c, d); else idx.push(a, b, c, b, d, c);\n      }\n      const g = new THREE.BufferGeometry();\n      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));\n      g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));\n      g.setIndex(idx); g.computeVertexNormals();\n      return g;\n    }\n\n    // Woven cotton bump texture\n    function weaveTexture() {\n      const c = document.createElement('canvas'); c.width = c.height = 256;\n      const ctx = c.getContext('2d'); const img = ctx.createImageData(256, 256);\n      for (let y = 0; y < 256; y++) for (let x = 0; x < 256; x++) {\n        const weave = ((x >> 1) + (y >> 1)) % 2 ? 18 : -18;\n        const slub = Math.sin(y * 0.21) * 10 + Math.sin(x * 0.13 + y * 0.05) * 6;\n        const v = 128 + weave + slub + (Math.random() - 0.5) * 34;\n        const k = (y * 256 + x) * 4; img.data[k] = img.data[k + 1] = img.data[k + 2] = v; img.data[k + 3] = 255;\n      }\n      ctx.putImageData(img, 0, 0);\n      const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(14, 9);\n      return t;\n    }\n    const bump = weaveTexture();\n    const cloth = new THREE.MeshPhysicalMaterial({\n      color: fabric, roughness: 0.93, metalness: 0,\n      sheen: 0.8, sheenRoughness: 0.55, sheenColor: new THREE.Color('#fff4e2'),\n      bumpMap: bump, bumpScale: 0.6\n    });\n\n    const flip = new THREE.Group();\n    flip.add(new THREE.Mesh(faceGeometry(1, 120, 80), cloth));\n    flip.add(new THREE.Mesh(faceGeometry(-1, 120, 80), cloth));\n\n    // Piping along the seam\n    const seam = [];\n    const S = 60;\n    for (let i = 0; i < S; i++) seam.push(pointAt(-1 + 2 * i / S, -1, 1));\n    for (let i = 0; i < S; i++) seam.push(pointAt(1, -1 + 2 * i / S, 1));\n    for (let i = 0; i < S; i++) seam.push(pointAt(1 - 2 * i / S, 1, 1));\n    for (let i = 0; i < S; i++) seam.push(pointAt(-1, 1 - 2 * i / S, 1));\n    const curve = new THREE.CatmullRomCurve3(seam.map((p) => new THREE.Vector3(p[0], 0, p[2])), true, 'catmullrom', 0.1);\n    const pipeMat = cloth.clone(); pipeMat.color = fabric.clone().multiplyScalar(0.94); pipeMat.bumpMap = null;\n    flip.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 480, 0.03, 10, true), pipeMat));\n\n    // Sewn side labels that conform to the fabric\n    function labelTexture(text) {\n      const c = document.createElement('canvas'); c.width = 512; c.height = 150;\n      const ctx = c.getContext('2d');\n      ctx.fillStyle = root.dataset.labelBg || '#8B8E5A'; ctx.fillRect(0, 0, 512, 150);\n      ctx.strokeStyle = 'rgba(255,255,255,.35)'; ctx.setLineDash([6, 6]); ctx.lineWidth = 3; ctx.strokeRect(12, 12, 488, 126);\n      ctx.fillStyle = '#FBF6EC'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';\n      ctx.font = '600 54px \"DM Sans\", system-ui, sans-serif';\n      if ('letterSpacing' in ctx) ctx.letterSpacing = '10px';\n      ctx.fillText(String(text || '').toUpperCase(), 256, 78);\n      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;\n      return t;\n    }\n    function label(text, top) {\n      const lw = 0.36, lh = 0.105, N = 24, M = 6, zc = 0.5, pos = [], uv = [], idx = [];\n      for (let j = 0; j <= M; j++) for (let i = 0; i <= N; i++) {\n        const a = -1 + 2 * i / N, b = -1 + 2 * j / M;\n        const x = a * lw, zWorld = zc - b * lh;          // text reads upright toward the viewer\n        const z = top ? zWorld : -zWorld;                 // bottom face lands mirrored in z after the flip\n        let u = x / (W / 2), v = z / (H / 2);\n        v = v / (1 - pinchZ(u)); u = u / (1 - pinchX(v));\n        const y = (height(u, v) + 0.006) * (top ? 1 : -1);\n        pos.push(x, y, z); uv.push((a + 1) / 2, (b + 1) / 2);\n      }\n      for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) {\n        const a = j * (N + 1) + i, b = a + 1, c = a + N + 1, d = c + 1; idx.push(a, b, c, b, d, c);\n      }\n      const g = new THREE.BufferGeometry();\n      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));\n      g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));\n      g.setIndex(idx); g.computeVertexNormals();\n      const m = new THREE.MeshStandardMaterial({ map: labelTexture(text), roughness: 0.8, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -2 });\n      return new THREE.Mesh(g, m);\n    }\n    flip.add(label(root.dataset.woolLabel, true));\n    flip.add(label(root.dataset.latexLabel, false));\n\n    // Soft contact shadow\n    function blobTexture() {\n      const c = document.createElement('canvas'); c.width = c.height = 256;\n      const ctx = c.getContext('2d'); const g = ctx.createRadialGradient(128, 128, 10, 128, 128, 128);\n      g.addColorStop(0, 'rgba(60,44,28,0.55)'); g.addColorStop(0.55, 'rgba(60,44,28,0.25)'); g.addColorStop(1, 'rgba(60,44,28,0)');\n      ctx.fillStyle = g; ctx.fillRect(0, 0, 256, 256);\n      return new THREE.CanvasTexture(c);\n    }\n    const blob = new THREE.Mesh(new THREE.PlaneGeometry(W * 1.35, H * 1.55), new THREE.MeshBasicMaterial({ map: blobTexture(), transparent: true, depthWrite: false }));\n    blob.rotation.x = -Math.PI / 2; blob.position.y = -T - 0.01;\n\n    const lift = new THREE.Group(); lift.add(flip);\n    const yaw = new THREE.Group(); yaw.add(lift); yaw.add(blob);\n    scene.add(yaw);\n\n    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);\n    let state = root._pf || { t: 0, p: 0 }, queued = false;\n    function render() {\n      queued = false;\n      const t = state.t, p = state.p, up = Math.sin(Math.PI * t);\n      const angle = reduce ? (t >= 0.5 ? Math.PI : 0) : ease(t) * Math.PI;\n      flip.rotation.x = -angle;                                  // tumbles toward the viewer\n      lift.position.y = reduce ? 0 : up * 0.9;\n      yaw.rotation.y = -0.32 + p * 0.64;\n      blob.scale.set(1 - up * 0.22, 1, 0.55 + 0.45 * Math.abs(Math.cos(angle)));\n      blob.material.opacity = 1 - up * 0.55;\n      renderer.render(scene, camera);\n    }\n    const queue = () => { if (!queued) { queued = true; requestAnimationFrame(render); } };\n    let lastW = 0, lastH = 0, resizeQueued = false;\n    function resize() {\n      resizeQueued = false;\n      const w = Math.round(host.clientWidth), h = Math.round(host.clientHeight);\n      if (!w || !h || (w === lastW && h === lastH)) return;\n      lastW = w; lastH = h;\n      renderer.setSize(w, h, false); camera.aspect = w / h;\n      camera.fov = w / h < 1.2 ? 33 : 27; camera.updateProjectionMatrix(); queue();\n    }\n    const queueResize = () => { if (!resizeQueued) { resizeQueued = true; requestAnimationFrame(resize); } };\n    root.addEventListener('pf:progress', (e) => { state = e.detail; queue(); });\n    new ResizeObserver(queueResize).observe(host);\n    resize(); render();\n    root.classList.add('pf-3d');\n  }\n</script>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "nw_testimonials_BU9rMk": {
@@ -766,6 +813,7 @@
         "benefit_rzHW3b",
         "benefit_7fpBCW"
       ],
+      "disabled": true,
       "name": "Nw Benefits",
       "settings": {
         "heading": "Dial in Your Loft",
@@ -798,6 +846,79 @@
         "padding_bottom_mobile": 48
       }
     },
+    "nw_founder_story_aEPTg4": {
+      "type": "nw-founder-story",
+      "blocks": {
+        "stat_wnfU7P": {
+          "type": "stat",
+          "settings": {
+            "value": "8 Hours",
+            "description": "<p>Every Night</p>"
+          }
+        },
+        "stat_KKFzTM": {
+          "type": "stat",
+          "settings": {
+            "value": "56 Hours",
+            "description": "<p>Every week</p>"
+          }
+        },
+        "stat_G46PR8": {
+          "type": "stat",
+          "settings": {
+            "value": "26 Years",
+            "description": "<p>Of your lifetime</p>"
+          }
+        }
+      },
+      "block_order": [
+        "stat_wnfU7P",
+        "stat_KKFzTM",
+        "stat_G46PR8"
+      ],
+      "name": "t:sections.nw-founder-story.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "What’s Inside Your Pillow Matters.",
+        "media_type": "video",
+        "video": "shopify://files/videos/Gary horizontal pillow longform-WEB.mp4",
+        "video_autoplay": false,
+        "show_play_icon": true,
+        "poster": "shopify://shop_images/Frame_48101000.png",
+        "overlay_text": "",
+        "quote": "<p><em>\"We spend so much time thinking about what we eat, what we drink, and the air we breathe. Then we put our face on a synthetic filled pillow for eight hours every night. That just didn't make sense to me. An organic mattress deserves an organic pillow.\"</em></p>",
+        "name": "Gary Brecka",
+        "show_verified": true,
+        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "show_footer_content": true,
+        "footer_heading": "\"Don't overlook the pillow you spend hours breathing through every night.\"",
+        "footer_description": "",
+        "disclaimer": "",
+        "heading_color": "#613916",
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "card_border_color": "#61391633",
+        "card_bg_color": "#fbf9f6",
+        "quote_color": "#613916",
+        "name_color": "#613916",
+        "role_color": "#613916",
+        "stat_border_color": "#61391633",
+        "stat_value_color": "#613916",
+        "stat_desc_color": "#613916",
+        "disclaimer_color": "#563822",
+        "footer_heading_color": "#613916",
+        "footer_description_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 24
+      }
+    },
     "nw_organic_gcGNTr": {
       "type": "nw-organic",
       "blocks": {
@@ -826,7 +947,7 @@
             "col2_use_custom_icon": false,
             "col2_icon": "cross",
             "col2_icon_color": "#b61919",
-            "col2_text": "Can trap dust, moisture, and allergens"
+            "col2_text": "Easily traps dust, moisture, and allergens"
           }
         },
         "table_row_eHpBAb": {
@@ -850,11 +971,11 @@
             "col1_use_custom_icon": false,
             "col1_icon": "verified-3",
             "col1_icon_color": "#878735",
-            "col1_text": "Allows airflow for cooler comfort",
+            "col1_text": "Allows airflow",
             "col2_use_custom_icon": false,
             "col2_icon": "cross",
             "col2_icon_color": "#b61919",
-            "col2_text": "Can trap heat around the face and neck"
+            "col2_text": "Synthetics trap heat&nbsp;"
           }
         },
         "table_row_b3GhLj": {
@@ -868,7 +989,7 @@
             "col2_use_custom_icon": false,
             "col2_icon": "cross",
             "col2_icon_color": "#b61919",
-            "col2_text": "Can collapse or go flat"
+            "col2_text": "Collapse flat"
           }
         }
       },
@@ -882,7 +1003,7 @@
       "name": "t:sections.nw-organic.name",
       "settings": {
         "heading": "Organic Snooze Pillow vs Conventional Pillow",
-        "description": "<p>Most pillows are plastic fill in a cover. This one is organic materials your body understands you can tune.</p>",
+        "description": "<p>Most pillows us polyester fill and cover which is a form of plastic. This one is made with organic materials your body understands.</p>",
         "brand_column_bg": "#fffcf0",
         "table_border_color": "#61391633",
         "heading_color": "#613916",
@@ -897,13 +1018,13 @@
         "video_autoplay": false,
         "show_play_icon": true,
         "image_position": "right",
-        "image_desktop": "shopify://shop_images/orgainc-main-2.png",
-        "image_mobile": "shopify://shop_images/orgainc-main-2-mobile.png",
+        "image_desktop": "shopify://shop_images/TUS_Pillow_Creative_14.jpg",
+        "image_mobile": "shopify://shop_images/TUS_Pillow_Creative_14.jpg",
         "col1_head_image": "shopify://shop_images/organic-3_4be3dd40-523e-40ff-a3c4-a2324b22bb21.png",
         "col1_head_logo": "shopify://shop_images/Ultimate_Snooze_-_Logo_-_Black_1.png",
-        "col1_head_title": "Organic Snooze",
+        "col1_head_title": "Ultimate Snooze",
         "col2_head_image": "shopify://shop_images/organic-4_65db9bad-e516-444c-84b6-bab0d80ace20.png",
-        "col2_head_title": "Conventional Foam",
+        "col2_head_title": "Common Pillow",
         "show_button": false,
         "button_text": "CHOOSE BETTER SLEEP",
         "button_link": "",
@@ -924,16 +1045,16 @@
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/icon-4.svg",
-            "title": "No Harsh Chemical Off-Gassing",
-            "description": "<p>Your pillow sits inches from your nose and mouth all night. We use breathable organic materials instead of synthetic foam fills with harsh chemical odors.</p>"
+            "title": "No Off-Gassing",
+            "description": "<p>We use breathable organic materials instead of synthetic foam fills with harsh chemical odors.</p>"
           }
         },
         "feature_PLjdKt": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/icon-8.svg",
-            "title": "Adjust It to You",
-            "description": "<p>Add or remove fill until the loft fits your neck exactly.</p>"
+            "title": "Adjust Your Size",
+            "description": "<p>Add or remove fill from a zipper, until the loft fits your neck exactly.</p>"
           }
         },
         "feature_VN7Am9": {
@@ -941,7 +1062,7 @@
           "settings": {
             "icon": "shopify://shop_images/icon-7.svg",
             "title": "Naturally Cool",
-            "description": "<p>Breathable organic materials help release heat and moisture, supporting a cooler sleep environment as your body moves into recovery.</p>"
+            "description": "<p>Breathable organic materials help release heat and moisture.</p>"
           }
         },
         "feature_cqgLtM": {
@@ -949,15 +1070,15 @@
           "settings": {
             "icon": "shopify://shop_images/icon-6.svg",
             "title": "Doesn't Collapse",
-            "description": "<p>Built to maintain loft instead of flattening out, so your neck stays supported while your body rests, repairs, and resets.</p>"
+            "description": "<p>Built to maintain loft, throughout the night without collapse.</p>"
           }
         },
         "feature_XyqrQ8": {
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/icon-5.svg",
-            "title": "Superior Comfort",
-            "description": "<p>Soft, breathable fill creates a cleaner, more supportive sleep surface without sacrificing the comfort you expect from a premium pillow.</p>"
+            "title": "Organic Comfort",
+            "description": "<p>Organic materials selected for non-toxic comfort.</p>"
           }
         }
       },
@@ -991,83 +1112,6 @@
         "bg_image": "shopify://shop_images/benifit-desktop.png",
         "bg_image_mobile": "shopify://shop_images/benifit-mobile.png",
         "bg_image_opacity": 16,
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_founder_story_RhHRer": {
-      "type": "nw-founder-story",
-      "blocks": {
-        "stat_XXFt9w": {
-          "type": "stat",
-          "settings": {
-            "value": "26",
-            "description": "<p><strong>Years</strong> Average lifetime spent in bed.</p>"
-          }
-        },
-        "stat_YEzEwg": {
-          "type": "stat",
-          "settings": {
-            "value": "68°F",
-            "description": "<p>Ideal sleep temperature</p>"
-          }
-        },
-        "stat_L6nGEx": {
-          "type": "stat",
-          "settings": {
-            "value": "1/3",
-            "description": "<p><strong>of Your Life </strong>spent sleeping.<br/>Those are memorable.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "stat_XXFt9w",
-        "stat_YEzEwg",
-        "stat_L6nGEx"
-      ],
-      "custom_css": [
-        "nw-founder-story {border-bottom: 1px solid #c7beb7;}"
-      ],
-      "name": "t:sections.nw-founder-story.name",
-      "settings": {
-        "show_rating": true,
-        "star_rating": 5,
-        "eyebrow": "Real sleepers, real mornings",
-        "heading": "Why Gary Cares About Your Pillow",
-        "media_type": "video",
-        "video": "shopify://files/videos/instagram-video-3fca1c1a-9512-49d9-a544-653ceebeebe4.mp4",
-        "video_autoplay": false,
-        "show_play_icon": true,
-        "poster": "shopify://shop_images/plaeholder-5-mobile.png",
-        "poster_mobile": "shopify://shop_images/plaeholder-5.png",
-        "overlay_text": "",
-        "quote": "<p>“Sleep is not passive. It’s when your body repairs tissue, regulates hormones, and resets the nervous system. If your pillow is trapping heat, collapsing your neck, or carrying chemical odors near your airway, that can work against the recovery you’re trying to build.”</p>",
-        "name": "Gary Brecka",
-        "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
-        "show_footer_content": true,
-        "footer_heading": "Alignment Starts at the Pillow",
-        "footer_description": "<p>The right loft helps support your head, neck, shoulders, and spine while your body rests, repairs, and resets.</p>",
-        "disclaimer": "<p><em>*Results vary by individual. General sleep trends, not guarantees.</em></p>",
-        "heading_color": "#613916",
-        "star_color": "#e57b1e",
-        "star_color_inactive": "#d1d5db",
-        "card_border_color": "#61391633",
-        "card_bg_color": "#fbf9f6",
-        "quote_color": "#613916",
-        "name_color": "#613916",
-        "role_color": "#613916",
-        "stat_border_color": "#61391633",
-        "stat_value_color": "#613916",
-        "stat_desc_color": "#613916",
-        "disclaimer_color": "#613916cc",
-        "footer_heading_color": "#613916",
-        "footer_description_color": "#613916",
-        "bg_type": "none",
-        "bg_color": "#ffffff",
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -1246,13 +1290,14 @@
     "disclosures",
     "related-products",
     "nw_marquee_v2_UfXLdp",
+    "custom_liquid_z7zdmm",
     "nw_testimonials_BU9rMk",
     "nw_benefits_J9TVzc",
-    "nw_organic_gcGNTr",
+    "nw_founder_story_aEPTg4",
     "nw_materials_matter_wH9DBk",
-    "nw_founder_story_RhHRer",
-    "nw_product_list_Ej8ReJ",
+    "nw_organic_gcGNTr",
     "nw_faq_VygLpj",
+    "nw_product_list_Ej8ReJ",
     "1788863647fd1fa831"
   ]
 }
