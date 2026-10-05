@@ -704,7 +704,7 @@
         "highlight_text": "<p>Mattress toppers follow the same trial as mattresses and a 3-year warranty. Sheets, pillows, and protectors are returnable within 30 days, free if unopened, or with a 20% restocking fee if opened. Adjustable bases and frames are final sale (non-returnable), but they're backed by a 20-year warranty.</p>",
         "show_button": true,
         "button_text": "START A RETURN OR EXCHANGE",
-        "button_link": "#",
+        "button_link": "shopify://pages/returns-exchanges",
         "button_style": "primary",
         "bg_type": "gradient",
         "bg_color": "#ffffff",
@@ -817,12 +817,13 @@
             "title": "Payment Options & Financing",
             "text": "Affirm, HSA/FSA, and more ways to pay",
             "button_text": "View Payment Options",
-            "button_link": "#",
+            "button_link": "shopify://pages/payments",
             "button_style": "outline"
           }
         },
         "card_9ktgnq": {
           "type": "card",
+          "disabled": true,
           "settings": {
             "use_custom_image": true,
             "custom_image": "shopify://shop_images/white-glove.png",
@@ -843,7 +844,7 @@
             "title": "Shipping & Returns",
             "text": "Delivery times and how returns work",
             "button_text": "See Shipping & Returns",
-            "button_link": "#",
+            "button_link": "shopify://pages/returns-exchanges",
             "button_style": "outline"
           }
         }
