@@ -46,7 +46,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>This Sleep Optimization Bundle is everything you need to build a cleaner, cooler, and more restorative sleep environment. </p>",
+            "custom_description": "<p><strong>Gary Brecka's Sleep Bundle</strong></p><p>This Sleep Optimization Bundle is everything you need to build a cleaner, cooler, and more restorative sleep environment.&nbsp;</p>",
             "margin_top": 0,
             "margin_bottom": 14,
             "margin_top_mobile": 0,
@@ -55,15 +55,25 @@
         },
         "price": {
           "type": "price",
-          "disabled": true,
           "settings": {
             "show_affirm": true,
             "show_sale_badge": true,
             "show_save_percentage": false,
             "margin_top": 0,
-            "margin_bottom": 20,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 16
+            "margin_bottom_mobile": 0
+          }
+        },
+        "affirm_pay_over_time_messaging_product_block_mpCiRU": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "settings": {
+            "logo_align": "left",
+            "font_size": 14,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "",
+            "price_selector": ""
           }
         },
         "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA": {
@@ -74,6 +84,7 @@
         },
         "nw_benifits_list_xTL4Mb": {
           "type": "nw_benifits_list",
+          "disabled": true,
           "settings": {
             "icon_color": "#cc926a",
             "text_color": "#613916",
@@ -87,100 +98,113 @@
         },
         "icon_text_WTq7CJ": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
-            "style": "inline",
-            "text": "Ultimate Recovery Mattress",
+            "style": "checklist",
+            "text": "Sleep System Includes:",
             "use_custom_icon": true,
             "icon": "check-circle",
-            "custom_icon": "shopify://shop_images/icon-11.svg",
             "link": "",
             "icon_color": "#cc926a",
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
-            "margin_top": 0,
+            "margin_top": 16,
             "margin_bottom": 8,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_Q78m9x": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Ultimate Recovery Mattress | Cushion-Firm",
+            "use_custom_icon": true,
+            "icon": "check-circle",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
+            "link": "",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 16,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 0
           }
         },
-        "icon_text_Gb63E7": {
+        "icon_text_V6AwgM": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
-            "style": "inline",
-            "text": "Breathable for Hot Sleepers",
+            "style": "checklist",
+            "text": "SnoozeLift 5.0 | Adjustable Base",
             "use_custom_icon": true,
             "icon": "check-circle",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_1_ea96148e-6ba6-41d6-821a-7e14774caa5e.svg",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
             "link": "",
             "icon_color": "#cc926a",
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
             "margin_top": 0,
-            "margin_bottom": 8,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 0
           }
         },
-        "icon_text_fzqtU8": {
+        "icon_text_Nwcnpt": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
-            "style": "inline",
-            "text": "Natural Fibers, Chemical-Free",
+            "style": "checklist",
+            "text": "(2x) Kloud Pillows | Latex and Kapok",
             "use_custom_icon": true,
             "icon": "check-circle",
-            "custom_icon": "shopify://shop_images/icon-13.svg",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
             "link": "",
             "icon_color": "#cc926a",
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
             "margin_top": 0,
-            "margin_bottom": 8,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 0
           }
         },
-        "icon_text_Kp4UwR": {
+        "icon_text_G6Nenw": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
-            "style": "inline",
-            "text": "Universal Fit",
+            "style": "checklist",
+            "text": "Breezline Air | Cotton Sheet Set",
             "use_custom_icon": true,
             "icon": "check-circle",
-            "custom_icon": "shopify://shop_images/icon-10.svg",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
             "link": "",
             "icon_color": "#cc926a",
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
             "margin_top": 0,
-            "margin_bottom": 8,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 0
           }
         },
-        "icon_text_epVFcH": {
+        "icon_text_Uk3zBN": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
-            "style": "inline",
-            "text": "Softer With Every Wash",
+            "style": "checklist",
+            "text": "Water-resistant mattress protector",
             "use_custom_icon": true,
             "icon": "check-circle",
-            "custom_icon": "shopify://shop_images/icon-9.svg",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
             "link": "",
             "icon_color": "#cc926a",
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
             "margin_top": 0,
-            "margin_bottom": 8,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 0
           }
@@ -232,17 +256,6 @@
             "margin_bottom": 8,
             "margin_top_mobile": 24,
             "margin_bottom_mobile": 8
-          }
-        },
-        "affirm_pay_over_time_messaging_product_block_mpCiRU": {
-          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
-          "settings": {
-            "logo_align": "left",
-            "font_size": 14,
-            "logo_color": "blue",
-            "logo_type": "logo",
-            "public_api_key": "",
-            "price_selector": ""
           }
         },
         "shipping_tag_Agd7QN": {
@@ -304,13 +317,13 @@
             "item_1_layout": "simple",
             "item_1_heading": "",
             "item_1_subheading": "",
-            "item_1_text": "Pay over time",
+            "item_1_text": "Pay over time choose affirm at checkout",
             "item_1_link": "",
             "item_2_image": "shopify://shop_images/image_1269.png",
             "item_2_layout": "simple",
             "item_2_heading": "HSA/FSA",
             "item_2_subheading": "Eligible",
-            "item_2_text": "Use your benefits",
+            "item_2_text": "Use your HSA/FSA benefits choose TrueMed at checkout",
             "item_2_link": "",
             "divider_color": "#d1ccc2",
             "heading_color": "#32323a",
@@ -325,7 +338,7 @@
         "bundle_tabs_KQjF3f": {
           "type": "bundle_tabs",
           "settings": {
-            "heading": "Explore what's included",
+            "heading": "Explore what's included in this bundle",
             "heading_color": "#613916",
             "tab_text_color": "#a0a0a0",
             "tab_active_color": "#613916",
@@ -350,11 +363,11 @@
           "settings": {
             "product": "2ab6ffb3-e07b-490a-aa77-1eab2fec6568",
             "tab_label": "Mattress",
-            "custom_title": "Pillow Top Organic Mattress",
-            "custom_subtitle": "4-inch organic latex pillowtop, 1,100 coils",
-            "extra_description": "4\" organic latex pillowtop over 1,100 pocketed coils. Plush comfort for side sleepers. GOLS certified.",
+            "custom_title": "Recovery Mattress",
+            "custom_subtitle": "4-inch organic latex euro-top, 1,100 coils",
+            "extra_description": "4\" organic latex euro-top over 1,100 pocketed coils. Plush comfort for combination sleepers. Organic certified.",
             "custom_image": "shopify://shop_images/product-image_1.png",
-            "features": "4\" Latex Pillowtop\n1,100 Pocketed Coils\n100-Night Sleep Trial\n30-Year Warranty",
+            "features": "4\" Latex euro-top\n1,100 Pocketed Coils\n100-Night Sleep Trial\n30-Year Warranty",
             "learn_more_label": "Learn More"
           }
         },
@@ -543,17 +556,18 @@
         "title",
         "description",
         "price",
+        "affirm_pay_over_time_messaging_product_block_mpCiRU",
         "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA",
         "nw_benifits_list_xTL4Mb",
         "icon_text_WTq7CJ",
-        "icon_text_Gb63E7",
-        "icon_text_fzqtU8",
-        "icon_text_Kp4UwR",
-        "icon_text_epVFcH",
+        "icon_text_Q78m9x",
+        "icon_text_V6AwgM",
+        "icon_text_Nwcnpt",
+        "icon_text_G6Nenw",
+        "icon_text_Uk3zBN",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
-        "affirm_pay_over_time_messaging_product_block_mpCiRU",
         "shipping_tag_Agd7QN",
         "trust_badges_th6jjr",
         "trust_badges_nMR3Vh",
