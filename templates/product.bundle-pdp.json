@@ -793,7 +793,7 @@
         "item_z47Tqk": {
           "type": "item",
           "settings": {
-            "text": "GOLS/GOTS CERTIFIED",
+            "text": "CERTIFIED ORGANIC",
             "icon": "verified",
             "link": ""
           }
@@ -805,28 +805,19 @@
             "icon": "warranty-2",
             "link": ""
           }
-        },
-        "item_DQCEYP": {
-          "type": "item",
-          "settings": {
-            "text": "Natural Materials",
-            "icon": "leaf",
-            "link": ""
-          }
         }
       },
       "block_order": [
         "item_j6qaii",
         "item_JmRtGP",
         "item_z47Tqk",
-        "item_H8WGMN",
-        "item_DQCEYP"
+        "item_H8WGMN"
       ],
       "name": "NW Marquee V2",
       "settings": {
         "enable_desktop_marquee": true,
         "direction": "right_to_left",
-        "speed": 30,
+        "speed": 95,
         "pause_on_hover": true,
         "font_weight": 600,
         "font_size": 20,
@@ -1035,7 +1026,7 @@
         "image_position": "left",
         "image_desktop": "shopify://shop_images/image_1261_1_1.png",
         "image_mobile": "shopify://shop_images/image_1261_2_1.png",
-        "show_button": true,
+        "show_button": false,
         "button_text": "CHOOSE BETTER SLEEP",
         "button_link": "",
         "button_style": "primary",
