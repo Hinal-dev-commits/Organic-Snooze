@@ -34,7 +34,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>Crisp, breathable weave made with organic cotton for a familiar feel that softens with every wash.</p>",
+            "custom_description": "<p>Classic organic cotton sheets with a crisp hotel-sheet feel that becomes softer with every wash. Comfortable, breathable, and built to last.</p><p></p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -66,6 +66,7 @@
         },
         "nw_benifits_list_NGGwWJ": {
           "type": "nw_benifits_list",
+          "disabled": true,
           "settings": {
             "icon_color": "#cc926a",
             "text_color": "#613916",
@@ -77,55 +78,52 @@
             "margin_bottom_mobile": 0
           }
         },
-        "icon_text_KzjrVr": {
+        "icon_text_tRPNk9": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "Naturall Cooling Breathable Fibers",
+            "text": "Made with Certified Organic Cotton",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-11.svg",
+            "custom_icon": "shopify://shop_images/icon-certified.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 11,
+            "margin_bottom": 0,
+            "margin_top_mobile": 11,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_KzjrVr": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Classic Soft Cotton Feel",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/icon-1.svg",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
             "margin_top": 0,
-            "margin_bottom": 8,
+            "margin_bottom": 0,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 0
           }
         },
         "icon_text_ykzhxB": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "Breathable for Hot Sleepers",
+            "text": "Naturally Breathable",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/image_1256_Vectorized_1_ea96148e-6ba6-41d6-821a-7e14774caa5e.svg",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 0,
-            "margin_bottom": 8,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "icon_text_tRPNk9": {
-          "type": "icon_text",
-          "disabled": true,
-          "settings": {
-            "style": "checklist",
-            "text": "Natural Fibers, Chemical-Free",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-13.svg",
+            "custom_icon": "shopify://shop_images/naturally.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -139,7 +137,6 @@
         },
         "icon_text_cKXLDG": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Universal Fit",
@@ -159,7 +156,6 @@
         },
         "icon_text_3FhWzM": {
           "type": "icon_text",
-          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Softer With Every Wash",
@@ -238,9 +234,9 @@
               "signature-organic-cotton-pillows-combo-packs",
               "the-organic-snooze-pillow"
             ],
-            "heading": "Bundle & save 30% on each add-on",
+            "heading": "Bundle & save 10% on each add-on",
             "preview_summary": "Sheets, protector, pillows & base",
-            "discount_percentage": 30,
+            "discount_percentage": 10,
             "optional_subtitle": "Optional, Bundle & Save [percent]%",
             "quick_view_title_override": "",
             "quick_view_description_override": "",
@@ -330,7 +326,7 @@
           "settings": {
             "heading": "Materials",
             "icon": "none",
-            "content": "<p>Organic Cotton (from fields)—100% certified organic cotton in a pure cotton weave. It lets your skin breathe, balances moisture, and helps your body regulate temperature without chemical interference. No synthetic blends, dyes, or chemical treatments.</p>",
+            "content": "<p>Organic Cotton — 100% certified organic cotton in a pure cotton weave. It lets your skin breathe, balances moisture, and helps your body regulate temperature without chemical interference. No synthetic blends, dyes, or chemical treatments.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -451,9 +447,9 @@
         "price",
         "affirm_pay_over_time_messaging_product_block_mrJq7J",
         "nw_benifits_list_NGGwWJ",
+        "icon_text_tRPNk9",
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
-        "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
         "variant_picker",
