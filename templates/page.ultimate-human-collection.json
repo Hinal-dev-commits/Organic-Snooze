@@ -69,7 +69,7 @@
         "logo_3eNMfF": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/logo_1.png",
+            "image": "shopify://shop_images/Inc_Mens_Health_Logo.png",
             "svg_code": "",
             "link": ""
           }
@@ -85,7 +85,7 @@
         "logo_dgWiWR": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/logo_3.png",
+            "image": "shopify://shop_images/Inc_Logo.png",
             "svg_code": "",
             "link": ""
           }
@@ -379,6 +379,9 @@
             "show_size_guide": true,
             "size_guide_label": "Size Guide",
             "size_guide_popup_id": "",
+            "show_firmness_guide": true,
+            "firmness_guide_label": "Firmness Guide",
+            "firmness_popup_modal_id": "",
             "quantity_option_name": "Select Quantity",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
@@ -397,6 +400,7 @@
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
             "show_affirm_button": true,
+            "show_atc_price": false,
             "margin_top": 32,
             "margin_bottom": 0,
             "margin_top_mobile": 24,
@@ -662,6 +666,9 @@
             "show_size_guide": true,
             "size_guide_label": "Size Guide",
             "size_guide_popup_id": "",
+            "show_firmness_guide": true,
+            "firmness_guide_label": "Firmness Guide",
+            "firmness_popup_modal_id": "",
             "quantity_option_name": "Select Quantity",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
@@ -680,6 +687,7 @@
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
             "show_affirm_button": true,
+            "show_atc_price": false,
             "margin_top": 32,
             "margin_bottom": 0,
             "margin_top_mobile": 24,
@@ -932,6 +940,24 @@
         "col1_head_title": "<strong>THE ULTIMATE SNOOZE  (ORGANIC)</strong>",
         "col2_head_image": "shopify://shop_images/IMG_7301_1.png",
         "col2_head_title": "<strong>CONVENTIONAL (SYNTHETIC)</strong>",
+        "show_comparison": false,
+        "comparison_title": "Long-Term Value Comparison",
+        "foam_brand": "Popular Foam Brands",
+        "foam_price": "$1.02 / night",
+        "foam_note": "Replaced every 10 years",
+        "snooze_brand": "ORGANIC SNOOZE",
+        "snooze_price": "$0.16 / night",
+        "snooze_note": "Built to last 30 years",
+        "comparison_title_color": "#613916",
+        "foam_card_bg": "#ffffff",
+        "foam_card_border_color": "#e5e5e5",
+        "foam_brand_color": "#666666",
+        "foam_price_color": "#1a1a1a",
+        "foam_note_color": "#61391680",
+        "snooze_bg": "#878735",
+        "snooze_brand_color": "#ffffff",
+        "snooze_price_color": "#ffffff",
+        "snooze_note_color": "#ffffff",
         "show_button": false,
         "button_text": "CHOOSE BETTER SLEEP",
         "button_link": "",
@@ -1535,6 +1561,8 @@
           "settings": {
             "icon_type": "seal",
             "image": "shopify://shop_images/Vector_3.svg",
+            "icon_link": "",
+            "icon_link_open_new_tab": false,
             "seal_ring": "MONEY BACK GUARANTEE",
             "seal_number": "100",
             "seal_label": "NIGHTS",
@@ -1547,6 +1575,8 @@
           "settings": {
             "icon_type": "logo",
             "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
+            "icon_link": "",
+            "icon_link_open_new_tab": false,
             "seal_ring": "MONEY BACK GUARANTEE",
             "seal_number": "100",
             "seal_label": "NIGHTS",
