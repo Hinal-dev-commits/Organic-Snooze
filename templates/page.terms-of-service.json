@@ -19,10 +19,14 @@
     },
     "nw_image_ArhVxC": {
       "type": "nw-image",
+      "disabled": true,
       "name": "NW Image",
       "settings": {
-        "image_desktop": "shopify://shop_images/terms-of-service.png",
-        "image_mobile": "shopify://shop_images/terms-mobile.png",
+        "heading": "",
+        "button_text": "",
+        "button_link": "",
+        "button_style": "primary",
+        "heading_color": "#613916",
         "show_gradient": false,
         "gradient_color_start": "",
         "gradient_color_end": "#fffcf0",
