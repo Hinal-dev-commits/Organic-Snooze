@@ -1,0 +1,25 @@
+{% doc %}
+  Renders one delivery column list row with preset or custom icon.
+
+  @param {string} text - Item label
+  @param {string} [icon] - NW icon preset name
+  @param {boolean} [use_custom_icon] - Use custom image instead of preset
+  @param {image} [custom_icon] - Custom icon image
+{% enddoc %}
+
+{%- if text != blank -%}
+  <li class="nw-contact-cta__list-item">
+    <span class="nw-contact-cta__list-icon" aria-hidden="true">
+      {%- if use_custom_icon and custom_icon != blank -%}
+        {{
+          custom_icon
+          | image_url: width: 80
+          | image_tag: alt: '', class: 'nw-contact-cta__list-icon-img', loading: 'lazy', width: 20, height: 20
+        }}
+      {%- elsif use_custom_icon != true -%}
+        {% render 'nw-icon', icon: icon | default: 'checkmark' %}
+      {%- endif -%}
+    </span>
+    <span>{{ text | escape }}</span>
+  </li>
+{%- endif -%}

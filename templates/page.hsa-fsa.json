@@ -1,0 +1,301 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "nw_image_with_text_Wq98qN": {
+      "type": "nw-image-with-text",
+      "name": "t:sections.nw-image-with-text.name",
+      "settings": {
+        "image": "shopify://shop_images/A1_-_1080x1350_-_v2_-_FB_-_Rivera_-_363313_1.png",
+        "image_mobile": "shopify://shop_images/A1_-_1080x1350_-_v2_-_FB_-_Rivera_-_363313_1.png",
+        "image_position": "right",
+        "show_promo_bar": true,
+        "promo_text": "SAVE 30%",
+        "promo_bg_color": "#878735",
+        "promo_text_color": "#FFFFFF",
+        "heading": "Qualify to save an average of 30% by paying with HSA/FSA",
+        "subheading": "<p>How to check out at Ultimate Snooze with HSA/FSA funds</p><p>Truemed is for qualified customers. HSA/FSA tax savings vary. Learn more at <a href=\"https://docs.google.com/document/d/19Cxl1ZbXTX25_44rZ8Mbj3nKfsuzmHVOXm7uYuVKewk/edit?tab=t.0\" target=\"_blank\" title=\"https://docs.google.com/document/d/19Cxl1ZbXTX25_44rZ8Mbj3nKfsuzmHVOXm7uYuVKewk/edit?tab=t.0\">truemed.com/disclosures</a></p>",
+        "features": "",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "feature_text_color": "#613916",
+        "show_button": false,
+        "button_text": "Bundle and save",
+        "button_link": "",
+        "button_style": "secondary",
+        "bg_type": "none",
+        "bg_color": "#FFFCF0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_benefits_AL4F8Q": {
+      "type": "nw-benefits",
+      "blocks": {
+        "benefit_BVH4CC": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/3_1_4ff680db-5874-4147-a67f-4462a08db2bc.jpg",
+            "title": "&nbsp;Checkout&nbsp;",
+            "description": "<p>Find the Truemed logo during checkout. Exit the \"Shop Pay\" pop-up if prompted.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#FFFFFF"
+          }
+        },
+        "benefit_D7wc4m": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/1_cc131e04-0426-4d68-abb9-186a5e51f3cc.jpg",
+            "title": "Complete Health Assessment",
+            "description": "<p>Take a private health survey. A licensed provider will review your answers to determine eligibility</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#FFFFFF"
+          }
+        },
+        "benefit_AqQwxj": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/3_bd2aef0a-02fd-45b6-a5d0-5065a878065f.jpg",
+            "title": "Make your purchase",
+            "description": "<p>Pay with your HSA/FSA card or a credit card. If you use a regular credit card, follow the guide included with your LMN to submit your purchase for reimbursement.</p>",
+            "tag": "",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#FFFFFF"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_BVH4CC",
+        "benefit_D7wc4m",
+        "benefit_AqQwxj"
+      ],
+      "name": "Nw Benefits",
+      "settings": {
+        "heading": "&nbsp;Checking out with Truemed is easy!&nbsp;",
+        "description": "",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_style": "style_2",
+        "card_bg_color": "#FBF9F6",
+        "card_border_color": "rgba(97, 57, 22, 0.2)",
+        "card_title_color": "#613916",
+        "card_desc_color": "#613916",
+        "show_arrows": false,
+        "show_pagination": true,
+        "pagination_color": "#613916",
+        "show_button": false,
+        "button_text": "SHOP THE MATTRESS",
+        "button_link": "",
+        "button_style": "primary",
+        "badge_icon_color": "#CC926A",
+        "badge_text_color": "#613916",
+        "bg_type": "image",
+        "bg_color": "#FFFFFF",
+        "bg_image_opacity": 21,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_rich_text_ETc6XE": {
+      "type": "nw-rich-text",
+      "blocks": {
+        "heading_MKqaQK": {
+          "type": "heading",
+          "settings": {
+            "heading": "&nbsp;Who is Truemed?&nbsp;"
+          }
+        },
+        "text_jkae4Y": {
+          "type": "text",
+          "settings": {
+            "text": "<p>At Truemed, we believe that investing in your health is far more valuable than waiting to spend on sickness. By unlocking pre-tax HSA/FSA spend on research backed interventions such as fitness, supplements, and health technology, we’re shifting healthcare spend toward true medicine.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_MKqaQK",
+        "text_jkae4Y"
+      ],
+      "name": "t:sections.nw-rich-text.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "content_width": "medium",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "eyebrow_color": "#613916",
+        "body_color": "#613916",
+        "bg_type": "color",
+        "bg_color": "#FFFCF0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_product_list_KKqred": {
+      "type": "nw-product-list",
+      "name": "t:sections.nw-product-list.name",
+      "settings": {
+        "show_header_rating": false,
+        "star_rating": 5,
+        "star_color": "#E57B1E",
+        "star_color_inactive": "#D1D5DB",
+        "eyebrow": "",
+        "heading": "HSA/FSA Eligible Products",
+        "subheading": "",
+        "product_source": "product_list",
+        "product_list": [
+          "the-ultimate-snooze-pillowtop-organic-mattress",
+          "the-ultimate-snooze-pure-organic-mattress",
+          "the-snooze-lift-adjustable-base",
+          "the-ultimate-snooze-complete-transformation-bundle",
+          "organic-waterproof-mattress-protector"
+        ],
+        "collection": "",
+        "products_to_show": 8,
+        "empty_text": "Select products or a collection to display.",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "show_rating": true,
+        "show_firmness": false,
+        "show_seller_tag": true,
+        "show_best_for": false,
+        "button_text": "Shop Now",
+        "button_style": "primary",
+        "firmness_label_soft": "Soft",
+        "firmness_label_firm": "Firm",
+        "show_arrows": true,
+        "show_pagination": true,
+        "overlay_color": "#FFFFFF",
+        "swiper_arrow_bg": "#613916",
+        "swiper_arrow_color": "#FFFFFF",
+        "pagination_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#FFFCF0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_faq_BfXQfr": {
+      "type": "nw-faq",
+      "blocks": {
+        "faq_item_Rfk7Vf": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What Truemed is?",
+            "answer": "<p>Truemed is a payment platform that enables qualified customers to use their HSA (Health Savings Account) or FSA (Flexible Spending Account) funds on eligible health and wellness products. Truemed partners with a network of independent, licensed clinicians who review customer health information and issue a Letter of Medical Necessity (LMN) when a purchase qualifies.</p>"
+          }
+        },
+        "faq_item_NwLPQ6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How customers save?",
+            "answer": "<p>HSA and FSA accounts hold pre-tax dollars. When customers pay with these funds, they effectively save their income tax rate on the purchase. Qualified customers save an average of 30%* compared to paying with after-tax income.</p>"
+          }
+        },
+        "faq_item_LHmNHp": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is an LMN?",
+            "answer": "<p>A Letter of Medical Necessity (LMN) is a document issued by an independent, licensed clinician confirming that a purchase is medically necessary for a diagnosed health condition. The IRS requires this documentation for HSA/FSA funds to be used on health and wellness products.</p><p>Key things your team should know about LMNs:</p><ul><li>Truemed’s clinician network handles all LMN issuance. Your team does not need to evaluate eligibility or issue any documentation.</li><li>Each LMN is valid for 12 months from the date of issue.</li><li>Not every person will qualify. Eligibility depends on individual health circumstances and the clinician’s assessment.</li></ul>"
+          }
+        },
+        "faq_item_4inxgG": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Two ways customers use Truemed",
+            "answer": "<h3><strong>At-checkout (Orders)</strong></h3><p>Select Truemed as a payment option during checkout, completes a clinical intake form, and pays with their HSA/FSA card. Documentation is generated automatically. This is the flow for merchants using Shopify or OTP (one-time payment) integrations.</p><h3><strong>Post-purchase (Reimbursements)</strong></h3><p>The customer pays with a regular credit or debit card, then receives a link to complete a clinical intake form after purchase. If they qualify, Truemed issues an LMN and receipt. The customer then submits those documents to their HSA/FSA administrator for reimbursement. This is the flow for merchants using Merchant Quals or D2C Quals integrations.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_Rfk7Vf",
+        "faq_item_NwLPQ6",
+        "faq_item_LHmNHp",
+        "faq_item_4inxgG"
+      ],
+      "name": "t:sections.nw-faq.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "",
+        "star_color_inactive": "",
+        "eyebrow": "",
+        "heading": "&nbsp;Common Questions&nbsp;",
+        "subheading": "",
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
+        "show_search": false,
+        "search_placeholder": "What can we help with?",
+        "open_first_faq": false,
+        "initial_faq_count": 6,
+        "more_label": "SEE MORE FAQ'S",
+        "less_label": "SEE LESS FAQ'S",
+        "contact_heading": "",
+        "show_call_btn": false,
+        "call_label": "CALL (443) 333-1213",
+        "call_link": "tel:+14433331213",
+        "call_style": "primary",
+        "show_text_btn": false,
+        "text_label": "TEXT US",
+        "text_link": "sms:+14433331213",
+        "text_style": "outline",
+        "show_quiz_btn": false,
+        "quiz_label": "SLEEP QUIZ",
+        "quiz_link": "",
+        "quiz_style": "outline",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_mobile": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_opacity": 16,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "nw_image_with_text_Wq98qN",
+    "nw_benefits_AL4F8Q",
+    "nw_rich_text_ETc6XE",
+    "nw_product_list_KKqred",
+    "nw_faq_BfXQfr"
+  ]
+}

@@ -1,0 +1,832 @@
+{{ 'nw-faq-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-faq-v2.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign faq_search_placeholder = section.settings.search_placeholder
+  if faq_search_placeholder == blank
+    assign faq_search_placeholder = 'nw.faq.search_placeholder' | t
+  endif
+
+  assign faq_blocks = section.blocks | where: 'type', 'faq_item'
+  assign items_per_page = section.settings.items_per_page | default: 20
+  assign default_tab_id = section.settings.default_tab_id | default: 'all'
+  assign default_tab_id_normalized = default_tab_id | downcase | strip
+  assign active_tab_id = default_tab_id_normalized
+  assign faq_tab_registry = ''
+  assign show_tabs_ui = false
+  if section.settings.show_tabs
+    if section.settings.show_all_tab or faq_blocks.size > 0
+      assign show_tabs_ui = true
+    endif
+  endif
+  unless show_tabs_ui
+    assign active_tab_id = 'all'
+  endunless
+
+  for block in faq_blocks
+    assign faq_tab_label = block.settings.tab_label | default: 'General' | strip
+    assign faq_tab_key = faq_tab_label | downcase | strip
+    assign faq_tab_token = faq_tab_key | append: ':::'
+    unless faq_tab_registry contains faq_tab_token
+      assign faq_tab_registry = faq_tab_registry | append: faq_tab_key | append: ':::' | append: faq_tab_label | append: '||'
+    endunless
+  endfor
+  assign faq_tab_entries = faq_tab_registry | split: '||'
+
+  assign pagination_status_template = section.settings.pagination_status_template
+  if pagination_status_template == blank
+    assign pagination_status_template = 'Showing {{ start }}–{{ end }} of {{ total }} questions'
+  endif
+
+  assign pagination_empty_text = section.settings.pagination_empty_text
+  if pagination_empty_text == blank
+    assign pagination_empty_text = 'No questions match your filters.'
+  endif
+-%}
+
+{%- assign nw_faq_selector = '.nw-faq-v2.section-' | append: section.id -%}
+<style>
+  .nw-faq-v2.section-{{ section.id }} {
+    {% render 'nw-section-color-var', name: '--nw-star-active', value: section.settings.star_color %}
+    {% render 'nw-section-color-var', name: '--nw-star-inactive', value: section.settings.star_color_inactive %}
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 80 }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        {% if section.settings.bg_color != blank %}
+          background-color: {{ section.settings.bg_color }};
+        {% endif %}
+      {% when 'gradient' %}
+        {% if section.settings.bg_gradient != blank %}
+          background: {{ section.settings.bg_gradient }};
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    .nw-faq-v2.section-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: {{ section.settings.bg_image_opacity | default: 16 | times: 0.01 }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  .nw-faq-v2.section-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .nw-faq-v2.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      .nw-faq-v2.section-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+{% render 'nw-section-text-colors', selector: nw_faq_selector %}
+
+<nw-faq-v2
+  class="nw-faq-v2 section-{{ section.id }}"
+  data-items-per-page="{{ items_per_page }}"
+  data-default-tab="{{ active_tab_id | escape }}"
+  style="
+    --nw-faq-v2-tab-border: {{ section.settings.tab_border_color }};
+    --nw-faq-v2-tab-bg: {{ section.settings.tab_bg_color }};
+    --nw-faq-v2-tab-text: {{ section.settings.tab_text_color }};
+    --nw-faq-v2-tab-active-bg: {{ section.settings.tab_active_bg_color }};
+    --nw-faq-v2-tab-active-text: {{ section.settings.tab_active_text_color }};
+    --nw-faq-v2-tab-active-border: {{ section.settings.tab_active_border_color }};
+    --nw-faq-v2-page-active-bg: {{ section.settings.pagination_active_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-faq-v2__wrapper {%- render 'nw-scroll-animation' -%}">
+      <div class="nw-faq-v2__main">
+        <div class="nw-faq-v2__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index,
+            heading_wrap_class: 'nw-faq-v2__heading-wrap'
+          %}
+        </div>
+
+        {%- if section.settings.show_search -%}
+          <div class="nw-faq-v2__search">
+            <input
+              type="text"
+              class="nw-faq-v2__search-input"
+              placeholder="{{ faq_search_placeholder }}"
+              aria-label="{{ faq_search_placeholder }}"
+            >
+            <span class="nw-faq-v2__search-icon" aria-hidden="true">
+              {% render 'nw-icon', icon: 'search-sm' %}
+            </span>
+          </div>
+        {%- endif -%}
+
+        {%- if show_tabs_ui -%}
+          <div class="nw-faq-v2__tabs-wrap">
+            <div
+              class="nw-faq-v2__tabs"
+              role="tablist"
+              aria-label="{{ section.settings.tabs_aria_label | default: 'FAQ categories' | escape }}"
+            >
+              {%- if section.settings.show_all_tab -%}
+                <button
+                  type="button"
+                  class="nw-faq-v2__tab{% if active_tab_id == 'all' %} is-active{% endif %}"
+                  role="tab"
+                  aria-selected="{% if active_tab_id == 'all' %}true{% else %}false{% endif %}"
+                  tabindex="{% if active_tab_id == 'all' %}0{% else %}-1{% endif %}"
+                  data-nw-faq-v2-tab="all"
+                >
+                  {{ section.settings.all_tab_label | default: 'All' | escape }}
+                </button>
+              {%- endif -%}
+
+              {%- for tab_entry in faq_tab_entries -%}
+                {%- if tab_entry != blank -%}
+                  {%- assign tab_parts = tab_entry | split: ':::' -%}
+                  {%- assign block_tab_id = tab_parts[0] -%}
+                  {%- assign block_tab_label = tab_parts[1] -%}
+                  <button
+                    type="button"
+                    class="nw-faq-v2__tab{% if active_tab_id == block_tab_id %} is-active{% endif %}"
+                    role="tab"
+                    aria-selected="{% if active_tab_id == block_tab_id %}true{% else %}false{% endif %}"
+                    tabindex="{% if active_tab_id == block_tab_id %}0{% else %}-1{% endif %}"
+                    data-nw-faq-v2-tab="{{ block_tab_id | escape }}"
+                  >
+                    {{ block_tab_label | escape }}
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if faq_blocks.size > 0 -%}
+          <div class="nw-faq-v2__list">
+            {%- for block in faq_blocks -%}
+              {%- assign item_tab_id = block.settings.tab_label | default: 'General' | downcase | strip -%}
+              <div
+                class="nw-faq-v2__item nw-faq-v2__accordion-item"
+                data-tab-id="{{ item_tab_id | escape }}"
+                {{ block.shopify_attributes }}
+              >
+                <details
+                  id="Details-{{ block.id }}-{{ section.id }}"
+                  {% if section.settings.open_first_faq and forloop.first %}
+                    open
+                  {% endif %}
+                >
+                  <summary id="Summary-{{ block.id }}-{{ section.id }}" class="nw-faq-v2__summary">
+                    <h3 class="nw-faq-v2__question">
+                      {{ block.settings.question }}
+                    </h3>
+                    <span class="nw-faq-v2__toggle" aria-hidden="true">
+                      <span class="nw-faq-v2__toggle-h"></span>
+                      <span class="nw-faq-v2__toggle-v"></span>
+                    </span>
+                  </summary>
+                  {%- if block.settings.answer != blank -%}
+                    <div
+                      class="nw-faq-v2__answer rte"
+                      id="CollapsibleAccordion-{{ block.id }}-{{ section.id }}"
+                      role="region"
+                      aria-labelledby="Summary-{{ block.id }}-{{ section.id }}"
+                    >
+                      {{ block.settings.answer }}
+                    </div>
+                  {%- endif -%}
+                </details>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <div class="nw-faq-v2__pagination" data-nw-faq-v2-pagination>
+            <p
+              class="nw-faq-v2__pagination-status"
+              data-nw-faq-v2-status
+              data-template="{{ pagination_status_template | escape }}"
+              data-empty-text="{{ pagination_empty_text | escape }}"
+            ></p>
+            <div class="nw-faq-v2__pagination-controls" data-nw-faq-v2-pagination-controls hidden>
+              <button
+                type="button"
+                class="nw-faq-v2__page-nav"
+                data-nw-faq-v2-prev
+                aria-label="{{ section.settings.pagination_prev_label | default: 'Previous page' | escape }}"
+              >
+                {{ section.settings.pagination_prev_label | default: '← Prev' | escape }}
+              </button>
+              <div class="nw-faq-v2__pages" data-nw-faq-v2-pages></div>
+              <button
+                type="button"
+                class="nw-faq-v2__page-nav"
+                data-nw-faq-v2-next
+                aria-label="{{ section.settings.pagination_next_label | default: 'Next page' | escape }}"
+              >
+                {{ section.settings.pagination_next_label | default: 'Next →' | escape }}
+              </button>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- liquid
+        assign show_call = false
+        if section.settings.show_call_btn and section.settings.call_label != blank
+          assign show_call = true
+        endif
+
+        assign show_text = false
+        if section.settings.show_text_btn and section.settings.text_label != blank
+          assign show_text = true
+        endif
+
+        assign show_quiz = false
+        if section.settings.show_quiz_btn and section.settings.quiz_label != blank
+          assign show_quiz = true
+        endif
+      -%}
+
+      {%- if section.settings.contact_heading != blank or show_call or show_text or show_quiz -%}
+        <div class="nw-faq-v2__contact">
+          {%- if section.settings.contact_heading != blank -%}
+            <div class="nw-faq-v2__contact-heading-wrap" id="faq-v2-heading-{{ section.id }}">
+              {% render 'nw-section-heading', text: section.settings.contact_heading, tag: 'h2' %}
+            </div>
+          {%- endif -%}
+
+          {%- if show_call or show_text or show_quiz -%}
+            <div class="nw-faq-v2__actions">
+              {%- if show_call -%}
+                {% render 'nw-button',
+                  text: section.settings.call_label,
+                  link: section.settings.call_link,
+                  style: section.settings.call_style
+                %}
+              {%- endif -%}
+
+              {%- if show_text or show_quiz -%}
+                <div class="nw-faq-v2__btn-row">
+                  {%- if show_text -%}
+                    {% render 'nw-button',
+                      text: section.settings.text_label,
+                      link: section.settings.text_link,
+                      style: section.settings.text_style
+                    %}
+                  {%- endif -%}
+
+                  {%- if show_quiz -%}
+                    {% render 'nw-button',
+                      text: section.settings.quiz_label,
+                      link: section.settings.quiz_link,
+                      style: section.settings.quiz_style
+                    %}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-faq-v2>
+
+{% schema %}
+{
+  "name": "t:sections.nw-faq-v2.name",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color",
+      "label": "Star Color",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color_inactive",
+      "label": "Star Inactive Color",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Questions answered"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "FAQ Text Color"
+    },
+    {
+      "type": "header",
+      "content": "FAQ SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show Search",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search Placeholder",
+      "default": "Search questions",
+      "visible_if": "{{ section.settings.show_search == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_faq",
+      "label": "Open First FAQ On Load",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "TAB SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tabs",
+      "label": "Show Category Tabs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_tab",
+      "label": "Show All Tab",
+      "default": true,
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "text",
+      "id": "all_tab_label",
+      "label": "All Tab Label",
+      "default": "All",
+      "visible_if": "{{ section.settings.show_tabs == true and section.settings.show_all_tab == true }}"
+    },
+    {
+      "type": "text",
+      "id": "default_tab_id",
+      "label": "Default Selected Tab ID",
+      "default": "all",
+      "info": "Use \"all\" for the All tab, or the lowercase FAQ Item Tab Label (e.g. mattress for \"Mattress\").",
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "text",
+      "id": "tabs_aria_label",
+      "label": "Tabs Aria Label",
+      "default": "FAQ categories",
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tab_border_color",
+      "label": "Tab Border Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tab_bg_color",
+      "label": "Tab Background",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tab_text_color",
+      "label": "Tab Text Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tab_active_bg_color",
+      "label": "Active Tab Background",
+      "default": "#CC926A",
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tab_active_text_color",
+      "label": "Active Tab Text Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "tab_active_border_color",
+      "label": "Active Tab Border Color",
+      "default": "#CC926A",
+      "visible_if": "{{ section.settings.show_tabs == true }}"
+    },
+    {
+      "type": "header",
+      "content": "PAGINATION"
+    },
+    {
+      "type": "range",
+      "id": "items_per_page",
+      "label": "FAQ Items Per Page",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "pagination_status_template",
+      "label": "Status Text Template",
+      "info": "Use {{ start }}, {{ end }}, and {{ total }} placeholders."
+    },
+    {
+      "type": "text",
+      "id": "pagination_empty_text",
+      "label": "Empty Results Text",
+      "default": "No questions match your filters."
+    },
+    {
+      "type": "text",
+      "id": "pagination_prev_label",
+      "label": "Previous Button Label",
+      "default": "← Prev"
+    },
+    {
+      "type": "text",
+      "id": "pagination_next_label",
+      "label": "Next Button Label",
+      "default": "Next →"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "pagination_active_color",
+      "label": "Active Page Color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "CONTACT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "contact_heading",
+      "label": "Contact Heading",
+      "default": "Still have questions?"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_call_btn",
+      "label": "Show Call Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "call_label",
+      "label": "Call Button Label",
+      "default": "CALL (443) 333-1213",
+      "visible_if": "{{ section.settings.show_call_btn == true }}"
+    },
+    {
+      "type": "text",
+      "id": "call_link",
+      "label": "Call Button Link",
+      "default": "tel:+14433331213",
+      "visible_if": "{{ section.settings.show_call_btn == true }}"
+    },
+    {
+      "type": "select",
+      "id": "call_style",
+      "label": "Call Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_call_btn == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_btn",
+      "label": "Show Text Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_label",
+      "label": "Text Button Label",
+      "default": "TEXT US",
+      "visible_if": "{{ section.settings.show_text_btn == true }}"
+    },
+    {
+      "type": "text",
+      "id": "text_link",
+      "label": "Text Button Link",
+      "default": "sms:+14433331213",
+      "visible_if": "{{ section.settings.show_text_btn == true }}"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "Text Button Style",
+      "default": "outline",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_text_btn == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quiz_btn",
+      "label": "Show Quiz Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quiz_label",
+      "label": "Quiz Button Label",
+      "default": "SLEEP QUIZ",
+      "visible_if": "{{ section.settings.show_quiz_btn == true }}"
+    },
+    {
+      "type": "url",
+      "id": "quiz_link",
+      "label": "Quiz Button Link",
+      "visible_if": "{{ section.settings.show_quiz_btn == true }}"
+    },
+    {
+      "type": "select",
+      "id": "quiz_style",
+      "label": "Quiz Button Style",
+      "default": "outline",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_quiz_btn == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "image",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.bg_type == 'color'}}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab Label",
+          "default": "General",
+          "info": "Category tab name. Items with the same label share a tab (matching is case insensitive)."
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What makes the Ultimate Snooze different from other organic mattresses?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Ultimate Snooze combines certified organic latex, organic wool, and pocket coils with zero toxic chemicals, glues, or fiberglass for restorative, clean sleep.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-faq-v2.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "tab_label": "Mattress",
+            "question": "What makes the Ultimate Snooze different from other organic mattresses?",
+            "answer": "<p>Ultimate Snooze combines certified organic latex, organic wool, and pocket coils with zero toxic chemicals, glues, or fiberglass for restorative, clean sleep.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "tab_label": "Materials",
+            "question": "What materials are used?",
+            "answer": "<p>We use 100% GOLS certified organic latex, GOTS certified organic wool, and GOTS certified organic cotton with recycled steel pocket coils.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "tab_label": "Materials",
+            "question": "Does it contain flame retardants or fiberglass?",
+            "answer": "<p>No. We never use chemical flame retardants or fiberglass. We use natural organic wool as our flame barrier.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "tab_label": "Mattress",
+            "question": "Will I sleep hot?",
+            "answer": "<p>Organic latex and wool are naturally temperature regulating and breathable, keeping you cool all night long.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

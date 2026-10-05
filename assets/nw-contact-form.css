@@ -1,0 +1,121 @@
+.contact-nw {
+  --nw-contact-input-border: #613916;
+  --nw-contact-input-text: #613916;
+  --nw-contact-input-placeholder: rgba(97, 57, 22, 0.7);
+  --nw-contact-input-bg: #ffffff;
+}
+
+.contact-nw .nw-contact-form__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto 32px;
+}
+
+.contact-nw .nw-section-description {
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.contact-nw .nw-section-description a{
+  color: inherit;
+}
+
+@media screen and (min-width: 750px) {
+
+  .contact-nw .nw-contact-form__header {
+    margin-bottom: 40px;
+  }
+}
+
+.contact-nw .field:before,
+.contact-nw .field:after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+}
+
+.contact-nw .field__input,
+.contact-nw .field__input:focus,
+.contact-nw .field__input:not(:placeholder-shown),
+.contact-nw .field__input:-webkit-autofill {
+  margin: 0;
+  padding: 0 24px;
+  height: 52px;
+  min-height: 52px;
+  border: 1px solid var(--nw-contact-input-border);
+  border-radius: 1000px;
+  background: var(--nw-contact-input-bg);
+  color: var(--nw-contact-input-text);
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 135%;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.contact-nw .field__input::placeholder {
+  opacity: 1;
+  color: var(--nw-contact-input-placeholder);
+}
+
+.contact-nw .field__label {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.contact-nw .text-area.field__input,
+.contact-nw .text-area.field__input:focus,
+.contact-nw .text-area.field__input:not(:placeholder-shown) {
+  height: auto;
+  min-height: 160px;
+  padding: 20px 24px;
+  border-radius: 24px;
+  resize: vertical;
+}
+
+.contact-nw .contact__button {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-nw .contact__button .button {
+  min-width: 200px;
+  border-radius: 1000px;
+}
+.contact-nw .contact__button .button::after,
+.contact-nw .contact__button .button::before {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .contact-nw .field__input,
+  .contact-nw .field__input:focus,
+  .contact-nw .field__input:not(:placeholder-shown),
+  .contact-nw .field__input:-webkit-autofill {
+    height: 48px;
+    min-height: 48px;
+    font-size: 14px;
+    padding: 0 20px;
+  }
+
+  .contact-nw .text-area.field__input,
+  .contact-nw .text-area.field__input:focus,
+  .contact-nw .text-area.field__input:not(:placeholder-shown) {
+    padding: 16px 20px;
+    min-height: 140px;
+  }
+}

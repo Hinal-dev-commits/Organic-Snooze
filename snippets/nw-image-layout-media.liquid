@@ -1,0 +1,64 @@
+{% doc %}
+  Responsive desktop/mobile image for NW Image Layout blocks.
+
+  @param {image} image - Desktop image
+  @param {image} [image_mobile] - Mobile image (optional)
+  @param {string} [alt] - Alt text
+  @param {string} [class_prefix] - BEM prefix, default nw-image-layout
+{% enddoc %}
+
+{%- liquid
+  assign prefix = class_prefix | default: 'nw-image-layout'
+  assign img_class = prefix | append: '__img'
+  assign img_desktop_class = img_class | append: ' ' | append: img_class | append: '--desktop'
+  assign img_mobile_class = img_class | append: ' ' | append: img_class | append: '--mobile'
+  assign img_alt = alt | default: image.alt | default: ''
+-%}
+
+{%- if image != blank and image_mobile != blank -%}
+  {{
+    image_mobile
+    | image_url: width: 900
+    | image_tag:
+      loading: 'lazy',
+      class: img_mobile_class,
+      widths: '375, 550, 750, 900',
+      sizes: '(max-width: 749px) 100vw, 50vw',
+      alt: img_alt
+  }}
+  {{
+    image
+    | image_url: width: 1400
+    | image_tag:
+      loading: 'lazy',
+      class: img_desktop_class,
+      widths: '550, 750, 900, 1200, 1400',
+      sizes: '(max-width: 749px) 100vw, 50vw',
+      alt: img_alt
+  }}
+{%- elsif image != blank -%}
+  {{
+    image
+    | image_url: width: 1400
+    | image_tag:
+      loading: 'lazy',
+      class: img_class,
+      widths: '375, 550, 750, 900, 1200, 1400',
+      sizes: '(max-width: 749px) 100vw, 960px',
+      alt: img_alt
+  }}
+{%- elsif image_mobile != blank -%}
+  {{
+    image_mobile
+    | image_url: width: 900
+    | image_tag:
+      loading: 'lazy',
+      class: img_class,
+      widths: '375, 550, 750, 900',
+      sizes: '100vw',
+      alt: img_alt
+  }}
+{%- else -%}
+  {%- assign placeholder_class = prefix | append: '__placeholder placeholder-svg' -%}
+  {{ 'hero-apparel-1' | placeholder_svg_tag: placeholder_class }}
+{%- endif -%}
