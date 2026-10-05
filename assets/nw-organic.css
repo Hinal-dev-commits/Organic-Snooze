@@ -472,6 +472,126 @@
   display: none;
 }
 
+.nw-organic__comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 590px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.nw-organic__comparison-title {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--nw-organic-comparison-title-color, var(--nw-organic-heading-color, #613916));
+}
+
+.nw-organic__comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+
+.nw-organic__compare-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-height: 105px;
+  padding: 12px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.nw-organic__compare-card--foam {
+  background: var(--nw-organic-foam-card-bg, #ffffff);
+  border: 1px solid var(--nw-organic-foam-card-border, #e5e5e5);
+}
+
+.nw-organic__foam-brand {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--nw-organic-foam-brand-color, #666666);
+}
+
+.nw-organic__compare-price-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nw-organic__foam-price {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--nw-organic-foam-price-color, #1a1a1a);
+}
+
+.nw-organic__foam-note {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--nw-organic-foam-note-color, rgba(97, 57, 22, 0.5));
+}
+
+.nw-organic__compare-card--snooze {
+  background: var(--nw-organic-snooze-card-bg, #878735);
+}
+
+.nw-organic__snooze-logo-wrap {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.nw-organic__snooze-logo-img {
+  height: 30px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.nw-organic__snooze-logo-text {
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  color: var(--nw-organic-snooze-brand-color, #ffffff);
+}
+
+.nw-organic__snooze-price {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--nw-organic-snooze-price-color, #ffffff);
+}
+
+.nw-organic__snooze-note {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--nw-organic-snooze-note-color, #ffffff);
+}
+
 .nw-organic__footer {
   display: flex;
   flex-direction: column;
@@ -633,7 +753,6 @@
   }
 
   .nw-organic__header {
-    order: 2;
     width: 100%;
     max-width: 590px;
     margin: 0 auto 68px;
@@ -655,8 +774,15 @@
     margin: 0 auto;
   }
 
-  .nw-organic__footer {
+  .nw-organic__comparison {
     order: 4;
+    width: 100%;
+    max-width: 590px;
+    margin: 0 auto;
+  }
+
+  .nw-organic__footer {
+    order: 5;
   }
   .nw-organic__inner.full-width .nw-organic__table-col{
     padding-right: 0;
@@ -807,7 +933,7 @@
   .nw-organic--full-width .nw-organic__wrapper {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     gap: 0;
     align-items: stretch;
     position: relative;
@@ -839,7 +965,7 @@
 
   .nw-organic--full-width .nw-organic__image-col {
     grid-column: 2;
-    grid-row: 1 / span 3;
+    grid-row: 1 / span 4;
     border-radius: 0;
     min-height: 100%;
     z-index: 1;
@@ -878,9 +1004,22 @@
     grid-column: 2;
   }
 
-  .nw-organic--full-width .nw-organic__footer {
+  .nw-organic--full-width .nw-organic__comparison {
     grid-column: 1;
     grid-row: 3;
+    width: 100%;
+    max-width: none;
+    padding: 24px 80px 0;
+    z-index: 1;
+  }
+
+  .nw-organic--full-width .nw-organic__wrapper--image-left .nw-organic__comparison {
+    grid-column: 2;
+  }
+
+  .nw-organic--full-width .nw-organic__footer {
+    grid-column: 1;
+    grid-row: 4;
     padding: 40px 80px 80px;
     z-index: 1;
   }
@@ -917,7 +1056,6 @@
   }
 
   .nw-organic--full-width .nw-organic__header {
-    order: 2;
     width: 100%;
     max-width: none;
     margin: 0;
@@ -938,8 +1076,15 @@
     padding: 0 16px;
   }
 
-  .nw-organic--full-width .nw-organic__footer {
+  .nw-organic--full-width .nw-organic__comparison {
     order: 4;
+    width: 100%;
+    max-width: none;
+    padding: 0 16px;
+  }
+
+  .nw-organic--full-width .nw-organic__footer {
+    order: 5;
     width: 100%;
     max-width: none;
     padding: 32px 16px 48px;
@@ -947,5 +1092,25 @@
 
   .nw-organic--full-width .nw-organic__image-col {
     order: 1;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .nw-organic__compare-card {
+    padding: 16px 20px;
+  }
+
+  .nw-organic__foam-brand {
+    font-size: 14px;
+  }
+
+  .nw-organic__foam-price,
+  .nw-organic__snooze-price {
+    font-size: 18px;
+  }
+
+  .nw-organic__foam-note,
+  .nw-organic__snooze-note {
+    font-size: 14px;
   }
 }
