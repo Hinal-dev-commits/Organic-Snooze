@@ -58,6 +58,14 @@
     "nw_featured_marquee_za77Xj": {
       "type": "nw-featured-marquee",
       "blocks": {
+        "logo_dgWiWR": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Inc_Logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
         "logo_QMLYER": {
           "type": "logo",
           "settings": {
@@ -74,28 +82,20 @@
             "link": ""
           }
         },
-        "logo_8kT4nB": {
+        "logo_fDxeWX": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/logo_2.png",
-            "svg_code": "",
-            "link": ""
-          }
-        },
-        "logo_dgWiWR": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Inc_Logo.png",
+            "image": "shopify://shop_images/new-york-logo.png",
             "svg_code": "",
             "link": ""
           }
         }
       },
       "block_order": [
+        "logo_dgWiWR",
         "logo_QMLYER",
         "logo_3eNMfF",
-        "logo_8kT4nB",
-        "logo_dgWiWR"
+        "logo_fDxeWX"
       ],
       "custom_css": [
         ".nw-featured-marquee {border-bottom: 1px solid #4e2f1466;}"
