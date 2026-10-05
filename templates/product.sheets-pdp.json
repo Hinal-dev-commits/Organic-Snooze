@@ -97,11 +97,30 @@
             "margin_bottom_mobile": 0
           }
         },
+        "icon_text_cKXLDG": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "15\" Pocketed Elastic Fitted Sheet",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/icon_deffd60d-2298-49f5-8117-97fe50807da7.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 8,
+            "margin_bottom": 8,
+            "margin_top_mobile": 8,
+            "margin_bottom_mobile": 0
+          }
+        },
         "icon_text_KzjrVr": {
           "type": "icon_text",
           "settings": {
             "style": "checklist",
-            "text": "Classic Soft Cotton Feel",
+            "text": "Luxury Soft Cotton Feel",
             "use_custom_icon": true,
             "icon": "trial",
             "custom_icon": "shopify://shop_images/TUS_-_Icons_8f2237a8-1ae9-4862-9068-6da79d636310.png",
@@ -131,25 +150,6 @@
             "icon_gap": 8,
             "margin_top": 8,
             "margin_bottom": 0,
-            "margin_top_mobile": 8,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "icon_text_cKXLDG": {
-          "type": "icon_text",
-          "settings": {
-            "style": "checklist",
-            "text": "Universal Fit",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon_deffd60d-2298-49f5-8117-97fe50807da7.png",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 8,
-            "margin_bottom": 8,
             "margin_top_mobile": 8,
             "margin_bottom_mobile": 0
           }
@@ -313,7 +313,7 @@
           "settings": {
             "heading": "How it feels",
             "icon": "none",
-            "content": "<p>Soft, airy, and breathable with the familiar comfort of crisp organic cotton. The Breezeline weave allows air to flow freely, helping release heat instead of trapping it for a cooler, more comfortable night's sleep. Every wash makes them even softer.</p><p></p>",
+            "content": "<p>Soft, airy, and breathable with a luxury hotel &nbsp;cotton feel. The Breezeline weave allows air to flow freely, helping release heat instead of trapping it for a cooler, more comfortable night's sleep. Every wash makes them even softer.</p><p></p>",
             "page": "",
             "margin_top": 40,
             "margin_bottom": 0,
@@ -448,9 +448,9 @@
         "affirm_pay_over_time_messaging_product_block_mrJq7J",
         "nw_benifits_list_NGGwWJ",
         "icon_text_tRPNk9",
+        "icon_text_cKXLDG",
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
-        "icon_text_cKXLDG",
         "icon_text_3FhWzM",
         "variant_picker",
         "whats_included_NYfjML",
@@ -1343,7 +1343,7 @@
         "swiper_arrow_bg": "#613916",
         "swiper_arrow_color": "#ffffff",
         "pagination_color": "#613916",
-        "bg_type": "none",
+        "bg_type": "color",
         "bg_color": "#fffcf0",
         "bg_gradient": "",
         "padding_top_desktop": 80,
