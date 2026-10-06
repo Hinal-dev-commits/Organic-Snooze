@@ -34,22 +34,22 @@
   letter-spacing: 1.32px;
   line-height: 1.2;
   text-transform: uppercase;
-  color: var(--nw-partner-hero-body, #533c16);
-  font-family: DM Sans, sans-serif;
+  color: var(--nw-partner-hero-body, var(--primary-color, #613916));
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-partner-hero-main .nw-partner-hero__heading {
   margin: 0;
-  font-family: 'Optima', sans-serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 60px;
   line-height: 1.167;
-  color: var(--nw-partner-hero-body, #533c16);
+  color: var(--nw-partner-hero-body, var(--primary-color, #613916));
   text-transform: unset;
 }
 
 .nw-partner-hero-main .nw-partner-hero__heading strong {
-  color: var(--nw-partner-hero-body, #533c16);
+  color: var(--nw-partner-hero-body, var(--primary-color, #613916));
   font-weight: 700;
 }
 
@@ -58,8 +58,8 @@
   max-width: 520px;
   font-size: 17px;
   line-height: 26px;
-  color: var(--nw-partner-hero-body, #533c16);
-  font-family: 'DM Sans', sans-serif;
+  color: var(--nw-partner-hero-body, var(--primary-color, #613916));
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
   text-align: left;
 }
 
@@ -89,11 +89,11 @@
   opacity: 1;
   border-radius: 8px;
   padding: 20px 32px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
   font-weight: 700;
   font-size: 15px;
   line-height: 100%;
-  background-color: #CC926A;
+  background-color: var(--secondary-color, #cc926a);
   color: #fff;
   text-transform: unset;
 }
@@ -102,12 +102,12 @@
 }
 
 .nw-partner-hero-main .nw-partner-hero__cta-row .button:hover{
-  background-color: #533C16;
+  background-color: var(--primary-color, #613916);
   color: #fff;
 }
 .nw-partner-hero-main .nw-partner-hero__cta-note {
   margin: 0;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
   font-size: 14px;
   line-height: 1.4;
   color: var(--nw-partner-hero-highlight, #cc926a);
@@ -231,7 +231,7 @@
   .nw-partner-hero-main .nw-partner-hero__cta-note {
     font-size: 14px;
     line-height: 18px;
-    color: #533c16;
+    color: var(--nw-partner-hero-body, var(--primary-color, #613916));
   }
 
   .nw-partner-hero-main .nw-partner-hero__cta-row {
