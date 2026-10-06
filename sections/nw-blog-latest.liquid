@@ -1,7 +1,3 @@
-{{ 'nw-cta-badges.css' | asset_url | stylesheet_tag }}
-{{ 'nw-blog-latest.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'nw-blog-latest.js' | asset_url }}" defer="defer"></script>
-
 {%- liquid
   assign nw_shell_selector = '#NwBlogLatest-' | append: section.id
   assign article_source = section.settings.article_source | default: 'blog'
@@ -22,8 +18,37 @@
   endif
   assign pagination_id = 'NwBlogLatestPagination-' | append: section.id
   assign has_articles = false
-  if article_source == 'metafields' and similar_articles != blank
-    assign has_articles = true
+  assign hide_section = false
+  if article_source == 'metafields'
+    if similar_articles != blank
+      if similar_articles.title != blank
+        assign has_articles = true
+      else
+        for item in similar_articles limit: post_limit
+          assign item_article = item
+          if item_article == blank or item_article.title == blank
+            assign article_path = item | strip
+            if article_path contains '/'
+              assign article_path_parts = article_path | split: '/'
+              assign article_blog_handle = article_path_parts.first
+              assign article_handle = article_path_parts.last
+              if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+                assign item_article = blogs[article_blog_handle].articles[article_handle]
+              endif
+            else
+              assign item_article = articles[article_path]
+            endif
+          endif
+          if item_article != blank and item_article.title != blank
+            assign has_articles = true
+            break
+          endif
+        endfor
+      endif
+    endif
+    unless has_articles
+      assign hide_section = true
+    endunless
   elsif article_source == 'article_list' and selected_articles != blank
     assign has_articles = true
   elsif article_source == 'blog' and selected_blog != blank and selected_blog.articles_count > 0
@@ -45,6 +70,10 @@
   endif
 -%}
 
+{%- unless hide_section -%}
+{{ 'nw-cta-badges.css' | asset_url | stylesheet_tag }}
+{{ 'nw-blog-latest.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-blog-latest.js' | asset_url }}" defer="defer"></script>
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
 {% render 'nw-section-text-colors', selector: nw_shell_selector %}
 
@@ -237,6 +266,7 @@
     </div>
   </div>
 </nw-blog-latest>
+{%- endunless -%}
 
 {% schema %}
 {
