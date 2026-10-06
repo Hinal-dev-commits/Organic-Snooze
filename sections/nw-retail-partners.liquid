@@ -1,0 +1,357 @@
+{{ 'nw-retail-partners.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% if section.settings.text_color != blank %}
+      color: {{ section.settings.text_color }};
+    {% endif %}
+    {% if section.settings.bg_type == 'color' %}
+      background-color: {{ section.settings.bg_color }};
+    {% endif %}
+    {% if section.settings.bg_type == 'gradient' %}
+      background: {{ section.settings.bg_gradient }};
+    {% endif %}
+    {% if section.settings.bg_type == 'image' and section.settings.background_image != blank %}
+      background-image: url('{{ section.settings.background_image | image_url: width: auto }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+    --nw-retail-body: {{ section.settings.text_color | default: '#0c0e0f' }};
+    --nw-retail-accent: {{ section.settings.accent_color | default: '#3f2b04' }};
+    --nw-retail-highlight: #F9BC2D;
+    --nw-retail-card-bg: {{ section.settings.card_background | default: '#f7f5f2' }};
+  }
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.background_image_mobile != blank %}
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: auto }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+<div class="nw-main-section nw-retail-partners-main section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-retail-partners">
+      <div class="nw-retail-partners__header">
+        {% if section.settings.eyebrow != blank %}
+          <p class="nw-retail-partners__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="h1 section-title nw-retail-partners__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="rte">{{ section.settings.description }}</div>
+        {% endif %}
+      </div>
+
+      {% assign has_stats = false %}
+      {% for block in section.blocks %}
+        {% if block.type == 'stat' %}
+          {% assign has_stats = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+
+      {% if has_stats %}
+        <div class="nw-retail-partners__stats">
+          {% for block in section.blocks %}
+            {% if block.type == 'stat' %}
+              <div class="nw-retail-partners__stat" {{ block.shopify_attributes }}>
+                {% if block.settings.value != blank %}
+                  <p class="nw-retail-partners__stat-value">{{ block.settings.value | escape }}</p>
+                {% endif %}
+                {% if block.settings.label != blank %}
+                  <p class="nw-retail-partners__stat-label">{{ block.settings.label | escape | newline_to_br }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.benefits_heading != blank or section.settings.text != blank or section.settings.image != blank %}
+        <div class="nw-retail-partners__body">
+          <div class="nw-retail-partners__benefits">
+            {% if section.settings.benefits_heading != blank %}
+              <h3 class="h1 section-heading nw-retail-partners__benefits-heading">{{ section.settings.benefits_heading | escape }}</h3>
+            {% endif %}
+
+            {% if section.settings.show_divider %}
+              <span class="nw-retail-partners__divider" aria-hidden="true"></span>
+            {% endif %}
+
+            {% if section.settings.text != blank %}
+              <div class="rte nw-retail-partners__benefits-text">
+                {{ section.settings.text }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="nw-retail-partners__media">
+            {% if section.settings.image != blank %}
+              {%- liquid
+                assign retail_alt = section.settings.image.alt | default: section.settings.benefits_heading | default: section.settings.heading | strip_html | default: shop.name
+              -%}
+              <div class="nw-retail-partners__figure">
+                {{
+                  section.settings.image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '400, 600, 800, 1000, 1200',
+                    sizes: '(max-width: 1023px) 100vw, 50vw',
+                    alt: retail_alt
+                }}
+              </div>
+            {% else %}
+              <div class="nw-retail-partners__placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                <p class="nw-retail-partners__placeholder-label">Retail Product / Store Image</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Retail Partners",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "For Retail Partners"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Place Ultimate Snooze In Your Store?"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>The organic sleep market is exploding. Be among the first retailers to own the category locally — with ad support, digital demand, and a brand customers are already searching for.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Benefits"
+    },
+    {
+      "type": "text",
+      "id": "benefits_heading",
+      "label": "Benefits heading",
+      "default": "What You Get As a Retail Partner"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Benefits list",
+      "default": "<ul><li>5% local ad matchback — we spend alongside you within 25 miles of your store</li><li>Local abandoned cart leads routed back to your location</li><li>Live dealer locator with Google Maps routing on our site</li><li>Gary Brecka creative assets & geo-targeted digital campaigns</li><li>30-year warranty + 100-night free trial</li><li>First 5 retailers receive $1,000 local ad credit — limited availability</li></ul>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background image mobile",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#0c0e0f",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#3f2b04",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Stat card background",
+      "default": "#f7f5f2",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top desktop",
+      "default": 80,
+      "min": 0,
+      "max": 120,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom desktop",
+      "default": 80,
+      "min": 0,
+      "max": 120,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "$3.5B"
+        },
+        {
+          "type": "textarea",
+          "id": "label",
+          "label": "Label",
+          "default": "Current organic mattress market"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Retail Partners",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "value": "$3.5B",
+            "label": "Current organic mattress market"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "$13.8B",
+            "label": "Projected market by 2032"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "250M+",
+            "label": "Monthly users touch points"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "6M+",
+            "label": "Engaged social followers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,360 @@
+{{ 'nw-venues.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% if section.settings.text_color != blank %}
+      color: {{ section.settings.text_color }};
+    {% endif %}
+    {% if section.settings.bg_type == 'color' %}
+      background-color: {{ section.settings.bg_color }};
+    {% endif %}
+    {% if section.settings.bg_type == 'gradient' %}
+      background: {{ section.settings.bg_gradient }};
+    {% endif %}
+    {% if section.settings.bg_type == 'image' and section.settings.background_image != blank %}
+      background-image: url('{{ section.settings.background_image | image_url: width: auto }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+    --nw-venues-body: {{ section.settings.text_color | default: '#0c0e0f' }};
+    --nw-venues-accent: {{ section.settings.accent_color | default: '#3f2b04' }};
+    --nw-venues-highlight: #F9BC2D;
+    --nw-venues-card-bg: {{ section.settings.card_background | default: '#ffffff' }};
+  }
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.background_image_mobile != blank %}
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: auto }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+<div class="nw-main-section nw-venues-main section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-venues">
+      <div class="nw-venues__header">
+        {% if section.settings.eyebrow != blank %}
+          <p class="nw-venues__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="h1 section-title nw-venues__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="rte nw-venues__description">{{ section.settings.description }}</div>
+        {% endif %}
+      </div>
+
+      {% assign has_stats = false %}
+      {% for block in section.blocks %}
+        {% if block.type == 'stat' %}
+          {% assign has_stats = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+
+      {% if has_stats or section.settings.text != blank or section.settings.image != blank %}
+        <div class="nw-venues__body">
+          <div class="nw-venues__media">
+            {% if section.settings.image != blank %}
+              {%- liquid
+                assign venues_alt = section.settings.image.alt | default: section.settings.heading | strip_html | default: shop.name
+              -%}
+              <div class="nw-venues__figure">
+                {{
+                  section.settings.image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '400, 600, 800, 1000, 1200',
+                    sizes: '(max-width: 1023px) 100vw, 45vw',
+                    alt: venues_alt
+                }}
+              </div>
+            {% else %}
+              <div class="nw-venues__placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                <p class="nw-venues__placeholder-label">Hospitality — Guest Room Image</p>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="nw-venues__content">
+            {% if has_stats %}
+              <div class="nw-venues__stats">
+                {% for block in section.blocks %}
+                  {% if block.type == 'stat' %}
+                    <div class="nw-venues__stat" {{ block.shopify_attributes }}>
+                      {% if block.settings.value != blank %}
+                        <p class="nw-venues__stat-value">{{ block.settings.value | escape }}</p>
+                      {% endif %}
+                      {% if block.settings.label != blank %}
+                        <p class="nw-venues__stat-label">{{ block.settings.label | escape | newline_to_br }}</p>
+                      {% endif %}
+                      {% if block.settings.source != blank %}
+                        <p class="nw-venues__stat-source">{{ block.settings.source | escape }}</p>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% if section.settings.show_divider %}
+              <span class="nw-venues__divider" aria-hidden="true"></span>
+            {% endif %}
+
+            {% if section.settings.text != blank %}
+              <div class="rte nw-venues__benefits-text">
+                {{ section.settings.text }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Venues",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "For Hospitality Venues"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Place Ultimate Snooze In Your Venue?"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Sleep is the #1 guest satisfaction driver outweighing decor and technology. The Ultimate Snooze gives your property a wellness story that drives reviews, repeat bookings, and premium room rates.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Benefits list",
+      "default": "<ul><li>Drives better guest reviews — sleep is the top satisfaction factor</li><li>Enables premium room upgrade pricing and wellness amenity upsells</li><li>Differentiates your property from competitors in the wellness trend</li><li>Made in USA · Toxin-Free · Certified Organic Cotton, Wool & Latex</li><li>Hand-tufted, zero foam or glue · 5-Zone Pocketed Coil construction</li><li>Creates a unique brand story and marketing angle for your property</li></ul>"
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f7f5f2",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background image mobile",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#0c0e0f",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#3f2b04",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Stat card background",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top desktop",
+      "default": 80,
+      "min": 0,
+      "max": 120,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom desktop",
+      "default": 80,
+      "min": 0,
+      "max": 120,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "#1"
+        },
+        {
+          "type": "textarea",
+          "id": "label",
+          "label": "Label",
+          "default": "Review driver in hospitality — above decor & tech"
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Source",
+          "default": "JD Power"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Venues",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "value": "#1",
+            "label": "Review driver in hospitality — above decor & tech",
+            "source": "JD Power"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "91%",
+            "label": "Of frequent travelers prioritize sleep health",
+            "source": "Global Wellness Institute"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "44%",
+            "label": "Willing to pay 10% premium for rooms with better sleep",
+            "source": "GWI"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": "78%",
+            "label": "More likely to rebook when guests wake refreshed",
+            "source": "Cornell University"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

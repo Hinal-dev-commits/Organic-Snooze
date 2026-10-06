@@ -1,0 +1,334 @@
+.nw-venues-main .nw-venues {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+.nw-venues-main .nw-venues__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  text-align: center;
+  margin-inline: auto;
+}
+
+.nw-venues-main .nw-venues__eyebrow {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.32px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #70804a;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.nw-venues-main .nw-venues__heading {
+  margin: 0 0 16px;
+  max-width: 580px;
+  font-family: 'Optima', sans-serif;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.23;
+  color: var(--nw-venues-body, #533c16);
+}
+
+.nw-venues-main .nw-venues__heading strong {
+  color: var(--nw-venues-body, #533c16);
+  font-weight: inherit;
+}
+
+.nw-venues-main .nw-venues__description {
+  margin: 0;
+  max-width: 830px;
+  font-size: 18px;
+  line-height: 25px;
+  color: var(--nw-venues-body, #533c16);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.nw-venues-main .nw-venues__description > *:first-child {
+  margin-top: 0;
+}
+
+.nw-venues-main .nw-venues__description p {
+  margin: 0 0 12px;
+  max-width: unset;
+}
+
+.nw-venues-main .nw-venues__description p:last-child {
+  margin: 0;
+}
+
+.nw-venues-main .nw-venues__description a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.nw-venues-main .nw-venues__body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 64px;
+  width: 100%;
+}
+
+.nw-venues-main .nw-venues__media {
+  flex: 1 ;
+  min-width: 0;
+  max-width: 560px;
+}
+
+.nw-venues-main .nw-venues__figure {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.nw-venues-main .nw-venues__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.nw-venues-main .nw-venues__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 520px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1.5px dashed rgba(63, 43, 4, 0.35);
+  background: #ffffff;
+  color: #a96b3e;
+  text-align: center;
+}
+
+.nw-venues-main .nw-venues__placeholder-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nw-venues-main .nw-venues__content {
+  flex: 1 ;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.nw-venues-main .nw-venues__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.nw-venues-main .nw-venues__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 36px;
+  text-align: center;
+  border-radius: 12px;
+  background: var(--nw-venues-card-bg, #ffffff);
+}
+
+.nw-venues-main .nw-venues__stat-value {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.1;
+  color: #a96b3e;
+}
+
+.nw-venues-main .nw-venues__stat-label {
+  margin: 0;
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--nw-venues-body, #533c16);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.nw-venues-main .nw-venues__stat-source {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #808080;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.nw-venues-main .nw-venues__divider {
+  display: block;
+  width: 48px;
+  height: 3px;
+  border-radius: 2px;
+  background: #A96B3E;
+}
+
+.nw-venues-main .nw-venues__benefits-text {
+  width: 100%;
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--nw-venues-body, #533c16);
+}
+
+.nw-venues-main .nw-venues__benefits-text ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.nw-venues-main .nw-venues__benefits-text li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.nw-venues-main .nw-venues__benefits-text li::before {
+  content: '✦';
+  flex: 0 0 auto;
+  margin-top: 0px;
+  line-height: 1.2;
+  color: #70804a;
+}
+
+.nw-venues-main .nw-venues__benefits-text p {
+  margin: 0 0 12px;
+}
+
+.nw-venues-main .nw-venues__benefits-text p:last-child {
+  margin: 0;
+}
+
+.nw-venues-main .nw-venues__benefits-text a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media screen and (max-width: 1199px) {
+  .nw-venues-main .nw-venues__body {
+    gap: 40px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .nw-venues-main .nw-venues {
+    gap: 40px;
+  }
+
+  .nw-venues-main .nw-venues__body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+  }
+
+  .nw-venues-main .nw-venues__media {
+    order: 2;
+    width: 100%;
+    margin: auto;
+  }
+
+  .nw-venues-main .nw-venues__content {
+    order: 1;
+    width: 100%;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .nw-venues-main .nw-venues__placeholder {
+    min-height: 360px;
+  }
+  
+  .nw-venues-main .nw-venues__stat-value{
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-venues-main .nw-venues {
+    gap: 24px;
+  }
+  .nw-venues-main .nw-venues__body{
+    align-items: center;
+  }
+  .nw-venues-main .nw-venues__media{
+    max-width: 100%;
+  }
+  .nw-venues-main .nw-venues__eyebrow {
+    margin-bottom: 24px;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+  }
+
+  .nw-venues-main .nw-venues__heading {
+    margin-bottom: 24px;
+    max-width: 340px;
+    font-size: 28px;
+    line-height: 1.29;
+  }
+
+  .nw-venues-main .nw-venues__description {
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .nw-venues-main .nw-venues__content {
+    gap: 20px;
+    max-width: unset;
+  }
+
+  .nw-venues-main .nw-venues__stats {
+    gap: 12px;
+    max-width: 475px;
+    margin-inline: auto;
+  }
+
+  .nw-venues-main .nw-venues__stat {
+    padding: 20px 10px;
+  }
+
+  .nw-venues-main .nw-venues__stat-value {
+    font-size: 30px;
+  }
+
+  .nw-venues-main .nw-venues__stat-label {
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .nw-venues-main .nw-venues__stat-source {
+    font-size: 12px;
+  }
+
+  .nw-venues-main .nw-venues__benefits-text {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .nw-venues-main .nw-venues__benefits-text ul {
+    gap: 14px;
+  }
+
+  .nw-venues-main .nw-venues__placeholder {
+    min-height: 260px;
+  }
+  .nw-venues-main .nw-venues__divider{
+    display: none;
+  }
+}

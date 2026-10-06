@@ -1,0 +1,324 @@
+.nw-retail-partners-main .nw-retail-partners {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+.nw-retail-partners-main .nw-retail-partners__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0px;
+  text-align: center;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.nw-retail-partners-main .nw-retail-partners__eyebrow {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.32px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #70804a;
+  font-family: 'DM Sans', sans-serif;
+}
+.nw-retail-partners__header .rte > *:first-child{
+  margin-top: 0px;
+}
+.nw-retail-partners__header .rte{
+  max-width: 790px;
+  font-size: 18px;
+  line-height: 25px;
+  color: var(--nw-retail-body, #533c16);
+}
+.nw-retail-partners__header .rte p{
+  max-width: unset;
+}
+.nw-retail-partners__heading{
+  margin-bottom: 16px;
+  max-width: 580px;
+  font-family: 'Optima', sans-serif;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.23;
+  color: var(--nw-retail-body, #533c16);
+}
+
+.nw-retail-partners-main .nw-retail-partners__description{
+  font-family: 'DM Sans', sans-serif;
+}
+.nw-retail-partners-main .nw-retail-partners__description a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+
+.nw-retail-partners-main .nw-retail-partners__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.nw-retail-partners-main .nw-retail-partners__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 28px;
+  text-align: center;
+  border-radius: 12px;
+  background: var(--nw-retail-card-bg, #f4efe8);
+}
+
+.nw-retail-partners-main .nw-retail-partners__stat-value {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.35;
+  color: #a96b3e;
+}
+
+.nw-retail-partners-main .nw-retail-partners__stat-label {
+  margin: 0;
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--nw-retail-body, #533c16);
+}
+
+.nw-retail-partners-main .nw-retail-partners__body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 64px;
+  width: 100%;
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits-heading {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.36;
+  color: var(--nw-retail-body, #533c16);
+  text-transform: unset;
+}
+
+.nw-retail-partners-main .nw-retail-partners__divider {
+  display: block;
+  width: 48px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #f9bc2d 80%, #fa5806 80% 95%, #943404 95%);
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits-text {
+  width: 100%;
+  font-size: 18px;
+  line-height: 22px;
+  color: var(--nw-retail-body, #533c16);
+  text-align: left;
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits-text ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits-text li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits-text li::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 0px;
+  background-color: #70804a;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M8 1.2l1.76 3.56 3.93.57-2.84 2.77.67 3.91L8 10.16l-3.52 1.85.67-3.91L2.31 5.33l3.93-.57L8 1.2z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M8 1.2l1.76 3.56 3.93.57-2.84 2.77.67 3.91L8 10.16l-3.52 1.85.67-3.91L2.31 5.33l3.93-.57L8 1.2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits-text p {
+  margin: 0 0 12px;
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits-text p:last-child {
+  margin: 0;
+}
+
+.nw-retail-partners-main .nw-retail-partners__benefits-text a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.nw-retail-partners-main .nw-retail-partners__media {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.nw-retail-partners-main .nw-retail-partners__figure {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.nw-retail-partners-main .nw-retail-partners__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.nw-retail-partners-main .nw-retail-partners__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 420px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1.5px dashed rgba(63, 43, 4, 0.35);
+  background: #f7f5f2;
+  color: #a96b3e;
+  text-align: center;
+}
+
+.nw-retail-partners-main .nw-retail-partners__placeholder-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1199px) {
+  .nw-retail-partners-main .nw-retail-partners__body {
+    gap: 40px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .nw-retail-partners-main .nw-retail-partners {
+    gap: 40px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__media {
+    width: 100%;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__stat-value{
+    font-size: 32px;
+  }
+  .nw-retail-partners-main .nw-retail-partners__stat{
+    padding: 20px 10px;
+  }
+  .nw-retail-partners-main .nw-retail-partners__stat-label{
+    font-size: 13px;
+  }
+  .nw-retail-partners__header .rte{
+    max-width: 670px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-retail-partners-main .nw-retail-partners {
+    gap: 24px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__eyebrow{
+    margin-bottom: 24px;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+  }
+
+  .nw-retail-partners__heading{
+    margin-bottom: 24px;
+    max-width: 340px;
+    font-size: 28px;
+    line-height: 1.29;
+  }
+
+  .nw-retail-partners__header .rte {
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__stat {
+    padding: 20px 14px;
+    gap: 6px;
+    border-radius: 12px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__stat-value {
+    font-size: 26px;
+  }
+
+
+  .nw-retail-partners-main .nw-retail-partners__benefits {
+    gap: 14px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__benefits-heading {
+    font-size: 20px;
+    display: none;
+  }
+  .nw-retail-partners-main .nw-retail-partners__divider{
+    display: none;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__benefits-text {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__benefits-text ul {
+    gap: 14px;
+  }
+
+  .nw-retail-partners-main .nw-retail-partners__placeholder {
+    min-height: 260px;
+  }
+  .nw-retail-partners-main .nw-retail-partners__stat-label{
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

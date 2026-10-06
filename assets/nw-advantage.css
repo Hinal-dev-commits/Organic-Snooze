@@ -1,0 +1,219 @@
+.nw-advantage-main .nw-advantage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.nw-advantage-main .nw-advantage__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  text-align: center;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.nw-advantage-main .nw-advantage__eyebrow {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.32px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: #70804a;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.nw-advantage-main .nw-advantage__heading {
+  margin: 0 0 16px;
+  font-family: 'Optima', sans-serif;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.23;
+  color: var(--nw-advantage-body, #533c16);
+  max-width: 450px;
+}
+
+.nw-advantage-main .nw-advantage__heading strong {
+  color: var(--nw-advantage-body, #533c16);
+  font-weight: inherit;
+}
+
+.nw-advantage-main .nw-advantage__description {
+  margin: 0 0 16px;
+  font-size: 18px;
+  line-height: 25px;
+  color: var(--nw-advantage-body, #533c16);
+  font-family: 'DM Sans', sans-serif;
+  max-width: 760px;
+}
+.nw-advantage-main .nw-advantage__description p{
+  max-width: unset;
+}
+
+.nw-advantage-main .nw-advantage__description > *:first-child {
+  margin-top: 0;
+}
+
+.nw-advantage-main .nw-advantage__description p {
+  margin: 0 0 12px;
+}
+
+.nw-advantage-main .nw-advantage__description p:last-child {
+  margin: 0;
+}
+
+.nw-advantage-main .nw-advantage__description a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.nw-advantage-main .nw-advantage__divider {
+  display: block;
+  width: 64px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #f9bc2d 80%, #fa5806 80% 95%, #943404 95%);
+}
+
+.nw-advantage-main .nw-advantage__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: 100%;
+}
+
+.nw-advantage-main .nw-advantage__card {
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 32px 28px;
+  border-radius: 14px;
+  background: var(--nw-advantage-card-bg, #f4efe8);
+  max-width: 400px;
+}
+
+.nw-advantage-main .nw-advantage__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--nw-advantage-icon-bg, rgba(112, 128, 74, 0.15));
+  color: #70804a;
+  box-sizing: border-box;
+}
+
+.nw-advantage-main .nw-advantage__icon img,
+.nw-advantage-main .nw-advantage__icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.nw-advantage-main .nw-advantage__card-title {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.44;
+  color: var(--nw-advantage-body, #533c16);
+  text-transform: unset;
+}
+
+.nw-advantage-main .nw-advantage__card-text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 21px;
+  color: var(--nw-advantage-body, #533c16);
+  text-align: left;
+}
+
+.nw-advantage-main .nw-advantage__card-text p {
+  margin: 0 0 12px;
+}
+
+.nw-advantage-main .nw-advantage__card-text p:last-child {
+  margin: 0;
+}
+
+.nw-advantage-main .nw-advantage__card-text a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media screen and (max-width: 1023px) {
+  .nw-advantage-main .nw-advantage__grid {
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+  .nw-advantage-main .nw-advantage__card{
+    max-width: calc(50% - 12px);
+    flex: unset;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-advantage-main .nw-advantage {
+    gap: 20px;
+  }
+
+  .nw-advantage-main .nw-advantage__eyebrow {
+    margin-bottom: 20px;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+  }
+
+  .nw-advantage-main .nw-advantage__heading {
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    line-height: 1.29;
+  }
+
+  .nw-advantage-main .nw-advantage__description {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .nw-advantage-main .nw-advantage__card {
+    padding: 24px 20px;
+  }
+
+  .nw-advantage-main .nw-advantage__card-title {
+    font-family: 'Optima', sans-serif;
+    font-size: 18px;
+    line-height: 1.375;
+  }
+
+  .nw-advantage-main .nw-advantage__card-text {
+    font-size: 15px;
+    line-height: 19px;
+  }
+  .nw-advantage-main .nw-advantage__card{
+    max-width: 100%;
+    flex: unset;
+    width: 100%;
+  }
+  .nw-advantage-main .nw-advantage__icon{
+    max-width: 38px;
+    max-height: 38px;
+    width: 100%;
+    height: 100%;
+  }
+  .nw-advantage-main .nw-advantage__grid{
+    gap: 20px;
+  }
+}

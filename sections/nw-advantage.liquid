@@ -1,0 +1,341 @@
+{{ 'nw-advantage.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% if section.settings.text_color != blank %}
+      color: {{ section.settings.text_color }};
+    {% endif %}
+    {% if section.settings.bg_type == 'color' %}
+      background-color: {{ section.settings.bg_color }};
+    {% endif %}
+    {% if section.settings.bg_type == 'gradient' %}
+      background: {{ section.settings.bg_gradient }};
+    {% endif %}
+    {% if section.settings.bg_type == 'image' and section.settings.background_image != blank %}
+      background-image: url('{{ section.settings.background_image | image_url: width: auto }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+    --nw-advantage-body: {{ section.settings.text_color | default: '#0c0e0f' }};
+    --nw-advantage-accent: {{ section.settings.accent_color | default: '#3f2b04' }};
+    --nw-advantage-highlight: #F9BC2D;
+    --nw-advantage-card-bg: {{ section.settings.card_background | default: '#f7f5f2' }};
+    --nw-advantage-icon-bg: {{ section.settings.icon_background | default: '#efeae3' }};
+  }
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.background_image_mobile != blank %}
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: auto }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+<div class="nw-main-section nw-advantage-main section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-advantage">
+      <div class="nw-advantage__header">
+        {% if section.settings.eyebrow != blank %}
+          <p class="nw-advantage__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="h1 section-title nw-advantage__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="rte nw-advantage__description">{{ section.settings.description }}</div>
+        {% endif %}
+
+        {% if section.settings.show_divider %}
+          <span class="nw-advantage__divider" aria-hidden="true"></span>
+        {% endif %}
+      </div>
+
+      {% if section.blocks.size > 0 %}
+        <div class="nw-advantage__grid">
+          {% for block in section.blocks %}
+            {% if block.type == 'card' %}
+              <article class="nw-advantage__card" {{ block.shopify_attributes }}>
+                <div class="nw-advantage__icon" aria-hidden="true">
+                  {% if block.settings.icon != blank %}
+                    {{
+                      block.settings.icon
+                      | image_url: width: 80
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '40, 80',
+                        sizes: '40px',
+                        alt: ''
+                    }}
+                  {% else %}
+                    {% case block.settings.icon_style %}
+                      {% when 'diamond' %}
+                        {{ 'nw-dimond.svg' | inline_asset_content }}
+                      {% when 'cycle' %}
+                        {{ 'nw-reverce.svg' | inline_asset_content }}
+                      {% else %}
+                        {{ 'nw-star.svg' | inline_asset_content }}
+                    {% endcase %}
+                  {% endif %}
+                </div>
+
+                {% if block.settings.title != blank %}
+                  <h3 class="nw-advantage__card-title">{{ block.settings.title | escape }}</h3>
+                {% endif %}
+
+                {% if block.settings.text != blank %}
+                  <div class="rte nw-advantage__card-text">{{ block.settings.text }}</div>
+                {% endif %}
+              </article>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Advantage",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Ultimate Snooze Advantage"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Work With The Ultimate Snooze?"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Whether you're in retail or hospitality, these are the reasons partners choose us — and stay with us.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background image mobile",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#0c0e0f",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#3f2b04",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#f7f5f2",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "icon_background",
+      "label": "Icon background",
+      "default": "#efeae3",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top desktop",
+      "default": 80,
+      "min": 0,
+      "max": 120,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom desktop",
+      "default": 80,
+      "min": 0,
+      "max": 120,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_style",
+          "label": "Built-in icon",
+          "default": "star",
+          "options": [
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "diamond",
+              "label": "Diamond"
+            },
+            {
+              "value": "cycle",
+              "label": "Cycle"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Custom icon image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Backed by Gary Brecka & The Ultimate Human"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>6M+ social followers and 225M monthly website users already search for our products. Your store or venue becomes part of a movement, not just a transaction.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Advantage",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon_style": "star",
+            "title": "Backed by Gary Brecka & The Ultimate Human",
+            "text": "<p>6M+ social followers and 225M monthly website users already search for our products. Your store or venue becomes part of a movement, not just a transaction.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_style": "diamond",
+            "title": "Certified Organic. Made in the USA.",
+            "text": "<p>Organic latex, wool, and cotton. Zero foam, zero glue. Hand-tufted craftsmanship with an extended warranty. Products guests and customers can feel and believe in.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon_style": "cycle",
+            "title": "A True Partnership — Not Just a Wholesale Account",
+            "text": "<p>We invest in your success. Ad matchback programs, geo-targeted campaigns, digital demand routing, seasonal assets, and live support. We grow when you grow.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
