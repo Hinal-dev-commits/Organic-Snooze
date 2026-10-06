@@ -1,0 +1,42 @@
+{% doc %}
+  Serializes Cart Gift Rule metaobjects for nw-cart-gift-rules.js.
+  Metaobject type: cart_gift_rule
+{% enddoc %}
+
+{%- liquid
+  assign gift_rule_entries = shop.metaobjects.cart_gift_rule.values
+  assign rule_index = 0
+-%}
+<script type="application/json" id="nw-cart-gift-rules-json">
+[
+{%- if gift_rule_entries != blank -%}
+  {%- for rule in gift_rule_entries -%}
+    {%- assign gift_variant = rule.gift_variant.value -%}
+    {%- if gift_variant != blank -%}
+      {%- liquid
+        assign trigger_mode_raw = rule.trigger_mode.value | default: rule.trigger_mode | downcase | strip
+        assign gift_qty = rule.gift_quantity.value | default: rule.gift_quantity | default: 1 | plus: 0
+        assign rule_priority = rule.priority.value | default: rule.priority | default: 0 | plus: 0
+        assign rule_title = rule.title.value | default: rule.title | default: rule.system.handle
+        assign rule_internal_id = rule.internal_id.value | default: rule.internal_id | strip
+        assign trigger_products = rule.trigger_products.value
+        assign trigger_variants = rule.trigger_variants.value
+      -%}
+      {%- if rule_index > 0 -%},{%- endif -%}
+      {
+        "id": {{ rule.system.handle | json }},
+        "title": {{ rule_title | json }},
+        "triggerMode": {{ trigger_mode_raw | json }},
+        "triggerProductIds": {{ trigger_products | map: 'id' | json }},
+        "triggerVariantIds": {{ trigger_variants | map: 'id' | json }},
+        "giftVariantId": {{ gift_variant.id }},
+        "giftQuantity": {{ gift_qty }},
+        "priority": {{ rule_priority }},
+        "internalId": {{ rule_internal_id | json }}
+      }
+      {%- assign rule_index = rule_index | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+]
+</script>
