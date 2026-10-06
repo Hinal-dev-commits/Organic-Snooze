@@ -101,6 +101,64 @@
                   </div>
                 {%- endif -%}
 
+              {%- when 'icon' -%}
+                {%- liquid
+                  assign show_icon = false
+                  if block.settings.use_custom_icon and block.settings.custom_icon != blank
+                    assign show_icon = true
+                  elsif block.settings.use_custom_icon != true and block.settings.icon != 'none'
+                    assign show_icon = true
+                  endif
+                -%}
+                {%- if show_icon -%}
+                  {%- capture icon_block_style -%}
+                    --nw-rich-text-icon-size: {{ block.settings.icon_size | default: 48 }}px;{% if block.settings.icon_color != blank %} --nw-rich-text-icon-color: {{ block.settings.icon_color }};{% endif %}{% if settings.animations_reveal_on_scroll %} --animation-order: {{ forloop.index }};{% endif %}
+                  {%- endcapture -%}
+                  <div
+                    class="nw-rich-text__icon{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    style="{{ icon_block_style | strip }}"
+                    {{ block.shopify_attributes }}
+                    {% if settings.animations_reveal_on_scroll %}
+                      data-cascade
+                    {% endif %}
+                  >
+                    <span class="nw-rich-text__icon-inner" aria-hidden="true">
+                      {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
+                        {{
+                          block.settings.custom_icon
+                          | image_url: width: 240
+                          | image_tag:
+                            alt: '',
+                            class: 'nw-rich-text__icon-img',
+                            loading: 'lazy',
+                            widths: '48, 96, 120, 240'
+                        }}
+                      {%- else -%}
+                        {% render 'nw-icon', icon: block.settings.icon, class: 'nw-rich-text__icon-svg' %}
+                      {%- endif -%}
+                    </span>
+                  </div>
+                {%- endif -%}
+
+              {%- when 'image' -%}
+                {%- if block.settings.image != blank or block.settings.image_mobile != blank -%}
+                  <div
+                    class="nw-rich-text__image nw-rich-text__image--{{ block.settings.image_width | default: 'full' }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                    {{ block.shopify_attributes }}
+                    {% if settings.animations_reveal_on_scroll %}
+                      data-cascade
+                      style="--animation-order: {{ forloop.index }};"
+                    {% endif %}
+                  >
+                    {% render 'nw-image-layout-media',
+                      image: block.settings.image,
+                      image_mobile: block.settings.image_mobile,
+                      alt: block.settings.image_alt,
+                      class_prefix: 'nw-rich-text'
+                    %}
+                  </div>
+                {%- endif -%}
+
               {%- when 'button' -%}
                 {%- liquid
                   assign show_button_1 = false
@@ -421,6 +479,93 @@
           "id": "text",
           "label": "Text",
           "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+        }
+      ]
+    },
+    {
+      "type": "icon",
+      "name": "Icon",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "use_custom_icon",
+          "label": "Use Custom Icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "verified",
+          "visible_if": "{{ block.settings.use_custom_icon != true }}",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "verified", "label": "Verified" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "star", "label": "Star" },
+            { "value": "offer", "label": "Offer" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image",
+          "visible_if": "{{ block.settings.use_custom_icon == true }}"
+        },
+        {
+          "type": "range",
+          "id": "icon_size",
+          "label": "Icon Size",
+          "min": 24,
+          "max": 120,
+          "step": 4,
+          "unit": "px",
+          "default": 48
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon Color",
+          "alpha": true
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (Mobile)"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image Alt Text"
+        },
+        {
+          "type": "select",
+          "id": "image_width",
+          "label": "Image Width",
+          "default": "full",
+          "options": [
+            { "value": "full", "label": "Full content width" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "narrow", "label": "Narrow" }
+          ]
         }
       ]
     },

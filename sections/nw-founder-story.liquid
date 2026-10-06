@@ -36,11 +36,37 @@
     --nw-fs-footer-desc-color: {{ section.settings.footer_description_color }};
     --nw-star-active: {{ section.settings.star_color }};
     --nw-star-inactive: {{ section.settings.star_color_inactive }};
+    --nw-fs-heading-size-desktop: {{ section.settings.heading_font_size_desktop }}px;
+    --nw-fs-heading-size-tablet: {{ section.settings.heading_font_size_tablet }}px;
+    --nw-fs-heading-size-mobile: {{ section.settings.heading_font_size_mobile }}px;
+    --nw-fs-stat-value-size-desktop: {{ section.settings.stat_value_font_size_desktop }}px;
+    --nw-fs-stat-value-size-tablet: {{ section.settings.stat_value_font_size_tablet }}px;
+    --nw-fs-stat-value-size-mobile: {{ section.settings.stat_value_font_size_mobile }}px;
+    --nw-fs-stat-desc-size-desktop: {{ section.settings.stat_desc_font_size_desktop }}px;
+    --nw-fs-stat-desc-size-tablet: {{ section.settings.stat_desc_font_size_tablet }}px;
+    --nw-fs-stat-desc-size-mobile: {{ section.settings.stat_desc_font_size_mobile }}px;
+    --nw-fs-stat-align-desktop: {{ section.settings.stat_text_align_desktop }};
+    --nw-fs-stat-align-mobile: {{ section.settings.stat_text_align_mobile }};
+    --nw-fs-quote-size-desktop: {{ section.settings.quote_font_size_desktop }}px;
+    --nw-fs-quote-size-tablet: {{ section.settings.quote_font_size_tablet }}px;
+    --nw-fs-quote-size-mobile: {{ section.settings.quote_font_size_mobile }}px;
+    --nw-fs-name-size-desktop: {{ section.settings.name_font_size_desktop }}px;
+    --nw-fs-name-size-tablet: {{ section.settings.name_font_size_tablet }}px;
+    --nw-fs-name-size-mobile: {{ section.settings.name_font_size_mobile }}px;
+    --nw-fs-role-size-desktop: {{ section.settings.role_font_size_desktop }}px;
+    --nw-fs-role-size-tablet: {{ section.settings.role_font_size_tablet }}px;
+    --nw-fs-role-size-mobile: {{ section.settings.role_font_size_mobile }}px;
+    --nw-fs-footer-heading-size-desktop: {{ section.settings.footer_heading_font_size_desktop }}px;
+    --nw-fs-footer-heading-size-tablet: {{ section.settings.footer_heading_font_size_tablet }}px;
+    --nw-fs-footer-heading-size-mobile: {{ section.settings.footer_heading_font_size_mobile }}px;
+    --nw-fs-footer-desc-size-desktop: {{ section.settings.footer_description_font_size_desktop }}px;
+    --nw-fs-footer-desc-size-tablet: {{ section.settings.footer_description_font_size_tablet }}px;
+    --nw-fs-footer-desc-size-mobile: {{ section.settings.footer_description_font_size_mobile }}px;
   "
 >
   <div class="page-width">
     <div class="nw-founder-story__wrapper{%- render 'nw-scroll-animation' -%}">
-      <div class="nw-founder-story__header">
+      <div class="nw-founder-story__header nw-founder-story__header--desktop-{{ section.settings.header_text_align_desktop }} nw-founder-story__header--mobile-{{ section.settings.header_text_align_mobile }}">
         {% render 'nw-section-header',
           show_rating: section.settings.show_rating,
           rating: section.settings.star_rating,
@@ -154,7 +180,7 @@
             {%- endif -%}
           </div>
 
-          <div class="nw-founder-story__content">
+          <div class="nw-founder-story__content nw-founder-story__content--desktop-{{ section.settings.testimonial_text_align_desktop }} nw-founder-story__content--mobile-{{ section.settings.testimonial_text_align_mobile }}">
             {%- if section.settings.avatar != blank or section.settings.quote != blank -%}
               <div class="nw-founder-story__quote-row">
                 {%- if section.settings.avatar != blank -%}
@@ -223,7 +249,7 @@
     </div>
 
     {%- if section.settings.show_footer_content -%}
-      <div class="nw-founder-story__footer">
+      <div class="nw-founder-story__footer nw-founder-story__footer--desktop-{{ section.settings.footer_text_align_desktop }} nw-founder-story__footer--mobile-{{ section.settings.footer_text_align_mobile }}">
         {%- if section.settings.footer_heading != blank -%}
           <h3 class="nw-founder-story__footer-heading">{{ section.settings.footer_heading }}</h3>
         {%- endif -%}
@@ -404,6 +430,351 @@
       "id": "disclaimer",
       "label": "Disclaimer",
       "default": "<p><em>Results vary by individual. General sleep trends, not guarantees.</em></p>"
+    },
+    {
+      "type": "header",
+      "content": "Section Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "label": "Heading Font Size (Desktop)",
+      "min": 20,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_tablet",
+      "label": "Heading Font Size (Tablet)",
+      "min": 20,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "label": "Heading Font Size (Mobile)",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "header_text_align_desktop",
+      "label": "Header Text Align (Desktop)",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "header_text_align_mobile",
+      "label": "Header Text Align (Mobile)",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Testimonial"
+    },
+    {
+      "type": "range",
+      "id": "quote_font_size_desktop",
+      "label": "Quote Font Size (Desktop)",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "quote_font_size_tablet",
+      "label": "Quote Font Size (Tablet)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "quote_font_size_mobile",
+      "label": "Quote Font Size (Mobile)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "name_font_size_desktop",
+      "label": "Name Font Size (Desktop)",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "name_font_size_tablet",
+      "label": "Name Font Size (Tablet)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "name_font_size_mobile",
+      "label": "Name Font Size (Mobile)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "role_font_size_desktop",
+      "label": "Role Font Size (Desktop)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "role_font_size_tablet",
+      "label": "Role Font Size (Tablet)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "role_font_size_mobile",
+      "label": "Role Font Size (Mobile)",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "testimonial_text_align_desktop",
+      "label": "Testimonial Text Align (Desktop)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "testimonial_text_align_mobile",
+      "label": "Testimonial Text Align (Mobile)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Stats"
+    },
+    {
+      "type": "range",
+      "id": "stat_value_font_size_desktop",
+      "label": "Stat Value Font Size (Desktop)",
+      "min": 24,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "stat_value_font_size_tablet",
+      "label": "Stat Value Font Size (Tablet)",
+      "min": 24,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "stat_value_font_size_mobile",
+      "label": "Stat Value Font Size (Mobile)",
+      "min": 20,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "stat_desc_font_size_desktop",
+      "label": "Stat Description Font Size (Desktop)",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "stat_desc_font_size_tablet",
+      "label": "Stat Description Font Size (Tablet)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stat_desc_font_size_mobile",
+      "label": "Stat Description Font Size (Mobile)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "stat_text_align_desktop",
+      "label": "Stat Text Align (Desktop)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "stat_text_align_mobile",
+      "label": "Stat Text Align (Mobile)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    
+    {
+      "type": "header",
+      "content": "Footer Content"
+    },
+    {
+      "type": "range",
+      "id": "footer_heading_font_size_desktop",
+      "label": "Footer Heading Font Size (Desktop)",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "footer_heading_font_size_tablet",
+      "label": "Footer Heading Font Size (Tablet)",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "footer_heading_font_size_mobile",
+      "label": "Footer Heading Font Size (Mobile)",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "footer_description_font_size_desktop",
+      "label": "Footer Description Font Size (Desktop)",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "footer_description_font_size_tablet",
+      "label": "Footer Description Font Size (Tablet)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "footer_description_font_size_mobile",
+      "label": "Footer Description Font Size (Mobile)",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "footer_text_align_desktop",
+      "label": "Footer Text Align (Desktop)",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "footer_text_align_mobile",
+      "label": "Footer Text Align (Mobile)",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
     },
     {
       "type": "header",

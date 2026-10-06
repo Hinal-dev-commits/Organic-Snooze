@@ -1,0 +1,423 @@
+{{ 'nw-image-layout.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign nw_image_layout_selector = '.nw-image-layout.section-' | append: section.id
+  assign half_row_open = false
+-%}
+
+<style>
+  .nw-image-layout.section-{{ section.id }} {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop | default: 64 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 64 }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        {% if section.settings.bg_color != blank %}
+          background-color: {{ section.settings.bg_color }};
+        {% endif %}
+      {% when 'gradient' %}
+        {% if section.settings.bg_gradient != blank %}
+          background: {{ section.settings.bg_gradient }};
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    .nw-image-layout.section-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: {{ section.settings.bg_image_opacity | default: 16 | times: 0.01 }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  .nw-image-layout.section-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .nw-image-layout.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 40 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 40 }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      .nw-image-layout.section-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+{% render 'nw-section-text-colors', selector: nw_image_layout_selector %}
+
+<div
+  class="nw-image-layout section-{{ section.id }}"
+  style="
+    --nw-image-layout-card-radius: {{ section.settings.card_border_radius }}px;
+    --nw-star-active: {{ section.settings.star_color }};
+    --nw-star-inactive: {{ section.settings.star_color_inactive }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-image-layout__wrapper{%- render 'nw-scroll-animation' -%}">
+      {%- if section.settings.show_rating
+        or section.settings.eyebrow != blank
+        or section.settings.heading != blank
+        or section.settings.subheading != blank
+      -%}
+        <div class="nw-image-layout__header">
+          {% render 'nw-section-header',
+            show_rating: section.settings.show_rating,
+            rating: section.settings.star_rating,
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.subheading,
+            section_index: section.index,
+            heading_wrap_class: 'nw-image-layout__heading-wrap'
+          %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-image-layout__blocks">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign next_is_half = false
+              if forloop.index < section.blocks.size
+                assign next_block = section.blocks[forloop.index]
+                if next_block.type == 'half_image'
+                  assign next_is_half = true
+                endif
+              endif
+            -%}
+
+            {%- if block.type == 'full_image' -%}
+              {%- if half_row_open -%}
+                </div>
+                {%- assign half_row_open = false -%}
+              {%- endif -%}
+              <div
+                class="nw-image-layout__item nw-image-layout__item--full"
+                style="{% if block.settings.card_bg_color != blank %}--nw-image-layout-card-bg: {{ block.settings.card_bg_color }};{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="nw-image-layout__media">
+                  {% render 'nw-image-layout-media',
+                    image: block.settings.image,
+                    image_mobile: block.settings.image_mobile,
+                    alt: block.settings.image_alt
+                  %}
+                </div>
+              </div>
+
+            {%- elsif block.type == 'half_image' -%}
+              {%- unless half_row_open -%}
+                <div class="nw-image-layout__row">
+                {%- assign half_row_open = true -%}
+              {%- endunless -%}
+              <div
+                class="nw-image-layout__cell"
+                style="{% if block.settings.card_bg_color != blank %}--nw-image-layout-card-bg: {{ block.settings.card_bg_color }};{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="nw-image-layout__media">
+                  {% render 'nw-image-layout-media',
+                    image: block.settings.image,
+                    image_mobile: block.settings.image_mobile,
+                    alt: block.settings.image_alt
+                  %}
+                </div>
+              </div>
+              {%- unless next_is_half -%}
+                </div>
+                {%- assign half_row_open = false -%}
+              {%- endunless -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if half_row_open -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.nw-image-layout.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Rating Stars",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "star_rating",
+      "label": "Star Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5,
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color",
+      "label": "Star Color",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "star_color_inactive",
+      "label": "Star Inactive Color",
+      "visible_if": "{{ section.settings.show_rating == true }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "description_color",
+      "label": "Description Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Text Color"
+    },
+    {
+      "type": "header",
+      "content": "LAYOUT"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card Corner Radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "half_image",
+      "name": "Half Width Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (Mobile)"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image Alt Text"
+        },
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "card_bg_color",
+          "label": "Card Background",
+          "info": "Optional behind the image (e.g. beige or mint panels)."
+        }
+      ]
+    },
+    {
+      "type": "full_image",
+      "name": "Full Width Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (Desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (Mobile)"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image Alt Text"
+        },
+        {
+          "type": "color",
+          "alpha": true,
+          "id": "card_bg_color",
+          "label": "Card Background"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-image-layout.name",
+      "category": "NW Sections",
+      "blocks": [
+        { "type": "half_image" },
+        { "type": "half_image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

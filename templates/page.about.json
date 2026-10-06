@@ -46,12 +46,14 @@
       "name": "t:sections.nw-section-banner.name",
       "settings": {
         "tag_text": "",
-        "heading": "Certified Organic.Not Just Called It.",
-        "description": "<p>GOTS textiles, GOLS latex, made in the USA. Every claim on this page is backed by proof you can verify.</p>",
+        "heading": "Premium Sleep Systems Created with certified organic materials.",
+        "heading_max_width": 100,
+        "description": "<p>Certified textiles, Certified latex, made in the USA.&nbsp;</p>",
         "text_position_mobile": "top",
         "button_text": "SHOP THE MATTRESS",
-        "button_link": "",
+        "button_link": "shopify://collections/mattress",
         "button_style": "primary",
+        "show_rating_bottom": false,
         "show_rating": true,
         "star_rating": 5,
         "rating_text": "4.8/5 from 100'S sleepers",
@@ -83,7 +85,7 @@
         "item_UWrMGi": {
           "type": "item",
           "settings": {
-            "text": "GOTS Certified Organic Cotton & Wool",
+            "text": "Certified Organic Cotton & Wool",
             "link": "",
             "use_custom_icon": false,
             "icon": "verified"
@@ -92,7 +94,7 @@
         "item_HmfV3B": {
           "type": "item",
           "settings": {
-            "text": "GOLS Certified Natural Latex",
+            "text": "Certified Organic Latex",
             "link": "",
             "use_custom_icon": false,
             "icon": "verified"
@@ -101,7 +103,7 @@
         "item_ChbEqq": {
           "type": "item",
           "settings": {
-            "text": "Zero Fiberglass · Zero Foam",
+            "text": "Zero Fiberglass · Zero Petroleum",
             "link": "",
             "use_custom_icon": false,
             "icon": "verified"
@@ -126,7 +128,7 @@
       "name": "t:sections.nw-marquee.name",
       "settings": {
         "direction": "right_to_left",
-        "speed": 35,
+        "speed": 90,
         "pause_on_hover": true,
         "enable_parallax": false,
         "repeat_count": 3,
@@ -163,7 +165,7 @@
         "image_position_mobile": "top",
         "show_button": true,
         "button_text": "Meet the Sleep System",
-        "button_link": "",
+        "button_link": "shopify://collections/mattress",
         "button_style": "primary",
         "bg_type": "color",
         "bg_color": "#ffffff",
@@ -249,11 +251,15 @@
         "enable_slider_desktop": true,
         "show_arrows": false,
         "show_dots": true,
+        "enable_slider_mobile": false,
+        "show_arrows_mobile": false,
+        "show_dots_mobile": true,
+        "pagination_color_mobile": "#613916",
         "show_leave_out_box": false,
         "leave_out_title": "What We Leave Out Matters Too",
         "show_button": true,
         "btn_text": "Shop Organic Mattresses",
-        "btn_link": "",
+        "btn_link": "shopify://collections/mattress",
         "btn_style": "primary",
         "bg_type": "image",
         "bg_color": "#ffffff",
@@ -270,6 +276,11 @@
       "type": "nw-image",
       "name": "NW Image",
       "settings": {
+        "heading": "",
+        "button_text": "",
+        "button_link": "",
+        "button_style": "primary",
+        "heading_color": "#613916",
         "image_desktop": "shopify://shop_images/image_18_cc76de36-7cf9-4ed7-8e4f-77a8793314c4.png",
         "show_gradient": false,
         "gradient_color_start": "",
@@ -349,8 +360,8 @@
         "heading": "What We Never Use",
         "subheading": "<p>A cleaner mattress is what we refuse. Most beds hide chemicals. We build without them and let labs prove it.</p>",
         "show_button": true,
-        "btn_text": "VERIFY OUR CERTIFICATIONS",
-        "btn_link": "",
+        "btn_text": "SHOP ORGANIC MATTRESS",
+        "btn_link": "shopify://collections/mattress",
         "btn_style": "primary",
         "bg_type": "none",
         "bg_color": "#ffffff",
@@ -422,6 +433,7 @@
         "standard_card_RkzGmC",
         "standard_card_at3cPL"
       ],
+      "disabled": true,
       "name": "NW Organic Standards V2",
       "settings": {
         "show_rating": false,
@@ -495,7 +507,7 @@
         "card_text_color": "",
         "icon_color": "#878735",
         "card_icon": "check-circle",
-        "show_button": true,
+        "show_button": false,
         "button_text": "See How It's Made",
         "button_link": "",
         "button_style": "primary",
@@ -513,6 +525,11 @@
       "type": "nw-image",
       "name": "NW Image",
       "settings": {
+        "heading": "",
+        "button_text": "",
+        "button_link": "",
+        "button_style": "primary",
+        "heading_color": "#613916",
         "image_desktop": "shopify://shop_images/image_12_f53c8169-b14f-4323-b3c2-b586e167e2b2.png",
         "image_mobile": "shopify://shop_images/mobile-image.png",
         "show_gradient": false,
@@ -546,7 +563,7 @@
           "type": "standard_card",
           "settings": {
             "image": "shopify://shop_images/standard-3.png",
-            "text": "<p>Responsibly sourced throughout - like our certified latex from well-managed forests</p>"
+            "text": "<p>Responsibly sourced certified organic latex from rubber tree farms.</p>"
           }
         },
         "standard_card_e3bmxe": {
@@ -573,9 +590,9 @@
         "card_border_color": "#6139161a",
         "card_text_color": "#613916",
         "show_button": true,
-        "button_text": "Read About Our Standards",
-        "button_link": "",
-        "button_style": "primary",
+        "button_text": "SHOP ORGANIC MATTRESSES",
+        "button_link": "shopify://collections/mattress",
+        "button_style": "outline",
         "bg_type": "color",
         "bg_color": "#ffffff",
         "bg_image_opacity": 100,
@@ -594,7 +611,7 @@
           "settings": {
             "collection": "accessories",
             "custom_title": "Bedding",
-            "custom_image": "shopify://shop_images/SnapInsta.to_670318428_17874444948586195_2339425393624769511_n_1_1_2.png",
+            "custom_image": "shopify://shop_images/image_1_2.png",
             "custom_link": ""
           }
         },
@@ -611,7 +628,7 @@
           "type": "collection",
           "settings": {
             "collection": "family-organic-mattress-and-bedding-for-kids",
-            "custom_title": "Kids",
+            "custom_title": "Family & Kids",
             "custom_image": "shopify://shop_images/CRIB_0753_1280_1_1.png",
             "custom_link": ""
           }
@@ -630,8 +647,8 @@
           "settings": {
             "collection": "bundles-ultimate-sleep-optimization-system",
             "custom_title": "Bundle & Save",
-            "custom_image": "shopify://shop_images/category-4_1.png",
-            "custom_link": ""
+            "custom_image": "shopify://shop_images/Pure-BTX4-Split_King_adjustable_base_set_ultimate_snooze.png",
+            "custom_link": "shopify://collections/bundles-ultimate-sleep-optimization-system"
           }
         },
         "trust_badge_dCbMPQ": {
@@ -699,7 +716,7 @@
         "autoplay_delay": 4,
         "show_button": true,
         "button_label": "SHOP ALL",
-        "button_link": "",
+        "button_link": "shopify://collections",
         "button_style": "primary",
         "show_features": true,
         "bg_type": "none",
@@ -718,43 +735,43 @@
         "faq_item_y66aRz": {
           "type": "faq_item",
           "settings": {
-            "question": "Is the mattress really free of fiberglass?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "question": "Why do you only use natural materials?",
+            "answer": "<p>Because what you sleep on matters. We build with certified organic cotton, wool, and natural latex instead of polyurethane foams, fiberglass, and unnecessary chemical additives whenever possible.</p>"
           }
         },
         "faq_item_NCDqpK": {
           "type": "faq_item",
           "settings": {
-            "question": "How is natural latex different from memory foam?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "question": "What makes your craftsmanship different?",
+            "answer": "<p>Every mattress and sheet is handcrafted in our Georgia factory using premium natural materials, thoughtful construction, and rigorous quality standards—not mass-produced on an overseas assembly line.</p>"
           }
         },
         "faq_item_QfaXFJ": {
           "type": "faq_item",
           "settings": {
-            "question": "What makes wool a better fire barrier than chemicals?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "question": "What does \"Made with Certified Organic Materials\" mean?",
+            "answer": "<p>Our products are made using certified organic materials sourced from trusted suppliers. We focus on transparency and quality, using natural fibers and materials that meet recognized organic certification standards. Each layer is independently certified.&nbsp;</p>"
           }
         },
         "faq_item_er8HLg": {
           "type": "faq_item",
           "settings": {
-            "question": "What does \"organic\" actually mean here?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "question": "Why don't you use polyurethane foam?",
+            "answer": "<p>We believe your bed should support recovery, not introduce unnecessary synthetic materials. That's why we focus on natural latex, organic cotton, and wool to create breathable, durable sleep products.</p>"
           }
         },
         "faq_item_yTKMy4": {
           "type": "faq_item",
           "settings": {
-            "question": "Where is the mattress made?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "question": "How long are your products designed to last?",
+            "answer": "<p>Quality natural materials are naturally resilient. With proper care, they're designed to provide years of comfortable, restorative sleep while maintaining their performance over time.</p>"
           }
         },
         "faq_item_3ATbxX": {
           "type": "faq_item",
           "settings": {
-            "question": "Why does it matter what my mattress is made of?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "question": "Why is organic worth the investment?",
+            "answer": "<p>Natural materials are more breathable, more durable, and free from many of the synthetic components commonly found in conventional bedding. We believe you'll feel the difference every night.</p>"
           }
         }
       },
@@ -784,14 +801,15 @@
         "open_first_faq": false,
         "initial_faq_count": 4,
         "more_label": "SEE MORE FAQ’S",
+        "less_label": "SEE LESS FAQ'S",
         "contact_heading": "Speak with Our Live Sleep Experts.",
         "show_call_btn": true,
-        "call_label": "CALL (443) 333-1213",
-        "call_link": "tel:+14433331213",
+        "call_label": "CALL (719) 751-6070",
+        "call_link": "tel:+17197516070",
         "call_style": "primary",
         "show_text_btn": true,
         "text_label": "TEXT US",
-        "text_link": "sms:+14433331213",
+        "text_link": "sms:+17197516070",
         "text_style": "outline",
         "show_quiz_btn": true,
         "quiz_label": "SLEEP QUIZ",

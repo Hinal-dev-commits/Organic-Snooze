@@ -22,7 +22,7 @@
           }
         },
         "title": {
-          "type": "title", 
+          "type": "title",
           "settings": {
             "custom_title": "K-Snooze Ultimate Dog Bed",
             "margin_top": 0,
@@ -77,6 +77,9 @@
             "show_size_guide": true,
             "size_guide_label": "Size Guide",
             "size_guide_popup_id": "",
+            "show_firmness_guide": true,
+            "firmness_guide_label": "Firmness Guide",
+            "firmness_popup_modal_id": "",
             "quantity_option_name": "Select Quantity",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
@@ -105,6 +108,7 @@
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
             "show_affirm_button": false,
+            "show_atc_price": false,
             "margin_top": 16,
             "margin_bottom": 8,
             "margin_top_mobile": 32,
@@ -152,7 +156,7 @@
           "settings": {
             "heading": "Product Specifications",
             "icon": "none",
-            "content": "<ul><li>Sizes: Small (33\" x 28\") for dogs under 10 lbs, Medium (43\" x 35\") under 30 lbs, Large (55\" x 43\") over 30 lbs</li><li>Recovery-first orthopedic construction built for joint support</li><li>Natural coconut coir core, hemp support layer, wool wrap, organic cotton cover</li><li>Breathable and temperature-regulating, no synthetic foams</li><li>Removable, washable organic cotton cover</li><li>Bed frame not included (wood frame coming soon)</li></ul>",
+            "content": "<ul><li>Sizes: Small (33\" x 28\") for dogs under 10 lbs, Medium (43\" x 35\") under 30 lbs, Large (55\" x 43\") over 30 lbs</li><li>Recovery-first orthopedic construction built for joint support</li><li>Natural coconut coir core, hemp support layer, wool wrap, organic cotton cover</li><li>Breathable and temperature-regulating, no synthetic foams</li><li>Removable, washable organic cotton cover</li><li>Bed frame not included</li></ul>",
             "page": "",
             "margin_top": 40,
             "margin_bottom": 0,
@@ -176,7 +180,7 @@
         "collapsible_tab_wP3yAA": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Why you'll love it",
+            "heading": "Why pet's love it",
             "icon": "none",
             "content": "<ul><li>Orthopedic coconut core that supports aging joints</li><li>100% non-toxic, natural materials with nothing to off-gas</li><li>Breathable hemp and wool keep your dog cool and calm</li><li>Washable organic cotton cover for easy freshening</li><li>The same clean-materials standard behind every Ultimate Snooze product</li></ul>",
             "page": "",
@@ -205,6 +209,7 @@
         },
         "customer_videos_JijkkX": {
           "type": "customer_videos",
+          "disabled": true,
           "settings": {
             "heading": "Why Customers Love This Bundle",
             "show_pagination": true,
@@ -237,7 +242,7 @@
             "item_2_icon": "moon",
             "item_2_use_custom_icon": true,
             "item_2_custom_icon": "shopify://shop_images/image_1254_Vectorized_1.svg",
-            "item_3_text": "GOLS/GOTS",
+            "item_3_text": "ORGANIC",
             "item_3_icon": "award",
             "item_3_use_custom_icon": true,
             "item_3_custom_icon": "shopify://shop_images/image_1254_Vectorized_2.svg",
@@ -426,14 +431,6 @@
             "link": ""
           }
         },
-        "item_66UMzf": {
-          "type": "item",
-          "settings": {
-            "text": "GOLS/GOTS CERTIFIED",
-            "icon": "verified",
-            "link": ""
-          }
-        },
         "item_8b4VhW": {
           "type": "item",
           "settings": {
@@ -454,7 +451,6 @@
       "block_order": [
         "item_9rEH9K",
         "item_KNFrKC",
-        "item_66UMzf",
         "item_8b4VhW",
         "item_yyWUzm"
       ],
@@ -813,6 +809,24 @@
         "col1_head_title": "Organic Snooze",
         "col2_head_image": "shopify://shop_images/Frame_2147238777_7.png",
         "col2_head_title": "Conventional Dog Bed",
+        "show_comparison": false,
+        "comparison_title": "Long-Term Value Comparison",
+        "foam_brand": "Popular Foam Brands",
+        "foam_price": "$1.02 / night",
+        "foam_note": "Replaced every 10 years",
+        "snooze_brand": "ORGANIC SNOOZE",
+        "snooze_price": "$0.16 / night",
+        "snooze_note": "Built to last 30 years",
+        "comparison_title_color": "#613916",
+        "foam_card_bg": "#ffffff",
+        "foam_card_border_color": "#e5e5e5",
+        "foam_brand_color": "#666666",
+        "foam_price_color": "#1a1a1a",
+        "foam_note_color": "#61391680",
+        "snooze_bg": "#878735",
+        "snooze_brand_color": "#ffffff",
+        "snooze_price_color": "#ffffff",
+        "snooze_note_color": "#ffffff",
         "show_button": false,
         "button_text": "CHOOSE BETTER SLEEP",
         "button_link": "",
@@ -823,79 +837,6 @@
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_founder_story_RhHRer": {
-      "type": "nw-founder-story",
-      "blocks": {
-        "stat_XXFt9w": {
-          "type": "stat",
-          "settings": {
-            "value": "0%",
-            "description": "<p>Chemicals & VOCs</p>"
-          }
-        },
-        "stat_YEzEwg": {
-          "type": "stat",
-          "settings": {
-            "value": "100%",
-            "description": "<p>Organic certified</p>"
-          }
-        },
-        "stat_L6nGEx": {
-          "type": "stat",
-          "settings": {
-            "value": "GOTS",
-            "description": "<p>Certified organic</p>"
-          }
-        }
-      },
-      "block_order": [
-        "stat_XXFt9w",
-        "stat_YEzEwg",
-        "stat_L6nGEx"
-      ],
-      "name": "t:sections.nw-founder-story.name",
-      "settings": {
-        "show_rating": false,
-        "star_rating": 5,
-        "eyebrow": "Featured: Gary Brecka on chemical-free sleep",
-        "heading": "Sleep Chemical-Free",
-        "media_type": "video",
-        "video": "shopify://files/videos/instagram-video-3fca1c1a-9512-49d9-a544-653ceebeebe4.mp4",
-        "video_autoplay": false,
-        "show_play_icon": true,
-        "poster": "shopify://shop_images/founder-video-poster.png",
-        "overlay_text": "",
-        "quote": "<p><em>\"Removed chemicals, foams, and adhesives linked to inflammation, poor sleep, and disrupted recovery. Built with biomechanically supportive engineering and clean, non-toxic materials. This is an investment in your longevity.\"</em></p>",
-        "name": "Gary Brecka",
-        "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
-        "show_footer_content": false,
-        "footer_heading": "Alignment Starts at the Pillow",
-        "footer_description": "<p>The right loft helps support your head, neck, shoulders, and spine while your body rests, repairs, and resets.</p>",
-        "disclaimer": "<p>Designed to protect long-term health through better sleep.</p>",
-        "heading_color": "#613916",
-        "star_color": "#e57b1e",
-        "star_color_inactive": "#d1d5db",
-        "card_border_color": "#61391633",
-        "card_bg_color": "#ffffff",
-        "quote_color": "#613916",
-        "name_color": "#613916",
-        "role_color": "#613916",
-        "stat_border_color": "#61391633",
-        "stat_value_color": "#613916",
-        "stat_desc_color": "#613916",
-        "disclaimer_color": "#613916cc",
-        "footer_heading_color": "#613916",
-        "footer_description_color": "#613916",
-        "bg_type": "color",
-        "bg_color": "#fbf9f6",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
     },
@@ -1078,12 +1019,11 @@
     "disclosures",
     "related-products",
     "nw_marquee_v2_UfXLdp",
+    "nw_faq_VygLpj",
     "nw_layer_v3_pyChRx",
     "nw_testimonials_BU9rMk",
     "nw_organic_gcGNTr",
-    "nw_founder_story_RhHRer",
     "nw_product_list_Ej8ReJ",
-    "nw_faq_VygLpj",
     "17888655264b72a32a"
   ]
 }

@@ -35,6 +35,16 @@
       --nw-organic-heading-color: {{ section.settings.heading_color }};
       --nw-organic-desc-color: {{ section.settings.description_color }};
     {%- endif -%}
+    --nw-organic-comparison-title-color: {{ section.settings.comparison_title_color }};
+    --nw-organic-foam-card-bg: {{ section.settings.foam_card_bg }};
+    --nw-organic-foam-card-border: {{ section.settings.foam_card_border_color }};
+    --nw-organic-foam-brand-color: {{ section.settings.foam_brand_color }};
+    --nw-organic-foam-price-color: {{ section.settings.foam_price_color }};
+    --nw-organic-foam-note-color: {{ section.settings.foam_note_color }};
+    --nw-organic-snooze-card-bg: {{ section.settings.snooze_bg }};
+    --nw-organic-snooze-brand-color: {{ section.settings.snooze_brand_color }};
+    --nw-organic-snooze-price-color: {{ section.settings.snooze_price_color }};
+    --nw-organic-snooze-note-color: {{ section.settings.snooze_note_color }};
   "
 >
   <div class="nw-organic__inner{% if layout_width == 'page_width' %} page-width {% else %} full-width{% endif %}">
@@ -342,6 +352,65 @@
         </div>
       </div>
 
+      {%- if section.settings.show_comparison -%}
+        <div class="nw-organic__comparison">
+          {%- if section.settings.comparison_title != blank -%}
+            <h3 class="nw-organic__comparison-title">{{ section.settings.comparison_title }}</h3>
+          {%- endif -%}
+
+          <div class="nw-organic__comparison-grid">
+            <div class="nw-organic__compare-card nw-organic__compare-card--foam">
+              {%- if section.settings.foam_brand != blank -%}
+                <p class="nw-organic__foam-brand">{{ section.settings.foam_brand }}</p>
+              {%- endif -%}
+              <div class="nw-organic__compare-price-group">
+                {%- if section.settings.foam_price != blank -%}
+                  <p class="nw-organic__foam-price">{{ section.settings.foam_price }}</p>
+                {%- endif -%}
+                {%- if section.settings.foam_note != blank -%}
+                  <p class="nw-organic__foam-note">{{ section.settings.foam_note }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="nw-organic__compare-card nw-organic__compare-card--snooze">
+              <div class="nw-organic__snooze-logo-wrap">
+                {%- if section.settings.snooze_logo != blank -%}
+                  <img
+                    src="{{ section.settings.snooze_logo | image_url: width: 400 }}"
+                    alt="{{ section.settings.snooze_brand | default: 'Organic Snooze' | escape }}"
+                    class="nw-organic__snooze-logo-img"
+                    width=""
+                    height=""
+                    loading="lazy"
+                  >
+                {%- elsif section.settings.col1_head_image != blank -%}
+                  <img
+                    src="{{ section.settings.col1_head_image | image_url: width: 400 }}"
+                    alt="{{ section.settings.snooze_brand | default: col1_head_alt | escape }}"
+                    class="nw-organic__snooze-logo-img"
+                    width=""
+                    height=""
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <span class="nw-organic__snooze-logo-text">{{ section.settings.snooze_brand | default: 'ORGANIC SNOOZE' }}</span>
+                {%- endif -%}
+              </div>
+
+              <div class="nw-organic__compare-price-group">
+                {%- if section.settings.snooze_price != blank -%}
+                  <p class="nw-organic__snooze-price">{{ section.settings.snooze_price }}</p>
+                {%- endif -%}
+                {%- if section.settings.snooze_note != blank -%}
+                  <p class="nw-organic__snooze-note">{{ section.settings.snooze_note }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
       {%- assign trust_badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
       {%- if trust_badge_blocks != blank or section.settings.show_button -%}
         <div class="nw-organic__footer">
@@ -571,6 +640,157 @@
       "id": "col2_head_title",
       "label": "Competitor Column Title",
       "default": "Conventional Foam"
+    },
+    {
+      "type": "header",
+      "content": "VALUE COMPARISON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comparison",
+      "label": "Show Comparison Module",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "comparison_title",
+      "label": "Comparison Title",
+      "default": "Long-Term Value Comparison",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "text",
+      "id": "foam_brand",
+      "label": "Competitor Brand Name",
+      "default": "Popular Foam Brands",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "text",
+      "id": "foam_price",
+      "label": "Competitor Price Per Night",
+      "default": "$1.02 / night",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "text",
+      "id": "foam_note",
+      "label": "Competitor Note",
+      "default": "Replaced every 10 years",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "snooze_logo",
+      "label": "Snooze Logo (Optional Image)",
+      "info": "Falls back to Brand Column Floating Image when empty.",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "text",
+      "id": "snooze_brand",
+      "label": "Snooze Brand Name",
+      "default": "ORGANIC SNOOZE",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "text",
+      "id": "snooze_price",
+      "label": "Snooze Price Per Night",
+      "default": "$0.16 / night",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "text",
+      "id": "snooze_note",
+      "label": "Snooze Note",
+      "default": "Built to last 30 years",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "header",
+      "content": "COMPARISON COLORS",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "comparison_title_color",
+      "label": "Comparison Title Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "foam_card_bg",
+      "label": "Competitor Card Background",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "foam_card_border_color",
+      "label": "Competitor Card Border Color",
+      "default": "#E5E5E5",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "foam_brand_color",
+      "label": "Competitor Brand Text Color",
+      "default": "#666666",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "foam_price_color",
+      "label": "Competitor Price Color",
+      "default": "#1A1A1A",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "foam_note_color",
+      "label": "Competitor Note Color",
+      "default": "rgba(97, 57, 22, 0.5)",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "snooze_bg",
+      "label": "Snooze Card Background",
+      "default": "#878735",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "snooze_brand_color",
+      "label": "Snooze Brand Text Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "snooze_price_color",
+      "label": "Snooze Price Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "snooze_note_color",
+      "label": "Snooze Note Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "header",

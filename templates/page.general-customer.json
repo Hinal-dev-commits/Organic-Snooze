@@ -704,7 +704,7 @@
         "highlight_text": "<p>Mattress toppers follow the same trial as mattresses and a 3-year warranty. Sheets, pillows, and protectors are returnable within 30 days, free if unopened, or with a 20% restocking fee if opened. Adjustable bases and frames are final sale (non-returnable), but they're backed by a 20-year warranty.</p>",
         "show_button": true,
         "button_text": "START A RETURN OR EXCHANGE",
-        "button_link": "#",
+        "button_link": "shopify://pages/returns-exchanges",
         "button_style": "primary",
         "bg_type": "gradient",
         "bg_color": "#ffffff",
@@ -817,12 +817,13 @@
             "title": "Payment Options & Financing",
             "text": "Affirm, HSA/FSA, and more ways to pay",
             "button_text": "View Payment Options",
-            "button_link": "#",
+            "button_link": "shopify://pages/payments",
             "button_style": "outline"
           }
         },
         "card_9ktgnq": {
           "type": "card",
+          "disabled": true,
           "settings": {
             "use_custom_image": true,
             "custom_image": "shopify://shop_images/white-glove.png",
@@ -843,7 +844,7 @@
             "title": "Shipping & Returns",
             "text": "Delivery times and how returns work",
             "button_text": "See Shipping & Returns",
-            "button_link": "#",
+            "button_link": "shopify://pages/returns-exchanges",
             "button_style": "outline"
           }
         }
@@ -974,7 +975,7 @@
         "eyebrow": "",
         "heading": "Protect Your Investment for 30 Years",
         "subheading": "<p>Stains and spills aren't covered by the warranty. One simple layer keeps your mattress protected and your coverage intact.</p>",
-        "product": "sheet-set-breezeline™-air-100-organic-cotton-copy-1",
+        "product": "organic-waterproof-mattress-protector",
         "show_card_rating": true,
         "show_button": true,
         "button_text": "SHOP NOW",
@@ -999,7 +1000,7 @@
           "settings": {
             "collection": "accessories",
             "custom_title": "Bedding",
-            "custom_image": "shopify://shop_images/SnapInsta.to_670318428_17874444948586195_2339425393624769511_n_1_1_2.png",
+            "custom_image": "shopify://shop_images/image_1_2.png",
             "custom_link": ""
           }
         },
@@ -1007,7 +1008,7 @@
           "type": "collection",
           "settings": {
             "collection": "family-organic-mattress-and-bedding-for-kids",
-            "custom_title": "Kids",
+            "custom_title": "Family & Kids",
             "custom_image": "shopify://shop_images/category-2_1.png",
             "custom_link": ""
           }
@@ -1026,7 +1027,7 @@
           "settings": {
             "collection": "bundles-ultimate-sleep-optimization-system",
             "custom_title": "Bundle & Save",
-            "custom_image": "shopify://shop_images/category-4_1.png",
+            "custom_image": "shopify://shop_images/Pure-BTX4-bundle.png",
             "custom_link": ""
           }
         },

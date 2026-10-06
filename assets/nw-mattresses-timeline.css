@@ -389,6 +389,75 @@
   line-height: 1.4;
   color: #ffffff;
 }
+
+.nw-mattresses-timeline__materials {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  padding: 13px 16px 18px;
+  background: #fffcf0;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.nw-mattresses-timeline__materials-title {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  color: #b61919;
+}
+
+.nw-mattresses-timeline__materials-title-line {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.nw-mattresses-timeline__materials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 12px;
+  row-gap: 12px;
+  width: 100%;
+}
+
+.nw-mattresses-timeline__materials-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.nw-mattresses-timeline__materials-icon {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nw-mattresses-timeline__materials-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.nw-mattresses-timeline__materials-text {
+  font-family: var(--font-body-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #613916;
+}
+
 .nw-mattresses-timeline__header .rte{
     margin-top: 12px;
     line-height: 110%;

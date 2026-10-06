@@ -1,0 +1,120 @@
+.nw-image-layout {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-image-layout__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.nw-image-layout__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.nw-image-layout__blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.nw-image-layout__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+  .nw-image-layout__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .nw-image-layout__row .nw-image-layout__cell:only-child {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 12px);
+    justify-self: center;
+    width: 100%;
+  }
+}
+
+.nw-image-layout__cell,
+.nw-image-layout__item--full {
+  border-radius: var(--nw-image-layout-card-radius, 24px);
+  overflow: hidden;
+  background: var(--nw-image-layout-card-bg, transparent);
+  box-sizing: border-box;
+}
+
+.nw-image-layout__media {
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+.nw-image-layout__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  vertical-align: middle;
+}
+
+.nw-image-layout__img--desktop {
+  display: none;
+}
+
+.nw-image-layout__img--mobile {
+  display: block;
+}
+
+@media screen and (min-width: 750px) {
+  .nw-image-layout__img--desktop {
+    display: block;
+  }
+
+  .nw-image-layout__img--mobile {
+    display: none;
+  }
+
+  .nw-image-layout__img:not(.nw-image-layout__img--desktop):not(.nw-image-layout__img--mobile) {
+    display: block;
+  }
+}
+
+.nw-image-layout__placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(97, 57, 22, 0.06);
+  object-fit: cover;
+}
+
+@media screen and (max-width: 749px) {
+  .nw-image-layout__wrapper {
+    gap: 20px;
+  }
+
+  .nw-image-layout__blocks {
+    gap: 16px;
+  }
+
+  .nw-image-layout__row {
+    gap: 16px;
+  }
+
+  .nw-image-layout__row .nw-image-layout__cell:only-child {
+    max-width: 100%;
+  }
+}

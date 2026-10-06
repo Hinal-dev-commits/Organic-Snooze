@@ -103,6 +103,113 @@
   color: inherit;
 }
 
+.nw-rich-text__icon {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.nw-rich-text__icon-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--nw-rich-text-icon-size, 48px);
+  height: var(--nw-rich-text-icon-size, 48px);
+  color: var(--nw-rich-text-icon-color, var(--primary-color, #613916));
+  flex-shrink: 0;
+}
+
+.nw-rich-text__icon-svg,
+.nw-rich-text__icon-inner svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.nw-rich-text__icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.nw-rich-text--align-left .nw-rich-text__icon {
+  justify-content: flex-start;
+}
+
+.nw-rich-text--align-right .nw-rich-text__icon {
+  justify-content: flex-end;
+}
+
+.nw-rich-text__image {
+  width: 100%;
+  line-height: 0;
+}
+
+.nw-rich-text__image--full {
+  max-width: 100%;
+}
+
+.nw-rich-text__image--medium {
+  max-width: min(100%, 42rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nw-rich-text__image--narrow {
+  max-width: min(100%, 28rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nw-rich-text--align-left .nw-rich-text__image--medium,
+.nw-rich-text--align-left .nw-rich-text__image--narrow {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.nw-rich-text--align-right .nw-rich-text__image--medium,
+.nw-rich-text--align-right .nw-rich-text__image--narrow {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.nw-rich-text__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+.nw-rich-text__img--desktop {
+  display: none;
+}
+
+.nw-rich-text__img--mobile {
+  display: block;
+}
+
+@media screen and (min-width: 750px) {
+  .nw-rich-text__img--desktop {
+    display: block;
+  }
+
+  .nw-rich-text__img--mobile {
+    display: none;
+  }
+
+  .nw-rich-text__img:not(.nw-rich-text__img--desktop):not(.nw-rich-text__img--mobile) {
+    display: block;
+  }
+}
+
+.nw-rich-text__placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: rgba(97, 57, 22, 0.06);
+  border-radius: 12px;
+}
+
 @media screen and (max-width: 749px) {
   .nw-rich-text__blocks > * + * {
     margin-top: 20px;

@@ -1,0 +1,1564 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "rating_fBAxBE": {
+          "type": "rating",
+          "settings": {
+            "margin_top": 0,
+            "margin_bottom": 15,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 15
+          }
+        },
+        "vendor": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "custom_title": "The Pure Mattress Complete Sleep System",
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 16
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "custom_description": "<p>This Sleep Optimization Bundle is everything you need to build a cleaner, cooler, and more restorative sleep environment.&nbsp;</p>",
+            "margin_top": 0,
+            "margin_bottom": 14,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 14
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_affirm": true,
+            "show_sale_badge": true,
+            "show_save_percentage": false,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "affirm_pay_over_time_messaging_product_block_mpCiRU": {
+          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "settings": {
+            "logo_align": "left",
+            "font_size": 14,
+            "logo_color": "blue",
+            "logo_type": "logo",
+            "public_api_key": "",
+            "price_selector": ""
+          }
+        },
+        "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA": {
+          "type": "shopify://apps/nw-ultimate-snooze-bundles/blocks/kit-product-block/01a0e2cc-18cc-7f11-97f3-0e082ec14e7f",
+          "settings": {
+            "product": "{{section.settings.product}}"
+          }
+        },
+        "nw_benifits_list_xTL4Mb": {
+          "type": "nw_benifits_list",
+          "disabled": true,
+          "settings": {
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 10,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_WTq7CJ": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Sleep System Includes:",
+            "use_custom_icon": true,
+            "icon": "check-circle",
+            "link": "",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 16,
+            "margin_bottom": 8,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_Q78m9x": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Ultimate Recovery Mattress | Firm",
+            "use_custom_icon": true,
+            "icon": "check-circle",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
+            "link": "",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 16,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_V6AwgM": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "SnoozeLift 3.0 | Adjustable Base",
+            "use_custom_icon": true,
+            "icon": "check-circle",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
+            "link": "",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_Nwcnpt": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "(2x) Signature Pillows | 100% Cotton",
+            "use_custom_icon": true,
+            "icon": "check-circle",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
+            "link": "",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_G6Nenw": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Breezline Air | Cotton Sheet Set",
+            "use_custom_icon": true,
+            "icon": "check-circle",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
+            "link": "",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_Uk3zBN": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Water-resistant mattress protector",
+            "use_custom_icon": true,
+            "icon": "check-circle",
+            "custom_icon": "shopify://shop_images/checkmark.svg",
+            "link": "",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle",
+            "firmness_option_name": "Firmness",
+            "loft_option_name": "Loft",
+            "size_option_name": "Select Size",
+            "show_size_guide": true,
+            "size_guide_label": "Size Guide",
+            "size_guide_popup_id": "",
+            "show_firmness_guide": true,
+            "firmness_guide_label": "Firmness Guide",
+            "firmness_popup_modal_id": "",
+            "quantity_option_name": "Select Quantity",
+            "picker_gap": 32,
+            "picker_gap_mobile": 24,
+            "option_position_order": "Firmness, Select Size, Sheet Color",
+            "option_1_values_order": "",
+            "option_2_values_order": "",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false,
+            "show_affirm_button": false,
+            "show_atc_price": false,
+            "margin_top": 32,
+            "margin_bottom": 8,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 8
+          }
+        },
+        "shipping_tag_Agd7QN": {
+          "type": "shipping_tag",
+          "settings": {
+            "text": "Ships from USA",
+            "delivery_threshold_days": 2,
+            "use_product_metafield": false,
+            "use_custom_icon": true,
+            "icon": "truck",
+            "custom_icon": "shopify://shop_images/Frame_2_ae1d68d4-b232-404a-9611-30258c776f81.svg",
+            "bg_color": "#e8f0e0",
+            "text_color": "#613916",
+            "icon_color": "#613916",
+            "margin_top": 12,
+            "margin_bottom": 0,
+            "margin_top_mobile": 12,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "trust_badges_th6jjr": {
+          "type": "trust_badges",
+          "settings": {
+            "item_1_text": "100-Night Risk-Free Trial",
+            "item_1_icon": "trial",
+            "item_1_use_custom_icon": false,
+            "item_2_text": "30-Year Warranty",
+            "item_2_icon": "warranty-check",
+            "item_2_use_custom_icon": false,
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "margin_top": 16,
+            "margin_bottom": 0,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "trust_badges_nMR3Vh": {
+          "type": "trust_badges",
+          "settings": {
+            "item_1_text": "Free Shipping",
+            "item_1_icon": "truck",
+            "item_1_use_custom_icon": false,
+            "item_2_text": "",
+            "item_2_icon": "warranty-check",
+            "item_2_use_custom_icon": false,
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "margin_top": 8,
+            "margin_bottom": 0,
+            "margin_top_mobile": 8,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "payment_logos_DVqLH3": {
+          "type": "payment_logos",
+          "settings": {
+            "item_1_image": "shopify://shop_images/image_1268.png",
+            "item_1_layout": "simple",
+            "item_1_heading": "",
+            "item_1_subheading": "",
+            "item_1_text": "Pay over time choose affirm at checkout",
+            "item_1_link": "",
+            "item_2_image": "shopify://shop_images/image_1269.png",
+            "item_2_layout": "simple",
+            "item_2_heading": "HSA/FSA",
+            "item_2_subheading": "Eligible",
+            "item_2_text": "Use your HSA/FSA benefits choose TrueMed at checkout",
+            "item_2_link": "",
+            "divider_color": "#d1ccc2",
+            "heading_color": "#32323a",
+            "subheading_color": "#32323a",
+            "text_color": "#666666",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "bundle_tabs_KQjF3f": {
+          "type": "bundle_tabs",
+          "settings": {
+            "heading": "Explore what's included in this bundle",
+            "heading_color": "#613916",
+            "tab_text_color": "#a0a0a0",
+            "tab_active_color": "#613916",
+            "tab_underline_color": "#613916",
+            "title_color": "#613916",
+            "subtitle_color": "#8c8073",
+            "price_color": "#613916",
+            "save_badge_bg": "#e8f5e9",
+            "save_badge_text": "#388e3c",
+            "feature_color": "#613916",
+            "check_color": "#613916",
+            "description_color": "#59544d",
+            "learn_more_color": "#595959",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "bundle_tab_jM6TGe": {
+          "type": "bundle_tab",
+          "settings": {
+            "product": "the-ultimate-snooze-pure-organic-mattress",
+            "tab_label": "Mattress",
+            "custom_title": "Pure Mattress",
+            "custom_subtitle": "1-inch organic latex, 800 coils",
+            "extra_description": "1\" organic latex with 800 pocketed coils. Firm support for back and stomach sleepers. Organic certified.",
+            "custom_image": "shopify://shop_images/Pure_Mattress_6.25V2.jpg",
+            "features": "1\" Latex Comfort Layer\n800 Pocketed Coils\n100-Night Sleep Trial\n30-Year Warranty",
+            "learn_more_label": "Learn More"
+          }
+        },
+        "bundle_tab_HnzHwR": {
+          "type": "bundle_tab",
+          "settings": {
+            "product": "snooze-btx4-adjustable-base-king-copy",
+            "tab_label": "Base",
+            "custom_title": "SnoozeLift 3.0 Adjustable Base",
+            "custom_subtitle": "Head & foot positioning, massage, low-EMF",
+            "extra_description": "Low-EMF quiet motors. Head & feet elevation for zero-gravity recovery.",
+            "custom_image": "shopify://shop_images/Frame_48099595_1.png",
+            "features": "Head and Feet Position\nRemote Controlled\nMassage Setting\n20-Year Warranty",
+            "learn_more_label": "Learn More"
+          }
+        },
+        "bundle_tab_CRhTHH": {
+          "type": "bundle_tab",
+          "settings": {
+            "product": "signature-organic-cotton-pillows-combo-packs",
+            "tab_label": "Pillows",
+            "custom_title": "2-Pack Signature Cotton Pillow",
+            "custom_subtitle": "Organic Cotton",
+            "extra_description": "",
+            "custom_image": "shopify://shop_images/Organic_Cotton_Pillow_Organic_Snooze_-_Gary_Brecka_Sleep.png",
+            "features": "100% Organic Cotton\nMedium-Firm Feel (Soft and Supportive)\nMachine-Washable Protector included",
+            "learn_more_label": "Learn More"
+          }
+        },
+        "bundle_tab_Mq7NRW": {
+          "type": "bundle_tab",
+          "settings": {
+            "product": "organic-cooling-sheets",
+            "tab_label": "Sheets",
+            "custom_title": "Breezeline Organic Cotton Sheet Set",
+            "custom_subtitle": "Fitted, flat, 2 pillowcases, cooling weave",
+            "extra_description": "Organic cotton cooling weave. Releases heat, fits securely. Organic certified.",
+            "custom_image": "shopify://shop_images/Cotton_Whire.webp",
+            "features": "One (1) fitted sheet\nOne (1) flat sheet\nTwo (2) pillowcases",
+            "learn_more_label": "Learn More"
+          }
+        },
+        "bundle_tab_KFt3YU": {
+          "type": "bundle_tab",
+          "settings": {
+            "product": "organic-waterproof-mattress-protector",
+            "tab_label": "Protector",
+            "custom_title": "Water-Resistant Protector",
+            "custom_subtitle": "Organic MoistureGuard barrier",
+            "extra_description": "A base layer that protects your mattress from stains, spills, and tears.",
+            "custom_image": "shopify://shop_images/product-image_1.png",
+            "features": "Organic Cotton\nCorner straps for secure fit\nWater Resistant Barrier\nMachine-Washable\nPVC-FREE",
+            "learn_more_label": "Learn More"
+          }
+        },
+        "collapsible_tab_3XrnC6": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Product Specifications",
+            "icon": "check_mark",
+            "content": "<ul><li>Complete organic sleep system: Recovery mattress (Firm), SnoozeLift 3.0 base, 2 Signature Cotton pillows, Breezeline Cotton sheet set, and a mattress protector</li><li><strong>1 Mattress</strong>: Pure Mattress 1\" organic latex layer, 800 pocketed coils, Firm feel.</li><li><strong>1 Adjustable Base</strong>: SnoozeLift 3.0 with head and foot positioning, remote control, massage setting.</li><li><strong>1 Sheet Set</strong>: Breezeline AIR Organic Cotton sheets.</li><li><strong>2 Signature Pillows</strong>: Organic Cotton. For Medium-Firm comfort, and support.</li><li><strong>Mattress</strong> <strong>Protector</strong>: Organic Cotton, water-resistant.</li><li>Every component matched to your selected size and designed to work together</li><li>100-night trial and 30-year warranty on the mattress</li><li>Sizes: Queen, King, California King, Split King</li></ul>",
+            "page": "",
+            "margin_top": 40,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "collapsible_tab_mkpMmw": {
+          "type": "collapsible_tab",
+          "disabled": true,
+          "settings": {
+            "heading": "Materials",
+            "icon": "check_mark",
+            "content": "<ul><li>Certified Organic Cotton</li><li>Certified Organic Wool</li><li>Certified Organic Latex</li><li></li></ul>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "collapsible_tab_9UMbgc": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Why Buy the Bundle?",
+            "icon": "check_mark",
+            "content": "<ul><li>A complete organic sleep system in one order, matched by size</li><li>Save $2,400, over 30% versus buying each piece separately</li><li>Adjustable base lifts head and legs for open airway, circulation, and recovery</li><li>Plush 4\" latex pillow top for deep pressure relief, ideal for combination sleepers</li><li>Clean and chemical-free from the coils to the pillowcase</li><li>FREE White Glove set-up and delivery included—a $299 value with all mattress bundles</li></ul>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "collapsible_tab_y7UPNM": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Warranty & Returns",
+            "icon": "check_mark",
+            "content": "<p>Mattress: 30-year warranty + 100-Night Trial</p><p>Sheets: 30-day return window, 1-Year Warranty</p><p>Pillows: 30-day return window, 1-Year Warranty</p><p>Base: Non-Returnable, 20-Year Warranty</p>",
+            "page": "",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "customer_videos_dyYCkY": {
+          "type": "customer_videos",
+          "settings": {
+            "heading": "Why Customers Love Organic Snooze",
+            "show_pagination": true,
+            "video_1": "shopify://files/videos/1UGC-Courtney-Snooze-.mov",
+            "caption_1": "",
+            "video_2": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_JessicaH_TheOrgaSnoo_40c39030.mov",
+            "caption_2": "",
+            "video_3": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_AlexisL_BreeOrgaCool_a5d63ed3.mov",
+            "caption_3": "",
+            "video_4": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_TorrieC_PillOrgaLate_ffc2ec05.mov",
+            "caption_4": "",
+            "video_5": "shopify://files/videos/Ultimate Snooze Mattress_ Experience Zero Gravity Comfort!.mp4",
+            "caption_5": "",
+            "caption_6": "",
+            "margin_top": 40,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "icon_text_v2_xGnYAH": {
+          "type": "icon_text_v2",
+          "settings": {
+            "text_case": "uppercase",
+            "item_1_text": "Made in USA",
+            "item_1_icon": "usamap",
+            "item_1_use_custom_icon": true,
+            "item_1_custom_icon": "shopify://shop_images/image_1254_Vectorized.svg",
+            "item_2_text": "100-Night Trial",
+            "item_2_icon": "moon",
+            "item_2_use_custom_icon": true,
+            "item_2_custom_icon": "shopify://shop_images/image_1254_Vectorized_1.svg",
+            "item_3_text": "CERTIFIED ORGANIC",
+            "item_3_icon": "award",
+            "item_3_use_custom_icon": true,
+            "item_3_custom_icon": "shopify://shop_images/image_1254_Vectorized_2.svg",
+            "item_4_text": "30-Year Warranty",
+            "item_4_icon": "warranty-check",
+            "item_4_use_custom_icon": true,
+            "item_4_custom_icon": "shopify://shop_images/image_1254_Vectorized_3.svg",
+            "icon_bg_color": "#f7f0ec",
+            "icon_color": "#cc926a",
+            "text_color": "#613916",
+            "margin_top": 48,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "setup_delivery_QdJYrr": {
+          "type": "setup_delivery",
+          "settings": {
+            "heading": "Set-Up & Delivery Included",
+            "description": "<p>All items in the bundle ship for <strong>FREE</strong>. When you buy a complete mattress bundle, you also get <strong>FREE White Glove </strong>set-up—we'll install the adjustable base in your bedroom and place the mattress to ensure everything is perfect.</p>",
+            "badge_text": "A $299 value — <strong>FREE with all mattress bundles</strong>",
+            "use_custom_icon": true,
+            "icon": "truck",
+            "custom_icon": "shopify://shop_images/icon-14.svg",
+            "bg_color": "#f7f2eb",
+            "border_color": "#e9b67e",
+            "heading_color": "#403326",
+            "icon_color": "#613916",
+            "text_color": "#594d40",
+            "badge_bg_color": "#ffffff",
+            "badge_text_color": "#613916",
+            "shadow_color": "#c07a2e",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "rating_fBAxBE",
+        "vendor",
+        "title",
+        "description",
+        "price",
+        "affirm_pay_over_time_messaging_product_block_mpCiRU",
+        "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA",
+        "nw_benifits_list_xTL4Mb",
+        "icon_text_WTq7CJ",
+        "icon_text_Q78m9x",
+        "icon_text_V6AwgM",
+        "icon_text_Nwcnpt",
+        "icon_text_G6Nenw",
+        "icon_text_Uk3zBN",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "shipping_tag_Agd7QN",
+        "trust_badges_th6jjr",
+        "trust_badges_nMR3Vh",
+        "payment_logos_DVqLH3",
+        "bundle_tabs_KQjF3f",
+        "bundle_tab_jM6TGe",
+        "bundle_tab_HnzHwR",
+        "bundle_tab_CRhTHH",
+        "bundle_tab_Mq7NRW",
+        "bundle_tab_KFt3YU",
+        "collapsible_tab_3XrnC6",
+        "collapsible_tab_mkpMmw",
+        "collapsible_tab_9UMbgc",
+        "collapsible_tab_y7UPNM",
+        "customer_videos_dyYCkY",
+        "icon_text_v2_xGnYAH",
+        "setup_delivery_QdJYrr"
+      ],
+      "settings": {
+        "product": "",
+        "show_section_header": false,
+        "section_header_heading": "",
+        "section_header_description": "",
+        "hide_media_slider": false,
+        "use_custom_media_images": false,
+        "custom_media_range_start": 1,
+        "custom_media_range_end": 1,
+        "media_badge_left": "",
+        "media_badge_right": "",
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "none",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "show_media_arrows": true,
+        "show_media_dots": true,
+        "media_pagination_color": "#fffdfc",
+        "media_arrow_bg": "#ffffff",
+        "media_arrow_color": "#613916",
+        "media_arrow_hover_bg": "#efe0ca",
+        "media_arrow_hover_color": "#613916",
+        "media_padding_top": 0,
+        "media_padding_bottom": 0,
+        "media_padding_top_mobile": 0,
+        "media_padding_bottom_mobile": 0,
+        "padding_top": 32,
+        "padding_bottom": 80,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "disabled": true,
+      "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "nw_layer_product_VqmfzG": {
+      "type": "nw-layer-product",
+      "blocks": {
+        "layer_FdgFh9": {
+          "type": "layer",
+          "settings": {
+            "product": "signature-organic-cotton-pillows-combo-packs",
+            "title": "",
+            "price_prefix": "Price if bought alone:",
+            "custom_price": "",
+            "description": "Gently supports the head and neck while keeping you cool all night.",
+            "pin_label": "1",
+            "pos_x_desktop": 24,
+            "pos_y_desktop": 25,
+            "pos_x_mobile": 16,
+            "pos_y_mobile": 22
+          }
+        },
+        "layer_xVbBdn": {
+          "type": "layer",
+          "settings": {
+            "product": "organic-cooling-sheets",
+            "title": "",
+            "price_prefix": "Price if bought alone:",
+            "custom_price": "",
+            "description": "Breathable, moisture-wicking barrier that preserves mattress freshness.",
+            "pin_label": "",
+            "pos_x_desktop": 40,
+            "pos_y_desktop": 36,
+            "pos_x_mobile": 41,
+            "pos_y_mobile": 38
+          }
+        },
+        "layer_zCrayX": {
+          "type": "layer",
+          "settings": {
+            "product": "organic-waterproof-mattress-protector",
+            "title": "",
+            "price_prefix": "Price if bought alone:",
+            "custom_price": "",
+            "description": "Pressure-relieving organic latex contours to your body for cloud-like comfort.",
+            "pin_label": "",
+            "pos_x_desktop": 52,
+            "pos_y_desktop": 44,
+            "pos_x_mobile": 55,
+            "pos_y_mobile": 48
+          }
+        },
+        "layer_ThiUwF": {
+          "type": "layer",
+          "settings": {
+            "product": "the-ultimate-snooze-pure-organic-mattress",
+            "title": "",
+            "price_prefix": "Price if bought alone:",
+            "custom_price": "",
+            "description": "Targeted lumbar support and motion isolation for undisturbed sleep.",
+            "pin_label": "",
+            "pos_x_desktop": 34,
+            "pos_y_desktop": 61,
+            "pos_x_mobile": 30,
+            "pos_y_mobile": 68
+          }
+        },
+        "layer_4pFUdq": {
+          "type": "layer",
+          "settings": {
+            "image": "shopify://shop_images/product-layer-img.png",
+            "product": "snooze-btx4-adjustable-base-king-copy",
+            "title": "",
+            "price_prefix": "Price if bought alone:",
+            "custom_price": "",
+            "description": "Firm support that takes pressure off aging joints and resists flattening, unlike foam that sags.",
+            "pin_label": "",
+            "pos_x_desktop": 54,
+            "pos_y_desktop": 79,
+            "pos_x_mobile": 61,
+            "pos_y_mobile": 86
+          }
+        }
+      },
+      "block_order": [
+        "layer_FdgFh9",
+        "layer_xVbBdn",
+        "layer_zCrayX",
+        "layer_ThiUwF",
+        "layer_4pFUdq"
+      ],
+      "name": "NW Layer Product",
+      "settings": {
+        "heading": "Your Complete Sleep System, Layer by Layer",
+        "subheading": "<p>Five pieces, matched and sized to work as one. Tap each to see its role.</p>",
+        "price_prefix": "",
+        "show_dots": true,
+        "pagination_color": "#613916",
+        "show_arrows": false,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "bg_type": "color",
+        "bg_color": "#fffaf3",
+        "bg_gradient": "",
+        "hotspot_active_color": "#613916",
+        "hotspot_inactive_color": "#bb967c",
+        "hotspot_text_color": "#ffffff",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#61391626",
+        "card_title_color": "#613916",
+        "card_subtitle_color": "#cc926a",
+        "card_desc_color": "#613916",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_marquee_v2_e8pbNW": {
+      "type": "nw-marquee-v2",
+      "blocks": {
+        "item_j6qaii": {
+          "type": "item",
+          "settings": {
+            "text": "MADE IN USA",
+            "icon": "usamap",
+            "link": ""
+          }
+        },
+        "item_JmRtGP": {
+          "type": "item",
+          "settings": {
+            "text": "100-NIGHT TRIAL",
+            "icon": "moon",
+            "link": ""
+          }
+        },
+        "item_z47Tqk": {
+          "type": "item",
+          "settings": {
+            "text": "CERTIFIED ORGANIC",
+            "icon": "verified",
+            "link": ""
+          }
+        },
+        "item_H8WGMN": {
+          "type": "item",
+          "settings": {
+            "text": "30-YEAR WARRANTY",
+            "icon": "warranty-2",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_j6qaii",
+        "item_JmRtGP",
+        "item_z47Tqk",
+        "item_H8WGMN"
+      ],
+      "name": "NW Marquee V2",
+      "settings": {
+        "enable_desktop_marquee": true,
+        "direction": "right_to_left",
+        "speed": 95,
+        "pause_on_hover": true,
+        "font_weight": 600,
+        "font_size": 20,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
+        "gap_desktop": 28,
+        "gap_mobile": 12,
+        "icon_size_desktop": 28,
+        "icon_size_mobile": 20,
+        "gap_icon_text": 4,
+        "marquee_height_desktop": 60,
+        "marquee_height_mobile": 44,
+        "padding_desktop": 16,
+        "padding_mobile": 12,
+        "bg_type": "color",
+        "bg_color": "#f4efe8",
+        "bg_gradient": "",
+        "text_color": "#432818",
+        "icon_color": "#432818"
+      }
+    },
+    "nw_testimonials_GXW3gY": {
+      "type": "nw-testimonials",
+      "blocks": {
+        "testimonial_rcebak": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”</p>",
+            "author": "Marcello Delle Grotti",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        },
+        "testimonial_h4iEzm": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”</p>",
+            "author": "Phillip Page",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        },
+        "testimonial_hxMeLh": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“We could not be happier with our new mattress and adjustable bed frame! It was so easy to set up and it is so comfortable, plus it’s organic. I can’t recommend this mattress and the adjustable frame enough.”</p>",
+            "author": "Kristi Allred",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        },
+        "testimonial_eGU6D8": {
+          "type": "testimonial",
+          "disabled": true,
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“Incredible mattress I want to invest in more!”</p>",
+            "author": "Kristin McGee",
+            "verified": true,
+            "verified_text": "Verified"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_rcebak",
+        "testimonial_h4iEzm",
+        "testimonial_hxMeLh",
+        "testimonial_eGU6D8"
+      ],
+      "name": "t:sections.nw-testimonials.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Join the Recovery Movement",
+        "subheading": "<p>Thousands are creating healthier sleep environments with organic materials because better recovery starts with what you sleep on.</p>",
+        "header_max_width_desktop": 1200,
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
+        "card_bg_color": "#f4efe8",
+        "card_text_color": "#613916",
+        "card_star_color": "#e57b1e",
+        "card_star_empty_color": "#d1c7ba",
+        "verified_text_color": "#878735",
+        "verified_icon_color": "#878735",
+        "full_width": false,
+        "enable_loop": false,
+        "enable_edge_shadow": false,
+        "show_arrows": false,
+        "show_pagination": true,
+        "bg_type": "none",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_bundle_product_DFhtrf": {
+      "type": "nw-bundle-product",
+      "blocks": {
+        "trust_badge_VNWwJJ": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "money",
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "trust_badge_hgC33w": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield",
+            "text": "30-Year Warranty"
+          }
+        },
+        "feature_heVanV": {
+          "type": "feature",
+          "settings": {
+            "text": "Independent head & foot adjustment",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/head-foot-adjustment.svg"
+          }
+        },
+        "feature_MfDPMr": {
+          "type": "feature",
+          "settings": {
+            "text": "Low-EMF quiet motors",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/low-efm-motor.svg"
+          }
+        },
+        "feature_PU6Tgz": {
+          "type": "feature",
+          "settings": {
+            "text": "850 lb weight capacity",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/weight-capacity.svg"
+          }
+        },
+        "feature_gW7qxk": {
+          "type": "feature",
+          "settings": {
+            "text": "20-year warranty",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/shield.svg"
+          }
+        },
+        "accordion_pYwNip": {
+          "type": "accordion",
+          "settings": {
+            "title": "Health Benefits",
+            "content": "<p>Elevate your head to reduce snoring, improve circulation, and ease acid reflux. Zero-gravity positioning relieves lower back pressure instantly.</p>",
+            "open_by_default": false
+          }
+        },
+        "accordion_PGNdNt": {
+          "type": "accordion",
+          "settings": {
+            "title": "Specs",
+            "content": "<p>Quiet dual-motor system, wireless remote with memory presets, zero-clearance design fits inside any standard bed frame. 850 lb total capacity.</p>",
+            "open_by_default": false
+          }
+        },
+        "accordion_FjaLwM": {
+          "type": "accordion",
+          "settings": {
+            "title": "Why You'll love it",
+            "content": "<p>Custom comfort at the touch of a button. Seamless Bluetooth connectivity and ultra-quiet motor technology ensure undisturbed rest for both partners.</p>",
+            "open_by_default": false
+          }
+        },
+        "accordion_FC6b7h": {
+          "type": "accordion",
+          "settings": {
+            "title": "Setup and Delivery",
+            "content": "<p>Simple tool-free assembly in under 15 minutes. White glove in-home setup and old mattress removal available at checkout.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "trust_badge_VNWwJJ",
+        "trust_badge_hgC33w",
+        "feature_heVanV",
+        "feature_MfDPMr",
+        "feature_PU6Tgz",
+        "feature_gW7qxk",
+        "accordion_pYwNip",
+        "accordion_PGNdNt",
+        "accordion_FjaLwM",
+        "accordion_FC6b7h"
+      ],
+      "name": "NW Bundle Product",
+      "settings": {
+        "badge_text": "INCLUDED IN BUNDLE",
+        "heading": "Snooze Lift 3.0 BT Adjustable Base",
+        "product": "",
+        "image_position": "left",
+        "image_desktop": "shopify://shop_images/bedtech-btx4-power-adjustable-bed-full-queen-002.jpg",
+        "image_mobile": "shopify://shop_images/bedtech-btx4-power-adjustable-bed-full-queen-002.jpg",
+        "show_button": false,
+        "button_text": "CHOOSE BETTER SLEEP",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#fffaf3",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_organic_YrjWU7": {
+      "type": "nw-organic",
+      "blocks": {
+        "table_row_KpU8Ff": {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Mattress",
+            "col1_use_custom_icon": false,
+            "col1_icon": "check-solar",
+            "col1_icon_color": "#878735",
+            "col1_text": "Organic mattress",
+            "col2_use_custom_icon": false,
+            "col2_icon": "cross",
+            "col2_icon_color": "#b61919",
+            "col2_text": "Foam mattress"
+          }
+        },
+        "table_row_ryBrnY": {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Sheets",
+            "col1_use_custom_icon": false,
+            "col1_icon": "check-solar",
+            "col1_icon_color": "#878735",
+            "col1_text": "Organic sheets",
+            "col2_use_custom_icon": false,
+            "col2_icon": "cross",
+            "col2_icon_color": "#b61919",
+            "col2_text": "Polyester sheets"
+          }
+        },
+        "table_row_wQU6ta": {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Pillows",
+            "col1_use_custom_icon": false,
+            "col1_icon": "check-solar",
+            "col1_icon_color": "#878735",
+            "col1_text": "Organic pillows",
+            "col2_use_custom_icon": false,
+            "col2_icon": "cross",
+            "col2_icon_color": "#b61919",
+            "col2_text": "Foam/polyfill pillows"
+          }
+        },
+        "table_row_TGintX": {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Protector",
+            "col1_use_custom_icon": false,
+            "col1_icon": "check-solar",
+            "col1_icon_color": "#878735",
+            "col1_text": "Organic protector",
+            "col2_use_custom_icon": false,
+            "col2_icon": "cross",
+            "col2_icon_color": "#b61919",
+            "col2_text": "Vinyl/PVC protector"
+          }
+        },
+        "table_row_rFHFAY": {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Toxicity",
+            "col1_use_custom_icon": false,
+            "col1_icon": "check-solar",
+            "col1_icon_color": "#878735",
+            "col1_text": "Lower-tox sleep environment",
+            "col2_use_custom_icon": false,
+            "col2_icon": "cross",
+            "col2_icon_color": "#b61919",
+            "col2_text": "Mixed synthetic materials"
+          }
+        },
+        "table_row_pPCijD": {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "Temperature",
+            "col1_use_custom_icon": false,
+            "col1_icon": "check-solar",
+            "col1_icon_color": "#878735",
+            "col1_text": "Natural temperature regulation",
+            "col2_use_custom_icon": false,
+            "col2_icon": "cross",
+            "col2_icon_color": "#b61919",
+            "col2_text": "Heat-trapping synthetics"
+          }
+        },
+        "table_row_f6XM9f": {
+          "type": "table_row",
+          "settings": {
+            "feature_name": "System",
+            "col1_use_custom_icon": false,
+            "col1_icon": "check-solar",
+            "col1_icon_color": "#878735",
+            "col1_text": "Designed to work together",
+            "col2_use_custom_icon": false,
+            "col2_icon": "cross",
+            "col2_icon_color": "#b61919",
+            "col2_text": "Products chosen independently"
+          }
+        }
+      },
+      "block_order": [
+        "table_row_KpU8Ff",
+        "table_row_ryBrnY",
+        "table_row_wQU6ta",
+        "table_row_TGintX",
+        "table_row_rFHFAY",
+        "table_row_pPCijD",
+        "table_row_f6XM9f"
+      ],
+      "name": "NW Organic",
+      "settings": {
+        "heading": "An Organic Sleep Recovery System Working Together",
+        "description": "<p>With this bundle you will have a complete organic recovery sleep system including everything you need and nothing you don't.</p>",
+        "brand_column_bg": "#fffcf0",
+        "table_border_color": "#61391633",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "cell_text_color": "#613916",
+        "table_bg": "",
+        "layout_width": "page_width",
+        "content_panel_bg": "linear-gradient(132deg, rgba(169, 107, 62, 1) 0.9%, rgba(78, 47, 20, 1) 57.786%)",
+        "content_panel_heading_color": "#ffffff",
+        "content_panel_description_color": "#ffffff",
+        "media_type": "image",
+        "video_autoplay": false,
+        "show_play_icon": true,
+        "image_position": "right",
+        "image_desktop": "shopify://shop_images/mattress_f9f3ee97-3c4c-4943-8518-09e126f3c035.png",
+        "image_mobile": "shopify://shop_images/ultimate-snooze-mobile.png",
+        "col1_head_image": "shopify://shop_images/thumbnail.png",
+        "col1_head_logo": "shopify://shop_images/Ultimate_Snooze_-_Logo_-_Black_1.png",
+        "col1_head_title": "Organic Snooze",
+        "col2_head_image": "shopify://shop_images/thumbnail-2.png",
+        "col2_head_title": "Typical Bedroom Setup",
+        "show_button": false,
+        "button_text": "CHOOSE BETTER SLEEP",
+        "button_link": "",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_benefits_xyfdap": {
+      "type": "nw-benefits",
+      "blocks": {
+        "benefit_WaxKH9": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Mattress B-Roll - Cooling_175ea078-b669-4984-8736-fa8ac0ceb351.mp4",
+            "title": "Naturally Cooler Nights",
+            "description": "<p>Organic wool and breathable latex release heat instead of trapping it, unlike most foams.</p><h3></h3>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_KjGnhF": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/hf_20261001_025551_e1da7d82-e1a8-4103-b869-657e170d0f55.mp4",
+            "title": "Pressure Relief",
+            "description": "<p>Responsive latex cushions your hips and shoulders while keeping your spine aligned without the sinking feeling of foam.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_wMqhVP": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Chemicals.mp4",
+            "title": "Lower Your Toxic Load",
+            "description": "<p>A cleaner sleep environment starts with certified organic materials. No polyurethane, fiberglass, or toxic glues.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        },
+        "benefit_XEt4QH": {
+          "type": "benefit",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/hf_20260930_224222_07302e1b-cfc1-4a84-80c2-923c296a6a52.mp4",
+            "title": "Built to Last",
+            "description": "<p>Our latex is built to outlast conventional petroleum foam, backed by our 30-year warranty.</p>",
+            "tag": "Side",
+            "tag_bg_color": "#613916",
+            "tag_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_WaxKH9",
+        "benefit_KjGnhF",
+        "benefit_wMqhVP",
+        "benefit_XEt4QH"
+      ],
+      "name": "Nw Benefits",
+      "settings": {
+        "heading": "Feel the Difference",
+        "description": "<h3>Why more people are choosing organic over conventional foam.</h3><p></p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "card_style": "style_1",
+        "card_bg_color": "#fbf9f6",
+        "card_border_color": "#61391633",
+        "card_title_color": "#613916",
+        "card_desc_color": "#613916",
+        "show_arrows": false,
+        "show_pagination": true,
+        "pagination_color": "#613916",
+        "show_button": false,
+        "button_text": "SHOP THE MATTRESS",
+        "button_link": "",
+        "button_style": "primary",
+        "badge_icon_color": "#cc926a",
+        "badge_text_color": "#613916",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/benifit-desktop.png",
+        "bg_image_mobile": "shopify://shop_images/benifit-mobile.png",
+        "bg_image_opacity": 21,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_founder_story_bYKExy": {
+      "type": "nw-founder-story",
+      "blocks": {
+        "stat_BnNXni": {
+          "type": "stat",
+          "settings": {
+            "value": "8 Hours",
+            "description": "<p>Every Night</p>"
+          }
+        },
+        "stat_RwJpiE": {
+          "type": "stat",
+          "settings": {
+            "value": "56 Hours",
+            "description": "<p>Every week</p>"
+          }
+        },
+        "stat_NVHejC": {
+          "type": "stat",
+          "settings": {
+            "value": "26 Years",
+            "description": "<p>Of your lifetime</p>"
+          }
+        }
+      },
+      "block_order": [
+        "stat_BnNXni",
+        "stat_RwJpiE",
+        "stat_NVHejC"
+      ],
+      "name": "t:sections.nw-founder-story.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "The Missing Piece In Gary Brecka's Sleep Protocol.",
+        "media_type": "video",
+        "video": "shopify://files/videos/Gary Longform Mashup-2.mov",
+        "video_autoplay": false,
+        "show_play_icon": true,
+        "poster": "shopify://shop_images/Frame_48101000.png",
+        "overlay_text": "",
+        "quote": "<p><em>\"I spent years helping people optimize their health, yet I overlooked the one place we spend nearly one-third of our lives. When I started testing for toxic load, I realized my mattress wasn't supporting the life I was trying to build. I couldn't find one that met my standards, so we created it.\"</em></p>",
+        "name": "Gary Brecka",
+        "show_verified": true,
+        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "show_footer_content": true,
+        "footer_heading": "Be intentional about where you spend the most time.",
+        "footer_description": "<p><strong>You spend nearly one-third of your life in bed. Choose materials you'll trust for every hour.</strong></p>",
+        "disclaimer": "",
+        "heading_color": "#613916",
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "card_border_color": "#61391633",
+        "card_bg_color": "#fbf9f6",
+        "quote_color": "#613916",
+        "name_color": "#613916",
+        "role_color": "#613916",
+        "stat_border_color": "#61391633",
+        "stat_value_color": "#613916",
+        "stat_desc_color": "#613916",
+        "disclaimer_color": "#563822",
+        "footer_heading_color": "#613916",
+        "footer_description_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "nw_guarantee_v2_tX333J": {
+      "type": "nw-guarantee-v2",
+      "name": "t:sections.nw-guarantee-v2.name",
+      "settings": {
+        "badge_image": "shopify://shop_images/Vector_3.svg",
+        "heading": "Try It for 100 Nights. Keep It for 30 Years",
+        "description": "<p>We know buying a mattress online is a big decision. That's why we give you 100-nights to decide if it's the right fit for your body. If not, we'll pick it up for a full refund. Backed by a 30-year warranty.</p>",
+        "cta_heading": "Questions? Talk to a Sleep Expert",
+        "show_primary_button": true,
+        "primary_button_text": "Call (719) 751-6070",
+        "primary_button_link": "(719) 751-6070",
+        "show_text_button": true,
+        "text_button_label": "Text Us",
+        "text_button_link": "(719) 751-6070",
+        "show_quiz_button": true,
+        "quiz_button_label": "Sleep Quiz",
+        "quiz_button_link": "shopify://pages/quiz",
+        "card_bg_color": "#ffffff",
+        "heading_color": "#613916",
+        "text_color": "#613916",
+        "cta_heading_color": "#613916",
+        "primary_btn_bg_color": "#878735",
+        "primary_btn_text_color": "#ffffff",
+        "outline_btn_border_color": "#613916",
+        "outline_btn_text_color": "#613916",
+        "divider_color": "#61391633",
+        "bg_type": "image",
+        "bg_color": "#fffcf0",
+        "bg_image": "shopify://shop_images/benifit-mobile.png",
+        "bg_image_opacity": 35,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_product_list_bkk4Br": {
+      "type": "nw-product-list",
+      "name": "t:sections.nw-product-list.name",
+      "settings": {
+        "show_header_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Shop Other Bundles",
+        "subheading": "<p>Add organic pillows, protectors, and covers. Mix, match, and save on your full sleep system.</p>",
+        "product_source": "product_list",
+        "product_list": [
+          "the-complete-sleep-organic-bedding-bundle-pillows-sheets-and-protector",
+          "signature-organic-cotton-pillows-combo-packs",
+          "the-snooze-lift-adjustable-base",
+          "100-linen-natural-cool-sheet-set",
+          "snooze-btx4-adjustable-base-king-copy"
+        ],
+        "collection": "mattress",
+        "products_to_show": 8,
+        "empty_text": "Select products or a collection to display.",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "show_rating": true,
+        "show_firmness": false,
+        "show_seller_tag": true,
+        "show_best_for": false,
+        "button_text": "Shop Now",
+        "button_style": "primary",
+        "firmness_label_soft": "Soft",
+        "firmness_label_firm": "Firm",
+        "show_arrows": false,
+        "show_pagination": true,
+        "overlay_color": "#ffffff",
+        "swiper_arrow_bg": "#613916",
+        "swiper_arrow_color": "#ffffff",
+        "pagination_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_faq_eNAtek": {
+      "type": "nw-faq",
+      "blocks": {
+        "faq_item_86xLYm": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's in the bundle?",
+            "answer": "<p>The Pure Mattress (Firm), the SnoozeLift 3.0 Adjustable Base, two Signature Cotton Organic pillows, a Breezeline organic cotton sheet set, and an organic mattress protector, all matched to your selected size. A complete sleep system.</p>"
+          }
+        },
+        "faq_item_A8nmKm": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How much do I save?",
+            "answer": "<p>This bundle is $5,799.99, down from $8,199.99 bought separately, a saving of $2,400 (over 30%). Bundling is the best-value way to get a full organic sleep system.</p>"
+          }
+        },
+        "faq_item_kRtVUc": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What are the sheets and protector made of?",
+            "answer": "<p>The sheets are Breezeline organic cotton with a cooling weave, in a set of one fitted sheet, one flat sheet, and two pillowcases. The protector pairs an ORGANIC-AIR organic cotton comfort layer with a MoistureGuard plant-based, breathable, water-resistant barrier, with corner straps for a secure fit.</p>"
+          }
+        },
+        "faq_item_j3cjpx": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I choose the pillow and sheet type?",
+            "answer": "<p>Bundle accessories are fixed as configured. If you want to swap items, you can build a custom bundle on the mattress page, or call a Sleep Expert at <a href=\"tel:(719) 751-6070\" title=\"tel:(719) 751-6070\">(719) 751-6070</a> to arrange one.</p>"
+          }
+        },
+        "faq_item_NNbpUf": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do the pieces ship together?",
+            "answer": "<p>Not always. Bundle components may ship separately. The mattress typically arrives within about 14 days from our Georgia facility.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_86xLYm",
+        "faq_item_A8nmKm",
+        "faq_item_kRtVUc",
+        "faq_item_j3cjpx",
+        "faq_item_NNbpUf"
+      ],
+      "name": "t:sections.nw-faq.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Frequently Asked Questions",
+        "subheading": "",
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
+        "show_search": false,
+        "search_placeholder": "What can we help with?",
+        "open_first_faq": false,
+        "initial_faq_count": 6,
+        "more_label": "",
+        "less_label": "SEE LESS FAQ'S",
+        "contact_heading": "",
+        "show_call_btn": false,
+        "call_label": "CALL (443) 333-1213",
+        "call_link": "tel:+14433331213",
+        "call_style": "primary",
+        "show_text_btn": false,
+        "text_label": "TEXT US",
+        "text_link": "sms:+14433331213",
+        "text_style": "outline",
+        "show_quiz_btn": false,
+        "quiz_label": "SLEEP QUIZ",
+        "quiz_link": "shopify://pages/quiz",
+        "quiz_style": "outline",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_opacity": 16,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "178886477090f48344": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_FqJCfD": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_FqJCfD"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "disclosures",
+    "related-products",
+    "nw_layer_product_VqmfzG",
+    "nw_marquee_v2_e8pbNW",
+    "nw_testimonials_GXW3gY",
+    "nw_bundle_product_DFhtrf",
+    "nw_organic_YrjWU7",
+    "nw_benefits_xyfdap",
+    "nw_founder_story_bYKExy",
+    "nw_guarantee_v2_tX333J",
+    "nw_product_list_bkk4Br",
+    "nw_faq_eNAtek",
+    "178886477090f48344"
+  ]
+}

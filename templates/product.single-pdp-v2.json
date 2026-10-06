@@ -18,13 +18,13 @@
             "margin_top": 0,
             "margin_bottom": 15,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 15 
+            "margin_bottom_mobile": 15
           }
         },
         "title": {
           "type": "title",
           "settings": {
-            "custom_title": "The Snooze Nest — Organic Crib Mattress",
+            "custom_title": "The Snooze Nest Organic Crib Bundle",
             "margin_top": 0,
             "margin_bottom": 14,
             "margin_top_mobile": 0,
@@ -34,7 +34,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>Organic coconut coir, hemp & wool crib mattress for safe, firm infant support. Zero chemicals from day one.</p>",
+            "custom_description": "<p>Organic coconut coir, hemp & wool crib mattress for safe, firm infant support. Zero chemicals from day one. Bundle includes, Firm-Safe mattress, Organic Cotton Sheets, and Organic Waterproof protector.</p><ul><li>Firm-Safe Organic Crib Mattress</li><li>Organic Waterproof Protector</li><li>Organic Cotton Sheet</li></ul>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -77,6 +77,9 @@
             "show_size_guide": true,
             "size_guide_label": "Size Guide",
             "size_guide_popup_id": "",
+            "show_firmness_guide": true,
+            "firmness_guide_label": "Firmness Guide",
+            "firmness_popup_modal_id": "",
             "quantity_option_name": "Select Quantity",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
@@ -105,6 +108,7 @@
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
             "show_affirm_button": false,
+            "show_atc_price": false,
             "margin_top": 16,
             "margin_bottom": 8,
             "margin_top_mobile": 32,
@@ -152,7 +156,7 @@
           "settings": {
             "heading": "Specifications",
             "icon": "none",
-            "content": "<ul><li>Dimensions: 28\" x 52\" (standard U.S. crib size), 5\" height </li><li>Flippable, dual-sided design with both sides identical </li><li>Firm, flat, supportive feel, built for infant safety </li><li>Fully breathable layered construction </li><li>Organic cotton woven cover </li><li>Pressure-tested for safety </li><li>Bed frame not included</li></ul>",
+            "content": "<p><strong>Organic Snooze Nest Firm-Safe Crib Mattress</strong></p><ul><li>Dimensions: 28\" x 52\" (standard U.S. crib size), 5\" height&nbsp;</li><li>Flippable, dual-sided design with both sides identical&nbsp;</li><li>Firm, flat, supportive feel, built for infant safety&nbsp;</li><li>Fully breathable layered construction&nbsp;</li><li>Organic cotton woven cover&nbsp;</li><li>Pressure-tested for safety&nbsp;</li><li>Bed frame not included</li></ul><p><strong>100% Organic Nest Sheets</strong></p><ul><li>Non-Toxic&nbsp;</li><li>Breathable Cotton sheets</li><li>White</li></ul><p><strong>100% Organic Nest Waterproof Protector</strong></p><ul><li><strong>Waterproof</strong></li><li><strong>Machine Washable</strong></li><li><strong>No PVC</strong></li></ul><p></p>",
             "page": "",
             "margin_top": 40,
             "margin_bottom": 0,
@@ -165,7 +169,7 @@
           "settings": {
             "heading": "Materials & Layers",
             "icon": "none",
-            "content": "<p>The Snooze Nest is a flippable, dual-sided system with three natural layers on each side: </p><p>1.5\" Organic Wool—comfort and temperature regulation; wicks moisture and acts as a natural fire barrier </p><p>1\" Organic Hemp—breathable support layer that adds airflow and resists moisture, mold, and bacteria </p><p>2\" Coconut Coir—firm core support that gives the flat, stable surface recommended for infant sleep and holds its shape over time </p><p>Wrapped in an organic cotton woven cover. No polyurethane foams, no chemical flame retardants, no synthetic adhesives, no VOCs.</p>",
+            "content": "<p>The Snooze Nest is a flippable, firm-safe dual-sided system with three natural layers on each side:&nbsp;</p><ul><li><strong>1.5\" Organic Wool</strong>—comfort and temperature regulation; wicks moisture and acts as a natural fire barrier&nbsp;</li><li><strong>1\" Organic Hemp</strong>—breathable supportive layer that adds airflow and resists moisture, mold, and bacteria&nbsp;</li><li><strong>2\" Coconut Coir</strong>—firm core support that gives the flat, stable surface recommended for infant sleep and holds its shape over time&nbsp;</li><li><strong>Wrapped in an organic cotton woven cover.</strong> No polyurethane foams, no chemical flame retardants, no synthetic adhesives, no VOCs.</li></ul>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -178,7 +182,7 @@
           "settings": {
             "heading": "Safety & Certifications",
             "icon": "none",
-            "content": "<ul><li>OEKO-TEX certified </li><li>Manufactured in a GOTS/GOLS certified facility </li><li>No chemical flame retardants (organic wool is the natural barrier) </li><li>No polyurethane foams, no synthetic adhesives or glues, no VOCs </li><li>Firm, flat construction that meets infant sleep safety guidelines </li><li>Pressure-tested for infant safety</li></ul>",
+            "content": "<ul><li>OEKO-TEX certified&nbsp;</li><li>Manufactured in a GOTS/GOLS certified facility&nbsp;</li><li>No chemical flame retardants (organic wool is the natural barrier)&nbsp;</li><li>No polyurethane foams, no synthetic adhesives or glues, no VOCs&nbsp;</li><li>Firm, flat construction that meets infant sleep safety guidelines&nbsp;</li><li>Pressure-tested for infant safety</li></ul>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -205,6 +209,7 @@
         },
         "customer_videos_JijkkX": {
           "type": "customer_videos",
+          "disabled": true,
           "settings": {
             "heading": "Why Customers Love This Bundle",
             "show_pagination": true,
@@ -237,7 +242,7 @@
             "item_2_icon": "moon",
             "item_2_use_custom_icon": true,
             "item_2_custom_icon": "shopify://shop_images/image_1254_Vectorized_1.svg",
-            "item_3_text": "Gols/Gots",
+            "item_3_text": "Organic Certified",
             "item_3_icon": "award",
             "item_3_use_custom_icon": true,
             "item_3_custom_icon": "shopify://shop_images/image_1254_Vectorized_2.svg",
@@ -377,7 +382,7 @@
         "item_66UMzf": {
           "type": "item",
           "settings": {
-            "text": "GOLS/GOTS CERTIFIED",
+            "text": "ORGANIC CERTIFIED",
             "icon": "verified",
             "link": ""
           }
@@ -532,7 +537,7 @@
       "name": "t:sections.nw-layer-v2.name",
       "settings": {
         "heading": "Every Layer Inside the Snooze Nest, Explained",
-        "subheading": "<p>4 certified organic layers. Flippable dual-sided design. 5\" total height.  Standard crib size (28\" x 52\").</p>",
+        "subheading": "<p>4 certified organic layers. Flippable dual-sided design. 5\" total depth. &nbsp;Standard crib size (28\" x 52\").</p>",
         "heading_color": "",
         "description_color": "",
         "diagram_image": "shopify://shop_images/layer-v2.png",
@@ -591,6 +596,7 @@
         "testimonial_PwYfRk",
         "testimonial_qpGpdz"
       ],
+      "disabled": true,
       "name": "NW Testimonials",
       "settings": {
         "show_rating": false,
@@ -753,8 +759,8 @@
       ],
       "name": "t:sections.nw-organic.name",
       "settings": {
-        "heading": "Your Dog Breathes What Their Bed is Made of",
-        "description": "<p>Dogs sleep low to the ground and rest most of the day, which makes off-gassing matter more, not less.</p>",
+        "heading": "Baby sleeps chemical free from day one.",
+        "description": "<p>We are exposed to microplastics, VOC's and toxins our whole lives. We aim to keep you and your babies sleep enviornment VOC-Free from day one.</p>",
         "brand_column_bg": "#fffcf0",
         "table_border_color": "#61391633",
         "heading_color": "#613916",
@@ -776,6 +782,24 @@
         "col1_head_title": "Organic Snooze",
         "col2_head_image": "shopify://shop_images/table-2.png",
         "col2_head_title": "Conventional Crib Mattress",
+        "show_comparison": false,
+        "comparison_title": "Long-Term Value Comparison",
+        "foam_brand": "Popular Foam Brands",
+        "foam_price": "$1.02 / night",
+        "foam_note": "Replaced every 10 years",
+        "snooze_brand": "ORGANIC SNOOZE",
+        "snooze_price": "$0.16 / night",
+        "snooze_note": "Built to last 30 years",
+        "comparison_title_color": "#613916",
+        "foam_card_bg": "#ffffff",
+        "foam_card_border_color": "#e5e5e5",
+        "foam_brand_color": "#666666",
+        "foam_price_color": "#1a1a1a",
+        "foam_note_color": "#61391680",
+        "snooze_bg": "#878735",
+        "snooze_brand_color": "#ffffff",
+        "snooze_price_color": "#ffffff",
+        "snooze_note_color": "#ffffff",
         "show_button": false,
         "button_text": "CHOOSE BETTER SLEEP",
         "button_link": "",
@@ -786,127 +810,6 @@
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 0,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_founder_story_RhHRer": {
-      "type": "nw-founder-story",
-      "blocks": {
-        "stat_XXFt9w": {
-          "type": "stat",
-          "settings": {
-            "value": "0%",
-            "description": "<p>VOCs & chemicals</p>"
-          }
-        },
-        "stat_YEzEwg": {
-          "type": "stat",
-          "settings": {
-            "value": "0%",
-            "description": "<p>Polyurethane foam</p>"
-          }
-        },
-        "stat_L6nGEx": {
-          "type": "stat",
-          "settings": {
-            "value": "0%",
-            "description": "<p>Fiberglass</p>"
-          }
-        }
-      },
-      "block_order": [
-        "stat_XXFt9w",
-        "stat_YEzEwg",
-        "stat_L6nGEx"
-      ],
-      "name": "t:sections.nw-founder-story.name",
-      "settings": {
-        "show_rating": false,
-        "star_rating": 5,
-        "eyebrow": "",
-        "heading": "Sleep Chemical-Free from Day One",
-        "media_type": "video",
-        "video": "shopify://files/videos/instagram-video-3fca1c1a-9512-49d9-a544-653ceebeebe4.mp4",
-        "video_autoplay": false,
-        "show_play_icon": true,
-        "poster": "shopify://shop_images/founder-video-poster.png",
-        "overlay_text": "",
-        "quote": "<p>\"Infants are the most vulnerable to chemical exposure. Their developing systems absorb everything in their environment. A truly organic crib mattress isn't optional — it's the first health decision you make for your child.\"</p>",
-        "name": "Gary Brecka",
-        "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
-        "show_footer_content": false,
-        "footer_heading": "Alignment Starts at the Pillow",
-        "footer_description": "<p>The right loft helps support your head, neck, shoulders, and spine while your body rests, repairs, and resets.</p>",
-        "disclaimer": "<p>Pressure tested for infant safety. OEKO-TEX certified.</p>",
-        "heading_color": "#613916",
-        "star_color": "#e57b1e",
-        "star_color_inactive": "#d1d5db",
-        "card_border_color": "#61391633",
-        "card_bg_color": "#ffffff",
-        "quote_color": "#613916",
-        "name_color": "#613916",
-        "role_color": "#613916",
-        "stat_border_color": "#61391633",
-        "stat_value_color": "#613916",
-        "stat_desc_color": "#613916",
-        "disclaimer_color": "#613916cc",
-        "footer_heading_color": "#613916",
-        "footer_description_color": "#613916",
-        "bg_type": "color",
-        "bg_color": "#fbf9f6",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_product_list_Ej8ReJ": {
-      "type": "nw-product-list",
-      "name": "t:sections.nw-product-list.name",
-      "settings": {
-        "show_header_rating": false,
-        "star_rating": 5,
-        "star_color": "#e57b1e",
-        "star_color_inactive": "#d1d5db",
-        "eyebrow": "",
-        "heading": "Shop Other Collections",
-        "subheading": "<p>Explore our full range of organic mattresses, pillows, bedding, and sleep accessories.</p>",
-        "product_source": "product_list",
-        "product_list": [
-          "the-organic-snooze-pillow",
-          "100-linen-natural-cool-sheet-set",
-          "organic-waterproof-mattress-protector",
-          "the-organic-snooze-kloud-pillow-copy",
-          "the-complete-sleep-organic-bedding-bundle-pillows-sheets-and-protector",
-          "signature-organic-cotton-pillows-combo-packs"
-        ],
-        "collection": "",
-        "products_to_show": 8,
-        "empty_text": "Select products or a collection to display.",
-        "heading_color": "#613916",
-        "description_color": "#613916",
-        "show_rating": true,
-        "show_firmness": false,
-        "show_seller_tag": false,
-        "show_best_for": false,
-        "button_text": "add to cart",
-        "button_style": "primary",
-        "firmness_label_soft": "Soft",
-        "firmness_label_firm": "Firm",
-        "show_arrows": false,
-        "show_pagination": true,
-        "overlay_color": "#ffffff",
-        "swiper_arrow_bg": "#613916",
-        "swiper_arrow_color": "#ffffff",
-        "pagination_color": "#613916",
-        "bg_type": "none",
-        "bg_color": "#fffcf0",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
     },
@@ -931,34 +834,34 @@
           "type": "faq_item",
           "settings": {
             "question": "Is it waterproof?",
-            "answer": "<p>No, the Snooze Nest is not waterproof. We recommend adding the washable organic protector (available in the Snooze Nest Bundle) along with organic sheets for full protection.</p>"
+            "answer": "<p>The mattress itself is made with natural materials, so we recommend using the included organic machine washable protector to help guard against spills, leaks, and everyday messes.</p>"
           }
         },
         "faq_item_qwBaqn": {
           "type": "faq_item",
           "settings": {
-            "question": "How do I clean it?",
-            "answer": "<p>The mattress itself is not washable. Spot clean only, with a damp cloth if needed. For easy cleaning, pair it with the washable organic protector and organic sheets.</p>"
+            "question": "What’s included in the crib bundle?",
+            "answer": "<p>The bundle includes the Snooze Nest Crib Mattress, organic cotton crib sheets, and an organic mattress protector — everything needed to create a cleaner first sleep setup.</p>"
           }
         },
         "faq_item_QbMgNb": {
           "type": "faq_item",
           "settings": {
-            "question": "What organic materials are used?",
-            "answer": "<p>Organic wool, organic hemp, coconut coir, and an organic cotton cover. Every layer is natural, with no synthetics, foams, adhesives, or chemical flame retardants.</p>"
+            "question": "Why use a protector if the mattress is organic?",
+            "answer": "<p>Babies are messy. A protector helps keep the mattress cleaner over time while preserving the organic sleep surface parents are trying to create.</p>"
           }
         },
         "faq_item_pV4KRW": {
           "type": "faq_item",
           "settings": {
-            "question": "Why choose organic over a conventional crib mattress?",
-            "answer": "<p>Conventional crib mattresses often use polyurethane foam, fiberglass, and chemical flame retardants. Babies sleep more hours than adults and breathe close to the surface, so a clean, chemical-free mattress matters from day one. The Snooze Nest is built entirely from organic wool, hemp, coconut, and cotton, so your baby sleeps chemical-free.</p>"
+            "question": "Are the sheets included organic cotton?",
+            "answer": "<p>Yes. The crib sheets are made with organic cotton for a soft, breathable surface against your baby’s skin.</p>"
           }
         },
         "faq_item_EkJ8ed": {
           "type": "faq_item",
           "settings": {
-            "question": "What certifications does it have?",
+            "question": "What makes the Snooze Nest safer than conventional crib mattresses?",
             "answer": "<p>It's OEKO-TEX certified and made in a GOTS/GOLS certified facility. There are no chemical flame retardants, no polyurethane foams, no synthetic adhesives, and no VOCs, and it's pressure-tested for infant safety.</p>"
           }
         }
@@ -1015,6 +918,159 @@
         "padding_bottom_mobile": 48
       }
     },
+    "nw_founder_story_Jen63a": {
+      "type": "nw-founder-story",
+      "blocks": {
+        "stat_M6chMi": {
+          "type": "stat",
+          "settings": {
+            "value": "16 Hours",
+            "description": "<p>Every Day</p>"
+          }
+        },
+        "stat_787hNQ": {
+          "type": "stat",
+          "settings": {
+            "value": "112 Hours",
+            "description": "<p>Every week</p>"
+          }
+        },
+        "stat_NRBMnM": {
+          "type": "stat",
+          "settings": {
+            "value": "1st Year",
+            "description": "<p>In a crib</p>"
+          }
+        }
+      },
+      "block_order": [
+        "stat_M6chMi",
+        "stat_787hNQ",
+        "stat_NRBMnM"
+      ],
+      "name": "t:sections.nw-founder-story.name",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "eyebrow": "",
+        "heading": "Sleep vOC-free from day one.",
+        "media_type": "video",
+        "video": "shopify://files/videos/Gary Longform Mashup-2.mov",
+        "video_autoplay": false,
+        "show_play_icon": true,
+        "poster": "shopify://shop_images/Frame_48101000.png",
+        "overlay_text": "",
+        "quote": "<p>“Most parents think carefully about what their baby eats, what touches their skin, and what’s in the air around them — but the mattress they sleep on every night is often overlooked. A crib mattress sits just inches from their airway for hours a day. That’s why materials matter. This crib mattress is made with certified organic cotton, wool, and natural latex because a baby’s first sleep environment should be one of the cleanest places in the home.”</p>",
+        "name": "Gary Brecka",
+        "show_verified": true,
+        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "show_footer_content": true,
+        "footer_heading": "This is how long your baby sleeps.",
+        "footer_description": "<p>Choose a crib mattress made with certified organic materials and no unnecessary synthetic fillers.</p><p></p>",
+        "disclaimer": "",
+        "heading_font_size_desktop": 36,
+        "heading_font_size_tablet": 32,
+        "heading_font_size_mobile": 28,
+        "header_text_align_desktop": "center",
+        "header_text_align_mobile": "center",
+        "quote_font_size_desktop": 20,
+        "quote_font_size_tablet": 18,
+        "quote_font_size_mobile": 14,
+        "name_font_size_desktop": 20,
+        "name_font_size_tablet": 18,
+        "name_font_size_mobile": 16,
+        "role_font_size_desktop": 18,
+        "role_font_size_tablet": 16,
+        "role_font_size_mobile": 14,
+        "testimonial_text_align_desktop": "left",
+        "testimonial_text_align_mobile": "left",
+        "stat_value_font_size_desktop": 48,
+        "stat_value_font_size_tablet": 40,
+        "stat_value_font_size_mobile": 32,
+        "stat_desc_font_size_desktop": 18,
+        "stat_desc_font_size_tablet": 16,
+        "stat_desc_font_size_mobile": 12,
+        "stat_text_align_desktop": "left",
+        "stat_text_align_mobile": "left",
+        "footer_heading_font_size_desktop": 24,
+        "footer_heading_font_size_tablet": 22,
+        "footer_heading_font_size_mobile": 20,
+        "footer_description_font_size_desktop": 16,
+        "footer_description_font_size_tablet": 15,
+        "footer_description_font_size_mobile": 14,
+        "footer_text_align_desktop": "center",
+        "footer_text_align_mobile": "left",
+        "heading_color": "#613916",
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "card_border_color": "#61391633",
+        "card_bg_color": "#fbf9f6",
+        "quote_color": "#613916",
+        "name_color": "#613916",
+        "role_color": "#613916",
+        "stat_border_color": "#61391633",
+        "stat_value_color": "#613916",
+        "stat_desc_color": "#613916",
+        "disclaimer_color": "#563822",
+        "footer_heading_color": "#613916",
+        "footer_description_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "nw_product_list_Ej8ReJ": {
+      "type": "nw-product-list",
+      "name": "t:sections.nw-product-list.name",
+      "settings": {
+        "show_header_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Shop Other Collections",
+        "subheading": "<p>Explore our full range of organic mattresses, pillows, bedding, and sleep accessories.</p>",
+        "product_source": "product_list",
+        "product_list": [
+          "the-organic-snooze-pillow",
+          "100-linen-natural-cool-sheet-set",
+          "organic-waterproof-mattress-protector",
+          "the-organic-snooze-kloud-pillow-copy",
+          "the-complete-sleep-organic-bedding-bundle-pillows-sheets-and-protector",
+          "signature-organic-cotton-pillows-combo-packs"
+        ],
+        "collection": "",
+        "products_to_show": 8,
+        "empty_text": "Select products or a collection to display.",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "show_rating": true,
+        "show_firmness": false,
+        "show_seller_tag": false,
+        "show_best_for": false,
+        "button_text": "add to cart",
+        "button_style": "primary",
+        "firmness_label_soft": "Soft",
+        "firmness_label_firm": "Firm",
+        "show_arrows": false,
+        "show_pagination": true,
+        "overlay_color": "#ffffff",
+        "swiper_arrow_bg": "#613916",
+        "swiper_arrow_color": "#ffffff",
+        "pagination_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
     "178886568216691c0d": {
       "type": "apps",
       "blocks": {
@@ -1044,9 +1100,9 @@
     "nw_layer_v2_xyMKrC",
     "nw_testimonials_BU9rMk",
     "nw_organic_gcGNTr",
-    "nw_founder_story_RhHRer",
-    "nw_product_list_Ej8ReJ",
     "nw_faq_VygLpj",
+    "nw_founder_story_Jen63a",
+    "nw_product_list_Ej8ReJ",
     "178886568216691c0d"
   ]
 }

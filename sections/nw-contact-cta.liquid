@@ -1,0 +1,751 @@
+{{ 'nw-contact-cta.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign nw_contact_cta_selector = '.nw-contact-cta.section-' | append: section.id
+
+  assign show_note = false
+  if section.settings.show_info_note and section.settings.info_note != blank
+    assign show_note = true
+  endif
+
+  assign show_btn_1 = false
+  if section.settings.show_button_1 and section.settings.button_1_label != blank
+    assign show_btn_1 = true
+  endif
+
+  assign show_btn_2 = false
+  if section.settings.show_button_2 and section.settings.button_2_label != blank
+    assign show_btn_2 = true
+  endif
+
+  assign column_blocks = section.blocks | where: 'type', 'delivery_column'
+-%}
+
+<style>
+  .nw-contact-cta.section-{{ section.id }} {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_desktop | default: 64 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop | default: 64 }}px;
+    {% case section.settings.bg_type %}
+      {% when 'color' %}
+        {% if section.settings.bg_color != blank %}
+          background-color: {{ section.settings.bg_color }};
+        {% endif %}
+      {% when 'gradient' %}
+        {% if section.settings.bg_gradient != blank %}
+          background: {{ section.settings.bg_gradient }};
+        {% endif %}
+      {% when 'none' %}
+        background: transparent;
+    {% endcase %}
+  }
+
+  {%- if section.settings.bg_type == 'image' and section.settings.bg_image != blank -%}
+    .nw-contact-cta.section-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: {{ section.settings.bg_image_opacity | default: 16 | times: 0.01 }};
+      z-index: 0;
+      pointer-events: none;
+    }
+  {%- endif -%}
+
+  .nw-contact-cta.section-{{ section.id }} > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .nw-contact-cta.section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 40 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 40 }}px;
+    }
+
+    {%- if section.settings.bg_type == 'image' and section.settings.bg_image_mobile != blank -%}
+      .nw-contact-cta.section-{{ section.id }}::before {
+        background-image: url('{{ section.settings.bg_image_mobile | image_url: width: 1200 }}');
+      }
+    {%- endif -%}
+  }
+</style>
+{% render 'nw-section-text-colors', selector: nw_contact_cta_selector %}
+
+<div
+  class="nw-contact-cta section-{{ section.id }}"
+  style="
+    --nw-contact-cta-panel-bg: {{ section.settings.panel_bg_color }};
+    --nw-contact-cta-panel-border: {{ section.settings.panel_border_color }};
+    --nw-contact-cta-header-color: {{ section.settings.panel_heading_color }};
+    --nw-contact-cta-header-icon-color: {{ section.settings.panel_icon_color }};
+    --nw-contact-cta-column-title-color: {{ section.settings.column_title_color }};
+    --nw-contact-cta-item-color: {{ section.settings.column_item_color }};
+    --nw-contact-cta-item-icon-color: {{ section.settings.column_item_icon_color }};
+    --nw-contact-cta-note-bg: {{ section.settings.note_bg_color }};
+    --nw-contact-cta-note-border: {{ section.settings.note_border_color }};
+    --nw-contact-cta-note-color: {{ section.settings.note_text_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-contact-cta__wrapper{%- render 'nw-scroll-animation' -%}">
+      <div class="nw-contact-cta__panel">
+        {%- if section.settings.heading != blank or section.settings.header_icon != 'none' -%}
+          <div class="nw-contact-cta__panel-header">
+            {%- if section.settings.header_icon != 'none' -%}
+              <span class="nw-contact-cta__panel-icon" aria-hidden="true">
+                {% render 'nw-icon', icon: section.settings.header_icon %}
+              </span>
+            {%- endif -%}
+            {%- if section.settings.heading != blank -%}
+              <h2 class="nw-contact-cta__panel-heading inline-richtext">
+                {{ section.settings.heading }}
+              </h2>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if column_blocks.size > 0 -%}
+          <div class="nw-contact-cta__columns">
+            {%- for block in column_blocks -%}
+              {%- liquid
+                assign has_list_items = false
+                if block.settings.item_1_text != blank
+                  assign has_list_items = true
+                elsif block.settings.item_2_text != blank
+                  assign has_list_items = true
+                elsif block.settings.item_3_text != blank
+                  assign has_list_items = true
+                elsif block.settings.item_4_text != blank
+                  assign has_list_items = true
+                elsif block.settings.item_5_text != blank
+                  assign has_list_items = true
+                endif
+              -%}
+              <div class="nw-contact-cta__column" {{ block.shopify_attributes }}>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="nw-contact-cta__column-title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+
+                {%- if has_list_items -%}
+                  <ul class="nw-contact-cta__list" role="list">
+                    {% render 'nw-contact-cta-list-item',
+                      text: block.settings.item_1_text,
+                      icon: block.settings.item_1_icon,
+                      use_custom_icon: block.settings.item_1_use_custom_icon,
+                      custom_icon: block.settings.item_1_custom_icon
+                    %}
+                    {% render 'nw-contact-cta-list-item',
+                      text: block.settings.item_2_text,
+                      icon: block.settings.item_2_icon,
+                      use_custom_icon: block.settings.item_2_use_custom_icon,
+                      custom_icon: block.settings.item_2_custom_icon
+                    %}
+                    {% render 'nw-contact-cta-list-item',
+                      text: block.settings.item_3_text,
+                      icon: block.settings.item_3_icon,
+                      use_custom_icon: block.settings.item_3_use_custom_icon,
+                      custom_icon: block.settings.item_3_custom_icon
+                    %}
+                    {% render 'nw-contact-cta-list-item',
+                      text: block.settings.item_4_text,
+                      icon: block.settings.item_4_icon,
+                      use_custom_icon: block.settings.item_4_use_custom_icon,
+                      custom_icon: block.settings.item_4_custom_icon
+                    %}
+                    {% render 'nw-contact-cta-list-item',
+                      text: block.settings.item_5_text,
+                      icon: block.settings.item_5_icon,
+                      use_custom_icon: block.settings.item_5_use_custom_icon,
+                      custom_icon: block.settings.item_5_custom_icon
+                    %}
+                  </ul>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if show_note -%}
+          <div class="nw-contact-cta__note rte">
+            {{ section.settings.info_note }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if show_btn_1 or show_btn_2 -%}
+        <div class="nw-contact-cta__actions">
+          {%- if show_btn_1 -%}
+            {% render 'nw-button',
+              text: section.settings.button_1_label,
+              link: section.settings.button_1_link,
+              style: section.settings.button_1_style
+            %}
+          {%- endif -%}
+          {%- if show_btn_2 -%}
+            {% render 'nw-button',
+              text: section.settings.button_2_label,
+              link: section.settings.button_2_link,
+              style: section.settings.button_2_style
+            %}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.nw-contact-cta.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "PANEL HEADER"
+    },
+    {
+      "type": "select",
+      "id": "header_icon",
+      "label": "Header Icon",
+      "default": "truck",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "clock", "label": "Clock" },
+        { "value": "checkmark", "label": "Checkmark" },
+        { "value": "check-circle", "label": "Check Circle" },
+        { "value": "shield", "label": "Shield" },
+        { "value": "offer", "label": "Offer" }
+      ]
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Delivery Information"
+    },
+    {
+      "type": "header",
+      "content": "INFO NOTE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_info_note",
+      "label": "Show Info Note",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "info_note",
+      "label": "Info Note Text",
+      "default": "<p>Delivery times are estimates and may vary by location. Orders placed on weekends are processed the next business day. Your mattress arrives compressed in a box — allow 24–48 hours for full expansion. Questions? Email <a href=\"mailto:Orders@theultimatesnooze.com\">Orders@theultimatesnooze.com</a>.</p>",
+      "visible_if": "{{ section.settings.show_info_note == true }}"
+    },
+    {
+      "type": "header",
+      "content": "BUTTONS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_1",
+      "label": "Show Button 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Button 1 Label",
+      "default": "START RETURN",
+      "visible_if": "{{ section.settings.show_button_1 == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link",
+      "visible_if": "{{ section.settings.show_button_1 == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_1_style",
+      "label": "Button 1 Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button_1 == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_2",
+      "label": "Show Button 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Button 2 Label",
+      "default": "SEE POLICIES",
+      "visible_if": "{{ section.settings.show_button_2 == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link",
+      "visible_if": "{{ section.settings.show_button_2 == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_2_style",
+      "label": "Button 2 Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button_2 == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "heading_color",
+      "label": "Section Heading Color"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "text_color",
+      "label": "Section Text Color"
+    },
+    {
+      "type": "header",
+      "content": "PANEL COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "panel_bg_color",
+      "label": "Panel Background",
+      "default": "#F4EFE8"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "panel_border_color",
+      "label": "Panel Border",
+      "default": "rgba(97, 57, 22, 0.15)"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "panel_heading_color",
+      "label": "Panel Heading Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "panel_icon_color",
+      "label": "Panel Icon Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "column_title_color",
+      "label": "Column Title Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "column_item_color",
+      "label": "Column Item Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "column_item_icon_color",
+      "label": "Column Item Icon Color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "INFO NOTE COLORS"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "note_bg_color",
+      "label": "Note Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "note_border_color",
+      "label": "Note Border",
+      "default": "rgba(97, 57, 22, 0.12)"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "note_text_color",
+      "label": "Note Text Color",
+      "default": "#613916"
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "delivery_column",
+      "name": "Delivery Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column Title",
+          "default": "Mattress Orders"
+        },
+        {
+          "type": "header",
+          "content": "Item 1"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "Text",
+          "default": "Processing Time: 3–5 Business days"
+        },
+        {
+          "type": "checkbox",
+          "id": "item_1_use_custom_icon",
+          "label": "Use Custom Icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "item_1_icon",
+          "label": "Icon",
+          "default": "clock",
+          "visible_if": "{{ block.settings.item_1_use_custom_icon != true }}",
+          "options": [
+            { "value": "clock", "label": "Clock" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check", "label": "Check" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "offer", "label": "Offer" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_custom_icon",
+          "label": "Custom Icon",
+          "visible_if": "{{ block.settings.item_1_use_custom_icon == true }}"
+        },
+        {
+          "type": "header",
+          "content": "Item 2"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "Text",
+          "default": "Mattress Delivery: 10–14 Business days"
+        },
+        {
+          "type": "checkbox",
+          "id": "item_2_use_custom_icon",
+          "label": "Use Custom Icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "item_2_icon",
+          "label": "Icon",
+          "default": "checkmark",
+          "visible_if": "{{ block.settings.item_2_use_custom_icon != true }}",
+          "options": [
+            { "value": "clock", "label": "Clock" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check", "label": "Check" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "offer", "label": "Offer" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_custom_icon",
+          "label": "Custom Icon",
+          "visible_if": "{{ block.settings.item_2_use_custom_icon == true }}"
+        },
+        {
+          "type": "header",
+          "content": "Item 3"
+        },
+        {
+          "type": "text",
+          "id": "item_3_text",
+          "label": "Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "item_3_use_custom_icon",
+          "label": "Use Custom Icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "item_3_icon",
+          "label": "Icon",
+          "default": "checkmark",
+          "visible_if": "{{ block.settings.item_3_use_custom_icon != true }}",
+          "options": [
+            { "value": "clock", "label": "Clock" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check", "label": "Check" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "offer", "label": "Offer" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "item_3_custom_icon",
+          "label": "Custom Icon",
+          "visible_if": "{{ block.settings.item_3_use_custom_icon == true }}"
+        },
+        {
+          "type": "header",
+          "content": "Item 4"
+        },
+        {
+          "type": "text",
+          "id": "item_4_text",
+          "label": "Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "item_4_use_custom_icon",
+          "label": "Use Custom Icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "item_4_icon",
+          "label": "Icon",
+          "default": "checkmark",
+          "visible_if": "{{ block.settings.item_4_use_custom_icon != true }}",
+          "options": [
+            { "value": "clock", "label": "Clock" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check", "label": "Check" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "offer", "label": "Offer" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "item_4_custom_icon",
+          "label": "Custom Icon",
+          "visible_if": "{{ block.settings.item_4_use_custom_icon == true }}"
+        },
+        {
+          "type": "header",
+          "content": "Item 5"
+        },
+        {
+          "type": "text",
+          "id": "item_5_text",
+          "label": "Text"
+        },
+        {
+          "type": "checkbox",
+          "id": "item_5_use_custom_icon",
+          "label": "Use Custom Icon",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "item_5_icon",
+          "label": "Icon",
+          "default": "checkmark",
+          "visible_if": "{{ block.settings.item_5_use_custom_icon != true }}",
+          "options": [
+            { "value": "clock", "label": "Clock" },
+            { "value": "checkmark", "label": "Checkmark" },
+            { "value": "check", "label": "Check" },
+            { "value": "check-circle", "label": "Check Circle" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "offer", "label": "Offer" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "item_5_custom_icon",
+          "label": "Custom Icon",
+          "visible_if": "{{ block.settings.item_5_use_custom_icon == true }}"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-contact-cta.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "delivery_column",
+          "settings": {
+            "title": "Mattress Orders",
+            "item_1_text": "Processing Time: 3–5 Business days",
+            "item_1_icon": "clock",
+            "item_2_text": "Mattress Delivery: 10–14 Business days",
+            "item_2_icon": "checkmark"
+          }
+        },
+        {
+          "type": "delivery_column",
+          "settings": {
+            "title": "Accessory Orders",
+            "item_1_text": "Processing Time: 1–3 Business days",
+            "item_1_icon": "clock",
+            "item_2_text": "Delivery: 5–7 Business days",
+            "item_2_icon": "checkmark"
+          }
+        },
+        {
+          "type": "delivery_column",
+          "settings": {
+            "title": "White Glove Delivery",
+            "item_1_text": "Scheduling: Within 5 Business days",
+            "item_1_icon": "clock",
+            "item_2_text": "In-Home Setup: As scheduled",
+            "item_2_icon": "checkmark"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

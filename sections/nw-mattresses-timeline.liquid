@@ -6,6 +6,7 @@
   assign nw_shell_selector = '.nw-mattresses-timeline.section-' | append: section.id
   assign timeline_main_alt = section.settings.main_image.alt | default: section.settings.heading
   assign timeline_main_mobile_alt = section.settings.main_image_mobile.alt | default: section.settings.heading
+  assign layer_blocks = section.blocks | where: 'type', 'layer'
 -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct' %}
 <style>
@@ -24,6 +25,24 @@
   .nw-mattresses-timeline.section-{{ section.id }} .nw-mattresses-timeline__card-desc {
     {% if section.settings.card_desc_color != blank %}
       color: {{ section.settings.card_desc_color }};
+    {% endif %}
+  }
+
+  .nw-mattresses-timeline.section-{{ section.id }} .nw-mattresses-timeline__materials {
+    {% if section.settings.materials_bg != blank %}
+      background-color: {{ section.settings.materials_bg }};
+    {% endif %}
+  }
+
+  .nw-mattresses-timeline.section-{{ section.id }} .nw-mattresses-timeline__materials-title {
+    {% if section.settings.materials_title_color != blank %}
+      color: {{ section.settings.materials_title_color }};
+    {% endif %}
+  }
+
+  .nw-mattresses-timeline.section-{{ section.id }} .nw-mattresses-timeline__materials-text {
+    {% if section.settings.materials_text_color != blank %}
+      color: {{ section.settings.materials_text_color }};
     {% endif %}
   }
 </style>
@@ -98,9 +117,9 @@
             </div>
           {%- endif -%}
 
-          {%- if section.blocks.size > 0 -%}
+          {%- if layer_blocks.size > 0 -%}
             <div class="nw-mattresses-timeline__timeline">
-              {%- for block in section.blocks -%}
+              {%- for block in layer_blocks -%}
                 <div class="nw-mattresses-timeline__layer-item" {{ block.shopify_attributes }}>
                   <div class="nw-mattresses-timeline__stepper" aria-hidden="true">
                     {%- unless forloop.first -%}
@@ -207,6 +226,36 @@
               </div>
             </div>
           {%- endif -%}
+
+          {%- if section.settings.show_materials and section.settings.materials_items != blank -%}
+            {%- assign materials_lines = section.settings.materials_items | newline_to_br | split: '<br />' -%}
+            <div class="nw-mattresses-timeline__materials">
+              {%- if section.settings.materials_heading_line_1 != blank or section.settings.materials_heading_line_2 != blank -%}
+                <div class="nw-mattresses-timeline__materials-title">
+                  {%- if section.settings.materials_heading_line_1 != blank -%}
+                    <p class="nw-mattresses-timeline__materials-title-line">{{ section.settings.materials_heading_line_1 }}</p>
+                  {%- endif -%}
+                  {%- if section.settings.materials_heading_line_2 != blank -%}
+                    <p class="nw-mattresses-timeline__materials-title-line">{{ section.settings.materials_heading_line_2 }}</p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              <div class="nw-mattresses-timeline__materials-grid">
+                {%- for material_label in materials_lines -%}
+                  {%- assign material_label = material_label | strip -%}
+                  {%- if material_label != blank -%}
+                    <div class="nw-mattresses-timeline__materials-item">
+                      <span class="nw-mattresses-timeline__materials-icon" aria-hidden="true">
+                        {% render 'nw-icon', icon: 'cross-circle' %}
+                      </span>
+                      <span class="nw-mattresses-timeline__materials-text">{{ material_label | escape }}</span>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
         </div>
       </div>
     </div>
@@ -287,55 +336,120 @@
       "type": "text",
       "id": "comparison_title",
       "label": "Comparison Title",
-      "default": "Long-Term Value Comparison"
+      "default": "Long-Term Value Comparison",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "text",
       "id": "foam_brand",
       "label": "Competitor Brand Name",
-      "default": "Popular Foam Brands"
+      "default": "Popular Foam Brands",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "text",
       "id": "foam_price",
       "label": "Competitor Price Per Night",
-      "default": "$1.02 / night"
+      "default": "$1.02 / night",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "text",
       "id": "foam_note",
       "label": "Competitor Note",
-      "default": "Replaced every 10 years"
+      "default": "Replaced every 10 years",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "image_picker",
       "id": "snooze_logo",
-      "label": "Snooze Logo (Optional Image)"
+      "label": "Snooze Logo (Optional Image)",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "text",
       "id": "snooze_brand",
       "label": "Snooze Brand Name",
-      "default": "ORGANIC SNOOZE"
+      "default": "ORGANIC SNOOZE",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "text",
       "id": "snooze_price",
       "label": "Snooze Price Per Night",
-      "default": "$0.16 / night"
+      "default": "$0.16 / night",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "text",
       "id": "snooze_note",
       "label": "Snooze Note",
-      "default": "Built to last 30 years"
+      "default": "Built to last 30 years",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
     },
     {
       "type": "color",
       "alpha": true,
       "id": "snooze_bg",
       "label": "Snooze Card Background",
-      "default": "#878735"
+      "default": "#878735",
+      "visible_if": "{{ section.settings.show_comparison == true }}"
+    },
+    {
+      "type": "header",
+      "content": "MATERIALS WE LEAVE OUT"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_materials",
+      "label": "Show Materials Module",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "materials_heading_line_1",
+      "label": "Materials Heading Line 1",
+      "default": "COMMON SYNTHETIC MATERIALS",
+      "visible_if": "{{ section.settings.show_materials == true }}"
+    },
+    {
+      "type": "text",
+      "id": "materials_heading_line_2",
+      "label": "Materials Heading Line 2",
+      "default": "Purposely WE LEAVE OUT",
+      "visible_if": "{{ section.settings.show_materials == true }}"
+    },
+    {
+      "type": "textarea",
+      "id": "materials_items",
+      "label": "Material Labels",
+      "info": "One label per line. Each line appears as a separate item with the cross icon.",
+      "default": "No Fiberglass\nNo Plastic Fibers\nNo Polyurethane\nNo Formaldehyde\nNo Toxic Glues\nNo Off-Gassing",
+      "visible_if": "{{ section.settings.show_materials == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "materials_bg",
+      "label": "Materials Box Background",
+      "default": "#FFFCF0",
+      "visible_if": "{{ section.settings.show_materials == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "materials_title_color",
+      "label": "Materials Heading Color",
+      "default": "#B61919",
+      "visible_if": "{{ section.settings.show_materials == true }}"
+    },
+    {
+      "type": "color",
+      "alpha": true,
+      "id": "materials_text_color",
+      "label": "Materials Item Text Color",
+      "default": "#613916",
+      "visible_if": "{{ section.settings.show_materials == true }}"
     },
     {
       "type": "header",
