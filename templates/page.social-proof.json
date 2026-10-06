@@ -53,6 +53,7 @@
         "button_text": "Find Your Mattress",
         "button_link": "",
         "button_style": "primary",
+        "show_rating_bottom": false,
         "show_rating": false,
         "star_rating": 5,
         "rating_text": "98% Satisfactory rating among sleepers",
@@ -67,6 +68,7 @@
         "tag_text_color": "#fffcf0",
         "tag_bg_color": "#ffffff33",
         "rating_text_color": "#ffffff",
+        "eyebrow_color": "#613916",
         "star_color": "#e57b1e",
         "star_inactive_color": "#ffffff4d",
         "button_bg_color": "#a96b3e",
@@ -91,7 +93,7 @@
         "logo_3eNMfF": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/marquee-3.png",
+            "image": "shopify://shop_images/Inc_Mens_Health_Logo_1.png",
             "svg_code": "",
             "link": ""
           }
@@ -107,7 +109,7 @@
         "logo_dgWiWR": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/marquee-1.png",
+            "image": "shopify://shop_images/Inc_Mens_Health_Logo_5.png",
             "svg_code": "",
             "link": ""
           }
@@ -1338,6 +1340,8 @@
           "settings": {
             "icon_type": "seal",
             "image": "shopify://shop_images/Vector_3.svg",
+            "icon_link": "",
+            "icon_link_open_new_tab": false,
             "seal_ring": "",
             "seal_number": "",
             "seal_label": "",
@@ -1350,6 +1354,8 @@
           "settings": {
             "icon_type": "logo",
             "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
+            "icon_link": "",
+            "icon_link_open_new_tab": false,
             "seal_ring": "",
             "seal_number": "",
             "seal_label": "",
@@ -1465,6 +1471,7 @@
         "open_first_faq": true,
         "initial_faq_count": 6,
         "more_label": "SEE MORE FAQ’S",
+        "less_label": "SEE LESS FAQ'S",
         "contact_heading": "Speak With Our Live Sleep Experts.",
         "show_call_btn": true,
         "call_label": "CALL (443) 333-1213",
