@@ -657,11 +657,11 @@
         "arrow_bg_color": "#563822",
         "arrow_icon_color": "#FFFFFF",
         "show_button": true,
-        "button_text": "Watch Gary Break Down the Science",
-        "button_link": "",
+        "button_text": "",
+        "button_link": "shopify://pages/faqs",
         "button_style": "primary",
         "button_bg_color": "#a96b3e",
-        "button_text_color": "#ffffff",
+        "button_text_color": "#563822",
         "bg_type": "none",
         "bg_color": "#4e2f14",
         "bg_image_opacity": 100,
@@ -1608,17 +1608,17 @@
       ],
       "name": "NW Review Videos",
       "settings": {
-        "show_rating": false,
+        "show_rating": true,
         "star_rating": 5,
         "star_color": "#e57b1e",
         "star_color_inactive": "#d1d5db",
-        "eyebrow": "",
+        "eyebrow": "Trusted by 10,000+ Sleepers",
         "heading": "Real Sleepers. Real Results. Real Recovery",
         "subheading": "<p>Meet the people who switched to clean sleep</p>",
-        "heading_color": "",
-        "description_color": "",
-        "eyebrow_color": "",
-        "text_color": "",
+        "heading_color": "#563822",
+        "description_color": "#563822",
+        "eyebrow_color": "#563822",
+        "text_color": "#563822",
         "card_style": "style-1",
         "enable_video_loop": true,
         "show_arrows": true,
@@ -1690,7 +1690,7 @@
         "eyebrow_color": "",
         "text_color": "",
         "show_btn": true,
-        "btn_label": "Start My 100-Night Trial",
+        "btn_label": "SHOP ORGANIC MATTRESS",
         "btn_link": "shopify://collections/mattress",
         "btn_style": "primary",
         "btn_bg_color": "",
@@ -1706,119 +1706,144 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_collection_list_D3thQD": {
-      "type": "nw-collection-list",
+    "nw_faq_yTwkby": {
+      "type": "nw-faq",
       "blocks": {
-        "collection_qTN6y3": {
-          "type": "collection",
+        "faq_item_WGfmDX": {
+          "type": "faq_item",
           "settings": {
-            "collection": "accessories",
-            "custom_title": "Bedding",
-            "custom_image": "shopify://shop_images/SnapInsta.to_670318428_17874444948586195_2339425393624769511_n_1_1_2.png",
-            "custom_link": ""
+            "question": "What's inside the mattress?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
           }
         },
-        "collection_hXbnKD": {
-          "type": "collection",
+        "faq_item_nC87iE": {
+          "type": "faq_item",
           "settings": {
-            "collection": "family-organic-mattress-and-bedding-for-kids",
-            "custom_title": "Kids",
-            "custom_image": "shopify://shop_images/category-2_1.png",
-            "custom_link": ""
+            "question": "What's NOT in it? (foams, adhesives, flame retardants, fiberglass, VOCs)",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
           }
         },
-        "collection_7Uazxi": {
-          "type": "collection",
+        "faq_item_iWNDG8": {
+          "type": "faq_item",
           "settings": {
-            "collection": "adjustable-bases-1",
-            "custom_title": "Bases",
-            "custom_image": "shopify://shop_images/category-3_1.png",
-            "custom_link": ""
+            "question": "How firm is the Pillow Top vs. the Pure?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
           }
         },
-        "collection_YqhnK7": {
-          "type": "collection",
+        "faq_item_6hfCAD": {
+          "type": "faq_item",
           "settings": {
-            "collection": "bundles-ultimate-sleep-optimization-system",
-            "custom_title": "Bundle & Save",
-            "custom_image": "shopify://shop_images/category-4_1.png",
-            "custom_link": ""
+            "question": "How does the 100-night trial and break-in work?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
           }
         },
-        "trust_badge_PpChz4": {
-          "type": "trust_badge",
+        "faq_item_UNfGA9": {
+          "type": "faq_item",
           "settings": {
-            "use_custom_icon": true,
-            "icon": "moneyback",
-            "custom_icon": "shopify://shop_images/moneyback.png",
-            "text": "100-Night Risk-Free Trial"
+            "question": "How long do shipping and White Glove Delivery take?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
           }
         },
-        "trust_badge_xVgFp7": {
-          "type": "trust_badge",
+        "faq_item_6XfxU8": {
+          "type": "faq_item",
           "settings": {
-            "use_custom_icon": true,
-            "icon": "shield",
-            "custom_icon": "shopify://shop_images/svg642.png",
-            "text": "30-Year Warranty"
+            "question": "Is the collection HSA/FSA eligible, and how does Affirm work?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
           }
         },
-        "trust_badge_Exczn6": {
-          "type": "trust_badge",
+        "faq_item_7qDamM": {
+          "type": "faq_item",
           "settings": {
-            "use_custom_icon": true,
-            "icon": "shipping",
-            "custom_icon": "shopify://shop_images/Frame_7.png",
-            "text": "Free Shipping"
+            "question": "What is SnoozeSense, and is it available yet?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
           }
         },
-        "trust_badge_tePcgJ": {
-          "type": "trust_badge",
+        "faq_item_XUTpai": {
+          "type": "faq_item",
           "settings": {
-            "use_custom_icon": true,
-            "icon": "financing",
-            "custom_icon": "shopify://shop_images/Frame_8.png",
-            "text": "0% Interest Financing Options"
+            "question": "What is Gary Brecka's role in the collection?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_4bFYRr": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's inside the mattress?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_maLwDi": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's NOT in it? (foams, adhesives, flame retardants, fiberglass, VOCs)",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_AqUG8Y": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What do GOTS and GOLS certifications mean?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        },
+        "faq_item_PGtgGx": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How firm is the Pillow Top vs. the Pure?",
+            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
           }
         }
       },
       "block_order": [
-        "collection_qTN6y3",
-        "collection_hXbnKD",
-        "collection_7Uazxi",
-        "collection_YqhnK7",
-        "trust_badge_PpChz4",
-        "trust_badge_xVgFp7",
-        "trust_badge_Exczn6",
-        "trust_badge_tePcgJ"
+        "faq_item_WGfmDX",
+        "faq_item_nC87iE",
+        "faq_item_iWNDG8",
+        "faq_item_6hfCAD",
+        "faq_item_UNfGA9",
+        "faq_item_6XfxU8",
+        "faq_item_7qDamM",
+        "faq_item_XUTpai",
+        "faq_item_4bFYRr",
+        "faq_item_maLwDi",
+        "faq_item_AqUG8Y",
+        "faq_item_PGtgGx"
       ],
-      "name": "t:sections.nw-collection-list.name",
+      "name": "t:sections.nw-faq.name",
       "settings": {
         "show_rating": false,
         "star_rating": 5,
         "star_color": "",
         "star_color_inactive": "",
         "eyebrow": "",
-        "heading": "Explore Also",
+        "heading": "Frequently Asked Questions",
         "subheading": "",
         "heading_color": "",
         "description_color": "",
         "eyebrow_color": "",
         "text_color": "",
-        "no_loop": true,
-        "show_arrows": false,
-        "show_dots": true,
-        "show_fade": true,
-        "enable_autoplay": false,
-        "autoplay_delay": 4,
-        "show_button": true,
-        "button_label": "SHOP ALL",
-        "button_link": "#",
-        "button_style": "primary",
-        "show_features": true,
+        "show_search": true,
+        "search_placeholder": "What can we help with?",
+        "open_first_faq": false,
+        "initial_faq_count": 9,
+        "more_label": "See More FAQ's",
+        "less_label": "SEE LESS FAQ'S",
+        "contact_heading": "Speak with Our Live Sleep Experts.",
+        "show_call_btn": true,
+        "call_label": "CALL (443) 333-1213",
+        "call_link": "tel:+14433331213",
+        "call_style": "primary",
+        "show_text_btn": true,
+        "text_label": "TEXT US",
+        "text_link": "sms:+14433331213",
+        "text_style": "outline",
+        "show_quiz_btn": true,
+        "quiz_label": "SLEEP QUIZ",
+        "quiz_link": "shopify://pages/quiz",
+        "quiz_style": "outline",
         "bg_type": "none",
-        "bg_color": "",
-        "bg_image_opacity": 100,
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_opacity": 16,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -1892,6 +1917,7 @@
         "tab_McAFhy",
         "tab_qgCWN8"
       ],
+      "disabled": true,
       "name": "NW Collection Tabs",
       "settings": {
         "show_rating_header": false,
@@ -2044,152 +2070,119 @@
         "icon_color": "#432818"
       }
     },
-    "nw_faq_yTwkby": {
-      "type": "nw-faq",
+    "nw_collection_list_D3thQD": {
+      "type": "nw-collection-list",
       "blocks": {
-        "faq_item_WGfmDX": {
-          "type": "faq_item",
+        "collection_qTN6y3": {
+          "type": "collection",
           "settings": {
-            "question": "What's inside the mattress?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "collection": "accessories",
+            "custom_title": "Bedding",
+            "custom_image": "shopify://shop_images/SnapInsta.to_670318428_17874444948586195_2339425393624769511_n_1_1_2.png",
+            "custom_link": ""
           }
         },
-        "faq_item_nC87iE": {
-          "type": "faq_item",
+        "collection_hXbnKD": {
+          "type": "collection",
           "settings": {
-            "question": "What's NOT in it? (foams, adhesives, flame retardants, fiberglass, VOCs)",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "collection": "family-organic-mattress-and-bedding-for-kids",
+            "custom_title": "Kids",
+            "custom_image": "shopify://shop_images/category-2_1.png",
+            "custom_link": ""
           }
         },
-        "faq_item_zXF3Lf": {
-          "type": "faq_item",
+        "collection_7Uazxi": {
+          "type": "collection",
           "settings": {
-            "question": "What do GOTS and GOLS certifications mean?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "collection": "adjustable-bases-1",
+            "custom_title": "Bases",
+            "custom_image": "shopify://shop_images/category-3_1.png",
+            "custom_link": ""
           }
         },
-        "faq_item_iWNDG8": {
-          "type": "faq_item",
+        "collection_YqhnK7": {
+          "type": "collection",
           "settings": {
-            "question": "How firm is the Pillow Top vs. the Pure?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "collection": "bundles-ultimate-sleep-optimization-system",
+            "custom_title": "Bundle & Save",
+            "custom_image": "shopify://shop_images/Frame_48099857.jpg",
+            "custom_link": ""
           }
         },
-        "faq_item_6hfCAD": {
-          "type": "faq_item",
+        "trust_badge_PpChz4": {
+          "type": "trust_badge",
           "settings": {
-            "question": "How does the 100-night trial and break-in work?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "use_custom_icon": true,
+            "icon": "moneyback",
+            "custom_icon": "shopify://shop_images/moneyback.png",
+            "text": "100-Night Risk-Free Trial"
           }
         },
-        "faq_item_UNfGA9": {
-          "type": "faq_item",
+        "trust_badge_xVgFp7": {
+          "type": "trust_badge",
           "settings": {
-            "question": "How long do shipping and White Glove Delivery take?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "use_custom_icon": true,
+            "icon": "shield",
+            "custom_icon": "shopify://shop_images/svg642.png",
+            "text": "30-Year Warranty"
           }
         },
-        "faq_item_6XfxU8": {
-          "type": "faq_item",
+        "trust_badge_Exczn6": {
+          "type": "trust_badge",
           "settings": {
-            "question": "Is the collection HSA/FSA eligible, and how does Affirm work?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "use_custom_icon": true,
+            "icon": "shipping",
+            "custom_icon": "shopify://shop_images/Frame_7.png",
+            "text": "Free Shipping"
           }
         },
-        "faq_item_7qDamM": {
-          "type": "faq_item",
+        "trust_badge_tePcgJ": {
+          "type": "trust_badge",
           "settings": {
-            "question": "What is SnoozeSense, and is it available yet?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
-          }
-        },
-        "faq_item_XUTpai": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What is Gary Brecka's role in the collection?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
-          }
-        },
-        "faq_item_4bFYRr": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What's inside the mattress?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
-          }
-        },
-        "faq_item_maLwDi": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What's NOT in it? (foams, adhesives, flame retardants, fiberglass, VOCs)",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
-          }
-        },
-        "faq_item_AqUG8Y": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What do GOTS and GOLS certifications mean?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
-          }
-        },
-        "faq_item_PGtgGx": {
-          "type": "faq_item",
-          "settings": {
-            "question": "How firm is the Pillow Top vs. the Pure?",
-            "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            "use_custom_icon": true,
+            "icon": "financing",
+            "custom_icon": "shopify://shop_images/Frame_8.png",
+            "text": "0% Interest Financing Options"
           }
         }
       },
       "block_order": [
-        "faq_item_WGfmDX",
-        "faq_item_nC87iE",
-        "faq_item_zXF3Lf",
-        "faq_item_iWNDG8",
-        "faq_item_6hfCAD",
-        "faq_item_UNfGA9",
-        "faq_item_6XfxU8",
-        "faq_item_7qDamM",
-        "faq_item_XUTpai",
-        "faq_item_4bFYRr",
-        "faq_item_maLwDi",
-        "faq_item_AqUG8Y",
-        "faq_item_PGtgGx"
+        "collection_qTN6y3",
+        "collection_hXbnKD",
+        "collection_7Uazxi",
+        "collection_YqhnK7",
+        "trust_badge_PpChz4",
+        "trust_badge_xVgFp7",
+        "trust_badge_Exczn6",
+        "trust_badge_tePcgJ"
       ],
-      "name": "t:sections.nw-faq.name",
+      "name": "t:sections.nw-collection-list.name",
       "settings": {
         "show_rating": false,
         "star_rating": 5,
         "star_color": "",
         "star_color_inactive": "",
         "eyebrow": "",
-        "heading": "Frequently Asked Questions",
+        "heading": "Explore Also",
         "subheading": "",
         "heading_color": "",
         "description_color": "",
         "eyebrow_color": "",
         "text_color": "",
-        "show_search": true,
-        "search_placeholder": "What can we help with?",
-        "open_first_faq": false,
-        "initial_faq_count": 9,
-        "more_label": "See More FAQ's",
-        "less_label": "SEE LESS FAQ'S",
-        "contact_heading": "Speak with Our Live Sleep Experts.",
-        "show_call_btn": true,
-        "call_label": "CALL (443) 333-1213",
-        "call_link": "tel:+14433331213",
-        "call_style": "primary",
-        "show_text_btn": true,
-        "text_label": "TEXT US",
-        "text_link": "sms:+14433331213",
-        "text_style": "outline",
-        "show_quiz_btn": true,
-        "quiz_label": "SLEEP QUIZ",
-        "quiz_link": "shopify://pages/quiz",
-        "quiz_style": "outline",
+        "no_loop": true,
+        "show_arrows": false,
+        "show_dots": true,
+        "show_fade": true,
+        "enable_autoplay": false,
+        "autoplay_delay": 4,
+        "show_button": true,
+        "button_label": "SHOP ALL",
+        "button_link": "#",
+        "button_style": "primary",
+        "show_features": true,
         "bg_type": "none",
-        "bg_color": "#ffffff",
-        "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_image_opacity": 16,
+        "bg_color": "",
+        "bg_image_opacity": 100,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
@@ -2216,9 +2209,9 @@
     "nw_guarantee_offer_xp6LVr",
     "nw_review_video_3PR6yc",
     "nw_guarantee_3k3mwd",
-    "nw_collection_list_D3thQD",
+    "nw_faq_yTwkby",
     "nw_collection_tabs_TNLRd3",
     "nw_marquee_v2_HpDNpk",
-    "nw_faq_yTwkby"
+    "nw_collection_list_D3thQD"
   ]
 }
