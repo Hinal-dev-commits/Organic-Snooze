@@ -13,7 +13,7 @@
   flex: 1 1 auto;
   min-width: 0;
   max-width: 640px;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 24px;
   line-height: 1.33;
@@ -29,7 +29,7 @@
   border-radius: 8px;
   padding: 19px 32px;
   opacity: 1;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
   font-weight: 700;
   font-size: 16px;
   line-height: 100%;
@@ -40,27 +40,27 @@
 
 .nw-cta-partner-main .nw-cta-partner__button {
   flex: 0 0 auto;
-  background-color: #533c16 ;
-  color: #fff ;
+  background-color: var(--primary-color, #613916);
+  color: #fff;
 }
 .nw-cta-partner-main .nw-cta-partner__button:hover{
   background-color: #ffffff;
-  color: #533c16;
+  color: var(--primary-color, #613916);
 }
 .nw-cta-partner-main .nw-cta-partner__button:hover svg path{
-  fill: #533c16;
+  fill: var(--primary-color, #613916);
 }
 .nw-cta-partner-main .nw-cta-partner__button.button--secondary{
   background-color: #fff !important;
-  color: #533c16 !important;
+  color: var(--primary-color, #613916) !important;
   border: none !important;
 }
 .nw-cta-partner-main .nw-cta-partner__button.button--secondary:hover{
   color: #fff !important;
-  background: #533c16 !important;
+  background: var(--primary-color, #613916) !important;
 }
 .nw-cta-partner-main .nw-cta-partner__button.button--secondary .nw-cta-partner__button-icon svg path{
-  fill: #533c16;
+  fill: var(--primary-color, #613916);
 }
 .nw-cta-partner-main .nw-cta-partner__button.button--secondary:hover .nw-cta-partner__button-icon svg path{
   fill: #fff;
@@ -84,13 +84,13 @@
 
   .nw-cta-partner-main .nw-cta-partner__heading {
     max-width: none;
-    font-family: 'Optima', sans-serif;
+    font-family: var(--font-heading-family);
     font-size: 20px;
     line-height: 1.1;
   }
 
   .nw-cta-partner-main:has(.nw-cta-partner__button:not(.button--secondary)) .nw-cta-partner__heading {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading-family);
     font-size: 16px;
     line-height: 1.375;
   }

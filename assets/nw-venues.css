@@ -21,22 +21,22 @@
   letter-spacing: 1.32px;
   line-height: 1.2;
   text-transform: uppercase;
-  color: #70804a;
-  font-family: 'DM Sans', sans-serif;
+  color: var(--quaternary-color, #70804a);
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-venues-main .nw-venues__heading {
   margin: 0 0 16px;
   max-width: 580px;
-  font-family: 'Optima', sans-serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 44px;
   line-height: 1.23;
-  color: var(--nw-venues-body, #533c16);
+  color: var(--nw-venues-body, var(--primary-color, #613916));
 }
 
 .nw-venues-main .nw-venues__heading strong {
-  color: var(--nw-venues-body, #533c16);
+  color: var(--nw-venues-body, var(--primary-color, #613916));
   font-weight: inherit;
 }
 
@@ -45,8 +45,8 @@
   max-width: 830px;
   font-size: 18px;
   line-height: 25px;
-  color: var(--nw-venues-body, #533c16);
-  font-family: 'DM Sans', sans-serif;
+  color: var(--nw-venues-body, var(--primary-color, #613916));
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-venues-main .nw-venues__description > *:first-child {
@@ -145,7 +145,7 @@
 
 .nw-venues-main .nw-venues__stat-value {
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 32px;
   line-height: 1.1;
@@ -156,8 +156,8 @@
   margin: 0;
   font-size: 14px;
   line-height: 19px;
-  color: var(--nw-venues-body, #533c16);
-  font-family: 'DM Sans', sans-serif;
+  color: var(--nw-venues-body, var(--primary-color, #613916));
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-venues-main .nw-venues__stat-source {
@@ -165,7 +165,7 @@
   font-size: 12px;
   line-height: 1.4;
   color: #808080;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-venues-main .nw-venues__divider {
@@ -180,7 +180,7 @@
   width: 100%;
   font-size: 18px;
   line-height: 22px;
-  color: var(--nw-venues-body, #533c16);
+  color: var(--nw-venues-body, var(--primary-color, #613916));
 }
 
 .nw-venues-main .nw-venues__benefits-text ul {
@@ -204,7 +204,7 @@
   flex: 0 0 auto;
   margin-top: 0px;
   line-height: 1.2;
-  color: #70804a;
+  color: var(--quaternary-color, #70804a);
 }
 
 .nw-venues-main .nw-venues__benefits-text p {

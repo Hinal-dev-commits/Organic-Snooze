@@ -22,8 +22,8 @@
   letter-spacing: 1.32px;
   line-height: 1.2;
   text-transform: uppercase;
-  color: #70804a;
-  font-family: 'DM Sans', sans-serif;
+  color: var(--quaternary-color, #70804a);
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 .nw-retail-partners__header .rte > *:first-child{
   margin-top: 0px;
@@ -32,7 +32,7 @@
   max-width: 790px;
   font-size: 18px;
   line-height: 25px;
-  color: var(--nw-retail-body, #533c16);
+  color: var(--nw-retail-body, var(--primary-color, #613916));
 }
 .nw-retail-partners__header .rte p{
   max-width: unset;
@@ -40,15 +40,15 @@
 .nw-retail-partners__heading{
   margin-bottom: 16px;
   max-width: 580px;
-  font-family: 'Optima', sans-serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 44px;
   line-height: 1.23;
-  color: var(--nw-retail-body, #533c16);
+  color: var(--nw-retail-body, var(--primary-color, #613916));
 }
 
 .nw-retail-partners-main .nw-retail-partners__description{
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 .nw-retail-partners-main .nw-retail-partners__description a {
   color: inherit;
@@ -77,7 +77,7 @@
 
 .nw-retail-partners-main .nw-retail-partners__stat-value {
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 36px;
   line-height: 1.35;
@@ -88,7 +88,7 @@
   margin: 0;
   font-size: 16px;
   line-height: 19px;
-  color: var(--nw-retail-body, #533c16);
+  color: var(--nw-retail-body, var(--primary-color, #613916));
 }
 
 .nw-retail-partners-main .nw-retail-partners__body {
@@ -110,11 +110,11 @@
 
 .nw-retail-partners-main .nw-retail-partners__benefits-heading {
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 24px;
   line-height: 1.36;
-  color: var(--nw-retail-body, #533c16);
+  color: var(--nw-retail-body, var(--primary-color, #613916));
   text-transform: unset;
 }
 
@@ -130,7 +130,7 @@
   width: 100%;
   font-size: 18px;
   line-height: 22px;
-  color: var(--nw-retail-body, #533c16);
+  color: var(--nw-retail-body, var(--primary-color, #613916));
   text-align: left;
 }
 
@@ -156,7 +156,7 @@
   width: 18px;
   height: 18px;
   margin-top: 0px;
-  background-color: #70804a;
+  background-color: var(--quaternary-color, #70804a);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M8 1.2l1.76 3.56 3.93.57-2.84 2.77.67 3.91L8 10.16l-3.52 1.85.67-3.91L2.31 5.33l3.93-.57L8 1.2z'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='M8 1.2l1.76 3.56 3.93.57-2.84 2.77.67 3.91L8 10.16l-3.52 1.85.67-3.91L2.31 5.33l3.93-.57L8 1.2z'/%3E%3C/svg%3E") center / contain no-repeat;
 }

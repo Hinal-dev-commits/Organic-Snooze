@@ -24,17 +24,17 @@
   letter-spacing: 1.54px;
   line-height: 1.2;
   text-transform: uppercase;
-  color: #70804a;
-  font-family: 'DM Sans', sans-serif;
+  color: var(--quaternary-color, #70804a);
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-availability-main .nw-availability__heading {
   margin: 0 0 24px;
-  font-family: 'Optima', sans-serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 52px;
   line-height: 1.19;
-  color: var(--nw-availability-body, #533c16);
+  color: var(--nw-availability-body, var(--primary-color, #613916));
   max-width: 380px;
   text-align: left;
 }
@@ -44,8 +44,8 @@
   max-width: 560px;
   font-size: 18px;
   line-height: 25px;
-  font-family: 'DM Sans', sans-serif;
-  color: var(--nw-availability-body, #533c16);
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
+  color: var(--nw-availability-body, var(--primary-color, #613916));
   text-align: left;
 }
 
@@ -105,7 +105,7 @@
   gap: 24px;
   padding: 48px;
   border-radius: 16px;
-  background: var(--nw-availability-card-bg, #533c16);
+  background: var(--nw-availability-card-bg, var(--primary-color, #613916));
   color: var(--nw-availability-card-text, #ffffff);
   text-align: center;
   max-width: 560px;
@@ -113,7 +113,7 @@
 
 .nw-availability-main .nw-availability__card-heading {
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 28px;
   line-height: 1.29;
@@ -152,7 +152,7 @@
   white-space: normal;
   border-radius: 10px;
   background-color: #fff;
-  color: #533c16;
+  color: var(--primary-color, #613916);
   text-transform: none;
 }
 .nw-availability-main .nw-availability__button svg{
@@ -160,7 +160,7 @@
   height: 13px;
 }
 .nw-availability-main .nw-availability__button svg path{
-  fill: #533c16;
+  fill: var(--primary-color, #613916);
 }
 .nw-availability-main .nw-availability__button:hover svg path{
   fill: #fff;
@@ -171,7 +171,7 @@
 
 .nw-availability-main .nw-availability__card .button:hover,
 .nw-availability-main .nw-availability__card .button:focus {
-  background: #CC926A;
+  background: var(--secondary-color, #cc926a);
   color: #fff;
 }
 
@@ -185,14 +185,14 @@
 .nw-availability-main .nw-availability__card .button.button--secondary:focus {
   background: var(--nw-availability-highlight, #cc926a);
   border-color: var(--nw-availability-highlight, #cc926a);
-  color: var(--nw-availability-accent, #533c16);
+  color: var(--nw-availability-accent, var(--primary-color, #613916));
 }
 
 .nw-availability-main .nw-availability__button-label {
   display: block;
   font-size: 18px;
   font-weight: 700;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-availability-main .nw-availability__button-note {
@@ -200,7 +200,7 @@
   font-size: 14px;
   font-weight: 400;
   opacity: 0.85;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-availability-main .nw-availability__divider {
@@ -216,7 +216,7 @@
   font-size: 14px;
   line-height: 1.4;
   color: inherit;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-availability-main .nw-availability__contact {
@@ -232,7 +232,7 @@
   line-height: 1.57;
   font-weight: 500;
   color: inherit;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 .nw-availability-main .nw-availability__contact-info p{
   margin: 0px;
@@ -336,7 +336,7 @@
     padding: 0;
     gap: 0px;
     background-color: transparent;
-    color: #533c16;
+    color: var(--primary-color, #613916);
   }
 
   .nw-availability-main .nw-availability__card-heading {

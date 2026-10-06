@@ -22,22 +22,22 @@
   letter-spacing: 1.32px;
   line-height: 1.2;
   text-transform: uppercase;
-  color: #70804a;
-  font-family: 'DM Sans', sans-serif;
+  color: var(--quaternary-color, #70804a);
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
 }
 
 .nw-advantage-main .nw-advantage__heading {
   margin: 0 0 16px;
-  font-family: 'Optima', sans-serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 44px;
   line-height: 1.23;
-  color: var(--nw-advantage-body, #533c16);
+  color: var(--nw-advantage-body, var(--primary-color, #613916));
   max-width: 450px;
 }
 
 .nw-advantage-main .nw-advantage__heading strong {
-  color: var(--nw-advantage-body, #533c16);
+  color: var(--nw-advantage-body, var(--primary-color, #613916));
   font-weight: inherit;
 }
 
@@ -45,8 +45,8 @@
   margin: 0 0 16px;
   font-size: 18px;
   line-height: 25px;
-  color: var(--nw-advantage-body, #533c16);
-  font-family: 'DM Sans', sans-serif;
+  color: var(--nw-advantage-body, var(--primary-color, #613916));
+  font-family: var(--font-body-family, 'DM Sans', sans-serif);
   max-width: 760px;
 }
 .nw-advantage-main .nw-advantage__description p{
@@ -107,7 +107,7 @@
   padding: 10px;
   border-radius: 8px;
   background: var(--nw-advantage-icon-bg, rgba(112, 128, 74, 0.15));
-  color: #70804a;
+  color: var(--quaternary-color, #70804a);
   box-sizing: border-box;
 }
 
@@ -121,11 +121,11 @@
 
 .nw-advantage-main .nw-advantage__card-title {
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading-family);
   font-weight: 700;
   font-size: 18px;
   line-height: 1.44;
-  color: var(--nw-advantage-body, #533c16);
+  color: var(--nw-advantage-body, var(--primary-color, #613916));
   text-transform: unset;
 }
 
@@ -133,7 +133,7 @@
   margin: 0;
   font-size: 16px;
   line-height: 21px;
-  color: var(--nw-advantage-body, #533c16);
+  color: var(--nw-advantage-body, var(--primary-color, #613916));
   text-align: left;
 }
 
@@ -177,7 +177,7 @@
 
   .nw-advantage-main .nw-advantage__heading {
     margin-bottom: 20px;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading-family);
     font-size: 28px;
     line-height: 1.29;
   }
@@ -193,7 +193,7 @@
   }
 
   .nw-advantage-main .nw-advantage__card-title {
-    font-family: 'Optima', sans-serif;
+    font-family: var(--font-heading-family);
     font-size: 18px;
     line-height: 1.375;
   }
