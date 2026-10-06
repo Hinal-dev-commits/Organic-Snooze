@@ -46,3 +46,6 @@
     countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
   };
 </script>
+
+{% render 'nw-cart-gift-rules-data' %}
+<script src="{{ 'nw-cart-gift-rules.js' | asset_url }}" defer="defer"></script>
