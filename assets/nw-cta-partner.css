@@ -1,0 +1,103 @@
+.nw-cta-partner-main .nw-cta-partner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  width: 100%;
+}
+
+.nw-cta-partner-main .nw-cta-partner__heading {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 640px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--nw-cta-partner-text, #ffffff);
+  text-transform: unset;
+}
+
+.nw-cta-partner-main .nw-cta-partner__heading strong {
+  color: var(--nw-cta-partner-text, #ffffff);
+  font-weight: inherit;
+}
+.nw-cta-partner-main .nw-cta-partner__button.button{
+  border-radius: 8px;
+  padding: 19px 32px;
+  opacity: 1;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  text-transform: none;  
+  gap: 6px;
+  display: inline-flex;
+}
+
+.nw-cta-partner-main .nw-cta-partner__button {
+  flex: 0 0 auto;
+  background-color: #533c16 ;
+  color: #fff ;
+}
+.nw-cta-partner-main .nw-cta-partner__button:hover{
+  background-color: #ffffff;
+  color: #533c16;
+}
+.nw-cta-partner-main .nw-cta-partner__button:hover svg path{
+  fill: #533c16;
+}
+.nw-cta-partner-main .nw-cta-partner__button.button--secondary{
+  background-color: #fff !important;
+  color: #533c16 !important;
+  border: none !important;
+}
+.nw-cta-partner-main .nw-cta-partner__button.button--secondary:hover{
+  color: #fff !important;
+  background: #533c16 !important;
+}
+.nw-cta-partner-main .nw-cta-partner__button.button--secondary .nw-cta-partner__button-icon svg path{
+  fill: #533c16;
+}
+.nw-cta-partner-main .nw-cta-partner__button.button--secondary:hover .nw-cta-partner__button-icon svg path{
+  fill: #fff;
+}
+.nw-cta-partner-main .nw-cta-partner__button.button--secondary::after, .nw-cta-partner-main .nw-cta-partner__button.button--secondary::before{
+  display: none;
+}
+
+.nw-cta-partner-main .nw-cta-partner__button.button::after, .nw-cta-partner-main .nw-cta-partner__button.button::before{
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .nw-cta-partner-main .nw-cta-partner {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .nw-cta-partner-main .nw-cta-partner__heading {
+    max-width: none;
+    font-family: 'Optima', sans-serif;
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  .nw-cta-partner-main:has(.nw-cta-partner__button:not(.button--secondary)) .nw-cta-partner__heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    line-height: 1.375;
+  }
+
+
+  .nw-cta-partner-main .nw-cta-partner__button.button {
+    font-size: 14px;
+    padding: 16px 30px;
+  }
+}

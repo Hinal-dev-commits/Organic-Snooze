@@ -1,0 +1,393 @@
+{{ 'nw-payments.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      {% if section.settings.text_color != blank %}
+        color: {{ section.settings.text_color }};
+      {% endif %}
+      {% if section.settings.bg_type == 'color' %}
+        background-color: {{ section.settings.bg_color }};
+      {% endif %}
+      {% if section.settings.bg_type == 'gradient' %}
+        background: {{ section.settings.bg_gradient }};
+      {% endif %}
+      {% if section.settings.background_image != blank %}
+        background-image: url('{{ section.settings.background_image | image_url: width: auto }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+  }
+  @media screen and (max-width: 749px) {
+      .section-{{ section.id }} {
+          padding-top: {{ section.settings.padding_top_mobile }}px;
+          padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+          {% if section.settings.background_image_mobile != blank %}
+            background-image: url('{{ section.settings.background_image_mobile | image_url: width: auto }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+          {% endif %}
+      }
+  }
+</style>
+
+<div class="nw-main-section nw-payments-main section-{{ section.id }}">
+  <div class="page-width">
+    {% if section.settings.heading != blank or section.settings.description != blank %}
+      <div class="nw-payments__header">
+        {% if section.settings.heading != blank %}
+          <h2 class="nw-payments__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.description != blank %}
+          <div class="nw-payments__description rte">{{ section.settings.description }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="nw-payments__grid">
+        {% for block in section.blocks %}
+          <div
+            class="nw-payments__card"
+            {{ block.shopify_attributes }}
+          >
+            <div class="nw-payments__card-top">
+              <div class="nw-payments__logo">
+                {% if block.settings.logo != blank %}
+                  {% liquid
+                    assign logo_alt = block.settings.logo.alt | default: block.settings.payment_name
+                  %}
+                  <img
+                    class="nw-payments__logo-img"
+                    src="{{ block.settings.logo | image_url: width: 200 }}"
+                    alt="{{ logo_alt | escape }}"
+                    width="{{ block.settings.logo.width }}"
+                    height="{{ block.settings.logo.height }}"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <span class="nw-payments__logo-placeholder" aria-hidden="true"></span>
+                {% endif %}
+              </div>
+              <div class="nw-payments__identity">
+                {% if block.settings.payment_name != blank %}
+                  <h3 class="nw-payments__name">{{ block.settings.payment_name | escape }}</h3>
+                {% endif %}
+                {% if block.settings.payment_subtitle != blank %}
+                  <p
+                    class="nw-payments__tagline"
+                    {% if block.settings.subtitle_color != blank %}
+                      style="color: {{ block.settings.subtitle_color }};"
+                    {% endif %}
+                  >
+                    {{ block.settings.payment_subtitle | escape }}
+                  </p>
+                {% endif %}
+              </div>
+            </div>
+
+            {% if block.settings.title != blank %}
+              <h4 class="nw-payments__title">{{ block.settings.title | escape }}</h4>
+            {% endif %}
+
+            {% if block.settings.subtitle != blank or block.settings.description != blank or block.settings.description_2 != blank %}
+              <hr class="nw-payments__divider">
+            {% endif %}
+
+            {% if block.settings.subtitle != blank %}
+              <p class="nw-payments__subtitle">{{ block.settings.subtitle | escape }}</p>
+            {% endif %}
+
+            {% if block.settings.description != blank %}
+              <div class="nw-payments__text rte">{{ block.settings.description }}</div>
+            {% endif %}
+
+            {% if block.settings.description_2 != blank %}
+              <hr class="nw-payments__divider">
+              <div class="nw-payments__text rte">{{ block.settings.description_2 }}</div>
+            {% endif %}
+
+            {% if block.settings.how_to_use_label != blank or block.settings.how_to_use_content != blank %}
+              <hr class="nw-payments__divider">
+              <details class="nw-payments__accordion">
+                <summary class="nw-payments__accordion-summary">
+                  <span class="nw-payments__accordion-icon" aria-hidden="true"></span>
+                  <span class="nw-payments__accordion-label">
+                    {{ block.settings.how_to_use_label | default: 'How to Use It' | escape }}
+                  </span>
+                </summary>
+                {% if block.settings.how_to_use_content != blank %}
+                  <div class="nw-payments__accordion-content rte">
+                    {{ block.settings.how_to_use_content }}
+                  </div>
+                {% endif %}
+              </details>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Payments",
+  "tag": "section",
+  "class": "nw-payments-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "label": "Heading",
+      "id": "heading",
+      "default": "Ways to Pay"
+    },
+    {
+      "type": "richtext",
+      "label": "Description",
+      "id": "description",
+      "default": "<p>Choose a flexible payment option that works for your lifestyle.</p>"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SETTINGS"
+    },
+    {
+      "type": "select",
+      "label": "BG Type",
+      "id": "bg_type",
+      "default": "color",
+      "options": [
+        {
+          "label": "None",
+          "value": "none"
+        },
+        {
+          "label": "Color",
+          "value": "color"
+        },
+        {
+          "label": "Gradient",
+          "value": "gradient"
+        },
+        {
+          "label": "Image",
+          "value": "image"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "label": "BG Color",
+      "id": "bg_color",
+      "default": "#fdf0de",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "label": "BG Gradient",
+      "id": "bg_gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "label": "Background Image",
+      "id": "background_image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "label": "Background Image Mobile",
+      "id": "background_image_mobile",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "label": "Text Color",
+      "id": "text_color",
+      "default": "#5b441b",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "label": "Padding Top Desktop",
+      "id": "padding_top_desktop",
+      "default": 60,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "label": "Padding Bottom Desktop",
+      "id": "padding_bottom_desktop",
+      "default": 60,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "label": "Padding Top Mobile",
+      "id": "padding_top_mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "label": "Padding Bottom Mobile",
+      "id": "padding_bottom_mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "payment",
+      "name": "Payment",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Payment Logo"
+        },
+        {
+          "type": "text",
+          "id": "payment_name",
+          "label": "Payment Name",
+          "default": "Affirm"
+        },
+        {
+          "type": "text",
+          "id": "payment_subtitle",
+          "label": "Payment Subtitle",
+          "default": "Buy Now, Pay Later"
+        },
+        {
+          "type": "color",
+          "id": "subtitle_color",
+          "label": "Subtitle Color",
+          "default": "#1da77a",
+          "alpha": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Split into 6 Interest-Free Payments!"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "What is Affirm?"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Affirm lets you buy now and pay over time with transparent monthly payments. Rates from 0–36% APR. Payment options through Affirm are subject to eligibility check and may not be available everywhere.</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "description_2",
+          "label": "Description 2",
+          "default": "<p>Choose a plan that fits your budget — and only pay for what you get.</p>"
+        },
+        {
+          "type": "text",
+          "id": "how_to_use_label",
+          "label": "How to Use Label",
+          "default": "How to Use It"
+        },
+        {
+          "type": "richtext",
+          "id": "how_to_use_content",
+          "label": "How to Use Content",
+          "default": "<p>Select Affirm at checkout, choose your payment plan, and complete a quick eligibility check.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Payments",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "payment",
+          "settings": {
+            "payment_name": "Affirm",
+            "payment_subtitle": "Buy Now, Pay Later",
+            "subtitle_color": "#1da77a",
+            "title": "Split into 6 Interest-Free Payments!",
+            "subtitle": "What is Affirm?",
+            "description": "<p>Affirm lets you buy now and pay over time with transparent monthly payments. Rates from 0–36% APR. Payment options through Affirm are subject to eligibility check and may not be available everywhere.</p>",
+            "description_2": "<p>Choose a plan that fits your budget — and only pay for what you get.</p>",
+            "how_to_use_label": "How to Use It",
+            "how_to_use_content": "<p>Select Affirm at checkout, choose your payment plan, and complete a quick eligibility check.</p>"
+          }
+        },
+        {
+          "type": "payment",
+          "settings": {
+            "payment_name": "Acima",
+            "payment_subtitle": "Lease-to-Own",
+            "subtitle_color": "#1a4f8e",
+            "title": "Lease-to-Own with $0 Down!",
+            "subtitle": "What is Acima?",
+            "description": "<p>Acima offers flexible lease-to-own options so you can get what you need today and own it over time with affordable payments.</p>",
+            "description_2": "<p>No credit needed to get started — approval is based on ability to pay.</p>",
+            "how_to_use_label": "How to Use It",
+            "how_to_use_content": "<p>Choose Acima at checkout and complete the short application to see your available options.</p>"
+          }
+        },
+        {
+          "type": "payment",
+          "settings": {
+            "payment_name": "TruMed",
+            "payment_subtitle": "HSA / FSA",
+            "subtitle_color": "#0b8eb4",
+            "title": "Use Your HSA/FSA Funds!",
+            "subtitle": "What is TruMed?",
+            "description": "<p>TruMed helps eligible customers use pre-tax HSA/FSA dollars on qualifying purchases for better sleep and wellness.</p>",
+            "description_2": "<p>Save money by unlocking health benefits you already have.</p>",
+            "how_to_use_label": "How to Use It",
+            "how_to_use_content": "<p>Select TruMed at checkout, complete the health assessment, and pay with your HSA/FSA card.</p>"
+          }
+        },
+        {
+          "type": "payment",
+          "settings": {
+            "payment_name": "Shop Pay",
+            "payment_subtitle": "Installments",
+            "subtitle_color": "#5c2de2",
+            "title": "Pay in 4 Interest-Free Installments!",
+            "subtitle": "What is Shop Pay?",
+            "description": "<p>Shop Pay Installments lets you split your purchase into interest-free payments with a fast, secure checkout experience.</p>",
+            "description_2": "<p>Available for eligible orders — see options at checkout.</p>",
+            "how_to_use_label": "How to Use It",
+            "how_to_use_content": "<p>Select Shop Pay at checkout and choose the installment plan that works for you.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,344 @@
+{{ 'nw-availability.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    {% if section.settings.text_color != blank %}
+      color: {{ section.settings.text_color }};
+    {% endif %}
+    {% if section.settings.bg_type == 'color' %}
+      background-color: {{ section.settings.bg_color }};
+    {% endif %}
+    {% if section.settings.bg_type == 'gradient' %}
+      background: {{ section.settings.bg_gradient }};
+    {% endif %}
+    {% if section.settings.bg_type == 'image' and section.settings.background_image != blank %}
+      background-image: url('{{ section.settings.background_image | image_url: width: auto }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    {% endif %}
+    --nw-availability-body: {{ section.settings.text_color | default: '#0c0e0f' }};
+    --nw-availability-accent: {{ section.settings.accent_color | default: '#3f2b04' }};
+    --nw-availability-highlight: #F9BC2D;
+    --nw-availability-check-bg: {{ section.settings.check_background | default: '#f7f5f2' }};
+    --nw-availability-card-bg: {{ section.settings.card_background | default: '#3f2b04' }};
+    --nw-availability-card-text: {{ section.settings.card_text_color | default: '#ffffff' }};
+  }
+  .nw-availability-main .nw-availability__description li::before {
+    background-image: url('{{ 'bullet.png' | asset_url }}');
+  }
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      {% if section.settings.bg_type == 'image' and section.settings.background_image_mobile != blank %}
+        background-image: url('{{ section.settings.background_image_mobile | image_url: width: auto }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% endif %}
+    }
+  }
+</style>
+
+{%- liquid
+  if section.settings.button_style == 'secondary'
+    assign button_class = 'button button--secondary'
+  else
+    assign button_class = 'button'
+  endif
+-%}
+
+<div class="nw-main-section nw-availability-main section-{{ section.id }}">
+  <div class="page-width">
+    <div class="nw-availability">
+      <div class="nw-availability__content">
+        {% if section.settings.eyebrow != blank %}
+          <p class="nw-availability__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="h1 section-title nw-availability__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="rte nw-availability__description">{{ section.settings.description }}</div>
+        {% endif %}
+      </div>
+
+      <div class="nw-availability__card">
+        {% if section.settings.card_heading != blank %}
+          <h3 class="nw-availability__card-heading">{{ section.settings.card_heading | escape }}</h3>
+        {% endif %}
+
+        {% if section.settings.card_text != blank %}
+          <div class="rte nw-availability__card-text">{{ section.settings.card_text }}</div>
+        {% endif %}
+
+        {% if section.settings.button_label != blank %}
+          <a
+            class="{{ button_class }} nw-availability__button"
+            href="{{ section.settings.button_link | default: '#' }}"
+            {% if section.settings.button_link == blank %}aria-disabled="true"{% endif %}
+          >
+            <span class="nw-availability__button-label">{{ section.settings.button_label | escape }} <span class="nw-availability__button-icon">{{ 'iw-cta-right.svg' | inline_asset_content }}</span></span>
+            
+            {% if section.settings.button_note != blank %}
+              <span class="nw-availability__button-note">{{ section.settings.button_note | escape }}</span>
+            {% endif %}
+          </a>
+        {% endif %}
+
+        {% if section.settings.show_divider %}
+          <span class="nw-availability__divider" aria-hidden="true"></span>
+        {% endif %}
+
+        {% if section.settings.contact_label != blank %}
+          <p class="nw-availability__contact-label">{{ section.settings.contact_label | escape }}</p>
+        {% endif %}
+
+        <div class="nw-availability__contact">
+          {% if section.settings.contact_info != blank %}
+            <div class="rte nw-availability__contact-info">{{ section.settings.contact_info }}</div>
+          {% endif %}         
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NW Availability",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Limited Availability"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Book Your Discovery Call Now."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Schedule a free 20-minute call with our partnership team. We'll cover your market opportunity, product fit, and how we support your success from day one.</p><ul><li>No commitment required</li><li>Learn your local market opportunity</li><li>See product samples & wholesale pricing</li><li>First 5 retailers receive $1,000 ad credit</li><li>Hospitality venues: custom bulk pricing available</li></ul>"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "text",
+      "id": "card_heading",
+      "label": "Card heading",
+      "default": "Start the Conversation"
+    },
+    {
+      "type": "richtext",
+      "id": "card_text",
+      "label": "Card text",
+      "default": "<p>Free · 20 minutes · No obligation</p><p>We'll make it worth your time.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Book a Discovery Call →"
+    },
+    {
+      "type": "text",
+      "id": "button_note",
+      "label": "Button note",
+      "default": "Free · 20 minutes · No obligation"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact label",
+      "default": "Questions? Contact us directly:"
+    },
+    {
+      "type": "richtext",
+      "id": "contact_info",
+      "label": "Contact info",
+      "default": "<p>Mitchell Vincentini</p><p>Mitchell@theultimatesnooze.com</p><p>(315) 516-3637</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section settings"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f7f5f2",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Background image mobile",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#0c0e0f",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#3f2b04",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "check_background",
+      "label": "Checklist background",
+      "default": "#f7f5f2",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#3f2b04",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top desktop",
+      "default": 96,
+      "min": 0,
+      "max": 120,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom desktop",
+      "default": 96,
+      "min": 0,
+      "max": 120,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "default": 48,
+      "min": 0,
+      "max": 100,
+      "step": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Availability",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}
