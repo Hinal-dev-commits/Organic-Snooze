@@ -523,7 +523,14 @@
 
 @media screen and (max-width: 749px) {
   .nw-warranty-timeline__media-col--video {
-    /* aspect-ratio: 343 / 236; */
+    aspect-ratio: 1 / 1.5;
+  }
+
+  .nw-warranty-timeline__media-col--video .nw-warranty-timeline__poster,
+  .nw-warranty-timeline__media-col--video .nw-warranty-timeline__img-placeholder {
+    aspect-ratio: 1 / 1.5;
+    width: 100%;
+    height: auto;
   }
 
   .nw-warranty-timeline__poster.nw-warranty-timeline__img--desktop {

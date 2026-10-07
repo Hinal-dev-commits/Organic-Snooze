@@ -52,56 +52,7 @@
   <div class="nw-recovery__inner{% if section.settings.layout_width == 'page_width' %} page-width{% endif %}">
     <div class="nw-recovery__grid{%- render 'nw-scroll-animation' -%}">
       <div class="nw-recovery__media">
-        {%- liquid
-          assign recovery_image_alt = section.settings.image.alt | default: section.settings.heading
-          assign recovery_image_mobile_alt = section.settings.image_mobile.alt | default: section.settings.heading
-        -%}
-        {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
-          {%- if section.settings.image != blank and section.settings.image_mobile != blank -%}
-            {{
-              section.settings.image_mobile
-              | image_url: width: 800
-              | image_tag:
-                alt: recovery_image_mobile_alt,
-                class: 'nw-recovery__image nw-recovery__image--mobile',
-                loading: 'lazy',
-                widths: '375, 550, 750, 800',
-                sizes: '100vw'
-            }}
-            {{
-              section.settings.image
-              | image_url: width: 1400
-              | image_tag:
-                alt: recovery_image_alt,
-                class: 'nw-recovery__image nw-recovery__image--desktop',
-                loading: 'lazy',
-                widths: '550, 750, 900, 1100, 1400',
-                sizes: '100vw'
-            }}
-          {%- elsif section.settings.image != blank -%}
-            {{
-              section.settings.image
-              | image_url: width: 1400
-              | image_tag:
-                alt: recovery_image_alt,
-                class: 'nw-recovery__image nw-recovery__image--desktop',
-                loading: 'lazy',
-                widths: '550, 750, 900, 1100, 1400',
-                sizes: '100vw'
-            }}
-          {%- else -%}
-            {{
-              section.settings.image_mobile
-              | image_url: width: 800
-              | image_tag:
-                alt: recovery_image_mobile_alt,
-                class: 'nw-recovery__image nw-recovery__image--mobile',
-                loading: 'lazy',
-                widths: '375, 550, 750, 800',
-                sizes: '100vw'
-            }}
-          {%- endif -%}
-        {%- endif -%}
+        {% render 'nw-recovery-media', section: section %}
       </div>
 
       <div class="nw-recovery__content">
@@ -199,18 +150,78 @@
     },
     {
       "type": "header",
-      "content": "IMAGE"
+      "content": "DESKTOP MEDIA"
+    },
+    {
+      "type": "select",
+      "id": "media_type_desktop",
+      "label": "Media type (Desktop)",
+      "default": "image",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video" }
+      ]
     },
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Image (Desktop)"
+      "label": "Image (Desktop)",
+      "visible_if": "{{ section.settings.media_type_desktop == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video (Desktop)",
+      "visible_if": "{{ section.settings.media_type_desktop == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video poster (Desktop)",
+      "info": "Optional. Uses video preview when empty.",
+      "visible_if": "{{ section.settings.media_type_desktop == 'video' }}"
+    },
+    {
+      "type": "header",
+      "content": "MOBILE MEDIA"
+    },
+    {
+      "type": "select",
+      "id": "media_type_mobile",
+      "label": "Media type (Mobile)",
+      "default": "image",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video" }
+      ]
     },
     {
       "type": "image_picker",
       "id": "image_mobile",
       "label": "Image (Mobile)",
-      "info": "Optional. Uses desktop image when empty."
+      "info": "Optional. Uses desktop image when empty.",
+      "visible_if": "{{ section.settings.media_type_mobile == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Video (Mobile)",
+      "info": "Optional. Uses desktop video when empty.",
+      "visible_if": "{{ section.settings.media_type_mobile == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster_mobile",
+      "label": "Video poster (Mobile)",
+      "info": "Optional. Uses desktop poster when empty.",
+      "visible_if": "{{ section.settings.media_type_mobile == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay video",
+      "default": true,
+      "visible_if": "{{ section.settings.media_type_desktop == 'video' or section.settings.media_type_mobile == 'video' }}"
     },
     {
       "type": "header",

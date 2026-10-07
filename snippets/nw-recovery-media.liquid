@@ -1,0 +1,160 @@
+{% doc %}
+  Desktop and mobile image/video media for nw-recovery.
+  @param {object} section - Section object
+{% enddoc %}
+
+{%- liquid
+  assign desktop_media_type = section.settings.media_type_desktop | default: 'image'
+  assign mobile_media_type = section.settings.media_type_mobile | default: 'image'
+  assign video_autoplay = section.settings.video_autoplay
+
+  assign recovery_image_alt = section.settings.image.alt | default: section.settings.heading
+  assign recovery_image_mobile_alt = section.settings.image_mobile.alt | default: section.settings.heading
+  assign recovery_video_alt = section.settings.heading | default: 'Recovery media' | escape
+
+  assign desktop_poster = section.settings.video_poster
+  if desktop_poster == blank and section.settings.video.preview_image != blank
+    assign desktop_poster = section.settings.video.preview_image
+  endif
+
+  assign mobile_poster = section.settings.video_poster_mobile
+  if mobile_poster == blank and section.settings.video_mobile.preview_image != blank
+    assign mobile_poster = section.settings.video_mobile.preview_image
+  endif
+  if mobile_poster == blank
+    assign mobile_poster = desktop_poster
+  endif
+
+  assign use_shared_video = false
+  if desktop_media_type == 'video' and mobile_media_type == 'video' and section.settings.video != blank and section.settings.video_mobile == blank
+    assign use_shared_video = true
+  endif
+
+  if video_autoplay
+    assign v_autoplay = true
+    assign v_loop = true
+    assign v_muted = true
+    assign v_controls = false
+  else
+    assign v_autoplay = false
+    assign v_loop = false
+    assign v_muted = false
+    assign v_controls = true
+  endif
+-%}
+
+{%- if desktop_media_type == 'video' and section.settings.video != blank -%}
+  {%- if use_shared_video -%}
+    {{
+      section.settings.video
+      | video_tag:
+        autoplay: v_autoplay,
+        loop: v_loop,
+        muted: v_muted,
+        controls: v_controls,
+        playsinline: true,
+        preload: 'metadata',
+        class: 'nw-recovery__video nw-recovery__video--both',
+        image_size: '1400x'
+    }}
+    {%- if video_autoplay == false and desktop_poster != blank -%}
+      {{
+        desktop_poster
+        | image_url: width: 1400
+        | image_tag:
+          alt: recovery_video_alt,
+          class: 'nw-recovery__image nw-recovery__video-poster nw-recovery__video-poster--both',
+          loading: 'lazy',
+          widths: '550, 750, 900, 1100, 1400',
+          sizes: '100vw'
+      }}
+    {%- endif -%}
+  {%- else -%}
+    {{
+      section.settings.video
+      | video_tag:
+        autoplay: v_autoplay,
+        loop: v_loop,
+        muted: v_muted,
+        controls: v_controls,
+        playsinline: true,
+        preload: 'metadata',
+        class: 'nw-recovery__video nw-recovery__video--desktop',
+        image_size: '1400x'
+    }}
+  {%- endif -%}
+  {%- if video_autoplay == false and desktop_poster != blank -%}
+    {{
+      desktop_poster
+      | image_url: width: 1400
+      | image_tag:
+        alt: recovery_video_alt,
+        class: 'nw-recovery__image nw-recovery__image--desktop nw-recovery__video-poster',
+        loading: 'lazy',
+        widths: '550, 750, 900, 1100, 1400',
+        sizes: '100vw'
+    }}
+  {%- endif -%}
+{%- elsif desktop_media_type == 'image' and section.settings.image != blank -%}
+  {{
+    section.settings.image
+    | image_url: width: 1400
+    | image_tag:
+      alt: recovery_image_alt,
+      class: 'nw-recovery__image nw-recovery__image--desktop',
+      loading: 'lazy',
+      widths: '550, 750, 900, 1100, 1400',
+      sizes: '100vw'
+  }}
+{%- endif -%}
+
+{%- if mobile_media_type == 'video' and section.settings.video_mobile != blank -%}
+  {{
+    section.settings.video_mobile
+    | video_tag:
+      autoplay: v_autoplay,
+      loop: v_loop,
+      muted: v_muted,
+      controls: v_controls,
+      playsinline: true,
+      preload: 'metadata',
+      class: 'nw-recovery__video nw-recovery__video--mobile',
+      image_size: '800x'
+  }}
+  {%- if video_autoplay == false and mobile_poster != blank -%}
+    {{
+      mobile_poster
+      | image_url: width: 800
+      | image_tag:
+        alt: recovery_video_alt,
+        class: 'nw-recovery__image nw-recovery__image--mobile nw-recovery__video-poster',
+        loading: 'lazy',
+        widths: '375, 550, 750, 800',
+        sizes: '100vw'
+    }}
+  {%- endif -%}
+{%- elsif mobile_media_type == 'image' -%}
+  {%- if section.settings.image_mobile != blank -%}
+    {{
+      section.settings.image_mobile
+      | image_url: width: 800
+      | image_tag:
+        alt: recovery_image_mobile_alt,
+        class: 'nw-recovery__image nw-recovery__image--mobile',
+        loading: 'lazy',
+        widths: '375, 550, 750, 800',
+        sizes: '100vw'
+    }}
+  {%- elsif section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 800
+      | image_tag:
+        alt: recovery_image_alt,
+        class: 'nw-recovery__image nw-recovery__image--mobile',
+        loading: 'lazy',
+        widths: '375, 550, 750, 800',
+        sizes: '100vw'
+    }}
+  {%- endif -%}
+{%- endif -%}
