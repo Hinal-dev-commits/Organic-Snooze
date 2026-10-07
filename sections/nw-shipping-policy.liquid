@@ -90,12 +90,7 @@
                 -%}
                 <div class="nw-shipping-policy__detail">
                   <span class="nw-shipping-policy__detail-icon" aria-hidden="true">
-                    {% render 'nw-icon',
-                      icon: block.settings.processing_icon | default: 'clock',
-                      custom_icon: nw_processing_custom,
-                      img_class: 'nw-shipping-policy__detail-icon-img',
-                      img_width: 16
-                    %}
+                    {% render 'nw-icon', icon: block.settings.processing_icon, default: 'clock', custom_icon: nw_processing_custom, img_class: 'nw-shipping-policy__detail-icon-img', img_width: 16 %}
                   </span>
                   <p class="nw-shipping-policy__detail-text">{{ block.settings.processing_text | escape }}</p>
                 </div>
@@ -110,12 +105,7 @@
                 -%}
                 <div class="nw-shipping-policy__detail">
                   <span class="nw-shipping-policy__detail-icon" aria-hidden="true">
-                    {% render 'nw-icon',
-                      icon: block.settings.delivery_icon | default: 'check-v2',
-                      custom_icon: nw_delivery_custom,
-                      img_class: 'nw-shipping-policy__detail-icon-img',
-                      img_width: 16
-                    %}
+                    {% render 'nw-icon', icon: block.settings.delivery_icon, default: 'check-v2', custom_icon: nw_delivery_custom, img_class: 'nw-shipping-policy__detail-icon-img', img_width: 16 %}
                   </span>
                   <p class="nw-shipping-policy__detail-text">{{ block.settings.delivery_text | escape }}</p>
                 </div>
@@ -138,20 +128,10 @@
             {%- if section.settings.button_1_text != blank or section.settings.button_2_text != blank -%}
               <div class="nw-shipping-policy__actions">
                 {%- if section.settings.button_1_text != blank -%}
-                  {% render 'nw-button',
-                    text: section.settings.button_1_text,
-                    link: section.settings.button_1_link | default: '#',
-                    style: section.settings.button_1_style,
-                    btn_class: 'nw-shipping-policy__btn'
-                  %}
+                  {% render 'nw-button', text: section.settings.button_1_text, link: section.settings.button_1_link, default: '#', style: section.settings.button_1_style, btn_class: 'nw-shipping-policy__btn' %}
                 {%- endif -%}
                 {%- if section.settings.button_2_text != blank -%}
-                  {% render 'nw-button',
-                    text: section.settings.button_2_text,
-                    link: section.settings.button_2_link | default: '#',
-                    style: section.settings.button_2_style,
-                    btn_class: 'nw-shipping-policy__btn'
-                  %}
+                  {% render 'nw-button', text: section.settings.button_2_text, link: section.settings.button_2_link, default: '#', style: section.settings.button_2_style, btn_class: 'nw-shipping-policy__btn' %}
                 {%- endif -%}
               </div>
             {%- endif -%}
@@ -669,3 +649,54 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'nw-icon',
+                          icon: block.settings.processing_icon | default: 'clock',
+                          custom_icon: nw_processing_custom,
+                          img_class: 'nw-shipping-policy__detail-icon-img',
+                          img_width: 16
+                        %}
+  to: "{% render 'nw-icon', icon: block.settings.processing_icon, default: 'clock',
+    custom_icon: nw_processing_custom, img_class: 'nw-shipping-policy__detail-icon-img',
+    img_width: 16 %}"
+  position: 3970..4148
+- from: |-
+    {% render 'nw-icon',
+                          icon: block.settings.delivery_icon | default: 'check-v2',
+                          custom_icon: nw_delivery_custom,
+                          img_class: 'nw-shipping-policy__detail-icon-img',
+                          img_width: 16
+                        %}
+  to: "{% render 'nw-icon', icon: block.settings.delivery_icon, default: 'check-v2',
+    custom_icon: nw_delivery_custom, img_class: 'nw-shipping-policy__detail-icon-img',
+    img_width: 16 %}"
+  position: 4830..5007
+- from: |-
+    {% render 'nw-button',
+                        text: section.settings.button_1_text,
+                        link: section.settings.button_1_link | default: '#',
+                        style: section.settings.button_1_style,
+                        btn_class: 'nw-shipping-policy__btn'
+                      %}
+  to: "{% render 'nw-button', text: section.settings.button_1_text, link: section.settings.button_1_link,
+    default: '#', style: section.settings.button_1_style, btn_class: 'nw-shipping-policy__btn'
+    %}"
+  position: 5938..6130
+- from: |-
+    {% render 'nw-button',
+                        text: section.settings.button_2_text,
+                        link: section.settings.button_2_link | default: '#',
+                        style: section.settings.button_2_style,
+                        btn_class: 'nw-shipping-policy__btn'
+                      %}
+  to: "{% render 'nw-button', text: section.settings.button_2_text, link: section.settings.button_2_link,
+    default: '#', style: section.settings.button_2_style, btn_class: 'nw-shipping-policy__btn'
+    %}"
+  position: 6246..6438
+{% endcomment %}

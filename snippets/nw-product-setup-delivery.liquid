@@ -30,7 +30,7 @@
           {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
             {%- render 'nw-icon', icon: 'custom', custom_icon: block.settings.custom_icon, img_class: 'nw-product-setup-delivery__icon-img', img_width: 24 -%}
           {%- else -%}
-            {%- render 'nw-icon', icon: block.settings.icon | default: 'truck' -%}
+            {%- render 'nw-icon', icon: block.settings.icon, default: 'truck' -%}
           {%- endif -%}
         </span>
         <h3 class="nw-product-setup-delivery__heading">{{ block.settings.heading | escape }}</h3>
@@ -46,3 +46,13 @@
     {%- endif -%}
   </div>
 {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'nw-icon', icon: block.settings.icon | default: 'truck' -%}"
+  to: "{%- render 'nw-icon', icon: block.settings.icon, default: 'truck' -%}"
+  position: 1524..1593
+{% endcomment %}
