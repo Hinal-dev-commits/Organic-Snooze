@@ -845,8 +845,23 @@
             "margin_bottom_mobile": 0
           }
         },
+        "button_Jy6MJy": {
+          "type": "button",
+          "settings": {
+            "button_label": "SHOP NOW",
+            "button_link": "shopify://products/the-ultimate-snooze-pillowtop-organic-mattress",
+            "button_style": "primary",
+            "button_width": "full",
+            "alignment": "left",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 25,
+            "margin_bottom_mobile": 0
+          }
+        },
         "buy_buttons_pNzNJe": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
@@ -923,6 +938,7 @@
         "price_7pT4fV",
         "nw_benifits_list_a4CVbe",
         "variant_picker_eb7mxe",
+        "button_Jy6MJy",
         "buy_buttons_pNzNJe",
         "mattress_upgrade_fnCVxp",
         "payment_logos_FUbHj4"
