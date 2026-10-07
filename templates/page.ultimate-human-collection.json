@@ -984,90 +984,6 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_testimonials_nBCaNc": {
-      "type": "nw-testimonials",
-      "blocks": {
-        "testimonial_xGMkdt": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "<p>“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”</p>",
-            "author": "Phillip Page",
-            "verified": true,
-            "verified_text": "Verified Customer"
-          }
-        },
-        "testimonial_QXrgCr": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "<p>\"Love my sheets and pillows from Ultimate Snooze. They keep me fresh all night, a plus for us who live in FL.  And no more headaches and allergies caused by polyester.</p>",
-            "author": "Clara",
-            "verified": true,
-            "verified_text": "Verified Customer"
-          }
-        },
-        "testimonial_gWdU8P": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "<p>“After just 5 nights with my pillow... my sleep scores went from 85% to a 100%...\"</p>",
-            "author": "Chad Finchum",
-            "verified": true,
-            "verified_text": "Verified Customer"
-          }
-        },
-        "testimonial_4hmN7U": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "quote": "<p>“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”</p>",
-            "author": "Marcello Delle Grotti",
-            "verified": true,
-            "verified_text": "Verified Customer"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_xGMkdt",
-        "testimonial_QXrgCr",
-        "testimonial_gWdU8P",
-        "testimonial_4hmN7U"
-      ],
-      "name": "t:sections.nw-testimonials.name",
-      "settings": {
-        "show_rating": true,
-        "star_rating": 5,
-        "star_color": "#563822",
-        "star_color_inactive": "#b79483",
-        "eyebrow": "trusted by 10,000+ customers",
-        "heading": "The Difference, Written by the Real People Who Feel It Every Night",
-        "subheading": "",
-        "header_max_width_desktop": 700,
-        "heading_color": "",
-        "description_color": "",
-        "eyebrow_color": "",
-        "text_color": "",
-        "card_bg_color": "",
-        "card_text_color": "",
-        "card_star_color": "",
-        "card_star_empty_color": "",
-        "verified_text_color": "#4e2f14",
-        "verified_icon_color": "",
-        "full_width": true,
-        "enable_loop": true,
-        "enable_edge_shadow": true,
-        "show_arrows": true,
-        "show_pagination": true,
-        "bg_type": "color",
-        "bg_color": "",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 28
-      }
-    },
     "main_product_m3EWin": {
       "type": "main-product",
       "blocks": {
@@ -1234,8 +1150,23 @@
             "margin_bottom_mobile": 0
           }
         },
+        "button_xtcEbf": {
+          "type": "button",
+          "settings": {
+            "button_label": "SHOP NOW",
+            "button_link": "shopify://products/the-organic-snooze-kloud-pillow",
+            "button_style": "primary",
+            "button_width": "full",
+            "alignment": "left",
+            "margin_top": 32,
+            "margin_bottom": 0,
+            "margin_top_mobile": 25,
+            "margin_bottom_mobile": 0
+          }
+        },
         "buy_buttons_8Afjpd": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
@@ -1284,6 +1215,7 @@
         "icon_text_6NH7ye",
         "icon_text_R64NAw",
         "variant_picker_BmNMX8",
+        "button_xtcEbf",
         "buy_buttons_8Afjpd",
         "payment_logos_dLQLiD"
       ],
@@ -1291,7 +1223,7 @@
       "settings": {
         "product": "the-organic-snooze-kloud-pillow",
         "show_section_header": true,
-        "section_header_heading": "The Pillow Built without VOC's. It's just organic.",
+        "section_header_heading": "The Pillow Built For Breathing And Recovery",
         "section_header_description": "",
         "hide_media_slider": false,
         "use_custom_media_images": true,
@@ -1329,6 +1261,90 @@
         "padding_bottom": 80,
         "padding_top_mobile": 26,
         "padding_bottom_mobile": 48
+      }
+    },
+    "nw_testimonials_nBCaNc": {
+      "type": "nw-testimonials",
+      "blocks": {
+        "testimonial_xGMkdt": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“I love it! sleeping great and the peace of mine knowing I am not breathing in those horrible gases from the conventional mattress!”</p>",
+            "author": "Phillip Page",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        },
+        "testimonial_QXrgCr": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>\"Love my sheets and pillows from Ultimate Snooze. They keep me fresh all night, a plus for us who live in FL.  And no more headaches and allergies caused by polyester.</p>",
+            "author": "Clara",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        },
+        "testimonial_gWdU8P": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“After just 5 nights with my pillow... my sleep scores went from 85% to a 100%...\"</p>",
+            "author": "Chad Finchum",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        },
+        "testimonial_4hmN7U": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”</p>",
+            "author": "Marcello Delle Grotti",
+            "verified": true,
+            "verified_text": "Verified Customer"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_xGMkdt",
+        "testimonial_QXrgCr",
+        "testimonial_gWdU8P",
+        "testimonial_4hmN7U"
+      ],
+      "name": "t:sections.nw-testimonials.name",
+      "settings": {
+        "show_rating": true,
+        "star_rating": 5,
+        "star_color": "#563822",
+        "star_color_inactive": "#b79483",
+        "eyebrow": "trusted by 10,000+ customers",
+        "heading": "The Difference, Written by the Real People Who Feel It Every Night",
+        "subheading": "",
+        "header_max_width_desktop": 700,
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
+        "card_bg_color": "",
+        "card_text_color": "",
+        "card_star_color": "",
+        "card_star_empty_color": "",
+        "verified_text_color": "#4e2f14",
+        "verified_icon_color": "",
+        "full_width": true,
+        "enable_loop": true,
+        "enable_edge_shadow": true,
+        "show_arrows": true,
+        "show_pagination": true,
+        "bg_type": "color",
+        "bg_color": "",
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 28
       }
     },
     "nw_marquee_v2_HpDNpk": {
@@ -2197,8 +2213,8 @@
     "nw_organic_BqaLCQ",
     "nw_image_slider_text_cKMQt9",
     "main_product_AC4rih",
-    "nw_testimonials_nBCaNc",
     "main_product_m3EWin",
+    "nw_testimonials_nBCaNc",
     "nw_marquee_v2_HpDNpk",
     "nw_recovery_v2_Human",
     "nw_trusted_people_j4z9a6",
