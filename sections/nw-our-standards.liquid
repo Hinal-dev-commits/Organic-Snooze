@@ -83,12 +83,7 @@
 
     {%- if section.settings.show_button and section.settings.button_text != blank -%}
         <div class="nw-our-standards__footer">
-          {% render 'nw-button',
-            text: section.settings.button_text,
-            link: section.settings.button_link | default: '#',
-            style: section.settings.button_style,
-            btn_class: 'nw-our-standards__btn'
-          %}
+          {% render 'nw-button', text: section.settings.button_text, link: section.settings.button_link, default: '#', style: section.settings.button_style, btn_class: 'nw-our-standards__btn' %}
         </div>
     {%- endif -%}
   </div>
@@ -347,3 +342,21 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'nw-button',
+                text: section.settings.button_text,
+                link: section.settings.button_link | default: '#',
+                style: section.settings.button_style,
+                btn_class: 'nw-our-standards__btn'
+              %}
+  to: "{% render 'nw-button', text: section.settings.button_text, link: section.settings.button_link,
+    default: '#', style: section.settings.button_style, btn_class: 'nw-our-standards__btn'
+    %}"
+  position: 3483..3667
+{% endcomment %}

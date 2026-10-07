@@ -300,13 +300,7 @@
 
                   <div class="nw-shipping-content__cta-actions">
                     {%- if block.settings.button_text != blank -%}
-                      {%
-                        render 'nw-button',
-                        text: block.settings.button_text,
-                        link: block.settings.button_link | default: '#',
-                        style: 'primary',
-                        btn_class: 'nw-shipping-content__cta-btn'
-                      %}
+                      {% render 'nw-button', text: block.settings.button_text, link: block.settings.button_link, default: '#', style: 'primary', btn_class: 'nw-shipping-content__cta-btn' %}
                     {%- endif -%}
 
                     {%- if block.settings.footer_note != blank -%}
@@ -1037,3 +1031,21 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%
+                            render 'nw-button',
+                            text: block.settings.button_text,
+                            link: block.settings.button_link | default: '#',
+                            style: 'primary',
+                            btn_class: 'nw-shipping-content__cta-btn'
+                          %}
+  to: "{% render 'nw-button', text: block.settings.button_text, link: block.settings.button_link,
+    default: '#', style: 'primary', btn_class: 'nw-shipping-content__cta-btn' %}"
+  position: 13462..13629
+{% endcomment %}

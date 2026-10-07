@@ -20,7 +20,7 @@
         {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
           {%- render 'nw-icon', icon: 'custom', custom_icon: block.settings.custom_icon, img_class: 'nw-product-quiz__icon-img' -%}
         {%- else -%}
-          {%- render 'nw-icon', icon: block.settings.icon | default: 'moon' -%}
+          {%- render 'nw-icon', icon: block.settings.icon, default: 'moon' -%}
         {%- endif -%}
       </span>
       <div class="nw-product-quiz__copy">
@@ -43,3 +43,13 @@
     {%- endif -%}
   </div>
 {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'nw-icon', icon: block.settings.icon | default: 'moon' -%}"
+  to: "{%- render 'nw-icon', icon: block.settings.icon, default: 'moon' -%}"
+  position: 1078..1146
+{% endcomment %}

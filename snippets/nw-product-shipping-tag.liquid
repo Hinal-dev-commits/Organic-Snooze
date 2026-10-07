@@ -45,9 +45,19 @@
       {%- if block.settings.use_custom_icon and block.settings.custom_icon != blank -%}
         {%- render 'nw-icon', icon: 'custom', custom_icon: block.settings.custom_icon, img_class: 'nw-product-shipping-tag__icon-img' -%}
       {%- else -%}
-        {%- render 'nw-icon', icon: block.settings.icon | default: 'truck' -%}
+        {%- render 'nw-icon', icon: block.settings.icon, default: 'truck' -%}
       {%- endif -%}
     </span>
     <span class="nw-product-shipping-tag__text">{{ tag_text }}</span>
   </div>
 {%- endif -%}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'nw-icon', icon: block.settings.icon | default: 'truck' -%}"
+  to: "{%- render 'nw-icon', icon: block.settings.icon, default: 'truck' -%}"
+  position: 1854..1923
+{% endcomment %}
