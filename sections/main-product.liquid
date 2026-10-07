@@ -664,6 +664,8 @@
                   {%- render 'nw-product-founder', block: block -%}
                 {%- when 'quiz_button' -%}
                   {%- render 'nw-product-quiz-button', block: block -%}
+                {%- when 'button' -%}
+                  {%- render 'nw-product-button', block: block -%}
                 {%- when 'bundle_save' -%}
                   {%- render 'nw-product-bundle-save', block: block, product: product -%}
                 {%- when 'nw_size_popup' -%}
@@ -4752,6 +4754,99 @@
           "label": "Button Background Color",
           "default": "#878735",
           "alpha": true
+        },
+        {
+          "type": "header",
+          "content": "BLOCK SPACING"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom Mobile",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "default": "primary",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "button_width",
+          "label": "Button width",
+          "default": "full",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "full", "label": "Full width" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Alignment",
+          "default": "left",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ]
         },
         {
           "type": "header",
