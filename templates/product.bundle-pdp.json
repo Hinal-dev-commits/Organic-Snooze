@@ -55,6 +55,7 @@
         },
         "price": {
           "type": "price",
+          "disabled": true,
           "settings": {
             "show_affirm": true,
             "show_sale_badge": true,
@@ -65,8 +66,15 @@
             "margin_bottom_mobile": 0
           }
         },
+        "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA": {
+          "type": "shopify://apps/nw-ultimate-snooze-bundles/blocks/kit-product-block/01a0e2cc-18cc-7f11-97f3-0e082ec14e7f",
+          "settings": {
+            "product": "{{ section.settings.product }}"
+          }
+        },
         "affirm_pay_over_time_messaging_product_block_mpCiRU": {
           "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
+          "disabled": true,
           "settings": {
             "logo_align": "left",
             "font_size": 14,
@@ -74,12 +82,6 @@
             "logo_type": "logo",
             "public_api_key": "",
             "price_selector": ""
-          }
-        },
-        "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA": {
-          "type": "shopify://apps/nw-ultimate-snooze-bundles/blocks/kit-product-block/01a0e2cc-18cc-7f11-97f3-0e082ec14e7f",
-          "settings": {
-            "product": "{{section.settings.product}}"
           }
         },
         "nw_benifits_list_xTL4Mb": {
@@ -557,8 +559,8 @@
         "title",
         "description",
         "price",
-        "affirm_pay_over_time_messaging_product_block_mpCiRU",
         "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA",
+        "affirm_pay_over_time_messaging_product_block_mpCiRU",
         "nw_benifits_list_xTL4Mb",
         "icon_text_WTq7CJ",
         "icon_text_Q78m9x",
@@ -1175,6 +1177,24 @@
         "col1_head_title": "Organic Snooze",
         "col2_head_image": "shopify://shop_images/thumbnail-2.png",
         "col2_head_title": "Typical Bedroom Setup",
+        "show_comparison": false,
+        "comparison_title": "Long-Term Value Comparison",
+        "foam_brand": "Popular Foam Brands",
+        "foam_price": "$1.02 / night",
+        "foam_note": "Replaced every 10 years",
+        "snooze_brand": "ORGANIC SNOOZE",
+        "snooze_price": "$0.16 / night",
+        "snooze_note": "Built to last 30 years",
+        "comparison_title_color": "#613916",
+        "foam_card_bg": "#ffffff",
+        "foam_card_border_color": "#e5e5e5",
+        "foam_brand_color": "#666666",
+        "foam_price_color": "#1a1a1a",
+        "foam_note_color": "#61391680",
+        "snooze_bg": "#878735",
+        "snooze_brand_color": "#ffffff",
+        "snooze_price_color": "#ffffff",
+        "snooze_note_color": "#ffffff",
         "show_button": false,
         "button_text": "CHOOSE BETTER SLEEP",
         "button_link": "",
@@ -1328,6 +1348,38 @@
         "footer_heading": "Be intentional about where you spend the most time.",
         "footer_description": "<p><strong>You spend nearly one-third of your life in bed. Choose materials you'll trust for every hour.</strong></p>",
         "disclaimer": "",
+        "heading_font_size_desktop": 36,
+        "heading_font_size_tablet": 32,
+        "heading_font_size_mobile": 28,
+        "header_text_align_desktop": "center",
+        "header_text_align_mobile": "center",
+        "quote_font_size_desktop": 20,
+        "quote_font_size_tablet": 18,
+        "quote_font_size_mobile": 14,
+        "name_font_size_desktop": 20,
+        "name_font_size_tablet": 18,
+        "name_font_size_mobile": 16,
+        "role_font_size_desktop": 18,
+        "role_font_size_tablet": 16,
+        "role_font_size_mobile": 14,
+        "testimonial_text_align_desktop": "left",
+        "testimonial_text_align_mobile": "left",
+        "stat_value_font_size_desktop": 48,
+        "stat_value_font_size_tablet": 40,
+        "stat_value_font_size_mobile": 32,
+        "stat_desc_font_size_desktop": 18,
+        "stat_desc_font_size_tablet": 16,
+        "stat_desc_font_size_mobile": 12,
+        "stat_text_align_desktop": "left",
+        "stat_text_align_mobile": "left",
+        "footer_heading_font_size_desktop": 24,
+        "footer_heading_font_size_tablet": 22,
+        "footer_heading_font_size_mobile": 20,
+        "footer_description_font_size_desktop": 16,
+        "footer_description_font_size_tablet": 15,
+        "footer_description_font_size_mobile": 14,
+        "footer_text_align_desktop": "center",
+        "footer_text_align_mobile": "left",
         "heading_color": "#613916",
         "star_color": "#e57b1e",
         "star_color_inactive": "#d1d5db",
@@ -1349,6 +1401,97 @@
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 24
+      }
+    },
+    "nw_recovery_txitYA": {
+      "type": "nw-recovery",
+      "blocks": {
+        "box_RMAgkd": {
+          "type": "box",
+          "settings": {
+            "use_custom_icon": true,
+            "icon": "leaf",
+            "custom_icon": "shopify://shop_images/recovery.svg",
+            "title": "Your Body Heals While You Sleep",
+            "description": "Deep sleep helps your body repair muscles, sharpen your mind, and prepare for tomorrow."
+          }
+        },
+        "box_UpRJtd": {
+          "type": "box",
+          "disabled": true,
+          "settings": {
+            "use_custom_icon": false,
+            "icon": "leaf",
+            "title": "Recovery",
+            "description": "Quality sleep restores focus, memory, and reaction time."
+          }
+        },
+        "box_cYaXwN": {
+          "type": "box",
+          "settings": {
+            "use_custom_icon": true,
+            "icon": "sparkle",
+            "custom_icon": "shopify://shop_images/performance.svg",
+            "title": "Perform Better Tomorrow",
+            "description": "A great night of sleep helps you wake up focused, energized, and ready to go."
+          }
+        },
+        "box_kNtx8z": {
+          "type": "box",
+          "settings": {
+            "use_custom_icon": true,
+            "icon": "heart",
+            "custom_icon": "shopify://shop_images/longevity.svg",
+            "title": "Sleep Is Your #1 Health Habit",
+            "description": "People who regularly sleep 7–9 hours tend to enjoy better long-term health."
+          }
+        },
+        "box_ekCNVx": {
+          "type": "box",
+          "settings": {
+            "use_custom_icon": true,
+            "icon": "leaf",
+            "custom_icon": "shopify://shop_images/toxic.svg",
+            "title": "Lower Your Toxic Load",
+            "description": "You spend nearly 3,000 hours each year on your mattress. The materials matter. That's why we build ours with organic materials."
+          }
+        }
+      },
+      "block_order": [
+        "box_RMAgkd",
+        "box_UpRJtd",
+        "box_cYaXwN",
+        "box_kNtx8z",
+        "box_ekCNVx"
+      ],
+      "name": "NW Recovery",
+      "settings": {
+        "layout_width": "full_width",
+        "heading": "Your Best Days Begin the Night Before.",
+        "subheading": "<p>The people who feel their best tomorrow are the ones who prioritize sleep tonight.</p><p></p>",
+        "media_type_desktop": "video",
+        "image": "shopify://shop_images/instagram-image-12d446ea-4de8-4511-aeb4-7c3ab566379f.jpg",
+        "video": "shopify://files/videos/Perform Video - 45.mp4",
+        "video_poster": "shopify://shop_images/Sepia_Sprint_in_Motion.png",
+        "media_type_mobile": "video",
+        "image_mobile": "shopify://shop_images/instagram-image-12d446ea-4de8-4511-aeb4-7c3ab566379f.jpg",
+        "video_mobile": "shopify://files/videos/Perform Video - 45.mp4",
+        "video_poster_mobile": "shopify://shop_images/Sepia_Sprint_in_Motion.png",
+        "video_autoplay": true,
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "box_bg_color": "#fbf9f6",
+        "box_border_color": "#6139161f",
+        "box_heading_color": "#613916",
+        "box_desc_color": "#613916",
+        "box_icon_color": "#613916",
+        "bg_type": "none",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 84,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
       }
     },
     "nw_guarantee_v2_tX333J": {
@@ -1556,6 +1699,7 @@
     "nw_organic_YrjWU7",
     "nw_benefits_xyfdap",
     "nw_founder_story_bYKExy",
+    "nw_recovery_txitYA",
     "nw_guarantee_v2_tX333J",
     "nw_product_list_bkk4Br",
     "nw_faq_eNAtek",

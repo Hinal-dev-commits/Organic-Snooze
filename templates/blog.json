@@ -327,6 +327,10 @@
     },
     "nw_blog_and_video_cepNjp": {
       "type": "nw-blog-and-video",
+      "custom_css": [
+        ".nw-blog-video__panel.nw-blog-video__panel--video {display: none;}",
+        ".nw-blog-video__tabs {display: none;}"
+      ],
       "name": "t:sections.nw-blog-and-video.name",
       "settings": {
         "blog_heading": "The Blog",

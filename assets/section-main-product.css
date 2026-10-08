@@ -1493,3 +1493,32 @@ a.product__text {
     border: none;
   }
 }
+
+.nw-product-button {
+  display: flex;
+  width: 100%;
+}
+
+.nw-product-button--align-left {
+  justify-content: flex-start;
+}
+
+.nw-product-button--align-center {
+  justify-content: center;
+}
+
+.nw-product-button--align-right {
+  justify-content: flex-end;
+}
+
+.nw-product-button--width-auto .nw-product-button__btn {
+  width: auto;
+}
+
+.nw-product-button--width-full {
+  flex-direction: column;
+}
+
+.nw-product-button--width-full .nw-product-button__btn {
+  width: 100%;
+}

@@ -1,0 +1,17 @@
+{% doc %}
+  Custom CTA button block for main product info.
+  @param {object} block - Block settings
+{% enddoc %}
+
+{%- if block.settings.button_label != blank -%}
+  <div
+    class="nw-product-button nw-product-button--align-{{ block.settings.alignment }} nw-product-button--width-{{ block.settings.button_width }}"
+  >
+    {% render 'nw-button',
+      text: block.settings.button_label,
+      link: block.settings.button_link,
+      style: block.settings.button_style,
+      btn_class: 'nw-product-button__btn'
+    %}
+  </div>
+{%- endif -%}
