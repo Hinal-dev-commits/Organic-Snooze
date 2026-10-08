@@ -1296,9 +1296,27 @@
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
       }
+    },
+    "shogun-above": {
+      "type": "shogun-above",
+      "settings": {}
+    },
+    "shogun-below": {
+      "type": "shogun-below",
+      "settings": {}
+    },
+    "shogun-helper": {
+      "type": "shogun-helper",
+      "settings": {}
+    },
+    "shogun-optimizer": {
+      "type": "shogun-optimizer",
+      "settings": {}
     }
   },
   "order": [
+    "shogun-helper",
+    "shogun-above",
     "banner",
     "product-grid",
     "nw_collection_hero_VWXgHj",
@@ -1315,6 +1333,8 @@
     "nw_review_video_J8Wpw4",
     "nw_guarantee_card_Uy9UGj",
     "nw_faq_CfP8mf",
-    "nw_collection_list_fmeerp"
+    "nw_collection_list_fmeerp",
+    "shogun-below",
+    "shogun-optimizer"
   ]
 }
