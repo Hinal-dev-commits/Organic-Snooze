@@ -726,7 +726,7 @@
                 {%- when 'complementary' -%}
                   <product-recommendations
                     class="complementary-products quick-add-hidden{% if block.settings.make_collapsible_row %} is-accordion{% endif %}{% if block.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}"
-                    data-url="{{ routes.product_recommendations_url }}?limit={{ block.settings.product_list_limit }}&intent=complementary"
+                    data-url="{{ routes.product_recommendations_url }}?limit={{ block.settings.product_list_limit | plus: 8 }}&intent=complementary"
                     data-section-id="{{ section.id }}"
                     data-product-id="{{ product.id }}"
                   >
@@ -785,6 +785,9 @@
                                       limit: block.settings.products_per_page
                                       offset: continue
                                     -%}
+                                      {%- if product.tags contains 'exclude-recommendation' -%}
+                                        {%- continue -%}
+                                      {%- endif -%}
                                       <li>
                                         {%- if block.settings.enable_quick_add -%}
                                           {% assign quick_add = 'standard' %}

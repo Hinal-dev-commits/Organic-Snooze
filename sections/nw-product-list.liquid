@@ -32,83 +32,73 @@
       </div>
 
       {%- liquid
-        assign has_products = false
+        assign nw_rec_exclude_tag = 'exclude-recommendation'
         assign product_source = section.settings.product_source | default: 'product_list'
+        assign max_products = section.settings.products_to_show | default: 8
         assign product_count = 0
+        assign has_products = false
+        assign list_mode = product_source
 
-        if product_source == 'collection'
-          if section.settings.collection != blank and section.settings.collection.products_count > 0
-            assign has_products = true
-            assign product_count = section.settings.collection.products_count
-            if product_count > section.settings.products_to_show
-              assign product_count = section.settings.products_to_show
+        if product_source == 'collection' and section.settings.collection != blank
+          for list_product in section.settings.collection.products
+            if list_product.tags contains nw_rec_exclude_tag
+              continue
             endif
+            assign product_count = product_count | plus: 1
+            if product_count >= max_products
+              break
+            endif
+          endfor
+          if product_count > 0
+            assign has_products = true
           endif
-        elsif section.settings.product_list != blank and section.settings.product_list.size > 0
-          assign has_products = true
-          assign product_count = section.settings.product_list.size
+        elsif product_source == 'product_list' and section.settings.product_list != blank
+          for list_product in section.settings.product_list
+            unless list_product.tags contains nw_rec_exclude_tag
+              assign product_count = product_count | plus: 1
+            endunless
+          endfor
+          if product_count > 0
+            assign has_products = true
+          endif
+        elsif product_source == 'recommendations' and product != blank
+          assign list_mode = 'recommendations'
+          if recommendations.performed and recommendations.products_count > 0
+            for list_product in recommendations.products
+              if list_product.tags contains nw_rec_exclude_tag
+                continue
+              endif
+              assign product_count = product_count | plus: 1
+              if product_count >= max_products
+                break
+              endif
+            endfor
+          endif
+          if product_count > 0
+            assign has_products = true
+          endif
         endif
+
+        assign rec_fetch_limit = max_products | plus: 12
       -%}
 
-      {%- if has_products -%}
-        <div class="nw-product-list__slider-wrap">
-          <div class="swiper nw-product-list__swiper" id="NwProductListSwiper-{{ section.id }}">
-            <div class="swiper-wrapper">
-              {%- if product_source == 'collection' -%}
-                {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
-                  <div class="swiper-slide">
-                    {% render 'nw-product-card',
-                      product: product,
-                      section_id: section.id,
-                      show_rating: section.settings.show_rating,
-                      show_firmness: section.settings.show_firmness,
-                      show_seller_tag: section.settings.show_seller_tag,
-                      show_best_for: section.settings.show_best_for,
-                      firmness_label_soft: section.settings.firmness_label_soft,
-                      firmness_label_firm: section.settings.firmness_label_firm,
-                      button_text: section.settings.button_text,
-                      button_style: section.settings.button_style,
-                      lazy_load: true
-                    %}
-                  </div>
-                {%- endfor -%}
-              {%- else -%}
-                {%- for product in section.settings.product_list -%}
-                  <div class="swiper-slide">
-                    {% render 'nw-product-card',
-                      product: product,
-                      section_id: section.id,
-                      show_rating: section.settings.show_rating,
-                      show_firmness: section.settings.show_firmness,
-                      show_seller_tag: section.settings.show_seller_tag,
-                      show_best_for: section.settings.show_best_for,
-                      firmness_label_soft: section.settings.firmness_label_soft,
-                      firmness_label_firm: section.settings.firmness_label_firm,
-                      button_text: section.settings.button_text,
-                      button_style: section.settings.button_style,
-                      lazy_load: true
-                    %}
-                  </div>
-                {%- endfor -%}
-              {%- endif -%}
-            </div>
-          </div>
-
-          {%- if section.settings.show_arrows -%}
-            {% render 'nw-swiper-arrows', prev_class: ' nw-product-list__arrow', next_class: ' nw-product-list__arrow' %}
-          {%- endif -%}
-
-          {%- if section.settings.show_pagination and product_count > 1 -%}
-            <div class="nw-swiper-pagination" id="NwProductListPagination-{{ section.id }}" data-nw-pl-pagination>
-              {%- for i in (1..product_count) -%}
-                <span
-                  class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
-                  data-bullet-index="{{ forloop.index0 }}"
-                ></span>
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
-        </div>
+      {%- if product_source == 'recommendations' -%}
+        {%- if product == blank -%}
+          <div class="nw-product-list__empty">{{ section.settings.empty_text }}</div>
+        {%- else -%}
+          <product-recommendations
+            class="nw-product-list__recommendations"
+            data-url="{{ routes.product_recommendations_url }}?limit={{ rec_fetch_limit }}&intent=related"
+            data-section-id="{{ section.id }}"
+            data-product-id="{{ product.id }}"
+          >
+            {%- if has_products -%}
+              {% render 'nw-product-list-slider', section: section, mode: list_mode, product_count: product_count %}
+            {%- endif -%}
+          </product-recommendations>
+        {%- endif -%}
+      {%- elsif has_products -%}
+        {% render 'nw-product-list-slider', section: section, mode: list_mode, product_count: product_count %}
       {%- else -%}
         <div class="nw-product-list__empty">{{ section.settings.empty_text }}</div>
       {%- endif -%}
@@ -192,6 +182,10 @@
         {
           "value": "collection",
           "label": "Collection"
+        },
+        {
+          "value": "recommendations",
+          "label": "Dynamic recommendations"
         }
       ]
     },
@@ -214,7 +208,7 @@
       "max": 50,
       "step": 1,
       "default": 8,
-      "visible_if": "{{ section.settings.product_source == 'collection' }}"
+      "visible_if": "{{ section.settings.product_source == 'collection' or section.settings.product_source == 'recommendations' }}"
     },
     {
       "type": "text",
