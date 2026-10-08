@@ -55,6 +55,7 @@
         },
         "price": {
           "type": "price",
+          "disabled": true,
           "settings": {
             "show_affirm": true,
             "show_sale_badge": true,
@@ -63,6 +64,12 @@
             "margin_bottom": 0,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 0
+          }
+        },
+        "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA": {
+          "type": "shopify://apps/nw-ultimate-snooze-bundles/blocks/kit-product-block/01a0e2cc-18cc-7f11-97f3-0e082ec14e7f",
+          "settings": {
+            "product": "{{section.settings.product}}"
           }
         },
         "affirm_pay_over_time_messaging_product_block_mpCiRU": {
@@ -74,12 +81,6 @@
             "logo_type": "logo",
             "public_api_key": "",
             "price_selector": ""
-          }
-        },
-        "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA": {
-          "type": "shopify://apps/nw-ultimate-snooze-bundles/blocks/kit-product-block/01a0e2cc-18cc-7f11-97f3-0e082ec14e7f",
-          "settings": {
-            "product": "{{section.settings.product}}"
           }
         },
         "nw_benifits_list_xTL4Mb": {
@@ -557,8 +558,8 @@
         "title",
         "description",
         "price",
-        "affirm_pay_over_time_messaging_product_block_mpCiRU",
         "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA",
+        "affirm_pay_over_time_messaging_product_block_mpCiRU",
         "nw_benifits_list_xTL4Mb",
         "icon_text_WTq7CJ",
         "icon_text_Q78m9x",
