@@ -14,9 +14,6 @@
 
   assign current_variant = sticky_product.selected_or_first_available_variant
   assign sticky_title = sticky_product.title
-  if section.settings.custom_title_override != blank
-    assign sticky_title = section.settings.custom_title_override
-  endif
   assign sticky_excerpt = sticky_product.metafields.custom.card_description.value | default: sticky_product.metafields.custom.card_description | default: sticky_product.metafields.custom.short_description.value | default: sticky_product.metafields.custom.short_description
 
   assign sticky_image = current_variant.featured_image | default: sticky_product.featured_image
@@ -243,12 +240,6 @@
     {
       "type": "header",
       "content": "CONTENT"
-    },
-    {
-      "type": "text",
-      "id": "custom_title_override",
-      "label": "Custom Title Override",
-      "info": "Optional. Displays instead of the product title when set."
     },
     {
       "type": "checkbox",
