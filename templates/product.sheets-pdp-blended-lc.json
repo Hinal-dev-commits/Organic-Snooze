@@ -268,6 +268,7 @@
         },
         "trust_badges_UF8dKt": {
           "type": "trust_badges",
+          "disabled": true,
           "settings": {
             "item_1_text": "100-Night Risk-Free Trial",
             "item_1_icon": "trial",
@@ -415,7 +416,7 @@
             "item_3_icon": "award",
             "item_3_use_custom_icon": true,
             "item_3_custom_icon": "shopify://shop_images/image_1254_Vectorized_2.svg",
-            "item_4_text": "30-Year Warranty",
+            "item_4_text": "1-Year Warranty",
             "item_4_icon": "warranty-check",
             "item_4_use_custom_icon": true,
             "item_4_custom_icon": "shopify://shop_images/image_1254_Vectorized_3.svg",
@@ -1178,8 +1179,11 @@
         "layout_width": "full_width",
         "heading": "Everything You Sleep On Matters",
         "subheading": "<p>The people who feel their best tomorrow are the ones who prioritize sleep tonight.</p><p></p>",
+        "media_type_desktop": "image",
         "image": "shopify://shop_images/recovery-desktop.png",
+        "media_type_mobile": "image",
         "image_mobile": "shopify://shop_images/recovery-mobile.png",
+        "video_autoplay": true,
         "heading_color": "#613916",
         "description_color": "#613916",
         "box_bg_color": "#fbf9f6",
