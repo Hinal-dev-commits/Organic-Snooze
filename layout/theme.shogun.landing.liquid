@@ -97,7 +97,9 @@ This file can be re-written at any time.
     {% render 'nw-theme-styles' %}
     {% render 'nw-theme-stylesheets' %}
     {% render 'nw-script' %}
-  </head>
+  
+  {% render 'shogun-head' %}
+</head>
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} nw-theme-{{ template.name }}">
     {% include 'shogun-content-handler' %}
 

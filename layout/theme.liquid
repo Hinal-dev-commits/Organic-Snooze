@@ -1,3 +1,4 @@
+{% include 'shogun-content-handler' %}
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
@@ -92,7 +93,9 @@
     {% render 'nw-theme-styles' %}
     {% render 'nw-theme-stylesheets' %}
     {% render 'nw-script' %}
-  </head>
+  
+  {% render 'shogun-head' %}
+</head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} nw-theme-{{ template.name }}">
     <div id="scrollbar-measure">
