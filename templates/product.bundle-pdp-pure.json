@@ -629,6 +629,31 @@
         "padding_bottom_mobile": 48
       }
     },
+    "nw_sticky_bar_bundle": {
+      "type": "nw-sticky-bar",
+      "name": "NW Sticky Bar",
+      "settings": {
+        "show_image": true,
+        "show_variant": true,
+        "show_description": true,
+        "show_save": true,
+        "save_prefix": "You save",
+        "show_affirm": true,
+        "change_options_label": "Change options",
+        "drawer_close_label": "Close",
+        "button_text": "",
+        "button_style": "primary",
+        "visibility_mode": "buy_buttons",
+        "scroll_offset": 360,
+        "z_index": 5,
+        "bar_bg_color": "#fffcf0",
+        "bar_border_color": "#61391626",
+        "title_color": "#613916",
+        "variant_color": "#613916",
+        "price_color": "#613916",
+        "save_color": "#454500"
+      }
+    },
     "disclosures": {
       "type": "disclosures",
       "disabled": true,
@@ -1691,6 +1716,7 @@
   },
   "order": [
     "main",
+    "nw_sticky_bar_bundle",
     "disclosures",
     "related-products",
     "nw_layer_product_VqmfzG",
