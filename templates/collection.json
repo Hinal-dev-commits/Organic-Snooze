@@ -9,6 +9,14 @@
  */
 {
   "sections": {
+    "shogun-helper": {
+      "type": "shogun-helper",
+      "settings": {}
+    },
+    "shogun-above": {
+      "type": "shogun-above",
+      "settings": {}
+    },
     "banner": {
       "type": "main-collection-banner",
       "disabled": true,
@@ -100,7 +108,7 @@
         "collection_BH7My6": {
           "type": "collection",
           "settings": {
-            "collection": "bundles-ultimate-sleep-optimization-system",
+            "collection": "bundle",
             "label": "Bundle & Save"
           }
         },
@@ -1297,16 +1305,8 @@
         "padding_bottom_mobile": 48
       }
     },
-    "shogun-above": {
-      "type": "shogun-above",
-      "settings": {}
-    },
     "shogun-below": {
       "type": "shogun-below",
-      "settings": {}
-    },
-    "shogun-helper": {
-      "type": "shogun-helper",
       "settings": {}
     },
     "shogun-optimizer": {
