@@ -1,0 +1,29 @@
+{% doc %}
+  Slider shell for nw-product-list (arrows, pagination, slides).
+  @param {object} section - Section settings
+  @param {string} mode - collection, product_list, or recommendations
+  @param {number} product_count - Visible slide count after filtering
+{% enddoc %}
+
+<div class="nw-product-list__slider-wrap">
+  <div class="swiper nw-product-list__swiper" id="NwProductListSwiper-{{ section.id }}">
+    <div class="swiper-wrapper">
+      {% render 'nw-product-list-slides', section: section, mode: mode %}
+    </div>
+  </div>
+
+  {%- if section.settings.show_arrows -%}
+    {% render 'nw-swiper-arrows', prev_class: ' nw-product-list__arrow', next_class: ' nw-product-list__arrow' %}
+  {%- endif -%}
+
+  {%- if section.settings.show_pagination and product_count > 1 -%}
+    <div class="nw-swiper-pagination" id="NwProductListPagination-{{ section.id }}" data-nw-pl-pagination>
+      {%- for i in (1..product_count) -%}
+        <span
+          class="swiper-pagination-bullet{% if forloop.first %} swiper-pagination-bullet-active{% endif %}"
+          data-bullet-index="{{ forloop.index0 }}"
+        ></span>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>

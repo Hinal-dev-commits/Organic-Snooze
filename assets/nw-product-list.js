@@ -3,19 +3,44 @@ if (!customElements.get('nw-product-list')) {
     connectedCallback() {
       this.swiperInstance = null;
       this.originalCount = 0;
-      var sliderEl = this.querySelector('.nw-product-list__swiper');
-      if (sliderEl) {
-        this.originalCount = sliderEl.querySelectorAll('.swiper-wrapper > .swiper-slide:not([data-nw-pl-clone])').length;
-      }
+      this._recsObserver = null;
+      this._syncOriginalCount();
       this._initSwiper();
+      this._observeRecommendations();
     }
 
     disconnectedCallback() {
+      if (this._recsObserver) {
+        this._recsObserver.disconnect();
+        this._recsObserver = null;
+      }
       var sliderEl = this.querySelector('.nw-product-list__swiper');
       if (sliderEl && sliderEl.swiper) {
         sliderEl.swiper.destroy(true, true);
       }
       this.swiperInstance = null;
+    }
+
+    _syncOriginalCount() {
+      var sliderEl = this.querySelector('.nw-product-list__swiper');
+      if (!sliderEl) {
+        this.originalCount = 0;
+        return;
+      }
+      this.originalCount = sliderEl.querySelectorAll('.swiper-wrapper > .swiper-slide:not([data-nw-pl-clone])').length;
+    }
+
+    _observeRecommendations() {
+      var recs = this.querySelector('product-recommendations.nw-product-list__recommendations');
+      if (!recs || this._recsObserver) return;
+
+      this._recsObserver = new MutationObserver(() => {
+        this._syncOriginalCount();
+        if (this.originalCount > 0) {
+          this._initSwiper();
+        }
+      });
+      this._recsObserver.observe(recs, { childList: true, subtree: true });
     }
 
     _whenSwiperReady(callback) {

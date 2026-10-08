@@ -1,0 +1,85 @@
+{% doc %}
+  Renders nw-product-list swiper slides, skipping products tagged exclude-recommendation.
+  @param {object} section - Section settings
+  @param {string} mode - collection, product_list, or recommendations
+{% enddoc %}
+
+{%- liquid
+  assign nw_rec_exclude_tag = 'exclude-recommendation'
+  assign max_products = section.settings.products_to_show | default: 8
+  assign slides_rendered = 0
+-%}
+
+{%- if mode == 'collection' and section.settings.collection != blank -%}
+  {%- for list_product in section.settings.collection.products -%}
+    {%- if list_product.tags contains nw_rec_exclude_tag -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- if slides_rendered >= max_products -%}
+      {%- break -%}
+    {%- endif -%}
+    <div class="swiper-slide">
+      {% render 'nw-product-card',
+        product: list_product,
+        section_id: section.id,
+        show_rating: section.settings.show_rating,
+        show_firmness: section.settings.show_firmness,
+        show_seller_tag: section.settings.show_seller_tag,
+        show_best_for: section.settings.show_best_for,
+        firmness_label_soft: section.settings.firmness_label_soft,
+        firmness_label_firm: section.settings.firmness_label_firm,
+        button_text: section.settings.button_text,
+        button_style: section.settings.button_style,
+        lazy_load: true
+      %}
+    </div>
+    {%- assign slides_rendered = slides_rendered | plus: 1 -%}
+  {%- endfor -%}
+{%- elsif mode == 'product_list' and section.settings.product_list != blank -%}
+  {%- for list_product in section.settings.product_list -%}
+    {%- if list_product.tags contains nw_rec_exclude_tag -%}
+      {%- continue -%}
+    {%- endif -%}
+    <div class="swiper-slide">
+      {% render 'nw-product-card',
+        product: list_product,
+        section_id: section.id,
+        show_rating: section.settings.show_rating,
+        show_firmness: section.settings.show_firmness,
+        show_seller_tag: section.settings.show_seller_tag,
+        show_best_for: section.settings.show_best_for,
+        firmness_label_soft: section.settings.firmness_label_soft,
+        firmness_label_firm: section.settings.firmness_label_firm,
+        button_text: section.settings.button_text,
+        button_style: section.settings.button_style,
+        lazy_load: true
+      %}
+    </div>
+    {%- assign slides_rendered = slides_rendered | plus: 1 -%}
+  {%- endfor -%}
+{%- elsif mode == 'recommendations' and recommendations.performed and recommendations.products_count > 0 -%}
+  {%- for list_product in recommendations.products -%}
+    {%- if list_product.tags contains nw_rec_exclude_tag -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- if slides_rendered >= max_products -%}
+      {%- break -%}
+    {%- endif -%}
+    <div class="swiper-slide">
+      {% render 'nw-product-card',
+        product: list_product,
+        section_id: section.id,
+        show_rating: section.settings.show_rating,
+        show_firmness: section.settings.show_firmness,
+        show_seller_tag: section.settings.show_seller_tag,
+        show_best_for: section.settings.show_best_for,
+        firmness_label_soft: section.settings.firmness_label_soft,
+        firmness_label_firm: section.settings.firmness_label_firm,
+        button_text: section.settings.button_text,
+        button_style: section.settings.button_style,
+        lazy_load: true
+      %}
+    </div>
+    {%- assign slides_rendered = slides_rendered | plus: 1 -%}
+  {%- endfor -%}
+{%- endif -%}
