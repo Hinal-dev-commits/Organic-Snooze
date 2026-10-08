@@ -24,7 +24,7 @@
         "title": {
           "type": "title",
           "settings": {
-            "custom_title": "Breezeline Air Sheet Set Organic Cotton",
+            "custom_title": "Organic Water Resistant Protector",
             "margin_top": 0,
             "margin_bottom": 14,
             "margin_top_mobile": 0,
@@ -34,7 +34,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>Classic organic cotton sheets with a crisp hotel-sheet feel that becomes softer with every wash. Comfortable, breathable, and built to last.</p><p></p>",
+            "custom_description": "<p>100% cotton mattress protector, ith elastic straps to fit most mattresses and protect from spills, stains, and tears.</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -101,7 +101,7 @@
           "type": "icon_text",
           "settings": {
             "style": "checklist",
-            "text": "15\" Pocketed Elastic Fitted Sheet",
+            "text": "15\" Pocketed Elastic Fitted Straps",
             "use_custom_icon": true,
             "icon": "trial",
             "custom_icon": "shopify://shop_images/icon_deffd60d-2298-49f5-8117-97fe50807da7.png",
@@ -120,7 +120,7 @@
           "type": "icon_text",
           "settings": {
             "style": "checklist",
-            "text": "Luxury Soft Cotton Feel",
+            "text": "Soft Thick Cotton Feel",
             "use_custom_icon": true,
             "icon": "trial",
             "custom_icon": "shopify://shop_images/TUS_-_Icons_8f2237a8-1ae9-4862-9068-6da79d636310.png",
@@ -158,7 +158,7 @@
           "type": "icon_text",
           "settings": {
             "style": "checklist",
-            "text": "Softer With Every Wash",
+            "text": "Machine Washable",
             "use_custom_icon": true,
             "icon": "trial",
             "custom_icon": "shopify://shop_images/icon_1306e386-ff60-4346-89fd-e3387333d922.png",
@@ -193,21 +193,6 @@
             "option_position_order": "Size, Firmness",
             "option_1_values_order": "",
             "option_2_values_order": "",
-            "margin_top": 32,
-            "margin_bottom": 32,
-            "margin_top_mobile": 24,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "whats_included_NYfjML": {
-          "type": "whats_included",
-          "settings": {
-            "heading": "What's Included",
-            "items": "1 Flat Sheet\n1 Fitted Sheet\n2 Pillow Cases",
-            "use_product_metafield": false,
-            "heading_color": "#613916",
-            "text_color": "#613916",
-            "icon_color": "#613916",
             "margin_top": 32,
             "margin_bottom": 32,
             "margin_top_mobile": 24,
@@ -313,7 +298,7 @@
           "settings": {
             "heading": "How it feels",
             "icon": "none",
-            "content": "<p>Soft, airy, and breathable with a luxury hotel &nbsp;cotton feel. The Breezeline weave allows air to flow freely, helping release heat instead of trapping it for a cooler, more comfortable night's sleep. Every wash makes them even softer.</p><p></p>",
+            "content": "<p>Most mattress protectors use PVC, and plastic base waterproof materials. Ours uses 100% Thick Cotton with tight weave for water resistance and protection. This protector won't add a crunchy plastic feel and will keep the soft cotton feel of the mattress.</p><p></p>",
             "page": "",
             "margin_top": 40,
             "margin_bottom": 0,
@@ -326,7 +311,7 @@
           "settings": {
             "heading": "Product Specifications",
             "icon": "none",
-            "content": "<ul><li>Includes 1 flat sheet, 1 fitted sheet, and 2 pillowcases&nbsp;</li><li>100% certified organic cotton</li><li>300 thread count, single-ply Breezeline™ sateen weave</li><li>Engineered for airflow and natural breathability</li><li>Deep-pocket fitted sheet fits mattresses up to 15\"</li><li>Reinforced elastic for a secure fit</li><li>Machine washable</li><li>Handcrafted in the USA</li></ul><p><em>(Twin/Twin XL includes 1 pillowcase)</em></p>",
+            "content": "<p></p><ul><li>100% certified organic cotton</li><li>Engineered for water and tear resistance</li><li>Fitted corners fits mattresses up to 15\" deep</li><li>Reinforced elastic for a secure fit</li><li>Machine washable</li><li>Handcrafted in the USA</li></ul>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -379,6 +364,7 @@
         },
         "customer_videos_JijkkX": {
           "type": "customer_videos",
+          "disabled": true,
           "settings": {
             "heading": "Why Customers Love Organic Snooze",
             "show_pagination": true,
@@ -453,7 +439,6 @@
         "icon_text_ykzhxB",
         "icon_text_3FhWzM",
         "variant_picker",
-        "whats_included_NYfjML",
         "quantity_selector",
         "bundle_save_K4nQ2p",
         "buy_buttons",
@@ -1003,7 +988,7 @@
         "cta_text": "Shop Now",
         "heading_color": "#613916",
         "description_color": "#613916",
-        "card_bg_color": "#FFFCF0",
+        "card_bg_color": "#fffcf0",
         "card_text_color": "#613916",
         "card_title_color": "#613916",
         "label_color": "#61391699",
@@ -1178,8 +1163,11 @@
         "layout_width": "full_width",
         "heading": "Everything You Sleep On Matters",
         "subheading": "<p>The people who feel their best tomorrow are the ones who prioritize sleep tonight.</p><p></p>",
+        "media_type_desktop": "image",
         "image": "shopify://shop_images/recovery-desktop.png",
+        "media_type_mobile": "image",
         "image_mobile": "shopify://shop_images/recovery-mobile.png",
+        "video_autoplay": true,
         "heading_color": "#613916",
         "description_color": "#613916",
         "box_bg_color": "#fbf9f6",
