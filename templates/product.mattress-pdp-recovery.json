@@ -153,7 +153,7 @@
             "icon_gap": 8,
             "margin_top": 17,
             "margin_bottom": 8,
-            "margin_top_mobile": 24,
+            "margin_top_mobile": 3,
             "margin_bottom_mobile": 5
           }
         },
@@ -304,6 +304,7 @@
         },
         "bundle_save_K4nQ2p": {
           "type": "bundle_save",
+          "disabled": true,
           "settings": {
             "product_source": "product_list",
             "product_list": [
@@ -346,6 +347,7 @@
         },
         "shipping_tag_Agd7QN": {
           "type": "shipping_tag",
+          "disabled": true,
           "settings": {
             "text": "Ships from USA",
             "delivery_threshold_days": 2,
