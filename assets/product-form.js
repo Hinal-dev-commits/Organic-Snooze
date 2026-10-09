@@ -460,9 +460,12 @@ if (!customElements.get('product-form')) {
           if (!variantId || seen.has(variantId)) return items;
           seen.add(variantId);
 
+          const defaultQty = parseInt(item.dataset.bundleDefaultQty, 10);
+          const quantity = Number.isFinite(defaultQty) && defaultQty > 0 ? defaultQty : 1;
+
           const cartItem = {
             id: variantId,
-            quantity: 1,
+            quantity,
           };
 
           const properties = {

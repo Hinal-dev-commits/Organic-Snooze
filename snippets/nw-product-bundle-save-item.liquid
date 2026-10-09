@@ -35,13 +35,35 @@
   endif
 
   assign check_id = 'BundleSave-' | append: block.id | append: '-' | append: bundle_product.id
-  assign bundle_product_title = bundle_product.metafields.custom.product_title.value | default: bundle_product.metafields.custom.product_title
+  assign bundle_product_title = bundle_product.metafields.custom.addon_title.value | default: bundle_product.metafields.custom.addon_title
   if bundle_product_title == blank
     assign bundle_product_title = bundle_product.title
   endif
   assign has_options = true
   if bundle_product.has_only_default_variant
     assign has_options = false
+  endif
+
+  assign bundle_item_qty_raw = bundle_product.metafields.custom.addon_qty.value | default: bundle_product.metafields.custom.addon_qty
+  assign bundle_item_qty = bundle_item_qty_raw | plus: 0
+  if bundle_item_qty_raw == blank or bundle_item_qty < 1
+    assign bundle_item_qty = 1
+  endif
+
+  assign qty_min = current_variant.quantity_rule.min | default: 1
+  assign qty_max = current_variant.quantity_rule.max
+  assign qty_step = current_variant.quantity_rule.increment | default: 1
+  if qty_min < 1
+    assign qty_min = 1
+  endif
+  if qty_step < 1
+    assign qty_step = 1
+  endif
+  if bundle_item_qty < qty_min
+    assign bundle_item_qty = qty_min
+  endif
+  if qty_max != null and bundle_item_qty > qty_max
+    assign bundle_item_qty = qty_max
   endif
 
   assign rating_value = blank
@@ -65,6 +87,7 @@
   data-variant-id="{{ current_variant.id }}"
   data-available="{{ current_variant.available }}"
   data-short-title="{{ short_title | escape }}"
+  data-bundle-default-qty="{{ bundle_item_qty }}"
 >
   <div class="nw-bundle-save__row">
     <label class="nw-bundle-save__toggle" for="{{ check_id }}">
@@ -235,6 +258,7 @@
       "rating_value": {% if rating_value != blank %}{{ rating_value | json }}{% else %}null{% endif %},
       "rating_scale": {{ rating_scale | json }},
       "rating_count": {{ rating_count | json }},
+      "default_quantity": {{ bundle_item_qty | json }},
       "media": [
         {%- for media in bundle_product.media limit: 8 -%}
           {%- liquid

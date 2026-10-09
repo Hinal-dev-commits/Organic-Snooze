@@ -9,7 +9,7 @@
   assign preview_product = bundle_product_item | default: bundle_product
   assign current_variant = preview_product.selected_or_first_available_variant
   assign preview_image = current_variant.featured_media.preview_image | default: current_variant.image | default: preview_product.featured_image
-  assign preview_title = preview_product.metafields.custom.product_title.value | default: preview_product.metafields.custom.product_title
+  assign preview_title = preview_product.metafields.custom.addon_title.value | default: preview_product.metafields.custom.addon_title
   if preview_title == blank
     assign preview_title = preview_product.title
   endif
