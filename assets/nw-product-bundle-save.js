@@ -67,6 +67,16 @@ if (!customElements.get('nw-bundle-save')) {
         if (options) options.hidden = !selected;
       }
 
+      getItemQuantity(item) {
+        const fromDataset = parseInt(item.dataset.bundleDefaultQty, 10);
+        if (Number.isFinite(fromDataset) && fromDataset > 0) return fromDataset;
+
+        const fromJson = Number(item._bundleProduct?.default_quantity);
+        if (Number.isFinite(fromJson) && fromJson > 0) return fromJson;
+
+        return 1;
+      }
+
       onOptionChange(item, control) {
         const fieldset = control.closest('fieldset');
         if (fieldset) {
@@ -138,7 +148,7 @@ if (!customElements.get('nw-bundle-save')) {
 
           items.push({
             id: variantId,
-            quantity: 1,
+            quantity: this.getItemQuantity(item),
             properties,
           });
 
@@ -196,7 +206,9 @@ if (!customElements.get('nw-bundle-save')) {
         let totalSaveCents = 0;
         selected.forEach((item) => {
           const variant = this.findVariant(item);
-          if (variant?.save_cents) totalSaveCents += Number(variant.save_cents) || 0;
+          if (variant?.save_cents) {
+            totalSaveCents += (Number(variant.save_cents) || 0) * this.getItemQuantity(item);
+          }
         });
 
         if (count > 0) {
