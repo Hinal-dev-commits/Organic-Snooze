@@ -1,0 +1,305 @@
+{{ 'nw-help-cta.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwHelpCta-' | append: section.id -%}
+
+{% capture nw_shell_extra %}
+  --nw-hc-heading: {{ section.settings.heading_color | default: '#2E2A26' }};
+  --nw-hc-desc: {{ section.settings.description_color | default: '#6F655C' }};
+  --nw-hc-btn-primary-bg: {{ section.settings.button_primary_bg | default: '#C68B5F' }};
+  --nw-hc-btn-primary-text: {{ section.settings.button_primary_text_color | default: '#FFFFFF' }};
+  --nw-hc-btn-outline-border: {{ section.settings.button_outline_border | default: '#6B3D1F' }};
+  --nw-hc-btn-outline-text: {{ section.settings.button_outline_text_color | default: '#6A3D1E' }};
+  --nw-hc-btn-primary-bg-hover: {{ section.settings.button_primary_bg_hover | default: '#B57D57' }};
+  --nw-hc-btn-primary-text-hover: {{ section.settings.button_primary_text_color_hover | default: '#FFFFFF' }};
+  --nw-hc-btn-outline-bg-hover: {{ section.settings.button_outline_bg_hover | default: '#6B3D1F' }};
+  --nw-hc-btn-outline-border-hover: {{ section.settings.button_outline_border_hover | default: '#6B3D1F' }};
+  --nw-hc-btn-outline-text-hover: {{ section.settings.button_outline_text_color_hover | default: '#FFFFFF' }};
+{% endcapture %}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', extra: nw_shell_extra, default_bg: '#FAF6F1' %}
+
+<section
+  id="NwHelpCta-{{ section.id }}"
+  class="nw-help-cta section-{{ section.id }}"
+>
+  <div class="nw-help-cta__inner{%- render 'nw-scroll-animation' -%}">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="nw-help-cta__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.description != blank -%}
+      <div class="nw-help-cta__description">{{ section.settings.description }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.show_button_primary or section.settings.show_button_secondary -%}
+      <div class="nw-help-cta__actions">
+        {%- if section.settings.show_button_primary and section.settings.button_primary_text != blank -%}
+          {% render 'nw-button',
+            text: section.settings.button_primary_text,
+            link: section.settings.button_primary_link,
+            style: 'primary',
+            btn_class: 'nw-help-cta__btn nw-help-cta__btn--primary'
+          %}
+        {%- endif -%}
+
+        {%- if section.settings.show_button_secondary and section.settings.button_secondary_text != blank -%}
+          {% render 'nw-button',
+            text: section.settings.button_secondary_text,
+            link: section.settings.button_secondary_link,
+            style: 'outline',
+            btn_class: 'nw-help-cta__btn nw-help-cta__btn--outline'
+          %}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.nw-help-cta.name",
+  "tag": "section",
+  "class": "section-nw-help-cta",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Don't See A Store Near You?"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Shop online with free shipping and our 100-Night Risk-Free Trial, or talk with a live sleep expert.</p>"
+    },
+    {
+      "type": "header",
+      "content": "PRIMARY BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_primary",
+      "label": "Show Primary Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_primary_text",
+      "label": "Primary Button Label",
+      "default": "Shop The Mattress",
+      "visible_if": "{{ section.settings.show_button_primary == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_primary_link",
+      "label": "Primary Button Link",
+      "visible_if": "{{ section.settings.show_button_primary == true }}"
+    },
+    {
+      "type": "header",
+      "content": "SECONDARY BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button_secondary",
+      "label": "Show Secondary Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_secondary_text",
+      "label": "Secondary Button Label",
+      "default": "Call (443) 333-1213",
+      "visible_if": "{{ section.settings.show_button_secondary == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_secondary_link",
+      "label": "Secondary Button Link",
+      "visible_if": "{{ section.settings.show_button_secondary == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#2E2A26",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#6F655C",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BUTTON COLORS"
+    },
+    {
+      "type": "color",
+      "id": "button_primary_bg",
+      "label": "Primary Button Background",
+      "default": "#C68B5F",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_primary_text_color",
+      "label": "Primary Button Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_outline_border",
+      "label": "Outline Button Border",
+      "default": "#6B3D1F",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_outline_text_color",
+      "label": "Outline Button Text Color",
+      "default": "#6A3D1E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_primary_bg_hover",
+      "label": "Primary Button Background (Hover)",
+      "default": "#B57D57",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_primary_text_color_hover",
+      "label": "Primary Button Text Color (Hover)",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_outline_bg_hover",
+      "label": "Outline Button Background (Hover)",
+      "default": "#6B3D1F",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_outline_border_hover",
+      "label": "Outline Button Border (Hover)",
+      "default": "#6B3D1F",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_outline_text_color_hover",
+      "label": "Outline Button Text Color (Hover)",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FAF6F1",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-help-cta.name",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

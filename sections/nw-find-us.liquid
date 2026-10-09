@@ -1,0 +1,433 @@
+{{ 'nw-find-us.css' | asset_url | stylesheet_tag }}
+
+{%- assign nw_shell_selector = '#NwFindUs-' | append: section.id -%}
+
+{% capture nw_shell_extra %}
+  --nw-fu-inner-max: {{ section.settings.content_max_width | default: 960 }}px;
+  --nw-fu-desc-max: {{ section.settings.description_max_width | default: 560 }}px;
+  --nw-fu-card-max: {{ section.settings.search_card_max_width | default: 720 }}px;
+  --nw-fu-eyebrow: {{ section.settings.eyebrow_color | default: '#A86F45' }};
+  --nw-fu-heading: {{ section.settings.heading_color | default: '#2E2A26' }};
+  --nw-fu-desc: {{ section.settings.description_color | default: '#6F655C' }};
+  --nw-fu-card-bg: {{ section.settings.card_bg_color | default: '#FFFFFF' }};
+  --nw-fu-card-border: {{ section.settings.card_border_color | default: '#E5DBCF' }};
+  --nw-fu-search-label: {{ section.settings.search_label_color | default: '#2E2A26' }};
+  --nw-fu-field-bg: {{ section.settings.field_bg_color | default: '#FAF6F1' }};
+  --nw-fu-field-border: {{ section.settings.field_border_color | default: '#E5DBCF' }};
+  --nw-fu-field-icon: {{ section.settings.field_icon_color | default: '#A86F45' }};
+  --nw-fu-input: {{ section.settings.input_text_color | default: '#2E2A26' }};
+  --nw-fu-placeholder: {{ section.settings.input_placeholder_color | default: '#6F655C' }};
+  --nw-fu-submit-bg: {{ section.settings.submit_bg_color | default: '#C68B5F' }};
+  --nw-fu-submit-text: {{ section.settings.submit_text_color | default: '#FFFFFF' }};
+  --nw-fu-location-dot: {{ section.settings.location_dot_color | default: '#7C8A4E' }};
+  --nw-fu-location-text: {{ section.settings.location_text_color | default: '#2E2A26' }};
+  --nw-fu-location-text-hover: {{ section.settings.location_text_hover_color | default: '#1A1816' }};
+  --nw-fu-submit-bg-hover: {{ section.settings.submit_bg_hover_color | default: '#B37A4B' }};
+  --nw-fu-submit-text-hover: {{ section.settings.submit_text_hover_color | default: '#FFFFFF' }};
+{% endcapture %}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FAF6F1', extra: nw_shell_extra %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<section id="NwFindUs-{{ section.id }}" class="nw-find-us section-{{ section.id }}">
+  <div class="nw-find-us__inner{%- render 'nw-scroll-animation' -%}">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="nw-eyebrow nw-find-us__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <div class="nw-find-us__heading">
+      {% render 'nw-section-heading',
+        text: section.settings.heading,
+        section_index: section.index
+      %}
+    </div>
+
+    {% render 'nw-section-description',
+      text: section.settings.description,
+      class: 'nw-find-us__description'
+    %}
+
+    {%- if section.settings.show_search_card -%}
+      <div class="nw-find-us__search-card">
+        {%- if section.settings.search_label != blank -%}
+          <p class="nw-find-us__search-label">{{ section.settings.search_label }}</p>
+        {%- endif -%}
+
+        <div class="nw-find-us__search-row">
+          <label class="nw-find-us__field">
+            <span class="nw-find-us__field-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </span>
+            <input
+              type="text"
+              class="nw-find-us__input"
+              placeholder="{{ section.settings.input_placeholder | escape }}"
+              autocomplete="postal-code"
+              aria-label="{{ section.settings.input_aria_label | escape }}"
+              
+            >
+          </label>
+
+          {%- if section.settings.submit_button_text != blank -%}
+            <button type="button" class="nw-find-us__submit nw-button-primary" >
+              <span class="nw-find-us__submit-text">{{ section.settings.submit_button_text }}</span>
+            </button>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_location_button and section.settings.location_button_text != blank -%}
+          <button type="button" class="nw-find-us__location" >
+            <span class="nw-find-us__location-dot" aria-hidden="true"></span>
+            <span class="nw-find-us__location-text">{{ section.settings.location_button_text }}</span>
+          </button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.nw-find-us.name",
+  "tag": "section",
+  "class": "section-nw-find-us",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Find Us In Person"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find A Store Near You"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Feel the difference of certified organic sleep at one of our retail partners.</p>"
+    },
+    {
+      "type": "header",
+      "content": "LAYOUT"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content Max Width",
+      "min": 640,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "default": 960
+    },
+    {
+      "type": "range",
+      "id": "description_max_width",
+      "label": "Description Max Width",
+      "min": 320,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 560
+    },
+    {
+      "type": "range",
+      "id": "search_card_max_width",
+      "label": "Search Card Max Width",
+      "min": 480,
+      "max": 960,
+      "step": 20,
+      "unit": "px",
+      "default": 720
+    },
+    {
+      "type": "header",
+      "content": "SEARCH"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_card",
+      "label": "Show Search Card",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Search Label",
+      "default": "Type your ZIP code or state below",
+      "visible_if": "{{ section.settings.show_search_card == true }}"
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "Input Placeholder",
+      "default": "e.g. 80202 or Colorado",
+      "visible_if": "{{ section.settings.show_search_card == true }}"
+    },
+    {
+      "type": "text",
+      "id": "input_aria_label",
+      "label": "Input Accessibility Label",
+      "default": "ZIP code or state",
+      "visible_if": "{{ section.settings.show_search_card == true }}"
+    },
+    {
+      "type": "text",
+      "id": "submit_button_text",
+      "label": "Submit Button Label",
+      "default": "Find Stores",
+      "visible_if": "{{ section.settings.show_search_card == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_location_button",
+      "label": "Show Location Link",
+      "default": true,
+      "visible_if": "{{ section.settings.show_search_card == true }}"
+    },
+    {
+      "type": "text",
+      "id": "location_button_text",
+      "label": "Location Link Label",
+      "default": "Use my current location",
+      "visible_if": "{{ section.settings.show_search_card == true and section.settings.show_location_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#2E2A26",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#6F655C",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color",
+      "default": "#A86F45",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "SEARCH COLORS"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border",
+      "default": "#E5DBCF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "search_label_color",
+      "label": "Search Label Color",
+      "default": "#2E2A26",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "field_bg_color",
+      "label": "Field Background",
+      "default": "#FAF6F1",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "field_border_color",
+      "label": "Field Border",
+      "default": "#E5DBCF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "field_icon_color",
+      "label": "Field Icon Color",
+      "default": "#A86F45",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "Input Text Color",
+      "default": "#2E2A26",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "input_placeholder_color",
+      "label": "Placeholder Color",
+      "default": "#6F655C",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "submit_bg_color",
+      "label": "Submit Button Background",
+      "default": "#C68B5F",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "submit_text_color",
+      "label": "Submit Button Text",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "submit_bg_hover_color",
+      "label": "Submit Button Background Hover",
+      "default": "#B37A4B",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "submit_text_hover_color",
+      "label": "Submit Button Text Hover",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "location_dot_color",
+      "label": "Location Dot Color",
+      "default": "#7C8A4E",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "location_text_color",
+      "label": "Location Link Color",
+      "default": "#2E2A26",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "location_text_hover_color",
+      "label": "Location Link Text Hover",
+      "default": "#1A1816",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FAF6F1",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile Optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-find-us.name",
+      "category": "NW Sections"
+    }
+  ]
+}
+{% endschema %}

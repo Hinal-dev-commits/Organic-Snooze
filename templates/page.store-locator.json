@@ -1,0 +1,174 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "nw_find_us_rmaBAe": {
+      "type": "nw-find-us",
+      "name": "t:sections.nw-find-us.name",
+      "settings": {
+        "eyebrow": "Find Us In Person",
+        "heading": "Find A Store Near You",
+        "description": "<p>Feel the difference of certified organic sleep at one of our retail partners.</p>",
+        "content_max_width": 960,
+        "description_max_width": 560,
+        "search_card_max_width": 720,
+        "show_search_card": true,
+        "search_label": "Type your ZIP code or state below",
+        "input_placeholder": "e.g. 80202 or Colorado",
+        "input_aria_label": "ZIP code or state",
+        "submit_button_text": "Find Stores",
+        "show_location_button": true,
+        "location_button_text": "Use my current location",
+        "heading_color": "#2e2a26",
+        "description_color": "#6f655c",
+        "eyebrow_color": "#a86f45",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#e5dbcf",
+        "search_label_color": "#2e2a26",
+        "field_bg_color": "#faf6f1",
+        "field_border_color": "#e5dbcf",
+        "field_icon_color": "#a86f45",
+        "input_text_color": "#2e2a26",
+        "input_placeholder_color": "#6f655c",
+        "submit_bg_color": "#c68b5f",
+        "submit_text_color": "#ffffff",
+        "submit_bg_hover_color": "#b37a4b",
+        "submit_text_hover_color": "#ffffff",
+        "location_dot_color": "#7c8a4e",
+        "location_text_color": "#2e2a26",
+        "location_text_hover_color": "#1a1816",
+        "bg_type": "color",
+        "bg_color": "#faf6f1",
+        "bg_gradient": "",
+        "padding_top_desktop": 72,
+        "padding_bottom_desktop": 56,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 32
+      }
+    },
+    "nw_help_cta_jWpiUL": {
+      "type": "nw-help-cta",
+      "name": "t:sections.nw-help-cta.name",
+      "settings": {
+        "heading": "Don't See A Store Near You?",
+        "description": "<p>Shop online with free shipping and our 100-Night Risk-Free Trial, or talk with a live sleep expert.</p>",
+        "show_button_primary": true,
+        "button_primary_text": "Shop The Mattress",
+        "button_primary_link": "shopify://collections/mattress",
+        "show_button_secondary": true,
+        "button_secondary_text": "Call (443) 333-1213",
+        "button_secondary_link": "tel:443333-1213",
+        "heading_color": "#2e2a26",
+        "description_color": "#6f655c",
+        "button_primary_bg": "#c68b5f",
+        "button_primary_text_color": "#ffffff",
+        "button_outline_border": "#6b3d1f",
+        "button_outline_text_color": "#6a3d1e",
+        "bg_type": "color",
+        "bg_color": "#faf6f1",
+        "bg_gradient": "",
+        "padding_top_desktop": 72,
+        "padding_bottom_desktop": 72,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "nw_benefits_v2_7c68rt": {
+      "type": "nw-benefits-v2",
+      "blocks": {
+        "benefit_JxmiiY": {
+          "type": "benefit",
+          "settings": {
+            "icon": "moneyback",
+            "use_custom_image": false,
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "benefit_fLRBpF": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "use_custom_image": true,
+            "text": "30-Year Warranty"
+          }
+        },
+        "benefit_BDgDpP": {
+          "type": "benefit",
+          "settings": {
+            "icon": "financing",
+            "use_custom_image": false,
+            "text": "0% Interest financing options"
+          }
+        },
+        "benefit_BcAePp": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "use_custom_image": false,
+            "text": "Free Shipping"
+          }
+        },
+        "logo_hXQJfY": {
+          "type": "logo",
+          "settings": {
+            "use_custom_image": true,
+            "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
+            "logo_type": "affirm",
+            "text": "Pay over time",
+            "link": ""
+          }
+        },
+        "logo_yB7qzY": {
+          "type": "logo",
+          "settings": {
+            "use_custom_image": true,
+            "image": "shopify://shop_images/image_1269.png",
+            "logo_type": "hsa_fsa",
+            "text": "Use your benefits",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "benefit_JxmiiY",
+        "benefit_fLRBpF",
+        "benefit_BDgDpP",
+        "benefit_BcAePp",
+        "logo_hXQJfY",
+        "logo_yB7qzY"
+      ],
+      "name": "NW Benefits V2",
+      "settings": {
+        "bg_type": "color",
+        "bg_color": "#f4efe8",
+        "bg_gradient": "",
+        "bg_overlay_color": "#f4efe8d6",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    }
+  },
+  "order": [
+    "main",
+    "nw_find_us_rmaBAe",
+    "nw_help_cta_jWpiUL",
+    "nw_benefits_v2_7c68rt"
+  ]
+}

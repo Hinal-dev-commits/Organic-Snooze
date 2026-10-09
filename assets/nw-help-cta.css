@@ -1,0 +1,123 @@
+.nw-help-cta {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-help-cta__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.nw-help-cta__heading {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 120%;
+  color: var(--nw-hc-heading, #2e2a26);
+}
+
+.nw-help-cta__description {
+  margin: 0;
+  max-width: 730px;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 163%;
+  color: var(--nw-hc-desc, #6f655c);
+}
+.nw-help-cta__description >*:last-child{
+  margin-bottom: 0;
+}
+
+.nw-help-cta__description >*:first-child{
+  margin-top: 0;
+}
+
+.nw-help-cta__actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: 0;
+}
+
+.nw-help-cta__btn.nw-btn {
+  width: auto;
+  min-height: 0;
+  padding: 16px 36px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+}
+
+.nw-help-cta__btn--primary.nw-btn--primary {
+  background: var(--nw-hc-btn-primary-bg, #c68b5f);
+  border-color: var(--nw-hc-btn-primary-bg, #c68b5f);
+  color: var(--nw-hc-btn-primary-text, #ffffff);
+}
+
+.nw-help-cta__btn--primary.nw-btn--primary:hover {
+  background: var(--nw-hc-btn-primary-bg-hover, #b57d57);
+  border-color: var(--nw-hc-btn-primary-bg-hover, #b57d57);
+  color: var(--nw-hc-btn-primary-text-hover, #ffffff);
+}
+
+.nw-help-cta__btn--outline.nw-btn--outline {
+  background: transparent;
+  border-color: var(--nw-hc-btn-outline-border, #6b3d1f);
+  color: var(--nw-hc-btn-outline-text, #6a3d1e);
+}
+
+.nw-help-cta__btn--outline.nw-btn--outline:hover {
+  background: var(--nw-hc-btn-outline-bg-hover, #6b3d1f);
+  border-color: var(--nw-hc-btn-outline-border-hover, #6b3d1f);
+  color: var(--nw-hc-btn-outline-text-hover, #ffffff);
+}
+
+@media screen and (max-width: 749px) {
+  .nw-help-cta__inner {
+    gap: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .nw-help-cta__heading {
+    font-size: 26px;
+    line-height: 1.2;
+    white-space: normal;
+  }
+
+  .nw-help-cta__description {
+    font-size: 15px;
+    line-height: 1.6;
+    width: 100%;
+  }
+
+  .nw-help-cta__actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .nw-help-cta__btn.nw-btn {
+    width: 100%;
+    font-size: 13px;
+    padding: 16px 24px;
+  }
+}
