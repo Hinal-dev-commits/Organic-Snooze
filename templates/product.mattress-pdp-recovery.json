@@ -302,20 +302,18 @@
             "margin_bottom_mobile": 0
           }
         },
-        "bundle_save_K4nQ2p": {
+        "bundle_save_RJ6jjd": {
           "type": "bundle_save",
-          "disabled": true,
           "settings": {
             "product_source": "product_list",
             "product_list": [
+              "the-organic-snooze-kloud-pillow",
               "organic-cooling-sheets",
-              "organic-waterproof-mattress-protector",
-              "signature-organic-cotton-pillows-combo-packs",
-              "snooze-btx4-adjustable-base-king-copy"
+              "organic-waterproof-mattress-protector"
             ],
             "heading": "&nbsp;Add-On Organic Bedding",
             "preview_summary": "Sheets, protector, pillows & base",
-            "discount_percentage": 30,
+            "discount_percentage": 5,
             "optional_subtitle": "Optional, Bundle & Save Up to [percent]%",
             "quick_view_title_override": "",
             "quick_view_description_override": "",
@@ -585,7 +583,7 @@
             "heading": "Not sure which mattress?",
             "text": "Answer 5 questions—we'll match you.",
             "button_label": "Take Quiz",
-            "button_link": "shopify://pages/quiz",
+            "button_link": "https://theultimatesnooze.com/pages/mattress-finder",
             "use_custom_icon": false,
             "icon": "bed",
             "custom_icon": "shopify://shop_images/image_1257_Vectorized.svg",
@@ -680,7 +678,7 @@
         "sleepers_qg7fAY",
         "variant_picker",
         "quantity_selector",
-        "bundle_save_K4nQ2p",
+        "bundle_save_RJ6jjd",
         "buy_buttons",
         "shipping_tag_Agd7QN",
         "trust_badges_UF8dKt",
@@ -823,19 +821,19 @@
         "padding_bottom": 28
       }
     },
-    "nw_mattresses_timeline_Aj3p4J": {
+    "nw_mattresses_timeline_EjgCVa": {
       "type": "nw-mattresses-timeline",
       "blocks": {
-        "layer_BrUEMa": {
+        "layer_NaF6Wj": {
           "type": "layer",
           "settings": {
             "tag": "LAYER 1",
             "title": "Organic Cover",
-            "subtitle": "Breathable Organic cotton",
+            "subtitle": "Breathable GOTS cotton",
             "image": "shopify://shop_images/Frame_2147238821_1.png"
           }
         },
-        "layer_r4nLD9": {
+        "layer_cxTQPq": {
           "type": "layer",
           "settings": {
             "tag": "LAYER 2",
@@ -844,36 +842,36 @@
             "image": "shopify://shop_images/Frame_2147238822-2.png"
           }
         },
-        "layer_XUyik8": {
+        "layer_hJBFpz": {
           "type": "layer",
           "settings": {
             "tag": "LAYER 3",
-            "title": "4\" Perforated Latex",
+            "title": "1\" Perforated Latex",
             "subtitle": "Perforated breathable design for max airflow",
             "image": "shopify://shop_images/Frame_2147238822-1.png"
           }
         },
-        "layer_xW7yaR": {
+        "layer_bLQCKc": {
           "type": "layer",
           "settings": {
             "tag": "LAYER 4",
-            "title": "1,100 Pocketed Coils",
+            "title": "800 Pocketed Coils",
             "subtitle": "Provide stable support and limits motion transfer",
             "image": "shopify://shop_images/Frame_2147238822_2_6aa4d2b2-b0aa-43d1-95ae-4a8cf469c700.png"
           }
         }
       },
       "block_order": [
-        "layer_BrUEMa",
-        "layer_r4nLD9",
-        "layer_XUyik8",
-        "layer_xW7yaR"
+        "layer_NaF6Wj",
+        "layer_cxTQPq",
+        "layer_hJBFpz",
+        "layer_bLQCKc"
       ],
       "name": "NW Mattress Timeline",
       "settings": {
         "heading": "Sleep Naturally with Organic Materials",
         "subheading": "Cleaner materials. Better recovery. Here's exactly what you're sleeping on.",
-        "main_image_mobile": "shopify://shop_images/IMG_7302_1_9866a6d5-18e3-428f-b656-0b11b1db378e.png",
+        "main_image_mobile": "shopify://shop_images/mattress-mobile.png",
         "tag_bg": "#613916",
         "card_wrap_bg": "#fbf9f6",
         "card_heading_color": "#613916",
@@ -888,7 +886,7 @@
         "snooze_price": "$0.16 / night",
         "snooze_note": "Built to last 30 years",
         "snooze_bg": "#878735",
-        "show_materials": false,
+        "show_materials": true,
         "materials_heading_line_1": "COMMON SYNTHETIC MATERIALS",
         "materials_heading_line_2": "Purposely WE LEAVE OUT",
         "materials_items": "No Fiberglass\nNo Plastic Fibers\nNo Polyurethane\nNo Formaldehyde\nNo Toxic Glues\nNo Off-Gassing",
@@ -1340,10 +1338,10 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_organic_gcGNTr": {
+    "nw_organic_ne6PtP": {
       "type": "nw-organic",
       "blocks": {
-        "table_row_WgN3DF": {
+        "table_row_dCpGCE": {
           "type": "table_row",
           "settings": {
             "feature_name": "Mattress",
@@ -1357,7 +1355,7 @@
             "col2_text": "Petroleum foams"
           }
         },
-        "table_row_WaE9cM": {
+        "table_row_CY4Pax": {
           "type": "table_row",
           "settings": {
             "feature_name": "Chemical Fire Barriers",
@@ -1371,7 +1369,7 @@
             "col2_text": "Chemicals, Fiberglass"
           }
         },
-        "table_row_eHpBAb": {
+        "table_row_fikDPM": {
           "type": "table_row",
           "settings": {
             "feature_name": "Polyurethane foams",
@@ -1385,7 +1383,7 @@
             "col2_text": "Common base material"
           }
         },
-        "table_row_ECtNHf": {
+        "table_row_wXyqGL": {
           "type": "table_row",
           "settings": {
             "feature_name": "Fiberglass",
@@ -1399,7 +1397,7 @@
             "col2_text": "Very common"
           }
         },
-        "table_row_b3GhLj": {
+        "table_row_gUU389": {
           "type": "table_row",
           "settings": {
             "feature_name": "Natural cooling",
@@ -1413,7 +1411,7 @@
             "col2_text": "Low, heat trapping"
           }
         },
-        "table_row_EBBY7q": {
+        "table_row_pe8RAT": {
           "type": "table_row",
           "settings": {
             "feature_name": "Pressure relief",
@@ -1427,7 +1425,7 @@
             "col2_text": "Can soften and sink over time"
           }
         },
-        "table_row_HC3p4c": {
+        "table_row_4d9V8H": {
           "type": "table_row",
           "settings": {
             "feature_name": "Off-gassing",
@@ -1441,7 +1439,7 @@
             "col2_text": "Common VOC release"
           }
         },
-        "table_row_iNyyEP": {
+        "table_row_iUKLCy": {
           "type": "table_row",
           "settings": {
             "feature_name": "Targeted Support",
@@ -1455,7 +1453,7 @@
             "col2_text": "Foam Sink"
           }
         },
-        "table_row_zkVRz4": {
+        "table_row_Fieidr": {
           "type": "table_row",
           "settings": {
             "feature_name": "Durability",
@@ -1471,15 +1469,15 @@
         }
       },
       "block_order": [
-        "table_row_WgN3DF",
-        "table_row_WaE9cM",
-        "table_row_eHpBAb",
-        "table_row_ECtNHf",
-        "table_row_b3GhLj",
-        "table_row_EBBY7q",
-        "table_row_HC3p4c",
-        "table_row_iNyyEP",
-        "table_row_zkVRz4"
+        "table_row_dCpGCE",
+        "table_row_CY4Pax",
+        "table_row_fikDPM",
+        "table_row_wXyqGL",
+        "table_row_gUU389",
+        "table_row_pe8RAT",
+        "table_row_4d9V8H",
+        "table_row_iUKLCy",
+        "table_row_Fieidr"
       ],
       "name": "t:sections.nw-organic.name",
       "settings": {
@@ -1506,11 +1504,12 @@
         "col1_head_title": "Organic Snooze",
         "col2_head_image": "shopify://shop_images/organic-table-1.png",
         "col2_head_title": "Common Mattress",
-        "show_comparison": false,
-        "comparison_title": "Long-Term Value Comparison",
+        "show_comparison": true,
+        "comparison_title": "",
         "foam_brand": "Popular Foam Brands",
         "foam_price": "$1.02 / night",
         "foam_note": "Replaced every 10 years",
+        "snooze_logo": "shopify://shop_images/ultimate_snooze_logo.png",
         "snooze_brand": "ORGANIC SNOOZE",
         "snooze_price": "$0.16 / night",
         "snooze_note": "Built to last 30 years",
@@ -1553,7 +1552,7 @@
         "text_button_link": "(719) 751-6070",
         "show_quiz_button": true,
         "quiz_button_label": "Sleep Quiz",
-        "quiz_button_link": "shopify://pages/quiz",
+        "quiz_button_link": "https://theultimatesnooze.com/pages/mattress-finder",
         "card_bg_color": "#ffffff",
         "heading_color": "#613916",
         "text_color": "#613916",
@@ -1760,13 +1759,13 @@
     "nw_sticky_bar_YhTzea",
     "disclosures",
     "related-products",
-    "nw_mattresses_timeline_Aj3p4J",
+    "nw_mattresses_timeline_EjgCVa",
     "nw_marquee_v2_UfXLdp",
     "nw_benefits_J9TVzc",
     "nw_founder_story_RhHRer",
     "nw_recovery_yYVmK7",
     "nw_testimonials_BU9rMk",
-    "nw_organic_gcGNTr",
+    "nw_organic_ne6PtP",
     "nw_guarantee_v2_fjedEd",
     "nw_product_list_Ej8ReJ",
     "nw_faq_VygLpj",

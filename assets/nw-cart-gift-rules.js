@@ -153,15 +153,30 @@
     }
   };
 
+  /** Lines added by this script always include _cart_gift_rule (Upcart / manual add-ons do not). */
+  const isLineAddedByGiftRules = (line) => {
+    const properties = line?.properties || {};
+    const marker = properties[DEFAULT_PROPERTY_KEY];
+    if (marker === undefined || marker === null) return false;
+    return String(marker).trim() !== '';
+  };
+
   const isManagedLineForRule = (line, rule) => {
+    if (!isLineAddedByGiftRules(line)) return false;
+
     const properties = line?.properties || {};
     const expected = rule.lineProperty.value;
+    const marker = properties[DEFAULT_PROPERTY_KEY];
+    if (String(marker) !== String(expected)) return false;
+
+    if (rule.lineProperty.key === DEFAULT_PROPERTY_KEY) return true;
+
     const actual = properties[rule.lineProperty.key];
     if (actual === undefined || actual === null) return false;
     return String(actual) === String(expected);
   };
 
-  const isManagedGiftLine = (line) => rules.some((rule) => isManagedLineForRule(line, rule));
+  const isManagedGiftLine = (line) => isLineAddedByGiftRules(line);
 
   const lineMatchesTrigger = (line, rule) => {
     if (!line || isManagedGiftLine(line)) return false;
@@ -216,18 +231,28 @@
     return actions;
   };
 
-  const addGiftLine = async (rule) => {
+  const buildGiftLineProperties = (rule) => {
     const propertyKey = rule.lineProperty.key;
     const propertyValue = rule.lineProperty.value;
+    /** @type {Record<string, string>} */
+    const properties = {
+      [DEFAULT_PROPERTY_KEY]: propertyValue,
+    };
 
+    if (propertyKey !== DEFAULT_PROPERTY_KEY) {
+      properties[propertyKey] = propertyValue;
+    }
+
+    return properties;
+  };
+
+  const addGiftLine = async (rule) => {
     await cartRequest(cartAddUrl(), {
       items: [
         {
           id: rule.giftVariantId,
           quantity: rule.giftQuantity,
-          properties: {
-            [propertyKey]: propertyValue,
-          },
+          properties: buildGiftLineProperties(rule),
         },
       ],
     });
