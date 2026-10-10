@@ -5,13 +5,15 @@
 <script src="{{ 'nw-materials-matter.js' | asset_url }}" defer="defer"></script>
 
 {%- assign nw_shell_selector = '#NwMaterialsMatter-' | append: section.id -%}
+{%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'overlay', default_bg: '#FFFFFF' %}
 
 <nw-materials-matter
   id="NwMaterialsMatter-{{ section.id }}"
-  class="nw-materials-matter{% if section.settings.mobile_slider %} nw-materials-matter--mobile-slider{% endif %}"
+  class="nw-materials-matter{% if section.settings.mobile_slider %} nw-materials-matter--mobile-slider{% endif %}{% if feature_blocks.size > 0 and feature_blocks.size < 5 and section.settings.mobile_slider == false %} nw-materials-matter--center-cards{% endif %}"
   data-mobile-slider="{{ section.settings.mobile_slider }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
+  data-card-count="{{ feature_blocks.size }}"
   style="
     --nw-mm-heading-color: {{ section.settings.heading_color }};
     --nw-mm-desc-color: {{ section.settings.description_color }};
@@ -35,7 +37,6 @@
         </div>
       {%- endif -%}
 
-      {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
       {%- if feature_blocks.size > 0 -%}
         <div class="nw-materials-matter__cards">
           <div class="swiper nw-materials-matter__swiper" id="NwMaterialsMatterSwiper-{{ section.id }}">

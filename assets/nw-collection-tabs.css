@@ -322,6 +322,9 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   box-sizing: border-box;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .nw-collection-tabs__promo-content {
@@ -359,13 +362,37 @@
   flex-shrink: 0;
 }
 
+@keyframes nw-hero-status-dot-blink {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 6px #ffff00;
+  }
+
+  50% {
+    opacity: 0.25;
+    box-shadow: 0 0 2px rgba(255, 255, 0, 0.35);
+  }
+}
+
 .nw-collection-tabs__promo-status-dot {
   width: 4.8px;
   height: 4.8px;
+  min-width: 4.8px;
+  min-height: 4.8px;
   border-radius: 50%;
   background: #ffff00;
   box-shadow: 0 0 6px #ffff00;
   flex-shrink: 0;
+  display: inline-block;
+  animation: nw-hero-status-dot-blink 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nw-collection-tabs__promo-status-dot {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .nw-collection-tabs__promo-status-text,

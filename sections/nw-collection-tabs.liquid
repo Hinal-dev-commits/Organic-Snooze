@@ -832,6 +832,13 @@
           "default": true
         },
         {
+          "type": "text",
+          "id": "promo_link",
+          "label": "Promo banner link",
+          "default": "#",
+          "visible_if": "{{ block.settings.show_promo == true }}"
+        },
+        {
           "type": "richtext",
           "id": "promo_title",
           "label": "Offer Title",

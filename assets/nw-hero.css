@@ -225,6 +225,7 @@
   padding-left: 3px;
   display: inline-flex;
   align-items: center;
+  text-decoration: none;
 }
 
 .nw-hero__content .nw-section-heading h1,
@@ -434,15 +435,37 @@ a.nw-hero__promo-module--linked {
   box-sizing: border-box;
 }
 
+@keyframes nw-hero-status-dot-blink {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 6px #ffff00;
+  }
+
+  50% {
+    opacity: 0.25;
+    box-shadow: 0 0 2px rgba(255, 255, 0, 0.35);
+  }
+}
+
 .nw-hero__status-dot {
   width: 4.8px;
   height: 4.8px;
   min-width: 4.8px;
   min-height: 4.8px;
-  background-color: #FFFF00;
+  background-color: #ffff00;
   border-radius: 50%;
-  box-shadow: 0 0 6px #FFFF00;
+  box-shadow: 0 0 6px #ffff00;
   display: inline-block;
+  flex-shrink: 0;
+  animation: nw-hero-status-dot-blink 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nw-hero__status-dot {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .nw-hero__status-text,
