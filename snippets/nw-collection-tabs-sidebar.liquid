@@ -69,7 +69,14 @@
     endif
   -%}
   {%- if has_promo_content -%}
-  <div
+    {%- liquid
+      assign promo_href = block.settings.promo_link
+      if promo_href == blank
+        assign promo_href = '#'
+      endif
+    -%}
+  <a
+    href="{{ promo_href }}"
     class="nw-collection-tabs__promo"
     data-countdown-date="{{ block.settings.countdown_end_date }}"
     data-hide-on-end="{{ block.settings.hide_after_timer_end }}"
@@ -111,7 +118,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </a>
   {%- endif -%}
 {%- endif -%}
 
