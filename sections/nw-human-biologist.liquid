@@ -1,4 +1,5 @@
 <script src="{{ 'nw-insights-slider.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-human-biologist-video.js' | asset_url }}" defer="defer"></script>
 {{ 'nw-human-biologist.css' | asset_url | stylesheet_tag }}
 
 {%- assign nw_shell_selector = '.nw-human-biologist.section-' | append: section.id -%}
@@ -152,63 +153,84 @@
           {%- endif -%}
         </div>
 
-        {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
         {%- liquid
-          assign image_alt = section.settings.image.alt | default: section.settings.name | default: 'Author' | escape
-          assign image_mobile_alt = section.settings.image_mobile.alt | default: section.settings.name | default: 'Author' | escape
+          assign desktop_media_type = section.settings.media_type_desktop | default: 'image'
+          assign mobile_media_type = section.settings.media_type_mobile | default: 'image'
+          assign show_author_media = false
+
+          if desktop_media_type == 'image' and section.settings.image != blank
+            assign show_author_media = true
+          elsif desktop_media_type == 'video' and section.settings.video != blank
+            assign show_author_media = true
+          endif
+
+          if mobile_media_type == 'image' and section.settings.image_mobile != blank
+            assign show_author_media = true
+          elsif mobile_media_type == 'image' and section.settings.image != blank
+            assign show_author_media = true
+          elsif mobile_media_type == 'video' and section.settings.video != blank
+            assign show_author_media = true
+          elsif mobile_media_type == 'video' and section.settings.video_mobile != blank
+            assign show_author_media = true
+          endif
+
+          assign author_manual_video = false
+          assign hb_desktop_poster_url = ''
+          assign hb_mobile_poster_url = ''
+          if section.settings.video_autoplay == false
+            if desktop_media_type == 'video' and section.settings.video != blank
+              assign author_manual_video = true
+            elsif mobile_media_type == 'video' and section.settings.video != blank
+              assign author_manual_video = true
+            elsif mobile_media_type == 'video' and section.settings.video_mobile != blank
+              assign author_manual_video = true
+            endif
+
+            assign hb_desktop_poster = section.settings.video_poster
+            if hb_desktop_poster == blank and section.settings.video.preview_image != blank
+              assign hb_desktop_poster = section.settings.video.preview_image
+            endif
+            assign hb_mobile_poster = section.settings.video_poster_mobile
+            if hb_mobile_poster == blank and section.settings.video_mobile.preview_image != blank
+              assign hb_mobile_poster = section.settings.video_mobile.preview_image
+            endif
+            if hb_mobile_poster == blank
+              assign hb_mobile_poster = hb_desktop_poster
+            endif
+            if hb_desktop_poster != blank
+              assign hb_desktop_poster_url = hb_desktop_poster | image_url: width: 1440
+            endif
+            if hb_mobile_poster != blank
+              assign hb_mobile_poster_url = hb_mobile_poster | image_url: width: 750
+            endif
+          endif
         -%}
-        <div class="nw-human-biologist__image-wrap">
-          {%- if section.settings.image != blank and section.settings.image_mobile != blank -%}
-            {{
-              section.settings.image_mobile
-              | image_url: width: 750
-              | image_tag:
-                loading: 'lazy',
-                class: 'nw-human-biologist__image nw-human-biologist__image--mobile',
-                widths: '375, 550, 750',
-                sizes: '100vw',
-                alt: image_mobile_alt
-            }}
-            {{
-              section.settings.image
-              | image_url: width: 1440
-              | image_tag:
-                loading: 'lazy',
-                class: 'nw-human-biologist__image nw-human-biologist__image--desktop',
-                widths: '712, 900, 1200, 1440',
-                sizes: '(min-width: 750px) 712px, 100vw',
-                alt: image_alt,
-                width: 712,
-                height: 496
-            }}
-          {%- elsif section.settings.image != blank -%}
-            {{
-              section.settings.image
-              | image_url: width: 1440
-              | image_tag:
-                loading: 'lazy',
-                class: 'nw-human-biologist__image',
-                widths: '712, 900, 1200, 1440',
-                sizes: '(min-width: 750px) 712px, 100vw',
-                alt: image_alt,
-                width: 712,
-                height: 496
-            }}
-          {%- elsif section.settings.image_mobile != blank -%}
-            {{
-              section.settings.image_mobile
-              | image_url: width: 750
-              | image_tag:
-                loading: 'lazy',
-                class: 'nw-human-biologist__image',
-                widths: '375, 550, 750',
-                sizes: '100vw',
-                alt: image_mobile_alt
-            }}
-          {%- else -%}
-            <span class="nw-human-biologist__image-placeholder" aria-hidden="true"></span>
-          {%- endif -%}
-        </div>
+        {%- if show_author_media -%}
+          <div
+            class="nw-human-biologist__image-wrap{% if author_manual_video %} nw-human-biologist__image-wrap--manual{% endif %}{% if section.settings.video_autoplay %} nw-human-biologist__image-wrap--autoplay{% endif %}"
+            {% if author_manual_video %}
+              data-nw-hb-media
+              data-autoplay="false"
+              {% if hb_desktop_poster_url != blank %}data-poster-desktop="{{ hb_desktop_poster_url }}"{% endif %}
+              {% if hb_mobile_poster_url != blank %}data-poster-mobile="{{ hb_mobile_poster_url }}"{% endif %}
+            {% endif %}
+          >
+            {% render 'nw-human-biologist-media', section: section %}
+            {%- if author_manual_video -%}
+              <div class="nw-human-biologist__video-controls">
+                <button type="button" class="nw-human-biologist__play" data-nw-hb-play aria-label="Play video">
+                  <span class="nw-human-biologist__control-icon" aria-hidden="true">
+                    {{ 'play-v2.svg' | inline_asset_content }}
+                  </span>
+                </button>
+                <button type="button" class="nw-human-biologist__pause" data-nw-hb-pause aria-label="Pause video" hidden>
+                  <span class="nw-human-biologist__control-icon" aria-hidden="true">
+                    {{ 'icon-pause.svg' | inline_asset_content }}
+                  </span>
+                </button>
+              </div>
+            {%- endif -%}
+          </div>
         {%- endif -%}
       </div>
 
@@ -390,15 +412,79 @@
       "default": "<p>“I spent years helping people reduce toxic exposure. It didn't make sense to ignore the place we spend a third of our lives. That's why we built this mattress.”</p>"
     },
     {
+      "type": "header",
+      "content": "DESKTOP MEDIA"
+    },
+    {
+      "type": "select",
+      "id": "media_type_desktop",
+      "label": "Media type (Desktop)",
+      "default": "image",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video" }
+      ]
+    },
+    {
       "type": "image_picker",
       "id": "image",
-      "label": "Author Image (Desktop)"
+      "label": "Author image (Desktop)",
+      "visible_if": "{{ section.settings.media_type_desktop == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Author video (Desktop)",
+      "visible_if": "{{ section.settings.media_type_desktop == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Video poster (Desktop)",
+      "info": "Optional. Uses video preview when empty.",
+      "visible_if": "{{ section.settings.media_type_desktop == 'video' }}"
+    },
+    {
+      "type": "header",
+      "content": "MOBILE MEDIA"
+    },
+    {
+      "type": "select",
+      "id": "media_type_mobile",
+      "label": "Media type (Mobile)",
+      "default": "image",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video" }
+      ]
     },
     {
       "type": "image_picker",
       "id": "image_mobile",
-      "label": "Author Image (Mobile)",
-      "info": "Optional. Uses the desktop image when empty."
+      "label": "Author image (Mobile)",
+      "info": "Optional. Uses desktop image when empty.",
+      "visible_if": "{{ section.settings.media_type_mobile == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Author video (Mobile)",
+      "info": "Optional. Uses desktop video when empty.",
+      "visible_if": "{{ section.settings.media_type_mobile == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster_mobile",
+      "label": "Video poster (Mobile)",
+      "info": "Optional. Uses desktop poster when empty.",
+      "visible_if": "{{ section.settings.media_type_mobile == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "Autoplay video",
+      "default": true,
+      "visible_if": "{{ section.settings.media_type_desktop == 'video' or section.settings.media_type_mobile == 'video' }}"
     },
     {
       "type": "header",
