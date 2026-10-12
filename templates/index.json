@@ -54,6 +54,7 @@
         },
         "promo_countdown_r7yEcE": {
           "type": "promo_countdown",
+          "disabled": true,
           "settings": {
             "show_icon": true,
             "icon_type": "none",
@@ -252,7 +253,7 @@
             "show_verified": true,
             "author_title": "<p>Longevity Expert & Co-founder of The Ultimate Human</p>",
             "author_image": "shopify://shop_images/auth.png",
-            "show_promo": true,
+            "show_promo": false,
             "promo_link": "#",
             "promo_title": "<p>RECOVERY DAY SALE</p>",
             "status_text": "<p>Live</p>",
@@ -985,7 +986,10 @@
         "show_verified": true,
         "role": "Longevity Expert & Founder of The Ultimate Human",
         "quote": "<p>\"I spent years using bloodwork and biomarkers in the life insurance industry to predict who was most likely to die early. That experience led me to dedicate my career to helping people live healthier, longer lives through The Ultimate Human.</p><p>While reducing unnecessary toxic exposure in my own life, I realized I had overlooked the one place we spend nearly one third of our lives, &nbsp;my mattress. I couldn't find a truly organic mattress that aligned with my philosophy on health and recovery, so I partnered with mattress expert Matt Smith to build one.</p><p><strong>We built Ultimate Snooze around one simple belief: better sleep creates a better life.</strong></p>",
+        "media_type_desktop": "image",
         "image": "shopify://shop_images/hwe.jpg",
+        "media_type_mobile": "image",
+        "video_autoplay": true,
         "show_btn_1": true,
         "btn_1_text": "Shop Gary's Collection",
         "btn_1_link": "shopify://collections/mattress",
