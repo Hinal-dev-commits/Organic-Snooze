@@ -253,9 +253,96 @@
   overflow: hidden;
   background-color: var(--tertiary-color, var(--tertiary-color));
   box-sizing: border-box;
+  position: relative;
 }
 
-.nw-human-biologist__image {
+.nw-human-biologist__image-wrap--manual .nw-human-biologist__video {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.nw-human-biologist__image-wrap--manual .nw-human-biologist__video::-webkit-media-controls,
+.nw-human-biologist__image-wrap--manual .nw-human-biologist__video::-webkit-media-controls-enclosure,
+.nw-human-biologist__image-wrap--manual .nw-human-biologist__video::-webkit-media-controls-panel,
+.nw-human-biologist__image-wrap--manual .nw-human-biologist__video::-webkit-media-controls-start-playback-button,
+.nw-human-biologist__image-wrap--manual .nw-human-biologist__video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.nw-human-biologist__video-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.nw-human-biologist__play,
+.nw-human-biologist__pause {
+  background: unset;
+  border: unset;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nw-human-biologist__play .nw-human-biologist__control-icon svg {
+  margin-left: 6px;
+}
+
+.nw-human-biologist__play > *,
+.nw-human-biologist__pause > * {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(2.8px);
+  -webkit-backdrop-filter: blur(2.8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color, #613916);
+}
+
+.nw-human-biologist__play svg > * {
+  fill: var(--primary-color, #613916);
+}
+
+.nw-human-biologist__control-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.nw-human-biologist__image-wrap--manual.is-playing .nw-human-biologist__pause {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nw-human-biologist__image-wrap--manual.is-playing:hover .nw-human-biologist__pause {
+  opacity: 1;
+}
+
+.nw-human-biologist__play[hidden],
+.nw-human-biologist__pause[hidden] {
+  display: none !important;
+}
+
+.nw-human-biologist__image,
+.nw-human-biologist__video {
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -263,15 +350,29 @@
   border-radius: 14px;
 }
 
+.nw-human-biologist__image-wrap .nw-human-biologist__video {
+  min-height: 100%;
+}
+
+.nw-human-biologist__video--mobile {
+  display: none;
+}
+
 @media screen and (min-width: 750px) {
-  .nw-human-biologist__image--mobile {
+  .nw-human-biologist__image--mobile,
+  .nw-human-biologist__video--mobile {
     display: none;
   }
 }
 
 @media screen and (max-width: 749px) {
-  .nw-human-biologist__image--desktop {
+  .nw-human-biologist__image--desktop,
+  .nw-human-biologist__video--desktop {
     display: none;
+  }
+
+  .nw-human-biologist__video--mobile {
+    display: block;
   }
 }
 

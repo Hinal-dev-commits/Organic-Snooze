@@ -1,0 +1,221 @@
+{% doc %}
+  Desktop and mobile image/video for nw-human-biologist author media.
+  @param {object} section - Section object
+{% enddoc %}
+
+{%- liquid
+  assign desktop_media_type = section.settings.media_type_desktop | default: 'image'
+  assign mobile_media_type = section.settings.media_type_mobile | default: 'image'
+  assign video_autoplay = section.settings.video_autoplay
+
+  assign image_alt = section.settings.image.alt | default: section.settings.name | default: 'Author' | escape
+  assign image_mobile_alt = section.settings.image_mobile.alt | default: section.settings.name | default: 'Author' | escape
+
+  assign desktop_poster = section.settings.video_poster
+  if desktop_poster == blank and section.settings.video.preview_image != blank
+    assign desktop_poster = section.settings.video.preview_image
+  endif
+
+  assign mobile_poster = section.settings.video_poster_mobile
+  if mobile_poster == blank and section.settings.video_mobile.preview_image != blank
+    assign mobile_poster = section.settings.video_mobile.preview_image
+  endif
+  if mobile_poster == blank
+    assign mobile_poster = desktop_poster
+  endif
+
+  assign desktop_poster_url = ''
+  assign mobile_poster_url = ''
+  if video_autoplay == false
+    if desktop_poster != blank
+      assign desktop_poster_url = desktop_poster | image_url: width: 1440
+    endif
+    if mobile_poster != blank
+      assign mobile_poster_url = mobile_poster | image_url: width: 750
+    endif
+  endif
+
+  assign use_shared_video = false
+  if desktop_media_type == 'video' and mobile_media_type == 'video' and section.settings.video != blank and section.settings.video_mobile == blank
+    assign use_shared_video = true
+  endif
+
+  if video_autoplay
+    assign v_autoplay = true
+    assign v_loop = true
+    assign v_muted = true
+    assign v_controls = false
+    assign v_preload = 'metadata'
+  else
+    assign v_autoplay = false
+    assign v_loop = false
+    assign v_muted = false
+    assign v_controls = false
+    assign v_preload = 'none'
+  endif
+-%}
+
+{%- if desktop_media_type == 'video' and section.settings.video != blank -%}
+  {%- if use_shared_video -%}
+    {%- if video_autoplay -%}
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: v_autoplay,
+          loop: v_loop,
+          muted: v_muted,
+          controls: v_controls,
+          playsinline: true,
+          preload: v_preload,
+          class: 'nw-human-biologist__video nw-human-biologist__video--both',
+          image_size: '1440x'
+      }}
+    {%- else -%}
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: v_autoplay,
+          loop: v_loop,
+          muted: v_muted,
+          controls: v_controls,
+          playsinline: true,
+          preload: v_preload,
+          tabindex: -1,
+          class: 'nw-human-biologist__video nw-human-biologist__video--both',
+          image_size: '1440x',
+          poster: desktop_poster_url
+      }}
+    {%- endif -%}
+  {%- else -%}
+    {%- if video_autoplay -%}
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: v_autoplay,
+          loop: v_loop,
+          muted: v_muted,
+          controls: v_controls,
+          playsinline: true,
+          preload: v_preload,
+          class: 'nw-human-biologist__video nw-human-biologist__video--desktop',
+          image_size: '1440x'
+      }}
+    {%- else -%}
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: v_autoplay,
+          loop: v_loop,
+          muted: v_muted,
+          controls: v_controls,
+          playsinline: true,
+          preload: v_preload,
+          tabindex: -1,
+          class: 'nw-human-biologist__video nw-human-biologist__video--desktop',
+          image_size: '1440x',
+          poster: desktop_poster_url
+      }}
+    {%- endif -%}
+  {%- endif -%}
+{%- elsif desktop_media_type == 'image' and section.settings.image != blank -%}
+  {{
+    section.settings.image
+    | image_url: width: 1440
+    | image_tag:
+      loading: 'lazy',
+      class: 'nw-human-biologist__image nw-human-biologist__image--desktop',
+      widths: '712, 900, 1200, 1440',
+      sizes: '(min-width: 750px) 712px, 100vw',
+      alt: image_alt,
+      width: 712,
+      height: 496
+  }}
+{%- endif -%}
+
+{%- if mobile_media_type == 'video' and use_shared_video == false -%}
+  {%- if section.settings.video_mobile != blank -%}
+    {%- if video_autoplay -%}
+      {{
+        section.settings.video_mobile
+        | video_tag:
+          autoplay: v_autoplay,
+          loop: v_loop,
+          muted: v_muted,
+          controls: v_controls,
+          playsinline: true,
+          preload: v_preload,
+          class: 'nw-human-biologist__video nw-human-biologist__video--mobile',
+          image_size: '750x'
+      }}
+    {%- else -%}
+      {{
+        section.settings.video_mobile
+        | video_tag:
+          autoplay: v_autoplay,
+          loop: v_loop,
+          muted: v_muted,
+          controls: v_controls,
+          playsinline: true,
+          preload: v_preload,
+          tabindex: -1,
+          class: 'nw-human-biologist__video nw-human-biologist__video--mobile',
+          image_size: '750x',
+          poster: mobile_poster_url
+      }}
+    {%- endif -%}
+  {%- elsif section.settings.video != blank -%}
+    {%- if video_autoplay -%}
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: v_autoplay,
+          loop: v_loop,
+          muted: v_muted,
+          controls: v_controls,
+          playsinline: true,
+          preload: v_preload,
+          class: 'nw-human-biologist__video nw-human-biologist__video--mobile',
+          image_size: '750x'
+      }}
+    {%- else -%}
+      {{
+        section.settings.video
+        | video_tag:
+          autoplay: v_autoplay,
+          loop: v_loop,
+          muted: v_muted,
+          controls: v_controls,
+          playsinline: true,
+          preload: v_preload,
+          tabindex: -1,
+          class: 'nw-human-biologist__video nw-human-biologist__video--mobile',
+          image_size: '750x',
+          poster: mobile_poster_url
+      }}
+    {%- endif -%}
+  {%- endif -%}
+{%- elsif mobile_media_type == 'image' -%}
+  {%- if section.settings.image_mobile != blank -%}
+    {{
+      section.settings.image_mobile
+      | image_url: width: 750
+      | image_tag:
+        loading: 'lazy',
+        class: 'nw-human-biologist__image nw-human-biologist__image--mobile',
+        widths: '375, 550, 750',
+        sizes: '100vw',
+        alt: image_mobile_alt
+    }}
+  {%- elsif section.settings.image != blank -%}
+    {{
+      section.settings.image
+      | image_url: width: 750
+      | image_tag:
+        loading: 'lazy',
+        class: 'nw-human-biologist__image nw-human-biologist__image--mobile',
+        widths: '375, 550, 750',
+        sizes: '100vw',
+        alt: image_alt
+    }}
+  {%- endif -%}
+{%- endif -%}
