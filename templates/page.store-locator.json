@@ -20,6 +20,80 @@
     "nw_find_us_rmaBAe": {
       "type": "nw-find-us",
       "name": "t:sections.nw-find-us.name",
+      "blocks": {
+        "location_KamKkw": {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Company - Rockwall, Texas",
+            "address_line_1": "919 E Interstate 30 Suite 101",
+            "city": "Rockwall",
+            "state_code": "TX",
+            "state_name": "Texas",
+            "postal_code": "75032",
+            "lat": "32.9019601",
+            "lng": "-96.4576431"
+          }
+        },
+        "location_XxJWNb": {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Company - Chesterfield, Missouri",
+            "address_line_1": "17217 Chesterfield Airport Rd.",
+            "city": "Chesterfield",
+            "state_code": "MO",
+            "state_name": "Missouri",
+            "postal_code": "63005",
+            "lat": "38.6691231",
+            "lng": "-90.598683"
+          }
+        },
+        "location_qWLfh4": {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Company - Troy, Michigan",
+            "address_line_1": "491 E Big Beaver Rd",
+            "city": "Troy",
+            "state_code": "MI",
+            "state_name": "Michigan",
+            "postal_code": "48083",
+            "lat": "42.5635778",
+            "lng": "-83.1384934"
+          }
+        },
+        "location_RNXBAG": {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Fort Collins, Colorado",
+            "address_line_1": "2700 S College Ave Suite 165",
+            "city": "Fort Collins",
+            "state_code": "CO",
+            "state_name": "Colorado",
+            "postal_code": "80525",
+            "lat": "40.5507498",
+            "lng": "-105.078732"
+          }
+        },
+        "location_CCVRqj": {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Company - Pueblo West, Colorado",
+            "address_line_1": "1002 N Market Pl Unit B",
+            "city": "Pueblo West",
+            "state_code": "CO",
+            "state_name": "Colorado",
+            "postal_code": "81007",
+            "lat": "38.326599",
+            "lng": "-104.6995719"
+          }
+        }
+      },
+      "block_order": [
+        "location_KamKkw",
+        "location_XxJWNb",
+        "location_qWLfh4",
+        "location_RNXBAG",
+        "location_CCVRqj"
+      ],
       "settings": {
         "eyebrow": "Find Us In Person",
         "heading": "Find A Store Near You",
@@ -34,6 +108,19 @@
         "submit_button_text": "Find Stores",
         "show_location_button": true,
         "location_button_text": "Use my current location",
+        "show_store_results": true,
+        "google_maps_api_key": "AIzaSyCVE1NgtxtC9bFvnKdFq7giill-9S42Ei4",
+        "results_max_width": 1280,
+        "map_height_desktop": 730,
+        "map_height_mobile": 300,
+        "map_aria_label": "Store locations map",
+        "results_all_label": "[[count]] store locations",
+        "results_filtered_label": "[[count]] stores in [[place]]",
+        "view_all_label_desktop": "View all locations",
+        "view_all_label_mobile": "View all",
+        "clear_filter_label": "Clear location filter",
+        "directions_label": "Directions →",
+        "empty_results_message": "No stores match your search. Try another ZIP code or state.",
         "heading_color": "#2e2a26",
         "description_color": "#6f655c",
         "eyebrow_color": "#a86f45",
@@ -52,6 +139,15 @@
         "location_dot_color": "#7c8a4e",
         "location_text_color": "#2e2a26",
         "location_text_hover_color": "#1a1816",
+        "map_bg_color": "#efeae2",
+        "map_border_color": "#e5dbcf",
+        "filter_chip_bg_color": "#f2ebe2",
+        "link_color": "#a86f45",
+        "store_title_color": "#2e2a26",
+        "store_muted_color": "#6f655c",
+        "store_active_border_color": "#c68b5f",
+        "pin_color": "#c68b5f",
+        "pin_active_color": "#6a3d1e",
         "bg_type": "color",
         "bg_color": "#faf6f1",
         "bg_gradient": "",
