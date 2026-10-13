@@ -1,4 +1,5 @@
 {{ 'nw-find-us.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-find-us.js' | asset_url }}" defer="defer"></script>
 
 {%- assign nw_shell_selector = '#NwFindUs-' | append: section.id -%}
 
@@ -24,6 +25,18 @@
   --nw-fu-location-text-hover: {{ section.settings.location_text_hover_color | default: '#1A1816' }};
   --nw-fu-submit-bg-hover: {{ section.settings.submit_bg_hover_color | default: '#B37A4B' }};
   --nw-fu-submit-text-hover: {{ section.settings.submit_text_hover_color | default: '#FFFFFF' }};
+  --nw-fu-results-max: {{ section.settings.results_max_width | default: 1280 }}px;
+  --nw-fu-map-height: {{ section.settings.map_height_desktop | default: 730 }}px;
+  --nw-fu-map-height-mobile: {{ section.settings.map_height_mobile | default: 300 }}px;
+  --nw-fu-map-bg: {{ section.settings.map_bg_color | default: '#EFEAE2' }};
+  --nw-fu-map-border: {{ section.settings.map_border_color | default: '#E5DBCF' }};
+  --nw-fu-filter-chip-bg: {{ section.settings.filter_chip_bg_color | default: '#F2EBE2' }};
+  --nw-fu-link: {{ section.settings.link_color | default: '#A86F45' }};
+  --nw-fu-store-title: {{ section.settings.store_title_color | default: '#2E2A26' }};
+  --nw-fu-store-muted: {{ section.settings.store_muted_color | default: '#6F655C' }};
+  --nw-fu-store-active-border: {{ section.settings.store_active_border_color | default: '#C68B5F' }};
+  --nw-fu-pin: {{ section.settings.pin_color | default: '#C68B5F' }};
+  --nw-fu-pin-active: {{ section.settings.pin_active_color | default: '#6A3D1E' }};
 {% endcapture %}
 
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FAF6F1', extra: nw_shell_extra %}
@@ -71,14 +84,14 @@
           </label>
 
           {%- if section.settings.submit_button_text != blank -%}
-            <button type="button" class="nw-find-us__submit nw-button-primary" >
+            <button type="button" class="nw-find-us__submit nw-button-primary">
               <span class="nw-find-us__submit-text">{{ section.settings.submit_button_text }}</span>
             </button>
           {%- endif -%}
         </div>
 
         {%- if section.settings.show_location_button and section.settings.location_button_text != blank -%}
-          <button type="button" class="nw-find-us__location" >
+          <button type="button" class="nw-find-us__location">
             <span class="nw-find-us__location-dot" aria-hidden="true"></span>
             <span class="nw-find-us__location-text">{{ section.settings.location_button_text }}</span>
           </button>
@@ -86,6 +99,153 @@
       </div>
     {%- endif -%}
   </div>
+
+  {%- assign store_blocks = section.blocks | where: 'type', 'store' -%}
+  {%- if section.settings.show_store_results and store_blocks.size > 0 -%}
+    <div
+      class="nw-find-us__results"
+      data-nw-find-us-locator
+      data-api-key="{{ section.settings.google_maps_api_key | escape }}"
+      data-results-all-label="{{ section.settings.results_all_label | escape }}"
+      data-results-filtered-label="{{ section.settings.results_filtered_label | escape }}"
+      data-pin-color="{{ section.settings.pin_color | default: '#C68B5F' }}"
+      data-pin-active-color="{{ section.settings.pin_active_color | default: '#6A3D1E' }}"
+    >
+      <div class="nw-find-us__results-header">
+        <div class="nw-find-us__results-meta">
+          <p class="nw-find-us__results-count" data-nw-fu-count>
+            {{- section.settings.results_all_label | replace: '[[count]]', store_blocks.size | replace: '[[place]]', '' | strip -}}
+          </p>
+          <button type="button" class="nw-find-us__filter-chip" data-nw-fu-chip hidden>
+            <span class="nw-find-us__filter-chip-label" data-nw-fu-chip-label></span>
+            <span class="nw-find-us__filter-chip-clear" aria-hidden="true">✕</span>
+            <span class="visually-hidden">{{ section.settings.clear_filter_label | escape }}</span>
+          </button>
+        </div>
+        <button type="button" class="nw-find-us__view-all" data-nw-fu-view-all hidden>
+          <span class="nw-find-us__view-all-desktop">{{ section.settings.view_all_label_desktop }}</span>
+          <span class="nw-find-us__view-all-mobile">{{ section.settings.view_all_label_mobile }}</span>
+        </button>
+      </div>
+
+      <p class="nw-find-us__empty" data-nw-fu-empty hidden>{{ section.settings.empty_results_message }}</p>
+
+      <div class="nw-find-us__layout">
+        <div class="nw-find-us__map-wrap">
+          <div
+            class="nw-find-us__map"
+            data-nw-fu-map
+            role="region"
+            aria-label="{{ section.settings.map_aria_label | escape }}"
+          ></div>
+          <div class="nw-find-us__map-zoom" aria-hidden="true">
+            <button type="button" class="nw-find-us__map-zoom-btn" data-nw-fu-zoom="in">+</button>
+            <button type="button" class="nw-find-us__map-zoom-btn" data-nw-fu-zoom="out">−</button>
+          </div>
+        </div>
+
+        <div class="nw-find-us__stores">
+          {%- for block in store_blocks -%}
+            {%- liquid
+              assign store_index = forloop.index
+              assign directions_url = block.settings.directions_url
+              if directions_url == blank and block.settings.lat != blank and block.settings.lng != blank
+                assign directions_url = 'https://www.google.com/maps/dir/?api=1&destination=' | append: block.settings.lat | append: ',' | append: block.settings.lng
+              endif
+              assign website_label = block.settings.website_label
+              if website_label == blank and block.settings.website_url != blank
+                assign website_label = block.settings.website_url | remove: 'https://' | remove: 'http://' | remove: 'www.'
+              endif
+            -%}
+            <article
+              class="nw-find-us__store-card"
+              data-nw-fu-store-card
+              data-store-id="{{ block.id }}"
+              aria-current="false"
+              {{ block.shopify_attributes }}
+            >
+              <div class="nw-find-us__store-media">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 720
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'nw-find-us__store-image',
+                      widths: '360, 540, 720',
+                      sizes: '(min-width: 750px) 348px, 100vw',
+                      alt: block.settings.title
+                  }}
+                {%- else -%}
+                  <div class="nw-find-us__store-media-placeholder" aria-hidden="true"></div>
+                {%- endif -%}
+                <span class="nw-find-us__store-badge">{{ store_index }}</span>
+              </div>
+              <div class="nw-find-us__store-body">
+                {%- if block.settings.title != blank -%}
+                  <h3 class="nw-find-us__store-title">{{ block.settings.title }}</h3>
+                {%- endif -%}
+                <div class="nw-find-us__store-address">
+                  {%- if block.settings.address_line_1 != blank -%}
+                    <p>{{ block.settings.address_line_1 }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.city != blank or block.settings.state_code != blank or block.settings.postal_code != blank -%}
+                    <p>
+                      {{- block.settings.city -}}
+                      {%- if block.settings.city != blank and block.settings.state_code != blank -%}, {% endif -%}
+                      {{- block.settings.state_code -}}
+                      {%- if block.settings.postal_code != blank -%} {{ block.settings.postal_code }}{%- endif -%}
+                    </p>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.phone != blank -%}
+                  <a class="nw-find-us__store-phone" href="tel:{{ block.settings.phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' }}">
+                    {{ block.settings.phone }}
+                  </a>
+                {%- endif -%}
+                <div class="nw-find-us__store-footer">
+                  {%- if block.settings.website_url != blank -%}
+                    <a class="nw-find-us__store-link" href="{{ block.settings.website_url }}" target="_blank" rel="noopener noreferrer">
+                      {{ website_label }}
+                    </a>
+                  {%- endif -%}
+                  {%- if directions_url != blank -%}
+                    <a class="nw-find-us__store-directions" href="{{ directions_url }}" target="_blank" rel="noopener noreferrer">
+                      {{ section.settings.directions_label }}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <script type="application/json" class="nw-find-us__data">
+        [
+          {%- for block in store_blocks -%}
+            {
+              "id": {{ block.id | json }},
+              "index": {{ forloop.index }},
+              "title": {{ block.settings.title | json }},
+              "address_line_1": {{ block.settings.address_line_1 | json }},
+              "city": {{ block.settings.city | json }},
+              "state_name": {{ block.settings.state_name | json }},
+              "state_code": {{ block.settings.state_code | json }},
+              "postal_code": {{ block.settings.postal_code | json }},
+              "phone": {{ block.settings.phone | json }},
+              "hours_text": {{ block.settings.hours_text | json }},
+              "website_url": {{ block.settings.website_url | json }},
+              "directions_url": {{ directions_url | json }},
+              "search_keywords": {{ block.settings.search_keywords | json }},
+              "lat": {{ block.settings.lat | json }},
+              "lng": {{ block.settings.lng | json }}
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      </script>
+    </div>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -201,6 +361,114 @@
       "label": "Location Link Label",
       "default": "Use my current location",
       "visible_if": "{{ section.settings.show_search_card == true and section.settings.show_location_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "MAP & RESULTS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_store_results",
+      "label": "Show Map And Store Results",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "google_maps_api_key",
+      "label": "Google Maps API Key",
+      "info": "Required for the interactive map. Enable Maps JavaScript API and Geocoding API.",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "range",
+      "id": "results_max_width",
+      "label": "Results Max Width",
+      "min": 960,
+      "max": 1440,
+      "step": 20,
+      "unit": "px",
+      "default": 1280,
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "range",
+      "id": "map_height_desktop",
+      "label": "Map Height (Desktop)",
+      "min": 400,
+      "max": 900,
+      "step": 5,
+      "unit": "px",
+      "default": 730,
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "range",
+      "id": "map_height_mobile",
+      "label": "Map Height (Mobile)",
+      "min": 220,
+      "max": 480,
+      "step": 4,
+      "unit": "px",
+      "default": 300,
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "text",
+      "id": "map_aria_label",
+      "label": "Map Accessibility Label",
+      "default": "Store locations map",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "text",
+      "id": "results_all_label",
+      "label": "All Locations Count Label",
+      "default": "[[count]] store locations",
+      "info": "Use [[count]] for the number of stores.",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "text",
+      "id": "results_filtered_label",
+      "label": "Filtered Count Label",
+      "default": "[[count]] stores in [[place]]",
+      "info": "Use [[count]] and [[place]].",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label_desktop",
+      "label": "View All Label (Desktop)",
+      "default": "View all locations",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label_mobile",
+      "label": "View All Label (Mobile)",
+      "default": "View all",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "text",
+      "id": "clear_filter_label",
+      "label": "Clear Filter Accessibility Label",
+      "default": "Clear location filter",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "text",
+      "id": "directions_label",
+      "label": "Directions Link Label",
+      "default": "Directions →",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "text",
+      "id": "empty_results_message",
+      "label": "No Results Message",
+      "default": "No stores match your search. Try another ZIP code or state.",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
     },
     {
       "type": "header",
@@ -338,6 +606,73 @@
     },
     {
       "type": "header",
+      "content": "MAP & STORE COLORS"
+    },
+    {
+      "type": "color",
+      "id": "map_bg_color",
+      "label": "Map Background",
+      "default": "#EFEAE2",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "map_border_color",
+      "label": "Map Border",
+      "default": "#E5DBCF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "filter_chip_bg_color",
+      "label": "Filter Chip Background",
+      "default": "#F2EBE2",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link Color",
+      "default": "#A86F45",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "store_title_color",
+      "label": "Store Title Color",
+      "default": "#2E2A26",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "store_muted_color",
+      "label": "Store Address Color",
+      "default": "#6F655C",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "store_active_border_color",
+      "label": "Active Store Border",
+      "default": "#C68B5F",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "pin_color",
+      "label": "Map Pin Color",
+      "default": "#C68B5F",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "pin_active_color",
+      "label": "Active Map Pin Color",
+      "default": "#6A3D1E",
+      "alpha": true
+    },
+    {
+      "type": "header",
       "content": "BACKGROUND"
     },
     {
@@ -423,10 +758,172 @@
       "default": 32
     }
   ],
+  "blocks": [
+    {
+      "type": "store",
+      "name": "Store Location",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Store Name",
+          "default": "Snooze Mattress Co."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Store Photo"
+        },
+        {
+          "type": "text",
+          "id": "address_line_1",
+          "label": "Address Line 1",
+          "default": "12345 Example Pkwy, Suite 100"
+        },
+        {
+          "type": "text",
+          "id": "city",
+          "label": "City",
+          "default": "Parker"
+        },
+        {
+          "type": "text",
+          "id": "state_code",
+          "label": "State Code",
+          "default": "CO"
+        },
+        {
+          "type": "text",
+          "id": "state_name",
+          "label": "State Name",
+          "default": "Colorado"
+        },
+        {
+          "type": "text",
+          "id": "postal_code",
+          "label": "ZIP / Postal Code",
+          "default": "80134"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone",
+          "default": "(303) 555-0141"
+        },
+        {
+          "type": "text",
+          "id": "hours_text",
+          "label": "Hours Note (Map Tooltip)",
+          "default": "Open today until 7pm"
+        },
+        {
+          "type": "url",
+          "id": "website_url",
+          "label": "Store Website"
+        },
+        {
+          "type": "text",
+          "id": "website_label",
+          "label": "Website Link Label",
+          "info": "Optional display text for the website link."
+        },
+        {
+          "type": "url",
+          "id": "directions_url",
+          "label": "Directions URL",
+          "info": "Optional. Auto-generated from coordinates when left blank."
+        },
+        {
+          "type": "text",
+          "id": "search_keywords",
+          "label": "Extra Search Keywords",
+          "info": "Optional aliases to match in search."
+        },
+        {
+          "type": "text",
+          "id": "lat",
+          "label": "Latitude",
+          "default": "39.5186"
+        },
+        {
+          "type": "text",
+          "id": "lng",
+          "label": "Longitude",
+          "default": "-104.7614"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "t:sections.nw-find-us.name",
-      "category": "NW Sections"
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Co. Parker",
+            "address_line_1": "12345 Example Pkwy, Suite 100",
+            "city": "Parker",
+            "state_code": "CO",
+            "state_name": "Colorado",
+            "postal_code": "80134",
+            "phone": "(303) 555-0141",
+            "hours_text": "Open today until 7pm",
+            "website_label": "snoozemattress.com/parker",
+            "lat": "39.5186",
+            "lng": "-104.7614"
+          }
+        },
+        {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Co. Castle Rock",
+            "address_line_1": "678 Sample Blvd",
+            "city": "Castle Rock",
+            "state_code": "CO",
+            "state_name": "Colorado",
+            "postal_code": "80108",
+            "phone": "(303) 555-0142",
+            "hours_text": "Open today until 7pm",
+            "website_label": "snoozemattress.com/castle-rock",
+            "lat": "39.3722",
+            "lng": "-104.8561"
+          }
+        },
+        {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Co. Woodland Park",
+            "address_line_1": "910 Placeholder Ave",
+            "city": "Woodland Park",
+            "state_code": "CO",
+            "state_name": "Colorado",
+            "postal_code": "80863",
+            "phone": "(719) 555-0143",
+            "hours_text": "Open today until 7pm",
+            "website_label": "snoozemattress.com/woodland-park",
+            "lat": "38.9939",
+            "lng": "-105.0569"
+          }
+        },
+        {
+          "type": "store",
+          "settings": {
+            "title": "Snooze Mattress Co. Colorado Springs",
+            "address_line_1": "2468 Demo Rd",
+            "city": "Colorado Springs",
+            "state_code": "CO",
+            "state_name": "Colorado",
+            "postal_code": "80920",
+            "phone": "(719) 555-0144",
+            "hours_text": "Open today until 7pm",
+            "website_label": "snoozemattress.com/co-springs",
+            "lat": "38.8339",
+            "lng": "-104.8214"
+          }
+        }
+      ]
     }
   ]
 }
