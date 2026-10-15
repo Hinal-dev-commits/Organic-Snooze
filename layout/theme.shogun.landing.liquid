@@ -6,6 +6,7 @@ This file can be re-written at any time.
 {% include 'shogun-content-handler' %}
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
+{% render 'replo-head' %}
   {% comment %}Loads Shogun Analytics. Removing this will disrupt analytics data collection.{% endcomment %}
   <script type="text/javascript" async src="https://na.shgcdn3.com/pixel-collector.js"></script>
     <meta charset="utf-8">
@@ -99,6 +100,8 @@ This file can be re-written at any time.
     {% render 'nw-script' %}
   
   {% render 'shogun-head' %}
+  {%- comment -%} Gohighlevel code {%- endcomment -%}
+  <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6aa1684faa1a4795583990d8" data-source="WEB_USER"></script>
 </head>
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} nw-theme-{{ template.name }}">
     {% include 'shogun-content-handler' %}
