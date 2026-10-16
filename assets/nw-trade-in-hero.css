@@ -261,13 +261,13 @@
   gap: 0;
   width: 100%;
   padding-top: var(--nw-trade-in-slider-offset-top, 92px);
-  position: relative;
+  padding-bottom: 40px;
   box-sizing: border-box;
 }
 
 .nw-trade-in-hero__slider-footer {
-  position: absolute;
-  bottom: 30px;
+  position: relative;
+  z-index: 4;
   display: flex;
   flex-direction: row;
   align-items: center;
