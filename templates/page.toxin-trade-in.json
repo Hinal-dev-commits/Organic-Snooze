@@ -11,13 +11,844 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "nw_trade_in_hero_XyTUbW": {
+      "type": "nw-trade-in-hero",
+      "blocks": {
+        "stat_bLcp7E": {
+          "type": "stat",
+          "settings": {
+            "enable_count_animation": true,
+            "number": "2,400+",
+            "decimals": 0,
+            "prefix": "",
+            "suffix": "+",
+            "label": "Toxic mattresses traded in"
+          }
+        },
+        "stat_KPrHhQ": {
+          "type": "stat",
+          "settings": {
+            "enable_count_animation": true,
+            "number": "300",
+            "decimals": 0,
+            "prefix": "$",
+            "suffix": "",
+            "label": "Average instant discount"
+          }
+        },
+        "stat_N4CXAi": {
+          "type": "stat",
+          "settings": {
+            "enable_count_animation": true,
+            "number": "4.9",
+            "decimals": 1,
+            "prefix": "",
+            "suffix": "★",
+            "label": "Rated by trade-in customers"
+          }
+        },
+        "video_slide_3AByYe": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_KelseyT_7cdb78c2 (1).mov.mp4",
+            "overlay_text": "",
+            "caption": ""
+          }
+        },
+        "video_slide_rx3Bdm": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_EmilyB_TheOrgaSnoo_5cc2352c (1).mov.mp4",
+            "overlay_text": "",
+            "caption": ""
+          }
+        },
+        "video_slide_xRHpXJ": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_BrittanyP_PillOrgaLate_d99ad2fc.mp4.mp4",
+            "overlay_text": "",
+            "caption": ""
+          }
+        },
+        "video_slide_7fdbyt": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_KelseyT_7cdb78c2 (1).mov.mp4",
+            "overlay_text": "",
+            "caption": ""
+          }
+        },
+        "video_slide_tbbLGP": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_EmilyB_TheOrgaSnoo_5cc2352c (1).mov.mp4",
+            "overlay_text": "",
+            "caption": ""
+          }
+        },
+        "video_slide_Yr7B8W": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_BrittanyP_PillOrgaLate_d99ad2fc.mp4.mp4",
+            "overlay_text": "",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "stat_bLcp7E",
+        "stat_KPrHhQ",
+        "stat_N4CXAi",
+        "video_slide_3AByYe",
+        "video_slide_rx3Bdm",
+        "video_slide_xRHpXJ",
+        "video_slide_7fdbyt",
+        "video_slide_tbbLGP",
+        "video_slide_Yr7B8W"
+      ],
+      "name": "t:sections.nw-trade-in-hero.name",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Trade In The Toxins. Get $300 Off.",
+        "description": "<p>Snap a photo or video of your old mattress's law tag (or just the gross top-of-bed) and we'll knock $300 off any Ultimate Snooze mattress instantly, no trade-in required.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "text_color": "#613916",
+        "stat_color": "#cc926a",
+        "stat_label_color": "#613916",
+        "counter_duration": 2,
+        "show_button": true,
+        "button_text": "Upload My Law Tag",
+        "cta_note": "Takes 30 seconds · No purchase required to try",
+        "button_link": "#toxin-offer",
+        "button_style": "primary",
+        "button_icon": "none",
+        "video_slide_width": 380,
+        "video_slide_width_mobile": 280,
+        "video_aspect_ratio": "380:676",
+        "slider_offset_top": 92,
+        "slider_effect": "slide",
+        "show_arrows": true,
+        "enable_autoplay": true,
+        "autoplay_delay": 5,
+        "slider_transition_ms": 750,
+        "swiper_arrow_bg": "#ffffff",
+        "swiper_arrow_color": "#613916",
+        "show_video_play_pause": true,
+        "video_autoplay_active_slide": false,
+        "loop_videos": true,
+        "bg_type": "color",
+        "bg_color": "#fffcf0",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_trade_in_video_explainer_CzrXTb": {
+      "type": "nw-trade-in-video-explainer",
+      "blocks": {
+        "point_M9nGf8": {
+          "type": "point",
+          "settings": {
+            "title": "Event runs now through the end of the month",
+            "text": "Every upload during the event window qualifies."
+          }
+        },
+        "point_6f84FJ": {
+          "type": "point",
+          "settings": {
+            "title": "Works with any mattress, any brand",
+            "text": "Law tag or a top-of-bed photo/video — either works."
+          }
+        },
+        "point_fiBtHB": {
+          "type": "point",
+          "settings": {
+            "title": "$300 applied instantly at checkout",
+            "text": "No waiting on approval, no mail-in rebate."
+          }
+        }
+      },
+      "block_order": [
+        "point_M9nGf8",
+        "point_6f84FJ",
+        "point_fiBtHB"
+      ],
+      "name": "t:sections.nw-trade-in-video-explainer.name",
+      "settings": {
+        "video": "shopify://files/videos/Trade In Your Toxic Mattress for 300 Off an Organic One.mp4.mp4",
+        "video_overlay_title": "The Toxin Trade-In, Explained",
+        "video_duration": "0:58",
+        "video_width_desktop": 380,
+        "video_aspect_w": 380,
+        "video_aspect_h": 676,
+        "eyebrow": "SEE IT IN ACTION",
+        "heading": "Watch The Toxin Trade-In In 60 Seconds",
+        "description": "<p>This is our biggest event of the year — and it's built to be effortless. Watch exactly how a real customer finds their mattress's law tag, uploads it, and unlocks $300 off in under a minute.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "show_button": true,
+        "button_text": "Upload My Law Tag",
+        "button_link": "#toxin-offer",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#fbf9f6",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 78,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "nw_step_v3_fa79G9": {
+      "type": "nw-step-v3",
+      "blocks": {
+        "step_FPc7Gd": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Snap a Photo or Video",
+            "description": "<p>Show us your mattress's law tag (the ingredient label) or just the dirty top-of-bed — phone camera is fine.</p>",
+            "footnote": ""
+          }
+        },
+        "step_qWHHHQ": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "We Verify It Instantly",
+            "description": "<p>Our system checks the upload and confirms your $300 discount in under a minute. No back-and-forth.</p>",
+            "footnote": ""
+          }
+        },
+        "step_GYxrBM": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "Shop & Save $300",
+            "description": "<p>Apply your instant code to any Ultimate Snooze mattress at checkout. We'll even help you recycle the old one.</p>",
+            "footnote": ""
+          }
+        },
+        "step_aYFXTD": {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "title": "We Will Pick Up Your Old Mattress",
+            "description": "<p>After delivery, schedule a free haul-away of your old mattress. Only applies to mattress purchases*.</p>",
+            "footnote": ""
+          }
+        }
+      },
+      "block_order": [
+        "step_FPc7Gd",
+        "step_qWHHHQ",
+        "step_GYxrBM",
+        "step_aYFXTD"
+      ],
+      "name": "t:sections.nw-step-v3.name",
+      "settings": {
+        "heading": "Three Steps to $300 + FREE Old Mattress Removal",
+        "heading_mobile": "Three Steps to $300 Off",
+        "heading_color": "#613916",
+        "card_bg_color": "#ffffff",
+        "card_title_color": "#613916",
+        "card_text_color": "#613916",
+        "badge_bg_color": "#cc926a",
+        "badge_text_color": "#ffffff",
+        "bg_type": "color",
+        "bg_color": "#fbf9f6",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_testimonial_video_P9fgi6": {
+      "type": "nw-testimonial-video",
+      "blocks": {
+        "video_slide_DbbkKJ": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Trade In Your Toxic Mattress for 300 Off an Organic One.mp4.mp4",
+            "handle": "",
+            "quote": ""
+          }
+        },
+        "video_slide_fnzEDV": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_KelseyT_7cdb78c2 (1).mov.mp4",
+            "handle": "",
+            "quote": ""
+          }
+        },
+        "video_slide_xxPBY3": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/VIDEO 8.mp4",
+            "handle": "",
+            "quote": ""
+          }
+        },
+        "video_slide_Yq7QQE": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/instagram-video-84058dd4-61f1-47cd-baf2-79f7f84b8150.mp4",
+            "handle": "@customer",
+            "quote": "I had no idea my old mattress had a law tag — this made trade-in so easy."
+          }
+        },
+        "video_slide_AJPfpj": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Trade In Your Toxic Mattress for 300 Off an Organic One.mp4.mp4",
+            "handle": "",
+            "quote": ""
+          }
+        },
+        "video_slide_Ln6h7y": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_KelseyT_7cdb78c2 (1).mov.mp4",
+            "handle": "",
+            "quote": ""
+          }
+        },
+        "video_slide_aCEYhN": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/instagram-video-84058dd4-61f1-47cd-baf2-79f7f84b8150.mp4",
+            "handle": "@customer",
+            "quote": "I had no idea my old mattress had a law tag — this made trade-in so easy."
+          }
+        },
+        "video_slide_cFMaM3": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/Trade In Your Toxic Mattress for 300 Off an Organic One.mp4.mp4",
+            "handle": "",
+            "quote": ""
+          }
+        },
+        "video_slide_eVmhk4": {
+          "type": "video_slide",
+          "settings": {
+            "video": "shopify://files/videos/the_ultimate_snooze_by_gary_brecka_fav_KelseyT_7cdb78c2 (1).mov.mp4",
+            "handle": "",
+            "quote": ""
+          }
+        }
+      },
+      "block_order": [
+        "video_slide_DbbkKJ",
+        "video_slide_fnzEDV",
+        "video_slide_xxPBY3",
+        "video_slide_Yq7QQE",
+        "video_slide_AJPfpj",
+        "video_slide_Ln6h7y",
+        "video_slide_aCEYhN",
+        "video_slide_cFMaM3",
+        "video_slide_eVmhk4"
+      ],
+      "name": "t:sections.nw-testimonial-video.name",
+      "settings": {
+        "eyebrow": "GOING VIRAL ON TIKTOK & IG",
+        "heading": "Real Customers, Real Law Tags",
+        "description": "",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "video_slide_width": 220,
+        "video_slide_width_mobile": 160,
+        "video_aspect_ratio": "160:280",
+        "slide_border_radius": 16,
+        "slide_border_radius_mobile": 16,
+        "loop_videos": true,
+        "video_autoplay_active_slide": false,
+        "show_arrows": true,
+        "enable_autoplay": true,
+        "autoplay_delay": 5,
+        "slider_transition_ms": 750,
+        "swiper_arrow_color": "#613916",
+        "swiper_arrow_border": "#613916",
+        "swiper_arrow_bg_mobile": "#f4efe8",
+        "bg_type": "color",
+        "bg_color": "#fbf9f6",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 96,
+        "padding_bottom_desktop": 96,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "nw_offer_qWyxcW": {
+      "type": "nw-offer",
+      "blocks": {
+        "bullet_Fk4HBC": {
+          "type": "bullet",
+          "settings": {
+            "text": "No trade-in shipping required",
+            "show_on_mobile": true
+          }
+        },
+        "bullet_8JehQT": {
+          "type": "bullet",
+          "settings": {
+            "text": "Works with any mattress brand",
+            "show_on_mobile": true
+          }
+        },
+        "bullet_witmN9": {
+          "type": "bullet",
+          "settings": {
+            "text": "Stacks with existing promos",
+            "show_on_mobile": true
+          }
+        },
+        "bullet_QmFzyk": {
+          "type": "bullet",
+          "settings": {
+            "text": "Instant approval with valid video/photo",
+            "show_on_mobile": false
+          }
+        }
+      },
+      "block_order": [
+        "bullet_Fk4HBC",
+        "bullet_8JehQT",
+        "bullet_witmN9",
+        "bullet_QmFzyk"
+      ],
+      "name": "t:sections.nw-offer.name",
+      "settings": {
+        "custom_id": "toxin-offer",
+        "eyebrow": "THE OFFER",
+        "headline": "$300 Off",
+        "description": "<p>Snap a photo or video of your old mattress's law tag (or just the gross top-of-bed) and we'll knock $300 off any Ultimate Snooze mattress instantly, no trade-in required.</p>",
+        "description_mobile": "<p>Any mattress. Any size. One upload. Our biggest trade-in offer ever — ends when the event does.</p>",
+        "eyebrow_color": "#cc926a",
+        "headline_color": "#613916",
+        "description_color": "#613916",
+        "check_color": "#cc926a",
+        "bullet_color": "#613916",
+        "mobile_bg_color": "#613916",
+        "mobile_headline_color": "#ffffff",
+        "mobile_description_color": "#ffffff",
+        "mobile_bullet_color": "#ffffff",
+        "card_title": "Upload Your Toxin Trade-In",
+        "card_bg_color": "#ffffff",
+        "card_title_color": "#613916",
+        "portal_min_height_desktop": 560,
+        "portal_min_height_mobile": 420,
+        "bg_type": "color",
+        "bg_color": "#fbf9f6",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_trade_in_video_explainer_LYnnAx": {
+      "type": "nw-trade-in-video-explainer",
+      "blocks": {
+        "point_yqba8W": {
+          "type": "point",
+          "settings": {
+            "title": "Most tags never get read",
+            "text": "Tucked under a corner seam in tiny print — almost nobody actually checks."
+          }
+        },
+        "point_AkTrNb": {
+          "type": "point",
+          "settings": {
+            "title": "Foams, adhesives, flame retardants",
+            "text": "Common materials linked to VOC off-gassing, even years after purchase."
+          }
+        },
+        "point_tXk4fJ": {
+          "type": "point",
+          "settings": {
+            "title": "Takes 10 seconds to check",
+            "text": "Flip your mattress, find the white tag near the seam. That’s it."
+          }
+        },
+        "point_pntNfp": {
+          "type": "point",
+          "settings": {
+            "title": "Not all law tags are transparent",
+            "text": "Many tags use vague terms like “proprietary” or “inorganic” instead of listing chemical names."
+          }
+        }
+      },
+      "block_order": [
+        "point_yqba8W",
+        "point_AkTrNb",
+        "point_tXk4fJ",
+        "point_pntNfp"
+      ],
+      "name": "t:sections.nw-trade-in-video-explainer.name",
+      "settings": {
+        "video": "shopify://files/videos/gary-longform-mashup-2mov-1_7AbgC3E8.mp4",
+        "video_overlay_title": "The Toxin Trade-In, Explained",
+        "video_duration": "0:58",
+        "video_width_desktop": 380,
+        "video_aspect_w": 380,
+        "video_aspect_h": 676,
+        "eyebrow": "WHY IT MATTERS",
+        "heading": "Gary Breaks Down What's Hiding In Your Mattress",
+        "description": "<p>Whether or not you take the $300, Gary wants you to actually look at your mattress's law tag. Most people never do — and most never find out what's really in the thing they sleep on for a third of their life.</p>",
+        "heading_color": "#613916",
+        "description_color": "#613916",
+        "show_button": true,
+        "button_text": "Upload My Law Tag",
+        "button_link": "#toxin-offer",
+        "button_style": "primary",
+        "bg_type": "color",
+        "bg_color": "#fbf9f6",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 120,
+        "padding_bottom_desktop": 78,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "nw_old_mattress_bPcGTk": {
+      "type": "nw-old-mattress",
+      "blocks": {
+        "toxin_card_4A8wMY": {
+          "type": "toxin_card",
+          "settings": {
+            "icon_label": "!",
+            "title": "Polyurethane Foam",
+            "description": "A petroleum-derived foam used in most conventional mattresses. It can off-gas volatile organic compounds (VOCs) for years, commonly linked to headaches and indoor air irritation.",
+            "description_mobile": "A petroleum-derived foam that can off-gas VOCs for years, commonly linked to headaches and indoor air irritation."
+          }
+        },
+        "toxin_card_qmwgmz": {
+          "type": "toxin_card",
+          "settings": {
+            "icon_label": "!",
+            "title": "Petroleum-Based Foam",
+            "description": "Made from crude oil byproducts, these foams are highly flammable on their own, requiring extra chemical treatment just to meet basic safety codes.",
+            "description_mobile": "Made from crude oil byproducts, highly flammable on their own and requiring extra chemical treatment to meet safety codes."
+          }
+        },
+        "toxin_card_KCEhDX": {
+          "type": "toxin_card",
+          "settings": {
+            "icon_label": "!",
+            "title": "Fiberglass",
+            "description": "A cheap flame barrier woven into many mattress covers. Once the cover is unzipped or worn, it can shed microscopic particles that irritate skin, eyes, and lungs.",
+            "description_mobile": "A cheap flame barrier woven into many covers. Once unzipped or worn, it can shed particles that irritate skin, eyes, and lungs."
+          }
+        },
+        "toxin_card_7GzqgL": {
+          "type": "toxin_card",
+          "settings": {
+            "icon_label": "!",
+            "title": "Formaldehyde",
+            "description": "Used in foam adhesives and pressed materials, formaldehyde is classified as a known human carcinogen and can continue off-gassing long after purchase.",
+            "description_mobile": "Used in foam adhesives and pressed materials, classified as a known human carcinogen that can off-gas long after purchase."
+          }
+        },
+        "toxin_card_Wpywwc": {
+          "type": "toxin_card",
+          "settings": {
+            "icon_label": "!",
+            "title": "Toxic Adhesives",
+            "description": "Petroleum-based glues bond foam layers together and keep releasing VOCs into your bedroom air long after the ‘new mattress smell’ fades.",
+            "description_mobile": "Petroleum-based glues bond foam layers and keep releasing VOCs long after the ‘new mattress smell’ fades."
+          }
+        },
+        "toxin_card_We8MVt": {
+          "type": "toxin_card",
+          "settings": {
+            "icon_label": "!",
+            "title": "Flame-Retardant Sprays",
+            "description": "Chemical sprays applied to meet flammability codes, often containing halogenated compounds linked to hormone disruption with long-term exposure.",
+            "description_mobile": "Chemical sprays applied to meet flammability codes, often containing compounds linked to hormone disruption."
+          }
+        }
+      },
+      "block_order": [
+        "toxin_card_4A8wMY",
+        "toxin_card_qmwgmz",
+        "toxin_card_KCEhDX",
+        "toxin_card_7GzqgL",
+        "toxin_card_Wpywwc",
+        "toxin_card_We8MVt"
+      ],
+      "name": "t:sections.nw-old-mattress.name",
+      "settings": {
+        "custom_id": "",
+        "eyebrow": "WHY THIS EVENT MATTERS",
+        "heading": "What's Really Inside Your Old Mattress",
+        "description": "<p>Most conventional mattresses are built with synthetic materials that off-gas chemicals into your bedroom air, night after night. Here's what to look for on your old law tag.</p>",
+        "description_mobile": "<p>Most conventional mattresses off-gas chemicals into your bedroom air, night after night. Here's what to look for.</p>",
+        "footnote": "",
+        "eyebrow_color": "#cc926a",
+        "heading_color": "#704524",
+        "description_color": "#704522",
+        "footnote_color": "#704522",
+        "mobile_bg_color": "#613916",
+        "mobile_heading_color": "#ffffff",
+        "mobile_description_color": "#ffffff",
+        "mobile_footnote_color": "#ffffff",
+        "card_bg_color": "#704522",
+        "card_title_color": "#ffffff",
+        "card_text_color": "#ffffff",
+        "icon_bg_color": "#cc926a",
+        "icon_color": "#ffffff",
+        "card_radius": 18,
+        "card_radius_mobile": 16,
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_shop_mattress_H3kLm9": {
+      "type": "nw-shop-mattress",
+      "blocks": {
+        "product_card_a1": {
+          "type": "product_card",
+          "settings": {
+            "product": "3554-medium-ept-gary-brecka",
+            "custom_title": "",
+            "subtitle": "Firm | Organic Latex | Organic Wool | Organic Cotton",
+            "price_text": "",
+            "show_starting_at": true,
+            "custom_link": "",
+            "image_fallback_color": "#d9b285",
+            "hide_badge": false
+          }
+        },
+        "product_card_a2": {
+          "type": "product_card",
+          "settings": {
+            "product": "3556-eco-pure",
+            "custom_title": "",
+            "subtitle": "Cushion-Firm | Organic Latex | Organic Wool | Organic Cotton",
+            "price_text": "",
+            "show_starting_at": true,
+            "custom_link": "",
+            "image_fallback_color": "#bf8c61",
+            "hide_badge": false
+          }
+        },
+        "product_card_a3": {
+          "type": "product_card",
+          "settings": {
+            "product": "dual-pillow-bedding-bundle",
+            "custom_title": "",
+            "subtitle": "Safe-Firm | Coconut Coir | Organic Wool | Organic Hemp | Organic Cotton",
+            "price_text": "",
+            "show_starting_at": false,
+            "custom_link": "",
+            "image_fallback_color": "#e5c79e",
+            "hide_badge": false
+          }
+        }
+      },
+      "block_order": [
+        "product_card_a1",
+        "product_card_a2",
+        "product_card_a3"
+      ],
+      "name": "t:sections.nw-shop-mattress.name",
+      "settings": {
+        "custom_id": "",
+        "eyebrow": "APPLY YOUR $300 CREDIT",
+        "heading": "Shop the Non-Toxic Organic Ultimate Snooze Mattress",
+        "heading_mobile": "",
+        "eyebrow_color": "#cc926a",
+        "heading_color": "#613916",
+        "show_badge": true,
+        "badge_text": "$300 OFF APPLIED",
+        "badge_bg_color": "#ffffff",
+        "badge_text_color": "#878735",
+        "button_label": "Shop Now",
+        "button_bg_color": "#f4efe8",
+        "button_text_color": "#613916",
+        "button_border_color": "#61391626",
+        "title_color": "#613916",
+        "subtitle_color": "#613916",
+        "price_color": "#cc926a",
+        "media_height_desktop": 260,
+        "media_height_mobile": 220,
+        "media_radius_desktop": 20,
+        "media_radius_mobile": 18,
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_faq_v3_pGc7xY": {
+      "type": "nw-faq-v3",
+      "blocks": {
+        "faq_item_kfd4YM": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does my mattress have to be an Ultimate Snooze mattress?",
+            "answer": "<p>Nope — any brand qualifies. We just need a clear photo or video of the law tag or top-of-bed.</p>"
+          }
+        },
+        "faq_item_dGapyf": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How fast do I get my discount?",
+            "answer": "<p>Once your law tag photo is approved, your $300 credit is applied to your account within one business day.</p>"
+          }
+        },
+        "faq_item_iBw9zb": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is this a trade-in I have to ship?",
+            "answer": "<p>No shipping required. This is a photo verification event — keep your old mattress and use your credit toward a new Ultimate Snooze.</p>"
+          }
+        },
+        "faq_item_bxW6gw": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I stack this with other offers?",
+            "answer": "<p>The $300 Toxin Trade-In credit cannot be combined with other sitewide promotions unless noted during checkout.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_kfd4YM",
+        "faq_item_dGapyf",
+        "faq_item_iBw9zb",
+        "faq_item_bxW6gw"
+      ],
+      "name": "t:sections.nw-faq-v3.name",
+      "settings": {
+        "custom_id": "",
+        "heading": "Frequently Asked Questions",
+        "heading_mobile": "",
+        "heading_color": "#613916",
+        "open_first_faq": true,
+        "allow_multiple_open": false,
+        "card_bg_color": "#ffffff",
+        "question_color": "#613916",
+        "answer_color": "#613916",
+        "icon_color": "#cc926a",
+        "card_radius": 16,
+        "card_radius_mobile": 14,
+        "bg_type": "color",
+        "bg_color": "#fbf9f6",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "nw_our_story_XEPxPe": {
+      "type": "nw-our-story",
+      "blocks": {
+        "pillar_weybaE": {
+          "type": "pillar",
+          "settings": {
+            "title": "Organic Materials",
+            "text": "<p>Natural latex, organic cotton and wool — no synthetic foams or hidden chemicals.</p>"
+          }
+        },
+        "pillar_djK4Dj": {
+          "type": "pillar",
+          "settings": {
+            "title": "Recovery-Focused",
+            "text": "<p>Designed around real sleep science, so your body actually repairs overnight.</p>"
+          }
+        },
+        "pillar_dx4y39": {
+          "type": "pillar",
+          "settings": {
+            "title": "Cooling & Breathable",
+            "text": "<p>Natural fibers regulate temperature — no synthetic heat trap.</p>"
+          }
+        },
+        "pillar_ARn7tP": {
+          "type": "pillar",
+          "settings": {
+            "title": "Backed By Experts",
+            "text": "<p>Developed with Gary Brecka and Ultimate Human’s performance and recovery protocols.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "pillar_weybaE",
+        "pillar_djK4Dj",
+        "pillar_dx4y39",
+        "pillar_ARn7tP"
+      ],
+      "name": "t:sections.nw-our-story.name",
+      "settings": {
+        "custom_id": "",
+        "eyebrow": "OUR STORY",
+        "heading": "What Is The Ultimate Snooze?",
+        "heading_mobile": "",
+        "description": "<p>The Ultimate Snooze is organic performance sleep — mattresses built from natural materials that support real recovery, not just rest. No polyurethane foam, no fiberglass, no toxic flame retardants. Just clean inputs, for a cleaner night's sleep. You spend nearly one-third of your life on your mattress. What it's made of matters.</p>",
+        "description_mobile": "<p>The Ultimate Snooze is organic performance sleep — mattresses built from natural materials that support real recovery, not just rest. No polyurethane foam, no fiberglass, no toxic flame retardants. Just clean inputs, for a cleaner night's sleep.</p>",
+        "eyebrow_color": "#cc926a",
+        "heading_color": "#613916",
+        "description_color": "#613916cc",
+        "pillar_title_color": "#613916",
+        "pillar_text_color": "#613916b3",
+        "show_button": true,
+        "button_label": "Explore The Mattress",
+        "button_link": "#toxin-offer",
+        "button_bg_color": "#613916",
+        "button_text_color": "#ffffff",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_image_opacity": 100,
+        "bg_gradient": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "nw_trade_in_hero_XyTUbW",
+    "nw_trade_in_video_explainer_CzrXTb",
+    "nw_step_v3_fa79G9",
+    "nw_testimonial_video_P9fgi6",
+    "nw_offer_qWyxcW",
+    "nw_trade_in_video_explainer_LYnnAx",
+    "nw_old_mattress_bPcGTk",
+    "nw_shop_mattress_H3kLm9",
+    "nw_faq_v3_pGc7xY",
+    "nw_our_story_XEPxPe"
   ]
 }

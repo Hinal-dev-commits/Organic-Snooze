@@ -1,0 +1,795 @@
+{{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
+{{ 'nw-trade-in-hero.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-when-swiper-ready.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-trade-in-hero.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign video_blocks = section.blocks | where: 'type', 'video_slide'
+  assign stat_blocks = section.blocks | where: 'type', 'stat'
+  assign nw_shell_selector = '#NwTradeInHero-' | append: section.id
+  assign slide_count = video_blocks.size
+  assign aspect_setting = section.settings.video_aspect_ratio | default: '380:676'
+  assign aspect_parts = aspect_setting | split: ':'
+  assign aspect_w = aspect_parts[0] | default: '380' | plus: 0
+  assign aspect_h = aspect_parts[1] | default: '676' | plus: 0
+  assign slide_width_dt = section.settings.video_slide_width | default: 380
+  assign slide_width_mb = section.settings.video_slide_width_mobile | default: 280
+  assign slider_offset_top = section.settings.slider_offset_top | default: 92
+-%}
+
+{% capture nw_shell_extra %}
+  overflow: visible;
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF', extra: nw_shell_extra %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  #shopify-section-{{ section.id }},
+  #NwTradeInHero-{{ section.id }},
+  #NwTradeInHero-{{ section.id }} .nw-trade-in-hero__container,
+  #NwTradeInHero-{{ section.id }} .nw-trade-in-hero__media-col,
+  #NwTradeInHero-{{ section.id }} .nw-trade-in-hero__swiper-stage {
+    overflow: visible !important;
+  }
+
+  @media screen and (min-width: 990px) {
+    #NwTradeInHero-{{ section.id }} .nw-trade-in-hero__container {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-start !important;
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    #NwTradeInHero-{{ section.id }} .nw-trade-in-hero__content-col {
+      flex: 0 0 auto !important;
+      width: auto !important;
+      min-width: 0 !important;
+      max-width: none !important;
+    }
+
+    #NwTradeInHero-{{ section.id }} .nw-trade-in-hero__media-col {
+      flex: 1 1 0 !important;
+      width: auto !important;
+      min-width: 0 !important;
+    }
+
+    #NwTradeInHero-{{ section.id }} .swiper {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+</style>
+
+<nw-trade-in-hero
+  id="NwTradeInHero-{{ section.id }}"
+  class="nw-trade-in-hero section-{{ section.id }}{% unless section.settings.show_arrows %} nw-trade-in-hero--hide-arrows{% endunless %}"
+  data-slide-count="{{ slide_count }}"
+  data-enable-autoplay="{% if section.settings.enable_autoplay %}true{% else %}false{% endif %}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | times: 1000 }}"
+  data-show-arrows="{% if section.settings.show_arrows %}true{% else %}false{% endif %}"
+  data-show-play-pause="{% if section.settings.show_video_play_pause %}true{% else %}false{% endif %}"
+  data-video-autoplay="{% if section.settings.video_autoplay_active_slide %}true{% else %}false{% endif %}"
+  data-loop-videos="{% if section.settings.loop_videos %}true{% else %}false{% endif %}"
+  data-slider-speed="{{ section.settings.slider_transition_ms }}"
+  data-slider-effect="{{ section.settings.slider_effect }}"
+  data-counter-duration="{{ section.settings.counter_duration | times: 1000 }}"
+  style="
+    --nw-trade-in-stat-color: {{ section.settings.stat_color }};
+    --nw-trade-in-stat-label-color: {{ section.settings.stat_label_color }};
+    --nw-swiper-arrow-bg: {{ section.settings.swiper_arrow_bg }};
+    --nw-swiper-arrow-color: {{ section.settings.swiper_arrow_color }};
+    --nw-trade-in-slide-width: {{ slide_width_dt }}px;
+    --nw-trade-in-slide-width-mobile: {{ slide_width_mb }}px;
+    --nw-trade-in-aspect-w: {{ aspect_w }};
+    --nw-trade-in-aspect-h: {{ aspect_h }};
+    --nw-trade-in-slider-offset-top: {{ slider_offset_top }}px;
+  "
+>
+  <div class="nw-trade-in-hero__container">
+    <div class="nw-trade-in-hero__content-col">
+      <div class="page-width nw-trade-in-hero__page-width">
+      <div class="nw-trade-in-hero__content-wrap">
+        <div class="nw-trade-in-hero__header">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="nw-trade-in-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.heading != blank -%}
+            {% render 'nw-section-heading',
+              text: section.settings.heading,
+              section_index: section.index,
+              class: 'nw-trade-in-hero__heading'
+            %}
+          {%- endif -%}
+
+          {% render 'nw-section-description', text: section.settings.description, class: 'nw-trade-in-hero__description' %}
+        </div>
+
+        {%- if section.settings.show_button and section.settings.button_text != blank or section.settings.cta_note != blank -%}
+          <div class="nw-trade-in-hero__cta-row">
+            {%- if section.settings.show_button and section.settings.button_text != blank -%}
+              {%- liquid
+                assign ti_btn_style = section.settings.button_style | default: 'primary'
+                assign ti_btn_classes = 'nw-btn nw-btn--' | append: ti_btn_style | append: ' nw-trade-in-hero__btn'
+                assign ti_btn_link = section.settings.button_link | strip
+                assign ti_btn_text = section.settings.button_text | replace: ' →', '' | replace: '→', '' | strip
+                assign ti_show_icon = false
+                if section.settings.button_custom_icon != blank
+                  assign ti_show_icon = true
+                elsif section.settings.button_icon != blank and section.settings.button_icon != 'none'
+                  assign ti_show_icon = true
+                endif
+              -%}
+              <div class="nw-trade-in-hero__btn-wrap">
+                {%- if ti_btn_link != blank and ti_btn_link != '#' -%}
+                  <a href="{{ ti_btn_link }}" class="{{ ti_btn_classes }}">
+                {%- else -%}
+                  <button type="button" class="{{ ti_btn_classes }}">
+                {%- endif -%}
+                    <span class="nw-trade-in-hero__btn-inner">
+                      {%- if section.settings.button_custom_icon != blank -%}
+                        <span class="nw-trade-in-hero__btn-icon" aria-hidden="true">
+                          {{
+                            section.settings.button_custom_icon
+                            | image_url: width: 48
+                            | image_tag: class: 'nw-trade-in-hero__btn-icon-img', alt: '', loading: 'lazy'
+                          }}
+                        </span>
+                      {%- elsif section.settings.button_icon != blank and section.settings.button_icon != 'none' -%}
+                        <span class="nw-trade-in-hero__btn-icon" aria-hidden="true">
+                          {% render 'nw-icon', icon: section.settings.button_icon %}
+                        </span>
+                      {%- endif -%}
+                      <span class="nw-btn__text">{{ ti_btn_text }}</span>
+                      <span class="nw-trade-in-btn-arrow" aria-hidden="true">{{ 'arrow-right.svg' | inline_asset_content }}</span>
+                    </span>
+                {%- if ti_btn_link != blank and ti_btn_link != '#' -%}
+                  </a>
+                {%- else -%}
+                  </button>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+            {%- if section.settings.cta_note != blank -%}
+              <p class="nw-trade-in-hero__cta-note">{{ section.settings.cta_note | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if stat_blocks.size > 0 -%}
+          <div class="nw-trade-in-hero__stats">
+            {%- for block in stat_blocks -%}
+              {%- if block.settings.number != blank -%}
+                <div class="nw-trade-in-hero__stat" {{ block.shopify_attributes }}>
+                  <div class="nw-trade-in-hero__stat-value">
+                    {%- if block.settings.prefix != blank -%}
+                      <span class="nw-trade-in-hero__stat-prefix">{{ block.settings.prefix | escape }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.enable_count_animation == false -%}
+                      <span class="nw-trade-in-hero__stat-number">{{ block.settings.number | escape }}</span>
+                    {%- else -%}
+                      <span
+                        class="nw-trade-in-hero__stat-number"
+                        data-nw-count-target="{{ block.settings.number | strip }}"
+                        data-count-decimals="{{ block.settings.decimals | default: 0 }}"
+                      >
+                        0
+                      </span>
+                    {%- endif -%}
+                    {%- if block.settings.suffix != blank -%}
+                      <span class="nw-trade-in-hero__stat-suffix">{{ block.settings.suffix | escape }}</span>
+                    {%- endif -%}
+                  </div>
+                  {%- if block.settings.label != blank -%}
+                    <p class="nw-trade-in-hero__stat-label">{{ block.settings.label | escape }}</p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      </div>
+    </div>
+
+    <div class="nw-trade-in-hero__media-col{% if slide_count == 0 %} nw-trade-in-hero__media-col--empty{% endif %}">
+      <div class="nw-trade-in-hero__slider-wrap">
+        {%- if slide_count > 0 -%}
+          <div class="nw-trade-in-hero__swiper-stage">
+            <div class="swiper" id="NwTradeInHeroSlider-{{ section.id }}" data-nw-trade-in-slider>
+              <div class="swiper-wrapper">
+              {%- for block in video_blocks -%}
+                {%- liquid
+                  assign poster = block.settings.poster
+                  if poster == blank and block.settings.video != blank and block.settings.video.preview_image != blank
+                    assign poster = block.settings.video.preview_image
+                  endif
+                -%}
+                <div
+                  class="swiper-slide nw-trade-in-hero__slide"
+                  data-slide-index="{{ forloop.index0 }}"
+                  data-video-autoplay="{{ section.settings.video_autoplay_active_slide }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="nw-trade-in-hero__media-inner">
+                    {%- if block.settings.video != blank -%}
+                      {%- liquid
+                        assign ti_video_loop = false
+                        if section.settings.loop_videos
+                          assign ti_video_loop = true
+                        endif
+                      -%}
+                      {{
+                        block.settings.video
+                        | video_tag:
+                          autoplay: false,
+                          loop: ti_video_loop,
+                          muted: true,
+                          controls: false,
+                          playsinline: true,
+                          preload: 'metadata',
+                          class: 'nw-trade-in-hero__video'
+                      }}
+                    {%- else -%}
+                      <div class="nw-trade-in-hero__placeholder" aria-hidden="true"></div>
+                    {%- endif -%}
+
+                    {%- if poster != blank -%}
+                      <img
+                        src="{{ poster | image_url: width: 1200 }}"
+                        alt=""
+                        width="380"
+                        height="676"
+                        loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                        class="nw-trade-in-hero__poster"
+                      >
+                    {%- endif -%}
+
+                    {%- if block.settings.overlay_text != blank -%}
+                      <p class="nw-trade-in-hero__overlay-text">{{ block.settings.overlay_text | escape }}</p>
+                    {%- endif -%}
+
+                    {%- if section.settings.show_video_play_pause and block.settings.video != blank -%}
+                      <button
+                        type="button"
+                        class="nw-trade-in-hero__video-toggle"
+                        data-nw-trade-in-video-toggle
+                        aria-label="Play video"
+                      >
+                        <span class="nw-trade-in-hero__control-icon nw-trade-in-hero__icon-play" aria-hidden="true">
+                          {% render 'nw-icon', icon: 'play' %}
+                        </span>
+                        <span class="nw-trade-in-hero__control-icon nw-trade-in-hero__icon-pause" aria-hidden="true">
+                          {% render 'nw-icon', icon: 'pause' %}
+                        </span>
+                      </button>
+                    {%- endif -%}
+
+                    {%- if block.settings.caption != blank -%}
+                      <p class="nw-trade-in-hero__caption">{{ block.settings.caption | escape }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+              </div>
+            </div>
+          </div>
+
+          {%- if slide_count > 1 and section.settings.show_arrows -%}
+            <div class="nw-trade-in-hero__slider-footer" data-nw-trade-in-nav>
+              {% render 'nw-swiper-arrows', prev_label: 'Previous video', next_label: 'Next video' %}
+            </div>
+          {%- endif -%}
+
+        {%- else -%}
+          <div class="nw-trade-in-hero__media-inner">
+            <div class="nw-trade-in-hero__placeholder" aria-hidden="true"></div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</nw-trade-in-hero>
+
+{% schema %}
+{
+  "name": "t:sections.nw-trade-in-hero.name",
+  "tag": "section",
+  "class": "section-nw-trade-in-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trade In The Toxins. Get $300 Off."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Snap a photo or video of your old mattress's law tag (or just the gross top-of-bed) and we'll knock $300 off any Ultimate Snooze mattress instantly, no trade-in required.</p>"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "STATS"
+    },
+    {
+      "type": "color",
+      "id": "stat_color",
+      "label": "Stat Number Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "stat_label_color",
+      "label": "Stat Label Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "range",
+      "id": "counter_duration",
+      "label": "Counter Animation Duration",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "s",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Upload My Law Tag →",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "text",
+      "id": "cta_note",
+      "label": "CTA Note",
+      "default": "Takes 30 seconds · No purchase required to try"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_icon",
+      "label": "Button Icon",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "arrow-right", "label": "Arrow Right" },
+        { "value": "check-circle", "label": "Check Circle" },
+        { "value": "verified", "label": "Verified" },
+        { "value": "star", "label": "Star" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "button_custom_icon",
+      "label": "Button Custom Icon",
+      "info": "Overrides the icon picker when set.",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "VIDEO CARD LAYOUT"
+    },
+    {
+      "type": "range",
+      "id": "video_slide_width",
+      "label": "Video Card Width (Desktop)",
+      "min": 260,
+      "max": 420,
+      "step": 4,
+      "unit": "px",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "video_slide_width_mobile",
+      "label": "Video Card Width (Mobile)",
+      "min": 220,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "select",
+      "id": "video_aspect_ratio",
+      "label": "Video Card Aspect Ratio",
+      "default": "380:676",
+      "options": [
+        { "value": "380:676", "label": "380:676" },
+        { "value": "9:16", "label": "9:16" },
+        { "value": "3:4", "label": "3:4" },
+        { "value": "4:5", "label": "4:5" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "slider_offset_top",
+      "label": "Slider Top Offset (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 92,
+      "info": "Space above the video row inside the right column."
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "slider_effect",
+      "label": "Transition Effect",
+      "default": "slide",
+      "options": [
+        { "value": "slide", "label": "Slide" },
+        { "value": "fade", "label": "Fade" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Slider Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Slider Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Slider Autoplay Delay (Seconds)",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "default": 6,
+      "visible_if": "{{ section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "range",
+      "id": "slider_transition_ms",
+      "label": "Slide Transition Duration",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "ms",
+      "default": 750
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_bg",
+      "label": "Arrow Background",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_color",
+      "label": "Arrow Icon Color",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_arrows == true }}"
+    },
+    {
+      "type": "header",
+      "content": "VIDEO SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_play_pause",
+      "label": "Show Play / Pause Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay_active_slide",
+      "label": "Autoplay Active Slide Video (Muted)",
+      "info": "Plays the current slide video automatically. Use Play/Pause for sound and manual control.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "loop_videos",
+      "label": "Loop Videos",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat Counter",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_count_animation",
+          "label": "Animate Counter On Page Load",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "2400",
+          "info": "Counts up from 0 when animation is enabled."
+        },
+        {
+          "type": "range",
+          "id": "decimals",
+          "label": "Decimal Places",
+          "min": 0,
+          "max": 2,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "prefix",
+          "label": "Prefix"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix",
+          "default": "+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Toxic mattresses traded in"
+        }
+      ]
+    },
+    {
+      "type": "video_slide",
+      "name": "Video Slide",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster Image",
+          "info": "Optional. Defaults to the video preview image."
+        },
+        {
+          "type": "text",
+          "id": "overlay_text",
+          "label": "Overlay Text (Top)"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "info": "Hidden in layout; use overlay text for on-video copy."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-trade-in-hero.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "2400",
+            "suffix": "+",
+            "label": "Toxic mattresses traded in",
+            "enable_count_animation": true
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "300",
+            "prefix": "$",
+            "label": "Average instant discount",
+            "enable_count_animation": true
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "4.9",
+            "suffix": "★",
+            "label": "Rated by trade-in customers",
+            "enable_count_animation": false,
+            "decimals": 1
+          }
+        },
+        {
+          "type": "video_slide",
+          "settings": {
+            "overlay_text": "Have you ever thought about what's actually IN your mattress?"
+          }
+        },
+        {
+          "type": "video_slide"
+        },
+        {
+          "type": "video_slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

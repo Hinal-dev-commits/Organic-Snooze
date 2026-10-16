@@ -1,0 +1,400 @@
+{{ 'nw-our-story.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign pillar_blocks = section.blocks | where: 'type', 'pillar'
+  assign section_dom_id = 'NwOurStory-' | append: section.id
+  assign custom_id = section.settings.custom_id | strip
+  if custom_id != blank
+    assign section_dom_id = custom_id | handleize
+  endif
+  assign nw_shell_selector = '#' | append: section_dom_id
+
+  assign section_heading = section.settings.heading
+  if section.settings.heading_mobile != blank
+    assign mobile_heading = section.settings.heading_mobile
+  else
+    assign mobile_heading = section_heading
+  endif
+
+  assign description_desktop = section.settings.description
+  if section.settings.description_mobile != blank
+    assign description_mobile = section.settings.description_mobile
+  else
+    assign description_mobile = description_desktop
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-our-story
+  id="{{ section_dom_id }}"
+  class="nw-our-story section-{{ section.id }}"
+  style="
+    --nw-our-story-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --nw-our-story-heading-color: {{ section.settings.heading_color }};
+    --nw-our-story-description-color: {{ section.settings.description_color }};
+    --nw-our-story-pillar-title-color: {{ section.settings.pillar_title_color }};
+    --nw-our-story-pillar-text-color: {{ section.settings.pillar_text_color }};
+    --nw-our-story-btn-bg: {{ section.settings.button_bg_color }};
+    --nw-our-story-btn-color: {{ section.settings.button_text_color }};
+  "
+>
+  <div class="page-width nw-our-story__page-width">
+  <div class="nw-our-story__inner">
+    <div class="nw-our-story__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="nw-our-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section_heading != blank -%}
+        <div class="nw-our-story__heading nw-our-story__heading--desktop">
+          {% render 'nw-section-heading', text: section_heading, tag: 'h2', class: 'nw-our-story__heading-inner' %}
+        </div>
+      {%- endif -%}
+
+      {%- if mobile_heading != blank -%}
+        <div class="nw-our-story__heading nw-our-story__heading--mobile">
+          {% render 'nw-section-heading', text: mobile_heading, tag: 'h2', class: 'nw-our-story__heading-inner' %}
+        </div>
+      {%- endif -%}
+
+      {%- if description_desktop != blank -%}
+        <div class="nw-our-story__description nw-our-story__description--desktop rte">
+          {{ description_desktop }}
+        </div>
+      {%- endif -%}
+
+      {%- if description_mobile != blank -%}
+        <div class="nw-our-story__description nw-our-story__description--mobile rte">
+          {{ description_mobile }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if pillar_blocks.size > 0 -%}
+      <ul class="nw-our-story__pillars" role="list">
+        {%- for block in pillar_blocks -%}
+          <li class="nw-our-story__pillar" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h3 class="nw-our-story__pillar-title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="nw-our-story__pillar-text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.show_button and section.settings.button_label != blank -%}
+      {%- liquid
+        assign story_btn_link = section.settings.button_link | strip
+        assign story_btn_text = section.settings.button_label | replace: ' →', '' | replace: '→', '' | strip
+      -%}
+      <div class="nw-our-story__cta-wrap">
+        {%- if story_btn_link != blank -%}
+          <a href="{{ story_btn_link }}" class="nw-our-story__cta">
+            <span class="nw-our-story__cta-text">{{ story_btn_text | escape }}</span>
+            <span class="nw-trade-in-btn-arrow" aria-hidden="true">{{ 'arrow-right.svg' | inline_asset_content }}</span>
+          </a>
+        {%- else -%}
+          <button type="button" class="nw-our-story__cta">
+            <span class="nw-our-story__cta-text">{{ story_btn_text | escape }}</span>
+            <span class="nw-trade-in-btn-arrow" aria-hidden="true">{{ 'arrow-right.svg' | inline_asset_content }}</span>
+          </button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+  </div>
+</nw-our-story>
+
+{% schema %}
+{
+  "name": "t:sections.nw-our-story.name",
+  "tag": "section",
+  "class": "section-nw-our-story",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom section ID",
+      "info": "Optional. For in-page anchor links."
+    },
+    {
+      "type": "header",
+      "content": "HEADER"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "OUR STORY"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading (Desktop)",
+      "default": "What Is The Ultimate Snooze?"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading_mobile",
+      "label": "Heading (Mobile)",
+      "info": "Leave blank to use the desktop heading."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description (Desktop)",
+      "default": "<p>The Ultimate Snooze is organic performance sleep — mattresses built from natural materials that support real recovery, not just rest. No polyurethane foam, no fiberglass, no toxic flame retardants. Just clean inputs, for a cleaner night's sleep. You spend nearly one-third of your life on your mattress. What it's made of matters.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "description_mobile",
+      "label": "Description (Mobile)",
+      "info": "Leave blank to use the desktop description.",
+      "default": "<p>The Ultimate Snooze is organic performance sleep — mattresses built from natural materials that support real recovery, not just rest. No polyurethane foam, no fiberglass, no toxic flame retardants. Just clean inputs, for a cleaner night's sleep.</p>"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "rgba(97,57,22,0.8)",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "PILLARS"
+    },
+    {
+      "type": "color",
+      "id": "pillar_title_color",
+      "label": "Pillar Title Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "pillar_text_color",
+      "label": "Pillar Text Color",
+      "default": "rgba(97,57,22,0.7)",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Explore The Mattress →",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background",
+      "default": "#613916",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Organic Materials"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Natural latex, organic cotton and wool — no synthetic foams or hidden chemicals.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-our-story.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Organic Materials",
+            "text": "<p>Natural latex, organic cotton and wool — no synthetic foams or hidden chemicals.</p>"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Recovery-Focused",
+            "text": "<p>Designed around real sleep science, so your body actually repairs overnight.</p>"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Cooling & Breathable",
+            "text": "<p>Natural fibers regulate temperature — no synthetic heat trap.</p>"
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "title": "Backed By Experts",
+            "text": "<p>Developed with Gary Brecka and Ultimate Human’s performance and recovery protocols.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

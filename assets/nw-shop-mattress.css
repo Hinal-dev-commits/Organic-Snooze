@@ -1,0 +1,259 @@
+.shopify-section.section-nw-shop-mattress {
+  overflow: visible;
+}
+
+.nw-shop-mattress {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-shop-mattress__page-width {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-shop-mattress__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  margin: 0;
+  padding: 96px 0;
+  box-sizing: border-box;
+}
+
+.nw-shop-mattress__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.nw-shop-mattress__heading--mobile {
+  display: none;
+}
+
+.nw-shop-mattress__eyebrow {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--nw-shop-mattress-eyebrow-color, #cc926a);
+}
+
+.nw-shop-mattress__heading {
+  margin: 0;
+  width: 100%;
+  max-width: 732px;
+}
+
+.nw-shop-mattress__heading .nw-section-heading h2,
+.nw-shop-mattress__heading .nw-section-heading .h2 {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  text-align: left;
+  color: var(--nw-shop-mattress-heading-color, #613916);
+  text-transform: none;
+  width: 100% !important;
+}
+
+.nw-shop-mattress__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nw-shop-mattress__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.nw-shop-mattress__media {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  border-radius: var(--nw-shop-mattress-media-radius, 20px);
+  overflow: hidden;
+  background-color: var(--nw-shop-mattress-media-fallback, #d9b285);
+  text-decoration: none;
+}
+
+.nw-shop-mattress__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nw-shop-mattress__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 1000px;
+  background: var(--nw-shop-mattress-badge-bg, #ffffff);
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 10px;
+  line-height: normal;
+  color: var(--nw-shop-mattress-badge-color, #878735);
+  white-space: nowrap;
+}
+
+.nw-shop-mattress__title {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.2px;
+  color: var(--nw-shop-mattress-title-color, #613916);
+}
+
+.nw-shop-mattress__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nw-shop-mattress__title a:hover {
+  opacity: 0.85;
+}
+
+.nw-shop-mattress__subtitle {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: normal;
+  color: var(--nw-shop-mattress-subtitle-color, #613916);
+  opacity: 0.6;
+  width: 100%;
+}
+
+.nw-shop-mattress__price {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: normal;
+  color: var(--nw-shop-mattress-price-color, #cc926a);
+}
+
+.nw-shop-mattress__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 20px;
+  border-radius: 1000px;
+  border: 1px solid var(--nw-shop-mattress-btn-border, rgba(97, 57, 22, 0.15));
+  background: var(--nw-shop-mattress-btn-bg, #f4efe8);
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: normal;
+  color: var(--nw-shop-mattress-btn-color, #613916);
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nw-shop-mattress__btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+@media screen and (max-width: 989px) {
+  .nw-shop-mattress__page-width.page-width {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .nw-shop-mattress__inner {
+    gap: 24px;
+    padding: 48px 20px;
+  }
+
+  .nw-shop-mattress__header {
+    gap: 6px;
+  }
+
+  .nw-shop-mattress__heading--desktop {
+    display: none;
+  }
+
+  .nw-shop-mattress__heading--mobile {
+    display: block;
+  }
+
+  .nw-shop-mattress__eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .nw-shop-mattress__heading .nw-section-heading h2,
+  .nw-shop-mattress__heading .nw-section-heading .h2 {
+    font-size: 24px;
+    max-width: 350px;
+  }
+
+  .nw-shop-mattress__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .nw-shop-mattress__card {
+    gap: 10px;
+    width: 100%;
+  }
+
+  .nw-shop-mattress__media {
+    border-radius: var(--nw-shop-mattress-media-radius-mobile, 18px);
+    aspect-ratio: 3/2;
+  }
+
+  .nw-shop-mattress__badge {
+    font-size: 9px;
+  }
+
+  .nw-shop-mattress__title {
+    font-size: 17px;
+    letter-spacing: -0.1px;
+  }
+
+  .nw-shop-mattress__subtitle {
+    font-size: 12px;
+  }
+
+  .nw-shop-mattress__price {
+    font-size: 15px;
+  }
+
+  .nw-shop-mattress__btn {
+    font-size: 13px;
+  }
+}

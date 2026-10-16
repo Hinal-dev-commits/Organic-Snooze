@@ -1,0 +1,413 @@
+{{ 'nw-offer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign bullet_blocks = section.blocks | where: 'type', 'bullet'
+  assign offer_dom_id = 'NwOffer-' | append: section.id
+  assign custom_id = section.settings.custom_id | strip
+  if custom_id != blank
+    assign offer_dom_id = custom_id | handleize
+  endif
+  assign nw_shell_selector = '#' | append: offer_dom_id
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FBF9F6' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  @media screen and (max-width: 989px) {
+    #{{ offer_dom_id }},
+    #shopify-section-{{ section.id }} {
+      background-color: {{ section.settings.mobile_bg_color | default: '#613916' }} !important;
+      background-image: none !important;
+    }
+  }
+</style>
+
+<nw-offer
+  id="{{ offer_dom_id }}"
+  class="nw-offer section-{{ section.id }}"
+  style="
+    --nw-offer-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --nw-offer-headline-color: {{ section.settings.headline_color }};
+    --nw-offer-description-color: {{ section.settings.description_color }};
+    --nw-offer-check-color: {{ section.settings.check_color }};
+    --nw-offer-bullet-color: {{ section.settings.bullet_color }};
+    --nw-offer-card-bg: {{ section.settings.card_bg_color }};
+    --nw-offer-card-title-color: {{ section.settings.card_title_color }};
+    --nw-offer-mobile-bg: {{ section.settings.mobile_bg_color }};
+    --nw-offer-mobile-headline-color: {{ section.settings.mobile_headline_color }};
+    --nw-offer-mobile-description-color: {{ section.settings.mobile_description_color }};
+    --nw-offer-mobile-bullet-color: {{ section.settings.mobile_bullet_color }};
+    --nw-offer-portal-min-height: {{ section.settings.portal_min_height_desktop }}px;
+    --nw-offer-portal-min-height-mobile: {{ section.settings.portal_min_height_mobile }}px;
+  "
+>
+  <div class="page-width nw-offer__page-width">
+  <div class="nw-offer__layout">
+    <div class="nw-offer__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="nw-offer__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.headline != blank -%}
+        <h2 class="nw-offer__headline">{{ section.settings.headline | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="nw-offer__description nw-offer__description--desktop rte">{{ section.settings.description }}</div>
+      {%- endif -%}
+
+      {%- liquid
+        assign mobile_description = section.settings.description_mobile
+        if mobile_description == blank
+          assign mobile_description = section.settings.description
+        endif
+      -%}
+      {%- if mobile_description != blank -%}
+        <div class="nw-offer__description nw-offer__description--mobile rte">{{ mobile_description }}</div>
+      {%- endif -%}
+
+      {%- if bullet_blocks.size > 0 -%}
+        <ul class="nw-offer__bullets" role="list">
+          {%- for block in bullet_blocks -%}
+            <li
+              class="nw-offer__bullet{% unless block.settings.show_on_mobile %} nw-offer__bullet--hide-mobile{% endunless %}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="nw-offer__bullet-mark" aria-hidden="true">✓</span>
+              {%- if block.settings.text != blank -%}
+                <span class="nw-offer__bullet-text">{{ block.settings.text | escape }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div class="nw-offer__card-col">
+      <div class="nw-offer__card">
+        {%- if section.settings.card_title != blank -%}
+          <h3 class="nw-offer__card-title">{{ section.settings.card_title | escape }}</h3>
+        {%- endif -%}
+        <div class="nw-offer__portal"></div>
+      </div>
+    </div>
+  </div>
+  </div>
+</nw-offer>
+
+{% schema %}
+{
+  "name": "t:sections.nw-offer.name",
+  "tag": "section",
+  "class": "section-nw-offer",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom section ID",
+      "info": "Optional. For in-page anchor links (e.g. toxin-offer). Leave blank to use the default ID."
+    },
+    {
+      "type": "header",
+      "content": "OFFER COPY"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE OFFER"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "$300 Off"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description (Desktop)",
+      "default": "<p>Snap a photo or video of your old mattress's law tag (or just the gross top-of-bed) and we'll knock $300 off any Ultimate Snooze mattress instantly, no trade-in required.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "description_mobile",
+      "label": "Description (Mobile)",
+      "default": "<p>Any mattress. Any size. One upload. Our biggest trade-in offer ever — ends when the event does.</p>"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline Color (Desktop)",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color (Desktop)",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "check_color",
+      "label": "Checkmark Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "bullet_color",
+      "label": "Bullet Text Color (Desktop)",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "MOBILE OFFER AREA"
+    },
+    {
+      "type": "color",
+      "id": "mobile_bg_color",
+      "label": "Mobile Background",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "mobile_headline_color",
+      "label": "Mobile Headline Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "mobile_description_color",
+      "label": "Mobile Description Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "mobile_bullet_color",
+      "label": "Mobile Bullet Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "UPLOAD CARD"
+    },
+    {
+      "type": "text",
+      "id": "card_title",
+      "label": "Card Title",
+      "default": "Upload Your Toxin Trade-In"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card Title Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "range",
+      "id": "portal_min_height_desktop",
+      "label": "Portal Min Height (Desktop)",
+      "min": 200,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 560,
+      "info": "Reserved empty area below the card title for a future upload form."
+    },
+    {
+      "type": "range",
+      "id": "portal_min_height_mobile",
+      "label": "Portal Min Height (Mobile)",
+      "min": 160,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "default": 420
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color (Desktop)",
+      "default": "#FBF9F6",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Bullet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "No trade-in shipping required"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_on_mobile",
+          "label": "Show on mobile",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-offer.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "bullet",
+          "settings": {
+            "text": "No trade-in shipping required",
+            "show_on_mobile": true
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "text": "Works with any mattress brand",
+            "show_on_mobile": true
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "text": "Stacks with existing promos",
+            "show_on_mobile": true
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "text": "Instant approval with valid video/photo",
+            "show_on_mobile": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

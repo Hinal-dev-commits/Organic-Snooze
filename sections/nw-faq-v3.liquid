@@ -1,0 +1,359 @@
+{{ 'nw-faq-v3.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-faq-v3.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign faq_blocks = section.blocks | where: 'type', 'faq_item'
+  assign section_dom_id = 'NwFaqV3-' | append: section.id
+  assign custom_id = section.settings.custom_id | strip
+  if custom_id != blank
+    assign section_dom_id = custom_id | handleize
+  endif
+  assign nw_shell_selector = '#' | append: section_dom_id
+  assign allow_multiple = section.settings.allow_multiple_open
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FBF9F6' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-faq-v3
+  id="{{ section_dom_id }}"
+  class="nw-faq-v3 section-{{ section.id }}"
+  data-allow-multiple="{% if allow_multiple %}true{% else %}false{% endif %}"
+  style="
+    --nw-faq-v3-heading-color: {{ section.settings.heading_color }};
+    --nw-faq-v3-question-color: {{ section.settings.question_color }};
+    --nw-faq-v3-answer-color: {{ section.settings.answer_color }};
+    --nw-faq-v3-icon-color: {{ section.settings.icon_color }};
+    --nw-faq-v3-card-bg: {{ section.settings.card_bg_color }};
+    --nw-faq-v3-card-radius: {{ section.settings.card_radius }}px;
+    --nw-faq-v3-card-radius-mobile: {{ section.settings.card_radius_mobile }}px;
+  "
+>
+  <div class="nw-faq-v3__inner">
+    {%- liquid
+      assign section_heading = section.settings.heading
+      if section.settings.heading_mobile != blank
+        assign mobile_heading = section.settings.heading_mobile
+      else
+        assign mobile_heading = section_heading
+      endif
+    -%}
+
+    {%- if section_heading != blank -%}
+      <div class="nw-faq-v3__heading nw-faq-v3__heading--desktop">
+        {% render 'nw-section-heading', text: section_heading, tag: 'h2', class: 'nw-faq-v3__heading-inner' %}
+      </div>
+    {%- endif -%}
+
+    {%- if mobile_heading != blank -%}
+      <div class="nw-faq-v3__heading nw-faq-v3__heading--mobile">
+        {% render 'nw-section-heading', text: mobile_heading, tag: 'h2', class: 'nw-faq-v3__heading-inner' %}
+      </div>
+    {%- endif -%}
+
+    {%- if faq_blocks.size > 0 -%}
+      <ul class="nw-faq-v3__list">
+        {%- for block in faq_blocks -%}
+          <li class="nw-faq-v3__list-item" {{ block.shopify_attributes }}>
+          <details
+            class="nw-faq-v3__item"
+            id="Details-{{ block.id }}-{{ section.id }}"
+            {% if section.settings.open_first_faq and forloop.first %}
+              open
+            {% endif %}
+          >
+            <summary
+              id="Summary-{{ block.id }}-{{ section.id }}"
+              class="nw-faq-v3__summary"
+              aria-expanded="{% if section.settings.open_first_faq and forloop.first %}true{% else %}false{% endif %}"
+            >
+              <h3 class="nw-faq-v3__question">{{ block.settings.question | escape }}</h3>
+              <span class="nw-faq-v3__icon" aria-hidden="true">
+                <span class="nw-faq-v3__icon-plus">+</span>
+                <span class="nw-faq-v3__icon-minus">−</span>
+              </span>
+            </summary>
+            {%- if block.settings.answer != blank -%}
+              <div
+                class="nw-faq-v3__answer rte"
+                id="Collapsible-{{ block.id }}-{{ section.id }}"
+                role="region"
+                aria-labelledby="Summary-{{ block.id }}-{{ section.id }}"
+              >
+                {{ block.settings.answer }}
+              </div>
+            {%- endif -%}
+          </details>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</nw-faq-v3>
+
+{% schema %}
+{
+  "name": "t:sections.nw-faq-v3.name",
+  "tag": "section",
+  "class": "section-nw-faq-v3",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom section ID",
+      "info": "Optional. For in-page anchor links."
+    },
+    {
+      "type": "header",
+      "content": "HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading (Desktop)",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading_mobile",
+      "label": "Heading (Mobile)",
+      "info": "Leave blank to use the desktop heading."
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "ACCORDION"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_faq",
+      "label": "Open first item by default",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "allow_multiple_open",
+      "label": "Allow multiple items open at once",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "FAQ ITEM STYLE"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Toggle Icon Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card Radius (Desktop)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_radius_mobile",
+      "label": "Card Radius (Mobile)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FBF9F6",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Does my mattress have to be an Ultimate Snooze mattress?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Nope — any brand qualifies. We just need a clear photo or video of the law tag or top-of-bed.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-faq-v3.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does my mattress have to be an Ultimate Snooze mattress?",
+            "answer": "<p>Nope — any brand qualifies. We just need a clear photo or video of the law tag or top-of-bed.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How fast do I get my discount?",
+            "answer": "<p>Once your law tag photo is approved, your $300 credit is applied to your account within one business day.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is this a trade-in I have to ship?",
+            "answer": "<p>No shipping required. This is a photo verification event — keep your old mattress and use your credit toward a new Ultimate Snooze.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I stack this with other offers?",
+            "answer": "<p>The $300 Toxin Trade-In credit cannot be combined with other sitewide promotions unless noted during checkout.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
