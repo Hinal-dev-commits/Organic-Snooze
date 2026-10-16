@@ -1,0 +1,480 @@
+{{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
+{{ 'nw-testimonial-video.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-when-swiper-ready.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nw-testimonial-video.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign video_blocks = section.blocks | where: 'type', 'video_slide'
+  assign nw_shell_selector = '#NwTestimonialVideo-' | append: section.id
+  assign slide_count = video_blocks.size
+  assign aspect_setting = section.settings.video_aspect_ratio | default: '220:380'
+  assign aspect_parts = aspect_setting | split: ':'
+  assign aspect_w = aspect_parts[0] | default: '220' | plus: 0
+  assign aspect_h = aspect_parts[1] | default: '380' | plus: 0
+  assign slide_width_dt = section.settings.video_slide_width | default: 220
+  assign slide_width_mb = section.settings.video_slide_width_mobile | default: 160
+-%}
+
+{% capture nw_shell_extra %}
+  overflow: visible;
+{% endcapture %}
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FBF9F6', extra: nw_shell_extra %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-testimonial-video
+  id="NwTestimonialVideo-{{ section.id }}"
+  class="nw-testimonial-video section-{{ section.id }}{% unless section.settings.show_arrows %} nw-testimonial-video--hide-arrows{% endunless %}"
+  data-slide-count="{{ slide_count }}"
+  data-enable-autoplay="{% if section.settings.enable_autoplay %}true{% else %}false{% endif %}"
+  data-autoplay-delay="{{ section.settings.autoplay_delay | times: 1000 }}"
+  data-slider-speed="{{ section.settings.slider_transition_ms }}"
+  data-show-arrows="{% if section.settings.show_arrows %}true{% else %}false{% endif %}"
+  data-video-autoplay="{% if section.settings.video_autoplay_active_slide %}true{% else %}false{% endif %}"
+  data-loop-videos="{% if section.settings.loop_videos %}true{% else %}false{% endif %}"
+  style="
+    --nw-tv-heading-color: {{ section.settings.heading_color }};
+    --nw-tv-slide-width: {{ slide_width_dt }}px;
+    --nw-tv-slide-width-mobile: {{ slide_width_mb }}px;
+    --nw-tv-aspect-w: {{ aspect_w }};
+    --nw-tv-aspect-h: {{ aspect_h }};
+    --nw-tv-slide-radius: {{ section.settings.slide_border_radius }}px;
+    --nw-tv-slide-radius-mobile: {{ section.settings.slide_border_radius_mobile }}px;
+    --nw-tv-nav-border: {{ section.settings.swiper_arrow_border }};
+    --nw-tv-nav-color: {{ section.settings.swiper_arrow_color }};
+    --nw-tv-nav-bg-mobile: {{ section.settings.swiper_arrow_bg_mobile }};
+  "
+>
+  <div class="nw-testimonial-video__inner">
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.description != blank -%}
+      <div class="page-width nw-testimonial-video__page-width">
+        <div class="nw-testimonial-video__header">
+          {% render 'nw-section-header',
+            eyebrow: section.settings.eyebrow,
+            heading: section.settings.heading,
+            description: section.settings.description,
+            section_index: section.index
+          %}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if slide_count > 0 -%}
+      <div class="nw-testimonial-video__slider-block">
+        <div class="nw-testimonial-video__swiper-stage">
+          <div class="swiper" id="NwTestimonialVideoSlider-{{ section.id }}" data-nw-tv-slider>
+            <div class="swiper-wrapper">
+              {%- for block in video_blocks -%}
+                {%- liquid
+                  assign poster = block.settings.poster
+                  if poster == blank and block.settings.video != blank and block.settings.video.preview_image != blank
+                    assign poster = block.settings.video.preview_image
+                  endif
+                  assign show_overlay = false
+                  if block.settings.handle != blank or block.settings.quote != blank
+                    assign show_overlay = true
+                  endif
+                -%}
+                <div
+                  class="swiper-slide nw-testimonial-video__slide"
+                  data-slide-index="{{ forloop.index0 }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="nw-testimonial-video__media-inner">
+                    {%- if block.settings.video != blank -%}
+                      {%- liquid
+                        assign tv_video_loop = false
+                        if section.settings.loop_videos
+                          assign tv_video_loop = true
+                        endif
+                      -%}
+                      {{
+                        block.settings.video
+                        | video_tag:
+                          autoplay: false,
+                          loop: tv_video_loop,
+                          muted: true,
+                          controls: false,
+                          playsinline: true,
+                          preload: 'metadata',
+                          class: 'nw-testimonial-video__video'
+                      }}
+                    {%- else -%}
+                      <div class="nw-testimonial-video__placeholder" aria-hidden="true"></div>
+                    {%- endif -%}
+
+                    {%- if poster != blank -%}
+                      <img
+                        src="{{ poster | image_url: width: 800 }}"
+                        alt=""
+                        width="{{ aspect_w }}"
+                        height="{{ aspect_h }}"
+                        loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                        class="nw-testimonial-video__poster"
+                      >
+                    {%- endif -%}
+
+                    {%- if show_overlay -%}
+                      <div class="nw-testimonial-video__overlay">
+                        {%- if block.settings.handle != blank -%}
+                          <p class="nw-testimonial-video__handle">{{ block.settings.handle | escape }}</p>
+                        {%- endif -%}
+                        {%- if block.settings.quote != blank -%}
+                          <p class="nw-testimonial-video__quote">{{ block.settings.quote | escape }}</p>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+
+                    {%- if block.settings.video != blank -%}
+                      <button
+                        type="button"
+                        class="nw-testimonial-video__video-toggle"
+                        data-nw-tv-video-toggle
+                        aria-label="Play video"
+                      >
+                        <span class="nw-testimonial-video__control-icon nw-testimonial-video__icon-play" aria-hidden="true">
+                          {% render 'nw-icon', icon: 'play' %}
+                        </span>
+                        <span class="nw-testimonial-video__control-icon nw-testimonial-video__icon-pause" aria-hidden="true">
+                          {% render 'nw-icon', icon: 'pause' %}
+                        </span>
+                      </button>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+
+        {%- if slide_count > 1 and section.settings.show_arrows -%}
+          <div class="nw-testimonial-video__nav" data-nw-tv-nav>
+            {% render 'nw-swiper-arrows', prev_label: 'Previous testimonial', next_label: 'Next testimonial' %}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</nw-testimonial-video>
+
+{% schema %}
+{
+  "name": "t:sections.nw-testimonial-video.name",
+  "tag": "section",
+  "class": "section-nw-testimonial-video",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "GOING VIRAL ON TIKTOK & IG"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real Customers, Real Law Tags"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "VIDEO CARDS"
+    },
+    {
+      "type": "range",
+      "id": "video_slide_width",
+      "label": "Card Width (Desktop)",
+      "min": 140,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "video_slide_width_mobile",
+      "label": "Card Width (Mobile)",
+      "min": 120,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "select",
+      "id": "video_aspect_ratio",
+      "label": "Card Aspect Ratio",
+      "default": "220:380",
+      "options": [
+        { "value": "220:380", "label": "220:380" },
+        { "value": "160:280", "label": "160:280" },
+        { "value": "9:16", "label": "9:16" },
+        { "value": "3:4", "label": "3:4" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "slide_border_radius",
+      "label": "Corner Radius (Desktop)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "slide_border_radius_mobile",
+      "label": "Corner Radius (Mobile)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "VIDEO PLAYBACK"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop_videos",
+      "label": "Loop Videos",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay_active_slide",
+      "label": "Autoplay Video on Active Slide (Muted)",
+      "default": true,
+      "info": "Plays the visible slide muted. User play unmutes and pauses slider autoplay."
+    },
+    {
+      "type": "header",
+      "content": "SLIDER"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Navigation Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Slider Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Slider Autoplay Delay",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "default": 6,
+      "visible_if": "{{ section.settings.enable_autoplay == true }}"
+    },
+    {
+      "type": "range",
+      "id": "slider_transition_ms",
+      "label": "Slide Transition Duration",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "ms",
+      "default": 750
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_color",
+      "label": "Arrow Icon Color",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_border",
+      "label": "Arrow Border (Desktop)",
+      "default": "#613916"
+    },
+    {
+      "type": "color",
+      "id": "swiper_arrow_bg_mobile",
+      "label": "Arrow Background (Mobile)",
+      "default": "#f4efe8"
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FBF9F6",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video_slide",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "Poster Image",
+          "info": "Optional. Defaults to the video preview image."
+        },
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Handle / Name Overlay",
+          "info": "Optional bottom overlay, e.g. @username"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote Overlay",
+          "info": "Optional short quote on the video card."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-testimonial-video.name",
+      "category": "NW Sections",
+      "blocks": [
+        { "type": "video_slide" },
+        { "type": "video_slide" },
+        { "type": "video_slide" },
+        {
+          "type": "video_slide",
+          "settings": {
+            "handle": "@customer",
+            "quote": "I had no idea my old mattress had a law tag — this made trade-in so easy."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,537 @@
+{{ 'nw-shop-mattress.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign product_blocks = section.blocks | where: 'type', 'product_card'
+  assign section_dom_id = 'NwShopMattress-' | append: section.id
+  assign custom_id = section.settings.custom_id | strip
+  if custom_id != blank
+    assign section_dom_id = custom_id | handleize
+  endif
+  assign nw_shell_selector = '#' | append: section_dom_id
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-shop-mattress
+  id="{{ section_dom_id }}"
+  class="nw-shop-mattress section-{{ section.id }}"
+  style="
+    --nw-shop-mattress-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --nw-shop-mattress-heading-color: {{ section.settings.heading_color }};
+    --nw-shop-mattress-badge-bg: {{ section.settings.badge_bg_color }};
+    --nw-shop-mattress-badge-color: {{ section.settings.badge_text_color }};
+    --nw-shop-mattress-title-color: {{ section.settings.title_color }};
+    --nw-shop-mattress-subtitle-color: {{ section.settings.subtitle_color }};
+    --nw-shop-mattress-price-color: {{ section.settings.price_color }};
+    --nw-shop-mattress-btn-bg: {{ section.settings.button_bg_color }};
+    --nw-shop-mattress-btn-color: {{ section.settings.button_text_color }};
+    --nw-shop-mattress-btn-border: {{ section.settings.button_border_color }};
+    --nw-shop-mattress-media-height: {{ section.settings.media_height_desktop }}px;
+    --nw-shop-mattress-media-height-mobile: {{ section.settings.media_height_mobile }}px;
+    --nw-shop-mattress-media-radius: {{ section.settings.media_radius_desktop }}px;
+    --nw-shop-mattress-media-radius-mobile: {{ section.settings.media_radius_mobile }}px;
+  "
+>
+  <div class="page-width nw-shop-mattress__page-width">
+  <div class="nw-shop-mattress__inner">
+    <div class="nw-shop-mattress__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="nw-shop-mattress__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- liquid
+        assign section_heading = section.settings.heading
+        if section.settings.heading_mobile != blank
+          assign mobile_heading = section.settings.heading_mobile
+        else
+          assign mobile_heading = section_heading
+        endif
+      -%}
+
+      {%- if section_heading != blank -%}
+        <div class="nw-shop-mattress__heading nw-shop-mattress__heading--desktop">
+          {% render 'nw-section-heading', text: section_heading, tag: 'h2', class: 'nw-shop-mattress__heading-inner' %}
+        </div>
+      {%- endif -%}
+
+      {%- if mobile_heading != blank -%}
+        <div class="nw-shop-mattress__heading nw-shop-mattress__heading--mobile">
+          {% render 'nw-section-heading', text: mobile_heading, tag: 'h2', class: 'nw-shop-mattress__heading-inner' %}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if product_blocks.size > 0 -%}
+      <ul class="nw-shop-mattress__grid" role="list">
+        {%- for block in product_blocks -%}
+          {%- liquid
+            assign card_product = block.settings.product
+            assign card_title = block.settings.custom_title | strip
+            if card_title == blank and card_product != blank
+              assign card_title = card_product.title
+            endif
+
+            assign card_image = block.settings.custom_image
+            if card_image == blank and card_product != blank and card_product.featured_media != blank
+              assign card_image = card_product.featured_media.preview_image
+            endif
+
+            assign card_url = block.settings.custom_link
+            if card_url == blank and card_product != blank
+              assign card_url = card_product.url
+            endif
+
+            assign price_text = block.settings.price_text | strip
+            if price_text == blank and card_product != blank
+              assign card_price_money = card_product.price_min | money
+              if block.settings.show_starting_at
+                assign price_text = 'Starting at ' | append: card_price_money
+              else
+                assign price_text = card_price_money
+              endif
+            endif
+
+            assign media_fallback = block.settings.image_fallback_color | default: '#d9b285'
+            assign show_badge = section.settings.show_badge
+            if block.settings.hide_badge
+              assign show_badge = false
+            endif
+          -%}
+          <li class="nw-shop-mattress__card" {{ block.shopify_attributes }}>
+            {%- if card_url != blank -%}
+              <a href="{{ card_url }}" class="nw-shop-mattress__media" style="--nw-shop-mattress-media-fallback: {{ media_fallback }};">
+            {%- else -%}
+              <div class="nw-shop-mattress__media" style="--nw-shop-mattress-media-fallback: {{ media_fallback }};">
+            {%- endif -%}
+              {%- if show_badge and section.settings.badge_text != blank -%}
+                <span class="nw-shop-mattress__badge">{{ section.settings.badge_text | escape }}</span>
+              {%- endif -%}
+              {%- if card_image != blank -%}
+                {{
+                  card_image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '400, 600, 900',
+                    sizes: '(min-width: 990px) 33vw, 100vw',
+                    alt: card_title | escape
+                }}
+              {%- endif -%}
+            {%- if card_url != blank -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+
+            {%- if card_title != blank -%}
+              <h3 class="nw-shop-mattress__title">
+                {%- if card_url != blank -%}
+                  <a href="{{ card_url }}">{{ card_title | escape }}</a>
+                {%- else -%}
+                  {{ card_title | escape }}
+                {%- endif -%}
+              </h3>
+            {%- endif -%}
+
+            {%- if block.settings.subtitle != blank -%}
+              <p class="nw-shop-mattress__subtitle">{{ block.settings.subtitle | escape }}</p>
+            {%- endif -%}
+
+            {%- if price_text != blank -%}
+              <p class="nw-shop-mattress__price">{{ price_text }}</p>
+            {%- endif -%}
+
+            {%- if card_url != blank and section.settings.button_label != blank -%}
+              <a href="{{ card_url }}" class="nw-shop-mattress__btn">{{ section.settings.button_label | escape }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+  </div>
+</nw-shop-mattress>
+
+{% schema %}
+{
+  "name": "t:sections.nw-shop-mattress.name",
+  "tag": "section",
+  "class": "section-nw-shop-mattress",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom section ID",
+      "info": "Optional. For in-page anchor links."
+    },
+    {
+      "type": "header",
+      "content": "HEADER"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "APPLY YOUR $300 CREDIT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading (Desktop)",
+      "default": "Shop the Non-Toxic Organic Ultimate Snooze Mattress"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading_mobile",
+      "label": "Heading (Mobile)",
+      "info": "Leave blank to use the desktop heading."
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BADGE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show badge on product images",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "$300 OFF APPLIED",
+      "visible_if": "{{ section.settings.show_badge == true }}"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Badge Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#878735",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background",
+      "default": "#F4EFE8",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "rgba(97,57,22,0.15)",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "PRODUCT CARD STYLE"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "range",
+      "id": "media_height_desktop",
+      "label": "Image Height (Desktop)",
+      "min": 180,
+      "max": 400,
+      "step": 4,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "media_height_mobile",
+      "label": "Image Height (Mobile)",
+      "min": 160,
+      "max": 320,
+      "step": 4,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "media_radius_desktop",
+      "label": "Image Radius (Desktop)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "media_radius_mobile",
+      "label": "Image Radius (Mobile)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom image",
+          "info": "Overrides the product featured image."
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom title",
+          "info": "Overrides the product title when set."
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Firm | Organic Latex | Organic Wool | Organic Cotton"
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Custom price text",
+          "info": "Optional. Overrides automatic product pricing."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_starting_at",
+          "label": "Prefix price with “Starting at”",
+          "default": true,
+          "visible_if": "{{ block.settings.price_text == blank }}"
+        },
+        {
+          "type": "url",
+          "id": "custom_link",
+          "label": "Custom link",
+          "info": "Optional. Overrides the product URL."
+        },
+        {
+          "type": "color",
+          "id": "image_fallback_color",
+          "label": "Image placeholder color",
+          "default": "#D9B285",
+          "alpha": true,
+          "info": "Shown when no custom or product image is set."
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_badge",
+          "label": "Hide badge on this card",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-shop-mattress.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+            "custom_title": "Pure Organic Latex Mattress",
+            "subtitle": "Firm | Organic Latex | Organic Wool | Organic Cotton",
+            "price_text": "Starting at $1,780",
+            "image_fallback_color": "#D9B285"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "custom_title": "Recovery Mattress by Gary Brecka",
+            "subtitle": "Cushion-Firm | Organic Latex | Organic Wool | Organic Cotton",
+            "price_text": "Starting at $2,970",
+            "image_fallback_color": "#BF8C61"
+          }
+        },
+        {
+          "type": "product_card",
+          "settings": {
+            "custom_title": "Snooze Nest Crib Mattress Bundle",
+            "subtitle": "Safe-Firm | Coconut Coir | Organic Wool | Organic Hemp | Organic Cotton",
+            "price_text": "$799.97",
+            "show_starting_at": false,
+            "image_fallback_color": "#E5C79E"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

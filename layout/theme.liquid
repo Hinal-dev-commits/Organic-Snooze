@@ -1,6 +1,14 @@
 {% include 'shogun-content-handler' %}
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
+  {%- liquid
+    assign nw_toxin_trade_in_page = false
+    if template.name == 'page' and template.suffix == 'toxin-trade-in'
+      assign nw_toxin_trade_in_page = true
+    elsif template.name == 'page' and request.query_parameters.view == 'toxin-trade-in'
+      assign nw_toxin_trade_in_page = true
+    endif
+  -%}
   <head>
 {% render 'replo-head' %}
   {% comment %}Loads Shogun Analytics. Removing this will disrupt analytics data collection.{% endcomment %}
@@ -94,7 +102,10 @@
     {% render 'nw-theme-styles' %}
     {% render 'nw-theme-stylesheets' %}
     {% render 'nw-script' %}
-  
+    {%- if nw_toxin_trade_in_page -%}
+      {% render 'nw-toxin-trade-in-page-head' %}
+    {%- endif -%}
+
   {% render 'shogun-head' %}
   {%- comment -%} Gohighlevel code {%- endcomment -%}
   <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6aa1684faa1a4795583990d8" data-source="WEB_USER"></script>
@@ -117,10 +128,13 @@
 
       <main
         id="MainContent"
-        class="content-for-layout focus-none"
+        class="content-for-layout focus-none{% if nw_toxin_trade_in_page %} nw-toxin-trade-in-page{% endif %}"
         role="main"
         tabindex="-1"
         data-template="{{ template.name }}"
+        {% if nw_toxin_trade_in_page %}
+          data-nw-scroll-animate="{% if settings.animations_reveal_on_scroll %}true{% else %}false{% endif %}"
+        {% endif %}
       >
         {% render 'nw-collection-page-h1' %}
         {{ content_for_layout }}
@@ -142,6 +156,11 @@
 
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- comment -%} Load after Replo/landing CSS so header/footer overrides win. {%- endcomment -%}
+    {%- if nw_toxin_trade_in_page -%}
+      {{ 'nw-toxin-trade-in-page.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
   </body>

@@ -1,0 +1,471 @@
+{{ 'nw-old-mattress.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign card_blocks = section.blocks | where: 'type', 'toxin_card'
+  assign section_dom_id = 'NwOldMattress-' | append: section.id
+  assign custom_id = section.settings.custom_id | strip
+  if custom_id != blank
+    assign section_dom_id = custom_id | handleize
+  endif
+  assign nw_shell_selector = '#' | append: section_dom_id
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<style>
+  @media screen and (max-width: 989px) {
+    #{{ section_dom_id }},
+    #shopify-section-{{ section.id }} {
+      background-color: {{ section.settings.mobile_bg_color | default: '#613916' }} !important;
+      background-image: none !important;
+    }
+  }
+</style>
+
+<nw-old-mattress
+  id="{{ section_dom_id }}"
+  class="nw-old-mattress section-{{ section.id }}"
+  style="
+    --nw-old-mattress-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --nw-old-mattress-heading-color: {{ section.settings.heading_color }};
+    --nw-old-mattress-description-color: {{ section.settings.description_color }};
+    --nw-old-mattress-card-bg: {{ section.settings.card_bg_color }};
+    --nw-old-mattress-card-title-color: {{ section.settings.card_title_color }};
+    --nw-old-mattress-card-text-color: {{ section.settings.card_text_color }};
+    --nw-old-mattress-icon-bg: {{ section.settings.icon_bg_color }};
+    --nw-old-mattress-icon-color: {{ section.settings.icon_color }};
+    --nw-old-mattress-card-radius: {{ section.settings.card_radius }}px;
+    --nw-old-mattress-card-radius-mobile: {{ section.settings.card_radius_mobile }}px;
+    --nw-old-mattress-footnote-color: {{ section.settings.footnote_color }};
+    --nw-old-mattress-mobile-heading-color: {{ section.settings.mobile_heading_color }};
+    --nw-old-mattress-mobile-description-color: {{ section.settings.mobile_description_color }};
+    --nw-old-mattress-mobile-footnote-color: {{ section.settings.mobile_footnote_color }};
+  "
+>
+  <div class="page-width nw-old-mattress__page-width">
+  <div class="nw-old-mattress__inner">
+    <div class="nw-old-mattress__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="nw-old-mattress__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <div class="nw-old-mattress__heading">
+          {% render 'nw-section-heading', text: section.settings.heading, tag: 'h2', class: 'nw-old-mattress__heading-inner' %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="nw-old-mattress__description nw-old-mattress__description--desktop rte">{{ section.settings.description }}</div>
+      {%- endif -%}
+
+      {%- liquid
+        assign mobile_description = section.settings.description_mobile
+        if mobile_description == blank
+          assign mobile_description = section.settings.description
+        endif
+      -%}
+      {%- if mobile_description != blank -%}
+        <div class="nw-old-mattress__description nw-old-mattress__description--mobile rte">{{ mobile_description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if card_blocks.size > 0 -%}
+      <ul class="nw-old-mattress__grid" role="list">
+        {%- for block in card_blocks -%}
+          {%- liquid
+            assign icon_label = block.settings.icon_label | strip
+            if icon_label == blank
+              assign icon_label = '!'
+            endif
+            assign mobile_text = block.settings.description_mobile
+          -%}
+          <li class="nw-old-mattress__card" {{ block.shopify_attributes }}>
+            <span class="nw-old-mattress__icon" aria-hidden="true">{{ icon_label | escape }}</span>
+            {%- if block.settings.title != blank -%}
+              <h3 class="nw-old-mattress__card-title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="nw-old-mattress__card-text nw-old-mattress__card-text--desktop">{{ block.settings.description | escape }}</p>
+            {%- endif -%}
+            {%- liquid
+              if mobile_text == blank
+                assign mobile_text = block.settings.description
+              endif
+            -%}
+            {%- if mobile_text != blank -%}
+              <p class="nw-old-mattress__card-text nw-old-mattress__card-text--mobile">{{ mobile_text | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="nw-old-mattress__footnote">{{ section.settings.footnote | escape }}</p>
+    {%- endif -%}
+  </div>
+  </div>
+</nw-old-mattress>
+
+{% schema %}
+{
+  "name": "t:sections.nw-old-mattress.name",
+  "tag": "section",
+  "class": "section-nw-old-mattress",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom section ID",
+      "info": "Optional. For in-page anchor links. Leave blank to use the default ID."
+    },
+    {
+      "type": "header",
+      "content": "HEADER"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "WHY THIS EVENT MATTERS"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What's Really Inside Your Old Mattress"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description (Desktop)",
+      "default": "<p>Most conventional mattresses are built with synthetic materials that off-gas chemicals into your bedroom air, night after night. Here's what to look for on your old law tag.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "description_mobile",
+      "label": "Description (Mobile)",
+      "default": "<p>Most conventional mattresses off-gas chemicals into your bedroom air, night after night. Here's what to look for.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "footnote",
+      "label": "Footnote",
+      "default": "*Common industry concerns cited by organic and non-toxic mattress advocates. Individual product composition varies by brand."
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow Color",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color (Desktop)",
+      "default": "#704524",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color (Desktop)",
+      "default": "#704522",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "footnote_color",
+      "label": "Footnote Color (Desktop)",
+      "default": "#704522",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "MOBILE HEADER"
+    },
+    {
+      "type": "color",
+      "id": "mobile_bg_color",
+      "label": "Mobile Section Background",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "mobile_heading_color",
+      "label": "Mobile Heading Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "mobile_description_color",
+      "label": "Mobile Description Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "mobile_footnote_color",
+      "label": "Mobile Footnote Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "TOXIN CARDS"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#704522",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card Title Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "icon_bg_color",
+      "label": "Icon Background",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Text Color",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card Radius (Desktop)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_radius_mobile",
+      "label": "Card Radius (Mobile)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color (Desktop)",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "toxin_card",
+      "name": "Toxin card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon_label",
+          "label": "Icon label",
+          "default": "!"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Polyurethane Foam"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description (Desktop)",
+          "default": "A petroleum-derived foam used in most conventional mattresses. It can off-gas volatile organic compounds (VOCs) for years, commonly linked to headaches and indoor air irritation."
+        },
+        {
+          "type": "textarea",
+          "id": "description_mobile",
+          "label": "Description (Mobile)",
+          "info": "Leave blank to use the desktop description."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-old-mattress.name",
+      "category": "NW Sections",
+      "blocks": [
+        {
+          "type": "toxin_card",
+          "settings": {
+            "title": "Polyurethane Foam",
+            "description": "A petroleum-derived foam used in most conventional mattresses. It can off-gas volatile organic compounds (VOCs) for years, commonly linked to headaches and indoor air irritation.",
+            "description_mobile": "A petroleum-derived foam that can off-gas VOCs for years, commonly linked to headaches and indoor air irritation."
+          }
+        },
+        {
+          "type": "toxin_card",
+          "settings": {
+            "title": "Petroleum-Based Foam",
+            "description": "Made from crude oil byproducts, these foams are highly flammable on their own, requiring extra chemical treatment just to meet basic safety codes.",
+            "description_mobile": "Made from crude oil byproducts, highly flammable on their own and requiring extra chemical treatment to meet safety codes."
+          }
+        },
+        {
+          "type": "toxin_card",
+          "settings": {
+            "title": "Fiberglass",
+            "description": "A cheap flame barrier woven into many mattress covers. Once the cover is unzipped or worn, it can shed microscopic particles that irritate skin, eyes, and lungs.",
+            "description_mobile": "A cheap flame barrier woven into many covers. Once unzipped or worn, it can shed particles that irritate skin, eyes, and lungs."
+          }
+        },
+        {
+          "type": "toxin_card",
+          "settings": {
+            "title": "Formaldehyde",
+            "description": "Used in foam adhesives and pressed materials, formaldehyde is classified as a known human carcinogen and can continue off-gassing long after purchase.",
+            "description_mobile": "Used in foam adhesives and pressed materials, classified as a known human carcinogen that can off-gas long after purchase."
+          }
+        },
+        {
+          "type": "toxin_card",
+          "settings": {
+            "title": "Toxic Adhesives",
+            "description": "Petroleum-based glues bond foam layers together and keep releasing VOCs into your bedroom air long after the ‘new mattress smell’ fades.",
+            "description_mobile": "Petroleum-based glues bond foam layers and keep releasing VOCs long after the ‘new mattress smell’ fades."
+          }
+        },
+        {
+          "type": "toxin_card",
+          "settings": {
+            "title": "Flame-Retardant Sprays",
+            "description": "Chemical sprays applied to meet flammability codes, often containing halogenated compounds linked to hormone disruption with long-term exposure.",
+            "description_mobile": "Chemical sprays applied to meet flammability codes, often containing compounds linked to hormone disruption."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

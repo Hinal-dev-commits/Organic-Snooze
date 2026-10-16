@@ -1,0 +1,207 @@
+.shopify-section.section-nw-step-v3 {
+  overflow: visible;
+}
+
+.nw-step-v3 {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-step-v3__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-left: 64px;
+  padding-right: 64px;
+  box-sizing: border-box;
+}
+
+.nw-step-v3__header {
+  width: 100%;
+  max-width: 636px;
+  text-align: center;
+}
+
+.nw-step-v3__heading--mobile {
+  display: none;
+}
+
+.nw-step-v3__header .nw-section-heading {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 470px;
+}
+
+.nw-step-v3__header .nw-section-heading h2,
+.nw-step-v3__header .nw-section-heading .h2,
+.nw-step-v3__header .nw-section-heading h1,
+.nw-step-v3__header .nw-section-heading .h1 {
+  text-align: center;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  color: var(--nw-step-v3-heading-color, var(--nw-brown, #613916));
+  text-transform: none;
+  width: 100% !important;
+  margin: 0;
+}
+
+.nw-step-v3__header .nw-section-heading p {
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  color: var(--nw-step-v3-heading-color, var(--nw-brown, #613916));
+  margin: 0;
+}
+
+.nw-step-v3__grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 992px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.nw-step-v3__card {
+  flex: 0 1 416px;
+  width: 100%;
+  max-width: 416px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 32px 28px;
+  border-radius: 20px;
+  background: var(--nw-step-v3-card-bg, #ffffff);
+  box-sizing: border-box;
+}
+
+.nw-step-v3__badge {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 1000px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: normal;
+  color: var(--nw-step-v3-badge-text, #ffffff);
+  background: var(--nw-step-v3-badge-bg, var(--nw-tan, #cc926a));
+}
+
+.nw-step-v3__title {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: normal;
+  color: var(--nw-step-v3-card-title, var(--nw-brown, #613916));
+}
+
+.nw-step-v3__description {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--nw-step-v3-card-text, var(--nw-brown, #613916));
+  opacity: 0.75;
+  max-width: 300px;
+}
+
+.nw-step-v3__description p {
+  margin: 0 0 0.5em;
+  text-align: left;
+}
+
+.nw-step-v3__description p:last-child {
+  margin-bottom: 0;
+}
+
+.nw-step-v3__footnote {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.45;
+  color: var(--nw-step-v3-card-text, var(--nw-brown, #613916));
+  opacity: 0.75;
+  max-width: 310px;
+}
+
+@media screen and (max-width: 989px) {
+  .nw-step-v3__inner {
+    gap: 28px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .nw-step-v3__heading--desktop {
+    display: none;
+  }
+
+  .nw-step-v3__heading--mobile {
+    display: block;
+  }
+
+  .nw-step-v3__header {
+    max-width: 340px;
+  }
+
+  .nw-step-v3__header .nw-section-heading h2,
+  .nw-step-v3__header .nw-section-heading .h2,
+  .nw-step-v3__header .nw-section-heading h1,
+  .nw-step-v3__header .nw-section-heading .h1,
+  .nw-step-v3__header .nw-section-heading p {
+    font-size: 26px;
+    line-height: normal;
+    letter-spacing: -0.2px;
+  }
+
+  .nw-step-v3__grid {
+    flex-direction: column;
+    gap: 14px;
+    max-width: none;
+  }
+
+  .nw-step-v3__card {
+    flex: none;
+    max-width: none;
+    gap: 10px;
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+
+  .nw-step-v3__badge {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .nw-step-v3__title {
+    font-size: 17px;
+  }
+
+  .nw-step-v3__description {
+    font-size: 13px;
+    max-width: none;
+  }
+}

@@ -1,0 +1,317 @@
+{{ 'nw-step-v3.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign step_blocks = section.blocks | where: 'type', 'step'
+  assign nw_shell_selector = '#NwStepV3-' | append: section.id
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FBF9F6' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-step-v3
+  id="NwStepV3-{{ section.id }}"
+  class="nw-step-v3 section-{{ section.id }}"
+  style="
+    --nw-step-v3-heading-color: {{ section.settings.heading_color }};
+    --nw-step-v3-badge-bg: {{ section.settings.badge_bg_color }};
+    --nw-step-v3-badge-text: {{ section.settings.badge_text_color }};
+    --nw-step-v3-card-bg: {{ section.settings.card_bg_color }};
+    --nw-step-v3-card-title: {{ section.settings.card_title_color }};
+    --nw-step-v3-card-text: {{ section.settings.card_text_color }};
+  "
+>
+  <div class="nw-step-v3__inner">
+    {%- if section.settings.heading != blank or section.settings.heading_mobile != blank -%}
+      <div class="nw-step-v3__header">
+        {%- if section.settings.heading != blank -%}
+          <div class="nw-step-v3__heading nw-step-v3__heading--desktop">
+            {% render 'nw-section-heading', text: section.settings.heading, tag: 'h2', class: 'nw-step-v3__heading-inner' %}
+          </div>
+        {%- endif -%}
+        {%- liquid
+          assign mobile_heading = section.settings.heading_mobile
+          if mobile_heading == blank
+            assign mobile_heading = section.settings.heading
+          endif
+        -%}
+        {%- if mobile_heading != blank -%}
+          <div class="nw-step-v3__heading nw-step-v3__heading--mobile">
+            {% render 'nw-section-heading', text: mobile_heading, tag: 'h2', class: 'nw-step-v3__heading-inner' %}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if step_blocks.size > 0 -%}
+      <ul class="nw-step-v3__grid" role="list">
+        {%- for block in step_blocks -%}
+          {%- liquid
+            assign step_label = block.settings.step_number | strip
+            if step_label == blank
+              if forloop.index < 10
+                assign step_label = '0' | append: forloop.index
+              else
+                assign step_label = forloop.index
+              endif
+            endif
+          -%}
+          <li class="nw-step-v3__card" {{ block.shopify_attributes }}>
+            <span class="nw-step-v3__badge" aria-hidden="true">{{ step_label | escape }}</span>
+            {%- if block.settings.title != blank -%}
+              <h3 class="nw-step-v3__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <div class="nw-step-v3__description rte">{{ block.settings.description }}</div>
+            {%- endif -%}
+            {%- if block.settings.footnote != blank -%}
+              <p class="nw-step-v3__footnote">{{ block.settings.footnote | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</nw-step-v3>
+
+{% schema %}
+{
+  "name": "t:sections.nw-step-v3.name",
+  "tag": "section",
+  "class": "section-nw-step-v3",
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading (Desktop)",
+      "default": "Three Steps to $300 + FREE Old Mattress Removal"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading_mobile",
+      "label": "Heading (Mobile)",
+      "default": "Three Steps to $300 Off",
+      "info": "Leave blank to use the desktop heading on mobile."
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "STEP CARDS"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card Title Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Step Badge Background",
+      "default": "#CC926A",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Step Badge Text",
+      "default": "#FFFFFF",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FBF9F6",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step Number",
+          "info": "Optional. Auto-numbered when blank (01, 02, …)."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Snap a Photo or Video"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Show us your mattress's law tag (the ingredient label) or just the dirty top-of-bed — phone camera is fine.</p>"
+        },
+        {
+          "type": "text",
+          "id": "footnote",
+          "label": "Footnote",
+          "info": "Optional italic note below the description (shown on mobile for steps 3–4 in Figma)."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-step-v3.name",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Snap a Photo or Video",
+            "description": "<p>Show us your mattress's law tag (the ingredient label) or just the dirty top-of-bed — phone camera is fine.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "We Verify It Instantly",
+            "description": "<p>Our system checks the upload and confirms your $300 discount in under a minute. No back-and-forth.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "Shop & Save $300",
+            "description": "<p>Apply your instant code to any Ultimate Snooze mattress at checkout. We'll even help you recycle the old one.</p>",
+            "footnote": "Only applies to mattress purchases*"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "title": "We Will Pick Up Your Old Mattress",
+            "description": "<p>After delivery, schedule a free haul-away of your old mattress. Only applies to mattress purchases*.</p>",
+            "footnote": "Only applies to mattress purchases*"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

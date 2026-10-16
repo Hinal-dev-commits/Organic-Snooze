@@ -1,0 +1,37 @@
+#MainContent.nw-toxin-trade-in-page {
+  --font-heading-family: 'Jost', sans-serif;
+  --nw-trade-in-subheading-font: 'Montserrat', sans-serif;
+  overflow: visible;
+}
+
+#MainContent.nw-toxin-trade-in-page #toxin-offer {
+  scroll-margin-top: calc(var(--header-height, 76px) + 12px);
+}
+
+body:has(#MainContent.nw-toxin-trade-in-page) #nw-site-scroll {
+  overflow: visible !important;
+}
+
+body:has(#MainContent.nw-toxin-trade-in-page) .shopify-section-group-header-group,
+body:has(#MainContent.nw-toxin-trade-in-page) .shopify-section-group-footer-group,
+body:has(#MainContent.nw-toxin-trade-in-page) .header-wrapper,
+body:has(#MainContent.nw-toxin-trade-in-page) .announcement-bar-section,
+body:has(#MainContent.nw-toxin-trade-in-page) #shopify-section-header,
+body:has(#MainContent.nw-toxin-trade-in-page) #shopify-section-footer,
+body:has(#MainContent.nw-toxin-trade-in-page) [id^='shopify-section-footer'] {
+  display: block !important;
+}
+
+body:has(#MainContent.nw-toxin-trade-in-page) sticky-header {
+  display: block !important;
+}
+
+body:has(#MainContent.nw-toxin-trade-in-page) footer:not(cart-drawer footer),
+body:has(#MainContent.nw-toxin-trade-in-page) footer.footer {
+  display: block !important;
+}
+
+body:has(#MainContent.nw-toxin-trade-in-page) .header.page-width,
+body:has(#MainContent.nw-toxin-trade-in-page) .utility-bar__grid.page-width {
+  display: grid !important;
+}

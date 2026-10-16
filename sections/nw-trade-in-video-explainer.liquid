@@ -1,0 +1,424 @@
+{{ 'nw-trade-in-video-explainer.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nw-trade-in-video-explainer.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign point_blocks = section.blocks | where: 'type', 'point'
+  assign nw_shell_selector = '#NwTradeInVideoExplainer-' | append: section.id
+  assign poster = section.settings.poster
+  if poster == blank and section.settings.video != blank and section.settings.video.preview_image != blank
+    assign poster = section.settings.video.preview_image
+  endif
+  assign duration_label = section.settings.video_duration | strip
+  if duration_label == blank
+    assign duration_label = '0:58'
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FBF9F6' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<nw-trade-in-video-explainer
+  id="NwTradeInVideoExplainer-{{ section.id }}"
+  class="nw-trade-in-video-explainer section-{{ section.id }}"
+  style="
+    --nw-tive-heading-color: {{ section.settings.heading_color }};
+    --nw-tive-description-color: {{ section.settings.description_color }};
+    --nw-tive-video-width: {{ section.settings.video_width_desktop }}px;
+    --nw-tive-aspect-w: {{ section.settings.video_aspect_w | default: 380 }};
+    --nw-tive-aspect-h: {{ section.settings.video_aspect_h | default: 676 }};
+  "
+>
+  <div class="nw-trade-in-video-explainer__container">
+    <div class="nw-trade-in-video-explainer__media-col">
+      <div class="nw-trade-in-video-explainer__media" data-nw-tive-media>
+        {%- if section.settings.video != blank -%}
+          {{
+            section.settings.video
+            | video_tag:
+              autoplay: false,
+              loop: false,
+              muted: true,
+              controls: false,
+              playsinline: true,
+              preload: 'metadata',
+              class: 'nw-trade-in-video-explainer__video'
+          }}
+        {%- else -%}
+          <div class="nw-trade-in-video-explainer__placeholder" aria-hidden="true"></div>
+        {%- endif -%}
+
+        {%- if poster != blank -%}
+          <img
+            src="{{ poster | image_url: width: 1200 }}"
+            alt=""
+            width="380"
+            height="676"
+            loading="lazy"
+            class="nw-trade-in-video-explainer__poster"
+          >
+        {%- endif -%}
+
+        {%- if section.settings.video_overlay_title != blank -%}
+          <p class="nw-trade-in-video-explainer__overlay-title">{{ section.settings.video_overlay_title | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.video != blank -%}
+          <div class="nw-trade-in-video-explainer__controls">
+            <button type="button" class="nw-trade-in-video-explainer__play" data-nw-tive-play aria-label="Play video">
+              <span class="nw-trade-in-video-explainer__control-icon" aria-hidden="true">
+                {% render 'nw-icon', icon: 'play' %}
+              </span>
+            </button>
+            <button type="button" class="nw-trade-in-video-explainer__pause" data-nw-tive-pause aria-label="Pause video" hidden>
+              <span class="nw-trade-in-video-explainer__control-icon" aria-hidden="true">
+                {% render 'nw-icon', icon: 'pause' %}
+              </span>
+            </button>
+          </div>
+        {%- endif -%}
+
+        <p
+          class="nw-trade-in-video-explainer__duration"
+          data-nw-tive-duration
+          data-duration-manual="{{ section.settings.video_duration | escape }}"
+        >
+          {{ duration_label | escape }}
+        </p>
+      </div>
+
+    </div>
+
+    <div class="nw-trade-in-video-explainer__content-col">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="nw-trade-in-video-explainer__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <div class="nw-trade-in-video-explainer__heading">
+          {% render 'nw-section-heading', text: section.settings.heading, tag: 'h2', class: 'nw-trade-in-video-explainer__heading-inner' %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="nw-trade-in-video-explainer__description rte">{{ section.settings.description }}</div>
+      {%- endif -%}
+
+      {%- if point_blocks.size > 0 -%}
+        <ul class="nw-trade-in-video-explainer__points" role="list">
+          {%- for block in point_blocks -%}
+            <li class="nw-trade-in-video-explainer__point" {{ block.shopify_attributes }}>
+              <span class="nw-trade-in-video-explainer__point-dot" aria-hidden="true"></span>
+              <div class="nw-trade-in-video-explainer__point-body">
+                {%- if block.settings.title != blank -%}
+                  <p class="nw-trade-in-video-explainer__point-title">{{ block.settings.title | escape }}</p>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="nw-trade-in-video-explainer__point-text">{{ block.settings.text | escape }}</p>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.show_button and section.settings.button_text != blank -%}
+        {%- liquid
+          assign tive_btn_style = section.settings.button_style | default: 'primary'
+          assign tive_btn_classes = 'nw-btn nw-btn--' | append: tive_btn_style
+          assign tive_btn_link = section.settings.button_link | strip
+          assign tive_btn_text = section.settings.button_text | replace: ' →', '' | replace: '→', '' | strip
+        -%}
+        <div class="nw-trade-in-video-explainer__btn-wrap">
+          {%- if tive_btn_link != blank and tive_btn_link != '#' -%}
+            <a href="{{ tive_btn_link }}" class="{{ tive_btn_classes }}">
+              <span class="nw-btn__text">{{ tive_btn_text | escape }}</span>
+              <span class="nw-trade-in-btn-arrow" aria-hidden="true">{{ 'arrow-right.svg' | inline_asset_content }}</span>
+            </a>
+          {%- else -%}
+            <button type="button" class="{{ tive_btn_classes }}">
+              <span class="nw-btn__text">{{ tive_btn_text | escape }}</span>
+              <span class="nw-trade-in-btn-arrow" aria-hidden="true">{{ 'arrow-right.svg' | inline_asset_content }}</span>
+            </button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</nw-trade-in-video-explainer>
+
+{% schema %}
+{
+  "name": "t:sections.nw-trade-in-video-explainer.name",
+  "tag": "section",
+  "class": "section-nw-trade-in-video-explainer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "VIDEO"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Poster Image",
+      "info": "Optional. Defaults to the video preview image."
+    },
+    {
+      "type": "text",
+      "id": "video_overlay_title",
+      "label": "Video Overlay Title",
+      "default": "The Toxin Trade-In, Explained"
+    },
+    {
+      "type": "text",
+      "id": "video_duration",
+      "label": "Video Duration Label",
+      "default": "0:58",
+      "info": "Shown on the video badge (e.g. 0:58). Leave blank to use the uploaded video length."
+    },
+    {
+      "type": "range",
+      "id": "video_width_desktop",
+      "label": "Video Width (Desktop)",
+      "min": 280,
+      "max": 420,
+      "step": 4,
+      "unit": "px",
+      "default": 380
+    },
+    {
+      "type": "number",
+      "id": "video_aspect_w",
+      "label": "Video Aspect Width",
+      "default": 380
+    },
+    {
+      "type": "number",
+      "id": "video_aspect_h",
+      "label": "Video Aspect Height",
+      "default": 676
+    },
+    {
+      "type": "header",
+      "content": "CONTENT"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "SEE IT IN ACTION"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Watch The Toxin Trade-In In 60 Seconds"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>This is our biggest event of the year — and it's built to be effortless. Watch exactly how a real customer finds their mattress's law tag, uploads it, and unlocks $300 off in under a minute.</p>"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BUTTON"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Upload My Law Tag",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "visible_if": "{{ section.settings.show_button == true }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION BACKGROUND"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background Type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FBF9F6",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "label": "Background Image Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background Gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "default": 78
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Bullet Point",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Event runs now through the end of the month"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Description",
+          "default": "Every upload during the event window qualifies.",
+          "info": "Hidden on mobile to match Figma."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-trade-in-video-explainer.name",
+      "blocks": [
+        {
+          "type": "point",
+          "settings": {
+            "title": "Event runs now through the end of the month",
+            "text": "Every upload during the event window qualifies."
+          }
+        },
+        {
+          "type": "point",
+          "settings": {
+            "title": "Works with any mattress, any brand",
+            "text": "Law tag or a top-of-bed photo/video — either works."
+          }
+        },
+        {
+          "type": "point",
+          "settings": {
+            "title": "$300 applied instantly at checkout",
+            "text": "No waiting on approval, no mail-in rebate."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

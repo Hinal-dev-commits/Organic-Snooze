@@ -1,0 +1,243 @@
+.shopify-section.section-nw-old-mattress {
+  overflow: visible;
+}
+
+.nw-old-mattress {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-old-mattress__page-width {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nw-old-mattress__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  margin: 0;
+  padding: 96px 0;
+  box-sizing: border-box;
+}
+
+.nw-old-mattress__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 720px;
+  text-align: center;
+}
+
+.nw-old-mattress__eyebrow {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--nw-old-mattress-eyebrow-color, #cc926a);
+}
+
+.nw-old-mattress__heading {
+  margin: 0;
+  width: 100%;
+  max-width: 715px;
+}
+
+.nw-old-mattress__heading .nw-section-heading h2,
+.nw-old-mattress__heading .nw-section-heading .h2 {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.12;
+  letter-spacing: -0.5px;
+  text-align: center;
+  color: var(--nw-old-mattress-heading-color, #704524);
+  text-transform: none;
+  width: 100% !important;
+}
+
+.nw-old-mattress__description {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--nw-old-mattress-description-color, #704522);
+  opacity: 0.8;
+  max-width: 720px;
+}
+
+.nw-old-mattress__description--mobile {
+  display: none;
+}
+
+.nw-old-mattress__description--desktop {
+  display: block;
+}
+
+.nw-old-mattress__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nw-old-mattress__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 28px 24px;
+  border-radius: var(--nw-old-mattress-card-radius, 18px);
+  background: var(--nw-old-mattress-card-bg, #704522);
+}
+
+.nw-old-mattress__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--nw-old-mattress-icon-bg, #cc926a);
+  color: var(--nw-old-mattress-icon-color, #ffffff);
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.nw-old-mattress__card-title {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: normal;
+  letter-spacing: -0.2px;
+  color: var(--nw-old-mattress-card-title-color, #ffffff);
+}
+
+.nw-old-mattress__card-text {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--nw-old-mattress-card-text-color, #ffffff);
+  opacity: 0.75;
+  max-width: 300px;
+}
+
+.nw-old-mattress__card-text--mobile {
+  display: none;
+}
+
+.nw-old-mattress__card-text--desktop {
+  display: block;
+}
+
+.nw-old-mattress__footnote {
+  margin: 0;
+  max-width: 720px;
+  font-family: var(--font-body-family);
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--nw-old-mattress-footnote-color, #704522);
+  opacity: 0.45;
+}
+
+@media screen and (max-width: 989px) {
+  .nw-old-mattress__page-width.page-width {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .nw-old-mattress__inner {
+    gap: 32px;
+    padding: 48px 20px;
+  }
+
+  .nw-old-mattress__header {
+    gap: 10px;
+  }
+
+  .nw-old-mattress__eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .nw-old-mattress__heading .nw-section-heading h2,
+  .nw-old-mattress__heading .nw-section-heading .h2 {
+    font-size: 26px;
+    line-height: 1.16;
+    letter-spacing: -0.3px;
+    color: var(--nw-old-mattress-mobile-heading-color, #ffffff) !important;
+  }
+
+  .nw-old-mattress__description--desktop {
+    display: none;
+  }
+
+  .nw-old-mattress__description--mobile {
+    display: block;
+    font-size: 13px;
+    max-width: 320px;
+    color: var(--nw-old-mattress-mobile-description-color, #ffffff);
+    opacity: 0.8;
+  }
+
+  .nw-old-mattress__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .nw-old-mattress__card {
+    gap: 10px;
+    padding: 22px 20px;
+    border-radius: var(--nw-old-mattress-card-radius-mobile, 16px);
+  }
+
+  .nw-old-mattress__icon {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .nw-old-mattress__card-title {
+    font-size: 16px;
+    letter-spacing: -0.1px;
+  }
+
+  .nw-old-mattress__card-text--desktop {
+    display: none;
+  }
+
+  .nw-old-mattress__card-text--mobile {
+    display: block;
+    font-size: 12px;
+  }
+
+  .nw-old-mattress__footnote {
+    max-width: 320px;
+    font-size: 10px;
+    color: var(--nw-old-mattress-mobile-footnote-color, #ffffff);
+    opacity: 0.45;
+  }
+}
