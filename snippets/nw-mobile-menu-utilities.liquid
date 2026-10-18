@@ -11,12 +11,11 @@ Mobile menu utilities: chat/call buttons and trust block.
   <div class="nw-mobile-menu__utility-buttons">
     {%- if block.settings.chat_label != blank -%}
       <a
-        {% if block.settings.chat_link != blank %}
-          href="{{ block.settings.chat_link }}"
-        {% else %}
-          href="#" role="link" aria-disabled="true"
-        {% endif %}
+        href="#"
         class="nw-mobile-menu__utility-btn"
+        data-nw-open-ghl-chat
+        role="button"
+        aria-label="{{ block.settings.chat_label | escape }}"
       >
         <span class="nw-mobile-menu__utility-btn-icon" aria-hidden="true">
           {%- if block.settings.chat_icon != blank -%}

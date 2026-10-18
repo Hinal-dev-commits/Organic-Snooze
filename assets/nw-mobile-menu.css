@@ -593,6 +593,10 @@
   .nw-mobile-menu__legacy-utilities {
     padding: 0 20px 20px;
   }
+
+  .nw-mobile-menu__legacy-utilities:empty {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

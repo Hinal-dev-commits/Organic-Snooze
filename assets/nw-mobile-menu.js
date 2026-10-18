@@ -87,6 +87,71 @@ if (!customElements.get('nw-mobile-menu')) {
 
 (function () {
   var drawerSelector = '#Details-menu-drawer-container';
+  var chatTriggerSelector = '[data-nw-open-ghl-chat]';
+  var ghlChatBubbleSelectors = [
+    '#lc_text-widget--btn',
+    'button.lc_text-widget--bubble',
+    '[aria-label*="open the chat widget" i]',
+  ];
+
+  function applyMenuDrawerClosedState(drawer, summary) {
+    document.documentElement.classList.remove('overflow-hidden-tablet');
+    document.documentElement.classList.remove('overflow-hidden-desktop');
+
+    if (drawer) {
+      drawer.classList.remove('menu-opening');
+      drawer.querySelectorAll('details').forEach(function (details) {
+        details.classList.remove('menu-opening');
+      });
+    }
+
+    if (summary) {
+      summary.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function closeMobileMenuDrawer() {
+    var drawer = document.querySelector(drawerSelector);
+    var summary = drawer && drawer.querySelector('summary.header__icon');
+
+    if (drawer && drawer.hasAttribute('open')) {
+      var headerDrawer = drawer.closest('header-drawer');
+      if (headerDrawer && typeof headerDrawer.closeMenuDrawer === 'function' && summary) {
+        headerDrawer.closeMenuDrawer(new Event('click'), summary);
+      } else {
+        drawer.removeAttribute('open');
+      }
+    }
+
+    applyMenuDrawerClosedState(drawer, summary);
+    resetMobileMegaPanels();
+  }
+
+  function clickGhlChatBubble() {
+    var widgets = document.querySelectorAll('chat-widget');
+    for (var i = 0; i < widgets.length; i++) {
+      var root = widgets[i].shadowRoot;
+      if (!root) continue;
+
+      for (var s = 0; s < ghlChatBubbleSelectors.length; s++) {
+        var bubble = root.querySelector(ghlChatBubbleSelectors[s]);
+        if (bubble) {
+          bubble.click();
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function openGhlChatWidget(attempt) {
+    attempt = attempt || 0;
+    if (clickGhlChatBubble()) return;
+    if (attempt >= 24) return;
+    window.setTimeout(function () {
+      openGhlChatWidget(attempt + 1);
+    }, 250);
+  }
 
   function resetMobileMegaPanels() {
     document.querySelectorAll('nw-mobile-menu').forEach(function (menu) {
@@ -95,6 +160,15 @@ if (!customElements.get('nw-mobile-menu')) {
       }
     });
   }
+
+  document.addEventListener('click', function (event) {
+    var trigger = event.target.closest(chatTriggerSelector);
+    if (!trigger) return;
+
+    event.preventDefault();
+    closeMobileMenuDrawer();
+    openGhlChatWidget(0);
+  });
 
   document.addEventListener('DOMContentLoaded', function () {
     var drawer = document.querySelector(drawerSelector);
