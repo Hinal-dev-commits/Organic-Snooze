@@ -26,6 +26,8 @@
     --nw-tive-video-width: {{ section.settings.video_width_desktop }}px;
     --nw-tive-aspect-w: {{ section.settings.video_aspect_w | default: 380 }};
     --nw-tive-aspect-h: {{ section.settings.video_aspect_h | default: 676 }};
+    --nw-tive-media-radius: {{ section.settings.media_border_radius_desktop | default: 28 }}px;
+    --nw-tive-media-radius-mobile: {{ section.settings.media_border_radius_mobile | default: 24 }}px;
   "
 >
   <div class="nw-trade-in-video-explainer__container">
@@ -191,6 +193,26 @@
       "default": 380
     },
     {
+      "type": "range",
+      "id": "media_border_radius_desktop",
+      "label": "Video Border Radius (Desktop)",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "media_border_radius_mobile",
+      "label": "Video Border Radius (Mobile)",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
       "type": "number",
       "id": "video_aspect_w",
       "label": "Video Aspect Width",
@@ -213,10 +235,10 @@
       "default": "SEE IT IN ACTION"
     },
     {
-      "type": "inline_richtext",
+      "type": "richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Watch The Toxin Trade-In In 60 Seconds"
+      "default": "<h2>Watch The Toxin Trade-In In 60 Seconds</h2>"
     },
     {
       "type": "richtext",

@@ -211,7 +211,7 @@
 
         {%- for block in section.blocks -%}
           {%- case block.type -%}
-            {%- when 'promo_countdown' -%}
+            {%- when 'promo_countdown' -%} 
               {%- liquid
                 assign promo_link = block.settings.promo_link
                 assign promo_open_new_tab = block.settings.promo_link_open_new_tab

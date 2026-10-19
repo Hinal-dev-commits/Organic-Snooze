@@ -2,6 +2,12 @@
   overflow: visible;
 }
 
+@media screen and (min-width: 990px) {
+  .shopify-section.section-nw-testimonial-video {
+    overflow: hidden;
+  }
+}
+
 .nw-testimonial-video {
   display: block;
   width: 100%;
@@ -34,9 +40,19 @@
 }
 
 @media screen and (min-width: 990px) {
-  .nw-testimonial-video__nav {
-    padding-left: max(5rem, calc((100vw - var(--page-width)) / 2 + 5rem));
-    padding-right: max(5rem, calc((100vw - var(--page-width)) / 2 + 5rem));
+  .nw-testimonial-video__header .nw-eyebrow,
+  .nw-testimonial-video__header .nw-rating .nw-eyebrow {
+    display: none;
+  }
+
+  .nw-testimonial-video__slider-page {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .nw-testimonial-video__nav-row {
+    width: 100%;
     box-sizing: border-box;
   }
 }
@@ -51,7 +67,7 @@
 .nw-testimonial-video__header .nw-section-heading h1,
 .nw-testimonial-video__header .nw-section-heading .h1 {
   text-align: left;
-  font-family: var(--font-body-family);
+  font-family: var(--font-heading-family);
   font-weight: 600;
   font-size: 36px;
   line-height: normal;
@@ -288,9 +304,21 @@
   box-shadow: none;
 }
 
-.nw-testimonial-video__nav .nw-swiper-btn svg {
-  width: 22px;
-  height: 22px;
+.nw-testimonial-video__nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.nw-testimonial-video__nav-icon svg {
+  width: 13px;
+  height: 14px;
+  display: block;
+}
+
+.nw-testimonial-video__nav .nw-swiper-btn svg path {
+  fill: currentColor;
 }
 
 .nw-testimonial-video__nav .nw-swiper-btn:hover:not(:disabled) {
@@ -317,6 +345,21 @@
     max-width: 100%;
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .nw-testimonial-video__slider-page.page-width {
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 0;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .nw-testimonial-video__nav-row.page-width {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
   }
 
   .nw-testimonial-video__inner {
@@ -370,5 +413,11 @@
 
   .nw-testimonial-video__slide.is-playing .nw-testimonial-video__icon-pause {
     display: flex;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-testimonial-video__slider-block{
+    gap: 20px;
   }
 }

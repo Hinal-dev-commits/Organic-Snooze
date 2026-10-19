@@ -198,29 +198,34 @@ if (!customElements.get('nw-testimonial-video')) {
       }, true);
     }
 
-    _updateNavState(swiper, prevEl, nextEl) {
-      if (!swiper || !prevEl || !nextEl) return;
+    _updateNavState(swiper) {
+      if (!swiper) return;
 
       var atStart = swiper.isBeginning;
       var atEnd = swiper.isEnd;
 
-      prevEl.classList.toggle('swiper-button-disabled', atStart);
-      nextEl.classList.toggle('swiper-button-disabled', atEnd);
-      prevEl.toggleAttribute('disabled', atStart);
-      nextEl.toggleAttribute('disabled', atEnd);
+      this.querySelectorAll('[data-nw-tv-nav] .nw-swiper-btn--prev').forEach(function (el) {
+        el.classList.toggle('swiper-button-disabled', atStart);
+        el.toggleAttribute('disabled', atStart);
+      });
+      this.querySelectorAll('[data-nw-tv-nav] .nw-swiper-btn--next').forEach(function (el) {
+        el.classList.toggle('swiper-button-disabled', atEnd);
+        el.toggleAttribute('disabled', atEnd);
+      });
     }
 
     _bindNavClicks(swiper) {
-      var navRoot = this.querySelector('[data-nw-tv-nav]');
-      if (!navRoot || !swiper) return;
-
-      var prevEl = navRoot.querySelector('.nw-swiper-btn--prev');
-      var nextEl = navRoot.querySelector('.nw-swiper-btn--next');
-      if (!prevEl || !nextEl) return;
+      var prevButtons = this.querySelectorAll('[data-nw-tv-nav] .nw-swiper-btn--prev');
+      var nextButtons = this.querySelectorAll('[data-nw-tv-nav] .nw-swiper-btn--next');
+      if (!prevButtons.length || !nextButtons.length || !swiper) return;
 
       if (this._navHandlers) {
-        prevEl.removeEventListener('click', this._navHandlers.prev);
-        nextEl.removeEventListener('click', this._navHandlers.next);
+        prevButtons.forEach(function (el) {
+          el.removeEventListener('click', this._navHandlers.prev);
+        }, this);
+        nextButtons.forEach(function (el) {
+          el.removeEventListener('click', this._navHandlers.next);
+        }, this);
       }
 
       var self = this;
@@ -240,13 +245,17 @@ if (!customElements.get('nw-testimonial-video')) {
         }
       };
 
-      prevEl.addEventListener('click', this._navHandlers.prev);
-      nextEl.addEventListener('click', this._navHandlers.next);
+      prevButtons.forEach(function (el) {
+        el.addEventListener('click', self._navHandlers.prev);
+      });
+      nextButtons.forEach(function (el) {
+        el.addEventListener('click', self._navHandlers.next);
+      });
 
-      this._updateNavState(swiper, prevEl, nextEl);
+      this._updateNavState(swiper);
 
       var syncNav = function () {
-        self._updateNavState(swiper, prevEl, nextEl);
+        self._updateNavState(swiper);
       };
 
       swiper.on('slideChange', syncNav);
@@ -345,14 +354,7 @@ if (!customElements.get('nw-testimonial-video')) {
         self._applySlidesOffsetAfter(swiperInstance);
         swiperInstance.slideTo(0, 0, false);
         if (showArrows) {
-          var navRoot = self.querySelector('[data-nw-tv-nav]');
-          if (navRoot) {
-            self._updateNavState(
-              swiperInstance,
-              navRoot.querySelector('.nw-swiper-btn--prev'),
-              navRoot.querySelector('.nw-swiper-btn--next')
-            );
-          }
+          self._updateNavState(swiperInstance);
         }
         self._syncVideoLoop();
         self._handleActiveSlideVideo();
