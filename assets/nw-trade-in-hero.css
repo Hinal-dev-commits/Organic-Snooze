@@ -548,6 +548,7 @@
 
   .nw-trade-in-hero__container {
     flex-direction: column;
+    overflow-x: hidden;
   }
 
   .nw-trade-in-hero__content-col {
