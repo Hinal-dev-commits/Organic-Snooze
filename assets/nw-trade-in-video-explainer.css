@@ -105,6 +105,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 1;
+  transition: opacity 0.2s ease 0s;
 }
 
 .nw-trade-in-video-explainer__play > *,
@@ -146,14 +148,19 @@
   display: none !important;
 }
 
+.nw-trade-in-video-explainer__media.is-playing .nw-trade-in-video-explainer__play,
 .nw-trade-in-video-explainer__media.is-playing .nw-trade-in-video-explainer__pause {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  pointer-events: none;
+  transition: opacity 0.25s ease 0.15s;
 }
 
-.nw-trade-in-video-explainer__media.is-playing:hover .nw-trade-in-video-explainer__pause,
-.nw-trade-in-video-explainer__media.is-playing:focus-within .nw-trade-in-video-explainer__pause {
-  opacity: 1;
+@media screen and (min-width: 990px) and (hover: hover) and (pointer: fine) {
+  .nw-trade-in-video-explainer__media.is-playing:hover .nw-trade-in-video-explainer__pause {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.2s ease 0s;
+  }
 }
 
 .nw-trade-in-video-explainer__duration {
@@ -415,7 +422,4 @@
     width: 100%;
   }
 
-  .nw-trade-in-video-explainer__media.is-playing .nw-trade-in-video-explainer__pause {
-    opacity: 1;
-  }
 }

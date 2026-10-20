@@ -431,7 +431,7 @@
   padding: 0;
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease 0s;
 }
 
 .nw-trade-in-hero__control-icon {
@@ -480,6 +480,10 @@
   display: flex;
 }
 
+.nw-trade-in-hero__slide.is-playing .nw-trade-in-hero__video-toggle {
+  transition: opacity 0.25s ease 0.15s;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .nw-trade-in-hero__slide.is-playing .nw-trade-in-hero__video-toggle {
     opacity: 0;
@@ -490,6 +494,7 @@
   .nw-trade-in-hero__slide.is-playing .nw-trade-in-hero__media-inner:focus-within .nw-trade-in-hero__video-toggle {
     opacity: 1;
     pointer-events: auto;
+    transition: opacity 0.2s ease 0s;
   }
 }
 
@@ -673,6 +678,12 @@
 
   .nw-trade-in-hero__media-inner {
     border-radius: 24px;
+  }
+
+  .nw-trade-in-hero__slide.is-playing .nw-trade-in-hero__video-toggle {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease 0.15s;
   }
 
 }
