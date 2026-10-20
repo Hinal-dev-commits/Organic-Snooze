@@ -65,12 +65,6 @@ Renders the NW product card used across collection sliders and grids.
 
   assign card_price = card_product.price_min
   assign card_compare_at = card_product.compare_at_price_min
-  assign save_percent = 0
-
-  if card_compare_at > card_price and card_compare_at > 0
-    assign save_diff = card_compare_at | minus: card_price
-    assign save_percent = save_diff | times: 100.0 | divided_by: card_compare_at | round
-  endif
 
   assign seller_tag = card_product.metafields.custom.seller_tag.value | default: card_product.metafields.custom.seller_tag
   assign firmness_value = card_product.metafields.custom.firmness.value | default: card_product.metafields.custom.firmness
@@ -124,6 +118,25 @@ Renders the NW product card used across collection sliders and grids.
       {%- endif -%}
     </a>
 
+    {%- liquid
+      assign save_percent = 0
+      assign price_variant = card_product.selected_or_first_available_variant
+      assign compare_at_price = price_variant.compare_at_price
+      assign current_price = price_variant.price
+    -%}
+    
+    {%- capture nw_bundle_save_pct -%}
+      {%- render 'nw-bundle-save-percent', product: card_product, for_collection_card: true -%}
+    {%- endcapture -%}
+    {%- assign nw_bundle_save_pct = nw_bundle_save_pct | strip -%}
+    
+    {%- if nw_bundle_save_pct != blank -%}
+      {%- assign save_percent = nw_bundle_save_pct | plus: 0 -%}
+    {%- elsif compare_at_price > current_price and compare_at_price > 0 -%}
+      {%- assign savings_amount = compare_at_price | minus: current_price -%}
+      {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
+    {%- endif -%}
+    
     {%- if save_percent > 0 -%}
       <span class="nw-product-card__tag nw-product-card__tag--save">{{ 'nw.product_card.save_percent' | t: percent: save_percent }}</span>
     {%- endif -%}
