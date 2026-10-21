@@ -115,10 +115,19 @@
         "item_Cgpt9L": {
           "type": "item",
           "settings": {
-            "text": "100% ORGANIC MATERIALS",
+            "text": "100% Organic",
             "link": "",
             "use_custom_icon": false,
             "icon": "verified"
+          }
+        },
+        "item_crX9DQ": {
+          "type": "item",
+          "settings": {
+            "text": "HSA/FSA ELIGIBLE",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "sparkle"
           }
         },
         "item_PC6UUy": {
@@ -130,10 +139,19 @@
             "icon": "verified"
           }
         },
+        "item_6FCdCg": {
+          "type": "item",
+          "settings": {
+            "text": "FINANCE WITH AFFIRM",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "sparkle"
+          }
+        },
         "item_qkVXKc": {
           "type": "item",
           "settings": {
-            "text": "NON-TOXIC BUILDS",
+            "text": "100-NIGHT TRIAL",
             "link": "",
             "use_custom_icon": false,
             "icon": "verified"
@@ -145,13 +163,15 @@
             "text": "30-YEAR WARRANTY",
             "link": "",
             "use_custom_icon": false,
-            "icon": "verified"
+            "icon": "sparkle"
           }
         }
       },
       "block_order": [
         "item_Cgpt9L",
+        "item_crX9DQ",
         "item_PC6UUy",
+        "item_6FCdCg",
         "item_qkVXKc",
         "item_6RpLjB"
       ],
@@ -168,7 +188,7 @@
         "icon_size_desktop": 24,
         "icon_size_mobile": 16,
         "font_size_desktop": 18,
-        "font_size_mobile": 12,
+        "font_size_mobile": 15,
         "font_weight": 500,
         "text_transform": "uppercase",
         "letter_spacing": 0,
