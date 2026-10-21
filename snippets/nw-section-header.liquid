@@ -7,6 +7,7 @@ Renders the shared NW section header: optional stars, eyebrow, heading, and desc
 @param {string} [description] - Rich text description
 @param {number} [section_index] - Used to pick h1 vs h2
 @param {string} [tag] - Optional heading tag override
+@param {string} [heading_style_class] - Optional class on the heading element (visual style)
 @param {string} [heading_class] - Extra class on the heading wrapper
 @param {string} [heading_wrap_class] - Optional extra wrapper around the heading
 @param {string} [star_class] - Extra class on the stars row
@@ -34,10 +35,10 @@ Renders the shared NW section header: optional stars, eyebrow, heading, and desc
 {%- if heading != blank -%}
   {%- if heading_wrap_class != blank -%}
     <div class="{{ heading_wrap_class }}">
-      {% render 'nw-section-heading', text: heading, section_index: section_index, tag: tag, class: heading_class %}
+      {% render 'nw-section-heading', text: heading, section_index: section_index, tag: tag, heading_style_class: heading_style_class, class: heading_class %}
     </div>
   {%- else -%}
-    {% render 'nw-section-heading', text: heading, section_index: section_index, tag: tag, class: heading_class %}
+    {% render 'nw-section-heading', text: heading, section_index: section_index, tag: tag, heading_style_class: heading_style_class, class: heading_class %}
   {%- endif -%}
 {%- endif -%}
 
