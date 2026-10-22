@@ -237,7 +237,7 @@
           "type": "icon_text",
           "settings": {
             "style": "checklist",
-            "text": "Handcrafted in the USA",
+            "text": "Assembled in the USA",
             "use_custom_icon": true,
             "icon": "trial",
             "custom_icon": "shopify://shop_images/Icon-Handcrafted.png",
@@ -365,7 +365,7 @@
         "trust_badges_UF8dKt": {
           "type": "trust_badges",
           "settings": {
-            "item_1_text": "100-Night Risk-Free Trial",
+            "item_1_text": "100-Night Trial",
             "item_1_icon": "trial",
             "item_1_use_custom_icon": false,
             "item_2_text": "30-Year Warranty",
@@ -447,7 +447,7 @@
           "settings": {
             "heading": "Product Specifications",
             "icon": "none",
-            "content": "<ul><li>10\" handcrafted profile (±1\")</li><li>Cushion Firm feel (3/10 comfort scale)</li><li>Hand-tufted construction for durability without adhesives</li><li>Certified organic cotton & wool comfort layers</li><li>Certified organic latex for responsive support</li><li>8\" individually pocketed coil system with targeted support</li><li>Adjustable base compatible</li><li>Handcrafted in the USA using domestic and globally sourced materials</li></ul>",
+            "content": "<ul><li>10\" handcrafted profile (±1\")</li><li>Cushion Firm feel (3/10 comfort scale)</li><li>Hand-tufted construction for durability without adhesives</li><li>Certified organic cotton & wool comfort layers</li><li>Certified organic latex for responsive support</li><li>8\" individually pocketed coil system with targeted support</li><li>Adjustable base compatible</li><li>Assembled in the USA using domestic and globally sourced materials</li></ul>",
             "page": "",
             "margin_top": 40,
             "margin_bottom": 0,
@@ -473,7 +473,7 @@
           "settings": {
             "heading": "Warranty / Return Policy",
             "icon": "none",
-            "content": "<p><strong>30-year warranty</strong>: Built to last and backed by a 30-year limited warranty, including 20 years of non-prorated coverage. <a href=\"/pages/general-customer-education\" target=\"_blank\" title=\"General Customer Education\">View Warranty Info</a></p><p><strong>Comfort Guarantee, 100-Night Trial:</strong> Sleep on it in your own home for 100 nights. If it isn't the right fit, we'll help you make it right. (30-night break-in period required.) <a href=\"/pages/general-customer-education\" target=\"_blank\" title=\"General Customer Education\">View Warranty Info</a></p>",
+            "content": "<p><strong>30-year warranty</strong>: Built to last and backed by a 30-year limited warranty, including 20 years of non-prorated coverage. <a href=\"/pages/general-customer-education\" target=\"_blank\" title=\"General Customer Education\">View Warranty Info</a></p><p><strong>Comfort Guarantee, 100-Night Trial:</strong> Return it between nights 31–100 for a refund of your purchase price. A $199 pickup fee applies, waived if you choose store credit. <a href=\"/pages/general-customer-education\" target=\"_blank\" title=\"General Customer Education\">View Warranty Info</a></p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -923,7 +923,7 @@
         "item_9rEH9K": {
           "type": "item",
           "settings": {
-            "text": "MADE IN USA",
+            "text": "ASSEMBLED IN USA",
             "icon": "usamap",
             "link": ""
           }
@@ -935,22 +935,13 @@
             "icon": "warranty-2",
             "link": ""
           }
-        },
-        "item_66UMzf": {
-          "type": "item",
-          "settings": {
-            "text": "CERTIFIED COMFORT",
-            "icon": "verified",
-            "link": ""
-          }
         }
       },
       "block_order": [
         "item_yyWUzm",
         "item_KNFrKC",
         "item_9rEH9K",
-        "item_8b4VhW",
-        "item_66UMzf"
+        "item_8b4VhW"
       ],
       "name": "t:sections.nw-marquee-v2.name",
       "settings": {
