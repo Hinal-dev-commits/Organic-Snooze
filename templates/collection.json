@@ -176,6 +176,83 @@
         "padding_bottom_mobile": 48
       }
     },
+    "nw_benefits_v2_LCKAka": {
+      "type": "nw-benefits-v2",
+      "blocks": {
+        "benefit_FERej7": {
+          "type": "benefit",
+          "settings": {
+            "icon": "moneyback",
+            "use_custom_image": false,
+            "text": "100-Night Risk-Free Trial"
+          }
+        },
+        "benefit_fCkEyf": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "use_custom_image": false,
+            "text": "30-Year Warranty"
+          }
+        },
+        "benefit_xrerXA": {
+          "type": "benefit",
+          "settings": {
+            "icon": "financing",
+            "use_custom_image": false,
+            "text": "0% Interest financing options"
+          }
+        },
+        "benefit_XkPUEw": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "use_custom_image": false,
+            "text": "Free Shipping"
+          }
+        },
+        "logo_NVwYWR": {
+          "type": "logo",
+          "settings": {
+            "use_custom_image": true,
+            "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
+            "logo_type": "affirm",
+            "text": "Pay over time",
+            "link": "shopify://pages/payments"
+          }
+        },
+        "logo_7PtUNj": {
+          "type": "logo",
+          "settings": {
+            "use_custom_image": true,
+            "image": "shopify://shop_images/hsa-fsa-logo.png",
+            "logo_type": "hsa_fsa",
+            "text": "Use your benefits",
+            "link": "shopify://pages/hsa-fsa"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_FERej7",
+        "benefit_fCkEyf",
+        "benefit_xrerXA",
+        "benefit_XkPUEw",
+        "logo_NVwYWR",
+        "logo_7PtUNj"
+      ],
+      "name": "NW Benefits V2",
+      "settings": {
+        "bg_type": "image",
+        "bg_color": "#f4efe8",
+        "bg_gradient": "",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_overlay_color": "#f4efe8d6",
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
     "nw_marquee_NtFXix": {
       "type": "nw-marquee",
       "blocks": {
@@ -269,83 +346,6 @@
         "padding_bottom_desktop": 16,
         "padding_top_mobile": 14,
         "padding_bottom_mobile": 14
-      }
-    },
-    "nw_benefits_v2_LCKAka": {
-      "type": "nw-benefits-v2",
-      "blocks": {
-        "benefit_FERej7": {
-          "type": "benefit",
-          "settings": {
-            "icon": "moneyback",
-            "use_custom_image": false,
-            "text": "100-Night Risk-Free Trial"
-          }
-        },
-        "benefit_fCkEyf": {
-          "type": "benefit",
-          "settings": {
-            "icon": "shield",
-            "use_custom_image": false,
-            "text": "30-Year Warranty"
-          }
-        },
-        "benefit_xrerXA": {
-          "type": "benefit",
-          "settings": {
-            "icon": "financing",
-            "use_custom_image": false,
-            "text": "0% Interest financing options"
-          }
-        },
-        "benefit_XkPUEw": {
-          "type": "benefit",
-          "settings": {
-            "icon": "truck",
-            "use_custom_image": false,
-            "text": "Free Shipping"
-          }
-        },
-        "logo_NVwYWR": {
-          "type": "logo",
-          "settings": {
-            "use_custom_image": true,
-            "image": "shopify://shop_images/affirm_logo_BLK_1_1.png",
-            "logo_type": "affirm",
-            "text": "Pay over time",
-            "link": "shopify://pages/payments"
-          }
-        },
-        "logo_7PtUNj": {
-          "type": "logo",
-          "settings": {
-            "use_custom_image": true,
-            "image": "shopify://shop_images/hsa-fsa-logo.png",
-            "logo_type": "hsa_fsa",
-            "text": "Use your benefits",
-            "link": "shopify://pages/hsa-fsa"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_FERej7",
-        "benefit_fCkEyf",
-        "benefit_xrerXA",
-        "benefit_XkPUEw",
-        "logo_NVwYWR",
-        "logo_7PtUNj"
-      ],
-      "name": "NW Benefits V2",
-      "settings": {
-        "bg_type": "image",
-        "bg_color": "#f4efe8",
-        "bg_gradient": "",
-        "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_overlay_color": "#f4efe8d6",
-        "padding_top_desktop": 40,
-        "padding_bottom_desktop": 40,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
       }
     },
     "nw_testimonials_PFYhEM": {
@@ -1261,12 +1261,12 @@
         "less_label": "SEE LESS FAQ'S",
         "contact_heading": "Speak with Our Live Sleep Experts.",
         "show_call_btn": true,
-        "call_label": "CALL (443) 333-1213",
-        "call_link": "tel:+14433331213",
+        "call_label": "CALL LIVE AGENT",
+        "call_link": "tel:+17197516070",
         "call_style": "primary",
         "show_text_btn": true,
         "text_label": "TEXT US",
-        "text_link": "sms:+14433331213",
+        "text_link": "sms:+17197516070",
         "text_style": "outline",
         "show_quiz_btn": true,
         "quiz_label": "SLEEP QUIZ",
