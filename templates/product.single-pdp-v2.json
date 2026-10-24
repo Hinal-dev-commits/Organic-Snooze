@@ -31,6 +31,13 @@
             "margin_bottom_mobile": 14
           }
         },
+        "nw_ultimate_snooze_bundles_kit_product_block_gnUMrH": {
+          "type": "shopify://apps/nw-ultimate-snooze-bundles/blocks/kit-product-block/01a0e2cc-18cc-7f11-97f3-0e082ec14e7f",
+          "settings": {
+            "product": "{{section.settings.product}}",
+            "save_label": "Save [percentage]%"
+          }
+        },
         "description": {
           "type": "description",
           "settings": {
@@ -52,13 +59,6 @@
             "margin_bottom": 20,
             "margin_top_mobile": 0,
             "margin_bottom_mobile": 16
-          }
-        },
-        "nw_ultimate_snooze_bundles_kit_product_block_gnUMrH": {
-          "type": "shopify://apps/nw-ultimate-snooze-bundles/blocks/kit-product-block/01a0e2cc-18cc-7f11-97f3-0e082ec14e7f",
-          "settings": {
-            "product": "{{section.settings.product}}",
-            "save_label": "Save [percentage]"
           }
         },
         "nw_benifits_list_wknf63": {
@@ -282,9 +282,9 @@
       "block_order": [
         "rating_erHRUK",
         "title",
+        "nw_ultimate_snooze_bundles_kit_product_block_gnUMrH",
         "description",
         "price",
-        "nw_ultimate_snooze_bundles_kit_product_block_gnUMrH",
         "nw_benifits_list_wknf63",
         "variant_picker",
         "quantity_selector",
