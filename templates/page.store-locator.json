@@ -19,7 +19,6 @@
     },
     "nw_find_us_rmaBAe": {
       "type": "nw-find-us",
-      "name": "t:sections.nw-find-us.name",
       "blocks": {
         "location_KamKkw": {
           "type": "store",
@@ -30,6 +29,12 @@
             "state_code": "TX",
             "state_name": "Texas",
             "postal_code": "75032",
+            "phone": "",
+            "hours_text": "Open today until 7pm",
+            "website_url": "",
+            "website_label": "",
+            "directions_url": "",
+            "search_keywords": "",
             "lat": "32.9019601",
             "lng": "-96.4576431"
           }
@@ -43,6 +48,12 @@
             "state_code": "MO",
             "state_name": "Missouri",
             "postal_code": "63005",
+            "phone": "",
+            "hours_text": "Open today until 7pm",
+            "website_url": "",
+            "website_label": "",
+            "directions_url": "",
+            "search_keywords": "",
             "lat": "38.6691231",
             "lng": "-90.598683"
           }
@@ -56,6 +67,12 @@
             "state_code": "MI",
             "state_name": "Michigan",
             "postal_code": "48083",
+            "phone": "",
+            "hours_text": "Open today until 7pm",
+            "website_url": "",
+            "website_label": "",
+            "directions_url": "",
+            "search_keywords": "",
             "lat": "42.5635778",
             "lng": "-83.1384934"
           }
@@ -69,6 +86,12 @@
             "state_code": "CO",
             "state_name": "Colorado",
             "postal_code": "80525",
+            "phone": "",
+            "hours_text": "Open today until 7pm",
+            "website_url": "",
+            "website_label": "",
+            "directions_url": "",
+            "search_keywords": "",
             "lat": "40.5507498",
             "lng": "-105.078732"
           }
@@ -82,6 +105,12 @@
             "state_code": "CO",
             "state_name": "Colorado",
             "postal_code": "81007",
+            "phone": "",
+            "hours_text": "Open today until 7pm",
+            "website_url": "",
+            "website_label": "",
+            "directions_url": "",
+            "search_keywords": "",
             "lat": "38.326599",
             "lng": "-104.6995719"
           }
@@ -94,6 +123,7 @@
         "location_RNXBAG",
         "location_CCVRqj"
       ],
+      "name": "t:sections.nw-find-us.name",
       "settings": {
         "eyebrow": "Find Us In Person",
         "heading": "Find A Store Near You",
@@ -167,14 +197,19 @@
         "button_primary_text": "Shop The Mattress",
         "button_primary_link": "shopify://collections/mattress",
         "show_button_secondary": true,
-        "button_secondary_text": "Call (443) 333-1213",
-        "button_secondary_link": "tel:443333-1213",
+        "button_secondary_text": "Call Live Agent",
+        "button_secondary_link": "tel:+17197516070",
         "heading_color": "#2e2a26",
         "description_color": "#6f655c",
         "button_primary_bg": "#c68b5f",
         "button_primary_text_color": "#ffffff",
         "button_outline_border": "#6b3d1f",
         "button_outline_text_color": "#6a3d1e",
+        "button_primary_bg_hover": "#b57d57",
+        "button_primary_text_color_hover": "#ffffff",
+        "button_outline_bg_hover": "#6b3d1f",
+        "button_outline_border_hover": "#6b3d1f",
+        "button_outline_text_color_hover": "#ffffff",
         "bg_type": "color",
         "bg_color": "#faf6f1",
         "bg_gradient": "",

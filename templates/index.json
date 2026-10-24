@@ -19,7 +19,7 @@
             "use_custom_icon": true,
             "icon": "moneyback",
             "custom_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
-            "text": "<p>100-Night Risk-Free Trial</p>"
+            "text": "<p>100-Night Trial</p>"
           }
         },
         "trust_badge_frbj7z": {
@@ -57,8 +57,8 @@
           "settings": {
             "show_icon": true,
             "icon_type": "none",
-            "promo_link": "#",
-            "promo_link_open_new_tab": false,
+            "promo_link": "shopify://collections",
+            "promo_link_open_new_tab": true,
             "promo_title": "<p>RECOVERY DAY&nbsp;</p>",
             "status_text": "<p>LIVE</p>",
             "promo_subtext": "<p>FREE GIFT: Get 2 FREE pillows with any mattress order&nbsp;</p><p>Add orders to cart to unlock special discounts</p>",
@@ -115,10 +115,19 @@
         "item_Cgpt9L": {
           "type": "item",
           "settings": {
-            "text": "100% ORGANIC MATERIALS",
+            "text": "100% Organic",
             "link": "",
             "use_custom_icon": false,
             "icon": "verified"
+          }
+        },
+        "item_crX9DQ": {
+          "type": "item",
+          "settings": {
+            "text": "HSA/FSA ELIGIBLE",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "sparkle"
           }
         },
         "item_PC6UUy": {
@@ -130,10 +139,19 @@
             "icon": "verified"
           }
         },
+        "item_6FCdCg": {
+          "type": "item",
+          "settings": {
+            "text": "FINANCE WITH AFFIRM",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "sparkle"
+          }
+        },
         "item_qkVXKc": {
           "type": "item",
           "settings": {
-            "text": "NON-TOXIC BUILDS",
+            "text": "100-NIGHT TRIAL",
             "link": "",
             "use_custom_icon": false,
             "icon": "verified"
@@ -145,13 +163,15 @@
             "text": "30-YEAR WARRANTY",
             "link": "",
             "use_custom_icon": false,
-            "icon": "verified"
+            "icon": "sparkle"
           }
         }
       },
       "block_order": [
         "item_Cgpt9L",
+        "item_crX9DQ",
         "item_PC6UUy",
+        "item_6FCdCg",
         "item_qkVXKc",
         "item_6RpLjB"
       ],
@@ -168,7 +188,7 @@
         "icon_size_desktop": 24,
         "icon_size_mobile": 16,
         "font_size_desktop": 18,
-        "font_size_mobile": 12,
+        "font_size_mobile": 15,
         "font_weight": 500,
         "text_transform": "uppercase",
         "letter_spacing": 0,
@@ -249,19 +269,19 @@
             "quote": "<p>We spend nearly one-third of our lives in bed, so I helped create Ultimate Snooze with certified organic materials because recovery starts with a cleaner, non-toxic sleep environment.</p>",
             "author_name": "<p>Gary Brecka</p>",
             "show_verified": true,
-            "author_title": "<p>Longevity Expert & Co-founder of The Ultimate Human</p>",
+            "author_title": "<p>Longevity Expert & Co-founder of The Ultimate Snooze</p>",
             "author_image": "shopify://shop_images/auth.png",
             "show_promo": true,
-            "promo_link": "#",
+            "promo_link": "https://theultimatesnooze.com/collections",
             "promo_title": "<p>RECOVERY DAY SALE</p>",
             "status_text": "<p>Live</p>",
             "promo_subtext": "<p>FREE GIFT: Get 2 FREE pillows with any mattress order&nbsp;| Add orders to cart to unlock special discounts</p>",
             "countdown_label": "<p>Event Ending In</p>",
             "countdown_end_date": "2026-10-23 23:59:59",
-            "hide_after_timer_end": false,
+            "hide_after_timer_end": true,
             "badge_1_icon": "moneyback",
             "badge_1_custom_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
-            "badge_1_text": "<p>100-Night Risk-Free Trial</p>",
+            "badge_1_text": "<p>100-Night Trial</p>",
             "badge_2_icon": "truck",
             "badge_2_custom_icon": "shopify://shop_images/truck.svg",
             "badge_2_text": "<p>Free Shipping</p>",
@@ -504,7 +524,7 @@
           "settings": {
             "rating": 5,
             "quote": "<p>“I am beyond impressed with this mattress. It’s the perfect mix of comfort and support, and I’ve genuinely been sleeping better since we got it. The quality feels incredible, it stays cool at night, and waking up without aches has been a game changer.”</p>",
-            "author": "Chloe",
+            "author": "Leah S.",
             "verified": true,
             "verified_text": "Verified"
           }
@@ -513,7 +533,7 @@
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "quote": "<p>“Incredible mattress I want to get more!”</p>",
+            "quote": "<p>“Incredible mattress!”</p>",
             "author": "Kristin McGee",
             "verified": true,
             "verified_text": "Verified"
@@ -982,7 +1002,7 @@
         "text_color": "",
         "name": "Gary Brecka",
         "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "role": "Longevity Expert & Co-founder of The Ultimate Snooze",
         "quote": "<p>\"I spent years using bloodwork and biomarkers in the life insurance industry to predict who was most likely to die early. That experience led me to dedicate my career to helping people live healthier, longer lives through The Ultimate Human.</p><p>While reducing unnecessary toxic exposure in my own life, I realized I had overlooked the one place we spend nearly one third of our lives, &nbsp;my mattress. I couldn't find a truly organic mattress that aligned with my philosophy on health and recovery, so I partnered with mattress expert Matt Smith to build one.\"</p><p><strong>We built Ultimate Snooze around one simple belief: better sleep creates a better life.</strong></p>",
         "media_type_desktop": "image",
         "image": "shopify://shop_images/hwe.jpg",
@@ -1265,11 +1285,11 @@
         "contact_heading": "Speak With Our Live Sleep Experts.",
         "show_call_btn": true,
         "call_label": "CALL (719) 751-6070",
-        "call_link": "tel: 1+7197516070",
+        "call_link": "tel:+17197516070",
         "call_style": "primary",
         "show_text_btn": true,
         "text_label": "TEXT US",
-        "text_link": "sms: 1+7197516070",
+        "text_link": "sms:+17197516070",
         "text_style": "outline",
         "show_quiz_btn": true,
         "quiz_label": "SLEEP QUIZ",

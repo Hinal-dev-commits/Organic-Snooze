@@ -701,7 +701,7 @@
         "image_position_mobile": "top",
         "show_highlight": true,
         "highlight_title": "Toppers, Bedding & Bases",
-        "highlight_text": "<p>Mattress toppers follow the same trial as mattresses and a 3-year warranty. Sheets, pillows, and protectors are returnable within 30 days, free if unopened, or with a 20% restocking fee if opened. Adjustable bases and frames are final sale (non-returnable), but they're backed by a 20-year warranty.</p>",
+        "highlight_text": "<p>Mattress toppers follow the same trial as mattresses and a 3-year warranty. Sheets, pillows, and protectors are returnable within 30 days, free if unopened, or with a 20% restocking fee if opened. Adjustable bases and frames are final sale (non-returnable), but they're backed by a varied warranty (1.0 - 10 years) (3.0 & 5.0 20-year).</p>",
         "show_button": true,
         "button_text": "START A RETURN OR EXCHANGE",
         "button_link": "shopify://pages/returns-exchanges",
@@ -1025,7 +1025,7 @@
         "collection_YqhnK7": {
           "type": "collection",
           "settings": {
-            "collection": "bundles-ultimate-sleep-optimization-system",
+            "collection": "bundle",
             "custom_title": "Bundle & Save",
             "custom_image": "shopify://shop_images/Pure-BTX4-bundle.png",
             "custom_link": ""
@@ -1113,6 +1113,7 @@
       "blocks": {
         "faq_item_WGfmDX": {
           "type": "faq_item",
+          "disabled": true,
           "settings": {
             "question": "Do I really have to wait 30 nights before I can return it?",
             "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
@@ -1120,6 +1121,7 @@
         },
         "faq_item_nC87iE": {
           "type": "faq_item",
+          "disabled": true,
           "settings": {
             "question": "Is the return actually free?",
             "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
@@ -1127,6 +1129,7 @@
         },
         "faq_item_zXF3Lf": {
           "type": "faq_item",
+          "disabled": true,
           "settings": {
             "question": "What makes the Ultimate Snooze different from other organic mattresses?",
             "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
@@ -1134,6 +1137,7 @@
         },
         "faq_item_iWNDG8": {
           "type": "faq_item",
+          "disabled": true,
           "settings": {
             "question": "What does the 30-year warranty cover?",
             "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
@@ -1141,6 +1145,7 @@
         },
         "faq_item_6hfCAD": {
           "type": "faq_item",
+          "disabled": true,
           "settings": {
             "question": "What isn't covered by the warranty?",
             "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
@@ -1148,6 +1153,7 @@
         },
         "faq_item_UNfGA9": {
           "type": "faq_item",
+          "disabled": true,
           "settings": {
             "question": "If I exchange, does my trial start over?",
             "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
@@ -1155,6 +1161,7 @@
         },
         "faq_item_6XfxU8": {
           "type": "faq_item",
+          "disabled": true,
           "settings": {
             "question": "How do I make a warranty claim?",
             "answer": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
@@ -1191,12 +1198,12 @@
         "less_label": "SEE LESS FAQ'S",
         "contact_heading": "Speak with Our Live Sleep Experts.",
         "show_call_btn": true,
-        "call_label": "CALL (443) 333-1213",
-        "call_link": "tel:+14433331213",
+        "call_label": "CALL LIVE AGENT",
+        "call_link": "tel:+17197516070",
         "call_style": "primary",
         "show_text_btn": true,
         "text_label": "TEXT US",
-        "text_link": "sms:+14433331213",
+        "text_link": "sms:+17197516070",
         "text_style": "outline",
         "show_quiz_btn": true,
         "quiz_label": "SLEEP QUIZ",

@@ -197,6 +197,7 @@
         },
         "icon_text_3FhWzM": {
           "type": "icon_text",
+          "disabled": true,
           "settings": {
             "style": "checklist",
             "text": "Handcrafted in the USA",
@@ -245,7 +246,7 @@
             "quantity_option_name": "Select Quantity",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
-            "option_position_order": "Size, Firmness",
+            "option_position_order": "Firmness, Size",
             "option_1_values_order": "",
             "option_2_values_order": "",
             "margin_top": 32,
@@ -329,10 +330,10 @@
         "trust_badges_UF8dKt": {
           "type": "trust_badges",
           "settings": {
-            "item_1_text": "100-Night Risk-Free Trial",
+            "item_1_text": "100-Night Trial",
             "item_1_icon": "trial",
             "item_1_use_custom_icon": false,
-            "item_2_text": "10-Year Warranty",
+            "item_2_text": "3-Year Warranty",
             "item_2_icon": "warranty-check",
             "item_2_use_custom_icon": false,
             "icon_color": "#cc926a",
@@ -438,7 +439,7 @@
           "settings": {
             "heading": "Warranty / Return Policy",
             "icon": "none",
-            "content": "<p><strong>10-year warranty</strong>: Built to last and backed by a 10-year limited warranty. <a href=\"/pages/organic-mattress-warranty\" title=\"Mattress Warranty\">View Warranty Info</a></p><p><strong>Comfort Guarantee, </strong>30 Day Return Window <a href=\"/pages/returns-exchanges\" target=\"_blank\" title=\"Returns & 100-Night trial\">View Trial Info</a></p>",
+            "content": "<p><strong>3-year warranty</strong>: Built to last and backed by a limited warranty.&nbsp;</p><p>30 Day Return Window <a href=\"/pages/shipping-returns-policy\" target=\"_blank\" title=\"Shipping & Returns Policy\">View More</a></p><p><strong>Comfort Guarantee, 100-Night Trial:</strong> Return it between nights 31–100 for a refund of your purchase price. A $199 pickup fee may apply, waived if you choose store credit. <a href=\"/pages/general-customer-education\" target=\"_blank\" title=\"General Customer Education\">View Warranty Info</a></p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -500,7 +501,7 @@
             "item_3_icon": "award",
             "item_3_use_custom_icon": true,
             "item_3_custom_icon": "shopify://shop_images/image_1254_Vectorized_2.svg",
-            "item_4_text": "10-Year Warranty",
+            "item_4_text": "3-Year Warranty",
             "item_4_icon": "warranty-check",
             "item_4_use_custom_icon": true,
             "item_4_custom_icon": "shopify://shop_images/image_1254_Vectorized_3.svg",
@@ -519,7 +520,7 @@
             "quote": "<p>\"We built Ultimate Snooze around human recovery. Every material, every layer, and everything we leave out was chosen with one goal: helping you wake up better than you went to bed.\"</p>",
             "avatar": "shopify://shop_images/auth-2.png",
             "name": "Gary Brecka",
-            "role": "Longevity Expert & Founder of The Ultimate Human",
+            "role": "Longevity Expert & Co-Founder of The Ultimate Snooze",
             "show_verified": true,
             "enable_marquee": true,
             "marquee_heading": "FIND GARY ON",
@@ -886,7 +887,7 @@
         "item_9rEH9K": {
           "type": "item",
           "settings": {
-            "text": "MADE IN USA",
+            "text": "USA ASSEMBLED",
             "icon": "usamap",
             "link": ""
           }
@@ -894,7 +895,7 @@
         "item_8b4VhW": {
           "type": "item",
           "settings": {
-            "text": "10-YEAR WARRANTY",
+            "text": "3-YEAR WARRANTY",
             "icon": "warranty-2",
             "link": ""
           }
@@ -917,7 +918,7 @@
       ],
       "name": "t:sections.nw-marquee-v2.name",
       "settings": {
-        "enable_desktop_marquee": false,
+        "enable_desktop_marquee": true,
         "direction": "right_to_left",
         "speed": 85,
         "pause_on_hover": true,
@@ -983,7 +984,7 @@
           "type": "faq_item",
           "settings": {
             "question": "How long does the warranty last?",
-            "answer": "<p>10 year limited warranty.&nbsp;</p>"
+            "answer": "<p>3-year limited warranty.&nbsp;</p>"
           }
         }
       },
@@ -1174,7 +1175,7 @@
         "quote": "<p><em>\"I spent years helping people optimize their health, yet I overlooked the one place we spend nearly one-third of our lives. When I started testing for toxic load, I realized my mattress wasn't supporting the life I was trying to build. I couldn't find one that met my standards, so we created it.\"</em></p>",
         "name": "Gary Brecka",
         "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "role": "Longevity Expert & Co-Founder of The Ultimate Snooze",
         "show_footer_content": true,
         "footer_heading": "Be intentional about where you spend the most time.",
         "footer_description": "<p><strong>You spend nearly one-third of your life in bed. Choose materials you'll trust for every hour.</strong></p>",
@@ -1325,30 +1326,30 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_testimonials_BU9rMk": {
+    "nw_testimonials_tm8kTn": {
       "type": "nw-testimonials",
       "blocks": {
-        "testimonial_PwYfRk": {
+        "testimonial_JTAxCm": {
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "quote": "<p>“Sitting all day wrecked my shoulders and neck. I didn’t realize my mattress was making it worse. Now I wake up without that pinched feeling and I’m not dragging myself through the day.”</p>",
+            "quote": "<p>“First night was truly an amazing night! Been sleeping on a 20 year old mattress. And I definitely would recommend this to anyone looking for a new mattress”</p>",
             "author": "Marcello Delle Grotti",
             "verified": true,
             "verified_text": "Verified Customer"
           }
         },
-        "testimonial_qpGpdz": {
+        "testimonial_rFENtt": {
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "quote": "<p>“My breathing feels noticeably easier at night. The pillow holds my neck in place without collapsing, and I wake up feeling more rested and clear-headed.”</p>",
-            "author": "Phillip Page",
+            "quote": "<p>\"It's really hard to find a good organic mattress. The Ultimate Snooze is perfect for me and my husband!</p>",
+            "author": "Karen V.",
             "verified": true,
             "verified_text": "Verified Customer"
           }
         },
-        "testimonial_D33iiT": {
+        "testimonial_axTWTR": {
           "type": "testimonial",
           "settings": {
             "rating": 5,
@@ -1360,9 +1361,9 @@
         }
       },
       "block_order": [
-        "testimonial_PwYfRk",
-        "testimonial_qpGpdz",
-        "testimonial_D33iiT"
+        "testimonial_JTAxCm",
+        "testimonial_rFENtt",
+        "testimonial_axTWTR"
       ],
       "name": "NW Testimonials",
       "settings": {
@@ -1501,12 +1502,13 @@
         },
         "table_row_zkVRz4": {
           "type": "table_row",
+          "disabled": true,
           "settings": {
             "feature_name": "Durability",
             "col1_use_custom_icon": false,
             "col1_icon": "verified-3",
             "col1_icon_color": "#878735",
-            "col1_text": "Up to 30 years",
+            "col1_text": "Up to 10 years",
             "col2_use_custom_icon": false,
             "col2_icon": "cross",
             "col2_icon_color": "#b61919",
@@ -1586,14 +1588,14 @@
       "settings": {
         "badge_image": "shopify://shop_images/Vector_3.svg",
         "heading": "Try It for 100 Nights.&nbsp;",
-        "description": "<p>We know buying a mattress online is a big decision. That's why we give you 100-nights to decide if it's the right fit for your body. If not, we'll pick it up for a full refund. Backed by a 1-year warranty.</p>",
+        "description": "<p>We know buying a mattress online is a big decision. That's why we give you 100-nights to decide if it's the right fit for your body. If not, we'll pick it up. Backed by a 3-year limited warranty.</p>",
         "cta_heading": "Questions? Talk to a Sleep Expert",
         "show_primary_button": true,
         "primary_button_text": "Call (719) 751-6070",
-        "primary_button_link": "(719) 751-6070",
+        "primary_button_link": "tel:+17197516070",
         "show_text_button": true,
         "text_button_label": "Text Us",
-        "text_button_link": "(719) 751-6070",
+        "text_button_link": "sms:+17197516070",
         "show_quiz_button": true,
         "quiz_button_label": "Sleep Quiz",
         "quiz_button_link": "shopify://pages/mattress-finder",
@@ -1696,7 +1698,7 @@
     "nw_benefits_J9TVzc",
     "nw_founder_story_RhHRer",
     "nw_recovery_fNhVry",
-    "nw_testimonials_BU9rMk",
+    "nw_testimonials_tm8kTn",
     "nw_organic_gcGNTr",
     "nw_guarantee_v2_fjedEd",
     "nw_product_list_Ej8ReJ",
