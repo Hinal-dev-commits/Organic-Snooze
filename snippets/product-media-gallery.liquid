@@ -76,7 +76,9 @@
       {{ 'accessibility.skip_to_product_info' | t }}
     </a>
     <nw-product-media class="nw-product-media__viewport">
-    {% render 'nw-product-media-tags', product: product %}
+    <div id="NwMediaTags-{{ section.id }}">
+      {% render 'nw-product-media-tags', product: product %}
+    </div>
     <ul
       id="Slider-Gallery-{{ section.id }}"
       class="product__media-list contains-media grid grid--peek list-unstyled slider slider--mobile"
