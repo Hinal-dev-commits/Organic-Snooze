@@ -156,7 +156,7 @@
           "settings": {
             "heading": "Product Specifications",
             "icon": "none",
-            "content": "<ul><li>Sizes: Small (33\" x 28\") for dogs under 10 lbs, Medium (43\" x 35\") under 30 lbs, Large (55\" x 43\") over 30 lbs</li><li>Recovery-first orthopedic construction built for joint support</li><li>Natural coconut coir core, hemp support layer, wool wrap, organic cotton cover</li><li>Breathable and temperature-regulating, no synthetic foams</li><li>Removable, washable organic cotton cover</li><li>Bed frame not included</li></ul>",
+            "content": "<ul><li>Sizes: Small for dogs under 10 lbs, Medium for under 30 lbs, Large for over 30 lbs</li><li>Recovery-first orthopedic construction built for joint support</li><li>Natural coconut coir core, hemp support layer, wool wrap, organic cotton cover</li><li>Breathable and temperature-regulating, no synthetic foams</li><li>Removable, washable organic cotton cover</li><li>Bed frame not included</li></ul>",
             "page": "",
             "margin_top": 40,
             "margin_bottom": 0,
@@ -478,6 +478,111 @@
         "bg_gradient": "",
         "text_color": "#432818",
         "icon_color": "#432818"
+      }
+    },
+    "nw_faq_VygLpj": {
+      "type": "nw-faq",
+      "blocks": {
+        "faq_item_hb8tnf": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the K-Snooze Dog Bed good for dogs with joint pain?",
+            "answer": "<p>Yes. The firm coconut coir core gives orthopedic support that takes pressure off the joints, which can help dogs with arthritis or hip issues. The hemp and wool layers add breathability and comfort for restful, recovery-focused sleep.</p>"
+          }
+        },
+        "faq_item_rnJYwh": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What sizes is it available in?",
+            "answer": "<p>Three sizes: Small (33\" x 28\") for dogs under 10 lbs, Medium (43\" x 35\") for dogs under 30 lbs, and Large (55\" x 43\") for dogs over 30 lbs.</p>"
+          }
+        },
+        "faq_item_rG8phx": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is the cover removable and washable?",
+            "answer": "<p>Yes. It comes with a zippable organic cotton cover that's fully removable and machine washable, so it's easy to keep fresh.</p>"
+          }
+        },
+        "faq_item_qwBaqn": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is it waterproof or water-resistant?",
+            "answer": "<p>The cover is water resistant and fully removable via zipper for easy washing.</p>"
+          }
+        },
+        "faq_item_QbMgNb": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What organic materials are used?",
+            "answer": "<p>Natural coconut coir, hemp, and wool, finished with an organic cotton cover. The same clean philosophy behind every Ultimate Snooze product, free from synthetic foams, chemical treatments, and artificial materials.</p>"
+          }
+        },
+        "faq_item_pV4KRW": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why choose an organic dog bed over a conventional one?",
+            "answer": "<p>Conventional dog beds often use polyurethane foam, synthetic fibers, and chemical flame retardants. Dogs sleep a lot and stay low to the ground, which makes off-gassing matter more, not less. The K-Snooze uses only natural coconut, hemp, and wool, so your dog rests on clean materials.</p>"
+          }
+        },
+        "faq_item_EkJ8ed": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does it come with a return policy?",
+            "answer": "<p>Yes. It may be returned within 30 days of delivery. Unopened and sealed carries no restocking fee (you pay return shipping). Opened or lightly used carries a 20% restocking fee. Stained or damaged items are not eligible.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_hb8tnf",
+        "faq_item_rnJYwh",
+        "faq_item_rG8phx",
+        "faq_item_qwBaqn",
+        "faq_item_QbMgNb",
+        "faq_item_pV4KRW",
+        "faq_item_EkJ8ed"
+      ],
+      "name": "NW FAQ",
+      "settings": {
+        "show_rating": false,
+        "star_rating": 5,
+        "star_color": "#e57b1e",
+        "star_color_inactive": "#d1d5db",
+        "eyebrow": "",
+        "heading": "Frequently Asked Questions",
+        "subheading": "",
+        "heading_color": "",
+        "description_color": "",
+        "eyebrow_color": "",
+        "text_color": "",
+        "show_search": false,
+        "search_placeholder": "What can we help with?",
+        "open_first_faq": false,
+        "initial_faq_count": 4,
+        "more_label": "",
+        "less_label": "SEE LESS FAQ'S",
+        "contact_heading": "",
+        "show_call_btn": false,
+        "call_label": "CALL (443) 333-1213",
+        "call_link": "tel:+14433331213",
+        "call_style": "primary",
+        "show_text_btn": false,
+        "text_label": "TEXT US",
+        "text_link": "sms:+14433331213",
+        "text_style": "outline",
+        "show_quiz_btn": false,
+        "quiz_label": "SLEEP QUIZ",
+        "quiz_link": "shopify://pages/quiz",
+        "quiz_style": "outline",
+        "bg_type": "image",
+        "bg_color": "#ffffff",
+        "bg_image": "shopify://shop_images/layers-bg-image.png",
+        "bg_image_opacity": 16,
+        "bg_gradient": "",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
       }
     },
     "nw_layer_v3_pyChRx": {
@@ -881,111 +986,6 @@
         "pagination_color": "#613916",
         "bg_type": "none",
         "bg_color": "#fffcf0",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_faq_VygLpj": {
-      "type": "nw-faq",
-      "blocks": {
-        "faq_item_hb8tnf": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Is the K-Snooze Dog Bed good for dogs with joint pain?",
-            "answer": "<p>Yes. The firm coconut coir core gives orthopedic support that takes pressure off the joints, which can help dogs with arthritis or hip issues. The hemp and wool layers add breathability and comfort for restful, recovery-focused sleep.</p>"
-          }
-        },
-        "faq_item_rnJYwh": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What sizes is it available in?",
-            "answer": "<p>Three sizes: Small (33\" x 28\") for dogs under 10 lbs, Medium (43\" x 35\") for dogs under 30 lbs, and Large (55\" x 43\") for dogs over 30 lbs.</p>"
-          }
-        },
-        "faq_item_rG8phx": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Is the cover removable and washable?",
-            "answer": "<p>Yes. It comes with a zippable organic cotton cover that's fully removable and machine washable, so it's easy to keep fresh.</p>"
-          }
-        },
-        "faq_item_qwBaqn": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Is it waterproof or water-resistant?",
-            "answer": "<p>The cover is water resistant and fully removable via zipper for easy washing.</p>"
-          }
-        },
-        "faq_item_QbMgNb": {
-          "type": "faq_item",
-          "settings": {
-            "question": "What organic materials are used?",
-            "answer": "<p>Natural coconut coir, hemp, and wool, finished with an organic cotton cover. The same clean philosophy behind every Ultimate Snooze product, free from synthetic foams, chemical treatments, and artificial materials.</p>"
-          }
-        },
-        "faq_item_pV4KRW": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Why choose an organic dog bed over a conventional one?",
-            "answer": "<p>Conventional dog beds often use polyurethane foam, synthetic fibers, and chemical flame retardants. Dogs sleep a lot and stay low to the ground, which makes off-gassing matter more, not less. The K-Snooze uses only natural coconut, hemp, and wool, so your dog rests on clean materials.</p>"
-          }
-        },
-        "faq_item_EkJ8ed": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Does it come with a return policy?",
-            "answer": "<p>Yes. It may be returned within 30 days of delivery. Unopened and sealed carries no restocking fee (you pay return shipping). Opened or lightly used carries a 20% restocking fee. Stained or damaged items are not eligible.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq_item_hb8tnf",
-        "faq_item_rnJYwh",
-        "faq_item_rG8phx",
-        "faq_item_qwBaqn",
-        "faq_item_QbMgNb",
-        "faq_item_pV4KRW",
-        "faq_item_EkJ8ed"
-      ],
-      "name": "NW FAQ",
-      "settings": {
-        "show_rating": false,
-        "star_rating": 5,
-        "star_color": "#e57b1e",
-        "star_color_inactive": "#d1d5db",
-        "eyebrow": "",
-        "heading": "Frequently Asked Questions",
-        "subheading": "",
-        "heading_color": "",
-        "description_color": "",
-        "eyebrow_color": "",
-        "text_color": "",
-        "show_search": false,
-        "search_placeholder": "What can we help with?",
-        "open_first_faq": false,
-        "initial_faq_count": 4,
-        "more_label": "",
-        "less_label": "SEE LESS FAQ'S",
-        "contact_heading": "",
-        "show_call_btn": false,
-        "call_label": "CALL (443) 333-1213",
-        "call_link": "tel:+14433331213",
-        "call_style": "primary",
-        "show_text_btn": false,
-        "text_label": "TEXT US",
-        "text_link": "sms:+14433331213",
-        "text_style": "outline",
-        "show_quiz_btn": false,
-        "quiz_label": "SLEEP QUIZ",
-        "quiz_link": "shopify://pages/quiz",
-        "quiz_style": "outline",
-        "bg_type": "image",
-        "bg_color": "#ffffff",
-        "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_image_opacity": 16,
         "bg_gradient": "",
         "padding_top_desktop": 80,
         "padding_bottom_desktop": 80,
