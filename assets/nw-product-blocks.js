@@ -263,11 +263,46 @@ class NwProductVideos extends HTMLElement {
     if (this.dataset.bound === 'true') return;
     this.dataset.bound = 'true';
     this._resizeObserver = null;
+    this._fixVideoPosterAccessibility();
     this._initSwiper();
     this._bindVideoPlay();
   }
 
+  _fixVideoPosterAccessibility() {
+    const apply = () => {
+      this.querySelectorAll('.nw-product-videos__media').forEach((media) => {
+        const captionEl = media.querySelector('.nw-product-videos__overlay');
+        const caption = captionEl?.textContent?.trim();
+        const label = media.dataset.videoAlt?.trim() || caption || 'Customer video';
+        const video = media.querySelector('video.nw-product-videos__video');
+
+        if (video) {
+          video.setAttribute('aria-label', label);
+          video.querySelectorAll('img').forEach((img) => {
+            img.setAttribute('alt', label);
+          });
+        }
+
+        media.querySelectorAll('.nw-product-videos__poster').forEach((img) => {
+          img.setAttribute('alt', label);
+        });
+      });
+    };
+
+    apply();
+
+    if (typeof MutationObserver === 'undefined') return;
+
+    this._videoA11yObserver?.disconnect();
+    this._videoA11yObserver = new MutationObserver(apply);
+    this.querySelectorAll('[data-nw-product-video-media]').forEach((media) => {
+      this._videoA11yObserver.observe(media, { childList: true, subtree: true, attributes: true });
+    });
+  }
+
   disconnectedCallback() {
+    this._videoA11yObserver?.disconnect();
+    this._videoA11yObserver = null;
     this._resizeObserver?.disconnect();
     this._resizeObserver = null;
     const sliderEl = this.querySelector('.nw-product-videos__swiper');

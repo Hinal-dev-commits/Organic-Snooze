@@ -90,7 +90,8 @@
           loading: nw_image_loading,
           fetchpriority: nw_fetchpriority,
           sizes: sizes,
-          widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+          widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946',
+          alt: media.alt | default: 'Product image' | escape
       }}
     </div>
     <button
@@ -132,7 +133,8 @@
           loading: nw_image_loading,
           fetchpriority: nw_fetchpriority,
           sizes: sizes,
-          widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
+          widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946',
+          alt: media.alt | default: 'Product image' | escape
       }}
     </button>
     <template>
@@ -141,14 +143,14 @@
           when 'external_video'
             assign video_class = 'js-' | append: media.host
             if media.host == 'youtube'
-              echo media | external_video_url: autoplay: true, loop: loop, playlist: media.external_id | external_video_tag: class: video_class, loading: 'lazy'
+              echo media | external_video_url: autoplay: true, loop: loop, playlist: media.external_id | external_video_tag: class: video_class, loading: 'lazy', alt: media.alt | default: 'Product image' | escape
             else
-              echo media | external_video_url: autoplay: true, loop: loop | external_video_tag: class: video_class, loading: 'lazy'
+              echo media | external_video_url: autoplay: true, loop: loop | external_video_tag: class: video_class, loading: 'lazy', alt: media.alt | default: 'Product image' | escape
             endif
           when 'video'
-            echo media | media_tag: image_size: '2048x', autoplay: true, loop: loop, controls: true, preload: 'none'
+            echo media | media_tag: image_size: '2048x', autoplay: true, loop: loop, controls: true, preload: 'none', alt: media.alt | default: 'Product image' | escape
           when 'model'
-            echo media | media_tag: image_size: '2048x', toggleable: true
+            echo media | media_tag: image_size: '2048x', toggleable: true, alt: media.alt | default: 'Product image' | escape
         endcase
       -%}
     </template>

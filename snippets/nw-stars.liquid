@@ -20,6 +20,7 @@ Renders a 5-star rating row using the shared NW star icon.
 -%}
 <div
   class="nw-stars{% if class != blank %} {{ class }}{% endif %}"
+  role="img"
   aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: star_count, rating_max: 5 }}"
 >
   {%- for i in (1..5) -%}

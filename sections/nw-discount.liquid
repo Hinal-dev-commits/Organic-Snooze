@@ -45,7 +45,7 @@
                     loading="lazy"
                   >
                 {%- else -%}
-                  <div class="nw-discount__logo-lockup" aria-label="Organic Snooze">
+                  <div class="nw-discount__logo-lockup" role="img" aria-label="Organic Snooze">
                     <span class="nw-discount__logo-text">ORGANIC</span>
                     <span class="nw-discount__logo-icon">
                       <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -147,7 +147,7 @@
 
           {%- if section.settings.show_rating -%}
             <div class="nw-discount__reviews">
-              <div class="nw-discount__stars" aria-label="{{ section.settings.rating_stars | default: 5 }} out of 5 stars">
+              <div class="nw-discount__stars" role="img" aria-label="{{ section.settings.rating_stars | default: 5 }} out of 5 stars">
                 {%- assign star_count = section.settings.rating_stars | default: 5 -%}
                 {%- for i in (1..star_count) -%}
                   <svg class="nw-discount__star" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

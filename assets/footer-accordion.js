@@ -27,6 +27,35 @@
     return null;
   }
 
+  function getPanelFocusables(panel) {
+    return panel.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+  }
+
+  function setPanelTabbing(panel, allowFocus) {
+    getPanelFocusables(panel).forEach((el) => {
+      if (allowFocus) {
+        if (Object.prototype.hasOwnProperty.call(el.dataset, 'footerAccordionPrevTabindex')) {
+          if (el.dataset.footerAccordionPrevTabindex === '') {
+            el.removeAttribute('tabindex');
+          } else {
+            el.setAttribute('tabindex', el.dataset.footerAccordionPrevTabindex);
+          }
+          delete el.dataset.footerAccordionPrevTabindex;
+        } else {
+          el.removeAttribute('tabindex');
+        }
+        return;
+      }
+
+      if (!Object.prototype.hasOwnProperty.call(el.dataset, 'footerAccordionPrevTabindex')) {
+        el.dataset.footerAccordionPrevTabindex = el.getAttribute('tabindex') || '';
+      }
+      el.setAttribute('tabindex', '-1');
+    });
+  }
+
   function cancelPanelAnimation(panel) {
     if (typeof panel.getAnimations !== 'function') return;
     panel.getAnimations().forEach((a) => a.cancel());
@@ -41,6 +70,7 @@
     heading.removeAttribute('tabindex');
     heading.removeAttribute('role');
     panel.setAttribute('aria-hidden', 'false');
+    setPanelTabbing(panel, true);
   }
 
   function setMobileClosed(heading, panel) {
@@ -52,6 +82,7 @@
     heading.setAttribute('tabindex', '0');
     heading.setAttribute('role', 'button');
     panel.setAttribute('aria-hidden', 'true');
+    setPanelTabbing(panel, false);
   }
 
   function animateHeight(panel, keyframes, onFinish) {
@@ -79,6 +110,7 @@
           heading.classList.add('is-open');
           heading.setAttribute('aria-expanded', 'true');
           panel.setAttribute('aria-hidden', 'false');
+          setPanelTabbing(panel, true);
         }
       );
     });
@@ -97,6 +129,7 @@
           heading.classList.remove('is-open');
           heading.setAttribute('aria-expanded', 'false');
           panel.setAttribute('aria-hidden', 'true');
+          setPanelTabbing(panel, false);
         }
       );
     });

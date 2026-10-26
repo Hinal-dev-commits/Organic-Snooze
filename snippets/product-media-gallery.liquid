@@ -156,10 +156,10 @@
     </ul>
     {%- if nw_custom_media_controls and media_count > 1 -%}
       {%- if section.settings.show_media_arrows and section.settings.gallery_layout == 'thumbnail_slider' -%}
-        <button type="button" class="nw-swiper-btn nw-swiper-btn--prev{{ prev_extra_class }}" aria-label="{{ prev_aria }}">
+        <button type="button" class="nw-swiper-btn nw-swiper-btn--prev{{ prev_extra_class }}" aria-label="swiper previous slide">
           {{ 'arrow-left-2.svg' | inline_asset_content }}
         </button>
-        <button type="button" class="nw-swiper-btn nw-swiper-btn--next{{ next_extra_class }}" aria-label="{{ next_aria }}">
+        <button type="button" class="nw-swiper-btn nw-swiper-btn--next{{ next_extra_class }}" aria-label="swiper next slide">
           {{ 'arrow-right-2.svg' | inline_asset_content }}
         </button>
 
