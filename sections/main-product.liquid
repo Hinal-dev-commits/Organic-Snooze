@@ -198,6 +198,11 @@
                       endif
                     endfor
 
+                    assign show_price_save_badge = false
+                    if block.settings.show_sale_badge and compare_at_price > current_price
+                      assign show_price_save_badge = true
+                    endif
+
                     if apply_metaobject_discount
                       assign discount_message_entries = shop.metaobjects.discount_message.values
                       if discount_message_entries != blank
@@ -225,6 +230,22 @@
                       endif
                     endif
                   -%}
+                  {%- capture nw_product_has_bundle_kit -%}
+                    {%- render 'nw-bundle-product-has-kit', product: product -%}
+                  {%- endcapture -%}
+                  {%- assign nw_product_has_bundle_kit = nw_product_has_bundle_kit | strip -%}
+                  {%- assign nw_bundle_price_save_badge = blank -%}
+                  {%- if nw_product_has_bundle_kit != blank and block.settings.show_sale_badge -%}
+                    {%- capture nw_bundle_price_save_badge -%}
+                      {%- render 'nw-bundle-save-badge-display', product: product, variant: price_variant -%}
+                    {%- endcapture -%}
+                    {%- assign nw_bundle_price_save_badge = nw_bundle_price_save_badge | strip -%}
+                    {%- if nw_bundle_price_save_badge != blank -%}
+                      {%- assign show_price_save_badge = true -%}
+                    {%- else -%}
+                      {%- assign show_price_save_badge = false -%}
+                    {%- endif -%}
+                  {%- endif -%}
                   <div class="nw-product-price">
                     <div id="price-{{ section.id }}" role="status">
                       {%- render 'price',
@@ -235,14 +256,18 @@
                         price_override: price_override,
                         compare_at_price_override: compare_at_override
                       -%}
-                      {%- if block.settings.show_sale_badge and compare_at_price > current_price -%}
-                        {%- assign savings_amount = compare_at_price | minus: current_price -%}
+                      {%- if show_price_save_badge -%}
                         <span class="nw-product-price__save-badge">
-                          {%- if block.settings.show_save_percentage -%}
-                            {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
-                            SAVE {{ save_percent }}%
+                          {%- if nw_bundle_price_save_badge != blank -%}
+                            {{ nw_bundle_price_save_badge | escape }}
                           {%- else -%}
-                            SAVE {{ savings_amount | money_without_trailing_zeros }}
+                            {%- assign savings_amount = compare_at_price | minus: current_price -%}
+                            {%- if block.settings.show_save_percentage -%}
+                              {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
+                              SAVE {{ save_percent }}%
+                            {%- else -%}
+                              SAVE {{ savings_amount | money_without_trailing_zeros }}
+                            {%- endif -%}
                           {%- endif -%}
                         </span>
                       {%- endif -%}

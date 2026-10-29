@@ -7,24 +7,32 @@ Renders save and seller tags over NW product media images.
   assign price_variant = product.selected_or_first_available_variant
   assign compare_at_price = price_variant.compare_at_price
   assign current_price = price_variant.price
+  assign bundle_save_badge = blank
   assign save_percent = 0
 
   assign seller_tag = product.metafields.custom.seller_tag.value | default: product.metafields.custom.seller_tag
 -%}
 
-{%- capture nw_bundle_save_pct -%}
-  {%- render 'nw-bundle-save-percent', product: product, variant: price_variant -%}
+{%- capture nw_product_has_bundle_kit -%}
+  {%- render 'nw-bundle-product-has-kit', product: product -%}
 {%- endcapture -%}
-{%- assign nw_bundle_save_pct = nw_bundle_save_pct | strip -%}
+{%- assign nw_product_has_bundle_kit = nw_product_has_bundle_kit | strip -%}
 
-{%- if nw_bundle_save_pct != blank -%}
-  {%- assign save_percent = nw_bundle_save_pct | plus: 0 -%}
+{%- if nw_product_has_bundle_kit != blank -%}
+  {%- capture bundle_save_badge -%}
+    {%- render 'nw-bundle-save-badge-display', product: product, variant: price_variant -%}
+  {%- endcapture -%}
+  {%- assign bundle_save_badge = bundle_save_badge | strip -%}
 {%- elsif compare_at_price > current_price and compare_at_price > 0 -%}
   {%- assign savings_amount = compare_at_price | minus: current_price -%}
   {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
 {%- endif -%}
 
-{%- if save_percent > 0 -%}
+{%- if bundle_save_badge != blank -%}
+  <span class="nw-product-page-media__badge nw-product-page-media__badge--left" data-nw-media-save-badge>
+    {{ bundle_save_badge | escape }}
+  </span>
+{%- elsif save_percent > 0 -%}
   <span class="nw-product-page-media__badge nw-product-page-media__badge--left" data-nw-media-save-badge>
     SAVE {{ save_percent }}%
   </span>
