@@ -34,7 +34,6 @@
 .nw-step-v3__header .nw-section-heading {
   width: 100%;
   margin: 0 auto;
-  max-width: 470px;
 }
 
 .nw-step-v3__header .nw-section-heading h2,
@@ -42,7 +41,7 @@
 .nw-step-v3__header .nw-section-heading h1,
 .nw-step-v3__header .nw-section-heading .h1 {
   text-align: center;
-  font-family: var(--font-body-family);
+  font-family: var(--font-heading-family);
   font-weight: 600;
   font-size: 40px;
   line-height: normal;
@@ -108,11 +107,16 @@
 
 .nw-step-v3__title {
   margin: 0;
-  font-family: var(--font-body-family);
+  font-family: var(--font-heading-family);
   font-weight: 600;
   font-size: 20px;
   line-height: normal;
   color: var(--nw-step-v3-card-title, var(--nw-brown, #613916));
+}
+
+.nw-step-v3__card:nth-child(4) .nw-step-v3__title {
+  max-width: 180px;
+  display: block;
 }
 
 .nw-step-v3__description {

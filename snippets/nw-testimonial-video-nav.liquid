@@ -1,0 +1,24 @@
+{% doc %}
+  Previous/next controls for NW Testimonial Video (arrow-previous / arrow-next assets).
+  @param {string} [prev_label] - Accessible label for previous
+  @param {string} [next_label] - Accessible label for next
+{% enddoc %}
+
+{%- liquid
+  if prev_label != blank
+    assign prev_aria = prev_label
+  else
+    assign prev_aria = 'general.slider.previous_slide' | t
+  endif
+  if next_label != blank
+    assign next_aria = next_label
+  else
+    assign next_aria = 'general.slider.next_slide' | t
+  endif
+-%}
+<button type="button" class="nw-swiper-btn nw-swiper-btn--prev" aria-label="{{ prev_aria }}">
+  <span class="nw-testimonial-video__nav-icon" aria-hidden="true">{{ 'arrow-previous.svg' | inline_asset_content }}</span>
+</button>
+<button type="button" class="nw-swiper-btn nw-swiper-btn--next" aria-label="{{ next_aria }}">
+  <span class="nw-testimonial-video__nav-icon" aria-hidden="true">{{ 'arrow-next.svg' | inline_asset_content }}</span>
+</button>

@@ -5845,6 +5845,42 @@
         },
         {
           "type": "header",
+          "content": "PRICING"
+        },
+        {
+          "type": "select",
+          "id": "discount_type",
+          "label": "Discount type",
+          "default": "percentage",
+          "options": [
+            {
+              "value": "percentage",
+              "label": "Percentage"
+            },
+            {
+              "value": "fixed",
+              "label": "Fixed amount"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "id": "discount_percentage",
+          "label": "Discount percentage",
+          "default": 20,
+          "info": "Percent off the selected product's current price. Set to 0 to show the regular price.",
+          "visible_if": "{{ block.settings.discount_type == 'percentage' }}"
+        },
+        {
+          "type": "number",
+          "id": "discount_fixed",
+          "label": "Fixed discount amount",
+          "default": 0,
+          "info": "Amount off in your store currency (e.g. 50 for $50).",
+          "visible_if": "{{ block.settings.discount_type == 'fixed' }}"
+        },
+        {
+          "type": "header",
           "content": "CONTENT OVERRIDES"
         },
         {

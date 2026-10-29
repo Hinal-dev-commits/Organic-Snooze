@@ -224,7 +224,7 @@
   display: flex;
   align-items: baseline;
   gap: 0;
-  font-family: var(--font-body-family);
+  font-family: var(--font-heading-family);
   font-weight: 600;
   font-size: 22px;
   line-height: normal;
@@ -261,13 +261,13 @@
   gap: 0;
   width: 100%;
   padding-top: var(--nw-trade-in-slider-offset-top, 92px);
-  padding-bottom: 40px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .nw-trade-in-hero__slider-footer {
-  position: relative;
-  z-index: 4;
+  position: absolute;
+  bottom: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -431,7 +431,7 @@
   padding: 0;
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease 0s;
 }
 
 .nw-trade-in-hero__control-icon {
@@ -480,6 +480,10 @@
   display: flex;
 }
 
+.nw-trade-in-hero__slide.is-playing .nw-trade-in-hero__video-toggle {
+  transition: opacity 0.25s ease 0.15s;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .nw-trade-in-hero__slide.is-playing .nw-trade-in-hero__video-toggle {
     opacity: 0;
@@ -490,6 +494,7 @@
   .nw-trade-in-hero__slide.is-playing .nw-trade-in-hero__media-inner:focus-within .nw-trade-in-hero__video-toggle {
     opacity: 1;
     pointer-events: auto;
+    transition: opacity 0.2s ease 0s;
   }
 }
 
@@ -502,8 +507,25 @@
 }
 
 @media screen and (min-width: 990px) and (max-width: 1199px) {
+  .nw-trade-in-hero__page-width.page-width {
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    max-width: none;
+  }
+
   .nw-trade-in-hero__content-col {
-    padding: 72px 40px 72px 0;
+    flex: 0 0 480px;
+    width: 480px;
+    max-width: 480px;
+    min-width: 0;
+    padding: 72px 32px 72px max(5rem, calc((100vw - var(--page-width)) / 2 + 5rem));
+    box-sizing: border-box;
+  }
+
+  .nw-trade-in-hero__content-wrap {
+    max-width: 100%;
   }
 
   .nw-trade-in-hero__header .nw-section-heading h1,
@@ -511,6 +533,12 @@
   .nw-trade-in-hero__header .nw-section-heading .h1,
   .nw-trade-in-hero__header .nw-section-heading .h2 {
     font-size: 44px;
+    max-width: 100%;
+  }
+
+  .nw-trade-in-hero__media-col {
+    flex: 1 1 0;
+    min-width: 0;
   }
 }
 
@@ -525,6 +553,7 @@
 
   .nw-trade-in-hero__container {
     flex-direction: column;
+    overflow-x: hidden;
   }
 
   .nw-trade-in-hero__content-col {
@@ -560,7 +589,7 @@
   .nw-trade-in-hero__header .nw-section-description p {
     font-size: 15px;
     opacity: 0.8;
-    max-width: 340px;
+    max-width: 100%;
   }
 
   .nw-trade-in-hero__cta-row {
@@ -624,6 +653,7 @@
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 12px;
+    bottom: 40px;
   }
 
   .nw-trade-in-hero__slider-footer .nw-swiper-btn {
@@ -648,6 +678,12 @@
 
   .nw-trade-in-hero__media-inner {
     border-radius: 24px;
+  }
+
+  .nw-trade-in-hero__slide.is-playing .nw-trade-in-hero__video-toggle {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease 0.15s;
   }
 
 }

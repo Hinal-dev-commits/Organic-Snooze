@@ -94,6 +94,8 @@ Mobile second-drawer panel for a matched megamenu block.
           assign category_collection = blank
           assign category_product_list = blank
           assign category_limit = 8
+          assign category_shop_link_label = blank
+          assign category_shop_link_override = blank
 
           case i
             when 1
@@ -102,30 +104,40 @@ Mobile second-drawer panel for a matched megamenu block.
               assign category_collection = block.settings.category_1_collection
               assign category_product_list = block.settings.category_1_product_list
               assign category_limit = block.settings.category_1_products_limit
+              assign category_shop_link_label = block.settings.category_1_shop_link_label
+              assign category_shop_link_override = block.settings.category_1_shop_link
             when 2
               assign category_title = block.settings.category_2_title
               assign category_source = block.settings.category_2_product_source
               assign category_collection = block.settings.category_2_collection
               assign category_product_list = block.settings.category_2_product_list
               assign category_limit = block.settings.category_2_products_limit
+              assign category_shop_link_label = block.settings.category_2_shop_link_label
+              assign category_shop_link_override = block.settings.category_2_shop_link
             when 3
               assign category_title = block.settings.category_3_title
               assign category_source = block.settings.category_3_product_source
               assign category_collection = block.settings.category_3_collection
               assign category_product_list = block.settings.category_3_product_list
               assign category_limit = block.settings.category_3_products_limit
+              assign category_shop_link_label = block.settings.category_3_shop_link_label
+              assign category_shop_link_override = block.settings.category_3_shop_link
             when 4
               assign category_title = block.settings.category_4_title
               assign category_source = block.settings.category_4_product_source
               assign category_collection = block.settings.category_4_collection
               assign category_product_list = block.settings.category_4_product_list
               assign category_limit = block.settings.category_4_products_limit
+              assign category_shop_link_label = block.settings.category_4_shop_link_label
+              assign category_shop_link_override = block.settings.category_4_shop_link
             when 5
               assign category_title = block.settings.category_5_title
               assign category_source = block.settings.category_5_product_source
               assign category_collection = block.settings.category_5_collection
               assign category_product_list = block.settings.category_5_product_list
               assign category_limit = block.settings.category_5_products_limit
+              assign category_shop_link_label = block.settings.category_5_shop_link_label
+              assign category_shop_link_override = block.settings.category_5_shop_link
           endcase
 
           assign category_source = category_source | default: 'product_list'
@@ -147,6 +159,16 @@ Mobile second-drawer panel for a matched megamenu block.
           unless category_title contains 'Shop'
             assign shop_label = 'Shop ' | append: category_title
           endunless
+
+          assign category_shop_link_label = category_shop_link_label | strip
+          if category_shop_link_label != blank
+            assign shop_label = category_shop_link_label
+          endif
+
+          assign category_shop_link_override = category_shop_link_override | strip
+          if category_shop_link_override != blank
+            assign category_link = category_shop_link_override
+          endif
         -%}
 
         {%- if category_has_products -%}

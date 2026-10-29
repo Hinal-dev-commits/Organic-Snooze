@@ -61,6 +61,7 @@
 
     {%- if slide_count > 0 -%}
       <div class="nw-testimonial-video__slider-block">
+        <div class="page-width nw-testimonial-video__slider-page">
         <div class="nw-testimonial-video__swiper-stage">
           <div class="swiper" id="NwTestimonialVideoSlider-{{ section.id }}" data-nw-tv-slider>
             <div class="swiper-wrapper">
@@ -146,10 +147,16 @@
             </div>
           </div>
         </div>
+        </div>
 
         {%- if slide_count > 1 and section.settings.show_arrows -%}
-          <div class="nw-testimonial-video__nav" data-nw-tv-nav>
-            {% render 'nw-swiper-arrows', prev_label: 'Previous testimonial', next_label: 'Next testimonial' %}
+          <div class="page-width nw-testimonial-video__nav-row">
+            <div class="nw-testimonial-video__nav" data-nw-tv-nav>
+              {% render 'nw-testimonial-video-nav',
+                prev_label: 'Previous testimonial',
+                next_label: 'Next testimonial'
+              %}
+            </div>
           </div>
         {%- endif -%}
       </div>

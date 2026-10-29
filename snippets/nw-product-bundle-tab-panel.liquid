@@ -30,12 +30,41 @@
       assign display_image = tab_product.featured_media.preview_image
     endif
 
-    assign compare_price = tab_variant.compare_at_price
-    assign sale_price = tab_variant.price
+    assign actual_price = tab_variant.price | default: 0
+    assign sale_price = actual_price
     assign save_cents = 0
     assign save_money = ''
-    if compare_price > sale_price
-      assign save_cents = compare_price | minus: sale_price
+
+    assign discount_type = tab_block.settings.discount_type | default: 'percentage'
+
+    if discount_type == 'fixed'
+      assign discount_fixed = tab_block.settings.discount_fixed | plus: 0
+      if discount_fixed > 0 and actual_price > 0
+        assign off_cents = discount_fixed | times: 100 | round
+        assign sale_price = actual_price | minus: off_cents
+        if sale_price < 0
+          assign sale_price = 0
+        endif
+      endif
+    else
+      assign discount_percent = tab_block.settings.discount_percentage | default: 20 | plus: 0
+      if discount_percent < 0
+        assign discount_percent = 0
+      elsif discount_percent > 100
+        assign discount_percent = 100
+      endif
+
+      if discount_percent > 0 and actual_price > 0
+        assign discount_amount = actual_price | times: discount_percent | divided_by: 100.0 | round
+        assign sale_price = actual_price | minus: discount_amount
+        if sale_price < 0
+          assign sale_price = 0
+        endif
+      endif
+    endif
+
+    if actual_price > sale_price
+      assign save_cents = actual_price | minus: sale_price
       assign save_money = save_cents | money_without_trailing_zeros
     endif
 

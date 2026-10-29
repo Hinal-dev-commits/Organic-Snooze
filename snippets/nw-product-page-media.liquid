@@ -57,7 +57,9 @@ Renders product page media wrapper with badges and gallery for non-product templ
 
 <div class="nw-product-page-media{% unless show_gallery %} nw-product-page-media--static{% endunless %}">
   <div class="nw-product-page-media__main">
-    {% render 'nw-product-media-tags', product: product %}
+    <div id="NwMediaTags-{{ section.id }}">
+      {% render 'nw-product-media-tags', product: product %}
+    </div>
 
     {%- if slide_count == 0 -%}
       <div class="nw-product-page-media__placeholder">

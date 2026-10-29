@@ -78,32 +78,20 @@ if (!customElements.get('nw-trade-in-video-explainer')) {
       if (video.readyState >= 1) syncBadge();
 
       media.addEventListener('click', (e) => {
-        var playBtn = e.target.closest('[data-nw-tive-play]');
-        var pauseBtn = e.target.closest('[data-nw-tive-pause]');
-        var isPoster = e.target.closest('.nw-trade-in-video-explainer__poster');
+        if (!media.contains(e.target)) return;
 
-        if (playBtn || isPoster) {
-          e.preventDefault();
-          e.stopPropagation();
+        e.preventDefault();
+
+        if (video.paused || video.ended) {
           video.muted = false;
           var playPromise = video.play();
           if (playPromise && typeof playPromise.catch === 'function') {
             playPromise.catch(function () {});
           }
-          this._setPlayingState(media, true);
           return;
         }
 
-        if (pauseBtn) {
-          e.preventDefault();
-          e.stopPropagation();
-          video.pause();
-        }
-      });
-
-      video.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        video.pause();
       });
 
       video.addEventListener('play', () => this._setPlayingState(media, true));
