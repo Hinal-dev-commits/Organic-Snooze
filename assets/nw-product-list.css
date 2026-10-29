@@ -65,6 +65,10 @@
   aspect-ratio: unset;
 }
 
+.nw-product-list__swiper .nw-product-card__media-link:not(.nw-product-card__media-link--featured-swap) .nw-product-card__image {
+  height: auto;
+}
+
 .nw-product-list__empty {
   width: 100%;
   text-align: center;
