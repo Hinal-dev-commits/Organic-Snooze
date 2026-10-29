@@ -1,0 +1,53 @@
+{% doc %}
+  Bundle kit save badge label for PDP/cards (SAVE $X or SAVE X%).
+  @param {object} product
+  @param {object} [variant] - PDP variant; omit for collection card (uses for_collection_card)
+  @param {boolean} [for_collection_card]
+  Outputs badge text only, e.g. "SAVE $500" or "SAVE 20%"; blank when no kit savings.
+{% enddoc %}
+
+{%- liquid
+  assign badge_text = blank
+  assign render_variant = variant
+  if for_collection_card
+    assign render_variant = blank
+  endif
+-%}
+
+{%- capture nw_bundle_discount_type -%}
+  {%- if for_collection_card -%}
+    {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true, output_mode: 'discount_type' -%}
+  {%- else -%}
+    {%- render 'nw-bundle-save-percent', product: product, variant: render_variant, output_mode: 'discount_type' -%}
+  {%- endif -%}
+{%- endcapture -%}
+{%- assign nw_bundle_discount_type = nw_bundle_discount_type | strip -%}
+
+{%- if nw_bundle_discount_type == 'fixed' -%}
+  {%- capture nw_bundle_save_cents -%}
+    {%- if for_collection_card -%}
+      {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true, output_mode: 'save_cents' -%}
+    {%- else -%}
+      {%- render 'nw-bundle-save-percent', product: product, variant: render_variant, output_mode: 'save_cents' -%}
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- assign nw_bundle_save_cents = nw_bundle_save_cents | strip | plus: 0 -%}
+  {%- if nw_bundle_save_cents > 0 -%}
+    {%- assign nw_bundle_save_money = nw_bundle_save_cents | money_without_trailing_zeros -%}
+    {%- assign badge_text = 'SAVE ' | append: nw_bundle_save_money -%}
+  {%- endif -%}
+{%- else -%}
+  {%- capture nw_bundle_save_pct -%}
+    {%- if for_collection_card -%}
+      {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true -%}
+    {%- else -%}
+      {%- render 'nw-bundle-save-percent', product: product, variant: render_variant -%}
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- assign nw_bundle_save_pct = nw_bundle_save_pct | strip -%}
+  {%- if nw_bundle_save_pct != blank -%}
+    {%- assign badge_text = 'SAVE ' | append: nw_bundle_save_pct | append: '%' -%}
+  {%- endif -%}
+{%- endif -%}
+
+{{- badge_text -}}

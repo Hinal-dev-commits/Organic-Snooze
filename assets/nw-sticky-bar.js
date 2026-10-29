@@ -1341,9 +1341,7 @@ if (!customElements.get('nw-sticky-bar')) {
         });
       }
 
-      const compare = Number(variant.compare_at_price);
-      const price = Number(variant.price);
-      const saveAmount = compare > price ? compare - price : 0;
+      const saveAmount = this._getVariantSaveCents(variant);
       const saveText =
         saveAmount > 0
           ? `${this.config.savePrefix || 'You save'} ${this._formatMoney(saveAmount, true)}`
@@ -1393,6 +1391,18 @@ if (!customElements.get('nw-sticky-bar')) {
       }
 
       this._updateStickyBarPrice();
+    }
+
+    _getVariantSaveCents(variant) {
+      if (!variant) return 0;
+
+      if (this.config?.hasBundleKit) {
+        return Math.max(0, Number(variant.bundle_save_cents) || 0);
+      }
+
+      const compare = Number(variant.compare_at_price);
+      const price = Number(variant.price);
+      return compare > price ? compare - price : 0;
     }
 
     _getVariantLabel(variant) {

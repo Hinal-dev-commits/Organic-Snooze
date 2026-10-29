@@ -1,0 +1,35 @@
+{%- comment -%}
+  Outputs "1" when the product has a bundle kit metafield with mappings; otherwise outputs nothing.
+  @param {object} product
+{%- endcomment -%}
+{%- unless product == blank -%}
+  {%- liquid
+    assign kit = blank
+    assign bundle_mf = product.metafields['$app'].bundle
+    if bundle_mf != blank and bundle_mf.value != blank
+      assign kit = bundle_mf.value
+    endif
+    if kit == blank
+      assign bundle_mf = product.metafields.app.bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+    if kit == blank
+      assign bundle_mf = product.metafields['app--1fce204f608afb633af44ab8a32b2cf8'].bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+    if kit == blank and product.metafields.app['bundle'] != blank
+      assign kit = product.metafields.app['bundle'].value
+    endif
+    if kit == blank
+      assign bundle_mf = product.metafields.custom.nw_bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+  -%}
+  {%- if kit != blank and kit.mappings != blank and kit.mappings.size > 0 -%}1{%- endif -%}
+{%- endunless -%}
