@@ -9,8 +9,6 @@
  */
 {
   "current": {
-    "nw_sitewide_sale_enabled": true,
-    "nw_sitewide_sale_percent": 20,
     "nw_pcard_text": "#613916",
     "nw_pcard_star_color": "#e57b1e",
     "nw_pcard_star_empty_color": "#d9cfc4",
@@ -145,6 +143,13 @@
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
     "customer_account_menu": "customer-account-main-menu",
+    "nw_sitewide_sale_enabled": true,
+    "nw_sitewide_sale_percent": 20,
+    "nw_sitewide_sale_excluded_products": [
+      "recovery-mattress-by-gary-brecka-sleep-system-bundle",
+      "pure-mattress-sleep-system-bundle",
+      "snooze-nest-crib-mattress"
+    ],
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
@@ -180,14 +185,6 @@
         "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
         "disabled": false,
         "settings": {}
-      },
-      "1530068250781986104": {
-        "type": "shopify://apps/fbp-fast-bundle/blocks/fast_bundle/9e87fbe2-9041-4c23-acf5-322413994cef",
-        "disabled": true,
-        "settings": {
-          "home": false,
-          "collection": false
-        }
       },
       "14060646107696862457": {
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
