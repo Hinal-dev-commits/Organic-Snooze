@@ -1,34 +1,34 @@
 {% doc %}
   Bundle kit save badge label for PDP/cards (SAVE $X or SAVE X%).
   @param {object} product
-  @param {object} [variant] - PDP variant; omit for collection card (uses for_collection_card)
-  @param {boolean} [for_collection_card]
+  @param {object} [variant] - Single-variant kit pricing (sticky/PDP price only)
+  @param {boolean} [for_collection_card] - When true, uses best savings across all kit mappings
   Outputs badge text only, e.g. "SAVE $500" or "SAVE 20%"; blank when no kit savings.
 {% enddoc %}
 
 {%- liquid
   assign badge_text = blank
-  assign render_variant = variant
-  if for_collection_card
-    assign render_variant = blank
+  assign use_max_kit_savings = for_collection_card
+  if use_max_kit_savings == false and variant == blank
+    assign use_max_kit_savings = true
   endif
 -%}
 
 {%- capture nw_bundle_discount_type -%}
-  {%- if for_collection_card -%}
+  {%- if use_max_kit_savings -%}
     {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true, output_mode: 'discount_type' -%}
   {%- else -%}
-    {%- render 'nw-bundle-save-percent', product: product, variant: render_variant, output_mode: 'discount_type' -%}
+    {%- render 'nw-bundle-save-percent', product: product, variant: variant, output_mode: 'discount_type' -%}
   {%- endif -%}
 {%- endcapture -%}
 {%- assign nw_bundle_discount_type = nw_bundle_discount_type | strip -%}
 
 {%- if nw_bundle_discount_type == 'fixed' -%}
   {%- capture nw_bundle_save_cents -%}
-    {%- if for_collection_card -%}
+    {%- if use_max_kit_savings -%}
       {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true, output_mode: 'save_cents' -%}
     {%- else -%}
-      {%- render 'nw-bundle-save-percent', product: product, variant: render_variant, output_mode: 'save_cents' -%}
+      {%- render 'nw-bundle-save-percent', product: product, variant: variant, output_mode: 'save_cents' -%}
     {%- endif -%}
   {%- endcapture -%}
   {%- assign nw_bundle_save_cents = nw_bundle_save_cents | strip | plus: 0 -%}
@@ -38,10 +38,10 @@
   {%- endif -%}
 {%- else -%}
   {%- capture nw_bundle_save_pct -%}
-    {%- if for_collection_card -%}
+    {%- if use_max_kit_savings -%}
       {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true -%}
     {%- else -%}
-      {%- render 'nw-bundle-save-percent', product: product, variant: render_variant -%}
+      {%- render 'nw-bundle-save-percent', product: product, variant: variant -%}
     {%- endif -%}
   {%- endcapture -%}
   {%- assign nw_bundle_save_pct = nw_bundle_save_pct | strip -%}

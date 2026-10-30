@@ -1,0 +1,25 @@
+{% doc %}
+  Highest compare-at savings percent across all product variants (non-bundle badge helper).
+  @param {object} product
+  Outputs rounded percent (e.g. 25) or nothing when no variant has compare-at savings.
+{% enddoc %}
+
+{%- unless product == blank -%}
+  {%- liquid
+    assign max_save_percent = 0
+    for variant in product.variants
+      assign compare_at_price = variant.compare_at_price
+      assign current_price = variant.price
+      if compare_at_price > current_price and compare_at_price > 0
+        assign savings_amount = compare_at_price | minus: current_price
+        assign variant_save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round
+        if variant_save_percent > max_save_percent
+          assign max_save_percent = variant_save_percent
+        endif
+      endif
+    endfor
+  -%}
+  {%- if max_save_percent > 0 -%}
+    {{- max_save_percent -}}
+  {%- endif -%}
+{%- endunless -%}

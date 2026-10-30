@@ -65,8 +65,8 @@
       endif
     endif
 
-    assign card_price_cents = -1
-    assign card_compare_cents = 0
+    assign card_max_save_cents = 0
+    assign card_best_compare_cents = 0
     assign card_discount_type = 'none'
   -%}
   {%- if kit != blank and kit.mappings != blank and kit.mappings.size > 0 -%}
@@ -122,26 +122,25 @@
           endif
         endif
 
-        if base_cents > 0 and pay_cents >= 0
-          if card_price_cents == -1 or pay_cents < card_price_cents
-            assign card_price_cents = pay_cents
-            assign card_compare_cents = base_cents
+        if base_cents > pay_cents and base_cents > 0
+          assign mapping_save_cents = base_cents | minus: pay_cents
+          if mapping_save_cents > card_max_save_cents
+            assign card_max_save_cents = mapping_save_cents
+            assign card_best_compare_cents = base_cents
             assign card_discount_type = discount_type
           endif
         endif
       -%}
     {%- endfor -%}
-    {%- if card_compare_cents > card_price_cents and card_price_cents >= 0 -%}
-      {%- assign save_cents = card_compare_cents | minus: card_price_cents -%}
-      {%- if save_cents > 0 -%}
-        {%- if output_mode == 'discount_type' -%}
-          {{- card_discount_type -}}
-        {%- elsif output_mode == 'save_cents' -%}
-          {{- save_cents -}}
-        {%- elsif card_discount_type == 'fixed' -%}
-        {%- else -%}
-          {{- save_cents | times: 100.0 | divided_by: card_compare_cents | round -}}
-        {%- endif -%}
+    {%- if card_max_save_cents > 0 -%}
+      {%- assign save_cents = card_max_save_cents -%}
+      {%- if output_mode == 'discount_type' -%}
+        {{- card_discount_type -}}
+      {%- elsif output_mode == 'save_cents' -%}
+        {{- save_cents -}}
+      {%- elsif card_discount_type == 'fixed' -%}
+      {%- else -%}
+        {{- save_cents | times: 100.0 | divided_by: card_best_compare_cents | round -}}
       {%- endif -%}
     {%- endif -%}
   {%- endif -%}
