@@ -188,9 +188,6 @@ Renders the NW product card used across collection sliders and grids.
     {%- liquid
       assign save_percent = 0
       assign bundle_save_badge = blank
-      assign price_variant = card_product.selected_or_first_available_variant
-      assign compare_at_price = price_variant.compare_at_price
-      assign current_price = price_variant.price
     -%}
 
     {%- capture nw_product_has_bundle_kit -%}
@@ -203,9 +200,11 @@ Renders the NW product card used across collection sliders and grids.
         {%- render 'nw-bundle-save-badge-display', product: card_product, for_collection_card: true -%}
       {%- endcapture -%}
       {%- assign bundle_save_badge = bundle_save_badge | strip -%}
-    {%- elsif compare_at_price > current_price and compare_at_price > 0 -%}
-      {%- assign savings_amount = compare_at_price | minus: current_price -%}
-      {%- assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
+    {%- else -%}
+      {%- capture nw_max_compare_save_pct -%}
+        {%- render 'nw-product-max-compare-save-percent', product: card_product -%}
+      {%- endcapture -%}
+      {%- assign save_percent = nw_max_compare_save_pct | strip | plus: 0 -%}
     {%- endif -%}
 
     {%- if bundle_save_badge != blank -%}
