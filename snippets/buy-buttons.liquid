@@ -22,6 +22,22 @@
       if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
         assign show_dynamic_checkout = true
       endif
+
+      assign atc_variant = product.selected_or_first_available_variant
+      assign atc_display_price_cents = atc_variant.price
+      capture nw_atc_sitewide_eligible
+        render 'nw-sitewide-sale-eligible', product: product
+      endcapture
+      assign nw_atc_sitewide_eligible = nw_atc_sitewide_eligible | strip
+      if nw_atc_sitewide_eligible != blank
+        capture nw_atc_sitewide_sale_price
+          render 'nw-sitewide-sale-variant-pricing', product: product, variant: atc_variant, output_mode: 'sale_price'
+        endcapture
+        assign nw_atc_sitewide_sale_price = nw_atc_sitewide_sale_price | strip
+        if nw_atc_sitewide_sale_price != blank
+          assign atc_display_price_cents = nw_atc_sitewide_sale_price | plus: 0
+        endif
+      endif
     -%}
 
     <product-form
@@ -30,7 +46,9 @@
       data-section-id="{{ section.id }}"
       data-show-atc-price="{{ block.settings.show_atc_price }}"
       data-money-format="{{ shop.money_format | escape }}"
-      data-initial-variant-price="{{ product.selected_or_first_available_variant.price }}"
+      data-initial-variant-price="{{ atc_display_price_cents }}"
+      data-sitewide-sale-enabled="{% if nw_atc_sitewide_eligible != blank %}true{% else %}false{% endif %}"
+      data-sitewide-sale-percent="{{ settings.nw_sitewide_sale_percent | default: 0 }}"
     >
       <div class="product-form__error-message-wrapper" role="alert" hidden>
         <span class="svg-wrapper">

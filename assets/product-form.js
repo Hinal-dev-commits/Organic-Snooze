@@ -141,13 +141,24 @@ if (!customElements.get('product-form')) {
             const { sectionId, variant } = event.data || {};
             if (sectionId !== this.dataset.sectionId) return;
             if (variant?.price != null) {
-              this.currentVariantPriceCents = Number(variant.price) || 0;
+              this.currentVariantPriceCents = this.getSitewideDisplayCents(Number(variant.price) || 0);
             }
             this.updateAtcButtonPrice();
           });
         }
 
         this.updateAtcButtonPrice();
+      }
+
+      getSitewideDisplayCents(catalogCents) {
+        const amount = Number(catalogCents);
+        if (!Number.isFinite(amount)) return 0;
+        if (this.dataset.sitewideSaleEnabled !== 'true') return amount;
+
+        const pct = Math.min(99, Math.max(0, Number(this.dataset.sitewideSalePercent) || 0));
+        if (pct <= 0) return amount;
+
+        return Math.round((amount * (100 - pct)) / 100);
       }
 
       disconnectedCallback() {
