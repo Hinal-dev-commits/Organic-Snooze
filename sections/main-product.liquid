@@ -184,6 +184,7 @@
                     assign current_price = price_variant.price
                     assign price_override = blank
                     assign compare_at_override = blank
+                    assign nw_sitewide_price_applied = false
                     assign show_affirm = block.settings.show_affirm
                     if show_affirm == nil
                       assign show_affirm = true
@@ -203,7 +204,29 @@
                       assign show_price_save_badge = true
                     endif
 
-                    if apply_metaobject_discount
+                    capture nw_product_has_bundle_kit_price
+                      render 'nw-bundle-product-has-kit', product: product
+                    endcapture
+                    assign nw_product_has_bundle_kit_price = nw_product_has_bundle_kit_price | strip
+
+                    capture nw_sitewide_sale_eligible
+                      render 'nw-sitewide-sale-eligible', product: product
+                    endcapture
+                    assign nw_sitewide_sale_eligible = nw_sitewide_sale_eligible | strip
+
+                    if nw_sitewide_sale_eligible != blank and nw_product_has_bundle_kit_price == blank
+                      assign nw_sale_pct = settings.nw_sitewide_sale_percent | plus: 0
+                      assign nw_strike_price = current_price
+                      assign nw_remaining_pct = 100 | minus: nw_sale_pct
+                      assign price_override = current_price | times: nw_remaining_pct | divided_by: 100.0 | round
+                      assign compare_at_override = nw_strike_price
+                      assign compare_at_price = nw_strike_price
+                      assign current_price = price_override
+                      assign nw_sitewide_price_applied = true
+                      if block.settings.show_sale_badge and nw_sale_pct > 0
+                        assign show_price_save_badge = true
+                      endif
+                    elsif apply_metaobject_discount
                       assign discount_message_entries = shop.metaobjects.discount_message.values
                       if discount_message_entries != blank
                         for discount_entry in discount_message_entries
@@ -260,6 +283,13 @@
                         <span class="nw-product-price__save-badge">
                           {%- if nw_bundle_price_save_badge != blank -%}
                             {{ nw_bundle_price_save_badge | escape }}
+                          {%- elsif nw_sitewide_price_applied -%}
+                            {%- if block.settings.show_save_percentage -%}
+                              SAVE {{ settings.nw_sitewide_sale_percent }}%
+                            {%- else -%}
+                              {%- assign savings_amount = compare_at_price | minus: current_price -%}
+                              SAVE {{ savings_amount | money_without_trailing_zeros }}
+                            {%- endif -%}
                           {%- else -%}
                             {%- assign savings_amount = compare_at_price | minus: current_price -%}
                             {%- if block.settings.show_save_percentage -%}

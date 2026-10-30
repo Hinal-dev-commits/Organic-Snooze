@@ -201,10 +201,16 @@ Renders the NW product card used across collection sliders and grids.
       {%- endcapture -%}
       {%- assign bundle_save_badge = bundle_save_badge | strip -%}
     {%- else -%}
-      {%- capture nw_max_compare_save_pct -%}
-        {%- render 'nw-product-max-compare-save-percent', product: card_product -%}
+      {%- capture nw_sitewide_save_pct -%}
+        {%- render 'nw-sitewide-sale-product-pricing', product: card_product, output_mode: 'save_percent' -%}
       {%- endcapture -%}
-      {%- assign save_percent = nw_max_compare_save_pct | strip | plus: 0 -%}
+      {%- assign save_percent = nw_sitewide_save_pct | strip | plus: 0 -%}
+      {%- if save_percent == 0 -%}
+        {%- capture nw_max_compare_save_pct -%}
+          {%- render 'nw-product-max-compare-save-percent', product: card_product -%}
+        {%- endcapture -%}
+        {%- assign save_percent = nw_max_compare_save_pct | strip | plus: 0 -%}
+      {%- endif -%}
     {%- endif -%}
 
     {%- if bundle_save_badge != blank -%}
@@ -317,11 +323,26 @@ Renders the NW product card used across collection sliders and grids.
       {%- if nw_bundle_card_price != blank -%}
         {{ nw_bundle_card_price }}
       {%- else -%}
+        {%- liquid
+          assign nw_card_display_price = card_price
+          assign nw_card_display_compare = card_compare_at
+          capture nw_sitewide_card_price_min
+            render 'nw-sitewide-sale-product-pricing', product: card_product, output_mode: 'price_min'
+          endcapture
+          assign nw_sitewide_card_price_min = nw_sitewide_card_price_min | strip
+          if nw_sitewide_card_price_min != blank
+            assign nw_card_display_price = nw_sitewide_card_price_min | plus: 0
+            capture nw_sitewide_card_strike
+              render 'nw-sitewide-sale-product-pricing', product: card_product, output_mode: 'strike_price'
+            endcapture
+            assign nw_card_display_compare = nw_sitewide_card_strike | strip | plus: 0
+          endif
+        -%}
         <div class="nw-product-card__price">
           <span class="nw-product-card__price-from">{{ 'nw.product_card.from' | t }}</span>
-          <span class="nw-product-card__price-current">{{ card_price | money }}</span>
-          {%- if card_compare_at > card_price -%}
-            <span class="nw-product-card__price-compare">{{ card_compare_at | money }}</span>
+          <span class="nw-product-card__price-current">{{ nw_card_display_price | money }}</span>
+          {%- if nw_card_display_compare > nw_card_display_price -%}
+            <span class="nw-product-card__price-compare">{{ nw_card_display_compare | money }}</span>
           {%- endif -%}
         </div>
       {%- endif -%}

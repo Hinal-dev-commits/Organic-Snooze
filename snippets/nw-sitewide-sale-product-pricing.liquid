@@ -1,0 +1,44 @@
+{% doc %}
+  Sitewide sale display pricing aggregated at product level (collection cards, etc.).
+  @param {object} product
+  @param {string} [output_mode] - save_percent | price_min | strike_price
+{% enddoc %}
+
+{%- liquid
+  assign output_mode = output_mode | default: 'save_percent'
+  assign display_save_percent = 0
+  assign min_sale_price = blank
+  assign min_sale_strike = blank
+
+  unless product == blank
+    capture nw_sale_eligible_capture
+      render 'nw-sitewide-sale-eligible', product: product
+    endcapture
+    assign nw_sale_eligible_capture = nw_sale_eligible_capture | strip
+
+    if nw_sale_eligible_capture != blank
+      assign nw_sale_pct = settings.nw_sitewide_sale_percent | plus: 0
+      assign display_save_percent = nw_sale_pct
+      assign remaining_pct = 100 | minus: nw_sale_pct
+
+      for variant in product.variants
+        assign base_price = variant.price
+        assign sale_price = base_price | times: remaining_pct | divided_by: 100.0 | round
+
+        if min_sale_price == blank or sale_price < min_sale_price
+          assign min_sale_price = sale_price
+          assign min_sale_strike = base_price
+        endif
+      endfor
+    endif
+  endunless
+-%}
+
+{%- case output_mode -%}
+  {%- when 'price_min' -%}
+    {%- if min_sale_price != blank -%}{{ min_sale_price }}{%- endif -%}
+  {%- when 'strike_price' -%}
+    {%- if min_sale_strike != blank -%}{{ min_sale_strike }}{%- endif -%}
+  {%- else -%}
+    {%- if display_save_percent > 0 -%}{{ display_save_percent }}{%- endif -%}
+{%- endcase -%}

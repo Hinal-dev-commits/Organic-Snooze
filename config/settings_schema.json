@@ -1585,5 +1585,37 @@
         "label": "t:settings_schema.customer_accounts.settings.customer_account_menu.label"
       }
     ]
+  },
+  {
+    "name": "NW Sitewide Sale (display)",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Controls storefront prices and SAVE badges only. Create a matching automatic discount in Shopify Admin so checkout matches what customers see. Turn off Enable to restore normal theme pricing everywhere."
+      },
+      {
+        "type": "checkbox",
+        "id": "nw_sitewide_sale_enabled",
+        "label": "Enable sitewide sale display",
+        "default": true,
+        "info": "When unchecked, pricing and badges behave exactly as before this feature."
+      },
+      {
+        "type": "range",
+        "id": "nw_sitewide_sale_percent",
+        "min": 1,
+        "max": 50,
+        "step": 1,
+        "unit": "%",
+        "label": "Sale discount percentage",
+        "default": 20
+      },
+      {
+        "type": "product_list",
+        "id": "nw_sitewide_sale_excluded_products",
+        "label": "Excluded products",
+        "info": "Add mattress bundles and any other products that should not show the sitewide discount (match your Admin discount exclusions)."
+      }
+    ]
   }
 ]

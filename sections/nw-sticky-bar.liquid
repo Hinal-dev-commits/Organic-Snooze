@@ -26,6 +26,12 @@
   assign sticky_compare = current_variant.compare_at_price
   assign sticky_save = 0
   assign sticky_available = current_variant.available
+
+  assign nw_sticky_sitewide_sale_enabled = false
+  capture nw_sticky_sitewide_eligible
+    render 'nw-sitewide-sale-eligible', product: sticky_product
+  endcapture
+  assign nw_sticky_sitewide_eligible = nw_sticky_sitewide_eligible | strip
 -%}
 
 {%- capture nw_sticky_has_bundle_kit -%}
@@ -38,6 +44,16 @@
     {%- render 'nw-bundle-save-percent', product: sticky_product, variant: current_variant, output_mode: 'save_cents' -%}
   {%- endcapture -%}
   {%- assign sticky_save = nw_sticky_bundle_save_cents | strip | plus: 0 -%}
+{%- elsif nw_sticky_sitewide_eligible != blank -%}
+  {%- assign nw_sticky_sitewide_sale_enabled = true -%}
+  {%- capture nw_sticky_sitewide_sale -%}
+    {%- render 'nw-sitewide-sale-variant-pricing', product: sticky_product, variant: current_variant, output_mode: 'sale_price' -%}
+  {%- endcapture -%}
+  {%- capture nw_sticky_sitewide_save_cents -%}
+    {%- render 'nw-sitewide-sale-variant-pricing', product: sticky_product, variant: current_variant, output_mode: 'save_cents' -%}
+  {%- endcapture -%}
+  {%- assign sticky_price = nw_sticky_sitewide_sale | strip | plus: 0 -%}
+  {%- assign sticky_save = nw_sticky_sitewide_save_cents | strip | plus: 0 -%}
 {%- elsif sticky_compare > sticky_price -%}
   {%- assign sticky_save = sticky_compare | minus: sticky_price -%}
 {%- endif -%}
@@ -223,6 +239,8 @@
         "showImage": {{ section.settings.show_image | json }},
         "savePrefix": {{ section.settings.save_prefix | default: 'You save' | json }},
         "hasBundleKit": {% if nw_sticky_has_bundle_kit != blank %}true{% else %}false{% endif %},
+        "sitewideSaleEnabled": {% if nw_sticky_sitewide_sale_enabled %}true{% else %}false{% endif %},
+        "sitewideSalePercent": {{ settings.nw_sitewide_sale_percent | default: 0 | json }},
         "initialVariantId": {{ current_variant.id | json }},
         "variants": [
           {%- for variant in sticky_product.variants -%}
