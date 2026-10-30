@@ -11,6 +11,29 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "nw_cart_popup_GJzWgL": {
+      "type": "nw-cart-popup",
+      "blocks": {
+        "image_Bg8E78": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image_55.png",
+            "image_alt": "",
+            "image_width": "full"
+          }
+        }
+      },
+      "block_order": [
+        "image_Bg8E78"
+      ],
+      "disabled": true,
+      "name": "NW Cart Popup",
+      "settings": {
+        "modal_link_id": "cart-popup",
+        "dialog_label": "Cart popup",
+        "content_alignment": "center"
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -61,6 +84,7 @@
     }
   },
   "order": [
+    "nw_cart_popup_GJzWgL",
     "footer"
   ]
 }
