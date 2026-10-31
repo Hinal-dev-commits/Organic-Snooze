@@ -13,7 +13,7 @@
       "type": "nw-hero",
       "blocks": {
         "trust_badge_zWwKea": {
-          "type": "trust_badge", 
+          "type": "trust_badge",
           "settings": {
             "icon_color": "#cc926a",
             "use_custom_icon": true,
@@ -223,6 +223,15 @@
             "label": "Mattress",
             "collection": "mattress",
             "products_to_show": 8,
+            "default_selected": false
+          }
+        },
+        "tab_QA9wDA": {
+          "type": "tab",
+          "settings": {
+            "label": "BFCM",
+            "collection": "bfcm",
+            "products_to_show": 8,
             "default_selected": true
           }
         },
@@ -298,6 +307,7 @@
       "block_order": [
         "tab_zzBgcE",
         "tab_QzhKAT",
+        "tab_QA9wDA",
         "tab_xBfytM",
         "tab_hGaVj4",
         "tab_8MGfk8",
