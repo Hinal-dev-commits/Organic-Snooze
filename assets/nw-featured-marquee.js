@@ -60,12 +60,31 @@ if (!customElements.get('nw-featured-marquee')) {
       }
 
       this.setupMarquee();
+      this.lastWrapperWidth = this.wrapper.getBoundingClientRect().width;
 
       if (window.ResizeObserver) {
         this.resizeObserver = new ResizeObserver(this.onResize);
         this.resizeObserver.observe(this.wrapper);
       } else {
         window.addEventListener('resize', this.onResize, { passive: true });
+      }
+
+      // Pause the animation loop while the marquee is off-screen.
+      if (window.IntersectionObserver) {
+        this.visibilityObserver = new IntersectionObserver((entries) => {
+          this.isVisible = entries[entries.length - 1].isIntersecting;
+          if (this.isVisible) {
+            this.lastTime = null;
+            if (!this.rafId && this.shouldAnimate()) {
+              this.rafId = requestAnimationFrame(this.animate);
+            }
+          } else if (this.rafId) {
+            cancelAnimationFrame(this.rafId);
+            this.rafId = null;
+            this.lastTime = null;
+          }
+        });
+        this.visibilityObserver.observe(this);
       }
     }
 
@@ -77,6 +96,9 @@ if (!customElements.get('nw-featured-marquee')) {
         } else if (this.mobileQuery.removeListener) {
           this.mobileQuery.removeListener(this.onBreakpointChange);
         }
+      }
+      if (this.visibilityObserver) {
+        this.visibilityObserver.disconnect();
       }
       if (this.resizeObserver) {
         this.resizeObserver.disconnect();
@@ -126,6 +148,10 @@ if (!customElements.get('nw-featured-marquee')) {
     }
 
     onResize() {
+      // ResizeObserver fires once on observe(); only rebuild when the width really changed.
+      const width = this.wrapper.getBoundingClientRect().width;
+      if (width === this.lastWrapperWidth) return;
+      this.lastWrapperWidth = width;
       this.setupMarquee();
     }
 
@@ -170,7 +196,7 @@ if (!customElements.get('nw-featured-marquee')) {
         this.pos = -this.groupWidth;
       }
 
-      if (!this.rafId) {
+      if (!this.rafId && this.isVisible !== false) {
         this.lastTime = null;
         this.rafId = requestAnimationFrame(this.animate);
       }
