@@ -27,11 +27,21 @@
         "padding_bottom": 0
       }
     },
+    "custom_liquid_hyCnFp": {
+      "type": "custom-liquid",
+      "name": "H1 heading",
+      "settings": {
+        "custom_liquid": "<h1 class=\"visually-hidden\">Mattress Finder | Quiz</h1>",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "1791276272788691cc": {
       "type": "apps",
       "blocks": {
         "revenuehunt_product_quiz_maker_v2_inline_quiz_CFyCW6": {
-          "type": "shopify://apps/revenuehunt-product-quiz-maker/blocks/v2-inline-quiz/672f3d48-fd3b-4227-8778-c6e58c4f8a98",
+          "type": "shopify://apps/rh-product-quiz-builder/blocks/v2-inline-quiz/672f3d48-fd3b-4227-8778-c6e58c4f8a98",
           "settings": {
             "quiz_height": 500,
             "quiz_height_unit": "px",
@@ -57,6 +67,7 @@
   "order": [
     "main",
     "custom_liquid_baCAtf",
+    "custom_liquid_hyCnFp",
     "1791276272788691cc"
   ]
 }
