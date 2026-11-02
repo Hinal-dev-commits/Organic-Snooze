@@ -73,7 +73,7 @@
             "discount_code": "",
             "use_custom_icon": true,
             "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
-            "bg_color": "#FFF7E0",
+            "bg_color": "#fff7e0",
             "border_color": "#61391633",
             "text_color": "#454500",
             "icon_color": "#454500",
@@ -345,10 +345,9 @@
         },
         "shipping_tag_Agd7QN": {
           "type": "shipping_tag",
-          "disabled": true,
           "settings": {
             "text": "Ships from USA",
-            "delivery_threshold_days": 2,
+            "delivery_threshold_days": 10,
             "use_product_metafield": false,
             "use_custom_icon": true,
             "icon": "truck",
