@@ -801,6 +801,78 @@
         "padding_bottom": 0
       }
     },
+    "nw_marquee_v2_RMtCkA": {
+      "type": "nw-marquee-v2",
+      "blocks": {
+        "item_8D4iJX": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_PmiMcD": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE +2 FREE PILLOWS + FREE Mattress protector (King & queen size only)",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_qEzFh8": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_EHhgKR": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE +2 FREE PILLOWS + FREE Mattress protector (King & queen size only)",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_8D4iJX",
+        "item_PmiMcD",
+        "item_qEzFh8",
+        "item_EHhgKR"
+      ],
+      "name": "t:sections.nw-marquee-v2.name",
+      "settings": {
+        "enable_desktop_marquee": true,
+        "direction": "right_to_left",
+        "speed": 85,
+        "pause_on_hover": true,
+        "font_weight": 600,
+        "font_size": 20,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
+        "gap_desktop": 28,
+        "gap_mobile": 12,
+        "icon_size_desktop": 28,
+        "icon_size_mobile": 20,
+        "gap_icon_text": 4,
+        "marquee_height_desktop": 60,
+        "marquee_height_mobile": 44,
+        "padding_desktop": 16,
+        "padding_mobile": 12,
+        "bg_type": "color",
+        "bg_color": "#E9B949",
+        "bg_gradient": "",
+        "text_color": "#000000",
+        "icon_color": "#FFFFFF"
+      }
+    },
     "related-products": {
       "type": "related-products",
       "disabled": true,
@@ -1748,6 +1820,7 @@
     "nw_firmness_popup_guide",
     "nw_sticky_bar_YhTzea",
     "disclosures",
+    "nw_marquee_v2_RMtCkA",
     "related-products",
     "nw_mattresses_timeline_EjgCVa",
     "nw_marquee_v2_UfXLdp",
