@@ -284,6 +284,27 @@
             "margin_bottom_mobile": 0
           }
         },
+        "promo_banner_jFDCEH": {
+          "type": "promo_banner",
+          "settings": {
+            "use_discount_metaobject": true,
+            "heading": "Save 15% on your first order!",
+            "description": "",
+            "discount_code": "",
+            "use_custom_icon": false,
+            "bg_color": "#FFF7E0",
+            "border_color": "#61391633",
+            "text_color": "#454500",
+            "icon_color": "#454500",
+            "code_bg_color": "#fffcf0",
+            "code_border_color": "#7f7f29",
+            "code_text_color": "#434300",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16
+          }
+        },
         "sleepers_UPVWMw": {
           "type": "sleepers",
           "settings": {
@@ -367,10 +388,9 @@
         },
         "shipping_tag_Agd7QN": {
           "type": "shipping_tag",
-          "disabled": true,
           "settings": {
             "text": "Ships from USA",
-            "delivery_threshold_days": 2,
+            "delivery_threshold_days": 6,
             "use_product_metafield": false,
             "use_custom_icon": true,
             "icon": "truck",
@@ -590,6 +610,7 @@
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
+        "promo_banner_jFDCEH",
         "sleepers_UPVWMw",
         "variant_picker",
         "bundle_save_K4nQ2p",
