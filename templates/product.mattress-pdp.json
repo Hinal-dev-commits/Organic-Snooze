@@ -66,7 +66,6 @@
         },
         "promo_banner_Q6znVP": {
           "type": "promo_banner",
-          "disabled": true,
           "settings": {
             "use_discount_metaobject": true,
             "heading": "Save 15% on your first order!",
@@ -345,10 +344,9 @@
         },
         "shipping_tag_Agd7QN": {
           "type": "shipping_tag",
-          "disabled": true,
           "settings": {
             "text": "Ships from USA",
-            "delivery_threshold_days": 2,
+            "delivery_threshold_days": 10,
             "use_product_metafield": false,
             "use_custom_icon": true,
             "icon": "truck",
