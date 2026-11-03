@@ -111,9 +111,7 @@
     >
   {%- endif -%}
 {% render 'nw-product', section: section %}
-{%- if is_nw_product_page -%}
-  {{ 'nw-product-page.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
+{{ 'nw-product-page.css' | asset_url | stylesheet_tag }}
 {{ 'nw-size-guide.css' | asset_url | stylesheet_tag }}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
