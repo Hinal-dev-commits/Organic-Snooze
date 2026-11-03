@@ -1,4 +1,7 @@
 {{ 'nw-collection-tabs.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.enable_black_friday_mode -%}
+  {{ 'nw-hero-black-friday.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'nw-collection-tabs.js' | asset_url }}" defer="defer"></script>
 
@@ -11,6 +14,7 @@
     endif
   endfor
 
+  assign bf_tabs_mode = section.settings.enable_black_friday_mode
   assign default_tab_index = 0
   assign tab_index_scan = 0
   for block in section.blocks
@@ -44,9 +48,16 @@
     }
   {% endif %}
 </style>
+{%- if bf_tabs_mode -%}
+  {% style %}
+    {%- unless section.settings.bf_tabs_font.system? -%}
+      {{ section.settings.bf_tabs_font | font_face: font_display: 'swap' }}
+    {%- endunless -%}
+  {% endstyle %}
+{%- endif -%}
 <nw-collection-tabs
   id="NwCollectionTabs-{{ section.id }}"
-  class="nw-collection-tabs"
+  class="nw-collection-tabs{% if bf_tabs_mode %} nw-collection-tabs--black-friday{% endif %}"
   data-show-arrows="{{ section.settings.show_arrows }}"
   data-show-pagination="{{ section.settings.show_pagination }}"
   style="
@@ -77,6 +88,19 @@
     --nw-pcard-firmness-active-bg: {{ section.settings.firmness_active_bg }};
     --nw-pcard-firmness-active-text: {{ section.settings.firmness_active_text }};
     --nw-pcard-firmness-active-border: {{ section.settings.firmness_active_border }};
+    {%- if bf_tabs_mode -%}
+    --nw-bf-tabs-font-family: {{ section.settings.bf_tabs_font.family }}, {{ section.settings.bf_tabs_font.fallback_families }};
+    --nw-bf-tabs-accent: {{ section.settings.bf_tabs_accent_color }};
+    --nw-bf-tabs-promo-bg: {{ section.settings.bf_tabs_promo_bg_color }};
+    --nw-bf-tabs-promo-border: {{ section.settings.bf_tabs_promo_border_color }};
+    --nw-bf-tabs-promo-title-color: {{ section.settings.bf_tabs_promo_title_color }};
+    --nw-bf-tabs-promo-subtext-color: {{ section.settings.bf_tabs_promo_subtext_color }};
+    --nw-bf-tabs-promo-divider: {{ section.settings.bf_tabs_promo_divider_color }};
+    --nw-bf-tabs-status-text: {{ section.settings.bf_tabs_status_text_color }};
+    --nw-bf-tabs-status-dot: {{ section.settings.bf_tabs_status_dot_color }};
+    --nw-bf-tabs-countdown-label-color: {{ section.settings.bf_tabs_countdown_label_color }};
+    --nw-bf-tabs-timer-text: {{ section.settings.bf_tabs_timer_text_color }};
+    {%- endif -%}
   "
 >
 
@@ -135,7 +159,7 @@
       <div class="nw-collection-tabs__main {% if sidebar_block == blank %}nw-collection-tabs__main--without-sidebar{% endif %}">
         {%- if sidebar_block -%}
           <aside class="nw-collection-tabs__sidebar" {{ sidebar_block.shopify_attributes }}>
-            {% render 'nw-collection-tabs-sidebar', block: sidebar_block %}
+            {% render 'nw-collection-tabs-sidebar', block: sidebar_block, bf_mode: bf_tabs_mode %}
           </aside>
         {%- endif -%}
 
@@ -230,6 +254,102 @@
   "tag": "section",
   "class": "section-nw-collection-tabs",
   "settings": [
+    {
+      "type": "header",
+      "content": "BLACK FRIDAY MODE"
+    },
+    {
+      "type": "paragraph",
+      "content": "When enabled, Black Friday styling applies to the mobile promo box in this section only. Enable alongside Hero Black Friday mode for a consistent campaign."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_black_friday_mode",
+      "label": "Enable Black Friday mode",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "bf_tabs_font",
+      "label": "Promo typography font (DM Sans)",
+      "default": "dm_sans_n4",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_accent_color",
+      "label": "Accent color",
+      "default": "#E9B949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_promo_bg_color",
+      "label": "Promo background",
+      "alpha": true,
+      "default": "#141414F0",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_promo_border_color",
+      "label": "Promo border",
+      "alpha": true,
+      "default": "#E9B949B3",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_promo_title_color",
+      "label": "Promo title color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_promo_subtext_color",
+      "label": "Promo subtext color",
+      "alpha": true,
+      "default": "#FFFFFFD9",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_promo_divider_color",
+      "label": "Countdown divider color",
+      "alpha": true,
+      "default": "#E9B94940",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_status_text_color",
+      "label": "Live badge text color",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_status_dot_color",
+      "label": "Live badge dot color",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_countdown_label_color",
+      "label": "Countdown label color",
+      "alpha": true,
+      "default": "#FFFFFF99",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_tabs_timer_text_color",
+      "label": "Timer text color",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
     {
       "type": "header",
       "content": "SECTION HEADER"

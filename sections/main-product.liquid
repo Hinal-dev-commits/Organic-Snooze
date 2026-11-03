@@ -723,6 +723,8 @@
                   {%- render 'nw-product-button', block: block -%}
                 {%- when 'bundle_save' -%}
                   {%- render 'nw-product-bundle-save', block: block, product: product -%}
+                {%- when 'nw_freegift' -%}
+                  {%- render 'nw-product-freegift', block: block, product: product -%}
                 {%- when 'nw_size_popup' -%}
                 {%- when 'bundle_tabs' -%}
                   {%- render 'nw-product-bundle-tabs', block: block, section: section -%}
@@ -2926,6 +2928,14 @@
           "id": "use_discount_metaobject",
           "label": "Use Discount Message metaobject",
           "default": true
+        },
+        {
+          "type": "text",
+          "id": "first_order_heading",
+          "label": "First order heading",
+          "info": "Shown when a Discount Message metaobject applies to this product. Use [percentage] for the entry discount percent.",
+          "default": "Save [percentage]% on your first order!",
+          "visible_if": "{{ block.settings.use_discount_metaobject }}"
         },
         {
           "type": "text",
@@ -5315,6 +5325,263 @@
           "unit": "px",
           "label": "Margin Top Mobile",
           "default": 24
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom Mobile",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "nw_freegift",
+      "name": "NW Free Gift",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "product_source",
+          "label": "Gift product source",
+          "default": "product_list",
+          "options": [
+            {
+              "value": "product_list",
+              "label": "Products (theme editor)"
+            },
+            {
+              "value": "metafield",
+              "label": "Metafield (custom.free_gifts)"
+            }
+          ]
+        },
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Gift products",
+          "limit": 8
+        },
+        {
+          "type": "header",
+          "content": "Header"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_eyebrow",
+          "label": "Show limited-time eyebrow",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "eyebrow_text",
+          "label": "Eyebrow text",
+          "default": "LIMITED TIME OFFER"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Black Friday Gifts"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_header_free_badge",
+          "label": "Show FREE badge beside heading",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subheading line",
+          "default": "2 Free Pillows + Free Protector · [value] Value",
+          "info": "Use [value] for the gift total (rounded to the nearest dollar; value bar shows exact amount)."
+        },
+        {
+          "type": "text",
+          "id": "free_badge_label",
+          "label": "FREE badge label",
+          "default": "FREE"
+        },
+        {
+          "type": "font_picker",
+          "id": "display_font",
+          "label": "Display font (FREE badge & value bar)",
+          "default": "anton_n4"
+        },
+        {
+          "type": "header",
+          "content": "Collapsed preview (desktop)"
+        },
+        {
+          "type": "text",
+          "id": "preview_summary",
+          "label": "Preview summary",
+          "default": "2 organic pillows & a mattress protector, on us"
+        },
+        {
+          "type": "checkbox",
+          "id": "start_expanded",
+          "label": "Start expanded",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Expanded footer notice"
+        },
+        {
+          "type": "text",
+          "id": "notice_text",
+          "label": "Notice bar text",
+          "default": "Added to your order automatically with any qualifying mattress."
+        },
+        {
+          "type": "header",
+          "content": "Gift value bar"
+        },
+        {
+          "type": "text",
+          "id": "value_bar_label",
+          "label": "Value bar label",
+          "default": "TOTAL FREE GIFT VALUE"
+        },
+        {
+          "type": "select",
+          "id": "value_amount_mode",
+          "label": "Total value amount",
+          "default": "auto",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Sum of gift values"
+            },
+            {
+              "value": "manual",
+              "label": "Manual text"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "value_amount_text",
+          "label": "Manual total value",
+          "default": "$459.98",
+          "visible_if": "{{ block.settings.value_amount_mode == 'manual' }}"
+        },
+        {
+          "type": "text",
+          "id": "value_promo_line",
+          "label": "Promo line",
+          "default": "+ 20% OFF ENTIRE ORDER"
+        },
+        {
+          "type": "richtext",
+          "id": "value_disclaimer",
+          "label": "Disclaimer (See details)",
+          "default": "<p>Offer valid for a limited time while supplies last on all Queen, King and CA King mattresses. Bundles excluded.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "value_details_open_by_default",
+          "label": "Show disclaimer by default",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "details_label",
+          "label": "See details label",
+          "default": "See Details"
+        },
+        {
+          "type": "text",
+          "id": "details_hide_label",
+          "label": "Hide details label",
+          "default": "Hide Details"
+        },
+        {
+          "type": "header",
+          "content": "Gift descriptions"
+        },
+        {
+          "type": "paragraph",
+          "content": "Rich text for each gift row (same order as gift products). Use a bullet list for feature lines."
+        },
+        {
+          "type": "richtext",
+          "id": "gift_1_description",
+          "label": "Gift 1 description"
+        },
+        {
+          "type": "richtext",
+          "id": "gift_2_description",
+          "label": "Gift 2 description"
+        },
+        {
+          "type": "richtext",
+          "id": "gift_3_description",
+          "label": "Gift 3 description"
+        },
+        {
+          "type": "richtext",
+          "id": "gift_4_description",
+          "label": "Gift 4 description"
+        },
+        {
+          "type": "richtext",
+          "id": "gift_5_description",
+          "label": "Gift 5 description"
+        },
+        {
+          "type": "richtext",
+          "id": "gift_6_description",
+          "label": "Gift 6 description"
+        },
+        {
+          "type": "richtext",
+          "id": "gift_7_description",
+          "label": "Gift 7 description"
+        },
+        {
+          "type": "richtext",
+          "id": "gift_8_description",
+          "label": "Gift 8 description"
+        },
+        {
+          "type": "header",
+          "content": "BLOCK SPACING"
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Top Mobile",
+          "default": 20
         },
         {
           "type": "range",

@@ -1,14 +1,29 @@
 {{ 'nw-hero.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.enable_black_friday_mode -%}
+  {{ 'nw-hero-black-friday.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 <script src="{{ 'nw-hero.js' | asset_url }}" defer="defer"></script>
 
 {%- liquid
   assign hero_media_type = section.settings.media_type
+  assign bf_mode = section.settings.enable_black_friday_mode
   if hero_media_type == blank and section.settings.shopify_video != blank
     assign hero_media_type = 'video'
   elsif hero_media_type == blank
     assign hero_media_type = 'image'
   endif
 -%}
+
+{%- if bf_mode -%}
+  {% style %}
+    {%- unless section.settings.bf_heading_font.system? -%}
+      {{ section.settings.bf_heading_font | font_face: font_display: 'swap' }}
+    {%- endunless -%}
+    {%- unless section.settings.bf_heading_accent_font.system? -%}
+      {{ section.settings.bf_heading_accent_font | font_face: font_display: 'swap' }}
+    {%- endunless -%}
+  {% endstyle %}
+{%- endif -%}
 
 <style>
   #NwHero-{{ section.id }} {
@@ -54,15 +69,78 @@
       {% elsif section.settings.bg_type == 'gradient' and section.settings.bg_gradient != blank %}
         background-image: none;
       {% endif %}
-      height: 100vh;
+      {% if bf_mode %}
+        height: auto;
+        min-height: min(100svh, 620px);
+      {% else %}
+        height: 100vh;
+      {% endif %}
     }
   }
+
+  {%- if bf_mode -%}
+    #NwHero-{{ section.id }}.nw-hero--black-friday {
+      --nw-bf-accent: {{ section.settings.bf_accent_color }};
+      --nw-bf-gold-rule-height: {{ section.settings.bf_gold_rule_height }}px;
+      --nw-bf-heading-transform: {{ section.settings.bf_heading_text_transform }};
+      --nw-bf-heading-font-family: {{ section.settings.bf_heading_font.family }}, {{ section.settings.bf_heading_font.fallback_families }};
+      --nw-bf-heading-font-style: {{ section.settings.bf_heading_font.style }};
+      --nw-bf-heading-font-weight: {{ section.settings.bf_heading_font.weight }};
+      --nw-bf-heading-primary-size-dt: {{ section.settings.bf_heading_line_1_size_desktop }}px;
+      --nw-bf-heading-primary-size-mb: {{ section.settings.bf_heading_line_1_size_mobile }}px;
+      --nw-bf-heading-primary-lh: {{ section.settings.bf_heading_line_1_line_height | divided_by: 100.0 }};
+      --nw-bf-heading-primary-ls: {{ section.settings.bf_heading_line_1_letter_spacing }}px;
+      --nw-bf-heading-primary-color: {{ section.settings.bf_heading_line_1_color }};
+      --nw-bf-heading-accent-font-family: {{ section.settings.bf_heading_accent_font.family }}, {{ section.settings.bf_heading_accent_font.fallback_families }};
+      --nw-bf-heading-accent-font-style: {{ section.settings.bf_heading_accent_font.style }};
+      --nw-bf-heading-accent-font-weight: {{ section.settings.bf_heading_accent_font.weight }};
+      --nw-bf-heading-accent-size-dt: {{ section.settings.bf_heading_line_2_size_desktop }}px;
+      --nw-bf-heading-accent-size-mb: {{ section.settings.bf_heading_line_2_size_mobile }}px;
+      --nw-bf-heading-accent-lh: {{ section.settings.bf_heading_line_2_line_height | divided_by: 100.0 }};
+      --nw-bf-heading-accent-ls: {{ section.settings.bf_heading_line_2_letter_spacing }}px;
+      --nw-bf-heading-accent-color: {{ section.settings.bf_heading_line_2_color }};
+      --nw-bf-rating-size-dt: {{ section.settings.bf_rating_size_desktop }}px;
+      --nw-bf-rating-size-mb: {{ section.settings.bf_rating_size_mobile }}px;
+      --nw-bf-rating-color: {{ section.settings.bf_rating_text_color }};
+      --nw-bf-star-color: {{ section.settings.bf_star_color }};
+      --nw-bf-subheading-font-weight: {{ section.settings.bf_subheading_font_weight }};
+      --nw-bf-subheading-size-dt: {{ section.settings.bf_subheading_size_desktop }}px;
+      --nw-bf-subheading-size-mb: {{ section.settings.bf_subheading_size_mobile }}px;
+      --nw-bf-subheading-lh: {{ section.settings.bf_subheading_line_height | divided_by: 100.0 }};
+      --nw-bf-subheading-color: {{ section.settings.bf_subheading_color }};
+      --nw-bf-btn-size-dt: {{ section.settings.bf_button_size_desktop }}px;
+      --nw-bf-btn-size-mb: {{ section.settings.bf_button_size_mobile }}px;
+      --nw-bf-btn-bg: {{ section.settings.bf_button_bg_color }};
+      --nw-bf-btn-color: {{ section.settings.bf_button_text_color }};
+      --nw-bf-badge-size-dt: {{ section.settings.bf_badge_size_desktop }}px;
+      --nw-bf-badge-size-mb: {{ section.settings.bf_badge_size_mobile }}px;
+      --nw-bf-badge-color: {{ section.settings.bf_badge_text_color }};
+      --nw-bf-promo-bg: {{ section.settings.bf_promo_bg_color }};
+      --nw-bf-promo-border: {{ section.settings.bf_promo_border_color }};
+      --nw-bf-promo-title-color: {{ section.settings.bf_promo_title_color }};
+      --nw-bf-promo-title-size-dt: {{ section.settings.bf_promo_title_size_desktop }}px;
+      --nw-bf-promo-subtext-color: {{ section.settings.bf_promo_subtext_color }};
+      --nw-bf-promo-subtext-size-dt: {{ section.settings.bf_promo_subtext_size_desktop }}px;
+      --nw-bf-promo-divider: {{ section.settings.bf_promo_divider_color }};
+      --nw-bf-status-text-color: {{ section.settings.bf_status_text_color }};
+      --nw-bf-status-dot-color: {{ section.settings.bf_status_dot_color }};
+      --nw-bf-countdown-label-color: {{ section.settings.bf_countdown_label_color }};
+      --nw-bf-countdown-label-size-dt: {{ section.settings.bf_countdown_label_size_desktop }}px;
+      --nw-bf-timer-text-color: {{ section.settings.bf_timer_text_color }};
+      --nw-bf-promo-inset-right: {{ section.settings.bf_promo_desktop_inset_right }}px;
+      --nw-bf-promo-inset-bottom: {{ section.settings.bf_promo_desktop_inset_bottom }}px;
+      --nw-bf-promo-inset-top: {{ section.settings.bf_promo_desktop_inset_top }}px;
+    }
+  {%- endif -%}
 </style>
 
 <nw-hero
   id="NwHero-{{ section.id }}"
-  class="nw-hero__wrapper{% if section.settings.enable_transparent_header %} nw-hero--transparent-header{% endif %}{%- render 'nw-scroll-animation', type: 'fade-in' -%}"
-  {% if section.settings.enable_transparent_header %}data-nw-transparent-header{% endif %}
+  class="nw-hero__wrapper{% if section.settings.enable_transparent_header %} nw-hero--transparent-header{% endif %}{% if bf_mode %} nw-hero--black-friday{% if section.settings.bf_show_gold_rule %} nw-hero--bf-gold-rule{% endif %}{% if section.settings.bf_promo_desktop_anchor == 'top' %} nw-hero--bf-promo-anchor-top{% else %} nw-hero--bf-promo-anchor-bottom{% endif %}{% endif %}{%- render 'nw-scroll-animation', type: 'fade-in' -%}"
+  {% if section.settings.enable_transparent_header %}
+    data-nw-transparent-header
+    data-nw-transparent-header-tone="{{ section.settings.transparent_header_tone | default: 'dark' }}"
+  {% endif %}
   style="
     --nw-hero-overlay-color: {{ section.settings.overlay_color }};
     --nw-hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
@@ -194,7 +272,29 @@
           </div>
         {%- endif -%}
 
-        {%- if section.settings.heading != blank -%}
+        {%- if bf_mode -%}
+          {%- liquid
+            assign bf_heading_primary = section.settings.bf_heading_line_1 | strip
+            assign bf_heading_accent = section.settings.bf_heading_line_2 | strip
+            if bf_heading_primary == blank
+              assign bf_heading_primary = section.settings.heading | strip_html | strip
+            endif
+            assign bf_heading_tag = 'h2'
+            if section.index == 1 and template.name != 'collection'
+              assign bf_heading_tag = 'h1'
+            endif
+          -%}
+          {%- if bf_heading_primary != blank or bf_heading_accent != blank -%}
+            <div class="nw-hero__bf-heading nw-heading">
+              {%- if bf_heading_primary != blank -%}
+                <{{ bf_heading_tag }} class="nw-hero__bf-heading-line nw-hero__bf-heading-line--primary">{{ bf_heading_primary | escape }}</{{ bf_heading_tag }}>
+              {%- endif -%}
+              {%- if bf_heading_accent != blank -%}
+                <p class="nw-hero__bf-heading-line nw-hero__bf-heading-line--accent">{{ bf_heading_accent | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- elsif section.settings.heading != blank -%}
           {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index, class: 'nw-heading' %}
         {%- endif -%}
 
@@ -219,7 +319,7 @@
               {%- if promo_link != blank -%}
                 <a
                   href="{{ promo_link }}"
-                  class="nw-hero__promo-module nw-hero__promo-module--linked"
+                  class="nw-hero__promo-module nw-hero__promo-module--linked{% if bf_mode %} nw-hero__promo-module--bf{% endif %}"
                   data-countdown-date="{{ block.settings.countdown_end_date }}"
                   data-hide-on-end="{{ block.settings.hide_after_timer_end }}"
                   {% if promo_open_new_tab %}
@@ -230,7 +330,7 @@
                 >
               {%- else -%}
                 <div
-                  class="nw-hero__promo-module"
+                  class="nw-hero__promo-module{% if bf_mode %} nw-hero__promo-module--bf{% endif %}"
                   data-countdown-date="{{ block.settings.countdown_end_date }}"
                   data-hide-on-end="{{ block.settings.hide_after_timer_end }}"
                   {{ block.shopify_attributes }}
@@ -261,7 +361,9 @@
                   {%- endif -%}
                 </div>
                 {%- if block.settings.promo_subtext != blank -%}
-                  <div class="nw-hero__promo-subtext">{{ block.settings.promo_subtext }}</div>
+                  <div class="nw-hero__promo-subtext rte">
+                    {{ block.settings.promo_subtext }}
+                  </div>
                 {%- endif -%}
                 {% if block.settings.countdown_end_date != blank or block.settings.countdown_label != blank %}
                 <div class="nw-hero__countdown-wrap">
@@ -324,6 +426,532 @@
       "id": "enable_transparent_header",
       "label": "Enable Transparent Header Over Hero",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "transparent_header_tone",
+      "label": "Transparent header text tone",
+      "info": "Match the hero area behind the nav. Light background uses dark links; dark background uses white links (Black Friday header).",
+      "default": "dark",
+      "options": [
+        {
+          "value": "dark",
+          "label": "Dark hero background (white nav text)"
+        },
+        {
+          "value": "light",
+          "label": "Light hero background (black nav text)"
+        }
+      ],
+      "visible_if": "{{ section.settings.enable_transparent_header }}"
+    },
+    {
+      "type": "header",
+      "content": "BLACK FRIDAY MODE"
+    },
+    {
+      "type": "paragraph",
+      "content": "When enabled, Black Friday typography and styling apply to this hero only. When disabled, the hero uses the default design and settings below."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_black_friday_mode",
+      "label": "Enable Black Friday mode",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bf_accent_color",
+      "label": "Accent color (gold)",
+      "default": "#E9B949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "bf_show_gold_rule",
+      "label": "Show gold bottom rule",
+      "default": true,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_gold_rule_height",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Gold rule height",
+      "default": 4,
+      "visible_if": "{{ section.settings.enable_black_friday_mode and section.settings.bf_show_gold_rule }}"
+    },
+    {
+      "type": "header",
+      "content": "Black Friday — heading",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "text",
+      "id": "bf_heading_line_1",
+      "label": "Heading line 1",
+      "default": "BLACK FRIDAY",
+      "info": "Leave blank to use the default Heading field below.",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "bf_heading_font",
+      "label": "Heading line 1 font",
+      "default": "dm_sans_n4",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_heading_line_1_size_desktop",
+      "min": 24,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading line 1 size (desktop)",
+      "default": 64,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_heading_line_1_size_mobile",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading line 1 size (mobile)",
+      "default": 40,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_heading_line_1_color",
+      "label": "Heading line 1 color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_heading_line_1_line_height",
+      "min": 90,
+      "max": 130,
+      "step": 1,
+      "unit": "%",
+      "label": "Heading line 1 line height",
+      "default": 102,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_heading_line_1_letter_spacing",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading line 1 letter spacing",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "text",
+      "id": "bf_heading_line_2",
+      "label": "Heading line 2 (accent)",
+      "default": "20% OFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "bf_heading_accent_font",
+      "label": "Heading line 2 font",
+      "default": "dm_sans_n4",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_heading_line_2_size_desktop",
+      "min": 24,
+      "max": 124,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading line 2 size (desktop)",
+      "default": 100,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_heading_line_2_size_mobile",
+      "min": 24,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading line 2 size (mobile)",
+      "default": 56,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_heading_line_2_color",
+      "label": "Heading line 2 color",
+      "default": "#E9B949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_heading_line_2_line_height",
+      "min": 90,
+      "max": 130,
+      "step": 1,
+      "unit": "%",
+      "label": "Heading line 2 line height",
+      "default": 102,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_heading_line_2_letter_spacing",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading line 2 letter spacing",
+      "default": 0,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "select",
+      "id": "bf_heading_text_transform",
+      "label": "Heading text transform",
+      "default": "uppercase",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "header",
+      "content": "Black Friday — subheading",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "select",
+      "id": "bf_subheading_font_weight",
+      "label": "Subheading font weight",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "SemiBold (600)" },
+        { "value": "700", "label": "Bold (700)" }
+      ],
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_subheading_size_desktop",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading size (desktop)",
+      "default": 20,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_subheading_size_mobile",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Subheading size (mobile)",
+      "default": 16,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_subheading_line_height",
+      "min": 100,
+      "max": 180,
+      "step": 1,
+      "unit": "%",
+      "label": "Subheading line height",
+      "default": 150,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_subheading_color",
+      "label": "Subheading color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "header",
+      "content": "Black Friday — rating",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_rating_size_desktop",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Rating text size (desktop)",
+      "default": 14,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_rating_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Rating text size (mobile)",
+      "default": 12,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_rating_text_color",
+      "label": "Rating text color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_star_color",
+      "label": "Star color",
+      "default": "#E9B949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "header",
+      "content": "Black Friday — button & badges",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_button_size_desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Button text size (desktop)",
+      "default": 18,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_button_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Button text size (mobile)",
+      "default": 16,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_button_bg_color",
+      "label": "Button background",
+      "default": "#E9B949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_button_text_color",
+      "label": "Button text color",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_badge_size_desktop",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Trust badge size (desktop)",
+      "default": 14,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_badge_size_mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Trust badge size (mobile)",
+      "default": 12,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_badge_text_color",
+      "label": "Trust badge text color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "header",
+      "content": "Black Friday — promo box position (desktop)",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_promo_desktop_inset_right",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Inset from right (desktop)",
+      "default": 80,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "select",
+      "id": "bf_promo_desktop_anchor",
+      "label": "Vertical anchor (desktop)",
+      "default": "bottom",
+      "options": [
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "top", "label": "Top" }
+      ],
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_promo_desktop_inset_bottom",
+      "min": 0,
+      "max": 297,
+      "step": 3,
+      "unit": "px",
+      "label": "Inset from bottom (desktop)",
+      "default": 57,
+      "visible_if": "{{ section.settings.enable_black_friday_mode and section.settings.bf_promo_desktop_anchor == 'bottom' }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_promo_desktop_inset_top",
+      "min": 0,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Inset from top (desktop)",
+      "default": 280,
+      "visible_if": "{{ section.settings.enable_black_friday_mode and section.settings.bf_promo_desktop_anchor == 'top' }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_promo_bg_color",
+      "label": "Promo box background",
+      "alpha": true,
+      "default": "#141414F0",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_promo_border_color",
+      "label": "Promo box border",
+      "alpha": true,
+      "default": "#E9B949B3",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_promo_title_size_desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Promo title size (desktop)",
+      "default": 18,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_promo_title_color",
+      "label": "Promo title color",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_promo_subtext_size_desktop",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Promo subtext size (desktop)",
+      "default": 14,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_promo_subtext_color",
+      "label": "Promo subtext color",
+      "alpha": true,
+      "default": "#FFFFFFD9",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_promo_divider_color",
+      "label": "Countdown divider color",
+      "alpha": true,
+      "default": "#E9B94940",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_status_text_color",
+      "label": "Live badge text color",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_status_dot_color",
+      "label": "Live badge dot color",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "range",
+      "id": "bf_countdown_label_size_desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Countdown label size (desktop)",
+      "default": 13,
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_countdown_label_color",
+      "label": "Countdown label color",
+      "alpha": true,
+      "default": "#FFFFFF99",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_timer_text_color",
+      "label": "Timer unit text color",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
     },
     {
       "type": "header",

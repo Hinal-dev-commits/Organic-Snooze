@@ -27,10 +27,10 @@
         "announcement_N8WHhU": {
           "type": "announcement",
           "settings": {
-            "text": "<p>BLACK FRIDAY STARTS NOW. SAVE 20% + FREE GiftS ON SELECT ORDERS <a href=\"/collections/bfcm\" title=\"BFCM\"><strong>SHOP NOW</strong></a></p>",
+            "text": "<p>Black Friday: 20% Off + 2 Free Pillows + Free Protector &nbsp;<a href=\"/collections/bfcm\" title=\"BFCM\"><strong>SHOP NOW</strong></a></p>",
             "link_text": "",
             "link": "",
-            "show_divider": false
+            "show_divider": true
           }
         }
       },
@@ -39,6 +39,12 @@
         "announcement_N8WHhU"
       ],
       "settings": {
+        "enable_black_friday_mode": true,
+        "bf_background_color": "#0a0a0a",
+        "bf_text_color": "#e9b949",
+        "bf_link_color": "#ffffff",
+        "bf_border_color": "#e9b949",
+        "bf_divider_color": "#ffffff",
         "auto_rotate": false,
         "change_slides_speed": 5,
         "color_scheme": "scheme-2",
@@ -510,6 +516,13 @@
         "show_line_separator": true,
         "color_scheme": "scheme-1",
         "menu_color_scheme": "scheme-1",
+        "enable_black_friday_mode": true,
+        "bf_header_background_color": "#0a0a0a",
+        "bf_header_text_color": "#ffffff",
+        "bf_header_icon_color": "#ffffff",
+        "bf_header_accent_color": "#e9b949",
+        "bf_header_border_color": "#e9b949",
+        "bf_highlight_menu_handle": "black-friday",
         "transparent_logo": "shopify://shop_images/Frame_48101060.png",
         "transparent_logo_width": 200,
         "transparent_text_color": "#ffffff",
