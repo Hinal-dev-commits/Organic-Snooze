@@ -173,6 +173,42 @@
             "margin_bottom_mobile": 0
           }
         },
+        "whats_included_NYfjML": {
+          "type": "whats_included",
+          "settings": {
+            "heading": "What's Included",
+            "items": "1 Flat Sheet\n1 Fitted Sheet\n2 Pillow Cases",
+            "use_product_metafield": false,
+            "heading_color": "#613916",
+            "text_color": "#613916",
+            "icon_color": "#613916",
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "promo_banner_z6X4cm": {
+          "type": "promo_banner",
+          "settings": {
+            "use_discount_metaobject": true,
+            "heading": "Save 15% on your first order!",
+            "description": "",
+            "discount_code": "",
+            "use_custom_icon": false,
+            "bg_color": "#FFF7E0",
+            "border_color": "#61391633",
+            "text_color": "#454500",
+            "icon_color": "#454500",
+            "code_bg_color": "#fffcf0",
+            "code_border_color": "#7f7f29",
+            "code_text_color": "#434300",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -193,21 +229,6 @@
             "option_position_order": "Size, Firmness",
             "option_1_values_order": "",
             "option_2_values_order": "",
-            "margin_top": 32,
-            "margin_bottom": 32,
-            "margin_top_mobile": 24,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "whats_included_NYfjML": {
-          "type": "whats_included",
-          "settings": {
-            "heading": "What's Included",
-            "items": "1 Flat Sheet\n1 Fitted Sheet\n2 Pillow Cases",
-            "use_product_metafield": false,
-            "heading_color": "#613916",
-            "text_color": "#613916",
-            "icon_color": "#613916",
             "margin_top": 32,
             "margin_bottom": 32,
             "margin_top_mobile": 24,
@@ -452,8 +473,9 @@
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
         "icon_text_3FhWzM",
-        "variant_picker",
         "whats_included_NYfjML",
+        "promo_banner_z6X4cm",
+        "variant_picker",
         "quantity_selector",
         "bundle_save_hbdQwN",
         "buy_buttons",

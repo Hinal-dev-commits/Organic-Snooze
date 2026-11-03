@@ -13,7 +13,7 @@
       "type": "nw-hero",
       "blocks": {
         "trust_badge_zWwKea": {
-          "type": "trust_badge", 
+          "type": "trust_badge",
           "settings": {
             "icon_color": "#cc926a",
             "use_custom_icon": true,
@@ -58,13 +58,13 @@
             "show_icon": true,
             "icon_type": "custom",
             "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
-            "promo_link": "shopify://collections",
+            "promo_link": "shopify://collections/all",
             "promo_link_open_new_tab": true,
             "promo_title": "<p><strong>BLACK FRIDAY SAVINGS ACTIVE NOW&nbsp;</strong></p>",
             "status_text": "<p>LIVE</p>",
             "promo_subtext": "<p>20% OFF + 2 FREE pillows + FREE mattress protector</p><p>Add orders to cart to unlock special discounts</p>",
             "countdown_label": "<p>Event Ending In</p>",
-            "countdown_end_date": "2026-10-23 23:59:59",
+            "countdown_end_date": "2026-11-25 23:59:59",
             "hide_after_timer_end": true
           }
         }
@@ -86,7 +86,7 @@
         "rating_stars": 5,
         "star_color": "#e57b1e",
         "rating_text": "<p><a href=\"/pages/social-proof\" title=\"Social Proof\">4.8/5 rating from 10,000+ sleepers</a></p>",
-        "heading": "Organic Mattress From the Inside Out.",
+        "heading": "Black Friday Starts Now, Save on Organic Mattresses.",
         "subheading": "<p>Bio-optimized, non-toxic mattress engineered with organic materials for deeper recovery. Developed with Gary Brecka, The Ultimate Human.</p>",
         "show_button": true,
         "btn_text": "SHOP MATTRESSES",
@@ -110,10 +110,102 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_marquee_RHRj4N": {
+    "nw_marquee_v2_ntnTnh": {
+      "type": "nw-marquee-v2",
+      "blocks": {
+        "item_BfrRdB": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_Gwwwqw": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_ihAbmy": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+)",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_9Acwh3": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_nYi7KY": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_TzhpH8": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+)",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_BfrRdB",
+        "item_Gwwwqw",
+        "item_ihAbmy",
+        "item_9Acwh3",
+        "item_nYi7KY",
+        "item_TzhpH8"
+      ],
+      "name": "t:sections.nw-marquee-v2.name",
+      "settings": {
+        "enable_desktop_marquee": true,
+        "direction": "right_to_left",
+        "speed": 85,
+        "pause_on_hover": true,
+        "font_weight": 600,
+        "font_size": 20,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
+        "gap_desktop": 28,
+        "gap_mobile": 12,
+        "icon_size_desktop": 28,
+        "icon_size_mobile": 20,
+        "gap_icon_text": 4,
+        "marquee_height_desktop": 60,
+        "marquee_height_mobile": 44,
+        "padding_desktop": 16,
+        "padding_mobile": 12,
+        "bg_type": "color",
+        "bg_color": "#E9B949",
+        "bg_gradient": "",
+        "text_color": "#000000",
+        "icon_color": "#FFFFFF"
+      }
+    },
+    "nw_marquee_xTGffW": {
       "type": "nw-marquee",
       "blocks": {
-        "item_Cgpt9L": {
+        "item_96phGC": {
           "type": "item",
           "settings": {
             "text": "100% Organic",
@@ -122,7 +214,7 @@
             "icon": "verified"
           }
         },
-        "item_crX9DQ": {
+        "item_mngVWF": {
           "type": "item",
           "settings": {
             "text": "HSA/FSA ELIGIBLE",
@@ -131,7 +223,7 @@
             "icon": "sparkle"
           }
         },
-        "item_PC6UUy": {
+        "item_XQwGVz": {
           "type": "item",
           "settings": {
             "text": "MADE IN THE USA",
@@ -140,7 +232,7 @@
             "icon": "verified"
           }
         },
-        "item_6FCdCg": {
+        "item_pFfEfF": {
           "type": "item",
           "settings": {
             "text": "FINANCE WITH AFFIRM",
@@ -149,7 +241,7 @@
             "icon": "sparkle"
           }
         },
-        "item_qkVXKc": {
+        "item_YBFDEN": {
           "type": "item",
           "settings": {
             "text": "100-NIGHT TRIAL",
@@ -158,7 +250,7 @@
             "icon": "verified"
           }
         },
-        "item_6RpLjB": {
+        "item_gngG3g": {
           "type": "item",
           "settings": {
             "text": "30-YEAR WARRANTY",
@@ -169,13 +261,14 @@
         }
       },
       "block_order": [
-        "item_Cgpt9L",
-        "item_crX9DQ",
-        "item_PC6UUy",
-        "item_6FCdCg",
-        "item_qkVXKc",
-        "item_6RpLjB"
+        "item_96phGC",
+        "item_mngVWF",
+        "item_XQwGVz",
+        "item_pFfEfF",
+        "item_YBFDEN",
+        "item_gngG3g"
       ],
+      "disabled": true,
       "name": "NW Marquee",
       "settings": {
         "direction": "right_to_left",
@@ -222,6 +315,15 @@
           "settings": {
             "label": "Mattress",
             "collection": "mattress",
+            "products_to_show": 8,
+            "default_selected": false
+          }
+        },
+        "tab_QA9wDA": {
+          "type": "tab",
+          "settings": {
+            "label": "Black Friday",
+            "collection": "bfcm",
             "products_to_show": 8,
             "default_selected": true
           }
@@ -273,12 +375,12 @@
             "author_title": "<p>Longevity Expert & Co-founder of The Ultimate Snooze</p>",
             "author_image": "shopify://shop_images/auth.png",
             "show_promo": true,
-            "promo_link": "https://theultimatesnooze.com/collections",
-            "promo_title": "<p>RECOVERY DAY SALE</p>",
+            "promo_link": "shopify://collections/all",
+            "promo_title": "<p>BLACK FRIDAY SALE</p>",
             "status_text": "<p>Live</p>",
-            "promo_subtext": "<p>FREE GIFT: Get 2 FREE pillows with any mattress order&nbsp;| Add orders to cart to unlock special discounts</p>",
+            "promo_subtext": "<p>20% OFF + FREE GIFT: Get 2 FREE pillows and FREE mattress protector with any mattress order&nbsp;| Add orders to cart to unlock special discounts</p>",
             "countdown_label": "<p>Event Ending In</p>",
-            "countdown_end_date": "2026-10-23 23:59:59",
+            "countdown_end_date": "2026-11-25 23:59:59",
             "hide_after_timer_end": true,
             "badge_1_icon": "moneyback",
             "badge_1_custom_icon": "shopify://shop_images/moneyback_9058c1d3-e09e-4452-ae29-0fc5da363722.svg",
@@ -298,6 +400,7 @@
       "block_order": [
         "tab_zzBgcE",
         "tab_QzhKAT",
+        "tab_QA9wDA",
         "tab_xBfytM",
         "tab_hGaVj4",
         "tab_8MGfk8",
@@ -1446,7 +1549,8 @@
   },
   "order": [
     "nw_hero_YTR6GB",
-    "nw_marquee_RHRj4N",
+    "nw_marquee_v2_ntnTnh",
+    "nw_marquee_xTGffW",
     "nw_collection_v2_a4yrmy",
     "nw_review_video_i4rgrQ",
     "nw_testimonials_GhpGXC",

@@ -21,10 +21,16 @@ Renders save and seller tags over NW product media images.
   {%- endcapture -%}
   {%- assign bundle_save_badge = bundle_save_badge | strip -%}
 {%- else -%}
-  {%- capture nw_max_compare_save_pct -%}
-    {%- render 'nw-product-max-compare-save-percent', product: product -%}
+  {%- capture nw_sitewide_save_pct -%}
+    {%- render 'nw-sitewide-sale-product-pricing', product: product, output_mode: 'save_percent' -%}
   {%- endcapture -%}
-  {%- assign save_percent = nw_max_compare_save_pct | strip | plus: 0 -%}
+  {%- assign save_percent = nw_sitewide_save_pct | strip | plus: 0 -%}
+  {%- if save_percent == 0 -%}
+    {%- capture nw_max_compare_save_pct -%}
+      {%- render 'nw-product-max-compare-save-percent', product: product -%}
+    {%- endcapture -%}
+    {%- assign save_percent = nw_max_compare_save_pct | strip | plus: 0 -%}
+  {%- endif -%}
 {%- endif -%}
 
 {%- if bundle_save_badge != blank -%}

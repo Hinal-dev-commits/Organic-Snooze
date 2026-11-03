@@ -9,6 +9,98 @@
  */
 {
   "sections": {
+    "nw_marquee_v2_fEBd3V": {
+      "type": "nw-marquee-v2",
+      "blocks": {
+        "item_Mz6R99": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_hG9gbj": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_Qnmz8E": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+) with mattress purchase",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_VbVdUj": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_dXk8VV": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_9M6RNA": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+) with mattress purchase",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_Mz6R99",
+        "item_hG9gbj",
+        "item_Qnmz8E",
+        "item_VbVdUj",
+        "item_dXk8VV",
+        "item_9M6RNA"
+      ],
+      "name": "t:sections.nw-marquee-v2.name",
+      "settings": {
+        "enable_desktop_marquee": true,
+        "direction": "right_to_left",
+        "speed": 85,
+        "pause_on_hover": true,
+        "font_weight": 600,
+        "font_size": 20,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
+        "gap_desktop": 28,
+        "gap_mobile": 12,
+        "icon_size_desktop": 28,
+        "icon_size_mobile": 20,
+        "gap_icon_text": 4,
+        "marquee_height_desktop": 60,
+        "marquee_height_mobile": 44,
+        "padding_desktop": 16,
+        "padding_mobile": 12,
+        "bg_type": "color",
+        "bg_color": "#E9B949",
+        "bg_gradient": "",
+        "text_color": "#000000",
+        "icon_color": "#FFFFFF"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -192,6 +284,27 @@
             "margin_bottom_mobile": 0
           }
         },
+        "promo_banner_jFDCEH": {
+          "type": "promo_banner",
+          "settings": {
+            "use_discount_metaobject": true,
+            "heading": "Save 15% on your first order!",
+            "description": "",
+            "discount_code": "",
+            "use_custom_icon": false,
+            "bg_color": "#FFF7E0",
+            "border_color": "#61391633",
+            "text_color": "#454500",
+            "icon_color": "#454500",
+            "code_bg_color": "#fffcf0",
+            "code_border_color": "#7f7f29",
+            "code_text_color": "#434300",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16
+          }
+        },
         "sleepers_UPVWMw": {
           "type": "sleepers",
           "settings": {
@@ -275,10 +388,9 @@
         },
         "shipping_tag_Agd7QN": {
           "type": "shipping_tag",
-          "disabled": true,
           "settings": {
             "text": "Ships from USA",
-            "delivery_threshold_days": 2,
+            "delivery_threshold_days": 6,
             "use_product_metafield": false,
             "use_custom_icon": true,
             "icon": "truck",
@@ -498,6 +610,7 @@
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
+        "promo_banner_jFDCEH",
         "sleepers_UPVWMw",
         "variant_picker",
         "bundle_save_K4nQ2p",
@@ -1308,6 +1421,7 @@
     }
   },
   "order": [
+    "nw_marquee_v2_fEBd3V",
     "main",
     "disclosures",
     "related-products",
