@@ -78,6 +78,10 @@
   position: relative;
 }
 
+.nw-product-promo-banner__code[hidden] {
+  display: none !important;
+}
+
 .nw-product-promo-banner__code-text {
   font-family: var(--font-body-family);
   font-size: 16px;

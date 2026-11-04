@@ -27,10 +27,10 @@
         "announcement_N8WHhU": {
           "type": "announcement",
           "settings": {
-            "text": "<p>BLACK FRIDAY STARTS NOW. SAVE 20% + FREE GiftS ON SELECT ORDERS <a href=\"/collections/bfcm\" title=\"BFCM\"><strong>SHOP NOW</strong></a></p>",
+            "text": "<p>Black Friday: 20% Off + 2 Free Pillows + Free Protector &nbsp;<a href=\"/collections/bfcm\" title=\"BFCM\"><strong>SHOP NOW</strong></a></p>",
             "link_text": "",
             "link": "",
-            "show_divider": false
+            "show_divider": true
           }
         }
       },
@@ -39,6 +39,12 @@
         "announcement_N8WHhU"
       ],
       "settings": {
+        "enable_black_friday_mode": true,
+        "bf_background_color": "#0a0a0a",
+        "bf_text_color": "#e9b949",
+        "bf_link_color": "#ffffff",
+        "bf_border_color": "#e9b949",
+        "bf_divider_color": "#ffffff",
         "auto_rotate": false,
         "change_slides_speed": 5,
         "color_scheme": "scheme-2",

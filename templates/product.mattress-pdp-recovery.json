@@ -126,7 +126,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p><strong>The Mattress Gary Brecka Sleeps On.</strong></p><p>Medium-firm comfort with a 4\" responsive organic latex euro-top comfort layer and 1,100 zoned pocketed coils for balanced pressure relief and full-body support. Made with certified organic materials and built for recovery.</p>",
+            "custom_description": "<p><strong>The Mattress Gary Brecka Sleeps On.</strong></p><p>Premium organic comfort with a 4\" responsive organic latex euro-top layer and 1,100 zoned pocketed coils for balanced pressure relief and full-body support. Made with certified organic materials and built for recovery.</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -160,6 +160,7 @@
           "type": "promo_banner",
           "settings": {
             "use_discount_metaobject": true,
+            "first_order_heading": "BLACK FRIDAY: Save [percentage]% + FREE Gifts!",
             "heading": "Save 15% on your first order!",
             "description": "",
             "discount_code": "",
@@ -533,6 +534,46 @@
             "margin_bottom_mobile": 0
           }
         },
+        "nw_freegift_bw6qVj": {
+          "type": "nw_freegift",
+          "settings": {
+            "product_source": "product_list",
+            "product_list": [
+              "organic-waterproof-mattress-protector",
+              "two-pack-signature-organic-cotton-pillows"
+            ],
+            "show_eyebrow": true,
+            "eyebrow_text": "LIMITED TIME OFFER",
+            "heading": "Black Friday Gifts",
+            "show_header_free_badge": true,
+            "subtitle": "2 Free Pillows + Free Protector · [value]  Value",
+            "free_badge_label": "FREE",
+            "display_font": "anton_n4",
+            "preview_summary": "2 organic pillows & a mattress protector, on us",
+            "start_expanded": false,
+            "notice_text": "Added to your order automatically with any King or Queen size mattress.",
+            "value_bar_label": "TOTAL FREE GIFT VALUE",
+            "value_amount_mode": "auto",
+            "value_amount_text": "$459.98",
+            "value_promo_line": "+ 20% OFF ENTIRE ORDER",
+            "value_disclaimer": "<p>Offer valid for a limited time while supplies last on all Queen, King and CA King mattresses. Bundles excluded.</p>",
+            "value_details_open_by_default": true,
+            "details_label": "See details",
+            "details_hide_label": "Hide details",
+            "gift_1_description": "<ul><li>100% USDA organic cotton fill</li><li>Adjustable loft, add or remove fill for your neck</li><li>Handcrafted in the USA</li></ul>",
+            "gift_2_description": "<ul><li>Water-resistant layer helps guard against spills</li><li>Made with organic materials, chosen for breathability</li><li>Keeps your new mattress fresh from night one</li></ul>",
+            "gift_3_description": "",
+            "gift_4_description": "",
+            "gift_5_description": "",
+            "gift_6_description": "",
+            "gift_7_description": "",
+            "gift_8_description": "",
+            "margin_top": 48,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
         "collapsible_tab_W7etYx": {
           "type": "collapsible_tab",
           "settings": {
@@ -775,6 +816,7 @@
         "trust_badges_UF8dKt",
         "payment_logos_aAAW97",
         "customer_reviews_n9JDUb",
+        "nw_freegift_bw6qVj",
         "collapsible_tab_W7etYx",
         "collapsible_tab_wP3yAA",
         "collapsible_tab_THr6Kx",

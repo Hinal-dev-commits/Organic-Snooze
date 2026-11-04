@@ -153,6 +153,8 @@ if (!customElements.get('nw-product-promo-banner')) {
             codeEl.setAttribute('data-copy-discount-code', code);
             codeEl.setAttribute('title', 'Click to copy discount code ' + code);
             codeEl.setAttribute('aria-label', 'Copy discount code ' + code);
+            codeEl.setAttribute('role', 'button');
+            codeEl.setAttribute('tabindex', '0');
             codeEl.hidden = false;
           } else {
             codeTextEl.textContent = '';
@@ -160,6 +162,8 @@ if (!customElements.get('nw-product-promo-banner')) {
             codeEl.removeAttribute('title');
             codeEl.removeAttribute('aria-label');
             codeEl.hidden = true;
+            codeEl.removeAttribute('role');
+            codeEl.removeAttribute('tabindex');
           }
         }
       };

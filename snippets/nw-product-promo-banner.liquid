@@ -20,6 +20,8 @@
   assign discount_code = block.settings.discount_code | strip
   assign discount_pct = blank
   assign discount_message_html = blank
+  assign discount_message_raw = blank
+  assign dynamic_promo_code = blank
   assign use_dynamic_promo = false
 
   if use_metaobject
@@ -32,6 +34,7 @@
             for listed_product in discount_products
               if listed_product.id == product.id
                 assign discount_message_html = discount_entry.message | metafield_tag
+                assign discount_message_raw = discount_entry.message.value | default: discount_entry.message
                 assign discount_pct = discount_entry.percentage.value | default: discount_entry.percentage
                 assign use_dynamic_promo = true
               endif
@@ -43,12 +46,30 @@
   endif
 
   if use_dynamic_promo
-    assign promo_heading = blank
+    assign promo_heading = block.settings.first_order_heading | default: block.settings.heading | strip
+    if promo_heading == blank
+      assign promo_heading = 'Save [percentage]% on your first order!'
+    endif
+    if discount_pct != blank and promo_heading contains '[percentage]'
+      assign promo_heading = promo_heading | replace: '[percentage]', discount_pct
+    endif
     assign promo_description = blank
     assign discount_code = blank
-    if discount_pct != blank
-      assign promo_heading = 'Save ' | append: discount_pct | append: '% on your first order!'
+
+    if discount_message_raw != blank and discount_message_raw contains '{'
+      assign after_open_brace = discount_message_raw | split: '{' | last
+      assign code_from_message = after_open_brace | split: '}' | first | strip
+      if code_from_message != blank
+        assign dynamic_promo_code = code_from_message
+      endif
     endif
+  endif
+
+  assign show_promo_code_pill = false
+  if discount_code != blank
+    assign show_promo_code_pill = true
+  elsif use_dynamic_promo and dynamic_promo_code != blank
+    assign show_promo_code_pill = true
   endif
 
   assign show_promo_banner = false
@@ -112,12 +133,12 @@
         {%- endif -%}
       </div>
   
-      {%- if use_dynamic_promo or discount_code != blank -%}
+      {%- if show_promo_code_pill -%}
         <div
           class="nw-product-promo-banner__code{% if use_dynamic_promo %} nw-product-promo-banner__code--copy{% endif %}"
           {% if use_dynamic_promo %}
             data-promo-banner-code
-            hidden
+            {% unless dynamic_promo_code != blank %}hidden{% endunless %}
             role="button"
             tabindex="0"
           {% endif %}
