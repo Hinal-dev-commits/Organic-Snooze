@@ -11,6 +11,7 @@
   assign product_form_id = 'product-form-' | append: section.id
 
   assign swatch_focal_point = null
+  assign fallback_color = blank
   if value.swatch.image
     assign image_url = value.swatch.image | image_url: width: 50
     assign swatch_value = 'url(' | append: image_url | append: ')'
@@ -19,6 +20,16 @@
     assign swatch_value = 'rgb(' | append: value.swatch.color.rgb | append: ')'
   else
     assign swatch_value = null
+    assign option_name_key = option.name | strip | downcase
+    if option_name_key == 'color' or option_name_key == 'colour' or option_name_key contains 'color' or option_name_key contains 'colour'
+      capture fallback_color
+        render 'nw-option-swatch-color', name: value
+      endcapture
+      assign fallback_color = fallback_color | strip
+      if fallback_color != blank
+        assign swatch_value = fallback_color
+      endif
+    endif
   endif
 
   assign option_disabled = true
@@ -65,6 +76,7 @@
     checked: value.selected,
     visually_disabled: option_disabled,
     shape: block.settings.swatch_shape,
+    fallback_color: fallback_color,
     help_text: help_text,
     additional_props: input_dataset
   %}
