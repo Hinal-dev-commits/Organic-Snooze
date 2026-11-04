@@ -9,18 +9,13 @@
 {% enddoc %}
 
 {%- liquid
-  assign blog_tag_metafield = article.metafields.custom.blog_tag
   assign read_time_metafield = article.metafields.custom.read_time
   assign editors_pick_metafield = article.metafields.custom.editor_s_pick
 
-  assign blog_tag = blank
-  if blog_tag_metafield != blank
-    if blog_tag_metafield.value != blank
-      assign blog_tag = blog_tag_metafield.value
-    else
-      assign blog_tag = blog_tag_metafield
-    endif
-  endif
+  capture blog_tag
+    render 'nw-blog-article-topic', article: article
+  endcapture
+  assign blog_tag = blog_tag | strip
 
   assign read_time = blank
   if section.settings.show_read_time and read_time_metafield != blank

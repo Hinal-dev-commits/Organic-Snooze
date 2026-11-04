@@ -1,0 +1,83 @@
+{% doc %}
+  Crawlable pagination for NW Blog Info when query params must be preserved (e.g. topic filter).
+  @param {string} base_path - URL path without query string (e.g. page.url)
+  @param {string} [topic_param] - Active topic query value (raw, not handleized)
+  @param {number} current_page - Current page number
+  @param {number} total_pages - Total page count
+  @param {string} [anchor] - Optional hash anchor
+{% enddoc %}
+
+{%- liquid
+  assign cur = current_page | default: 1 | plus: 0
+  assign total = total_pages | default: 1 | plus: 0
+  if cur < 1
+    assign cur = 1
+  endif
+  if total < 1
+    assign total = 1
+  endif
+  assign anchor_suffix = anchor | default: ''
+-%}
+
+{%- if total > 1 -%}
+  {{ 'component-pagination.css' | asset_url | stylesheet_tag }}
+  <div class="pagination-wrapper nw-blog-info__pagination" data-page="{{ cur }}">
+    <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+      <ul class="pagination__list list-unstyled" role="list">
+        {%- if cur > 1 -%}
+          {%- assign prev_page = cur | minus: 1 -%}
+          <li>
+            <a
+              href="{{ base_path }}?{% if topic_param != blank %}topic={{ topic_param | url_param_escape }}&{% endif %}topic_page={{ prev_page }}{{ anchor_suffix }}"
+              class="pagination__item pagination__item--next pagination__item-arrow link motion-reduce"
+              aria-label="{{ 'general.pagination.previous' | t }}"
+            >
+              <span class="svg-wrapper">
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </span>
+            </a>
+          </li>
+        {%- endif -%}
+
+        {%- for page_num in (1..total) -%}
+          <li>
+            {%- if page_num == cur -%}
+              <a
+                role="link"
+                aria-disabled="true"
+                class="pagination__item pagination__item--current light"
+                aria-current="page"
+                aria-label="{{ 'general.pagination.page' | t: number: page_num }}"
+              >
+                {{- page_num -}}
+              </a>
+            {%- else -%}
+              <a
+                href="{{ base_path }}?{% if topic_param != blank %}topic={{ topic_param | url_param_escape }}&{% endif %}topic_page={{ page_num }}{{ anchor_suffix }}"
+                class="pagination__item link"
+                aria-label="{{ 'general.pagination.page' | t: number: page_num }}"
+              >
+                {{- page_num -}}
+              </a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+
+        {%- if cur < total -%}
+          {%- assign next_page = cur | plus: 1 -%}
+          <li>
+            <a
+              href="{{ base_path }}?{% if topic_param != blank %}topic={{ topic_param | url_param_escape }}&{% endif %}topic_page={{ next_page }}{{ anchor_suffix }}"
+              class="pagination__item pagination__item--prev pagination__item-arrow link motion-reduce"
+              aria-label="{{ 'general.pagination.next' | t }}"
+            >
+              <span class="svg-wrapper">
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </span>
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+    </nav>
+  </div>
+{%- endif -%}

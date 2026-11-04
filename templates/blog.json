@@ -165,8 +165,47 @@
         "padding_bottom_mobile": 14
       }
     },
+    "nw_blog_info_9wjTpy": {
+      "type": "nw-blog-info",
+      "name": "t:sections.nw-blog-info.name",
+      "settings": {
+        "heading": "The Blog",
+        "blog": "blog",
+        "articles_per_page": 12,
+        "empty_blog_message": "Select a blog in section settings to show articles.",
+        "empty_topic_message": "No articles found for this topic.",
+        "show_excerpt": true,
+        "excerpt_length": 160,
+        "show_published_date": true,
+        "show_author": false,
+        "show_read_time": false,
+        "show_topic_filters": true,
+        "topic_filters_aria_label": "Filter articles by topic",
+        "topic_label": "Topic",
+        "topic_all_label": "All",
+        "heading_color": "#613916",
+        "tag_color": "#c2673b",
+        "title_color": "#613916",
+        "excerpt_color": "#613916",
+        "meta_color": "#613916",
+        "filter_border_color": "#cc926a",
+        "filter_text_color": "#613916",
+        "filter_bg_color": "#ffffff",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#cc926a",
+        "media_bg_color": "#f4efe8",
+        "bg_type": "color",
+        "bg_color": "#ffffff",
+        "bg_gradient": "",
+        "padding_top_desktop": 68,
+        "padding_bottom_desktop": 68,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
     "nw_featured_articles_zgaNLW": {
       "type": "nw-featured-articles",
+      "disabled": true,
       "name": "t:sections.nw-featured-articles.name",
       "settings": {
         "show_rating": false,
@@ -230,32 +269,9 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_quiz_bar_77kDKf": {
-      "type": "nw-quiz-bar",
-      "name": "t:sections.nw-quiz-bar.name",
-      "settings": {
-        "heading": "Find your perfect mattress",
-        "description": "Two quick questions to the right fit.",
-        "show_button": true,
-        "button_text": "Take quiz",
-        "button_link": "shopify://pages/quiz",
-        "button_style": "secondary",
-        "heading_color": "#613916",
-        "description_color": "#613916",
-        "button_bg_color": "#7f7f29",
-        "button_text_color": "#ffffff",
-        "border_color": "#61391626",
-        "bg_type": "color",
-        "bg_color": "#f4efe8",
-        "bg_gradient": "",
-        "padding_top_desktop": 0,
-        "padding_bottom_desktop": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
-      }
-    },
     "nw_blog_latest_h9GTTV": {
       "type": "nw-blog-latest",
+      "disabled": true,
       "name": "t:sections.nw-blog-latest.name",
       "settings": {
         "show_rating": false,
@@ -264,6 +280,7 @@
         "heading": "The Latest",
         "description": "",
         "article_source": "article_list",
+        "show_selection_status": true,
         "blog": "",
         "article": [
           "blog/do-mattresses-get-moldy-over-time-and-how-to-protect-yours",
@@ -327,6 +344,7 @@
     },
     "nw_blog_and_video_cepNjp": {
       "type": "nw-blog-and-video",
+      "disabled": true,
       "custom_css": [
         ".nw-blog-video__panel.nw-blog-video__panel--video {display: none;}",
         ".nw-blog-video__tabs {display: none;}"
@@ -416,368 +434,15 @@
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 48
       }
-    },
-    "nw_ultimate_video_F7nmmr": {
-      "type": "nw-ultimate-video",
-      "blocks": {
-        "video_DW8aVy": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/designed-to-work-togetther (1).mp4",
-            "image": "shopify://shop_images/shadow-potted-plants-table.png",
-            "video_link": "",
-            "category": "Expert insights",
-            "description": "<p>Dr. Jordan Metzl explains how just two minutes of movement can improve your health, mood, and daily habits.</p>",
-            "avatar": "shopify://shop_images/image_1251_feefb7b0-b018-40bd-8eb4-63bd117eb0ae.png",
-            "social_handle": "@theultimatehuman",
-            "followers": "162K followers",
-            "show_social_icon": true,
-            "social_link": "",
-            "social_icon": "shopify://shop_images/image_1253.png"
-          }
-        },
-        "video_qeGpDY": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/designed-to-work-togetther (1).mp4",
-            "image": "shopify://shop_images/shadow-potted-plants-table-1.png",
-            "video_link": "",
-            "category": "Health education",
-            "description": "<p>Gary Brecka shares practical ways to recognize inflammation and reduce it through simple lifestyle changes.</p>",
-            "avatar": "shopify://shop_images/image_1251_feefb7b0-b018-40bd-8eb4-63bd117eb0ae.png",
-            "social_handle": "@theultimatehuman",
-            "followers": "162K followers",
-            "show_social_icon": true,
-            "social_link": "",
-            "social_icon": "shopify://shop_images/image_1253.png"
-          }
-        },
-        "video_Egpxe7": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/designed-to-work-togetther (1).mp4",
-            "image": "shopify://shop_images/shadow-potted-plants-table-2.png",
-            "video_link": "",
-            "category": "Expert insights",
-            "description": "<p>Discover how inflammation, diet, and internal health affect your skin and how to support a healthier glow.</p>",
-            "avatar": "shopify://shop_images/image_1251_feefb7b0-b018-40bd-8eb4-63bd117eb0ae.png",
-            "social_handle": "@theultimatehuman",
-            "followers": "162K followers",
-            "show_social_icon": true,
-            "social_link": "",
-            "social_icon": "shopify://shop_images/image_1253.png"
-          }
-        },
-        "video_RpwiVN": {
-          "type": "video",
-          "settings": {
-            "video": "shopify://files/videos/designed-to-work-togetther (1).mp4",
-            "image": "shopify://shop_images/shadow-potted-plants-table-3.png",
-            "video_link": "",
-            "category": "Expert insights",
-            "description": "<p>Dr. Bill Rawls explores how chronic infections may affect inflammation, cellular health, and overall well-being.</p>",
-            "avatar": "shopify://shop_images/image_1251_feefb7b0-b018-40bd-8eb4-63bd117eb0ae.png",
-            "social_handle": "@theultimatehuman",
-            "followers": "162K followers",
-            "show_social_icon": true,
-            "social_link": "",
-            "social_icon": "shopify://shop_images/image_1253.png"
-          }
-        }
-      },
-      "block_order": [
-        "video_DW8aVy",
-        "video_qeGpDY",
-        "video_Egpxe7",
-        "video_RpwiVN"
-      ],
-      "disabled": true,
-      "name": "t:sections.nw-ultimate-video.name",
-      "settings": {
-        "logo": "shopify://shop_images/blog-logo.png",
-        "show_rating": true,
-        "star_rating": 5,
-        "rating_text": "Real sleepers, real mornings",
-        "heading": "Ultimate Human Podcast with Gary Brecka",
-        "show_pagination": true,
-        "show_arrows": false,
-        "arrow_style": "circle",
-        "enable_slider_loop": true,
-        "enable_autoplay": false,
-        "autoplay_delay": 4,
-        "card_bg_color": "#ffffff",
-        "card_border_color": "#cc926a",
-        "media_bg_color": "#f4efe8",
-        "media_badge_bg_color": "#f5c518",
-        "media_badge_text_color": "#613916",
-        "play_bg_color": "#ffffff80",
-        "play_icon_color": "#ffffff",
-        "heading_color": "#613916",
-        "rating_text_color": "#613916",
-        "star_color": "#e57b1e",
-        "star_inactive_color": "#d1d5db",
-        "tag_color": "#c2673b",
-        "description_color": "#613916",
-        "meta_color": "#613916",
-        "social_color": "#613916",
-        "pagination_color": "#613916",
-        "swiper_arrow_bg": "#ffffff",
-        "swiper_arrow_color": "#613916",
-        "bg_type": "color",
-        "bg_color": "#fffcf0",
-        "bg_gradient": "",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_review_video_eNX4Eq": {
-      "type": "nw-review-video",
-      "blocks": {
-        "review_R8RmNQ": {
-          "type": "review",
-          "settings": {
-            "video": "shopify://files/videos/instagram-video_e8b26256-9aaa-4428-b2d4-b9640655d5ba.mp4",
-            "overlay_text": "",
-            "review_text": "<p>10 hours before bed: no caffeine.<br/>3 hours before bed: no heavy meals or alcohol.<br/>2 hours before bed: no work.<br/>1 hour before bed: no screens.<br/>0: the number of times you hit snooze.</p>",
-            "author": "Gary Brecka",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "product": "the-ultimate-snooze-complete-transformation-bundle",
-            "custom_image": "shopify://shop_images/Object.png",
-            "custom_title": "Gary Brecka Elite™ Organic Mattress Bundle",
-            "custom_link": ""
-          }
-        },
-        "review_yyNH9w": {
-          "type": "review",
-          "settings": {
-            "video": "shopify://files/videos/instagram-video_e8b26256-9aaa-4428-b2d4-b9640655d5ba.mp4",
-            "overlay_text": "",
-            "review_text": "<p>One of the simplest ways to support better sleep is to get outside within the first 30–45 minutes of waking.</p><p>Better sleep is not only built at bedtime.</p>",
-            "author": "Gary Brecka",
-            "show_verified": true,
-            "verified_text": "Verified Customer",
-            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
-            "custom_image": "shopify://shop_images/IMG_7301_2_83a9ff42-2d40-4ee5-b6d5-055c431c7327.png",
-            "custom_title": "Pillowtop Mattress",
-            "custom_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "review_R8RmNQ",
-        "review_yyNH9w"
-      ],
-      "disabled": true,
-      "name": "t:sections.nw-review-video.name",
-      "settings": {
-        "show_rating": false,
-        "star_rating": 5,
-        "star_color": "",
-        "star_color_inactive": "",
-        "eyebrow": "SHORTS",
-        "heading": "Gary sleep tips",
-        "subheading": "",
-        "heading_color": "",
-        "description_color": "",
-        "eyebrow_color": "#c2673b",
-        "text_color": "",
-        "card_style": "style-2",
-        "enable_video_loop": false,
-        "show_arrows": true,
-        "show_dots": true,
-        "enable_autoplay": false,
-        "autoplay_delay": 3,
-        "bg_type": "none",
-        "bg_color": "",
-        "bg_gradient": "",
-        "show_button": false,
-        "button_text": "SHOP NOW",
-        "button_link": "",
-        "button_style": "primary",
-        "badge_icon_color": "#cc926a",
-        "badge_text_color": "#613916",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
-    },
-    "nw_image_aPNQ8q": {
-      "type": "nw-image",
-      "name": "t:sections.nw-image.name",
-      "settings": {
-        "heading": "Not yet sure which is the perfect Mattress for you?",
-        "button_text": "take 2-min quiz",
-        "button_link": "shopify://pages/quiz",
-        "button_style": "primary",
-        "heading_color": "#613916",
-        "image_desktop": "shopify://shop_images/38_99ccb3af-f9b5-44c9-9f44-daf9e6e6a94b.png",
-        "image_mobile": "shopify://shop_images/100_Nights_V1.png",
-        "show_gradient": false,
-        "gradient_color_start": "",
-        "gradient_color_end": "#fffcf0",
-        "gradient_end_position": 91,
-        "padding_top_desktop": 0,
-        "padding_bottom_desktop": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
-      }
-    },
-    "nw_follow_xTrrhX": {
-      "type": "nw-follow",
-      "blocks": {
-        "image_3y9A3w": {
-          "type": "image",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/SnapInsta.to_AQOSPOkg4xsv9AGYZRWblCd_ZY0lMKWUQW4GyzP2l4mwL1-uZkZtrRQHamYE4I7wKFpJ22PRZxL876XJ6yh1w7pZfTKZHq4nI8Qu5uQ.mp4",
-            "link": ""
-          }
-        },
-        "image_nQRVxF": {
-          "type": "image",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/SnapInsta.to_AQPDd-7qqoC5fbBLAsOSTqhUR7bZ6AZ6vVRT-sbsowg5Be_c8KHrfdTIkCLi4J-KVTc1kvTyuQZFcsSJMhDT5gz-d8FDjNWROX52lgI.mp4",
-            "link": ""
-          }
-        },
-        "image_YDFx36": {
-          "type": "image",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/SnapInsta.to_AQNBq0Ovf27Gn0_2l9P6blf_zc9aR3wwyOZ3Ec-WkS5cEStm6CIy7sffHBw_idr7FABx6ziaM-tPIT7BeVAXkc_S0DqiupBU8HyJA9g.mp4",
-            "link": ""
-          }
-        },
-        "image_tNNrjQ": {
-          "type": "image",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/SnapInsta.to_AQPWT6asBIBqPqsOyOoZxdrUb9yurbFc1hKGfYxpmylTq_VbQyIXRhGQdn1MMt1zWipBJoBCqdyI77bttjn5OGUSHK1FtMr8zrVgyeE.mp4",
-            "link": ""
-          }
-        },
-        "image_AcDfbE": {
-          "type": "image",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/SnapInsta.to_AQPnqMbg9uH3BApdMiCDX7Tp-rQ_7gAH57RP_KYZxGWF6yvgtDFv15EC9mosiCLXDWHYFsV06NAH9n1r3K2jsRrqgF1Gg1jj_TI16SI.mp4",
-            "link": ""
-          }
-        },
-        "image_zDrGVr": {
-          "type": "image",
-          "settings": {
-            "media_type": "image",
-            "image": "shopify://shop_images/Frame_48101003.png",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "image_3y9A3w",
-        "image_nQRVxF",
-        "image_YDFx36",
-        "image_tNNrjQ",
-        "image_AcDfbE",
-        "image_zDrGVr"
-      ],
-      "name": "t:sections.nw-follow.name",
-      "settings": {
-        "show_instagram": true,
-        "instagram_link": "https://www.instagram.com/theultimatesnooze/",
-        "show_facebook": true,
-        "facebook_link": "https://www.facebook.com/profile.php/?id=61584122796080",
-        "handle": "@theultimatesnooze",
-        "heading": "Follow the movement",
-        "show_button": true,
-        "button_text": "Follow us",
-        "button_link": "",
-        "button_style": "primary",
-        "show_arrows": true,
-        "arrow_style": "style_2",
-        "show_pagination": true,
-        "show_edge_fade": true,
-        "enable_slider_loop": true,
-        "enable_autoplay": false,
-        "autoplay_delay": 4,
-        "heading_color": "#613916",
-        "handle_color": "#c2673b",
-        "social_icon_color": "#613916",
-        "social_border_color": "#613916",
-        "edge_fade_color": "#ffffff",
-        "pagination_color": "#613916",
-        "swiper_arrow_bg": "#613916",
-        "swiper_arrow_color": "#ffffff",
-        "play_bg_color": "#ffffff80",
-        "play_icon_color": "#ffffff",
-        "bg_type": "color",
-        "bg_color": "#ffffff",
-        "bg_gradient": "",
-        "padding_top_desktop": 44,
-        "padding_bottom_desktop": 44,
-        "padding_top_mobile": 44,
-        "padding_bottom_mobile": 44
-      }
-    },
-    "nw_social_qnBwr8": {
-      "type": "nw-social",
-      "name": "t:sections.nw-social.name",
-      "settings": {
-        "heading": "Get the Sleep-Science Digest",
-        "description": "<p>Exclusive insights, deals, and early access. no spam - just better sleep.</p>",
-        "show_newsletter": true,
-        "email_placeholder": "Email address",
-        "submit_label": "Subscribe",
-        "success_message": "Thanks for subscribing!",
-        "show_call_button": true,
-        "call_button_text": "Call (719) 751-6070",
-        "call_button_link": "tel: +17197516070",
-        "show_text_button": true,
-        "text_button_text": "Text Us",
-        "text_button_link": "sms:+17197516070",
-        "show_quiz_button": true,
-        "quiz_button_text": "Sleep Quiz",
-        "quiz_button_link": "shopify://pages/quiz",
-        "heading_color": "#613916",
-        "text_color": "#613916",
-        "input_border_color": "#61391673",
-        "input_text_color": "#613916",
-        "submit_bg_color": "#878735",
-        "submit_icon_color": "#ffffff",
-        "call_button_bg_color": "#cc926a",
-        "call_button_text_color": "#ffffff",
-        "outline_button_border_color": "#613916",
-        "outline_button_text_color": "#613916",
-        "bg_type": "image",
-        "bg_color": "rgba(0,0,0,0)",
-        "bg_gradient": "",
-        "bg_image": "shopify://shop_images/layers-bg-image.png",
-        "bg_image_mobile": "shopify://shop_images/layers-bg-image.png",
-        "bg_image_opacity": 16,
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 48
-      }
     }
   },
   "order": [
     "main",
     "nw_blog_banner_ikEMXB",
     "nw_marquee_U6XiLt",
+    "nw_blog_info_9wjTpy",
     "nw_featured_articles_zgaNLW",
-    "nw_quiz_bar_77kDKf",
     "nw_blog_latest_h9GTTV",
-    "nw_blog_and_video_cepNjp",
-    "nw_ultimate_video_F7nmmr",
-    "nw_review_video_eNX4Eq",
-    "nw_image_aPNQ8q",
-    "nw_follow_xTrrhX",
-    "nw_social_qnBwr8"
+    "nw_blog_and_video_cepNjp"
   ]
 }
