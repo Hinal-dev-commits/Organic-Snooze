@@ -173,6 +173,42 @@
             "margin_bottom_mobile": 0
           }
         },
+        "whats_included_NYfjML": {
+          "type": "whats_included",
+          "settings": {
+            "heading": "What's Included",
+            "items": "1 Flat Sheet\n1 Fitted Sheet\n2 Pillow Cases",
+            "use_product_metafield": false,
+            "heading_color": "#613916",
+            "text_color": "#613916",
+            "icon_color": "#613916",
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "promo_banner_zLYBne": {
+          "type": "promo_banner",
+          "settings": {
+            "use_discount_metaobject": true,
+            "heading": "Save 15% on your first order!",
+            "description": "",
+            "discount_code": "",
+            "use_custom_icon": false,
+            "bg_color": "#fff7e0",
+            "border_color": "#61391633",
+            "text_color": "#454500",
+            "icon_color": "#454500",
+            "code_bg_color": "#fffcf0",
+            "code_border_color": "#7f7f29",
+            "code_text_color": "#434300",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -193,21 +229,6 @@
             "option_position_order": "Size, Firmness",
             "option_1_values_order": "",
             "option_2_values_order": "",
-            "margin_top": 32,
-            "margin_bottom": 32,
-            "margin_top_mobile": 24,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "whats_included_NYfjML": {
-          "type": "whats_included",
-          "settings": {
-            "heading": "What's Included",
-            "items": "1 Flat Sheet\n1 Fitted Sheet\n2 Pillow Cases",
-            "use_product_metafield": false,
-            "heading_color": "#613916",
-            "text_color": "#613916",
-            "icon_color": "#613916",
             "margin_top": 32,
             "margin_bottom": 32,
             "margin_top_mobile": 24,
@@ -265,8 +286,27 @@
             "margin_bottom_mobile": 8
           }
         },
+        "shipping_tag_YGyEYq": {
+          "type": "shipping_tag",
+          "settings": {
+            "text": "Ships from USA",
+            "delivery_threshold_days": 6,
+            "use_product_metafield": false,
+            "use_custom_icon": true,
+            "icon": "truck",
+            "custom_icon": "shopify://shop_images/Frame_2_ae1d68d4-b232-404a-9611-30258c776f81.svg",
+            "bg_color": "#e8f0e0",
+            "text_color": "#613916",
+            "icon_color": "#613916",
+            "margin_top": 12,
+            "margin_bottom": 0,
+            "margin_top_mobile": 12,
+            "margin_bottom_mobile": 0
+          }
+        },
         "trust_badges_UF8dKt": {
           "type": "trust_badges",
+          "disabled": true,
           "settings": {
             "item_1_text": "100-Night Risk-Free Trial",
             "item_1_icon": "trial",
@@ -451,11 +491,13 @@
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
         "icon_text_3FhWzM",
-        "variant_picker",
         "whats_included_NYfjML",
+        "promo_banner_zLYBne",
+        "variant_picker",
         "quantity_selector",
         "bundle_save_K4nQ2p",
         "buy_buttons",
+        "shipping_tag_YGyEYq",
         "trust_badges_UF8dKt",
         "payment_logos_GKUGrC",
         "collapsible_tab_wP3yAA",
@@ -954,7 +996,7 @@
         "product_pAFffA": {
           "type": "product",
           "settings": {
-            "product": "sheet-set-breezeline™-air-100-organic-cotton-copy-1",
+            "product": "organic-cooling-sheets",
             "custom_title": "Breezeline Air™ Cotton",
             "use_custom_image": true,
             "custom_image": "shopify://shop_images/Airy_Luxury_Bedding_in_Morning_Light.png",
@@ -974,7 +1016,7 @@
         "product_LhQtai": {
           "type": "product",
           "settings": {
-            "product": "the-ultimate-snooze-breezeline™-organic-cooling-sheet-set",
+            "product": "100-linen-natural-cool-sheet-set",
             "custom_title": "Breezeline Cool™ Linen",
             "use_custom_image": true,
             "custom_image": "shopify://shop_images/Breezy_Linen_Sheets_at_Twilight.png",
@@ -1321,10 +1363,10 @@
         "product_list": [
           "the-ultimate-snooze-pillowtop-organic-mattress",
           "the-ultimate-snooze-pure-organic-mattress",
-          "signature-organic-cotton-pillows-combo-packs",
+          "two-pack-signature-organic-cotton-pillows",
           "the-organic-snooze-pillow",
           "organic-waterproof-mattress-protector",
-          "the-organic-snooze-kloud-pillow-copy"
+          "the-organic-snooze-kloud-pillow"
         ],
         "collection": "",
         "products_to_show": 8,

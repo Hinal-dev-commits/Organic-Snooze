@@ -43,6 +43,30 @@
     display: block;
 }
 
+.nw-cta-badges__icon--themed {
+    color: var(--nw-cta-badge-icon, var(--nw-tan));
+}
+
+.nw-cta-badges__icon--themed svg path[fill]:not([fill='none']) {
+    fill: var(--nw-cta-badge-icon, var(--nw-tan)) !important;
+}
+
+.nw-cta-badges__icon--themed svg path[stroke]:not([stroke='none']) {
+    stroke: var(--nw-cta-badge-icon, var(--nw-tan)) !important;
+}
+
+.nw-cta-badges__icon--themed[style*='--nw-cta-badge-icon-mask'] .nw-cta-badges__icon-img {
+    background-color: var(--nw-cta-badge-icon, var(--nw-tan));
+    -webkit-mask-image: var(--nw-cta-badge-icon-mask);
+    mask-image: var(--nw-cta-badge-icon-mask);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
 .nw-cta-badges__text,
 .nw-cta-badges__text * {
     margin: 0;

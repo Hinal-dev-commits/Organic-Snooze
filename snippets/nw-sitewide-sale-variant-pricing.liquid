@@ -1,0 +1,46 @@
+{% doc %}
+  Sitewide sale display pricing for a single variant (storefront only).
+  Strike is variant.price only — compare-at is not stacked on top of the promo %.
+  @param {object} product
+  @param {object} variant
+  @param {string} [output_mode] - sale_price | strike_price | save_percent | save_cents
+{% enddoc %}
+
+{%- liquid
+  assign output_mode = output_mode | default: 'sale_price'
+  assign sale_price = blank
+  assign strike_price = blank
+  assign save_percent = 0
+  assign save_cents = 0
+
+  unless variant == blank or product == blank
+    capture nw_sale_eligible_capture
+      render 'nw-sitewide-sale-eligible', product: product
+    endcapture
+    assign nw_sale_eligible_capture = nw_sale_eligible_capture | strip
+
+    if nw_sale_eligible_capture != blank
+      assign nw_sale_pct = settings.nw_sitewide_sale_percent | plus: 0
+      assign base_price = variant.price
+      assign strike_price = base_price
+      assign remaining_pct = 100 | minus: nw_sale_pct
+      assign sale_price = base_price | times: remaining_pct | divided_by: 100.0 | round
+      assign save_percent = nw_sale_pct
+      assign save_cents = base_price | minus: sale_price
+      if save_cents < 0
+        assign save_cents = 0
+      endif
+    endif
+  endunless
+-%}
+
+{%- case output_mode -%}
+  {%- when 'strike_price' -%}
+    {%- if strike_price != blank -%}{{ strike_price }}{%- endif -%}
+  {%- when 'save_percent' -%}
+    {%- if save_percent > 0 -%}{{ save_percent }}{%- endif -%}
+  {%- when 'save_cents' -%}
+    {%- if save_cents > 0 -%}{{ save_cents }}{%- endif -%}
+  {%- else -%}
+    {%- if sale_price != blank -%}{{ sale_price }}{%- endif -%}
+{%- endcase -%}

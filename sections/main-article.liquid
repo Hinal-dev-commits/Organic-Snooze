@@ -68,7 +68,7 @@
           class="article-template__content page-width page-width--narrow rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           {{ block.shopify_attributes }}
         >
-          {{ article.content }}
+          {% render 'nw-rte-demote-h1', html: article.content, demoted_class: 'nw-article-content__from-h1' %}
         </div>
 
       {%- when 'share' -%}

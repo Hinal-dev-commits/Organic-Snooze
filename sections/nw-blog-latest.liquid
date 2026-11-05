@@ -4,7 +4,30 @@
   assign selected_blog = section.settings.blog
   assign selected_articles = section.settings.article
   assign selected_articles_count = section.settings.article.count | default: 0
-  assign similar_articles = article.metafields.custom.similar_article.value | default: article.metafields.custom.similar_article
+  assign bl_similar_mf = blank
+  assign bl_similar_mf_list = blank
+  if article != blank
+    assign bl_similar_mf = article.metafields.custom.similar_article
+    if bl_similar_mf == blank
+      assign bl_similar_mf = article.metafields.custom.similar_articles
+    endif
+    if bl_similar_mf != blank
+      assign bl_similar_mf_list = bl_similar_mf.value
+      if bl_similar_mf_list == blank
+        assign bl_similar_mf_list = bl_similar_mf
+      endif
+    endif
+  endif
+  assign bl_selected_ids = ''
+  assign bl_selected_count = 0
+  assign bl_metafield_count = 0
+  assign bl_selection_source = ''
+  assign bl_selection_source_label = ''
+  assign bl_selected_titles_display = ''
+  assign bl_use_metafield_selection = false
+  assign bl_category_count = 0
+  assign bl_current_topic = blank
+  assign bl_show_selected_blog = false
   assign post_limit = section.settings.post_limit | default: 6
   assign slides_desktop = section.settings.slides_desktop | default: 4
   if post_limit < 1
@@ -19,36 +42,245 @@
   assign pagination_id = 'NwBlogLatestPagination-' | append: section.id
   assign has_articles = false
   assign hide_section = false
-  if article_source == 'metafields'
-    if similar_articles != blank
-      if similar_articles.title != blank
-        assign has_articles = true
-      else
-        for item in similar_articles limit: post_limit
-          assign item_article = item
-          if item_article == blank or item_article.title == blank
-            assign article_path = item | strip
-            if article_path contains '/'
-              assign article_path_parts = article_path | split: '/'
-              assign article_blog_handle = article_path_parts.first
-              assign article_handle = article_path_parts.last
-              if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
-                assign item_article = blogs[article_blog_handle].articles[article_handle]
+  if article != blank
+    assign bl_use_metafield_selection = true
+  elsif article_source == 'metafields'
+    assign bl_use_metafield_selection = true
+  endif
+
+  if bl_use_metafield_selection
+      assign bl_source_blog = blank
+      if selected_blog != blank
+        assign bl_source_blog = selected_blog
+      elsif article != blank and article.blog != blank
+        assign bl_source_blog = article.blog
+      endif
+      if bl_source_blog != blank and bl_source_blog.handle != blank and blogs[bl_source_blog.handle] != blank
+        assign bl_source_blog = blogs[bl_source_blog.handle]
+      endif
+
+      if bl_similar_mf_list != blank
+        if bl_similar_mf_list.title != blank
+          assign bl_mf_item = bl_similar_mf_list
+          if bl_mf_item.value != blank
+            assign bl_mf_item = bl_mf_item.value
+          endif
+          if bl_mf_item != blank and bl_mf_item.title != blank and bl_mf_item.id != article.id
+            assign bl_metafield_count = 1
+          endif
+        else
+          for bl_mf_item in bl_similar_mf_list limit: post_limit
+            assign bl_mf_article = bl_mf_item
+            if bl_mf_article.value != blank
+              assign bl_mf_article = bl_mf_article.value
+            endif
+            if bl_mf_article == blank or bl_mf_article.title == blank
+              assign article_path = bl_mf_item | strip
+              if article_path contains '/'
+                assign article_path_parts = article_path | split: '/'
+                assign article_blog_handle = article_path_parts.first
+                assign article_handle = article_path_parts.last
+                assign bl_mf_article = blank
+                if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
+                  for bl_mf_candidate in blogs[article_blog_handle].articles
+                    if bl_mf_candidate.handle == article_handle
+                      assign bl_mf_article = bl_mf_candidate
+                      break
+                    endif
+                  endfor
+                endif
+              else
+                assign bl_mf_article = articles[article_path]
               endif
+            endif
+            if bl_mf_article != blank and bl_mf_article.title != blank and bl_mf_article.id != article.id
+              assign bl_metafield_count = bl_metafield_count | plus: 1
+            endif
+          endfor
+        endif
+      endif
+
+      if bl_metafield_count > 0
+        assign bl_selection_source = 'metafield'
+        assign bl_selection_source_label = 'Related Articles Metafield'
+      endif
+
+      if bl_metafield_count == 0 and bl_source_blog != blank
+        assign bl_current_topic = blank
+        if article != blank
+          assign bl_current_topic_mf = article.metafields.custom.blog_tag
+          if bl_current_topic_mf != blank
+            if bl_current_topic_mf.value != blank
+              assign bl_current_topic = bl_current_topic_mf.value | strip
             else
-              assign item_article = articles[article_path]
+              assign bl_current_topic = bl_current_topic_mf | strip
             endif
           endif
-          if item_article != blank and item_article.title != blank
-            assign has_articles = true
-            break
+          if bl_current_topic == blank and article.tags.size > 0
+            assign bl_current_topic = article.tags.first | strip
+          endif
+        endif
+        assign bl_current_topic_handle = bl_current_topic | handleize
+
+        if bl_current_topic_handle != blank and article != blank
+          for candidate in bl_source_blog.articles limit: 50
+            if article != blank and candidate.id == article.id
+              continue
+            endif
+            assign candidate_match = false
+            if bl_current_topic != blank and candidate.tags contains bl_current_topic
+              assign candidate_match = true
+            endif
+            unless candidate_match
+              assign cand_topic = blank
+              assign cand_topic_mf = candidate.metafields.custom.blog_tag
+              if cand_topic_mf != blank
+                if cand_topic_mf.value != blank
+                  assign cand_topic = cand_topic_mf.value | strip
+                else
+                  assign cand_topic = cand_topic_mf | strip
+                endif
+              endif
+              if cand_topic == blank and candidate.tags.size > 0
+                assign cand_topic = candidate.tags.first | strip
+              endif
+              if cand_topic != blank
+                assign cand_topic_handle = cand_topic | handleize
+                if cand_topic_handle == bl_current_topic_handle
+                  assign candidate_match = true
+                endif
+              endif
+            endunless
+            unless candidate_match
+              for cand_shop_tag in candidate.tags
+                assign cand_shop_tag = cand_shop_tag | strip
+                if cand_shop_tag != blank
+                  assign cand_shop_tag_handle = cand_shop_tag | handleize
+                  if cand_shop_tag_handle == bl_current_topic_handle
+                    assign candidate_match = true
+                    break
+                  endif
+                endif
+              endfor
+            endunless
+            if candidate_match and candidate.blog != blank
+              assign ref_token = candidate.blog.handle | append: '/' | append: candidate.handle
+              assign id_check = '|' | append: ref_token | append: '|'
+              assign ids_wrapped = '|' | append: bl_selected_ids | append: '|'
+              unless ids_wrapped contains id_check
+                if bl_selected_ids != blank
+                  assign bl_selected_ids = bl_selected_ids | append: '|'
+                endif
+                assign bl_selected_ids = bl_selected_ids | append: ref_token
+                assign bl_category_count = bl_category_count | plus: 1
+                assign bl_selected_count = bl_selected_count | plus: 1
+              endunless
+            endif
+            if bl_category_count >= post_limit
+              break
+            endif
+          endfor
+        endif
+
+        if bl_category_count > 0 and bl_selection_source == blank
+          assign bl_selection_source = 'category'
+          assign bl_selection_source_label = 'Same category (NW Blog Info topic)'
+        endif
+
+        if bl_category_count == 0
+          assign bl_selected_ids = ''
+          assign bl_selected_count = 0
+          for candidate in bl_source_blog.articles limit: 50
+            if article != blank and candidate.id == article.id
+              continue
+            endif
+            if candidate.blog == blank
+              continue
+            endif
+            assign ref_token = candidate.blog.handle | append: '/' | append: candidate.handle
+            assign id_check = '|' | append: ref_token | append: '|'
+            assign ids_wrapped = '|' | append: bl_selected_ids | append: '|'
+            unless ids_wrapped contains id_check
+              if bl_selected_ids != blank
+                assign bl_selected_ids = bl_selected_ids | append: '|'
+              endif
+              assign bl_selected_ids = bl_selected_ids | append: ref_token
+              assign bl_selected_count = bl_selected_count | plus: 1
+            endunless
+            if bl_selected_count >= post_limit
+              break
+            endif
+          endfor
+        endif
+
+        if bl_category_count == 0 and bl_selected_count > 0 and bl_selection_source == blank
+          assign bl_selection_source = 'latest'
+          assign bl_selection_source_label = 'Latest Articles Fallback'
+        endif
+      endif
+
+      if bl_metafield_count > 0
+        assign has_articles = true
+        if bl_similar_mf_list.title != blank
+          assign bl_mf_title_article = bl_similar_mf_list
+          if bl_mf_title_article.value != blank
+            assign bl_mf_title_article = bl_mf_title_article.value
+          endif
+          if bl_mf_title_article != blank and bl_mf_title_article.title != blank
+            assign bl_selected_titles_display = bl_mf_title_article.title
+          endif
+        else
+          for bl_mf_item in bl_similar_mf_list limit: post_limit
+            assign bl_mf_title_article = bl_mf_item
+            if bl_mf_title_article.value != blank
+              assign bl_mf_title_article = bl_mf_title_article.value
+            endif
+            if bl_mf_title_article != blank and bl_mf_title_article.title != blank and bl_mf_title_article.id != article.id
+              if bl_selected_titles_display != blank
+                assign bl_selected_titles_display = bl_selected_titles_display | append: ' • '
+              endif
+              assign bl_selected_titles_display = bl_selected_titles_display | append: bl_mf_title_article.title
+            endif
+          endfor
+        endif
+      elsif bl_selected_count > 0
+        assign has_articles = true
+        assign bl_ref_list_for_titles = bl_selected_ids | split: '|'
+        for bl_title_ref in bl_ref_list_for_titles
+          if bl_title_ref == blank
+            continue
+          endif
+          assign bl_title_parts = bl_title_ref | split: '/'
+          assign bl_title_blog_handle = bl_title_parts | first
+          assign bl_title_article_handle = bl_title_parts | last
+          if bl_title_blog_handle != blank and bl_title_article_handle != blank and blogs[bl_title_blog_handle] != blank
+            assign bl_title_article = blank
+            for bl_title_candidate in blogs[bl_title_blog_handle].articles
+              if bl_title_candidate.handle == bl_title_article_handle
+                assign bl_title_article = bl_title_candidate
+                break
+              endif
+            endfor
+            if bl_title_article != blank and bl_title_article.title != blank
+              if bl_selected_titles_display != blank
+                assign bl_selected_titles_display = bl_selected_titles_display | append: ' • '
+              endif
+              assign bl_selected_titles_display = bl_selected_titles_display | append: bl_title_article.title
+            endif
           endif
         endfor
+      elsif bl_source_blog != blank and bl_source_blog.articles_count > 0
+        assign bl_show_selected_blog = true
+        assign has_articles = true
+        if bl_selection_source == blank
+          assign bl_selection_source = 'latest'
+          assign bl_selection_source_label = 'Latest Articles Fallback'
+        endif
+      elsif request.design_mode
+        assign has_articles = false
+      else
+        assign hide_section = true
       endif
-    endif
-    unless has_articles
-      assign hide_section = true
-    endunless
   elsif article_source == 'article_list' and selected_articles != blank
     assign has_articles = true
   elsif article_source == 'blog' and selected_blog != blank and selected_blog.articles_count > 0
@@ -61,9 +293,11 @@
     else
       assign placeholder_count = 3
     endif
-  elsif article_source == 'metafields'
-    if similar_articles.count > 0
-      assign placeholder_count = similar_articles.count
+  elsif bl_use_metafield_selection
+    if bl_metafield_count > 0
+      assign placeholder_count = bl_metafield_count
+    elsif bl_selected_count > 0
+      assign placeholder_count = bl_selected_count
     else
       assign placeholder_count = 3
     endif
@@ -111,6 +345,35 @@
   "
 >
   <div class="page-width">
+    {%- if request.design_mode and section.settings.show_selection_status -%}
+      <div
+        class="nw-blog-latest__selection-status"
+        style="margin:0 0 24px;padding:16px 20px;border:1px dashed #cc926a;border-radius:8px;background:#faf7f2;font-family:var(--font-body-family);font-size:14px;line-height:1.5;color:#613916;"
+        aria-live="polite"
+      >
+        <p style="margin:0 0 8px;font-weight:600;">Article selection (theme editor only)</p>
+        {%- if bl_use_metafield_selection -%}
+          {%- if article == blank -%}
+            <p style="margin:0;">Preview an <strong>article</strong> page to see which source and articles are used.</p>
+          {%- elsif bl_selection_source_label != blank -%}
+            <p style="margin:0 0 8px;"><strong>Source:</strong> {{ bl_selection_source_label }}</p>
+            {%- if bl_selected_titles_display != blank -%}
+              <p style="margin:0;"><strong>Articles:</strong> {{ bl_selected_titles_display }}</p>
+            {%- elsif bl_current_topic != blank -%}
+              <p style="margin:0;"><strong>Topic:</strong> {{ bl_current_topic }}</p>
+            {%- else -%}
+              <p style="margin:0;">No articles selected (section hidden on storefront).</p>
+            {%- endif -%}
+          {%- else -%}
+            <p style="margin:0;">No articles selected (section hidden on storefront).</p>
+          {%- endif -%}
+        {%- elsif article_source == 'article_list' -%}
+          <p style="margin:0;"><strong>Source:</strong> Manual article list (section settings)</p>
+        {%- elsif article_source == 'blog' -%}
+          <p style="margin:0;"><strong>Source:</strong> Blog — latest from selected blog</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
     <div class="nw-blog-latest__wrapper{%- render 'nw-scroll-animation' -%}">
       {%- if section.settings.show_rating
         or section.settings.eyebrow != blank
@@ -138,33 +401,88 @@
         <div class="swiper nw-blog-latest__swiper" id="NwBlogLatestSwiper-{{ section.id }}">
           <div class="swiper-wrapper">
             {%- if has_articles -%}
-              {%- if article_source == 'metafields' -%}
-                {%- if similar_articles.title != blank -%}
-                  <div class="swiper-slide">
-                    {% render 'nw-blog-latest-card', article: similar_articles, section: section %}
-                  </div>
-                {%- else -%}
-                  {%- for item in similar_articles limit: post_limit -%}
-                    {%- liquid
-                      assign item_article = item
-                      if item_article == blank or item_article.title == blank
-                        assign article_path = item | strip
-                        if article_path contains '/'
-                          assign article_path_parts = article_path | split: '/'
-                          assign article_blog_handle = article_path_parts.first
-                          assign article_handle = article_path_parts.last
-                          if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank
-                            assign item_article = blogs[article_blog_handle].articles[article_handle]
-                          endif
-                        else
-                          assign item_article = articles[article_path]
-                        endif
-                      endif
-                    -%}
-                    {%- if item_article != blank and item_article.title != blank -%}
+              {%- if bl_use_metafield_selection -%}
+                {%- if bl_metafield_count > 0 -%}
+                  {%- if bl_similar_mf_list.title != blank -%}
+                    {%- assign bl_mf_slide = bl_similar_mf_list -%}
+                    {%- if bl_mf_slide.value != blank -%}
+                      {%- assign bl_mf_slide = bl_mf_slide.value -%}
+                    {%- endif -%}
+                    {%- if bl_mf_slide != blank and bl_mf_slide.title != blank and bl_mf_slide.id != article.id -%}
                       <div class="swiper-slide">
-                        {% render 'nw-blog-latest-card', article: item_article, section: section %}
+                        {% render 'nw-blog-latest-card', article: bl_mf_slide, section: section %}
                       </div>
+                    {%- endif -%}
+                  {%- else -%}
+                    {%- assign bl_mf_slides_rendered = 0 -%}
+                    {%- for bl_mf_item in bl_similar_mf_list -%}
+                      {%- assign bl_mf_slide = bl_mf_item -%}
+                      {%- if bl_mf_slide.value != blank -%}
+                        {%- assign bl_mf_slide = bl_mf_slide.value -%}
+                      {%- endif -%}
+                      {%- if bl_mf_slide == blank or bl_mf_slide.title == blank -%}
+                        {%- assign article_path = bl_mf_item | strip -%}
+                        {%- if article_path contains '/' -%}
+                          {%- assign article_path_parts = article_path | split: '/' -%}
+                          {%- assign article_blog_handle = article_path_parts.first -%}
+                          {%- assign article_handle = article_path_parts.last -%}
+                          {%- if article_blog_handle != blank and article_handle != blank and blogs[article_blog_handle] != blank -%}
+                            {%- for bl_mf_slide in blogs[article_blog_handle].articles -%}
+                              {%- if bl_mf_slide.handle == article_handle -%}
+                                {%- break -%}
+                              {%- endif -%}
+                            {%- endfor -%}
+                          {%- endif -%}
+                        {%- else -%}
+                          {%- assign bl_mf_slide = articles[article_path] -%}
+                        {%- endif -%}
+                      {%- endif -%}
+                      {%- if bl_mf_slide != blank and bl_mf_slide.title != blank and bl_mf_slide.id != article.id -%}
+                        <div class="swiper-slide">
+                          {% render 'nw-blog-latest-card', article: bl_mf_slide, section: section %}
+                        </div>
+                        {%- assign bl_mf_slides_rendered = bl_mf_slides_rendered | plus: 1 -%}
+                        {%- if bl_mf_slides_rendered >= post_limit -%}
+                          {%- break -%}
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                {%- elsif bl_selected_count > 0 -%}
+                  {%- assign bl_ref_list = bl_selected_ids | split: '|' -%}
+                  {%- for bl_ref_token in bl_ref_list -%}
+                    {%- if bl_ref_token != blank -%}
+                      {%- assign bl_ref_parts = bl_ref_token | split: '/' -%}
+                      {%- assign bl_ref_blog_handle = bl_ref_parts | first -%}
+                      {%- assign bl_ref_article_handle = bl_ref_parts | last -%}
+                      {%- if bl_ref_blog_handle != blank and bl_ref_article_handle != blank and blogs[bl_ref_blog_handle] != blank -%}
+                        {%- assign bl_slide_article = blank -%}
+                        {%- for bl_candidate in blogs[bl_ref_blog_handle].articles -%}
+                          {%- if bl_candidate.handle == bl_ref_article_handle -%}
+                            {%- assign bl_slide_article = bl_candidate -%}
+                            {%- break -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                        {%- if bl_slide_article != blank and bl_slide_article.title != blank -%}
+                          <div class="swiper-slide">
+                            {% render 'nw-blog-latest-card', article: bl_slide_article, section: section %}
+                          </div>
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- elsif bl_show_selected_blog -%}
+                  {%- assign bl_slides_rendered = 0 -%}
+                  {%- for bl_slide_article in bl_source_blog.articles -%}
+                    {%- if article != blank and bl_slide_article.id == article.id -%}
+                      {%- continue -%}
+                    {%- endif -%}
+                    <div class="swiper-slide">
+                      {% render 'nw-blog-latest-card', article: bl_slide_article, section: section %}
+                    </div>
+                    {%- assign bl_slides_rendered = bl_slides_rendered | plus: 1 -%}
+                    {%- if bl_slides_rendered >= post_limit -%}
+                      {%- break -%}
                     {%- endif -%}
                   {%- endfor -%}
                 {%- endif -%}
@@ -324,13 +642,28 @@
         { "value": "article_list", "label": "Article List" },
         { "value": "metafields", "label": "Metafields" }
       ],
-      "info": "Choose Blog to pull latest articles, Article List for specific articles, or Metafields for article.metafields.custom.similar_article."
+      "info": "On article pages, related posts are chosen automatically (metafield, then same category, then latest). On other templates, choose Blog or Article List."
+    },
+    {
+      "type": "header",
+      "content": "Article page selection (automatic)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_selection_status",
+      "label": "Show selection source in theme editor",
+      "default": true,
+      "info": "On article pages, preview shows whether posts came from the similar-article metafield, category/tag matching, or latest fallback. Hidden on the live store."
+    },
+    {
+      "type": "paragraph",
+      "content": "Article pages: (1) custom.similar_article metafield, (2) other articles in the same topic/category as NW Blog Info (blog_tag metafield, else first Shopify tag), (3) latest published articles. Uses Articles To Show for the count. The current article is never included."
     },
     {
       "type": "blog",
       "id": "blog",
       "label": "Blog",
-      "info": "Used when Article Source is set to Blog."
+      "info": "Article pages: blog used for category and latest fallbacks. Other templates: used when Article Source is Blog."
     },
     {
       "type": "article_list",

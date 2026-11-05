@@ -95,7 +95,28 @@ document.addEventListener('DOMContentLoaded', () => {
           return announcementBar ? announcementBar.offsetHeight : 0;
         }
 
-        function setTransparentHeader(enabled) {
+        const TRANSPARENT_TONE_CLASSES = ['nw-header-transparent-tone-light', 'nw-header-transparent-tone-dark'];
+
+        function setTransparentHeaderTone(trigger) {
+          const { header, headerWrapper } = getHeaderElements();
+          const tone = trigger?.dataset?.nwTransparentHeaderTone === 'light' ? 'light' : 'dark';
+
+          [header, headerWrapper].forEach(function (element) {
+            if (!element) return;
+            element.classList.remove(...TRANSPARENT_TONE_CLASSES);
+            element.classList.add('nw-header-transparent-tone-' + tone);
+          });
+        }
+
+        function clearTransparentHeaderTone() {
+          const { header, headerWrapper } = getHeaderElements();
+          [header, headerWrapper].forEach(function (element) {
+            if (!element) return;
+            element.classList.remove(...TRANSPARENT_TONE_CLASSES);
+          });
+        }
+
+        function setTransparentHeader(enabled, trigger) {
           const { header, headerWrapper } = getHeaderElements();
 
           if (header) {
@@ -104,6 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (headerWrapper) {
             headerWrapper.classList.toggle(TRANSPARENT_HEADER_CLASS, enabled);
+          }
+
+          if (enabled && trigger) {
+            setTransparentHeaderTone(trigger);
+          } else {
+            clearTransparentHeaderTone();
           }
         }
 
@@ -128,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const isWithinThreshold = window.scrollY <= scrollThreshold;
           const shouldEnable = isWithinThreshold && sectionBottom > headerHeight;
 
-          setTransparentHeader(shouldEnable);
+          setTransparentHeader(shouldEnable, trigger);
         }
 
         function onScrollOrResize() {

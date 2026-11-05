@@ -1,0 +1,553 @@
+{{ 'nw-blog-info.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign nw_shell_selector = '#NwBlogInfo-' | append: section.id
+  assign listing_blog = section.settings.blog
+  if listing_blog == blank and blog != blank
+    assign listing_blog = blog
+  endif
+
+  assign articles_blog = listing_blog
+  if blog != blank and listing_blog != blank and blog.handle == listing_blog.handle
+    assign articles_blog = blog
+  endif
+
+  assign per_page = section.settings.articles_per_page | default: 12
+  if per_page < 1
+    assign per_page = 1
+  endif
+  if per_page > 50
+    assign per_page = 50
+  endif
+
+  assign list_base_url = articles_blog.url | default: listing_blog.url | default: request.path
+
+  assign topic_source_blog = listing_blog
+  if listing_blog != blank and listing_blog.handle != blank and blogs[listing_blog.handle] != blank
+    assign topic_source_blog = blogs[listing_blog.handle]
+  endif
+
+  assign topic_discovered_string = ''
+  if topic_source_blog != blank and section.settings.show_topic_filters
+    for topic_article in topic_source_blog.articles limit: 50
+      assign article_tag = blank
+      assign topic_tag_metafield = topic_article.metafields.custom.blog_tag
+      if topic_tag_metafield != blank
+        if topic_tag_metafield.value != blank
+          assign article_tag = topic_tag_metafield.value | strip
+        else
+          assign article_tag = topic_tag_metafield | strip
+        endif
+      endif
+      if article_tag == blank and topic_article.tags.size > 0
+        assign article_tag = topic_article.tags.first | strip
+      endif
+      if article_tag != blank
+        assign tag_check = '|' | append: article_tag | append: '|'
+        assign tags_wrapped = '|' | append: topic_discovered_string | append: '|'
+        unless tags_wrapped contains tag_check
+          if topic_discovered_string != blank
+            assign topic_discovered_string = topic_discovered_string | append: '|'
+          endif
+          assign topic_discovered_string = topic_discovered_string | append: article_tag
+        endunless
+      endif
+    endfor
+  endif
+  assign topic_discovered_array = topic_discovered_string | split: '|'
+
+  assign topic_order_default = "Sleep Science|Mattress Materials|Organic Living|Product Guides|Recovery & Performance|Sleep Environment|Adjustable Bases|Sleep Health|Bedding & Accessories|Gary Brecka|Buyer's Guides|Sleep Tips"
+  assign topic_order_array = topic_order_default | split: '|'
+
+  assign topic_tags_string = ''
+  for ordered_topic in topic_order_array
+    assign ordered_topic = ordered_topic | strip
+    if ordered_topic == blank
+      continue
+    endif
+    assign ordered_topic_handle = ordered_topic | handleize
+    assign topic_found = false
+    assign topic_label_for_list = ordered_topic
+    for discovered_topic in topic_discovered_array
+      assign discovered_topic = discovered_topic | strip
+      if discovered_topic == blank
+        continue
+      endif
+      assign discovered_topic_handle = discovered_topic | handleize
+      if discovered_topic_handle == ordered_topic_handle
+        assign topic_found = true
+        assign topic_label_for_list = discovered_topic
+        break
+      endif
+    endfor
+    if topic_found
+      assign tag_check = '|' | append: topic_label_for_list | append: '|'
+      assign tags_wrapped = '|' | append: topic_tags_string | append: '|'
+      unless tags_wrapped contains tag_check
+        if topic_tags_string != blank
+          assign topic_tags_string = topic_tags_string | append: '|'
+        endif
+        assign topic_tags_string = topic_tags_string | append: topic_label_for_list
+      endunless
+    endif
+  endfor
+
+  for discovered_topic in topic_discovered_array
+    assign discovered_topic = discovered_topic | strip
+    if discovered_topic == blank
+      continue
+    endif
+    assign discovered_topic_handle = discovered_topic | handleize
+    assign already_listed = false
+    for ordered_topic in topic_order_array
+      assign ordered_topic = ordered_topic | strip
+      if ordered_topic != blank
+        assign ordered_topic_check_handle = ordered_topic | handleize
+        if ordered_topic_check_handle == discovered_topic_handle
+          assign already_listed = true
+          break
+        endif
+      endif
+    endfor
+    unless already_listed
+      assign tag_check = '|' | append: discovered_topic | append: '|'
+      assign tags_wrapped = '|' | append: topic_tags_string | append: '|'
+      unless tags_wrapped contains tag_check
+        if topic_tags_string != blank
+          assign topic_tags_string = topic_tags_string | append: '|'
+        endif
+        assign topic_tags_string = topic_tags_string | append: discovered_topic
+      endunless
+    endunless
+  endfor
+
+  assign topic_tags_array = topic_tags_string | split: '|'
+
+  assign active_topic_handle = ''
+  assign active_topic_label = ''
+  assign topic_filter_active = false
+  if current_tags.size > 0
+    assign active_topic_label = current_tags.first | strip
+    assign active_topic_handle = active_topic_label | handleize
+    assign topic_filter_active = true
+    for topic_label in topic_tags_array
+      assign topic_label_stripped = topic_label | strip
+      if topic_label_stripped == blank
+        continue
+      endif
+      assign topic_label_handle = topic_label_stripped | handleize
+      if topic_label_stripped == active_topic_label or topic_label_handle == active_topic_handle
+        assign active_topic_label = topic_label_stripped
+        assign active_topic_handle = topic_label_handle
+        break
+      endif
+    endfor
+  endif
+-%}
+
+{% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#FFFFFF' %}
+{% render 'nw-section-text-colors', selector: nw_shell_selector %}
+
+<section
+  id="NwBlogInfo-{{ section.id }}"
+  class="nw-blog-info section-{{ section.id }}"
+  style="
+    --nw-bi-heading-color: {{ section.settings.heading_color }};
+    --nw-bi-filter-border: {{ section.settings.filter_border_color }};
+    --nw-bi-filter-text: {{ section.settings.filter_text_color }};
+    --nw-bi-filter-bg: {{ section.settings.filter_bg_color }};
+    --nw-bi-tag-color: {{ section.settings.tag_color }};
+    --nw-bi-title-color: {{ section.settings.title_color }};
+    --nw-bi-excerpt-color: {{ section.settings.excerpt_color }};
+    --nw-bi-meta-color: {{ section.settings.meta_color }};
+    --nw-bi-card-bg: {{ section.settings.card_bg_color }};
+    --nw-bi-card-border: {{ section.settings.card_border_color }};
+    --nw-bi-media-bg: {{ section.settings.media_bg_color }};
+  "
+>
+  <div class="page-width">
+    <div class="nw-blog-info__wrapper">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="nw-blog-info__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if listing_blog == blank -%}
+        <p class="nw-blog-info__empty">{{ section.settings.empty_blog_message }}</p>
+      {%- else -%}
+        {%- if section.settings.show_topic_filters and topic_tags_array.size > 0 -%}
+          <nav class="nw-blog-info__filters" aria-label="{{ section.settings.topic_filters_aria_label | escape }}">
+            {%- if section.settings.topic_label != blank -%}
+              <span class="nw-blog-info__filters-label">{{ section.settings.topic_label }}</span>
+            {%- endif -%}
+            <div class="nw-blog-info__topic-scroll">
+              <ul class="nw-blog-info__topic-list" role="list">
+                <li>
+                  <a
+                    href="{{ list_base_url }}"
+                    class="nw-blog-info__topic-link{% unless topic_filter_active %} nw-blog-info__topic-link--active{% endunless %}"
+                    {% unless topic_filter_active %}aria-current="page"{% endunless %}
+                  >
+                    {{ section.settings.topic_all_label }}
+                  </a>
+                </li>
+                {%- for topic_label in topic_tags_array -%}
+                  {%- if topic_label != blank -%}
+                    {%- assign topic_item_handle = topic_label | handleize -%}
+                    {%- assign topic_is_active = false -%}
+                    {%- if topic_filter_active -%}
+                      {%- if topic_item_handle == active_topic_handle -%}
+                        {%- assign topic_is_active = true -%}
+                      {%- elsif active_topic_label != blank and topic_label == active_topic_label -%}
+                        {%- assign topic_is_active = true -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                    <li>
+                      <a
+                        href="{{ list_base_url }}/tagged/{{ topic_item_handle }}"
+                        class="nw-blog-info__topic-link{% if topic_is_active %} nw-blog-info__topic-link--active{% endif %}"
+                        {% if topic_is_active %}aria-current="page"{% endif %}
+                      >
+                        {{ topic_label }}
+                      </a>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </div>
+          </nav>
+        {%- endif -%}
+
+        {%- paginate articles_blog.articles by per_page -%}
+          <div class="nw-blog-info__grid">
+            {%- if paginate.current_page == 1 and articles_blog.articles.size == 0 -%}
+              {%- if topic_filter_active -%}
+                <p class="nw-blog-info__empty nw-blog-info__empty--grid">{{ section.settings.empty_topic_message }}</p>
+              {%- else -%}
+                <p class="nw-blog-info__empty nw-blog-info__empty--grid">{{ section.settings.empty_blog_message }}</p>
+              {%- endif -%}
+            {%- else -%}
+              {%- for article in articles_blog.articles -%}
+                {% render 'nw-blog-info-card', article: article, section: section, animation_index: forloop.index %}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            {% render 'pagination', paginate: paginate, anchor: '' %}
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.nw-blog-info.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "SECTION HEADER"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Blog"
+    },
+    {
+      "type": "header",
+      "content": "BLOG SOURCE"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "Articles per page",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "empty_blog_message",
+      "label": "Empty blog message",
+      "default": "Select a blog in section settings to show articles."
+    },
+    {
+      "type": "text",
+      "id": "empty_topic_message",
+      "label": "Empty topic message",
+      "default": "No articles found for this topic."
+    },
+    {
+      "type": "header",
+      "content": "CARD CONTENT"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show excerpt",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "excerpt_length",
+      "label": "Excerpt length",
+      "min": 60,
+      "max": 320,
+      "step": 10,
+      "default": 160
+    },
+    {
+      "type": "checkbox",
+      "id": "show_published_date",
+      "label": "Show published date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author name",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_read_time",
+      "label": "Show read time",
+      "default": true,
+      "info": "Uses article metafield custom.read_time when set; otherwise estimates from article length."
+    },
+    {
+      "type": "header",
+      "content": "TOPIC FILTERS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_topic_filters",
+      "label": "Show topic filters",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "topic_filters_aria_label",
+      "label": "Topic filters accessibility label",
+      "default": "Filter articles by topic"
+    },
+    {
+      "type": "text",
+      "id": "topic_label",
+      "label": "Topic label",
+      "default": "Topic"
+    },
+    {
+      "type": "text",
+      "id": "topic_all_label",
+      "label": "All topics label",
+      "default": "All"
+    },
+    {
+      "type": "header",
+      "content": "TEXT COLORS"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "tag_color",
+      "label": "Tag color",
+      "default": "#c2673b",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "excerpt_color",
+      "label": "Excerpt color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Meta color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "FILTER COLORS"
+    },
+    {
+      "type": "color",
+      "id": "filter_border_color",
+      "label": "Filter border color",
+      "default": "#cc926a",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "filter_text_color",
+      "label": "Filter text color",
+      "default": "#613916",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "filter_bg_color",
+      "label": "Filter background color",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "CARD COLORS"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#ffffff",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#cc926a",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "media_bg_color",
+      "label": "Media background",
+      "default": "#f4efe8",
+      "alpha": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND SETTINGS"
+    },
+    {
+      "type": "select",
+      "id": "bg_type",
+      "label": "Background type",
+      "default": "color",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "color", "label": "Color" },
+        { "value": "gradient", "label": "Gradient" },
+        { "value": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF",
+      "alpha": true,
+      "visible_if": "{{ section.settings.bg_type == 'color' }}"
+    },
+    {
+      "type": "color_background",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ section.settings.bg_type == 'gradient' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (desktop)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background image (mobile optional)",
+      "visible_if": "{{ section.settings.bg_type == 'image' }}"
+    },
+    {
+      "type": "header",
+      "content": "SECTION SPACING"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding top desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding bottom desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 68
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.nw-blog-info.name",
+      "category": "NW Sections",
+      "settings": {
+        "heading": "The Blog",
+        "articles_per_page": 12,
+        "show_excerpt": true,
+        "show_published_date": true,
+        "show_topic_filters": true,
+        "padding_top_desktop": 68,
+        "padding_bottom_desktop": 68,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    }
+  ]
+}
+{% endschema %}

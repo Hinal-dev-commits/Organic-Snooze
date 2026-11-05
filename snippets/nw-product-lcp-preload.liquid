@@ -1,0 +1,60 @@
+{% doc %}
+  Preloads the product gallery LCP image (featured variant media or first product media).
+  @param {object} section - main-product section
+  @param {object} product - Product liquid object
+{% enddoc %}
+
+{%- liquid
+  assign lcp_media = product.selected_or_first_available_variant.featured_media
+  if lcp_media == null and product.media.size > 0
+    assign lcp_media = product.media.first
+  endif
+
+  if lcp_media == null or lcp_media.preview_image == blank
+    assign nw_lcp_preload = false
+  else
+    assign nw_lcp_preload = true
+    assign lcp_image = lcp_media.preview_image
+
+    if section.settings.media_size == 'large'
+      assign media_width = 0.65
+    elsif section.settings.media_size == 'small'
+      assign media_width = 0.45
+    else
+      assign media_width = 0.55
+    endif
+
+    assign media_count = product.media.size
+    assign desktop_columns = 1
+    if section.settings.gallery_layout == 'columns' and media_count > 1
+      assign desktop_columns = 2
+    endif
+
+    assign mobile_columns = 1
+    if section.settings.mobile_thumbnails == 'columns' and media_count > 1
+      assign mobile_columns = 2
+    endif
+  endif
+-%}
+
+{%- if nw_lcp_preload -%}
+  {%- capture nw_lcp_sizes -%}
+    (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | times: media_width | divided_by: desktop_columns | round }}px, (min-width: 990px) calc({{ media_width | times: 100 | divided_by: desktop_columns }}vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / {{ mobile_columns }} - 4rem)
+  {%- endcapture -%}
+  {%- capture nw_lcp_srcset -%}
+    {%- assign nw_lcp_widths = '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946' | split: ', ' -%}
+    {%- for width in nw_lcp_widths -%}
+      {%- assign width_num = width | plus: 0 -%}
+      {{ lcp_image | image_url: width: width_num }} {{ width_num }}w
+      {%- unless forloop.last -%}, {% endunless -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  <link
+    rel="preload"
+    as="image"
+    href="{{ lcp_image | image_url: width: 1100 }}"
+    imagesrcset="{{ nw_lcp_srcset | strip }}"
+    imagesizes="{{ nw_lcp_sizes | strip }}"
+    fetchpriority="high"
+  >
+{%- endif -%}

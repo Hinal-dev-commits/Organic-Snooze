@@ -19,6 +19,11 @@
     assign banner_overlay = 'transparent'
     assign banner_overlay_opacity = 0
   endif
+
+  assign uhc_banner_heading_tag = blank
+  if template.name == 'page' and page.handle == 'ultimate-human-collection'
+    assign uhc_banner_heading_tag = 'h1'
+  endif
 -%}
 
 {% render 'nw-section-shell', selector: nw_shell_selector, mode: 'direct', default_bg: '#8B5E3C' %}
@@ -98,6 +103,7 @@
                 heading: section.settings.heading,
                 description: section.settings.description,
                 section_index: section.index,
+                tag: uhc_banner_heading_tag,
                 heading_class: 'nw-section-banner__heading',
                 star_class: 'nw-section-banner__star'
               %}
@@ -221,6 +227,7 @@
                 heading: section.settings.heading,
                 description: section.settings.description,
                 section_index: section.index,
+                tag: uhc_banner_heading_tag,
                 heading_class: 'nw-section-banner__heading',
                 star_class: 'nw-section-banner__star'
               %}

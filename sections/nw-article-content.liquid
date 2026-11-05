@@ -41,7 +41,7 @@
       <div class="nw-article-content__wrapper">
         {%- if article.content != blank -%}
           <div class="nw-article-content__body rte">
-            {{ article.content }}
+            {% render 'nw-rte-demote-h1', html: article.content, demoted_class: 'nw-article-content__from-h1' %}
           </div>
         {%- endif -%}
 

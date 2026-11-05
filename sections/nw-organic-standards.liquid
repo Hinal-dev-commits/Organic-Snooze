@@ -16,7 +16,7 @@
         background: {{ section.settings.bg_gradient }};
       {% when 'image' %}
         {% if section.settings.bg_image != blank %}
-          background-image: url('{{ section.settings.bg_image | image_url: width: 2880 }}');
+          background-image: url('{{ section.settings.bg_image | image_url: width: 1920 }}');
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;

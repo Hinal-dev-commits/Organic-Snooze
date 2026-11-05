@@ -1,0 +1,20 @@
+{% doc %}
+  Topic/category label for a blog article. Matches nw-blog-info.liquid topic discovery.
+  @param {object} article - Shopify article
+{% enddoc %}
+{%- liquid
+  assign nw_article_topic = blank
+  if article != blank
+    assign nw_topic_tag_metafield = article.metafields.custom.blog_tag
+    if nw_topic_tag_metafield != blank
+      if nw_topic_tag_metafield.value != blank
+        assign nw_article_topic = nw_topic_tag_metafield.value | strip
+      else
+        assign nw_article_topic = nw_topic_tag_metafield | strip
+      endif
+    endif
+    if nw_article_topic == blank and article.tags.size > 0
+      assign nw_article_topic = article.tags.first | strip
+    endif
+  endif
+-%}{{- nw_article_topic -}}

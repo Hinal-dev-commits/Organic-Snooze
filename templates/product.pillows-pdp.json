@@ -211,6 +211,27 @@
             "margin_bottom_mobile": 0
           }
         },
+        "promo_banner_mHPEwE": {
+          "type": "promo_banner",
+          "settings": {
+            "use_discount_metaobject": true,
+            "heading": "Save 15% on your first order!",
+            "description": "",
+            "discount_code": "",
+            "use_custom_icon": false,
+            "bg_color": "#fff7e0",
+            "border_color": "#61391633",
+            "text_color": "#454500",
+            "icon_color": "#454500",
+            "code_bg_color": "#fffcf0",
+            "code_border_color": "#7f7f29",
+            "code_text_color": "#434300",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16
+          }
+        },
         "sleepers_UPVWMw": {
           "type": "sleepers",
           "settings": {
@@ -292,12 +313,11 @@
             "margin_bottom_mobile": 8
           }
         },
-        "shipping_tag_Agd7QN": {
+        "shipping_tag_9CQ8r6": {
           "type": "shipping_tag",
-          "disabled": true,
           "settings": {
             "text": "Ships from USA",
-            "delivery_threshold_days": 2,
+            "delivery_threshold_days": 6,
             "use_product_metafield": false,
             "use_custom_icon": true,
             "icon": "truck",
@@ -569,11 +589,12 @@
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
+        "promo_banner_mHPEwE",
         "sleepers_UPVWMw",
         "variant_picker",
         "bundle_save_mqHNyp",
         "buy_buttons",
-        "shipping_tag_Agd7QN",
+        "shipping_tag_9CQ8r6",
         "trust_badges_UF8dKt",
         "payment_logos_XfCCjt",
         "collapsible_tab_W7etYx",
@@ -1322,8 +1343,8 @@
         "subheading": "<p>Add organic pillows, protectors, and covers. Mix, match, and save on your full sleep system.</p>",
         "product_source": "product_list",
         "product_list": [
-          "the-organic-snooze-kloud-pillow-copy",
-          "signature-organic-cotton-pillows-combo-packs",
+          "the-organic-snooze-kloud-pillow",
+          "two-pack-signature-organic-cotton-pillows",
           "organic-cooling-sheets",
           "cool-comfort-blended-natural-sheet-set-linen-and-cotton",
           "the-snooze-tex-organic-latex-contour-molded-pillow",

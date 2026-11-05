@@ -1,0 +1,26 @@
+{% doc %}
+Demotes h1 tags in rich text HTML to h2 for correct heading hierarchy.
+@param {string} html - Rich text HTML
+@param {string} [demoted_class] - Optional class on demoted h2 elements
+{% enddoc %}
+
+{%- liquid
+  assign rte_html = html
+  if rte_html != blank
+    if demoted_class != blank
+      assign h1_open = '<h2 class="' | append: demoted_class | append: '">'
+      assign h1_open_spaced = '<h2 class="' | append: demoted_class | append: '" '
+    else
+      assign h1_open = '<h2>'
+      assign h1_open_spaced = '<h2 '
+    endif
+
+    assign rte_html = rte_html | replace: '<h1>', h1_open
+    assign rte_html = rte_html | replace: '<h1 ', h1_open_spaced
+    assign rte_html = rte_html | replace: '</h1>', '</h2>'
+    assign rte_html = rte_html | replace: '<H1>', h1_open
+    assign rte_html = rte_html | replace: '<H1 ', h1_open_spaced
+    assign rte_html = rte_html | replace: '</H1>', '</h2>'
+  endif
+-%}
+{{- rte_html -}}

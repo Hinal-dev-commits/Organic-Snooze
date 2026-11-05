@@ -97,54 +97,54 @@
 }
 
 @media screen and (min-width: 990px) {
-    .header-wrapper.nw-header-transparent:hover,
-    .header-wrapper:has(.header.nw-header-transparent):hover,
-    .header-wrapper.nw-header-mega-open,
-    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open),
-    .header-wrapper:has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) {
+    .header-wrapper.nw-header-transparent:not(.nw-header--black-friday):hover,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):hover,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday),
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(header-menu.is-open),
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) {
         background: #ffffff !important;
         background-color: #ffffff !important;
     }
 
-    .header-wrapper.nw-header-transparent:hover .header,
-    .header-wrapper:has(.header.nw-header-transparent):hover .header,
-    .header-wrapper.nw-header-mega-open .header,
-    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header,
-    .header-wrapper:has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header {
+    .header-wrapper.nw-header-transparent:not(.nw-header--black-friday):hover .header,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):hover .header,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(header-menu.is-open) .header,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header {
         background: #ffffff !important;
         background-color: #ffffff !important;
     }
 
-    .header-wrapper.nw-header-transparent:hover .header__heading-logo--default,
-    .header-wrapper:has(.header.nw-header-transparent):hover .header__heading-logo--default,
-    .header-wrapper.nw-header-mega-open .header__heading-logo--default,
-    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__heading-logo--default,
-    .header-wrapper:has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header__heading-logo--default {
+    .header-wrapper.nw-header-transparent:not(.nw-header--black-friday):hover .header__heading-logo--default,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):hover .header__heading-logo--default,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header__heading-logo--default,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(header-menu.is-open) .header__heading-logo--default,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header__heading-logo--default {
         display: block;
     }
 
-    .header-wrapper.nw-header-transparent:hover .header__heading-logo--transparent,
-    .header-wrapper:has(.header.nw-header-transparent):hover .header__heading-logo--transparent,
-    .header-wrapper.nw-header-mega-open .header__heading-logo--transparent,
-    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__heading-logo--transparent,
-    .header-wrapper:has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header__heading-logo--transparent {
+    .header-wrapper.nw-header-transparent:not(.nw-header--black-friday):hover .header__heading-logo--transparent,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):hover .header__heading-logo--transparent,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header__heading-logo--transparent,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(header-menu.is-open) .header__heading-logo--transparent,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(.nw-mega-menu-item.is-open) .header__heading-logo--transparent {
         display: none;
     }
 
-    .header-wrapper.nw-header-transparent:hover .header__menu-item,
-    .header-wrapper.nw-header-transparent:hover .header__menu-item span,
-    .header-wrapper.nw-header-transparent:hover summary.list-menu__item,
-    .header-wrapper.nw-header-transparent:hover .header__icon,
-    .header-wrapper:has(.header.nw-header-transparent):hover .header__menu-item,
-    .header-wrapper:has(.header.nw-header-transparent):hover .header__menu-item span,
-    .header-wrapper:has(.header.nw-header-transparent):hover summary.list-menu__item,
-    .header-wrapper:has(.header.nw-header-transparent):hover .header__icon,
-    .header-wrapper.nw-header-mega-open .header.nw-header-transparent .header__menu-item,
-    .header-wrapper.nw-header-mega-open .header.nw-header-transparent .header__menu-item span,
-    .header-wrapper.nw-header-mega-open .header.nw-header-transparent .header__icon,
-    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__menu-item,
-    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__menu-item span,
-    .header-wrapper:has(.header.nw-header-transparent):has(header-menu.is-open) .header__icon {
+    .header-wrapper.nw-header-transparent:not(.nw-header--black-friday):hover .header__menu-item,
+    .header-wrapper.nw-header-transparent:not(.nw-header--black-friday):hover .header__menu-item span,
+    .header-wrapper.nw-header-transparent:not(.nw-header--black-friday):hover summary.list-menu__item,
+    .header-wrapper.nw-header-transparent:not(.nw-header--black-friday):hover .header__icon,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):hover .header__menu-item,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):hover .header__menu-item span,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):hover summary.list-menu__item,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):hover .header__icon,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header.nw-header-transparent .header__menu-item,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header.nw-header-transparent .header__menu-item span,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header.nw-header-transparent .header__icon,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(header-menu.is-open) .header__menu-item,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(header-menu.is-open) .header__menu-item span,
+    .header-wrapper:not(.nw-header--black-friday):has(.header.nw-header-transparent):has(header-menu.is-open) .header__icon {
         color: #613916;
     }
 
@@ -218,18 +218,18 @@
         text-decoration: none;
     }
 
-    .header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item,
-    .header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item span,
-    .header-wrapper.nw-header-mega-open:not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item,
-    .header-wrapper.nw-header-mega-open:not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item span {
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item span,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday):not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday):not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item span {
         color: #613916;
         text-decoration: none;
     }
 
-    .header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover,
-    .header-wrapper.nw-header-mega-open .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover span,
-    .header-wrapper.nw-header-mega-open:not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item:hover,
-    .header-wrapper.nw-header-mega-open:not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item:hover span {
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday) .header:not(.nw-header-transparent) .header__inline-menu .header__menu-item:hover span,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday):not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item:hover,
+    .header-wrapper.nw-header-mega-open:not(.nw-header--black-friday):not(.nw-header-transparent):not(:has(.header.nw-header-transparent)) .header__inline-menu .header__menu-item:hover span {
         color: #613916;
         text-decoration: none;
     }

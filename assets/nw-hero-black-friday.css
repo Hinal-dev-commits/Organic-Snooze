@@ -1,0 +1,585 @@
+.nw-hero--black-friday .nw-hero__overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.93) 0%,
+    rgba(0, 0, 0, 0.65) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+.nw-hero--black-friday.nw-hero--bf-gold-rule::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--nw-bf-gold-rule-height, 4px);
+  background: var(--nw-bf-accent, #e9b949);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.nw-hero--black-friday .nw-hero__bf-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  text-transform: var(--nw-bf-heading-transform, uppercase);
+}
+
+.nw-hero--black-friday .nw-hero__content--align-center .nw-hero__bf-heading {
+  align-items: center;
+  text-align: center;
+}
+
+.nw-hero--black-friday .nw-hero__content--align-right .nw-hero__bf-heading {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.nw-hero--black-friday .nw-hero__content--align-left .nw-hero__bf-heading {
+  text-align: left;
+}
+
+.nw-hero--black-friday .nw-hero__bf-heading-line {
+  font-family: var(--nw-bf-heading-font-family, var(--font-heading-family));
+  font-style: var(--nw-bf-heading-font-style, normal);
+  font-weight: var(--nw-bf-heading-font-weight, 400);
+  margin: 0;
+  width: 100%;
+  text-align: inherit;
+  font-feature-settings: 'lnum' 1, 'pnum' 1;
+}
+
+.nw-hero--black-friday .nw-hero__bf-heading-line--primary {
+  font-size: var(--nw-bf-heading-primary-size-dt, 64px);
+  line-height: var(--nw-bf-heading-primary-lh, 1.02);
+  letter-spacing: var(--nw-bf-heading-primary-ls, 0.38px);
+  color: var(--nw-bf-heading-primary-color, #ffffff);
+}
+
+.nw-hero--black-friday .nw-hero__bf-heading-line--accent {
+  font-family: var(--nw-bf-heading-accent-font-family, var(--nw-bf-heading-font-family, var(--font-heading-family)));
+  font-style: var(--nw-bf-heading-accent-font-style, var(--nw-bf-heading-font-style, normal));
+  font-weight: var(--nw-bf-heading-accent-font-weight, var(--nw-bf-heading-font-weight, 400));
+  font-size: var(--nw-bf-heading-accent-size-dt, 100px);
+  line-height: var(--nw-bf-heading-accent-lh, 1.02);
+  letter-spacing: var(--nw-bf-heading-accent-ls, 0.38px);
+  color: var(--nw-bf-heading-accent-color, var(--nw-bf-accent, #e9b949));
+}
+
+.nw-hero--black-friday .nw-hero__rating-text,
+.nw-hero--black-friday .nw-hero__rating-text * {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--nw-bf-rating-size-dt, 14px);
+  line-height: var(--nw-bf-rating-lh, 1.5);
+  color: var(--nw-bf-rating-color, #ffffff);
+}
+
+.nw-hero--black-friday .nw-hero__star {
+  color: var(--nw-bf-star-color, var(--nw-bf-accent, #e9b949));
+}
+
+.nw-hero--black-friday .nw-hero .nw-section-description,
+.nw-hero--black-friday .nw-hero .nw-section-description *,
+.nw-hero--black-friday .nw-hero__subheading,
+.nw-hero--black-friday .nw-hero__subheading * {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: var(--nw-bf-subheading-font-weight, 400);
+  font-size: var(--nw-bf-subheading-size-dt, 20px);
+  line-height: var(--nw-bf-subheading-lh, 1.5);
+  color: var(--nw-bf-subheading-color, #ffffff);
+}
+
+.nw-hero--black-friday .nw-cta-badges .nw-btn.nw-btn--primary,
+.nw-hero--black-friday .nw-cta-badges .nw-btn.nw-btn--secondary,
+.nw-hero--black-friday .nw-cta-badges .nw-btn.nw-btn--outline {
+  background: var(--nw-bf-btn-bg, var(--nw-bf-accent, #e9b949));
+  border-color: var(--nw-bf-btn-bg, var(--nw-bf-accent, #e9b949));
+  color: var(--nw-bf-btn-color, #0a0a0a);
+  min-height: 56px;
+  padding: 18px 32px;
+  border-radius: 1000px;
+}
+
+.nw-hero--black-friday .nw-cta-badges .nw-btn.nw-btn--primary:hover,
+.nw-hero--black-friday .nw-cta-badges .nw-btn.nw-btn--secondary:hover,
+.nw-hero--black-friday .nw-cta-badges .nw-btn.nw-btn--outline:hover {
+  background: var(--nw-bf-btn-bg, var(--nw-bf-accent, #e9b949));
+  border-color: var(--nw-bf-btn-bg, var(--nw-bf-accent, #e9b949));
+  filter: brightness(0.94);
+  color: var(--nw-bf-btn-color, #0a0a0a);
+}
+
+.nw-hero--black-friday .nw-cta-badges .nw-btn__text {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--nw-bf-btn-size-dt, 18px);
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--nw-bf-btn-color, #0a0a0a);
+}
+
+.nw-hero--black-friday .nw-cta-badges__text,
+.nw-hero--black-friday .nw-cta-badges__text * {
+  font-family: var(--font-body-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--nw-bf-badge-size-dt, 14px);
+  line-height: 1.3;
+  color: var(--nw-bf-badge-color, #ffffff) !important;
+}
+
+.nw-hero--black-friday .nw-cta-badges,
+.nw-hero--black-friday .nw-hero__cta {
+  --nw-cta-badge-text: var(--nw-bf-badge-color, #ffffff);
+}
+
+.nw-hero--black-friday .nw-hero__promo-module {
+  background: var(--nw-bf-promo-bg, rgba(20, 20, 20, 0.94));
+  border: 1px solid var(--nw-bf-promo-border, rgba(233, 185, 73, 0.7));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-sizing: border-box;
+  justify-content: center;
+  padding: 16px;
+  gap: 12px;
+}
+
+.nw-hero--black-friday .nw-hero__promo-header {
+  height: auto;
+  min-height: 24px;
+  align-items: center;
+}
+
+.nw-hero--black-friday .nw-hero__promo-title,
+.nw-hero--black-friday .nw-hero__promo-title * {
+  font-family: var(--nw-bf-promo-title-font-family, var(--font-body-family));
+  font-style: var(--nw-bf-promo-title-font-style, normal);
+  font-weight: var(--nw-bf-promo-title-font-weight, 700);
+  font-size: var(--nw-bf-promo-title-size-dt, 18px);
+  line-height: 1.2;
+  color: var(--nw-bf-promo-title-color, #ffffff);
+}
+
+.nw-hero--black-friday .nw-hero__status-badge {
+  background: var(--nw-bf-accent, #e9b949);
+}
+
+.nw-hero--black-friday .nw-hero__status-text,
+.nw-hero--black-friday .nw-hero__status-text * {
+  font-family: var(--nw-bf-promo-title-font-family, var(--font-body-family));
+  font-style: italic;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--nw-bf-status-text-color, #0a0a0a);
+}
+
+.nw-hero--black-friday .nw-hero__status-dot {
+  background-color: var(--nw-bf-status-dot-color, #0a0a0a);
+  box-shadow: none;
+  animation: none;
+}
+
+.nw-hero--black-friday .nw-hero__promo-subtext,
+.nw-hero--black-friday .nw-hero__promo-subtext * {
+  font-family: var(--nw-bf-promo-subtext-font-family, var(--font-body-family));
+  font-style: var(--nw-bf-promo-subtext-font-style, normal);
+  font-weight: var(--nw-bf-promo-subtext-font-weight, 500);
+  font-size: var(--nw-bf-promo-subtext-size-dt, 14px);
+  line-height: 1.4;
+  color: var(--nw-bf-promo-subtext-color, rgba(255, 255, 255, 0.85));
+}
+
+.nw-hero--black-friday .nw-hero__countdown-wrap {
+  border-top-color: var(--nw-bf-promo-divider, rgba(233, 185, 73, 0.25));
+  height: auto;
+  min-height: 46px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.nw-hero--black-friday .nw-hero__countdown-label,
+.nw-hero--black-friday .nw-hero__countdown-label * {
+  font-family: var(--nw-bf-countdown-label-font-family, var(--font-body-family));
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--nw-bf-countdown-label-size-dt, 13px);
+  line-height: normal;
+  color: var(--nw-bf-countdown-label-color, rgba(255, 255, 255, 0.6));
+}
+
+.nw-hero--black-friday .nw-hero__timer-unit {
+  background: var(--nw-bf-accent, #e9b949);
+}
+
+.nw-hero--black-friday .nw-hero__timer-num {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--nw-bf-timer-text-color, #0a0a0a);
+}
+
+.nw-hero--black-friday .nw-hero__timer-txt {
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 17px;
+  text-transform: uppercase;
+  color: var(--nw-bf-timer-text-color, #0a0a0a);
+}
+
+.nw-hero--black-friday .nw-hero__timer-sep {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--nw-bf-accent, #e9b949);
+}
+
+@media screen and (min-width: 750px) and (max-width: 1279px) {
+  .nw-hero--black-friday .nw-hero__content {
+    max-width: 100%;
+  }
+
+  .nw-hero--black-friday .nw-hero__promo-module--bf {
+    position: relative;
+    right: auto;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 521px;
+    margin: 24px 0 0;
+    z-index: auto;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .nw-hero--black-friday .page-width {
+    position: relative;
+  }
+
+  .nw-hero--black-friday .nw-hero__promo-module--bf {
+    position: absolute;
+    right: var(--nw-bf-promo-inset-right, 80px);
+    left: auto;
+    width: min(521px, calc(100% - 160px));
+    max-width: 521px;
+    z-index: 5;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .nw-hero--black-friday.nw-hero--bf-promo-anchor-bottom .nw-hero__promo-module--bf {
+    bottom: var(--nw-bf-promo-inset-bottom, 57px);
+    top: auto;
+  }
+
+  .nw-hero--black-friday.nw-hero--bf-promo-anchor-top .nw-hero__promo-module--bf {
+    top: var(--nw-bf-promo-inset-top, 280px);
+    bottom: auto;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 16px 8px;
+    border-radius: 16px;
+    background: var(--nw-bf-tabs-promo-bg, rgba(20, 20, 20, 0.94));
+    border: 1px solid var(--nw-bf-tabs-promo-border, rgba(233, 185, 73, 0.7));
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-sizing: border-box;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-height: 24px;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-title,
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-title * {
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-size: 18px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.2;
+    color: var(--nw-bf-tabs-promo-title-color, #ffffff);
+    text-align: left;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-status {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 100px;
+    background: var(--nw-bf-tabs-accent, #e9b949);
+    flex-shrink: 0;
+    height: 24px;
+    box-sizing: border-box;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-status-dot {
+    width: 4.8px;
+    height: 4.8px;
+    min-width: 4.8px;
+    min-height: 4.8px;
+    border-radius: 50%;
+    background: var(--nw-bf-tabs-status-dot, #0a0a0a);
+    box-shadow: none;
+    animation: none;
+    flex-shrink: 0;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-status-text,
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-status-text * {
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    font-weight: 600;
+    font-style: italic;
+    line-height: normal;
+    color: var(--nw-bf-tabs-status-text, #0a0a0a);
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-subtext,
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-subtext * {
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 1.4;
+    color: var(--nw-bf-tabs-promo-subtext-color, rgba(255, 255, 255, 0.85));
+    width: 100%;
+    text-align: left;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-countdown {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 0 8px;
+    border-top: 1px solid var(--nw-bf-tabs-promo-divider, rgba(233, 185, 73, 0.25));
+    box-sizing: border-box;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-countdown-label,
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-countdown-label * {
+    margin: 0;
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    font-weight: 500;
+    font-style: italic;
+    line-height: normal;
+    color: var(--nw-bf-tabs-countdown-label-color, rgba(255, 255, 255, 0.6));
+    white-space: nowrap;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-timer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-timer-unit {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px;
+    min-height: 26px;
+    border-radius: 4px;
+    background: var(--nw-bf-tabs-accent, #e9b949);
+    box-sizing: border-box;
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-timer-num {
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 18px;
+    color: var(--nw-bf-tabs-timer-text, #0a0a0a);
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-timer-txt {
+    font-family: var(--font-body-family);
+    font-size: 13px;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 17px;
+    text-transform: uppercase;
+    color: var(--nw-bf-tabs-timer-text, #0a0a0a);
+  }
+
+  .nw-collection-tabs--black-friday .nw-collection-tabs__promo-timer-sep {
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 16px;
+    color: var(--nw-bf-tabs-accent, #e9b949);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nw-hero--black-friday.nw-hero__wrapper {
+    align-items: center;
+    justify-content: center;
+    min-height: min(100svh, 820px) !important;
+    height: auto !important;
+  }
+
+  .nw-hero--black-friday.nw-hero--transparent-header {
+    min-height: min(100svh, 820px) !important;
+  }
+
+  .nw-hero--black-friday .nw-hero__cta {
+    margin-bottom: 20px;
+  }
+
+  .nw-hero--black-friday .nw-hero__subheading p {
+    margin-bottom: 16px;
+  }
+
+  .nw-hero--black-friday .page-width {
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: inherit;
+  }
+
+  .nw-hero--black-friday .nw-hero__inner {
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+  }
+
+  .nw-hero--black-friday .nw-hero__content {
+    align-items: center;
+  }
+
+  .nw-hero--black-friday .nw-hero__content--align-left .nw-hero__bf-heading,
+  .nw-hero--black-friday .nw-hero__content--align-right .nw-hero__bf-heading,
+  .nw-hero--black-friday .nw-hero__content--align-center .nw-hero__bf-heading,
+  .nw-hero--black-friday .nw-hero__bf-heading {
+    align-items: center;
+    text-align: center;
+  }
+
+  .nw-hero--black-friday .nw-hero__bf-heading-line {
+    text-align: center;
+  }
+
+  .nw-hero--black-friday .nw-hero__bf-heading-line--primary {
+    font-size: var(--nw-bf-heading-primary-size-mb, 40px);
+  }
+
+  .nw-hero--black-friday .nw-hero__bf-heading-line--accent {
+    font-size: var(--nw-bf-heading-accent-size-mb, 56px);
+  }
+
+  .nw-hero--black-friday .nw-hero__rating-text,
+  .nw-hero--black-friday .nw-hero__rating-text * {
+    font-size: var(--nw-bf-rating-size-mb, 12px);
+  }
+
+  .nw-hero--black-friday .nw-hero .nw-section-description,
+  .nw-hero--black-friday .nw-hero .nw-section-description *,
+  .nw-hero--black-friday .nw-hero__subheading,
+  .nw-hero--black-friday .nw-hero__subheading * {
+    font-size: var(--nw-bf-subheading-size-mb, 16px);
+  }
+
+  .nw-hero--black-friday .nw-cta-badges .nw-btn__text {
+    font-size: var(--nw-bf-btn-size-mb, 16px);
+  }
+
+  .nw-hero--black-friday .nw-cta-badges__text,
+  .nw-hero--black-friday .nw-cta-badges__text * {
+    font-size: var(--nw-bf-badge-size-mb, 12px);
+  }
+
+  .nw-hero--black-friday .nw-hero__promo-module--bf {
+    display: none;
+    position: relative;
+    right: auto;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 0 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nw-hero--black-friday .nw-hero__promo-header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .nw-hero--black-friday .nw-hero__promo-title {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .nw-hero--black-friday .nw-hero__promo-title,
+  .nw-hero--black-friday .nw-hero__promo-title * {
+    text-align: center;
+  }
+
+  .nw-hero--black-friday .nw-hero__promo-subtext,
+  .nw-hero--black-friday .nw-hero__promo-subtext * {
+    text-align: center;
+  }
+
+  .nw-hero--black-friday .nw-hero__countdown-wrap {
+    justify-content: center;
+    width: 100%;
+  }
+}

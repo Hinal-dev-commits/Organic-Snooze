@@ -57,13 +57,16 @@
 }
 
 .nw-swiper-pagination .swiper-pagination-bullet {
+    box-sizing: content-box;
     width: 8px;
     height: 8px;
     margin: 0 !important;
     border-radius: 8px;
     opacity: 0.3;
     background: var(--nw-swiper-bullet, var(--nw-brown));
+    background-clip: content-box;
     transition: width 0.25s ease, opacity 0.25s ease;
+    cursor: pointer;
 }
 
 .nw-swiper-pagination .swiper-pagination-bullet-active {
@@ -96,6 +99,7 @@
     .nw-swiper-pagination .swiper-pagination-bullet{
         width: 5px;
         height: 5px;
+        min-width: 5px;
     }
     .nw-swiper-pagination .swiper-pagination-bullet-active{
         width: 30px;

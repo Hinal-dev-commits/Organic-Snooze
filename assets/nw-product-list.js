@@ -95,6 +95,45 @@ if (!customElements.get('nw-product-list')) {
       this._updateCustomPagination();
     }
 
+    _getSlideFocusables(slide) {
+      return slide.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+    }
+
+    _setSlideTabbing(slide, allowFocus) {
+      this._getSlideFocusables(slide).forEach(function (el) {
+        if (allowFocus) {
+          if (Object.prototype.hasOwnProperty.call(el.dataset, 'nwPlPrevTabindex')) {
+            if (el.dataset.nwPlPrevTabindex === '') {
+              el.removeAttribute('tabindex');
+            } else {
+              el.setAttribute('tabindex', el.dataset.nwPlPrevTabindex);
+            }
+            delete el.dataset.nwPlPrevTabindex;
+          } else {
+            el.removeAttribute('tabindex');
+          }
+          return;
+        }
+
+        if (!Object.prototype.hasOwnProperty.call(el.dataset, 'nwPlPrevTabindex')) {
+          el.dataset.nwPlPrevTabindex = el.getAttribute('tabindex') || '';
+        }
+        el.setAttribute('tabindex', '-1');
+      });
+    }
+
+    _syncSlidesAccessibility(sliderEl) {
+      if (!sliderEl) return;
+
+      sliderEl.querySelectorAll('.swiper-slide').forEach((slide) => {
+        var isClone = slide.hasAttribute('data-nw-pl-clone');
+        var isHidden = slide.getAttribute('aria-hidden') === 'true';
+        this._setSlideTabbing(slide, !isClone && !isHidden);
+      });
+    }
+
     _cloneSlide(slide) {
       var clone = slide.cloneNode(true);
 
@@ -103,6 +142,7 @@ if (!customElements.get('nw-product-list')) {
       clone.removeAttribute('data-slide-index');
       clone.setAttribute('data-nw-pl-clone', 'true');
       clone.setAttribute('aria-hidden', 'true');
+      this._setSlideTabbing(clone, false);
 
       return clone;
     }
@@ -265,12 +305,19 @@ if (!customElements.get('nw-product-list')) {
 
         this.swiperInstance = new Swiper(sliderEl, swiperOptions);
 
-        this.swiperInstance.on('slideChange', () => this._updateCustomPagination());
-        this.swiperInstance.on('slideChangeTransitionEnd', () => {
-          this._fixInfinitePosition(this.swiperInstance);
+        this.swiperInstance.on('slideChange', () => {
+          this._syncSlidesAccessibility(sliderEl);
           this._updateCustomPagination();
         });
-        this.swiperInstance.on('transitionEnd', () => this._updateCustomPagination());
+        this.swiperInstance.on('slideChangeTransitionEnd', () => {
+          this._fixInfinitePosition(this.swiperInstance);
+          this._syncSlidesAccessibility(sliderEl);
+          this._updateCustomPagination();
+        });
+        this.swiperInstance.on('transitionEnd', () => {
+          this._syncSlidesAccessibility(sliderEl);
+          this._updateCustomPagination();
+        });
 
         this.swiperInstance.on('resize', () => {
           var savedIndex = this._getRealSlideIndex(this.swiperInstance.activeIndex);
@@ -282,6 +329,7 @@ if (!customElements.get('nw-product-list')) {
 
           this.swiperInstance.update();
           this.swiperInstance.slideTo(refreshedMeta.startIndex + savedIndex, 0);
+          this._syncSlidesAccessibility(sliderEl);
           this._updateCustomPagination();
 
           if (showArrows && this.swiperInstance.navigation) {
@@ -291,6 +339,7 @@ if (!customElements.get('nw-product-list')) {
 
         this._updateCustomPagination();
         this._bindPagination();
+        this._syncSlidesAccessibility(sliderEl);
 
         if (showArrows && this.swiperInstance.navigation) {
           this.swiperInstance.navigation.update();
@@ -302,6 +351,7 @@ if (!customElements.get('nw-product-list')) {
           this.swiperInstance.update();
           this.swiperInstance.slideTo(slideMeta.startIndex + this._getRealSlideIndex(this.swiperInstance.activeIndex), 0);
           this._fixInfinitePosition(this.swiperInstance);
+          this._syncSlidesAccessibility(sliderEl);
           this._updateCustomPagination();
 
           if (showArrows && this.swiperInstance.navigation) {
@@ -319,6 +369,7 @@ if (!customElements.get('nw-product-list')) {
           this.swiperInstance.update();
           this.swiperInstance.slideTo(slideMeta.startIndex + this._getRealSlideIndex(this.swiperInstance.activeIndex), 0);
           this._fixInfinitePosition(this.swiperInstance);
+          this._syncSlidesAccessibility(sliderEl);
           this._updateCustomPagination();
 
           if (showArrows && this.swiperInstance.navigation) {

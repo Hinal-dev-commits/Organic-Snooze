@@ -9,6 +9,98 @@
  */
 {
   "sections": {
+    "nw_marquee_v2_RMtCkA": {
+      "type": "nw-marquee-v2",
+      "blocks": {
+        "item_8D4iJX": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_PmiMcD": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_UMgNPf": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+)",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_qEzFh8": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_VCg7fg": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_VcYJtg": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+)",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_8D4iJX",
+        "item_PmiMcD",
+        "item_UMgNPf",
+        "item_qEzFh8",
+        "item_VCg7fg",
+        "item_VcYJtg"
+      ],
+      "name": "t:sections.nw-marquee-v2.name",
+      "settings": {
+        "enable_desktop_marquee": true,
+        "direction": "right_to_left",
+        "speed": 85,
+        "pause_on_hover": true,
+        "font_weight": 600,
+        "font_size": 20,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
+        "gap_desktop": 28,
+        "gap_mobile": 12,
+        "icon_size_desktop": 28,
+        "icon_size_mobile": 20,
+        "gap_icon_text": 4,
+        "marquee_height_desktop": 60,
+        "marquee_height_mobile": 44,
+        "padding_desktop": 16,
+        "padding_mobile": 12,
+        "bg_type": "color",
+        "bg_color": "#e9b949",
+        "bg_gradient": "",
+        "text_color": "#000000",
+        "icon_color": "#ffffff"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -34,7 +126,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p><strong>The Mattress Gary Brecka Sleeps On.</strong></p><p>Medium-firm comfort with a 4\" responsive organic latex euro-top comfort layer and 1,100 zoned pocketed coils for balanced pressure relief and full-body support. Made with certified organic materials and built for recovery.</p>",
+            "custom_description": "<p><strong>The Mattress Gary Brecka Sleeps On.</strong></p><p>Premium organic comfort with a 4\" responsive organic latex euro-top layer and 1,100 zoned pocketed coils for balanced pressure relief and full-body support. Made with certified organic materials and built for recovery.</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -66,14 +158,15 @@
         },
         "promo_banner_Q6znVP": {
           "type": "promo_banner",
-          "disabled": true,
           "settings": {
             "use_discount_metaobject": true,
+            "first_order_heading": "BLACK FRIDAY: Save [percentage]% + FREE Gifts!",
             "heading": "Save 15% on your first order!",
             "description": "",
             "discount_code": "",
-            "use_custom_icon": false,
-            "bg_color": "#edf5eb",
+            "use_custom_icon": true,
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "bg_color": "#fff7e0",
             "border_color": "#61391633",
             "text_color": "#454500",
             "icon_color": "#454500",
@@ -273,7 +366,7 @@
             "swatch_shape": "circle",
             "firmness_option_name": "Firmness",
             "loft_option_name": "Loft",
-            "size_option_name": "Select Size",
+            "size_option_name": "Size",
             "show_size_guide": true,
             "size_guide_label": "See Size Guide",
             "size_guide_popup_id": "",
@@ -345,10 +438,9 @@
         },
         "shipping_tag_Agd7QN": {
           "type": "shipping_tag",
-          "disabled": true,
           "settings": {
             "text": "Ships from USA",
-            "delivery_threshold_days": 2,
+            "delivery_threshold_days": 10,
             "use_product_metafield": false,
             "use_custom_icon": true,
             "icon": "truck",
@@ -436,6 +528,46 @@
             "review_5_author": "",
             "review_5_rating": 5,
             "review_5_verified": true,
+            "margin_top": 48,
+            "margin_bottom": 0,
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "nw_freegift_bw6qVj": {
+          "type": "nw_freegift",
+          "settings": {
+            "product_source": "product_list",
+            "product_list": [
+              "organic-waterproof-mattress-protector",
+              "two-pack-signature-organic-cotton-pillows"
+            ],
+            "show_eyebrow": true,
+            "eyebrow_text": "LIMITED TIME OFFER",
+            "heading": "Black Friday Gifts",
+            "show_header_free_badge": true,
+            "subtitle": "2 Free Pillows + Free Protector · [value]  Value",
+            "free_badge_label": "FREE",
+            "display_font": "anton_n4",
+            "preview_summary": "2 organic pillows & a mattress protector, on us",
+            "start_expanded": false,
+            "notice_text": "Added to your order automatically with any King or Queen size mattress.",
+            "value_bar_label": "TOTAL FREE GIFT VALUE",
+            "value_amount_mode": "auto",
+            "value_amount_text": "$459.98",
+            "value_promo_line": "+ 20% OFF ENTIRE ORDER",
+            "value_disclaimer": "<p>Offer valid for a limited time while supplies last on all Queen, King and CA King mattresses. Bundles excluded.</p>",
+            "value_details_open_by_default": true,
+            "details_label": "See details",
+            "details_hide_label": "Hide details",
+            "gift_1_description": "<ul><li>100% USDA organic cotton fill</li><li>Adjustable loft, add or remove fill for your neck</li><li>Handcrafted in the USA</li></ul>",
+            "gift_2_description": "<ul><li>Water-resistant layer helps guard against spills</li><li>Made with organic materials, chosen for breathability</li><li>Keeps your new mattress fresh from night one</li></ul>",
+            "gift_3_description": "",
+            "gift_4_description": "",
+            "gift_5_description": "",
+            "gift_6_description": "",
+            "gift_7_description": "",
+            "gift_8_description": "",
             "margin_top": 48,
             "margin_bottom": 0,
             "margin_top_mobile": 32,
@@ -684,6 +816,7 @@
         "trust_badges_UF8dKt",
         "payment_logos_aAAW97",
         "customer_reviews_n9JDUb",
+        "nw_freegift_bw6qVj",
         "collapsible_tab_W7etYx",
         "collapsible_tab_wP3yAA",
         "collapsible_tab_THr6Kx",
@@ -1577,7 +1710,7 @@
         "subheading": "<p>Explore other mattresses, pillows, protectors, sheets, and bundles. Build your perfect sleep setup and save.</p>",
         "product_source": "product_list",
         "product_list": [
-          "signature-organic-cotton-pillows-combo-packs",
+          "two-pack-signature-organic-cotton-pillows",
           "organic-cooling-sheets",
           "cool-comfort-blended-natural-sheet-set-linen-and-cotton",
           "the-snooze-tex-organic-latex-contour-molded-pillow"
@@ -1745,6 +1878,7 @@
     }
   },
   "order": [
+    "nw_marquee_v2_RMtCkA",
     "main",
     "nw_firmness_popup_guide",
     "nw_sticky_bar_YhTzea",

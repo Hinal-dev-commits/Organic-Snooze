@@ -1,0 +1,79 @@
+{%- liquid
+  assign current_variant = gift_product.selected_or_first_available_variant
+  assign item_image = current_variant.featured_media.preview_image | default: current_variant.image | default: gift_product.featured_image
+
+  assign gift_title = gift_product.metafields.custom.gift_title.value | default: gift_product.metafields.custom.gift_title
+  if gift_title == blank
+    assign gift_title = gift_product.metafields.custom.addon_title.value | default: gift_product.metafields.custom.addon_title
+  endif
+  if gift_title == blank
+    assign gift_title = gift_product.title
+  endif
+
+  assign gift_value_cents = gift_product.metafields.custom.gift_value.value | default: gift_product.metafields.custom.gift_value
+  if gift_value_cents == blank or gift_value_cents == 0
+    assign gift_value_cents = current_variant.compare_at_price | default: current_variant.price
+  else
+    assign gift_value_cents = gift_value_cents | plus: 0
+  endif
+
+  assign description_setting_key = 'gift_' | append: gift_index | append: '_description'
+  assign gift_description = block.settings[description_setting_key]
+
+  if gift_description == blank
+    assign gift_description = gift_product.metafields.custom.gift_description.value | default: gift_product.metafields.custom.gift_description
+  endif
+
+  assign bullets_raw = gift_product.metafields.custom.gift_bullets.value | default: gift_product.metafields.custom.gift_bullets
+  if bullets_raw == blank
+    assign bullets_raw = gift_product.metafields.custom.gift_details.value | default: gift_product.metafields.custom.gift_details
+  endif
+
+  assign free_label = block.settings.free_badge_label | default: 'FREE'
+-%}
+
+<li class="nw-freegift__item">
+  <div class="nw-freegift__row">
+    <div class="nw-freegift__media" aria-hidden="true">
+      {%- if item_image != blank -%}
+        <img
+          class="nw-freegift__image"
+          src="{{ item_image | image_url: width: 200 }}"
+          alt=""
+          width="84"
+          height="84"
+          loading="lazy"
+        >
+      {%- else -%}
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'nw-freegift__image nw-freegift__image--placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="nw-freegift__info">
+      <div class="nw-freegift__item-title-row">
+        <p class="nw-freegift__item-title">{{ gift_title | escape }}</p>
+        {%- if gift_value_cents > 0 -%}
+          <s class="nw-freegift__value">{{ gift_value_cents | money_without_trailing_zeros }}</s>
+        {%- endif -%}
+        <span class="nw-freegift__free-badge">{{ free_label | escape }}</span>
+      </div>
+
+      {%- if gift_description != blank -%}
+        <div class="nw-freegift__description rte">{{ gift_description }}</div>
+      {%- elsif bullets_raw != blank -%}
+        {%- assign bullet_lines = bullets_raw | newline_to_br | split: '<br />' -%}
+        <ul class="nw-freegift__bullets" role="list">
+          {%- for bullet_text in bullet_lines -%}
+            {%- assign bullet_text = bullet_text | strip_html | strip -%}
+            {%- if bullet_text != blank -%}
+              <li class="nw-freegift__bullet">
+                <span class="nw-freegift__bullet-dot" aria-hidden="true"></span>
+                <span class="nw-freegift__bullet-text">{{ bullet_text | escape }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</li>
