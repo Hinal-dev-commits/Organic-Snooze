@@ -1,0 +1,38 @@
+{%- if article != blank -%}
+  <style>
+    #shopify-section-{{ section.id }} {
+      height: 0;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      overflow: hidden;
+      flex-grow: 0;
+    }
+  </style>
+  <script type="application/ld+json">
+    {{ article | structured_data }}
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "NW Article Schema",
+  "tag": "div",
+  "class": "nw-article-schema",
+  "enabled_on": {
+    "templates": ["article"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Outputs Article JSON-LD for search engines. This section does not change the page layout."
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Article Schema"
+    }
+  ]
+}
+{% endschema %}

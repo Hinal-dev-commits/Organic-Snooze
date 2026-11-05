@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "nw_article_schema": {
+      "type": "nw-article-schema",
+      "settings": {}
+    },
     "main": {
       "type": "main-article",
       "blocks": {
@@ -327,6 +331,7 @@
     }
   },
   "order": [
+    "nw_article_schema",
     "main",
     "nw_article_hero_wJfMxg",
     "nw_article_content_wJfMxg",
