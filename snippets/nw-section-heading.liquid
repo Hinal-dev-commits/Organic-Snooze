@@ -5,6 +5,7 @@ On collection pages, section headings never use an h1 tag; they keep h1 styling 
 @param {string} text - Heading content
 @param {number} [section_index] - Section position in the template (1 = h1 styling)
 @param {string} [tag] - Optional tag override (h1 or h2 styling)
+@param {string} [heading_style_class] - Optional class on the heading element (overrides tag / section_index)
 @param {string} [class] - Optional wrapper class
 @example
 {% render 'nw-section-heading', text: section.settings.heading, section_index: section.index %}
@@ -25,6 +26,16 @@ On collection pages, section headings never use an h1 tag; they keep h1 styling 
 
     if template.name != 'collection' and heading_class == 'h1'
       assign heading_tag = 'h1'
+    endif
+
+    if heading_style_class != blank
+      assign heading_class = heading_style_class
+    endif
+
+    if template.name == 'page' and page.handle == 'ultimate-human-collection'
+      unless tag == 'h1'
+        assign heading_tag = 'h2'
+      endunless
     endif
   -%}
   <div class="nw-section-heading{% if class != blank %} {{ class }}{% endif %}">

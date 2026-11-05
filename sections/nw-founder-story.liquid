@@ -95,7 +95,8 @@
                   preload: 'metadata',
                   tabindex: -1,
                   class: 'nw-founder-story__media-video',
-                  image_size: '1200x'
+                  image_size: '1200x',
+                  alt: founder_name_alt 
               }}
 
               {%- if media_poster != blank or media_poster_mobile != blank -%}
@@ -104,7 +105,7 @@
                     media_poster
                     | image_url: width: 1200
                     | image_tag:
-                      alt: founder_name_alt,
+                      alt: founder_name_alt ,
                       class: 'nw-founder-story__media-poster nw-founder-story__media-poster--desktop',
                       loading: 'lazy',
                       widths: '600, 900, 1200',
@@ -114,7 +115,7 @@
                     media_poster_mobile
                     | image_url: width: 800
                     | image_tag:
-                      alt: founder_name_alt,
+                      alt: founder_name_alt ,
                       class: 'nw-founder-story__media-poster nw-founder-story__media-poster--mobile',
                       loading: 'lazy',
                       widths: '400, 600, 800',
@@ -125,7 +126,7 @@
                     media_poster
                     | image_url: width: 1200
                     | image_tag:
-                      alt: founder_name_alt,
+                      alt: founder_name_alt ,
                       class: 'nw-founder-story__media-poster',
                       loading: 'lazy',
                       widths: '600, 900, 1200',
@@ -136,7 +137,7 @@
                     media_poster_mobile
                     | image_url: width: 800
                     | image_tag:
-                      alt: founder_name_alt,
+                      alt: founder_name_alt ,
                       class: 'nw-founder-story__media-poster',
                       loading: 'lazy',
                       widths: '400, 600, 800',
@@ -210,7 +211,7 @@
                   <div class="nw-founder-story__name-row">
                     <h3 class="nw-founder-story__name">{{ section.settings.name }}</h3>
                     {%- if section.settings.show_verified -%}
-                      <span class="nw-founder-story__verified" aria-label="Verified">
+                      <span class="nw-founder-story__verified" role="img" aria-label="Verified">
                         {% render 'nw-icon', icon: 'verified-3' %}
                       </span>
                     {%- endif -%}

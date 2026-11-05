@@ -1,0 +1,33 @@
+{% doc %}
+  Whether an article belongs to a blog topic (same rules as NW Blog Info + Shopify tag).
+  @param {object} article
+  @param {string} topic_handle - handleized topic label
+{% enddoc %}
+{%- liquid
+  assign nw_in_topic = false
+  assign nw_topic_handle = topic_handle | strip | handleize
+  if article != blank and nw_topic_handle != blank
+    capture nw_resolved_topic
+      render 'nw-blog-article-topic', article: article
+    endcapture
+    assign nw_resolved_topic = nw_resolved_topic | strip
+    if nw_resolved_topic != blank
+      assign nw_resolved_handle = nw_resolved_topic | handleize
+      if nw_resolved_handle == nw_topic_handle
+        assign nw_in_topic = true
+      endif
+    endif
+    unless nw_in_topic
+      for nw_shop_tag in article.tags
+        assign nw_shop_tag = nw_shop_tag | strip
+        if nw_shop_tag != blank
+          assign nw_shop_tag_handle = nw_shop_tag | handleize
+          if nw_shop_tag_handle == nw_topic_handle
+            assign nw_in_topic = true
+            break
+          endif
+        endif
+      endfor
+    endunless
+  endif
+-%}{%- if nw_in_topic -%}1{%- endif -%}

@@ -57,8 +57,6 @@ This file can be re-written at any time.
       }, { once: true });
     </script>
 
-    <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a995a8bc6e0c5008d00cc21" data-source="WEB_USER"></script>
-
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
@@ -104,7 +102,7 @@ This file can be re-written at any time.
 
   {% render 'shogun-head' %}
   {%- comment -%} Gohighlevel code {%- endcomment -%}
-  <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6aa1684faa1a4795583990d8" data-source="WEB_USER"></script>
+  <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6aa1684faa1a4795583990d8" data-source="WEB_USER" defer></script>
 </head>
   <body>
     {% include 'shogun-content-handler' %}

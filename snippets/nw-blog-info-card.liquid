@@ -1,0 +1,135 @@
+{% doc %}
+  Blog listing card for NW Blog Info (matches NW Blog And Video card styling).
+  @param {object} article - Shopify article object
+  @param {object} section - Section object
+{% enddoc %}
+
+{%- liquid
+  assign blog_tag_metafield = article.metafields.custom.blog_tag
+  assign read_time_metafield = article.metafields.custom.read_time
+  assign blog_tag = blank
+  if blog_tag_metafield != blank
+    if blog_tag_metafield.value != blank
+      assign blog_tag = blog_tag_metafield.value
+    else
+      assign blog_tag = blog_tag_metafield
+    endif
+  endif
+
+  assign read_time = blank
+  if section.settings.show_read_time and read_time_metafield != blank
+    if read_time_metafield.value != blank
+      assign read_time = read_time_metafield.value
+    else
+      assign read_time = read_time_metafield
+    endif
+  endif
+
+  assign read_time_display = blank
+  if read_time != blank
+    assign read_time_text = read_time | append: '' | strip_html | strip
+    if read_time_text != blank
+      if read_time_text contains 'read'
+        assign read_time_display = read_time_text
+      else
+        assign read_time_display = read_time_text | append: ' min read'
+      endif
+    endif
+  endif
+
+  if read_time_display == blank and section.settings.show_read_time
+    assign read_words = article.content | strip_html | split: ' ' | size
+    if read_words > 0
+      assign read_minutes = read_words | plus: 199 | divided_by: 200
+      assign read_time_display = read_minutes | append: ' min read'
+    endif
+  endif
+
+  assign show_author_meta = false
+  if section.settings.show_author and article.author != blank
+    assign show_author_meta = true
+  endif
+
+  assign show_read_time_meta = false
+  if section.settings.show_read_time and read_time_display != blank
+    assign show_read_time_meta = true
+  endif
+
+  assign show_date_meta = section.settings.show_published_date
+  assign excerpt_limit = section.settings.excerpt_length | default: 160
+  assign excerpt_text = article.excerpt | strip_html | strip
+  if excerpt_text == blank
+    assign excerpt_text = article.content | strip_html | strip | truncate: excerpt_limit
+  else
+    assign excerpt_text = excerpt_text | truncate: excerpt_limit
+  endif
+-%}
+
+<article class="nw-blog-info__card">
+  <div class="nw-blog-info__media">
+    {%- if article.image != blank -%}
+      <a href="{{ article.url }}" class="nw-blog-info__media-link">
+        <img
+          src="{{ article.image | image_url: width: 800 }}"
+          alt="{{ article.image.alt | default: article.title | escape }}"
+          width=""
+          height=""
+          loading="lazy"
+          class="nw-blog-info__image"
+        >
+      </a>
+    {%- else -%}
+      <a href="{{ article.url }}" class="nw-blog-info__media-link nw-blog-info__media-link--placeholder">
+        <div class="nw-blog-info__placeholder" aria-hidden="true">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      </a>
+    {%- endif -%}
+
+    {%- if blog_tag != blank -%}
+      <span class="nw-blog-info__media-tag">{{ blog_tag }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="nw-blog-info__body">
+    <div class="nw-blog-info__copy">
+      {%- if article.title != blank -%}
+        <h3 class="nw-blog-info__title">
+          <a href="{{ article.url }}" class="nw-blog-info__title-link">{{ article.title }}</a>
+        </h3>
+      {%- endif -%}
+
+      {%- if section.settings.show_excerpt and excerpt_text != blank -%}
+        <p class="nw-blog-info__excerpt">{{ excerpt_text }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if show_date_meta or show_author_meta or show_read_time_meta -%}
+      <div class="nw-blog-info__meta">
+        {%- if show_date_meta and article.published_at != blank -%}
+          <time class="nw-blog-info__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+            {{ article.published_at | date: '%b %d, %Y' }}
+          </time>
+        {%- endif -%}
+
+        {%- if show_date_meta and show_author_meta -%}
+          <span class="nw-blog-info__meta-dot" aria-hidden="true">&bull;</span>
+        {%- elsif show_date_meta and show_read_time_meta -%}
+          <span class="nw-blog-info__meta-dot" aria-hidden="true">&bull;</span>
+        {%- endif -%}
+
+        {%- if show_author_meta -%}
+          <span class="nw-blog-info__author">{{ article.author }}</span>
+        {%- endif -%}
+
+        {%- if show_author_meta and show_read_time_meta -%}
+          <span class="nw-blog-info__meta-dot" aria-hidden="true">&bull;</span>
+        {%- endif -%}
+
+        {%- if show_read_time_meta -%}
+          <span class="nw-blog-info__read-time">{{ read_time_display }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>

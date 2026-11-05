@@ -31,10 +31,14 @@
   if section.settings.show_category
     if section.settings.category_source == 'blog_title' and blog.title != blank
       assign nw_category_label = blog.title
-    elsif article.tags.size > 0
-      assign nw_category_label = article.tags.first
-    elsif blog.title != blank
-      assign nw_category_label = blog.title
+    else
+      capture nw_category_label
+        render 'nw-blog-article-topic', article: article
+      endcapture
+      assign nw_category_label = nw_category_label | strip
+      if nw_category_label == blank and blog.title != blank
+        assign nw_category_label = blog.title
+      endif
     endif
   endif
 

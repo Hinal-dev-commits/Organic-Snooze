@@ -21,3 +21,146 @@
   width: 52.5rem;
   height: 52.5rem;
 }
+
+.nw-default-page-content {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nw-default-page-content .main-page-title.page-title.h0 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-family: var(--font-heading-family);
+  font-style: normal;
+  letter-spacing: 0;
+  font-size: 36px;
+  line-height: 120%;
+  text-align: center;
+  color: #613916;
+}
+
+.nw-default-page-content > .rte {
+  width: 100%;
+  text-align: left;
+  word-break: break-word;
+  font-family: var(--font-body-family, 'DM Sans');
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  color: #613916;
+}
+
+.nw-default-page-content > .rte > *:first-child {
+  margin-top: 0;
+  text-align: left;
+}
+
+.nw-default-page-content > .rte > *:last-child {
+  margin-bottom: 0;
+}
+
+.nw-default-page-content > .rte p {
+  margin: 0 0 20px;
+  color: #613916;
+}
+
+.nw-default-page-content > .rte p:last-child {
+  margin-bottom: 0;
+}
+
+.nw-default-page-content > .rte ul,
+.nw-default-page-content > .rte ol {
+  list-style-position: outside;
+  margin: 0 0 20px;
+  padding-left: 1.5em;
+}
+
+.nw-default-page-content > .rte ol {
+  padding-left: 1.75em;
+}
+
+.nw-default-page-content > .rte ul:last-child,
+.nw-default-page-content > .rte ol:last-child {
+  margin-bottom: 0;
+}
+
+.nw-default-page-content > .rte li {
+  margin-bottom: 15px;
+  padding-left: 0.15em;
+}
+
+.nw-default-page-content > .rte li:last-child {
+  margin-bottom: 0;
+}
+
+.nw-default-page-content > .rte li > p {
+  margin: 0;
+}
+
+.nw-default-page-content > .rte li > p + p {
+  margin-top: 12px;
+}
+
+.nw-default-page-content > .rte li > ul,
+.nw-default-page-content > .rte li > ol {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+.nw-default-page-content > .rte strong,
+.nw-default-page-content > .rte b {
+  font-weight: 700;
+}
+
+.nw-default-page-content > .rte a {
+  color: #613916;
+  text-underline-offset: 2px;
+}
+
+.nw-default-page-content > .rte h2,
+.nw-default-page-content > .rte h3,
+.nw-default-page-content > .rte h4 {
+  margin: 0 0 12px;
+  font-family: var(--font-body-family, 'DM Sans');
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 150%;
+  text-align: left;
+  color: #613916;
+  word-break: break-word;
+}
+
+@media screen and (max-width: 749px) {
+  .nw-default-page-content .main-page-title.page-title.h0 {
+    font-size: 20px;
+    line-height: 150%;
+  }
+
+  .nw-default-page-content > .rte {
+    font-size: 16px;
+    line-height: 150%;
+  }
+
+  .nw-default-page-content > .rte h2,
+  .nw-default-page-content > .rte h3,
+  .nw-default-page-content > .rte h4 {
+    font-size: 20px;
+    line-height: 150%;
+  }
+
+  .nw-default-page-content > .rte ul,
+  .nw-default-page-content > .rte ol {
+    padding-left: 1.25em;
+  }
+
+  .nw-default-page-content > .rte ol {
+    padding-left: 1.4em;
+  }
+
+  .nw-default-page-content > .rte li {
+    margin-bottom: 12px;
+  }
+}

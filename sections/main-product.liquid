@@ -13,6 +13,18 @@
       assign hide_section = true
     endif
   endunless
+
+  assign is_uhc_page = false
+  if template.name == 'page' and page.handle == 'ultimate-human-collection'
+    assign is_uhc_page = true
+  endif
+
+  assign nw_section_header_tag = 'h1'
+  assign nw_section_header_style_class = blank
+  if is_uhc_page and is_nw_product_page
+    assign nw_section_header_tag = 'h2'
+    assign nw_section_header_style_class = 'h1'
+  endif
 -%}
 
 {%- unless hide_section -%}
@@ -27,6 +39,9 @@
     data-zoom-on-hover
   {% endif %}
 >
+  {%- if template.name == 'product' -%}
+    {% render 'nw-product-lcp-preload', section: section, product: product %}
+  {%- endif -%}
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -123,7 +138,8 @@
             heading: section.settings.section_header_heading,
             description: section.settings.section_header_description,
             section_index: section.index,
-            tag: 'h1',
+            tag: nw_section_header_tag,
+            heading_style_class: nw_section_header_style_class,
           %}
         </div>
       {%- endif -%}
@@ -165,14 +181,22 @@
                   -%}
                   <div class="product__title">
                     {% if block.settings.custom_title != blank %}
+                    {%- if is_uhc_page and is_nw_product_page -%}
+                    <h2 class="h1">{{ block.settings.custom_title }}</h2>
+                    {%- else -%}
                     <h1>{{ block.settings.custom_title }}</h1>
                     <a href="{{ product.url }}" class="product__title">
                       <h2 class="h1">
                         {{ block.settings.custom_title }}
                       </h2>
                     </a>
+                    {%- endif -%}
                     {% else %}
+                      {%- if is_uhc_page and is_nw_product_page -%}
+                      <h2 class="h1">{{ product.title }}</h2>
+                      {%- else -%}
                       <h1>{{ product.title }}</h1>
+                      {%- endif -%}
                     {% endif %}
                   </div>
                 {%- when 'price' -%}
