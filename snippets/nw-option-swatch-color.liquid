@@ -1,0 +1,33 @@
+{% doc %}
+  CSS color for a variant option value, read from Shopify's standard Color metaobject
+  (shopify--color-pattern). Outputs nothing when no entry matches the option value.
+  Native option swatches should be preferred by the caller.
+  @param {string} name - Option value name, such as Ivory or Gray
+{% enddoc %}
+{%- liquid
+  assign color_name = name | strip | downcase
+  assign color_handle = color_name | handleize
+  assign swatch_color = blank
+
+  if color_name != blank
+    assign color_entries = shop.metaobjects['shopify--color-pattern'].values
+    for entry in color_entries
+      assign entry_label = entry.label.value | default: entry.label | append: '' | strip | downcase
+      assign entry_handle = entry.system.handle | default: '' | strip | downcase
+      if entry_label == color_name or entry_handle == color_handle
+        assign entry_image = entry.image.value
+        assign entry_color = entry.color.value
+        if entry_image != blank
+          assign image_url = entry_image | image_url: width: 80
+          assign swatch_color = 'url(' | append: image_url | append: ')'
+        elsif entry_color.rgb != blank
+          assign swatch_color = 'rgb(' | append: entry_color.rgb | append: ')'
+        elsif entry_color != blank
+          assign swatch_color = entry_color | color_to_hex
+        endif
+        break
+      endif
+    endfor
+  endif
+-%}
+{{- swatch_color -}}

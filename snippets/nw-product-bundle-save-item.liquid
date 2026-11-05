@@ -179,8 +179,13 @@
       {%- for option in bundle_product.options_with_values -%}
         {%- liquid
           assign swatch_count = option.values | map: 'swatch' | compact | size
+          assign option_name_key = option.name | strip | downcase
+          assign is_color_option = false
+          if option_name_key == 'color' or option_name_key == 'colour' or option_name_key contains 'color' or option_name_key contains 'colour'
+            assign is_color_option = true
+          endif
         -%}
-        {%- if swatch_count > 0 -%}
+        {%- if swatch_count > 0 or is_color_option -%}
           <fieldset class="nw-bundle-save__option nw-bundle-save__option--swatch">
             <legend class="nw-bundle-save__option-label">
               {{ option.name }}:
@@ -208,7 +213,10 @@
                   title="{{ value | escape }}"
                   class="swatch-input__label"
                 >
-                  {% render 'swatch', swatch: value.swatch, shape: 'circle' %}
+                  {%- capture fallback_color -%}
+                    {%- render 'nw-option-swatch-color', name: value -%}
+                  {%- endcapture -%}
+                  {% render 'swatch', swatch: value.swatch, shape: 'circle', fallback_color: fallback_color %}
                   <span class="visually-hidden">{{ value }}</span>
                 </label>
               {%- endfor -%}

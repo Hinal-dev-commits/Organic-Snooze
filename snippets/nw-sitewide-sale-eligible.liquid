@@ -1,0 +1,27 @@
+{% doc %}
+  Outputs "1" when sitewide sale display applies to this product.
+  Requires theme setting enabled, valid percent, not excluded, and no bundle kit (bundle pricing unchanged).
+  @param {object} product
+{% enddoc %}
+
+{%- unless product == blank -%}
+  {%- if settings.nw_sitewide_sale_enabled -%}
+    {%- assign nw_sale_pct = settings.nw_sitewide_sale_percent | plus: 0 -%}
+    {%- if nw_sale_pct > 0 and nw_sale_pct < 100 -%}
+      {%- capture nw_sale_has_bundle_kit -%}
+        {%- render 'nw-bundle-product-has-kit', product: product -%}
+      {%- endcapture -%}
+      {%- assign nw_sale_has_bundle_kit = nw_sale_has_bundle_kit | strip -%}
+      {%- if nw_sale_has_bundle_kit == blank -%}
+        {%- assign nw_sale_excluded = false -%}
+        {%- for excluded_product in settings.nw_sitewide_sale_excluded_products -%}
+          {%- if excluded_product.id == product.id -%}
+            {%- assign nw_sale_excluded = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- unless nw_sale_excluded -%}1{%- endunless -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endunless -%}

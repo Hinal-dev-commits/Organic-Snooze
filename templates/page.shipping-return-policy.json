@@ -69,6 +69,20 @@
             "delivery_custom_icon": "shopify://shop_images/checkmark.svg"
           }
         },
+        "delivery_group_kDNXMg": {
+          "type": "delivery_group",
+          "settings": {
+            "heading": "Adjustable Base Orders",
+            "processing_text": "Processing Time: 1-2 Business days",
+            "processing_use_custom_icon": true,
+            "processing_icon": "clock",
+            "processing_custom_icon": "shopify://shop_images/clock.svg",
+            "delivery_text": "Accessory Delivery: 5-10 Business days",
+            "delivery_use_custom_icon": true,
+            "delivery_icon": "check-v2",
+            "delivery_custom_icon": "shopify://shop_images/checkmark.svg"
+          }
+        },
         "stat_card_9bhkQj": {
           "type": "stat_card",
           "settings": {
@@ -101,6 +115,7 @@
       "block_order": [
         "delivery_group_9FYTBp",
         "delivery_group_rGfPMb",
+        "delivery_group_kDNXMg",
         "stat_card_9bhkQj",
         "stat_card_bT7B7F",
         "stat_card_wjDATC",
@@ -400,6 +415,15 @@
             "content": "<p>Accessories may be exchanged within 30 days for a different size or option with no restocking fees. Ultimate Snooze covers exchange shipping. Exchanges are subject to product availability.</p>"
           }
         },
+        "content_item_nrWLzX": {
+          "type": "content_item",
+          "settings": {
+            "divider_before": "heavy",
+            "heading": "Adjustable Base Returns",
+            "heading_size": "large",
+            "content": "<p>All adjustable base purchases are FINAL. No returns are accepted, if product arrives defective please contact customer support for a solution. The adjustable base has a 20-year warranty.</p>"
+          }
+        },
         "content_item_RJQVA4": {
           "type": "content_item",
           "settings": {
@@ -467,6 +491,7 @@
         "content_item_X4EL7n",
         "table_group_9tTJWN",
         "content_item_AGpdT9",
+        "content_item_nrWLzX",
         "content_item_RJQVA4",
         "callout_8KCJGc",
         "content_item_dFrGge",

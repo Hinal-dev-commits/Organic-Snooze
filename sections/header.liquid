@@ -35,6 +35,10 @@
   <script src="{{ 'nw-mega-menu.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
+{%- if section.settings.enable_black_friday_mode -%}
+  {{ 'nw-bf-header-announcement.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
 {%- if section.settings.menu_type_desktop == 'mega' -%}
   <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -170,6 +174,34 @@
       border-bottom-color: {{ section.settings.transparent_border_color }};
     }
   {%- endif -%}
+
+  {%- if section.settings.enable_black_friday_mode -%}
+    .header-wrapper.nw-header--black-friday {
+      --nw-bf-header-bg: {{ section.settings.bf_header_background_color }};
+      --nw-bf-header-text: {{ section.settings.bf_header_text_color.red }}, {{ section.settings.bf_header_text_color.green }}, {{ section.settings.bf_header_text_color.blue }};
+      --nw-bf-header-icon: {{ section.settings.bf_header_icon_color.red }}, {{ section.settings.bf_header_icon_color.green }}, {{ section.settings.bf_header_icon_color.blue }};
+      --nw-bf-header-border: {{ section.settings.bf_header_border_color }};
+      --nw-bf-accent: {{ section.settings.bf_header_accent_color }};
+      --nw-bf-transparent-text-light: {{ section.settings.bf_transparent_text_light.red }}, {{ section.settings.bf_transparent_text_light.green }}, {{ section.settings.bf_transparent_text_light.blue }};
+      --nw-bf-transparent-icon-light: {{ section.settings.bf_transparent_icon_light.red }}, {{ section.settings.bf_transparent_icon_light.green }}, {{ section.settings.bf_transparent_icon_light.blue }};
+      --nw-bf-transparent-text-dark: {{ section.settings.bf_transparent_text_dark.red }}, {{ section.settings.bf_transparent_text_dark.green }}, {{ section.settings.bf_transparent_text_dark.blue }};
+      --nw-bf-transparent-icon-dark: {{ section.settings.bf_transparent_icon_dark.red }}, {{ section.settings.bf_transparent_icon_dark.green }}, {{ section.settings.bf_transparent_icon_dark.blue }};
+    }
+
+    {%- assign bf_nav_handle = section.settings.bf_highlight_menu_handle | handleize -%}
+    {%- if bf_nav_handle != blank -%}
+      .header-wrapper.nw-header--black-friday #HeaderMenu-{{ bf_nav_handle }},
+      .header-wrapper.nw-header--black-friday #HeaderMenu-{{ bf_nav_handle }} span {
+        color: var(--nw-bf-accent) !important;
+      }
+
+      @media screen and (min-width: 990px) {
+        .header-wrapper.nw-header--black-friday #HeaderMenu-{{ bf_nav_handle }}::after {
+          background: var(--nw-bf-accent);
+        }
+      }
+    {%- endif -%}
+  {%- endif -%}
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
@@ -194,7 +226,7 @@
   {% if header_tag == 'sticky-header' %}
     data-sticky-type="{{ section.settings.sticky_header_type }}"
   {% endif %}
-  class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+  class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.enable_black_friday_mode %} nw-header--black-friday{% endif %}{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
 >
   {%- liquid
     assign social_links = false
@@ -647,6 +679,88 @@
     },
     {
       "type": "header",
+      "content": "BLACK FRIDAY"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_black_friday_mode",
+      "label": "Enable Black Friday mode",
+      "default": false,
+      "info": "Applies Black Friday header styling. Off by default."
+    },
+    {
+      "type": "color",
+      "id": "bf_header_background_color",
+      "label": "Header background",
+      "default": "#0a0a0a",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_header_text_color",
+      "label": "Navigation text",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_header_icon_color",
+      "label": "Icon color",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_header_accent_color",
+      "label": "Accent (highlight link & cart badge)",
+      "default": "#e9b949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_header_border_color",
+      "label": "Bottom border",
+      "default": "#e9b949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "text",
+      "id": "bf_highlight_menu_handle",
+      "label": "Highlighted menu link handle",
+      "default": "black-friday",
+      "info": "Navigation link handle to show in accent color (e.g. black-friday).",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_transparent_text_light",
+      "label": "Transparent nav text (light hero background)",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_transparent_icon_light",
+      "label": "Transparent icons (light hero background)",
+      "default": "#0A0A0A",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_transparent_text_dark",
+      "label": "Transparent nav text (dark hero background)",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_transparent_icon_dark",
+      "label": "Transparent icons (dark hero background)",
+      "default": "#FFFFFF",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "header",
       "content": "TRANSPARENT HEADER"
     },
     {
@@ -1058,6 +1172,18 @@
           "visible_if": "{{ block.settings.category_1_product_source == 'collection' }}"
         },
         {
+          "type": "text",
+          "id": "category_1_shop_link_label",
+          "label": "Mobile section link label",
+          "info": "Mobile menu only. Leave blank to use “Shop {category title}”."
+        },
+        {
+          "type": "url",
+          "id": "category_1_shop_link",
+          "label": "Mobile section link",
+          "info": "Leave blank to use the collection URL or parent menu link."
+        },
+        {
           "type": "header",
           "content": "CATEGORY 2"
         },
@@ -1096,6 +1222,18 @@
           "step": 1,
           "default": 8,
           "visible_if": "{{ block.settings.category_2_product_source == 'collection' }}"
+        },
+        {
+          "type": "text",
+          "id": "category_2_shop_link_label",
+          "label": "Mobile section link label",
+          "info": "Mobile menu only. Leave blank to use “Shop {category title}”."
+        },
+        {
+          "type": "url",
+          "id": "category_2_shop_link",
+          "label": "Mobile section link",
+          "info": "Leave blank to use the collection URL or parent menu link."
         },
         {
           "type": "header",
@@ -1138,6 +1276,18 @@
           "visible_if": "{{ block.settings.category_3_product_source == 'collection' }}"
         },
         {
+          "type": "text",
+          "id": "category_3_shop_link_label",
+          "label": "Mobile section link label",
+          "info": "Mobile menu only. Leave blank to use “Shop {category title}”."
+        },
+        {
+          "type": "url",
+          "id": "category_3_shop_link",
+          "label": "Mobile section link",
+          "info": "Leave blank to use the collection URL or parent menu link."
+        },
+        {
           "type": "header",
           "content": "CATEGORY 4"
         },
@@ -1178,6 +1328,18 @@
           "visible_if": "{{ block.settings.category_4_product_source == 'collection' }}"
         },
         {
+          "type": "text",
+          "id": "category_4_shop_link_label",
+          "label": "Mobile section link label",
+          "info": "Mobile menu only. Leave blank to use “Shop {category title}”."
+        },
+        {
+          "type": "url",
+          "id": "category_4_shop_link",
+          "label": "Mobile section link",
+          "info": "Leave blank to use the collection URL or parent menu link."
+        },
+        {
           "type": "header",
           "content": "CATEGORY 5"
         },
@@ -1216,6 +1378,18 @@
           "step": 1,
           "default": 8,
           "visible_if": "{{ block.settings.category_5_product_source == 'collection' }}"
+        },
+        {
+          "type": "text",
+          "id": "category_5_shop_link_label",
+          "label": "Mobile section link label",
+          "info": "Mobile menu only. Leave blank to use “Shop {category title}”."
+        },
+        {
+          "type": "url",
+          "id": "category_5_shop_link",
+          "label": "Mobile section link",
+          "info": "Leave blank to use the collection URL or parent menu link."
         },
         {
           "type": "header",

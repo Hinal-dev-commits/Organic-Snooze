@@ -44,6 +44,11 @@
     assign is_quantity_option = true
   endif
 
+  assign is_color_option = false
+  if current_option_name == 'color' or current_option_name == 'colour' or current_option_name contains 'color' or current_option_name contains 'colour'
+    assign is_color_option = true
+  endif
+
   if is_firmness_option or is_loft_option or is_size_option or is_quantity_option
     assign picker_type = 'button'
   elsif swatch_count > 0 and block.settings.swatch_shape != 'none'
@@ -52,14 +57,36 @@
     else
       assign picker_type = 'swatch'
     endif
+  elsif is_color_option and block.settings.swatch_shape != 'none'
+    if block.settings.picker_type == 'dropdown'
+      assign picker_type = 'swatch_dropdown'
+    else
+      assign picker_type = 'swatch'
+    endif
   endif
+
+  assign option_display_name = option.name
+  assign display_name_rules = block.settings.option_display_names | newline_to_br | replace: '<br />', '|' | replace: ',', '|' | split: '|'
+  for display_rule in display_name_rules
+    assign rule_parts = display_rule | split: '='
+    if rule_parts.size < 2
+      assign rule_parts = display_rule | split: ':'
+    endif
+    if rule_parts.size > 1
+      assign rule_source = rule_parts | first | strip | downcase
+      if rule_source == current_option_name
+        assign option_display_name = rule_parts | last | strip
+        break
+      endif
+    endif
+  endfor
 -%}
 {%- if picker_type == 'swatch' -%}
   <fieldset class="js product-form__input product-form__input--swatch nw-variant-picker nw-variant-picker--swatch">
-    <legend class="visually-hidden">{{ option.name }}</legend>
+    <legend class="visually-hidden">{{ option_display_name | escape }}</legend>
     <div class="nw-variant-picker__header">
       <span class="nw-variant-picker__label">
-        {{ option.name }}:
+        {{ option_display_name | escape }}:
         <span data-selected-value>{{ option.selected_value }}</span>
       </span>
     </div>
@@ -75,9 +102,9 @@
   </fieldset>
 {%- elsif picker_type == 'button' -%}
   <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness nw-variant-picker--card{% endif %}{% if is_loft_option %} nw-variant-picker--card nw-variant-picker--card-left{% endif %}{% if is_quantity_option %} nw-variant-picker--quantity{% endif %}{% if is_size_option %} nw-variant-picker--size{% endif %}">
-    <legend class="visually-hidden">{{ option.name }}</legend>
+    <legend class="visually-hidden">{{ option_display_name | escape }}</legend>
     <div class="nw-variant-picker__header">
-      <span class="nw-variant-picker__label">{{ option.name }}:</span>
+      <span class="nw-variant-picker__label">{{ option_display_name | escape }}:</span>
       {%- if is_firmness_option -%}
         {%- if show_firmness_guide and firmness_popup_modal_id != blank and firmness_guide_label != blank -%}
           <modal-opener
@@ -168,7 +195,7 @@
 {%- else -%}
   <div class="product-form__input product-form__input--dropdown">
     <label class="form__label" for="Option-{{ section.id }}-{{ option.position | minus: 1 }}">
-      {{ option.name }}
+      {{ option_display_name | escape }}
     </label>
     <div class="select">
       {%- if picker_type == 'swatch_dropdown' -%}
@@ -176,7 +203,14 @@
           data-selected-value
           class="dropdown-swatch"
         >
-          {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
+          {%- capture selected_fallback_color -%}
+            {%- render 'nw-option-swatch-color', name: option.selected_value -%}
+          {%- endcapture -%}
+          {% render 'swatch',
+            swatch: option.selected_value.swatch,
+            shape: block.settings.swatch_shape,
+            fallback_color: selected_fallback_color
+          %}
         </span>
       {%- endif -%}
       <select

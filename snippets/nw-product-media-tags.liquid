@@ -4,21 +4,41 @@ Renders save and seller tags over NW product media images.
 {% enddoc %}
 
 {%- liquid
-  assign price_variant = product.selected_or_first_available_variant
-  assign compare_at_price = price_variant.compare_at_price
-  assign current_price = price_variant.price
+  assign bundle_save_badge = blank
   assign save_percent = 0
-
-  if compare_at_price > current_price and compare_at_price > 0
-    assign savings_amount = compare_at_price | minus: current_price
-    assign save_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round
-  endif
 
   assign seller_tag = product.metafields.custom.seller_tag.value | default: product.metafields.custom.seller_tag
 -%}
 
-{%- if save_percent > 0 -%}
-  <span class="nw-product-page-media__badge nw-product-page-media__badge--left">
+{%- capture nw_product_has_bundle_kit -%}
+  {%- render 'nw-bundle-product-has-kit', product: product -%}
+{%- endcapture -%}
+{%- assign nw_product_has_bundle_kit = nw_product_has_bundle_kit | strip -%}
+
+{%- if nw_product_has_bundle_kit != blank -%}
+  {%- capture bundle_save_badge -%}
+    {%- render 'nw-bundle-save-badge-display', product: product, for_collection_card: true -%}
+  {%- endcapture -%}
+  {%- assign bundle_save_badge = bundle_save_badge | strip -%}
+{%- else -%}
+  {%- capture nw_sitewide_save_pct -%}
+    {%- render 'nw-sitewide-sale-product-pricing', product: product, output_mode: 'save_percent' -%}
+  {%- endcapture -%}
+  {%- assign save_percent = nw_sitewide_save_pct | strip | plus: 0 -%}
+  {%- if save_percent == 0 -%}
+    {%- capture nw_max_compare_save_pct -%}
+      {%- render 'nw-product-max-compare-save-percent', product: product -%}
+    {%- endcapture -%}
+    {%- assign save_percent = nw_max_compare_save_pct | strip | plus: 0 -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- if bundle_save_badge != blank -%}
+  <span class="nw-product-page-media__badge nw-product-page-media__badge--left" data-nw-media-save-badge>
+    {{ bundle_save_badge | escape }}
+  </span>
+{%- elsif save_percent > 0 -%}
+  <span class="nw-product-page-media__badge nw-product-page-media__badge--left" data-nw-media-save-badge>
     SAVE {{ save_percent }}%
   </span>
 {%- endif -%}

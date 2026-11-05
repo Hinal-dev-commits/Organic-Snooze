@@ -33,6 +33,7 @@
         },
         "price": {
           "type": "price",
+          "disabled": true,
           "settings": {
             "show_affirm": true,
             "show_sale_badge": true,
@@ -46,7 +47,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>Organic coconut coir, hemp & wool crib mattress for safe, firm infant support. Zero chemicals from day one. Bundle includes, Firm-Safe mattress, Organic Cotton Sheets, and Organic Waterproof protector.</p><p>Whats Included:</p>",
+            "custom_description": "<p>Organic coconut coir, hemp & wool crib mattress for safe, firm infant support. Sleep Organic from day one. Bundle includes, Firm-Safe mattress, Organic Cotton Sheets, and Organic Waterproof protector.</p><p>What's Included:</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -224,10 +225,10 @@
             "product": "the-snooze-nest-organic-crib-mattress",
             "tab_label": "Mattress",
             "custom_title": "Organic Nest Crib Mattress",
-            "custom_subtitle": "Firm-Safe | Made 100% Organic",
+            "custom_subtitle": "Firm-Safe | Made With Organic",
             "extra_description": "",
             "custom_image": "shopify://shop_images/SnoozeNest-Hero.png",
-            "features": "Dimensions: 28\" x 52\" (standard U.S. crib size)\n5\" height Flippable, dual-sided design with both sides identical \nFirm, flat, supportive feel, built for infant safety Fully breathable layered construction \nMade with 100% Organic Materials\nPressure-tested for safety Bed frame not included\nOkeo-Tex Certified",
+            "features": "Dimensions: 28\" x 52\" (standard U.S. crib size)\n5\" height Flippable, dual-sided design with both sides identical \nFirm, flat, supportive feel, built for infant safety Fully breathable layered construction \nMade with Organic Materials\nPressure-tested for safety Bed frame not included\nOkeo-Tex Certified",
             "learn_more_label": ""
           }
         },
@@ -240,7 +241,7 @@
             "custom_subtitle": "100% Organic Cotton",
             "extra_description": "",
             "custom_image": "shopify://shop_images/CRIB_0762_1256_Large_df9d1d8f-a7e0-40af-bbb4-7bb0c3f5b73e.jpg",
-            "features": "Dimensions: 28\" x 52\" \n100% Organic Cotton\nPVC-FREE\nWaterproof\nElastic Fit\nMachine Washable",
+            "features": "Dimensions: 28\" x 52\" \nOrganic Cotton\nPVC-FREE\nWaterproof\nElastic Fit\nMachine Washable",
             "learn_more_label": ""
           }
         },
@@ -253,7 +254,7 @@
             "custom_subtitle": "100% Organic Cotton",
             "extra_description": "",
             "custom_image": "shopify://shop_images/CRIB_0748_1248_Large_db933b5b-f15a-4246-ab13-96df07f7e8dc.jpg",
-            "features": "Non-Toxic 100% Organic Cotton\nBreezeline Breathable Sheets\nWhite Color\nMachine Washable",
+            "features": "100% Organic Cotton\nBreezeline Breathable Sheets\nWhite Color\nMachine Washable",
             "learn_more_label": "Learn More"
           }
         },
@@ -289,7 +290,7 @@
           "settings": {
             "heading": "Safety & Certifications",
             "icon": "none",
-            "content": "<ul><li>OEKO-TEX certified&nbsp;</li><li>Manufactured in a GOTS/GOLS certified facility&nbsp;</li><li>No chemical flame retardants (organic wool is the natural barrier)&nbsp;</li><li>No polyurethane foams, no synthetic adhesives or glues, no VOCs&nbsp;</li><li>Firm, flat construction that meets infant sleep safety guidelines&nbsp;</li><li>Pressure-tested for infant safety</li></ul>",
+            "content": "<ul><li>OEKO-TEX certified&nbsp;</li><li>Manufactured in a GOTS/GOLS certified facility&nbsp;</li><li>No chemical flame retardants (organic wool is the natural barrier)&nbsp;</li><li>No polyurethane foams, no toxic synthetic adhesives or glues&nbsp;</li><li>Firm, flat construction that meets infant sleep safety guidelines&nbsp;</li><li>Pressure-tested for infant safety</li></ul>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -341,7 +342,7 @@
           "type": "icon_text_v2",
           "settings": {
             "text_case": "capitalize",
-            "item_1_text": "Made in USA",
+            "item_1_text": "Assembled in USA",
             "item_1_icon": "usamap",
             "item_1_use_custom_icon": true,
             "item_1_custom_icon": "shopify://shop_images/image_1254_Vectorized.svg",
@@ -479,7 +480,7 @@
         "item_9rEH9K": {
           "type": "item",
           "settings": {
-            "text": "MADE IN USA",
+            "text": "Assembled in USA",
             "icon": "usamap",
             "link": ""
           }
@@ -619,12 +620,14 @@
         },
         "safety_item_86CVNT": {
           "type": "safety_item",
+          "disabled": true,
           "settings": {
             "text": "✓ No synthetic adhesives or glues"
           }
         },
         "safety_item_NtzURw": {
           "type": "safety_item",
+          "disabled": true,
           "settings": {
             "text": "✓ No VOCs"
           }
@@ -768,7 +771,7 @@
             "col1_use_custom_icon": false,
             "col1_icon": "verified-3",
             "col1_icon_color": "#878735",
-            "col1_text": "100% organic throughout",
+            "col1_text": "Made with Organic Materials",
             "col2_use_custom_icon": false,
             "col2_icon": "cross",
             "col2_icon_color": "#b61919",
@@ -782,11 +785,11 @@
             "col1_use_custom_icon": false,
             "col1_icon": "verified-3",
             "col1_icon_color": "#878735",
-            "col1_text": "Zero VOCs",
+            "col1_text": "Made with Organic Materials",
             "col2_use_custom_icon": false,
             "col2_icon": "cross",
             "col2_icon_color": "#b61919",
-            "col2_text": "VOC release into nursery air"
+            "col2_text": "Potential VOC release with chemical materials"
           }
         },
         "table_row_ECtNHf": {
@@ -1066,7 +1069,7 @@
         "show_rating": false,
         "star_rating": 5,
         "eyebrow": "",
-        "heading": "Sleep vOC-free from day one.",
+        "heading": "Sleep naturally from day one.",
         "media_type": "video",
         "video": "shopify://files/videos/Gary Longform Mashup-2.mov",
         "video_autoplay": false,
@@ -1076,7 +1079,7 @@
         "quote": "<p>“Most parents think carefully about what their baby eats, what touches their skin, and what’s in the air around them — but the mattress they sleep on every night is often overlooked. A crib mattress sits just inches from their airway for hours a day. That’s why materials matter. This crib mattress is made with certified organic cotton, wool, and natural latex because a baby’s first sleep environment should be one of the cleanest places in the home.”</p>",
         "name": "Gary Brecka",
         "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "role": "Longevity Expert & Co-Founder of The Ultimate Snooze",
         "show_footer_content": true,
         "footer_heading": "This is how long your baby sleeps.",
         "footer_description": "<p>Choose a crib mattress made with certified organic materials and no unnecessary synthetic fillers.</p><p></p>",

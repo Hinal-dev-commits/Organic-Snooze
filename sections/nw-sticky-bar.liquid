@@ -25,11 +25,40 @@
   assign sticky_price = current_variant.price
   assign sticky_compare = current_variant.compare_at_price
   assign sticky_save = 0
-  if sticky_compare > sticky_price
-    assign sticky_save = sticky_compare | minus: sticky_price
-  endif
   assign sticky_available = current_variant.available
 
+  assign nw_sticky_sitewide_sale_enabled = false
+  capture nw_sticky_sitewide_eligible
+    render 'nw-sitewide-sale-eligible', product: sticky_product
+  endcapture
+  assign nw_sticky_sitewide_eligible = nw_sticky_sitewide_eligible | strip
+-%}
+
+{%- capture nw_sticky_has_bundle_kit -%}
+  {%- render 'nw-bundle-product-has-kit', product: sticky_product -%}
+{%- endcapture -%}
+{%- assign nw_sticky_has_bundle_kit = nw_sticky_has_bundle_kit | strip -%}
+
+{%- if nw_sticky_has_bundle_kit != blank -%}
+  {%- capture nw_sticky_bundle_save_cents -%}
+    {%- render 'nw-bundle-save-percent', product: sticky_product, variant: current_variant, output_mode: 'save_cents' -%}
+  {%- endcapture -%}
+  {%- assign sticky_save = nw_sticky_bundle_save_cents | strip | plus: 0 -%}
+{%- elsif nw_sticky_sitewide_eligible != blank -%}
+  {%- assign nw_sticky_sitewide_sale_enabled = true -%}
+  {%- capture nw_sticky_sitewide_sale -%}
+    {%- render 'nw-sitewide-sale-variant-pricing', product: sticky_product, variant: current_variant, output_mode: 'sale_price' -%}
+  {%- endcapture -%}
+  {%- capture nw_sticky_sitewide_save_cents -%}
+    {%- render 'nw-sitewide-sale-variant-pricing', product: sticky_product, variant: current_variant, output_mode: 'save_cents' -%}
+  {%- endcapture -%}
+  {%- assign sticky_price = nw_sticky_sitewide_sale | strip | plus: 0 -%}
+  {%- assign sticky_save = nw_sticky_sitewide_save_cents | strip | plus: 0 -%}
+{%- elsif sticky_compare > sticky_price -%}
+  {%- assign sticky_save = sticky_compare | minus: sticky_price -%}
+{%- endif -%}
+
+{%- liquid
   assign sticky_btn_label = section.settings.button_text
   if sticky_btn_label == blank
     assign sticky_btn_label = 'products.product.add_to_cart' | t
@@ -209,13 +238,24 @@
         "showVariant": {{ section.settings.show_variant | json }},
         "showImage": {{ section.settings.show_image | json }},
         "savePrefix": {{ section.settings.save_prefix | default: 'You save' | json }},
+        "hasBundleKit": {% if nw_sticky_has_bundle_kit != blank %}true{% else %}false{% endif %},
+        "sitewideSaleEnabled": {% if nw_sticky_sitewide_sale_enabled %}true{% else %}false{% endif %},
+        "sitewideSalePercent": {{ settings.nw_sitewide_sale_percent | default: 0 | json }},
         "initialVariantId": {{ current_variant.id | json }},
         "variants": [
           {%- for variant in sticky_product.variants -%}
+            {%- assign variant_bundle_save_cents = 0 -%}
+            {%- if nw_sticky_has_bundle_kit != blank -%}
+              {%- capture nw_variant_bundle_save_cents -%}
+                {%- render 'nw-bundle-save-percent', product: sticky_product, variant: variant, output_mode: 'save_cents' -%}
+              {%- endcapture -%}
+              {%- assign variant_bundle_save_cents = nw_variant_bundle_save_cents | strip | plus: 0 -%}
+            {%- endif -%}
             {
               "id": {{ variant.id | json }},
               "price": {{ variant.price | json }},
               "compare_at_price": {{ variant.compare_at_price | json }},
+              "bundle_save_cents": {{ variant_bundle_save_cents | json }},
               "available": {{ variant.available | json }},
               "options": {{ variant.options | json }},
               "title": {{ variant.title | json }},

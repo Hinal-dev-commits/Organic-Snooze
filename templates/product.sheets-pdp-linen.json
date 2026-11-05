@@ -173,6 +173,42 @@
             "margin_bottom_mobile": 0
           }
         },
+        "whats_included_NYfjML": {
+          "type": "whats_included",
+          "settings": {
+            "heading": "What's Included",
+            "items": "1 Flat Sheet\n1 Fitted Sheet\n2 Pillow Cases",
+            "use_product_metafield": false,
+            "heading_color": "#613916",
+            "text_color": "#613916",
+            "icon_color": "#613916",
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "promo_banner_kWtECB": {
+          "type": "promo_banner",
+          "settings": {
+            "use_discount_metaobject": true,
+            "heading": "Save 15% on your first order!",
+            "description": "",
+            "discount_code": "",
+            "use_custom_icon": false,
+            "bg_color": "#fff7e0",
+            "border_color": "#61391633",
+            "text_color": "#454500",
+            "icon_color": "#454500",
+            "code_bg_color": "#fffcf0",
+            "code_border_color": "#7f7f29",
+            "code_text_color": "#434300",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -193,21 +229,6 @@
             "option_position_order": "Size, Firmness",
             "option_1_values_order": "",
             "option_2_values_order": "",
-            "margin_top": 32,
-            "margin_bottom": 32,
-            "margin_top_mobile": 24,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "whats_included_NYfjML": {
-          "type": "whats_included",
-          "settings": {
-            "heading": "What's Included",
-            "items": "1 Flat Sheet\n1 Fitted Sheet\n2 Pillow Cases",
-            "use_product_metafield": false,
-            "heading_color": "#613916",
-            "text_color": "#613916",
-            "icon_color": "#613916",
             "margin_top": 32,
             "margin_bottom": 32,
             "margin_top_mobile": 24,
@@ -263,6 +284,24 @@
             "margin_bottom": 8,
             "margin_top_mobile": 32,
             "margin_bottom_mobile": 8
+          }
+        },
+        "shipping_tag_6x33Xx": {
+          "type": "shipping_tag",
+          "settings": {
+            "text": "Ships from USA",
+            "delivery_threshold_days": 6,
+            "use_product_metafield": false,
+            "use_custom_icon": true,
+            "icon": "truck",
+            "custom_icon": "shopify://shop_images/Frame_2_ae1d68d4-b232-404a-9611-30258c776f81.svg",
+            "bg_color": "#e8f0e0",
+            "text_color": "#613916",
+            "icon_color": "#613916",
+            "margin_top": 12,
+            "margin_bottom": 0,
+            "margin_top_mobile": 12,
+            "margin_bottom_mobile": 0
           }
         },
         "trust_badges_UF8dKt": {
@@ -326,7 +365,7 @@
           "settings": {
             "heading": "Product Specifications",
             "icon": "none",
-            "content": "<ul><li>Includes 1 flat sheet, 1 fitted sheet & 2 pillowcases*</li><li>100% Certified Organic Linen</li><li>Naturally Open Weave for Maximum Airflow</li><li>Exceptional Moisture Wicking</li><li>Fits Mattresses Up to 15\" Deep</li><li>Reinforced Elastic for a Secure Fit</li><li>Machine Washable</li><li>Handcrafted in the USA</li></ul><p>*Twin/Twin XL includes one pillowcase.</p>",
+            "content": "<ul><li>Includes 1 flat sheet, 1 fitted sheet & 2 pillowcases*</li><li>Certified Organic Linen</li><li>Naturally Open Weave for Maximum Airflow</li><li>Exceptional Moisture Wicking</li><li>Fits Mattresses Up to 15\" Deep</li><li>Reinforced Elastic for a Secure Fit</li><li>Machine Washable</li><li>Handcrafted in the USA</li></ul><p>*Twin/Twin XL includes one pillowcase.</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -403,7 +442,7 @@
           "type": "icon_text_v2",
           "settings": {
             "text_case": "uppercase",
-            "item_1_text": "Made in USA",
+            "item_1_text": "Assembled in USA",
             "item_1_icon": "usamap",
             "item_1_use_custom_icon": true,
             "item_1_custom_icon": "shopify://shop_images/image_1254_Vectorized.svg",
@@ -452,11 +491,13 @@
         "icon_text_KzjrVr",
         "icon_text_ykzhxB",
         "icon_text_3FhWzM",
-        "variant_picker",
         "whats_included_NYfjML",
+        "promo_banner_kWtECB",
+        "variant_picker",
         "quantity_selector",
         "bundle_save_MbTHDA",
         "buy_buttons",
+        "shipping_tag_6x33Xx",
         "trust_badges_UF8dKt",
         "payment_logos_GKUGrC",
         "collapsible_tab_wP3yAA",
@@ -544,7 +585,7 @@
         "item_9rEH9K": {
           "type": "item",
           "settings": {
-            "text": "MADE IN USA",
+            "text": "Assembled in USA",
             "icon": "usamap",
             "link": ""
           }
@@ -949,10 +990,10 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_breezeline_collection_7eXYwc": {
+    "nw_breezeline_collection_GcxtVL": {
       "type": "nw-breezeline-collection",
       "blocks": {
-        "product_pAFffA": {
+        "product_miRUkJ": {
           "type": "product",
           "settings": {
             "product": "organic-cooling-sheets",
@@ -962,7 +1003,7 @@
             "tag_text": "COTTON"
           }
         },
-        "product_TGrjgB": {
+        "product_A38mGm": {
           "type": "product",
           "settings": {
             "product": "cool-comfort-blended-natural-sheet-set-linen-and-cotton",
@@ -972,10 +1013,10 @@
             "tag_text": "LINEN + COTTON"
           }
         },
-        "product_LhQtai": {
+        "product_RCAkfF": {
           "type": "product",
           "settings": {
-            "product": "organic-cooling-sheets",
+            "product": "100-linen-natural-cool-sheet-set",
             "custom_title": "Breezeline Cool™ Linen",
             "use_custom_image": true,
             "custom_image": "shopify://shop_images/Breezy_Linen_Sheets_at_Twilight.png",
@@ -984,9 +1025,9 @@
         }
       },
       "block_order": [
-        "product_pAFffA",
-        "product_TGrjgB",
-        "product_LhQtai"
+        "product_miRUkJ",
+        "product_A38mGm",
+        "product_RCAkfF"
       ],
       "name": "t:sections.nw-breezeline-collection.name",
       "settings": {
@@ -1244,7 +1285,7 @@
         "quote": "<p><em>\"I spent years helping people optimize their health, yet I overlooked the one place we spend nearly one-third of our lives. When I started testing for toxic load, I realized my mattress wasn't supporting the life I was trying to build. I couldn't find one that met my standards, so we created it.\"</em></p>",
         "name": "Gary Brecka",
         "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "role": "Longevity Expert & Co-Founder of The Ultimate Snooze",
         "show_footer_content": true,
         "footer_heading": "Be intentional about where you spend the most time.",
         "footer_description": "<p><strong>You spend nearly one-third of your life in bed. Choose materials you'll trust for every hour.</strong></p>",
@@ -1384,7 +1425,7 @@
     "nw_testimonials_BU9rMk",
     "nw_benefits_J9TVzc",
     "nw_organic_gcGNTr",
-    "nw_breezeline_collection_7eXYwc",
+    "nw_breezeline_collection_GcxtVL",
     "nw_faq_VygLpj",
     "nw_recovery_3VQ6xY",
     "nw_founder_story_j6dLDk",

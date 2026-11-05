@@ -24,13 +24,79 @@
       padding-bottom: {{ section.settings.mobile_bottom_padding }}px;
     }
   }
+
+  {%- if section.settings.enable_black_friday_mode -%}
+    #shopify-section-{{ section.id }} .utility-bar.nw-announcement-bar--black-friday {
+      --nw-bf-announcement-bg: {{ section.settings.bf_background_color }};
+      --nw-bf-announcement-text: {{ section.settings.bf_text_color }};
+      --nw-bf-announcement-link: {{ section.settings.bf_link_color }};
+      --nw-bf-announcement-border: {{ section.settings.bf_border_color }};
+      --nw-bf-announcement-divider: {{ section.settings.bf_divider_color }};
+      --nw-bf-accent: {{ section.settings.bf_text_color }};
+      background: {{ section.settings.bf_background_color }} !important;
+      background-color: {{ section.settings.bf_background_color }} !important;
+      background-image: none !important;
+      border-bottom: none !important;
+      box-shadow: none;
+    }
+
+    #shopify-section-{{ section.id }} .utility-bar.nw-announcement-bar--black-friday .announcement-bar__message,
+    #shopify-section-{{ section.id }} .utility-bar.nw-announcement-bar--black-friday .announcement-bar__message p,
+    #shopify-section-{{ section.id }} .utility-bar.nw-announcement-bar--black-friday .announcement-bar__message > span:not(.announcement-bar__link-divider) {
+      color: {{ section.settings.bf_text_color }} !important;
+    }
+
+    #shopify-section-{{ section.id }} .utility-bar.nw-announcement-bar--black-friday .announcement-bar__link,
+    #shopify-section-{{ section.id }} .utility-bar.nw-announcement-bar--black-friday .announcement-bar__link * {
+      color: {{ section.settings.bf_link_color }} !important;
+    }
+
+    #shopify-section-{{ section.id }} .utility-bar.nw-announcement-bar--black-friday .announcement-bar__link-divider {
+      background: {{ section.settings.bf_divider_color }} !important;
+    }
+
+    #shopify-section-{{ section.id }} .utility-bar.nw-announcement-bar--black-friday .slider-button {
+      color: {{ section.settings.bf_text_color }} !important;
+    }
+
+    #shopify-section-{{ section.id }} .nw-bf-announcement-bar__divider {
+      display: block !important;
+      width: 100% !important;
+      height: 1px !important;
+      min-height: 1px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      background: {{ section.settings.bf_border_color }} !important;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    #shopify-section-{{ section.id }}.announcement-bar-section:has(.nw-announcement-bar--black-friday) {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 101;
+      overflow: visible;
+    }
+  {%- endif -%}
 {% endstyle %}
 {% if social_icons %}
   {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 {% endif %}
 
 <div
-  class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border{% elsif section.settings.show_line_separator and section.settings.show_social and social_icons%} utility-bar--bottom-border-social-only{% endif %}{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
+  class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.enable_black_friday_mode %} nw-announcement-bar--black-friday{% endif %}{% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border{% elsif section.settings.show_line_separator and section.settings.show_social and social_icons%} utility-bar--bottom-border-social-only{% endif %}{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
+  {% if section.settings.enable_black_friday_mode %}
+    style="
+      --nw-bf-announcement-bg: {{ section.settings.bf_background_color }};
+      --nw-bf-announcement-text: {{ section.settings.bf_text_color }};
+      --nw-bf-announcement-link: {{ section.settings.bf_link_color }};
+      --nw-bf-announcement-border: {{ section.settings.bf_border_color }};
+      --nw-bf-announcement-divider: {{ section.settings.bf_divider_color }};
+    "
+  {% endif %}
 >
   <div class="page-width utility-bar__grid{% if announcement_bar and language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--3-col{% elsif language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--2-col{% endif %}">
     {%- if section.settings.show_social and social_icons -%}
@@ -175,6 +241,13 @@
     </div>
   </div>
 </div>
+{%- if section.settings.enable_black_friday_mode -%}
+  <div
+    class="nw-bf-announcement-bar__divider"
+    style="background-color: {{ section.settings.bf_border_color }};"
+    aria-hidden="true"
+  ></div>
+{%- endif -%}
 
 {% schema %}
 {
@@ -185,6 +258,52 @@
     "groups": ["header"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "BLACK FRIDAY"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_black_friday_mode",
+      "label": "Enable Black Friday mode",
+      "default": false,
+      "info": "Applies Black Friday announcement bar styling. Off by default."
+    },
+    {
+      "type": "color",
+      "id": "bf_background_color",
+      "label": "Background color",
+      "default": "#0a0a0a",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_text_color",
+      "label": "Text color",
+      "default": "#e9b949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_link_color",
+      "label": "Link color",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_border_color",
+      "label": "Bottom border color",
+      "default": "#e9b949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
+    {
+      "type": "color",
+      "id": "bf_divider_color",
+      "label": "Divider dot color",
+      "default": "#e9b949",
+      "visible_if": "{{ section.settings.enable_black_friday_mode }}"
+    },
     {
       "type": "checkbox",
       "id": "auto_rotate",

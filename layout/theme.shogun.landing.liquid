@@ -6,9 +6,9 @@ This file can be re-written at any time.
 {% include 'shogun-content-handler' %}
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
-{% render 'replo-head' %}
   {% comment %}Loads Shogun Analytics. Removing this will disrupt analytics data collection.{% endcomment %}
   <script type="text/javascript" async src="https://na.shgcdn3.com/pixel-collector.js"></script>
+{% render 'replo-head' %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -96,15 +96,18 @@ This file can be re-written at any time.
     {% render 'nw-theme-styles' %}
     {% render 'nw-theme-stylesheets' %}
     {% render 'nw-script' %}
-  
+    {%- if nw_toxin_trade_in_page -%}
+      {% render 'nw-toxin-trade-in-page-head' %}
+    {%- endif -%}
+
   {% render 'shogun-head' %}
   {%- comment -%} Gohighlevel code {%- endcomment -%}
   <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6aa1684faa1a4795583990d8" data-source="WEB_USER" defer></script>
 </head>
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} nw-theme-{{ template.name }}">
+  <body>
     {% include 'shogun-content-handler' %}
 
-    
+    {{ 'nw-toxin-trade-in-page.css' | asset_url | stylesheet_tag }}
     
     {{ content_for_layout }}
     

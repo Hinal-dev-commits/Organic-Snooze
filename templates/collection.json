@@ -67,6 +67,98 @@
         "padding_bottom_mobile": 32
       }
     },
+    "nw_marquee_v2_Ji8g3A": {
+      "type": "nw-marquee-v2",
+      "blocks": {
+        "item_bR3fUV": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_QAtYG8": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_3BTTyB": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+) with mattress purchase",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_6j4hNn": {
+          "type": "item",
+          "settings": {
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_qa6PhR": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_TEhd4D": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+) with mattress purchase",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_bR3fUV",
+        "item_QAtYG8",
+        "item_3BTTyB",
+        "item_6j4hNn",
+        "item_qa6PhR",
+        "item_TEhd4D"
+      ],
+      "name": "t:sections.nw-marquee-v2.name",
+      "settings": {
+        "enable_desktop_marquee": true,
+        "direction": "right_to_left",
+        "speed": 85,
+        "pause_on_hover": true,
+        "font_weight": 600,
+        "font_size": 20,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
+        "gap_desktop": 28,
+        "gap_mobile": 12,
+        "icon_size_desktop": 28,
+        "icon_size_mobile": 20,
+        "gap_icon_text": 4,
+        "marquee_height_desktop": 60,
+        "marquee_height_mobile": 44,
+        "padding_desktop": 16,
+        "padding_mobile": 12,
+        "bg_type": "color",
+        "bg_color": "#e9b949",
+        "bg_gradient": "",
+        "text_color": "#000000",
+        "icon_color": "#ffffff"
+      }
+    },
     "nw_collections_CdUFHw": {
       "type": "nw-collections",
       "blocks": {
@@ -75,6 +167,13 @@
           "settings": {
             "collection": "best-sellers",
             "label": "Best Sellers"
+          }
+        },
+        "collection_VBwxKx": {
+          "type": "collection",
+          "settings": {
+            "collection": "bfcm",
+            "label": "Black Friday"
           }
         },
         "collection_6M9hdC": {
@@ -88,7 +187,7 @@
           "type": "collection",
           "settings": {
             "collection": "mattress",
-            "label": "Matresses"
+            "label": "Mattresses"
           }
         },
         "collection_RVVUf3": {
@@ -136,6 +235,7 @@
       },
       "block_order": [
         "collection_tHJdeT",
+        "collection_VBwxKx",
         "collection_6M9hdC",
         "collection_NWGL9w",
         "collection_RVVUf3",
@@ -251,6 +351,101 @@
         "padding_bottom_desktop": 40,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40
+      }
+    },
+    "nw_marquee_NtFXix": {
+      "type": "nw-marquee",
+      "blocks": {
+        "item_Mw6qpW": {
+          "type": "item",
+          "settings": {
+            "text": "100% Organic",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_xjpnCn": {
+          "type": "item",
+          "settings": {
+            "text": "HSA/FSA ELIGIBLE",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "sparkle"
+          }
+        },
+        "item_kAj47k": {
+          "type": "item",
+          "settings": {
+            "text": "MADE IN THE USA",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_GG68MJ": {
+          "type": "item",
+          "settings": {
+            "text": "FINANCE WITH AFFIRM",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "sparkle"
+          }
+        },
+        "item_J6MfgF": {
+          "type": "item",
+          "settings": {
+            "text": "100-NIGHT TRIAL",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "verified"
+          }
+        },
+        "item_9AihLd": {
+          "type": "item",
+          "settings": {
+            "text": "30-YEAR WARRANTY",
+            "link": "",
+            "use_custom_icon": false,
+            "icon": "sparkle"
+          }
+        }
+      },
+      "block_order": [
+        "item_Mw6qpW",
+        "item_xjpnCn",
+        "item_kAj47k",
+        "item_GG68MJ",
+        "item_J6MfgF",
+        "item_9AihLd"
+      ],
+      "name": "NW Marquee",
+      "settings": {
+        "direction": "right_to_left",
+        "speed": 160,
+        "pause_on_hover": true,
+        "enable_parallax": true,
+        "repeat_count": 3,
+        "bg_color": "#613916",
+        "text_color": "#ffffff",
+        "icon_color": "#f4efe8",
+        "icon_size_desktop": 24,
+        "icon_size_mobile": 16,
+        "font_size_desktop": 18,
+        "font_size_mobile": 15,
+        "font_weight": 500,
+        "text_transform": "uppercase",
+        "letter_spacing": 0,
+        "gap_icon_text_desktop": 18,
+        "gap_icon_text_mobile": 10,
+        "gap_items_desktop": 18,
+        "gap_items_mobile": 10,
+        "section_height_desktop": 56,
+        "section_height_mobile": 44,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_top_mobile": 14,
+        "padding_bottom_mobile": 14
       }
     },
     "nw_testimonials_PFYhEM": {
@@ -447,7 +642,7 @@
             "product_1_type": "text",
             "product_1_text": "Firm",
             "product_2_type": "text",
-            "product_2_text": "Medium Plush"
+            "product_2_text": "Medium-Firm"
           }
         },
         "row_wTzzJj": {
@@ -558,7 +753,7 @@
         "product_1_btn_style": "secondary",
         "product_2_tag": "Gary Brecka Collection",
         "product_2_image": "shopify://shop_images/pillow-top.png",
-        "product_2_title": "Pillowtop Mattress",
+        "product_2_title": "Recovery Mattress",
         "product_2_bg_color": "#f4efe8",
         "product_2_show_btn": true,
         "product_2_btn_text": "SHOP NOW",
@@ -1059,13 +1254,14 @@
       "type": "nw-guarantee-card",
       "name": "NW Guarantee Card",
       "settings": {
-        "show_rating": false,
+        "show_rating": true,
         "star_rating": 5,
-        "eyebrow": "",
+        "eyebrow": "Trusted by 10,000+ Sleepers",
         "heading": "Sleep On It For 100 Nights. Risk-Free.",
         "description": "<p>Try your mattress at home for 100 nights. If it’s not the right fit, send it back. Every mattress is also backed by a <strong>30-year warranty</strong> because it’s built to last.</p>",
         "image_position": "left",
-        "image": "shopify://shop_images/2f626812bcd7d171aa49b362e89dbf4eca72bdff_1.png",
+        "image": "shopify://shop_images/Standards_-_Mobile.png",
+        "image_mobile": "shopify://shop_images/Standards_-_Mobile.png",
         "image_width": 360,
         "show_badge": true,
         "badge_image": "shopify://shop_images/Vector_3.svg",
@@ -1074,7 +1270,7 @@
         "seal_ring": "MONEY BACK GUARANTEE",
         "show_button": true,
         "btn_text": "SHOP ORGANIC MATTRESSES",
-        "btn_link": "",
+        "btn_link": "shopify://collections/mattress",
         "btn_style": "primary",
         "card_max_width": 920,
         "card_bg_color": "#ffffff",
@@ -1165,12 +1361,12 @@
         "less_label": "SEE LESS FAQ'S",
         "contact_heading": "Speak with Our Live Sleep Experts.",
         "show_call_btn": true,
-        "call_label": "CALL (443) 333-1213",
-        "call_link": "tel:+14433331213",
+        "call_label": "CALL LIVE AGENT",
+        "call_link": "tel:+17197516070",
         "call_style": "primary",
         "show_text_btn": true,
         "text_label": "TEXT US",
-        "text_link": "sms:+14433331213",
+        "text_link": "sms:+17197516070",
         "text_style": "outline",
         "show_quiz_btn": true,
         "quiz_label": "SLEEP QUIZ",
@@ -1328,8 +1524,10 @@
     "banner",
     "product-grid",
     "nw_collection_hero_VWXgHj",
+    "nw_marquee_v2_Ji8g3A",
     "nw_collections_CdUFHw",
     "nw_benefits_v2_LCKAka",
+    "nw_marquee_NtFXix",
     "nw_testimonials_PFYhEM",
     "nw_featured_marquee_LEteBQ",
     "nw_compare_KpbLdt",

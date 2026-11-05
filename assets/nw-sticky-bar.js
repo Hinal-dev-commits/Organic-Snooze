@@ -1268,7 +1268,7 @@ if (!customElements.get('nw-sticky-bar')) {
         }
       }
 
-      const mainCents = Number(this._selectedVariant?.price) || 0;
+      const mainCents = this._getVariantDisplayPriceCents(this._selectedVariant);
       const bundle = this._getMainBundleSave();
       let bundleCents = 0;
       if (bundle?.getSelectedItems) {
@@ -1341,9 +1341,7 @@ if (!customElements.get('nw-sticky-bar')) {
         });
       }
 
-      const compare = Number(variant.compare_at_price);
-      const price = Number(variant.price);
-      const saveAmount = compare > price ? compare - price : 0;
+      const saveAmount = this._getVariantSaveCents(variant);
       const saveText =
         saveAmount > 0
           ? `${this.config.savePrefix || 'You save'} ${this._formatMoney(saveAmount, true)}`
@@ -1373,7 +1371,7 @@ if (!customElements.get('nw-sticky-bar')) {
 
       if (this.config.showAffirm) {
         this.affirmEls.forEach((el) => {
-          el.setAttribute('data-amount', variant.price);
+          el.setAttribute('data-amount', this._getVariantDisplayPriceCents(variant));
         });
         this._refreshAffirm();
       }
@@ -1393,6 +1391,44 @@ if (!customElements.get('nw-sticky-bar')) {
       }
 
       this._updateStickyBarPrice();
+    }
+
+    _getSitewideDisplay(variant) {
+      if (!variant || !this.config?.sitewideSaleEnabled || this.config?.hasBundleKit) return null;
+
+      const pct = Math.min(99, Math.max(0, Number(this.config.sitewideSalePercent) || 0));
+      if (pct <= 0) return null;
+
+      const price = Number(variant.price);
+      const sale = Math.round((price * (100 - pct)) / 100);
+
+      return {
+        sale,
+        strike: price,
+        save: Math.max(0, price - sale),
+      };
+    }
+
+    _getVariantSaveCents(variant) {
+      if (!variant) return 0;
+
+      if (this.config?.hasBundleKit) {
+        return Math.max(0, Number(variant.bundle_save_cents) || 0);
+      }
+
+      const sitewide = this._getSitewideDisplay(variant);
+      if (sitewide) return sitewide.save;
+
+      const compare = Number(variant.compare_at_price);
+      const price = Number(variant.price);
+      return compare > price ? compare - price : 0;
+    }
+
+    _getVariantDisplayPriceCents(variant) {
+      if (!variant) return 0;
+      const sitewide = this._getSitewideDisplay(variant);
+      if (sitewide) return sitewide.sale;
+      return Number(variant.price) || 0;
     }
 
     _getVariantLabel(variant) {

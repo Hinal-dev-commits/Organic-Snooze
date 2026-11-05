@@ -1,0 +1,29 @@
+{% doc %}
+Resolves a product/file metafield to an image URL for use in img src.
+@param {object} metafield - Metafield drop (e.g. product.metafields.custom.custom_featured_image)
+@param {number} [width] - Requested image width. Default: 800
+@returns {string} image_url via capture — read parent assign from snippet output pattern
+
+Usage:
+  capture custom_featured_src
+    render 'nw-metafield-image-src', metafield: card_product.metafields.custom.custom_featured_image, width: 800
+  endcapture
+{% enddoc %}
+
+{%- liquid
+  assign nw_mf_width = width | default: 800
+  assign nw_mf_src = blank
+
+  if metafield != blank
+    assign nw_mf_src = metafield | image_url: width: nw_mf_width
+
+    if nw_mf_src == blank
+      assign nw_mf_val = metafield.value | default: metafield
+      if nw_mf_val != blank
+        assign nw_mf_src = nw_mf_val | image_url: width: nw_mf_width
+      endif
+    endif
+
+  endif
+-%}
+{{- nw_mf_src -}}

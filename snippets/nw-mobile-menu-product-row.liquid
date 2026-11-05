@@ -44,12 +44,40 @@ Horizontal product row for the mobile megamenu drawer.
       <p class="nw-mobile-menu-product__description">{{ card_description | escape }}</p>
     {%- endif -%}
 
-    <div class="nw-mobile-menu-product__price">
-      <span class="nw-mobile-menu-product__price-from">from</span>
-      <span class="nw-mobile-menu-product__price-current">{{ card_price | money }}</span>
-      {%- if card_compare_at > card_price -%}
-        <span class="nw-mobile-menu-product__price-compare">{{ card_compare_at | money }}</span>
-      {%- endif -%}
-    </div>
+    {%- assign nw_from_label = 'nw.product_card.from' | t -%}
+    {%- capture nw_mobile_menu_card_price -%}
+      {%- render 'nw-bundle-card-pricing',
+        product: card_product,
+        from_text: nw_from_label,
+        class_prefix: 'nw-mobile-menu-product'
+      -%}
+    {%- endcapture -%}
+
+    {%- if nw_mobile_menu_card_price != blank -%}
+      {{ nw_mobile_menu_card_price }}
+    {%- else -%}
+      {%- liquid
+        assign nw_card_display_price = card_price
+        assign nw_card_display_compare = card_compare_at
+        capture nw_sitewide_card_price_min
+          render 'nw-sitewide-sale-product-pricing', product: card_product, output_mode: 'price_min'
+        endcapture
+        assign nw_sitewide_card_price_min = nw_sitewide_card_price_min | strip
+        if nw_sitewide_card_price_min != blank
+          assign nw_card_display_price = nw_sitewide_card_price_min | plus: 0
+          capture nw_sitewide_card_strike
+            render 'nw-sitewide-sale-product-pricing', product: card_product, output_mode: 'strike_price'
+          endcapture
+          assign nw_card_display_compare = nw_sitewide_card_strike | strip | plus: 0
+        endif
+      -%}
+      <div class="nw-mobile-menu-product__price">
+        <span class="nw-mobile-menu-product__price-from">{{ 'nw.product_card.from' | t }}</span>
+        <span class="nw-mobile-menu-product__price-current">{{ nw_card_display_price | money }}</span>
+        {%- if nw_card_display_compare > nw_card_display_price -%}
+          <span class="nw-mobile-menu-product__price-compare">{{ nw_card_display_compare | money }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 </article>

@@ -121,7 +121,7 @@
           "type": "icon_text",
           "settings": {
             "style": "checklist",
-            "text": "Ultimate Recovery Mattress | Cushion-Firm",
+            "text": "Ultimate Recovery Mattress | Medium Feel",
             "use_custom_icon": true,
             "icon": "check-circle",
             "custom_icon": "shopify://shop_images/checkmark.svg",
@@ -283,7 +283,7 @@
         "trust_badges_th6jjr": {
           "type": "trust_badges",
           "settings": {
-            "item_1_text": "100-Night Risk-Free Trial",
+            "item_1_text": "100-Night Trial",
             "item_1_icon": "trial",
             "item_1_use_custom_icon": false,
             "item_2_text": "30-Year Warranty",
@@ -362,6 +362,19 @@
             "margin_bottom_mobile": 0
           }
         },
+        "bundle_tab_EqmYhM": {
+          "type": "bundle_tab",
+          "settings": {
+            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
+            "tab_label": "Mattress",
+            "custom_title": "Recovery Mattress by Gary Brecka",
+            "custom_subtitle": "Made with Organic Materials",
+            "extra_description": "",
+            "custom_image": "shopify://shop_images/EPT_2.jpg",
+            "features": "Organic Cotton Hand-Tufted Cover\nOrganic Wool Flame Barrier\nOrganic Latex Cushion Layer\n1,100 Pocketed Coils",
+            "learn_more_label": "Learn More"
+          }
+        },
         "bundle_tab_jM6TGe": {
           "type": "bundle_tab",
           "settings": {
@@ -369,9 +382,9 @@
             "tab_label": "Mattress",
             "custom_title": "Recovery Mattress",
             "custom_subtitle": "4-inch organic latex euro-top, 1,100 coils",
-            "extra_description": "4\" organic latex euro-top over 1,100 pocketed coils. Plush comfort for combination sleepers. Organic certified.",
+            "extra_description": "4\" organic latex euro-top over 1,100 pocketed coils. Soft yet supportive Medium-Firm support for combination sleepers. Organic certified.",
             "custom_image": "shopify://shop_images/2f626812bcd7d171aa49b362e89dbf4eca72bdff_1.png",
-            "features": "4\" Latex euro-top\n1,100 Pocketed Coils\n100-Night Sleep Trial\n30-Year Warranty",
+            "features": "Medium-Firm \n4\" Latex euro-top\n1,100 Pocketed Coils\n100-Night Sleep Trial\n30-Year Warranty",
             "learn_more_label": "Learn More"
           }
         },
@@ -388,16 +401,16 @@
             "learn_more_label": "Learn More"
           }
         },
-        "bundle_tab_CRhTHH": {
+        "bundle_tab_bhK9Pq": {
           "type": "bundle_tab",
           "settings": {
-            "product": "the-ultimate-bedding-bundle",
+            "product": "the-organic-snooze-kloud-pillow",
             "tab_label": "Pillows",
-            "custom_title": "2-Pack Kloud Pillow",
-            "custom_subtitle": "Organic Kapok/Latex Blend",
+            "custom_title": "2x FREE Kloud Pillows",
+            "custom_subtitle": "Organic Latex Shreds and Organic Kapok Fiber",
             "extra_description": "",
-            "custom_image": "shopify://shop_images/main-photo_2_1.png",
-            "features": "100% Organic\nKapok Fiber (Airy, and Light)\nLatex Shreds (Supportive and Springy)\nMedium Feel (Soft and Supportive)\nMachine-Washable Protector included",
+            "custom_image": "shopify://shop_images/24hr_ship_kloud.png",
+            "features": "Soft and Supportive\nOrganic Kapok Fiber \nOrganic Latex\nOrganic Cotton Machine-Washable Cover",
             "learn_more_label": "Learn More"
           }
         },
@@ -459,7 +472,7 @@
           "settings": {
             "heading": "Why Buy the Bundle?",
             "icon": "check_mark",
-            "content": "<ul><li>A complete organic sleep system in one order, matched by size</li><li>Save $2,400, over 30% versus buying each piece separately</li><li>Adjustable base lifts head and legs for open airway, circulation, and recovery</li><li>Plush 4\" latex pillow top for deep pressure relief, ideal for combination sleepers</li><li>Clean and chemical-free from the coils to the pillowcase</li><li>FREE White Glove set-up and delivery included—a $299 value with all mattress bundles</li></ul>",
+            "content": "<ul><li>A complete organic sleep system in one order, matched by size</li><li>Save 20% versus buying each piece separately&nbsp;</li><li>FREE (2x) Kloud Pillows</li></ul>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -472,7 +485,7 @@
           "settings": {
             "heading": "Warranty & Returns",
             "icon": "check_mark",
-            "content": "<p>Mattress: 30-year warranty + 100-Night Trial</p><p>Sheets: 30-day return window, 1-Year Warranty</p><p>Pillows: 30-day return window, 1-Year Warranty</p><p>Base: Non-Returnable, 20-Year Warranty</p>",
+            "content": "<p><strong>Comfort Guarantee, 100-Night Trial:</strong> Return the mattress between nights 31–100 for a refund of your purchase price. A $199 pickup fee applies, waived if you choose store credit. <a href=\"/pages/general-customer-education\" target=\"_blank\" title=\"General Customer Education\">View Warranty Info</a></p><p>Sheets: 30-day return window, 1-Year Warranty</p><p>Pillows: 30-day return window, 1-Year Warranty</p><p>Base: Non-Returnable, 20-Year Warranty</p>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -506,7 +519,7 @@
           "type": "icon_text_v2",
           "settings": {
             "text_case": "uppercase",
-            "item_1_text": "Made in USA",
+            "item_1_text": "Assembled in USA",
             "item_1_icon": "usamap",
             "item_1_use_custom_icon": true,
             "item_1_custom_icon": "shopify://shop_images/image_1254_Vectorized.svg",
@@ -533,6 +546,7 @@
         },
         "setup_delivery_QdJYrr": {
           "type": "setup_delivery",
+          "disabled": true,
           "settings": {
             "heading": "Set-Up & Delivery Included",
             "description": "<p>All items in the bundle ship for <strong>FREE</strong>. When you buy a complete mattress bundle, you also get <strong>FREE White Glove </strong>set-up—we'll install the adjustable base in your bedroom and place the mattress to ensure everything is perfect.</p>",
@@ -578,9 +592,10 @@
         "trust_badges_nMR3Vh",
         "payment_logos_DVqLH3",
         "bundle_tabs_KQjF3f",
+        "bundle_tab_EqmYhM",
         "bundle_tab_jM6TGe",
         "bundle_tab_HnzHwR",
-        "bundle_tab_CRhTHH",
+        "bundle_tab_bhK9Pq",
         "bundle_tab_Mq7NRW",
         "bundle_tab_KFt3YU",
         "collapsible_tab_3XrnC6",
@@ -806,7 +821,7 @@
         "item_j6qaii": {
           "type": "item",
           "settings": {
-            "text": "MADE IN USA",
+            "text": "ASSEMBLED IN USA",
             "icon": "usamap",
             "link": ""
           }
@@ -816,14 +831,6 @@
           "settings": {
             "text": "100-NIGHT TRIAL",
             "icon": "moon",
-            "link": ""
-          }
-        },
-        "item_z47Tqk": {
-          "type": "item",
-          "settings": {
-            "text": "CERTIFIED ORGANIC",
-            "icon": "verified",
             "link": ""
           }
         },
@@ -839,7 +846,6 @@
       "block_order": [
         "item_j6qaii",
         "item_JmRtGP",
-        "item_z47Tqk",
         "item_H8WGMN"
       ],
       "name": "NW Marquee V2",
@@ -956,18 +962,11 @@
     "nw_bundle_product_DFhtrf": {
       "type": "nw-bundle-product",
       "blocks": {
-        "trust_badge_VNWwJJ": {
-          "type": "trust_badge",
-          "settings": {
-            "icon": "money",
-            "text": "100-Night Risk-Free Trial"
-          }
-        },
         "trust_badge_hgC33w": {
           "type": "trust_badge",
           "settings": {
             "icon": "shield",
-            "text": "30-Year Warranty"
+            "text": "20-Year Warranty"
           }
         },
         "feature_heVanV": {
@@ -1036,7 +1035,6 @@
         }
       },
       "block_order": [
-        "trust_badge_VNWwJJ",
         "trust_badge_hgC33w",
         "feature_heVanV",
         "feature_MfDPMr",
@@ -1370,7 +1368,7 @@
         "quote": "<p><em>\"I spent years helping people optimize their health, yet I overlooked the one place we spend nearly one-third of our lives. When I started testing for toxic load, I realized my mattress wasn't supporting the life I was trying to build. I couldn't find one that met my standards, so we created it.\"</em></p>",
         "name": "Gary Brecka",
         "show_verified": true,
-        "role": "Longevity Expert & Founder of The Ultimate Human",
+        "role": "Longevity Expert & Co-Founder of The Ultimate Snooze",
         "show_footer_content": true,
         "footer_heading": "Be intentional about where you spend the most time.",
         "footer_description": "<p><strong>You spend nearly one-third of your life in bed. Choose materials you'll trust for every hour.</strong></p>",
@@ -1619,7 +1617,7 @@
           "type": "faq_item",
           "settings": {
             "question": "How much do I save?",
-            "answer": "<p>This bundle is $5,799.99, down from $8,199.99 bought separately, a saving of $2,400 (over 30%). Bundling is the best-value way to get a full organic sleep system.</p>"
+            "answer": "<p>On bundles we offer our best price, thats why it is ineligible for additional promotions. On mattress bundles you are saving 20% on all products + 2 FREE Pillows, total value is up to $2500+ in savings for the recovery bundle.&nbsp;</p>"
           }
         },
         "faq_item_kRtVUc": {

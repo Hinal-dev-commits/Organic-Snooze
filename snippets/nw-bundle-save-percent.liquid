@@ -1,0 +1,321 @@
+{%- comment -%}
+  Outputs a rounded save percentage (e.g. 20) for bundle products, or nothing for non-bundles / no savings.
+
+  PDP:
+    {%- capture nw_bundle_save_pct -%}
+      {%- render 'nw-bundle-save-percent', product: product, variant: price_variant -%}
+    {%- endcapture -%}
+
+  Collection card:
+    {%- render 'nw-bundle-save-percent', product: card_product, for_collection_card: true -%}
+
+  Do not call from inside {% liquid %} — render is not allowed there.
+{%- endcomment -%}
+
+{%- unless product == blank -%}
+{%- if for_collection_card -%}
+  {%- liquid
+    assign card_product = product
+    assign kit = blank
+    assign bundle_mf = card_product.metafields['$app'].bundle
+    if bundle_mf != blank and bundle_mf.value != blank
+      assign kit = bundle_mf.value
+    endif
+    if kit == blank
+      assign bundle_mf = card_product.metafields.app.bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+    if kit == blank
+      assign bundle_mf = card_product.metafields['app--1fce204f608afb633af44ab8a32b2cf8'].bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+    if kit == blank and card_product.metafields.app['bundle'] != blank
+      assign kit = card_product.metafields.app['bundle'].value
+    endif
+    if kit == blank
+      assign bundle_mf = card_product.metafields.custom.nw_bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+
+    assign kit_price_source = kit.priceSource | default: 'child_sum'
+    assign kit_custom_price = kit.customPrice | default: ''
+    assign kit_discount_type = kit.discountType | default: 'none'
+    assign kit_discount_value = kit.discountValue | default: ''
+
+    if kit.pricingMode == 'fixed'
+      assign kit_price_source = 'custom'
+      assign kit_custom_price = kit.pricingValue
+    endif
+    if kit.pricingMode == 'percent_off'
+      assign kit_discount_type = 'percent'
+      if kit_discount_value == blank
+        assign kit_discount_value = kit.pricingValue
+      endif
+    endif
+    if kit.pricingMode == 'amount_off'
+      assign kit_discount_type = 'fixed'
+      if kit_discount_value == blank
+        assign kit_discount_value = kit.pricingValue
+      endif
+    endif
+
+    assign card_max_save_cents = 0
+    assign card_best_compare_cents = 0
+    assign card_discount_type = 'none'
+  -%}
+  {%- if kit != blank and kit.mappings != blank and kit.mappings.size > 0 -%}
+    {%- for mapping in kit.mappings -%}
+      {%- liquid
+        assign price_source = mapping.priceSource | default: kit_price_source
+        assign custom_price = mapping.customPrice | default: kit_custom_price | default: ''
+        assign discount_type = mapping.discountType | default: kit_discount_type | default: 'none'
+        assign discount_value = mapping.discountValue | default: kit_discount_value | default: ''
+
+        if price_source == blank
+          assign price_source = 'child_sum'
+        endif
+        if discount_type == 'none'
+          assign discount_value = ''
+        endif
+
+        assign base_cents = 0
+        if price_source == 'custom'
+          assign base_cents = custom_price | times: 100 | round
+        elsif price_source == 'parent_price'
+          if mapping.parentCatalogPrice != blank
+            assign base_cents = mapping.parentCatalogPrice | times: 100 | round
+          endif
+        else
+          assign child_sum_d = 0
+          for component in mapping.components
+            assign cp = component.catalogPrice | default: component.price | plus: 0.0
+            assign qty = component.quantity | default: 1
+            assign line_d = cp | times: qty
+            assign child_sum_d = child_sum_d | plus: line_d
+          endfor
+          if child_sum_d > 0
+            assign base_cents = child_sum_d | times: 100 | round
+          elsif mapping.catalogTotal != blank
+            assign base_cents = mapping.catalogTotal | times: 100 | round
+          endif
+        endif
+
+        assign pay_cents = base_cents
+        if discount_type == 'percent' and discount_value != blank
+          assign pct = discount_value | plus: 0
+          if pct > 100
+            assign pct = 100
+          endif
+          assign keep = 100 | minus: pct
+          assign pay_cents = base_cents | times: keep | divided_by: 100 | round
+        elsif discount_type == 'fixed' and discount_value != blank
+          assign off_cents = discount_value | times: 100 | round
+          assign pay_cents = base_cents | minus: off_cents
+          if pay_cents < 0
+            assign pay_cents = 0
+          endif
+        endif
+
+        if base_cents > pay_cents and base_cents > 0
+          assign mapping_save_cents = base_cents | minus: pay_cents
+          if mapping_save_cents > card_max_save_cents
+            assign card_max_save_cents = mapping_save_cents
+            assign card_best_compare_cents = base_cents
+            assign card_discount_type = discount_type
+          endif
+        endif
+      -%}
+    {%- endfor -%}
+    {%- if card_max_save_cents > 0 -%}
+      {%- assign save_cents = card_max_save_cents -%}
+      {%- if output_mode == 'discount_type' -%}
+        {{- card_discount_type -}}
+      {%- elsif output_mode == 'save_cents' -%}
+        {{- save_cents -}}
+      {%- elsif card_discount_type == 'fixed' -%}
+      {%- else -%}
+        {{- save_cents | times: 100.0 | divided_by: card_best_compare_cents | round -}}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- else -%}
+  {%- liquid
+    assign kit_product = product
+    assign price_variant = variant | default: kit_product.selected_or_first_available_variant
+    assign kit = blank
+
+    assign bundle_mf = kit_product.metafields['$app'].bundle
+    if bundle_mf != blank and bundle_mf.value != blank
+      assign kit = bundle_mf.value
+    endif
+    if kit == blank
+      assign bundle_mf = kit_product.metafields.app.bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+    if kit == blank
+      assign bundle_mf = kit_product.metafields['app--1fce204f608afb633af44ab8a32b2cf8'].bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+    if kit == blank and kit_product.metafields.app['bundle'] != blank
+      assign kit = kit_product.metafields.app['bundle'].value
+    endif
+    if kit == blank
+      assign bundle_mf = kit_product.metafields.custom.nw_bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
+      endif
+    endif
+
+    assign active_mapping = kit.mappings | first
+    if kit != blank and kit.mappings != blank and price_variant != blank
+      for mapping in kit.mappings
+        assign map_id = mapping.parentVariantId | split: '/' | last | plus: 0
+        if map_id == 0
+          assign map_id = mapping.parentVariantId | plus: 0
+        endif
+        if map_id == price_variant.id
+          assign active_mapping = mapping
+        endif
+      endfor
+    endif
+
+    assign kit_price_source = kit.priceSource | default: 'child_sum'
+    assign kit_custom_price = kit.customPrice | default: ''
+    assign kit_discount_type = kit.discountType
+    assign kit_discount_value = kit.discountValue | default: ''
+
+    if kit.pricingMode == 'fixed'
+      assign kit_price_source = 'custom'
+      assign kit_custom_price = kit.pricingValue
+    endif
+    if kit.pricingMode == 'percent_off'
+      assign kit_discount_type = 'percent'
+      if kit_discount_value == blank
+        assign kit_discount_value = kit.pricingValue
+      endif
+    endif
+    if kit.pricingMode == 'amount_off'
+      assign kit_discount_type = 'fixed'
+      if kit_discount_value == blank
+        assign kit_discount_value = kit.pricingValue
+      endif
+    endif
+
+    assign price_source = active_mapping.priceSource | default: kit_price_source
+    assign custom_price = active_mapping.customPrice | default: kit_custom_price | default: ''
+    assign discount_type = active_mapping.discountType | default: kit_discount_type
+    assign discount_value = active_mapping.discountValue | default: kit_discount_value | default: ''
+
+    if price_source == blank
+      if kit.pricingMode == 'fixed'
+        assign price_source = 'custom'
+        assign custom_price = kit.pricingValue
+      else
+        assign price_source = 'child_sum'
+      endif
+    endif
+
+    if discount_type == blank
+      if kit.pricingMode == 'percent_off'
+        assign discount_type = 'percent'
+        assign discount_value = kit.pricingValue
+      elsif kit.pricingMode == 'amount_off'
+        assign discount_type = 'fixed'
+        assign discount_value = kit.pricingValue
+      else
+        assign discount_type = 'none'
+      endif
+    endif
+
+    if kit_discount_type == blank
+      if kit.pricingMode == 'percent_off'
+        assign kit_discount_type = 'percent'
+        assign kit_discount_value = kit.pricingValue
+      elsif kit.pricingMode == 'amount_off'
+        assign kit_discount_type = 'fixed'
+        assign kit_discount_value = kit.pricingValue
+      else
+        assign kit_discount_type = 'none'
+      endif
+    endif
+
+    if discount_type == blank
+      assign discount_type = kit_discount_type
+      if discount_value == blank
+        assign discount_value = kit_discount_value
+      endif
+    endif
+
+    if discount_type == 'none'
+      assign discount_value = ''
+    endif
+
+    assign base_cents = 0
+    if active_mapping != blank
+      if price_source == 'custom'
+        assign base_cents = custom_price | times: 100 | round
+      elsif price_source == 'parent_price'
+        if active_mapping.parentCatalogPrice != blank
+          assign base_cents = active_mapping.parentCatalogPrice | times: 100 | round
+        elsif price_variant != blank
+          assign base_cents = price_variant.price
+        endif
+      else
+        assign child_sum_d = 0
+        for component in active_mapping.components
+          assign cp = component.catalogPrice | default: component.price | plus: 0.0
+          assign qty = component.quantity | default: 1
+          assign line_d = cp | times: qty
+          assign child_sum_d = child_sum_d | plus: line_d
+        endfor
+        if child_sum_d > 0
+          assign base_cents = child_sum_d | times: 100 | round
+        elsif active_mapping.catalogTotal != blank
+          assign base_cents = active_mapping.catalogTotal | times: 100 | round
+        elsif price_variant != blank
+          assign base_cents = price_variant.price
+        endif
+      endif
+    endif
+
+    assign pay_cents = base_cents
+    if discount_type == 'percent' and discount_value != blank
+      assign pct = discount_value | plus: 0
+      if pct > 100
+        assign pct = 100
+      endif
+      assign keep = 100 | minus: pct
+      assign pay_cents = base_cents | times: keep | divided_by: 100 | round
+    elsif discount_type == 'fixed' and discount_value != blank
+      assign off_cents = discount_value | times: 100 | round
+      assign pay_cents = base_cents | minus: off_cents
+      if pay_cents < 0
+        assign pay_cents = 0
+      endif
+    endif
+  -%}
+  {%- if base_cents > pay_cents and base_cents > 0 -%}
+    {%- assign save_cents = base_cents | minus: pay_cents -%}
+    {%- if save_cents > 0 -%}
+      {%- if output_mode == 'discount_type' -%}
+        {{- discount_type -}}
+      {%- elsif output_mode == 'save_cents' -%}
+        {{- save_cents -}}
+      {%- elsif discount_type == 'fixed' -%}
+      {%- else -%}
+        {{- save_cents | times: 100.0 | divided_by: base_cents | round -}}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+{%- endunless -%}

@@ -65,12 +65,6 @@ Renders the NW product card used across collection sliders and grids.
 
   assign card_price = card_product.price_min
   assign card_compare_at = card_product.compare_at_price_min
-  assign save_percent = 0
-
-  if card_compare_at > card_price and card_compare_at > 0
-    assign save_diff = card_compare_at | minus: card_price
-    assign save_percent = save_diff | times: 100.0 | divided_by: card_compare_at | round
-  endif
 
   assign seller_tag = card_product.metafields.custom.seller_tag.value | default: card_product.metafields.custom.seller_tag
   assign firmness_value = card_product.metafields.custom.firmness.value | default: card_product.metafields.custom.firmness
@@ -101,12 +95,79 @@ Renders the NW product card used across collection sliders and grids.
   else
     assign best_for_value = best_for_raw
   endif
+
+  assign custom_featured_mf = card_product.metafields.custom.custom_featured_image
+  capture custom_featured_src
+    render 'nw-metafield-image-src', metafield: custom_featured_mf, width: 800
+  endcapture
+  assign custom_featured_src = custom_featured_src | strip
+
+  assign custom_featured_alt = card_product.title
+  if custom_featured_mf != blank
+    if custom_featured_mf.value.alt != blank
+      assign custom_featured_alt = custom_featured_mf.value.alt
+    elsif custom_featured_mf.alt != blank
+      assign custom_featured_alt = custom_featured_mf.alt
+    endif
+  endif
+
+  assign custom_featured_valid = false
+  if custom_featured_src != blank
+    if custom_featured_src contains 'cdn.shopify.com' or custom_featured_src contains 'shopifycdn.com' or custom_featured_src contains '/cdn/shop/'
+      assign custom_featured_valid = true
+    endif
+  endif
+
+  assign use_custom_featured_swap = false
+  if custom_featured_valid and card_product.featured_media
+    assign use_custom_featured_swap = true
+  endif
 -%}
 
 <article class="nw-product-card" id="NwProductCard-{{ section_id }}-{{ card_product.id }}">
   <div class="nw-product-card__media">
-    <a href="{{ card_product.url }}" class="nw-product-card__media-link" aria-label="{{ card_product.title | escape }}">
-      {%- if card_product.featured_media -%}
+    <a
+      href="{{ card_product.url }}"
+      class="nw-product-card__media-link{% if use_custom_featured_swap %} nw-product-card__media-link--featured-swap{% endif %}"
+      aria-label="{{ card_product.title | escape }}"
+    >
+      {%- if use_custom_featured_swap -%}
+        {%- assign image_loading = 'eager' -%}
+        {%- if lazy_load -%}
+          {%- assign image_loading = 'lazy' -%}
+        {%- endif -%}
+        <span class="nw-product-card__media-stack" aria-hidden="true">
+          <img
+            src="{{ card_product.featured_media | image_url: width: 800 }}"
+            alt=""
+            width=""
+            height=""
+            loading="{{ image_loading }}"
+            class="nw-product-card__image nw-product-card__image--base"
+          >
+          <img
+            src="{{ custom_featured_src }}"
+            alt="{{ custom_featured_alt | escape }}"
+            width=""
+            height=""
+            loading="{{ image_loading }}"
+            class="nw-product-card__image nw-product-card__image--featured-overlay"
+          >
+        </span>
+      {%- elsif custom_featured_valid -%}
+        {%- assign image_loading = 'eager' -%}
+        {%- if lazy_load -%}
+          {%- assign image_loading = 'lazy' -%}
+        {%- endif -%}
+        <img
+          src="{{ custom_featured_src }}"
+          alt="{{ custom_featured_alt | escape }}"
+          width=""
+          height=""
+          loading="{{ image_loading }}"
+          class="nw-product-card__image"
+        >
+      {%- elsif card_product.featured_media -%}
         {%- assign image_loading = 'eager' -%}
         {%- if lazy_load -%}
           {%- assign image_loading = 'lazy' -%}
@@ -124,7 +185,37 @@ Renders the NW product card used across collection sliders and grids.
       {%- endif -%}
     </a>
 
-    {%- if save_percent > 0 -%}
+    {%- liquid
+      assign save_percent = 0
+      assign bundle_save_badge = blank
+    -%}
+
+    {%- capture nw_product_has_bundle_kit -%}
+      {%- render 'nw-bundle-product-has-kit', product: card_product -%}
+    {%- endcapture -%}
+    {%- assign nw_product_has_bundle_kit = nw_product_has_bundle_kit | strip -%}
+
+    {%- if nw_product_has_bundle_kit != blank -%}
+      {%- capture bundle_save_badge -%}
+        {%- render 'nw-bundle-save-badge-display', product: card_product, for_collection_card: true -%}
+      {%- endcapture -%}
+      {%- assign bundle_save_badge = bundle_save_badge | strip -%}
+    {%- else -%}
+      {%- capture nw_sitewide_save_pct -%}
+        {%- render 'nw-sitewide-sale-product-pricing', product: card_product, output_mode: 'save_percent' -%}
+      {%- endcapture -%}
+      {%- assign save_percent = nw_sitewide_save_pct | strip | plus: 0 -%}
+      {%- if save_percent == 0 -%}
+        {%- capture nw_max_compare_save_pct -%}
+          {%- render 'nw-product-max-compare-save-percent', product: card_product -%}
+        {%- endcapture -%}
+        {%- assign save_percent = nw_max_compare_save_pct | strip | plus: 0 -%}
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if bundle_save_badge != blank -%}
+      <span class="nw-product-card__tag nw-product-card__tag--save">{{ bundle_save_badge | escape }}</span>
+    {%- elsif save_percent > 0 -%}
       <span class="nw-product-card__tag nw-product-card__tag--save">{{ 'nw.product_card.save_percent' | t: percent: save_percent }}</span>
     {%- endif -%}
 
@@ -232,11 +323,26 @@ Renders the NW product card used across collection sliders and grids.
       {%- if nw_bundle_card_price != blank -%}
         {{ nw_bundle_card_price }}
       {%- else -%}
+        {%- liquid
+          assign nw_card_display_price = card_price
+          assign nw_card_display_compare = card_compare_at
+          capture nw_sitewide_card_price_min
+            render 'nw-sitewide-sale-product-pricing', product: card_product, output_mode: 'price_min'
+          endcapture
+          assign nw_sitewide_card_price_min = nw_sitewide_card_price_min | strip
+          if nw_sitewide_card_price_min != blank
+            assign nw_card_display_price = nw_sitewide_card_price_min | plus: 0
+            capture nw_sitewide_card_strike
+              render 'nw-sitewide-sale-product-pricing', product: card_product, output_mode: 'strike_price'
+            endcapture
+            assign nw_card_display_compare = nw_sitewide_card_strike | strip | plus: 0
+          endif
+        -%}
         <div class="nw-product-card__price">
           <span class="nw-product-card__price-from">{{ 'nw.product_card.from' | t }}</span>
-          <span class="nw-product-card__price-current">{{ card_price | money }}</span>
-          {%- if card_compare_at > card_price -%}
-            <span class="nw-product-card__price-compare">{{ card_compare_at | money }}</span>
+          <span class="nw-product-card__price-current">{{ nw_card_display_price | money }}</span>
+          {%- if nw_card_display_compare > nw_card_display_price -%}
+            <span class="nw-product-card__price-compare">{{ nw_card_display_compare | money }}</span>
           {%- endif -%}
         </div>
       {%- endif -%}

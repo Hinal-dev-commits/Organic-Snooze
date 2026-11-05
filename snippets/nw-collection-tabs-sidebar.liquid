@@ -94,7 +94,9 @@
         {%- endif -%}
       </div>
       {%- if block.settings.promo_subtext != blank -%}
-        <div class="nw-collection-tabs__promo-subtext">{{ block.settings.promo_subtext }}</div>
+        <div class="nw-collection-tabs__promo-subtext rte">
+          {{ block.settings.promo_subtext }}
+        </div>
       {%- endif -%}
     </div>
     <div class="nw-collection-tabs__promo-countdown">

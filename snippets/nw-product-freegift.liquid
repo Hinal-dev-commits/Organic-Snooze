@@ -1,0 +1,260 @@
+{%- liquid
+  assign product_source = block.settings.product_source | default: 'product_list'
+  assign gift_products = blank
+  assign gift_count = 0
+
+  if product_source == 'metafield'
+    assign gift_products = product.metafields.custom.free_gifts.value
+    if gift_products != blank
+      if gift_products.id != blank
+        assign gift_count = 1
+      else
+        assign gift_count = gift_products.size
+      endif
+    endif
+  else
+    if block.settings.product_list != blank and block.settings.product_list.size > 0
+      assign gift_products = block.settings.product_list
+      assign gift_count = block.settings.product_list.size
+    endif
+  endif
+
+  assign eyebrow = block.settings.eyebrow_text | strip
+  assign heading = block.settings.heading | strip
+  assign subtitle = block.settings.subtitle | strip
+  assign preview_summary = block.settings.preview_summary | strip
+  assign notice_text = block.settings.notice_text | strip
+  assign panel_id = 'NwFreeGiftPanel-' | append: block.id
+  assign value_details_id = 'NwFreeGiftValueDetails-' | append: block.id
+
+  assign start_collapsed = true
+  if block.settings.start_expanded
+    assign start_collapsed = false
+  endif
+
+  assign total_value_cents = 0
+  if gift_count > 0
+    if gift_products.id != blank
+      assign gp = gift_products
+      assign gv = gp.metafields.custom.gift_value.value | default: gp.metafields.custom.gift_value
+      assign g_variant = gp.selected_or_first_available_variant
+      if gv == blank or gv == 0
+        assign gv = g_variant.compare_at_price | default: g_variant.price | default: 0
+      else
+        assign gv = gv | plus: 0
+      endif
+      assign total_value_cents = gv
+    else
+      for gp in gift_products
+        assign gv = gp.metafields.custom.gift_value.value | default: gp.metafields.custom.gift_value
+        assign g_variant = gp.selected_or_first_available_variant
+        if gv == blank or gv == 0
+          assign gv = g_variant.compare_at_price | default: g_variant.price | default: 0
+        else
+          assign gv = gv | plus: 0
+        endif
+        assign total_value_cents = total_value_cents | plus: gv
+      endfor
+    endif
+  endif
+
+  assign value_amount_text = block.settings.value_amount_text | strip
+  if block.settings.value_amount_mode != 'manual' and total_value_cents > 0
+    assign value_amount_text = total_value_cents | money_without_trailing_zeros
+  endif
+
+  assign subtitle_value_cents = total_value_cents
+  if block.settings.value_amount_mode == 'manual' and block.settings.value_amount_text != blank
+    assign manual_digits = block.settings.value_amount_text | strip | remove: '$' | remove: ',' | remove: ' '
+    if manual_digits contains '.'
+      assign manual_parts = manual_digits | split: '.'
+      assign manual_whole = manual_parts[0] | plus: 0
+      assign manual_frac = manual_parts[1] | default: '0' | append: '00' | slice: 0, 2 | plus: 0
+      assign subtitle_value_cents = manual_whole | times: 100 | plus: manual_frac
+    else
+      assign subtitle_value_cents = manual_digits | plus: 0 | times: 100
+    endif
+  endif
+
+  assign subtitle_value_text = blank
+  if subtitle_value_cents > 0
+    assign subtitle_cents_remainder = subtitle_value_cents | modulo: 100
+    assign subtitle_value_cents = subtitle_value_cents | minus: subtitle_cents_remainder
+    if subtitle_cents_remainder >= 50
+      assign subtitle_value_cents = subtitle_value_cents | plus: 100
+    endif
+    assign subtitle_value_text = subtitle_value_cents | money_without_trailing_zeros
+  endif
+
+  assign subtitle_display = subtitle
+  if subtitle_display != blank and subtitle_value_text != blank
+    if subtitle_display contains '[value]'
+      assign subtitle_display = subtitle_display | replace: '[value]', subtitle_value_text
+    endif
+  endif
+
+  assign value_disclaimer = block.settings.value_disclaimer
+  assign show_value_details_toggle = false
+  if value_disclaimer != blank
+    assign show_value_details_toggle = true
+  endif
+
+  assign value_details_start_open = block.settings.value_details_open_by_default
+-%}
+
+{%- if gift_count == 0 -%}
+  {%- if request.design_mode -%}
+    {{ 'nw-product-freegift.css' | asset_url | stylesheet_tag }}
+    <div class="nw-freegift nw-freegift--empty">
+      {%- if heading != blank -%}
+        <p class="nw-freegift__empty-heading">{{ heading | escape }}</p>
+      {%- endif -%}
+      <p class="nw-freegift__empty">
+        {%- if product_source == 'metafield' -%}
+          {{ 'products.freegift.empty_metafield' | t }}
+        {%- else -%}
+          {{ 'products.freegift.empty_product_list' | t }}
+        {%- endif -%}
+      </p>
+    </div>
+  {%- endif -%}
+{%- else -%}
+  {{ 'nw-product-freegift.css' | asset_url | stylesheet_tag }}
+  {%- unless block.settings.display_font.system? -%}
+    {% style %}
+      {{ block.settings.display_font | font_face: font_display: 'swap' }}
+    {% endstyle %}
+  {%- endunless -%}
+  <script src="{{ 'nw-product-freegift.js' | asset_url }}" defer="defer"></script>
+
+  <nw-freegift
+    class="nw-freegift nw-freegift--collapsible{% if start_collapsed %} is-collapsed{% endif %}{% if value_details_start_open %} is-value-details-open{% endif %}"
+    style="
+      --nw-fg-display-font-family: {{ block.settings.display_font.family }}, {{ block.settings.display_font.fallback_families }};
+      --nw-fg-display-font-style: {{ block.settings.display_font.style }};
+      --nw-fg-display-font-weight: {{ block.settings.display_font.weight }};
+    "
+    data-block-id="{{ block.id }}"
+  >
+    <div class="nw-freegift__header">
+      <button
+        type="button"
+        class="nw-freegift__header-toggle"
+        data-freegift-collapse-toggle
+        aria-expanded="{% if start_collapsed %}false{% else %}true{% endif %}"
+        aria-controls="{{ panel_id }}"
+      >
+        <span class="nw-freegift__titles">
+          {%- if block.settings.show_eyebrow and eyebrow != blank -%}
+            <span class="nw-freegift__eyebrow">
+              <span class="nw-freegift__eyebrow-dot" aria-hidden="true"></span>
+              <span class="nw-freegift__eyebrow-text">{{ eyebrow | escape }}</span>
+            </span>
+          {%- endif -%}
+          <span class="nw-freegift__title-row">
+            {%- if heading != blank -%}
+              <span class="nw-freegift__heading">{{ heading | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.show_header_free_badge -%}
+              <span class="nw-freegift__free-badge nw-freegift__free-badge--header">{{ block.settings.free_badge_label | default: 'FREE' | escape }}</span>
+            {%- endif -%}
+          </span>
+          {%- if subtitle_display != blank -%}
+            <span class="nw-freegift__subtitle">{{ subtitle_display | escape }}</span>
+          {%- endif -%}
+        </span>
+        <span class="nw-freegift__toggle-btn" aria-hidden="true">
+          <span class="nw-freegift__toggle-icon svg-wrapper" aria-hidden="true">
+            {{- 'chevron down.svg' | inline_asset_content -}}
+          </span>
+        </span>
+      </button>
+    </div>
+
+    <div class="nw-freegift__closed-preview" data-freegift-closed-preview>
+      <div class="nw-freegift__closed-preview-inner">
+        <div class="nw-freegift__divider" aria-hidden="true"></div>
+        <div class="nw-freegift__preview-row">
+          <div class="nw-freegift__thumb-stack" aria-hidden="true">
+            {%- if gift_products.id != blank -%}
+              {%- render 'nw-product-freegift-preview-thumb', gift_product: gift_products -%}
+            {%- else -%}
+              {%- for gift_product in gift_products limit: 3 -%}
+                {%- render 'nw-product-freegift-preview-thumb', gift_product: gift_product -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+          {%- if preview_summary != blank -%}
+            <p class="nw-freegift__preview-text">{{ preview_summary | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="nw-freegift__collapsible"
+      id="{{ panel_id }}"
+      data-freegift-collapse-panel
+    >
+      <div class="nw-freegift__collapsible-inner">
+        <div class="nw-freegift__divider nw-freegift__divider--panel" aria-hidden="true"></div>
+        <ul class="nw-freegift__list" role="list">
+          {%- if gift_products.id != blank -%}
+            {%- render 'nw-product-freegift-item', gift_product: gift_products, block: block, gift_index: 1 -%}
+          {%- else -%}
+            {%- for gift_product in gift_products -%}
+              {%- render 'nw-product-freegift-item', gift_product: gift_product, block: block, gift_index: forloop.index -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+        {%- if notice_text != blank -%}
+          <div class="nw-freegift__notice">{{ notice_text | escape }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="nw-freegift__value-bar">
+      <div class="nw-freegift__value-bar-label-row">
+        <span class="nw-freegift__value-bar-label">{{ block.settings.value_bar_label | default: 'TOTAL FREE GIFT VALUE' | escape }}</span>
+        {%- if show_value_details_toggle -%}
+          <button
+            type="button"
+            class="nw-freegift__value-bar-details-toggle"
+            data-freegift-value-details-toggle
+            aria-expanded="{% if value_details_start_open %}true{% else %}false{% endif %}"
+            aria-controls="{{ value_details_id }}"
+          >
+            <span data-freegift-value-details-label-show{% if value_details_start_open %} hidden{% endif %}>
+              {{- block.settings.details_label | default: 'See details' -}}
+            </span>
+            <span data-freegift-value-details-label-hide{% unless value_details_start_open %} hidden{% endunless %}>
+              {{- block.settings.details_hide_label | default: 'Hide details' -}}
+            </span>
+          </button>
+        {%- endif -%}
+      </div>
+      <div class="nw-freegift__value-bar-value-row">
+        {%- if value_amount_text != blank -%}
+          <span class="nw-freegift__value-bar-amount">{{ value_amount_text | escape }}</span>
+        {%- endif -%}
+        {%- if block.settings.value_promo_line != blank -%}
+          <span class="nw-freegift__value-bar-promo">{{ block.settings.value_promo_line | escape }}</span>
+        {%- endif -%}
+      </div>
+      {%- if value_disclaimer != blank -%}
+        <div
+          class="nw-freegift__value-bar-disclaimer-panel"
+          id="{{ value_details_id }}"
+          data-freegift-value-details
+          aria-hidden="{% if value_details_start_open %}false{% else %}true{% endif %}"
+        >
+          <div class="nw-freegift__value-bar-disclaimer-panel-inner">
+            <div class="nw-freegift__value-bar-disclaimer rte">
+              {{ value_disclaimer }}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </nw-freegift>
+{%- endif -%}
