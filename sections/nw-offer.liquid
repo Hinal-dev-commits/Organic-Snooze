@@ -21,7 +21,7 @@
       background-image: none !important;
     }
   }
-  #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height | default: 860 }}px; } @media screen and (max-width: 749px) { #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height_mobile | default: 1000 }}px; } } #{{ offer_dom_id }} .nw-offer__card:has(.nw-offer__form-embed) { padding-left: 20px; padding-right: 20px; } @media screen and (max-width: 749px) { #{{ offer_dom_id }} .nw-offer__card:has(.nw-offer__form-embed) { padding-left: 10px; padding-right: 10px; } }</style>
+  #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height | default: 860 }}px; } @media screen and (max-width: 749px) { #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height_mobile | default: 1000 }}px; } } #{{ offer_dom_id }} .nw-offer__card:has(.nw-offer__form-embed) { padding: 0 !important; overflow: hidden; } #{{ offer_dom_id }} .nw-offer__card:has(.nw-offer__form-embed) .nw-offer__portal { min-height: 0; }</style>
 
 <nw-offer
   id="{{ offer_dom_id }}"
