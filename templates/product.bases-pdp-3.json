@@ -162,6 +162,7 @@
             "firmness_guide_label": "Firmness Guide",
             "firmness_popup_modal_id": "",
             "quantity_option_name": "Select Quantity",
+            "option_display_names": "",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
             "option_position_order": "Firmness, Select Size, Sheet Color",
@@ -307,6 +308,9 @@
           "settings": {
             "product": "organic-cooling-sheets",
             "tab_label": "Sheets",
+            "discount_type": "percentage",
+            "discount_percentage": 20,
+            "discount_fixed": 0,
             "custom_title": "Breezeline Organic Sheet Set",
             "custom_subtitle": "Fitted, flat, 2 pillowcases, cooling weave",
             "extra_description": "Organic cotton cooling weave. Releases heat, fits securely. Organic certified.",
@@ -320,6 +324,9 @@
           "settings": {
             "product": "organic-waterproof-mattress-protector",
             "tab_label": "Protector",
+            "discount_type": "percentage",
+            "discount_percentage": 20,
+            "discount_fixed": 0,
             "custom_title": "Cotton Water-Resistant Protector",
             "custom_subtitle": "Organic MoistureGuard barrier",
             "extra_description": "A base layer that protects your mattress from stains, spills, and tears.",
