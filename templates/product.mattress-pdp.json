@@ -126,7 +126,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p>Firm support with a soft, breathable comfort layer on top. Made with clean organic materials and built for recovery. Everything you need, nothing you don't.</p>",
+            "custom_description": "<p>Experience organic, responsive support that keeps your body comfortably aligned without the sinking feeling of memory foam. Ideal for anyone who prefers a more supportive, naturally breathable sleep surface.</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -158,6 +158,7 @@
         },
         "promo_banner_Q6znVP": {
           "type": "promo_banner",
+          "disabled": true,
           "settings": {
             "use_discount_metaobject": true,
             "first_order_heading": "BLACK FRIDAY: Save [percentage]% + FREE Gifts!",
@@ -192,44 +193,6 @@
             "margin_bottom_mobile": 0
           }
         },
-        "icon_text_KzjrVr": {
-          "type": "icon_text",
-          "settings": {
-            "style": "checklist",
-            "text": "1\" Responsive Organic Latex Support",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/Icon_-_supportive.png",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 24,
-            "margin_bottom": 8,
-            "margin_top_mobile": 24,
-            "margin_bottom_mobile": 5
-          }
-        },
-        "icon_text_VhGYCt": {
-          "type": "icon_text",
-          "settings": {
-            "style": "checklist",
-            "text": "800 Zoned Pocketed Coils",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/spring_icon_7097b9f0-1de3-494c-8468-e794231c79f3.png",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 26,
-            "icon_gap": 8,
-            "margin_top": 0,
-            "margin_bottom": 8,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
-          }
-        },
         "icon_text_dGNAqm": {
           "type": "icon_text",
           "settings": {
@@ -243,9 +206,9 @@
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
-            "margin_top": 0,
+            "margin_top": 24,
             "margin_bottom": 8,
-            "margin_top_mobile": 0,
+            "margin_top_mobile": 24,
             "margin_bottom_mobile": 5
           }
         },
@@ -257,44 +220,6 @@
             "use_custom_icon": true,
             "icon": "trial",
             "custom_icon": "shopify://shop_images/icon-no_chemical.png",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 0,
-            "margin_bottom": 8,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
-          }
-        },
-        "icon_text_cKXLDG": {
-          "type": "icon_text",
-          "settings": {
-            "style": "checklist",
-            "text": "Naturally Cool and Breathable&nbsp;",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-snowflake.png",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 0,
-            "margin_bottom": 8,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
-          }
-        },
-        "icon_text_tRPNk9": {
-          "type": "icon_text",
-          "settings": {
-            "style": "checklist",
-            "text": "Designed for Better Recovery",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-recovery.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -322,7 +247,64 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 6
+            "margin_bottom_mobile": 5
+          }
+        },
+        "icon_text_KzjrVr": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "1\" Responsive Organic Latex Support",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/Icon_-_supportive.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 5
+          }
+        },
+        "icon_text_VhGYCt": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "800 Zoned Pocketed Coils",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/spring_icon_7097b9f0-1de3-494c-8468-e794231c79f3.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 26,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 5
+          }
+        },
+        "icon_text_cKXLDG": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Naturally Cool and Breathable&nbsp;",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/icon-snowflake.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 5
           }
         },
         "icon_text_3FhWzM": {
@@ -385,6 +367,46 @@
             "margin_bottom_mobile": 0
           }
         },
+        "nw_freegift_ymq7RU": {
+          "type": "nw_freegift",
+          "settings": {
+            "product_source": "product_list",
+            "product_list": [
+              "organic-waterproof-mattress-protector",
+              "the-organic-snooze-kloud-pillow"
+            ],
+            "show_eyebrow": false,
+            "eyebrow_text": "LIMITED TIME OFFER",
+            "heading": "Unlock Black Friday Gifts",
+            "show_header_free_badge": true,
+            "subtitle": "Choose King or Queen, Get $650+ Gift Value",
+            "free_badge_label": "FREE",
+            "display_font": "anton_n4",
+            "preview_summary": "2 organic pillows & a mattress protector, on us",
+            "start_expanded": false,
+            "notice_text": "Offer valid for a limited time while supplies last on all Queen, King and CA King mattresses. Bundles excluded.",
+            "value_bar_label": "TOTAL FREE GIFT VALUE with Queen/King",
+            "value_amount_mode": "manual",
+            "value_amount_text": "$650",
+            "value_promo_line": "+ 20% OFF ENTIRE ORDER",
+            "value_disclaimer": "<p>Discounts are automatically applied to your order with any King, CA King, or Queen size mattress. No code required. Not valid on Twin, Twin XL, Full or bundles.</p>",
+            "value_details_open_by_default": false,
+            "details_label": "See details",
+            "details_hide_label": "Hide details",
+            "gift_1_description": "<ul><li>Organic cotton sleep surface</li><li>Protects against spills and everyday wear</li></ul>",
+            "gift_2_description": "<ul><li>Medium-plush Feel, 100% Organic Fill&nbsp;</li><li>Machine washable cover</li></ul>",
+            "gift_3_description": "",
+            "gift_4_description": "",
+            "gift_5_description": "",
+            "gift_6_description": "",
+            "gift_7_description": "",
+            "gift_8_description": "",
+            "margin_top": 8,
+            "margin_bottom": 0,
+            "margin_top_mobile": 17,
+            "margin_bottom_mobile": 0
+          }
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "disabled": true,
@@ -397,6 +419,7 @@
         },
         "bundle_save_K4nQ2p": {
           "type": "bundle_save",
+          "disabled": true,
           "settings": {
             "product_source": "product_list",
             "product_list": [
@@ -528,46 +551,6 @@
             "review_5_author": "",
             "review_5_rating": 5,
             "review_5_verified": true,
-            "margin_top": 48,
-            "margin_bottom": 0,
-            "margin_top_mobile": 32,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "nw_freegift_YbLz9e": {
-          "type": "nw_freegift",
-          "settings": {
-            "product_source": "product_list",
-            "product_list": [
-              "organic-waterproof-mattress-protector",
-              "two-pack-signature-organic-cotton-pillows"
-            ],
-            "show_eyebrow": true,
-            "eyebrow_text": "LIMITED TIME OFFER",
-            "heading": "Black Friday Gifts",
-            "show_header_free_badge": true,
-            "subtitle": "2 Free Pillows + Free Protector · [value]  Value",
-            "free_badge_label": "FREE",
-            "display_font": "anton_n4",
-            "preview_summary": "2 organic pillows & a mattress protector, on us",
-            "start_expanded": false,
-            "notice_text": "Added to your order automatically with any qualifying mattress.",
-            "value_bar_label": "TOTAL FREE GIFT VALUE",
-            "value_amount_mode": "auto",
-            "value_amount_text": "$459.98",
-            "value_promo_line": "+ 20% OFF ENTIRE ORDER",
-            "value_disclaimer": "<p>Offer valid for a limited time while supplies last on all Queen, King and CA King mattresses. Bundles excluded.</p>",
-            "value_details_open_by_default": true,
-            "details_label": "See details",
-            "details_hide_label": "Hide details",
-            "gift_1_description": "<ul><li>100% USDA organic cotton fill</li><li>Adjustable loft, add or remove fill for your neck</li><li>Handcrafted in the USA</li></ul>",
-            "gift_2_description": "<ul><li>Water-resistant layer helps guard against spills</li><li>Made with organic materials, chosen for breathability</li><li>Keeps your new mattress fresh from night one</li></ul>",
-            "gift_3_description": "",
-            "gift_4_description": "",
-            "gift_5_description": "",
-            "gift_6_description": "",
-            "gift_7_description": "",
-            "gift_8_description": "",
             "margin_top": 48,
             "margin_bottom": 0,
             "margin_top_mobile": 32,
@@ -831,16 +814,16 @@
         "affirm_pay_over_time_messaging_product_block_RzJw7G",
         "promo_banner_Q6znVP",
         "nw_benifits_list_fYL9X3",
-        "icon_text_KzjrVr",
-        "icon_text_VhGYCt",
         "icon_text_dGNAqm",
         "icon_text_ykzhxB",
-        "icon_text_cKXLDG",
-        "icon_text_tRPNk9",
         "icon_text_hrkDMh",
+        "icon_text_KzjrVr",
+        "icon_text_VhGYCt",
+        "icon_text_cKXLDG",
         "icon_text_3FhWzM",
         "sleepers_qg7fAY",
         "variant_picker",
+        "nw_freegift_ymq7RU",
         "quantity_selector",
         "bundle_save_K4nQ2p",
         "buy_buttons",
@@ -848,7 +831,6 @@
         "trust_badges_UF8dKt",
         "payment_logos_aAAW97",
         "customer_reviews_n9JDUb",
-        "nw_freegift_YbLz9e",
         "collapsible_tab_W7etYx",
         "collapsible_tab_wP3yAA",
         "collapsible_tab_THr6Kx",
