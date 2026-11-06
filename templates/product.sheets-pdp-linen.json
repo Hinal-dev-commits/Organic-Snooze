@@ -192,6 +192,7 @@
           "type": "promo_banner",
           "settings": {
             "use_discount_metaobject": true,
+            "first_order_heading": "Save [percentage]% on your first order!",
             "heading": "Save 15% on your first order!",
             "description": "",
             "discount_code": "",
@@ -224,6 +225,7 @@
             "firmness_guide_label": "Firmness Guide",
             "firmness_popup_modal_id": "",
             "quantity_option_name": "Select Quantity",
+            "option_display_names": "",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
             "option_position_order": "Size, Firmness",
@@ -242,34 +244,6 @@
             "margin_top": 0,
             "margin_bottom": 0,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "bundle_save_MbTHDA": {
-          "type": "bundle_save",
-          "settings": {
-            "product_source": "product_list",
-            "product_list": [
-              "the-organic-snooze-kloud-pillow",
-              "the-ultimate-snooze-organic-cotton-pillow",
-              "the-organic-snooze-pillow"
-            ],
-            "heading": "Bundle & save 5% on each add-on",
-            "preview_summary": "Sheets, protector, pillows & base",
-            "discount_percentage": 5,
-            "optional_subtitle": "Optional, Bundle & Save [percent]%",
-            "quick_view_title_override": "",
-            "quick_view_description_override": "",
-            "quick_view_description_limit": 220,
-            "quick_view_warranty_title": "1-Year Warranty",
-            "quick_view_warranty_text": "Covers defects in materials and workmanship",
-            "quick_view_returns_title": "30-Day Returns",
-            "quick_view_returns_text": "Unused and in original packaging",
-            "quick_view_warranty_note": "Ships free with your mattress, est.",
-            "quick_view_shipping_days": 3,
-            "margin_top": 32,
-            "margin_bottom": 0,
-            "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
         },
@@ -495,7 +469,6 @@
         "promo_banner_kWtECB",
         "variant_picker",
         "quantity_selector",
-        "bundle_save_MbTHDA",
         "buy_buttons",
         "shipping_tag_6x33Xx",
         "trust_badges_UF8dKt",
