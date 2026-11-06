@@ -21,7 +21,7 @@
       background-image: none !important;
     }
   }
-  #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height | default: 860 }}px; } @media screen and (max-width: 749px) { #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height_mobile | default: 1000 }}px; } }</style>
+  #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height | default: 860 }}px; } @media screen and (max-width: 749px) { #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height_mobile | default: 1000 }}px; } } #{{ offer_dom_id }} .nw-offer__card:has(.nw-offer__form-embed) { padding-left: 20px; padding-right: 20px; } @media screen and (max-width: 749px) { #{{ offer_dom_id }} .nw-offer__card:has(.nw-offer__form-embed) { padding-left: 10px; padding-right: 10px; } }</style>
 
 <nw-offer
   id="{{ offer_dom_id }}"
@@ -89,7 +89,7 @@
         {%- if section.settings.card_title != blank -%}
           <h3 class="nw-offer__card-title">{{ section.settings.card_title | escape }}</h3>
         {%- endif -%}
-        <div class="nw-offer__portal">{%- if section.settings.form_page_id != blank -%}<script type="module" src="https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js"></script><zapier-interfaces-page-embed class="nw-offer__form-embed" page-id="{{ section.settings.form_page_id | strip | escape }}" no-background="true" style="display:block;width:100%;max-width:100%;"></zapier-interfaces-page-embed>{%- endif -%}</div>
+        <div class="nw-offer__portal">{%- if section.settings.form_page_id != blank -%}<script type="module" src="https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js"></script><zapier-interfaces-page-embed class="nw-offer__form-embed" page-id="{{ section.settings.form_page_id | strip | escape }}" no-background="true" style="display:block;width:100%;max-width:100%;"></zapier-interfaces-page-embed><script>(function(){var p=document.querySelector('#{{ offer_dom_id }} .nw-offer__portal');if(!p)return;var e=p.querySelector('.nw-offer__form-embed');if(!e)return;var M=400,last=-1;function fit(){var w=p.clientWidth;if(w===last)return;last=w;e.style.transform='';e.style.width='';e.style.maxWidth='';e.style.marginBottom='';if(w>0&&w<M){var s=w/M;e.style.maxWidth='none';e.style.width=M+'px';e.style.transformOrigin='top left';e.style.transform='scale('+s+')';e.style.marginBottom=(-(1-s)*e.offsetHeight)+'px';}}fit();if(window.ResizeObserver){new ResizeObserver(fit).observe(p);}else{window.addEventListener('resize',fit);}})();</script>{%- endif -%}</div>
       </div>
     </div>
   </div>
@@ -212,7 +212,7 @@
     },
     {
       "type": "header",
-      "content": "UPLOAD CARD" }, { "type": "text", "id": "form_page_id", "label": "Zapier form page ID", "default": "cmvg8by0q000msu5h32t0vf09", "info": "From Zapier form > Share > Embed: the page-id value. Leave blank to hide the form." }, { "type": "range", "id": "form_embed_height", "label": "Form height (desktop)", "min": 400, "max": 1400, "step": 20, "unit": "px", "default": 860 }, { "type": "range", "id": "form_embed_height_mobile", "label": "Form height (mobile)", "min": 400, "max": 1600, "step": 20, "unit": "px", "default": 1000, "info": "Make the form tall enough to avoid an inner scrollbar."
+      "content": "UPLOAD CARD" }, { "type": "text", "id": "form_page_id", "label": "Zapier form page ID", "default": "cmvg8by0q000msu5h32t0vf09", "info": "From Zapier form > Share > Embed: the page-id value. Leave blank to hide the form." }, { "type": "range", "id": "form_embed_height", "label": "Form height (desktop)", "min": 400, "max": 1400, "step": 20, "unit": "px", "default": 1120 }, { "type": "range", "id": "form_embed_height_mobile", "label": "Form height (mobile)", "min": 400, "max": 1600, "step": 20, "unit": "px", "default": 1140, "info": "Make the form tall enough to avoid an inner scrollbar."
     },
     {
       "type": "text",
