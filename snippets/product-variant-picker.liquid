@@ -10,6 +10,20 @@
 {% endcomment %}
 {%- unless product.has_only_default_variant -%}
   {%- liquid
+    assign bedding_size_option_label = block.settings.bedding_size_option_name | strip
+    if bedding_size_option_label == blank
+      assign bedding_size_option_label = 'Bedding Size'
+    endif
+    assign bedding_size_option_name = bedding_size_option_label | downcase
+  -%}
+  {%- capture bedding_size_value_tokens_check -%}
+    {%- render 'nw-bedding-size-variant-values',
+      product: product,
+      bedding_size_option_name: bedding_size_option_label
+    -%}
+  {%- endcapture -%}
+  {%- assign bedding_size_value_tokens_check = bedding_size_value_tokens_check | strip -%}
+  {%- liquid
     assign selected_variant = product.selected_or_first_available_variant
     assign select_size_text = selected_variant.metafields.custom.select_size.value | default: selected_variant.metafields.custom.select_size
     assign variant_tag_text = selected_variant.metafields.custom.variant_tag.value | default: selected_variant.metafields.custom.variant_tag
@@ -38,7 +52,16 @@
     endif
 
     assign size_guide_modal_id = blank
+    assign bedding_size_guide_modal_id = blank
     assign firmness_popup_modal_id = blank
+    assign show_bedding_size_guide = block.settings.show_bedding_size_guide
+    if show_bedding_size_guide == nil
+      assign show_bedding_size_guide = false
+    endif
+    assign bedding_size_guide_label = block.settings.bedding_size_guide_label | strip
+    if bedding_size_guide_label == blank
+      assign bedding_size_guide_label = 'See Size Guide'
+    endif
     assign firmness_popup_ref = block.settings.firmness_popup_modal_id | strip
     if firmness_popup_ref != blank
       if firmness_popup_ref contains 'NwFirmnessPopupModal-'
@@ -68,6 +91,33 @@
       if popup_block != blank
         assign size_guide_modal_id = 'NwSizePopupModal-' | append: popup_block.id
       endif
+    endif
+    assign product_has_bedding_size_option = false
+    if bedding_size_value_tokens_check != blank and bedding_size_value_tokens_check != '|'
+      assign product_has_bedding_size_option = true
+    endif
+
+    if show_bedding_size_guide and product_has_bedding_size_option
+      assign bedding_popup_block = blank
+      assign bedding_popup_id_setting = block.settings.bedding_size_guide_popup_id | strip
+      if bedding_popup_id_setting != blank
+        for bedding_popup_candidate in section.blocks
+          if bedding_popup_candidate.type == 'nw_bedding_size_popup'
+            assign bedding_popup_link_id = bedding_popup_candidate.settings.link_id | strip
+            if bedding_popup_link_id == bedding_popup_id_setting or bedding_popup_candidate.id == bedding_popup_id_setting
+              assign bedding_popup_block = bedding_popup_candidate
+              break
+            endif
+          endif
+        endfor
+      else
+        assign bedding_popup_block = section.blocks | where: 'type', 'nw_bedding_size_popup' | first
+      endif
+      if bedding_popup_block != blank
+        assign bedding_size_guide_modal_id = 'NwBeddingSizePopupModal-' | append: bedding_popup_block.id
+      endif
+    else
+      assign bedding_size_guide_modal_id = blank
     endif
   -%}
   <variant-selects
@@ -111,12 +161,16 @@
               firmness_option_name: firmness_option_name,
               loft_option_name: loft_option_name,
               size_option_name: size_option_name,
+              bedding_size_option_name: bedding_size_option_name,
               quantity_option_name: quantity_option_name,
               select_size_text: select_size_text,
               variant_tag_text: variant_tag_text,
               values_order: values_order,
               show_size_guide: show_size_guide,
               size_guide_modal_id: size_guide_modal_id,
+              show_bedding_size_guide: show_bedding_size_guide,
+              bedding_size_guide_label: bedding_size_guide_label,
+              bedding_size_guide_modal_id: bedding_size_guide_modal_id,
               show_firmness_guide: show_firmness_guide,
               firmness_guide_label: firmness_guide_label,
               firmness_popup_modal_id: firmness_popup_modal_id,
@@ -146,12 +200,16 @@
             firmness_option_name: firmness_option_name,
             loft_option_name: loft_option_name,
             size_option_name: size_option_name,
+            bedding_size_option_name: bedding_size_option_name,
             quantity_option_name: quantity_option_name,
             select_size_text: select_size_text,
             variant_tag_text: variant_tag_text,
             values_order: values_order,
             show_size_guide: show_size_guide,
             size_guide_modal_id: size_guide_modal_id,
+            show_bedding_size_guide: show_bedding_size_guide,
+            bedding_size_guide_label: bedding_size_guide_label,
+            bedding_size_guide_modal_id: bedding_size_guide_modal_id,
             show_firmness_guide: show_firmness_guide,
             firmness_guide_label: firmness_guide_label,
             firmness_popup_modal_id: firmness_popup_modal_id,
@@ -177,12 +235,16 @@
           firmness_option_name: firmness_option_name,
           loft_option_name: loft_option_name,
           size_option_name: size_option_name,
+          bedding_size_option_name: bedding_size_option_name,
           quantity_option_name: quantity_option_name,
           select_size_text: select_size_text,
           variant_tag_text: variant_tag_text,
           values_order: values_order,
           show_size_guide: show_size_guide,
           size_guide_modal_id: size_guide_modal_id,
+          show_bedding_size_guide: show_bedding_size_guide,
+          bedding_size_guide_label: bedding_size_guide_label,
+          bedding_size_guide_modal_id: bedding_size_guide_modal_id,
           show_firmness_guide: show_firmness_guide,
           firmness_guide_label: firmness_guide_label,
           firmness_popup_modal_id: firmness_popup_modal_id,

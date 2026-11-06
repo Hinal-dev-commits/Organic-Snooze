@@ -1,0 +1,38 @@
+{% doc %}
+  Renders one bedding size guide tab or panel for a variant value label.
+  @param {string} part - 'tab' or 'panel'
+  @param {object} block - nw_bedding_size_popup block
+  @param {string} value_label - Bedding Size variant label from product
+  @param {boolean} is_first - Active tab on load
+{% enddoc %}
+{%- liquid
+  assign normalized = value_label | strip | downcase | replace: '-', ' ' | replace: '  ', ' '
+  assign tab_key = blank
+
+  if normalized contains 'twin' and normalized contains 'xl'
+    assign tab_key = 'twin_xl'
+  elsif normalized contains 'california'
+    assign tab_key = 'cal_king'
+  elsif normalized contains 'cal' and normalized contains 'king'
+    assign tab_key = 'cal_king'
+  elsif normalized == 'twin'
+    assign tab_key = 'twin'
+  elsif normalized == 'full' or normalized == 'double'
+    assign tab_key = 'full'
+  elsif normalized == 'queen'
+    assign tab_key = 'queen'
+  elsif normalized == 'king'
+    assign tab_key = 'king'
+  endif
+-%}
+{%- if tab_key != blank -%}
+  {%- assign tab_slug = tab_key | replace: '_', '-' -%}
+  {% render 'nw-bedding-size-guide-variant-tabs',
+    part: part,
+    block: block,
+    value_label: value_label,
+    tab_key: tab_key,
+    tab_slug: tab_slug,
+    is_first: is_first
+  %}
+{%- endif -%}

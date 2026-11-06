@@ -1,0 +1,24 @@
+{% doc %}
+  Maps a Bedding Size variant label to a Theme Customizer setting key prefix.
+  @param {string} variant_value - Product option value label
+{% enddoc %}
+{%- liquid
+  assign normalized = variant_value | strip | downcase | replace: '-', ' ' | replace: '  ', ' '
+  assign tab_key = blank
+
+  if normalized contains 'twin' and normalized contains 'xl'
+    assign tab_key = 'twin_xl'
+  elsif normalized contains 'california'
+    assign tab_key = 'cal_king'
+  elsif normalized contains 'cal' and normalized contains 'king'
+    assign tab_key = 'cal_king'
+  elsif normalized == 'twin'
+    assign tab_key = 'twin'
+  elsif normalized == 'full' or normalized == 'double'
+    assign tab_key = 'full'
+  elsif normalized == 'queen'
+    assign tab_key = 'queen'
+  elsif normalized == 'king'
+    assign tab_key = 'king'
+  endif
+-%}{{- tab_key -}}

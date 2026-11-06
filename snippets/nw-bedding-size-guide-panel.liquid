@@ -1,0 +1,76 @@
+{% doc %}
+  One tab panel for the bedding size guide popup.
+  @param {object} block - nw_bedding_size_popup block
+  @param {string} tab_key - setting prefix (e.g. twin, twin_xl)
+  @param {string} tab_slug - data attribute slug (e.g. twin-xl)
+  @param {boolean} is_first - first tab active on load
+{% enddoc %}
+{%- liquid
+  assign set_summary_key = tab_key | append: '_set_summary'
+  assign flat_qty_key = tab_key | append: '_flat_qty'
+  assign flat_name_key = tab_key | append: '_flat_name'
+  assign flat_dimensions_key = tab_key | append: '_flat_dimensions'
+  assign flat_note_key = tab_key | append: '_flat_note'
+  assign fitted_qty_key = tab_key | append: '_fitted_qty'
+  assign fitted_name_key = tab_key | append: '_fitted_name'
+  assign fitted_dimensions_key = tab_key | append: '_fitted_dimensions'
+  assign fitted_note_key = tab_key | append: '_fitted_note'
+  assign sham_qty_key = tab_key | append: '_sham_qty'
+  assign sham_name_key = tab_key | append: '_sham_name'
+  assign sham_dimensions_key = tab_key | append: '_sham_dimensions'
+  assign sham_note_key = tab_key | append: '_sham_note'
+  assign sham_visual_key = tab_key | append: '_sham_visual'
+  assign guidelines_key = tab_key | append: '_guidelines'
+
+  assign set_summary = block.settings[set_summary_key]
+  assign flat_qty = block.settings[flat_qty_key]
+  assign flat_name = block.settings[flat_name_key]
+  assign flat_dimensions = block.settings[flat_dimensions_key]
+  assign flat_note = block.settings[flat_note_key]
+  assign fitted_qty = block.settings[fitted_qty_key]
+  assign fitted_name = block.settings[fitted_name_key]
+  assign fitted_dimensions = block.settings[fitted_dimensions_key]
+  assign fitted_note = block.settings[fitted_note_key]
+  assign sham_qty = block.settings[sham_qty_key]
+  assign sham_name = block.settings[sham_name_key]
+  assign sham_dimensions = block.settings[sham_dimensions_key]
+  assign sham_note = block.settings[sham_note_key]
+  assign sham_visual = block.settings[sham_visual_key]
+  assign guidelines_content = block.settings[guidelines_key]
+  assign guidelines_heading = block.settings.guidelines_heading
+-%}
+<div
+  class="nw-bedding-size-guide__panel{% if is_first %} is-active{% endif %}"
+  data-bedding-size-panel="{{ tab_slug }}"
+  role="tabpanel"
+  id="BeddingSizePanel-{{ block.id }}-{{ tab_slug }}"
+  {% unless is_first %}
+    aria-hidden="true"
+  {% endunless %}
+>
+  <div class="nw-bedding-size-guide__set-contents">
+    {%- if set_summary != blank -%}
+      <div class="nw-bedding-size-guide__set-summary inline-richtext">{{ set_summary }}</div>
+    {%- endif -%}
+    {% render 'nw-bedding-size-guide-set-items',
+      set_items_layout: block.settings.set_items_layout,
+      flat_qty: flat_qty,
+      flat_name: flat_name,
+      flat_dimensions: flat_dimensions,
+      flat_note: flat_note,
+      fitted_qty: fitted_qty,
+      fitted_name: fitted_name,
+      fitted_dimensions: fitted_dimensions,
+      fitted_note: fitted_note,
+      sham_qty: sham_qty,
+      sham_name: sham_name,
+      sham_dimensions: sham_dimensions,
+      sham_note: sham_note,
+      sham_type: sham_visual
+    %}
+  </div>
+  {% render 'nw-bedding-size-guide-guidelines',
+    guidelines_heading: guidelines_heading,
+    guidelines_content: guidelines_content
+  %}
+</div>
