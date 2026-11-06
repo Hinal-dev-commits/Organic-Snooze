@@ -89,7 +89,7 @@
         {%- if section.settings.card_title != blank -%}
           <h3 class="nw-offer__card-title">{{ section.settings.card_title | escape }}</h3>
         {%- endif -%}
-        <div class="nw-offer__portal">{%- if section.settings.form_embed_url != blank -%}<iframe class="nw-offer__form-embed" src="{{ section.settings.form_embed_url }}" title="Toxin Trade-In upload form" loading="lazy" allow="camera; microphone" style="display:block;width:100%;border:0;"></iframe>{%- endif -%}</div>
+        <div class="nw-offer__portal">{%- if section.settings.form_page_id != blank -%}<script type="module" src="https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js"></script><zapier-interfaces-page-embed class="nw-offer__form-embed" page-id="{{ section.settings.form_page_id | strip | escape }}" no-background="true" style="display:block;width:100%;max-width:100%;"></zapier-interfaces-page-embed>{%- endif -%}</div>
       </div>
     </div>
   </div>
@@ -212,7 +212,7 @@
     },
     {
       "type": "header",
-      "content": "UPLOAD CARD" }, { "type": "url", "id": "form_embed_url", "label": "Upload form embed URL", "info": "Zapier form page URL shown inside this card." }, { "type": "range", "id": "form_embed_height", "label": "Form height (desktop)", "min": 400, "max": 1400, "step": 20, "unit": "px", "default": 860 }, { "type": "range", "id": "form_embed_height_mobile", "label": "Form height (mobile)", "min": 400, "max": 1600, "step": 20, "unit": "px", "default": 1000, "info": "Make the form tall enough to avoid an inner scrollbar."
+      "content": "UPLOAD CARD" }, { "type": "text", "id": "form_page_id", "label": "Zapier form page ID", "default": "cmvg8by0q000msu5h32t0vf09", "info": "From Zapier form > Share > Embed: the page-id value. Leave blank to hide the form." }, { "type": "range", "id": "form_embed_height", "label": "Form height (desktop)", "min": 400, "max": 1400, "step": 20, "unit": "px", "default": 860 }, { "type": "range", "id": "form_embed_height_mobile", "label": "Form height (mobile)", "min": 400, "max": 1600, "step": 20, "unit": "px", "default": 1000, "info": "Make the form tall enough to avoid an inner scrollbar."
     },
     {
       "type": "text",
