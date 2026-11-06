@@ -208,10 +208,10 @@
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
-            "margin_top": 17,
+            "margin_top": 14,
             "margin_bottom": 8,
-            "margin_top_mobile": 10,
-            "margin_bottom_mobile": 5
+            "margin_top_mobile": 17,
+            "margin_bottom_mobile": 6
           }
         },
         "icon_text_ykzhxB": {
@@ -230,7 +230,7 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
+            "margin_bottom_mobile": 6
           }
         },
         "icon_text_hrkDMh": {
@@ -268,7 +268,7 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
+            "margin_bottom_mobile": 6
           }
         },
         "icon_text_iUeaBF": {
@@ -287,7 +287,7 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
+            "margin_bottom_mobile": 6
           }
         },
         "icon_text_tRPNk9": {
@@ -326,7 +326,7 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
+            "margin_bottom_mobile": 6
           }
         },
         "icon_text_3FhWzM": {
@@ -345,6 +345,47 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
+            "margin_bottom_mobile": 6
+          }
+        },
+        "sleepers_qg7fAY": {
+          "type": "sleepers",
+          "settings": {
+            "label": "Best for:",
+            "label_color": "#613916",
+            "chip_bg_color": "#f4efe8",
+            "chip_text_color": "#613916",
+            "chip_icon_color": "#613916",
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle",
+            "firmness_option_name": "Firmness",
+            "loft_option_name": "Loft",
+            "size_option_name": "Size",
+            "show_size_guide": true,
+            "size_guide_label": "See Size Guide",
+            "size_guide_popup_id": "",
+            "show_firmness_guide": true,
+            "firmness_guide_label": "Which firmness for me?",
+            "firmness_popup_modal_id": "firmness-guide",
+            "quantity_option_name": "Select Quantity",
+            "option_display_names": "",
+            "picker_gap": 21,
+            "picker_gap_mobile": 18,
+            "option_position_order": "Firmness, Size",
+            "option_1_values_order": "",
+            "option_2_values_order": "",
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
         },
@@ -385,47 +426,6 @@
             "margin_top": 24,
             "margin_bottom": 0,
             "margin_top_mobile": 32,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "sleepers_qg7fAY": {
-          "type": "sleepers",
-          "settings": {
-            "label": "Best for:",
-            "label_color": "#613916",
-            "chip_bg_color": "#f4efe8",
-            "chip_text_color": "#613916",
-            "chip_icon_color": "#613916",
-            "margin_top": 0,
-            "margin_bottom": 0,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle",
-            "firmness_option_name": "Firmness",
-            "loft_option_name": "Loft",
-            "size_option_name": "Size",
-            "show_size_guide": true,
-            "size_guide_label": "See Size Guide",
-            "size_guide_popup_id": "",
-            "show_firmness_guide": true,
-            "firmness_guide_label": "Which firmness for me?",
-            "firmness_popup_modal_id": "firmness-guide",
-            "quantity_option_name": "Select Quantity",
-            "option_display_names": "",
-            "picker_gap": 32,
-            "picker_gap_mobile": 24,
-            "option_position_order": "Firmness, Size",
-            "option_1_values_order": "",
-            "option_2_values_order": "",
-            "margin_top": 32,
-            "margin_bottom": 32,
-            "margin_top_mobile": 24,
             "margin_bottom_mobile": 0
           }
         },
@@ -811,9 +811,9 @@
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
         "icon_text_3FhWzM",
-        "nw_freegift_bw6qVj",
         "sleepers_qg7fAY",
         "variant_picker",
+        "nw_freegift_bw6qVj",
         "quantity_selector",
         "bundle_save_RJ6jjd",
         "buy_buttons",
