@@ -378,7 +378,7 @@
             "firmness_popup_modal_id": "firmness-guide",
             "quantity_option_name": "Select Quantity",
             "option_display_names": "",
-            "picker_gap": 21,
+            "picker_gap": 11,
             "picker_gap_mobile": 18,
             "option_position_order": "Firmness, Size",
             "option_1_values_order": "",
@@ -401,6 +401,7 @@
         },
         "bundle_save_RJ6jjd": {
           "type": "bundle_save",
+          "disabled": true,
           "settings": {
             "product_source": "product_list",
             "product_list": [
@@ -424,6 +425,46 @@
             "margin_top": 32,
             "margin_bottom": 0,
             "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "nw_freegift_bw6qVj": {
+          "type": "nw_freegift",
+          "settings": {
+            "product_source": "product_list",
+            "product_list": [
+              "organic-waterproof-mattress-protector",
+              "the-organic-snooze-kloud-pillow"
+            ],
+            "show_eyebrow": false,
+            "eyebrow_text": "LIMITED TIME OFFER",
+            "heading": "Unlock Black Friday Gifts",
+            "show_header_free_badge": true,
+            "subtitle": "Choose King or Queen, Get $650+ Gift Value",
+            "free_badge_label": "FREE",
+            "display_font": "anton_n4",
+            "preview_summary": "2 organic pillows & a mattress protector, on us",
+            "start_expanded": false,
+            "notice_text": "Offer valid for a limited time while supplies last on all Queen, King and CA King mattresses. Bundles excluded.",
+            "value_bar_label": "TOTAL FREE GIFT VALUE with Queen/King",
+            "value_amount_mode": "manual",
+            "value_amount_text": "$650",
+            "value_promo_line": "+ 20% OFF ENTIRE ORDER",
+            "value_disclaimer": "<p>Discounts are automatically applied to your order with any King, CA King, or Queen size mattress. No code required. Not valid on Twin, Twin XL, Full or bundles.</p>",
+            "value_details_open_by_default": false,
+            "details_label": "See details",
+            "details_hide_label": "Hide details",
+            "gift_1_description": "<ul><li>Organic cotton sleep surface</li><li>Protects against spills and everyday wear</li></ul>",
+            "gift_2_description": "<ul><li>Medium-plush Feel, 100% Organic Fill&nbsp;</li><li>Machine washable cover</li></ul>",
+            "gift_3_description": "",
+            "gift_4_description": "",
+            "gift_5_description": "",
+            "gift_6_description": "",
+            "gift_7_description": "",
+            "gift_8_description": "",
+            "margin_top": 8,
+            "margin_bottom": 0,
+            "margin_top_mobile": 17,
             "margin_bottom_mobile": 0
           }
         },
@@ -472,46 +513,6 @@
             "margin_top": 16,
             "margin_bottom": 0,
             "margin_top_mobile": 12,
-            "margin_bottom_mobile": 0
-          }
-        },
-        "nw_freegift_bw6qVj": {
-          "type": "nw_freegift",
-          "settings": {
-            "product_source": "product_list",
-            "product_list": [
-              "organic-waterproof-mattress-protector",
-              "the-organic-snooze-kloud-pillow"
-            ],
-            "show_eyebrow": false,
-            "eyebrow_text": "LIMITED TIME OFFER",
-            "heading": "Unlock Black Friday Gifts",
-            "show_header_free_badge": true,
-            "subtitle": "Choose King or Queen, Get $650+ Gift Value",
-            "free_badge_label": "FREE",
-            "display_font": "anton_n4",
-            "preview_summary": "2 organic pillows & a mattress protector, on us",
-            "start_expanded": false,
-            "notice_text": "Offer valid for a limited time while supplies last on all Queen, King and CA King mattresses. Bundles excluded.",
-            "value_bar_label": "TOTAL FREE GIFT VALUE with Queen/King",
-            "value_amount_mode": "manual",
-            "value_amount_text": "$650",
-            "value_promo_line": "+ 20% OFF ENTIRE ORDER",
-            "value_disclaimer": "<p>Discounts are automatically applied to your order with any King, CA King, or Queen size mattress. No code required. Not valid on Twin, Twin XL, Full or bundles.</p>",
-            "value_details_open_by_default": false,
-            "details_label": "See details",
-            "details_hide_label": "Hide details",
-            "gift_1_description": "<ul><li>Organic cotton sleep surface</li><li>Protects against spills and everyday wear</li></ul>",
-            "gift_2_description": "<ul><li>Medium-plush Feel, 100% Organic Fill&nbsp;</li><li>Machine washable cover</li></ul>",
-            "gift_3_description": "",
-            "gift_4_description": "",
-            "gift_5_description": "",
-            "gift_6_description": "",
-            "gift_7_description": "",
-            "gift_8_description": "",
-            "margin_top": 15,
-            "margin_bottom": 0,
-            "margin_top_mobile": 17,
             "margin_bottom_mobile": 0
           }
         },
@@ -815,10 +816,10 @@
         "variant_picker",
         "quantity_selector",
         "bundle_save_RJ6jjd",
+        "nw_freegift_bw6qVj",
         "buy_buttons",
         "shipping_tag_Agd7QN",
         "trust_badges_UF8dKt",
-        "nw_freegift_bw6qVj",
         "payment_logos_aAAW97",
         "customer_reviews_n9JDUb",
         "collapsible_tab_W7etYx",
