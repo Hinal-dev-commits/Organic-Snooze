@@ -39,8 +39,11 @@
 {%- endcapture -%}
 {%- assign nw_sticky_has_bundle_kit = nw_sticky_has_bundle_kit | strip -%}
 
-{%- if sticky_compare > sticky_price -%}
-  {%- assign sticky_save = sticky_compare | minus: sticky_price -%}
+{%- if nw_sticky_has_bundle_kit != blank -%}
+  {%- capture nw_sticky_bundle_save_cents -%}
+    {%- render 'nw-bundle-save-percent', product: sticky_product, variant: current_variant, output_mode: 'save_cents' -%}
+  {%- endcapture -%}
+  {%- assign sticky_save = nw_sticky_bundle_save_cents | strip | plus: 0 -%}
 {%- elsif nw_sticky_sitewide_eligible != blank -%}
   {%- assign nw_sticky_sitewide_sale_enabled = true -%}
   {%- capture nw_sticky_sitewide_sale -%}
@@ -51,6 +54,8 @@
   {%- endcapture -%}
   {%- assign sticky_price = nw_sticky_sitewide_sale | strip | plus: 0 -%}
   {%- assign sticky_save = nw_sticky_sitewide_save_cents | strip | plus: 0 -%}
+{%- elsif sticky_compare > sticky_price -%}
+  {%- assign sticky_save = sticky_compare | minus: sticky_price -%}
 {%- endif -%}
 
 {%- liquid
@@ -239,12 +244,13 @@
         "initialVariantId": {{ current_variant.id | json }},
         "variants": [
           {%- for variant in sticky_product.variants -%}
-            {%- liquid
-              assign variant_bundle_save_cents = 0
-              if variant.compare_at_price > variant.price
-                assign variant_bundle_save_cents = variant.compare_at_price | minus: variant.price
-              endif
-            -%}
+            {%- assign variant_bundle_save_cents = 0 -%}
+            {%- if nw_sticky_has_bundle_kit != blank -%}
+              {%- capture nw_variant_bundle_save_cents -%}
+                {%- render 'nw-bundle-save-percent', product: sticky_product, variant: variant, output_mode: 'save_cents' -%}
+              {%- endcapture -%}
+              {%- assign variant_bundle_save_cents = nw_variant_bundle_save_cents | strip | plus: 0 -%}
+            {%- endif -%}
             {
               "id": {{ variant.id | json }},
               "price": {{ variant.price | json }},

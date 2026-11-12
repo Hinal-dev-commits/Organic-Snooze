@@ -1,44 +1,148 @@
 {%- comment -%}
-  Card pricing from Shopify variant catalog prices (not bundle-kit metafield math).
+  Bundle pay/compare prices for collection & section product cards.
+  Renders nothing if the product is not a bundle.
 {%- endcomment -%}
 
 {%- if product != blank -%}
-  {%- liquid
-    assign card_price_cents = product.price_min | default: 0 | plus: 0
-    assign card_max_pay_cents = product.price_max | default: card_price_cents | plus: 0
-    assign card_compare_cents = 0
-    assign prefix = class_prefix | default: 'nw-product-card'
-    assign from_label = from_text | default: ''
-
-    if card_price_cents > 0
-      for v in product.variants
-        assign v_price = v.price | default: 0 | plus: 0
-        if v_price == card_price_cents
-          assign v_compare = v.compare_at_price | default: 0 | plus: 0
-          if v_compare > v_price
-            assign card_compare_cents = v_compare
-          endif
-          break
-        endif
-      endfor
-    endif
-  -%}
-
-  {%- if card_price_cents > 0 -%}
     {%- liquid
-      assign show_from = false
-      if card_max_pay_cents > card_price_cents and from_label != blank
-        assign show_from = true
+      assign card_product = product
+      assign kit = blank
+      assign bundle_mf = card_product.metafields['$app'].bundle
+      if bundle_mf != blank and bundle_mf.value != blank
+        assign kit = bundle_mf.value
       endif
+      if kit == blank
+        assign bundle_mf = card_product.metafields.app.bundle
+        if bundle_mf != blank and bundle_mf.value != blank
+          assign kit = bundle_mf.value
+        endif
+      endif
+      if kit == blank
+        assign bundle_mf = card_product.metafields['app--1fce204f608afb633af44ab8a32b2cf8'].bundle
+        if bundle_mf != blank and bundle_mf.value != blank
+          assign kit = bundle_mf.value
+        endif
+      endif
+      if kit == blank and card_product.metafields.app['bundle'] != blank
+        assign kit = card_product.metafields.app['bundle'].value
+      endif
+      if kit == blank
+        assign bundle_mf = card_product.metafields.custom.nw_bundle
+        if bundle_mf != blank and bundle_mf.value != blank
+          assign kit = bundle_mf.value
+        endif
+      endif
+    
+      assign kit_price_source = kit.priceSource | default: 'child_sum'
+      assign kit_custom_price = kit.customPrice | default: ''
+      assign kit_discount_type = kit.discountType | default: 'none'
+      assign kit_discount_value = kit.discountValue | default: ''
+    
+      if kit.pricingMode == 'fixed'
+        assign kit_price_source = 'custom'
+        assign kit_custom_price = kit.pricingValue
+      endif
+      if kit.pricingMode == 'percent_off'
+        assign kit_discount_type = 'percent'
+        if kit_discount_value == blank
+          assign kit_discount_value = kit.pricingValue
+        endif
+      endif
+      if kit.pricingMode == 'amount_off'
+        assign kit_discount_type = 'fixed'
+        if kit_discount_value == blank
+          assign kit_discount_value = kit.pricingValue
+        endif
+      endif
+    
+      assign card_price_cents = -1
+      assign card_compare_cents = 0
+      assign card_max_pay_cents = 0
+      assign prefix = class_prefix | default: 'nw-product-card'
+      assign from_label = from_text | default: ''
     -%}
-    <div class="{{ prefix }}__price">
-      {%- if show_from -%}
-        <span class="{{ prefix }}__price-from">{{ from_label }}</span>
-      {%- endif -%}
-      <span class="{{ prefix }}__price-current">{{ card_price_cents | money }}</span>
-      {%- if card_compare_cents > card_price_cents -%}
-        <span class="{{ prefix }}__price-compare">{{ card_compare_cents | money }}</span>
-      {%- endif -%}
-    </div>
-  {%- endif -%}
-{%- endif -%}
+    
+    {%- if kit != blank and kit.mappings != blank and kit.mappings.size > 0 -%}
+    {%- for mapping in kit.mappings -%}
+      {%- liquid
+        assign price_source = mapping.priceSource | default: kit_price_source
+        assign custom_price = mapping.customPrice | default: kit_custom_price | default: ''
+        assign discount_type = mapping.discountType | default: kit_discount_type | default: 'none'
+        assign discount_value = mapping.discountValue | default: kit_discount_value | default: ''
+    
+        if price_source == blank
+          assign price_source = 'child_sum'
+        endif
+        if discount_type == 'none'
+          assign discount_value = ''
+        endif
+    
+        assign base_cents = 0
+        if price_source == 'custom'
+          assign base_cents = custom_price | times: 100 | round
+        elsif price_source == 'parent_price'
+          if mapping.parentCatalogPrice != blank
+            assign base_cents = mapping.parentCatalogPrice | times: 100 | round
+          endif
+        else
+          assign child_sum_d = 0
+          for component in mapping.components
+            assign cp = component.catalogPrice | default: component.price | plus: 0.0
+            assign qty = component.quantity | default: 1
+            assign line_d = cp | times: qty
+            assign child_sum_d = child_sum_d | plus: line_d
+          endfor
+          if child_sum_d > 0
+            assign base_cents = child_sum_d | times: 100 | round
+          elsif mapping.catalogTotal != blank
+            assign base_cents = mapping.catalogTotal | times: 100 | round
+          endif
+        endif
+    
+        assign pay_cents = base_cents
+        if discount_type == 'percent' and discount_value != blank
+          assign pct = discount_value | plus: 0
+          if pct > 100
+            assign pct = 100
+          endif
+          assign keep = 100 | minus: pct
+          assign pay_cents = base_cents | times: keep | divided_by: 100 | round
+        elsif discount_type == 'fixed' and discount_value != blank
+          assign off_cents = discount_value | times: 100 | round
+          assign pay_cents = base_cents | minus: off_cents
+          if pay_cents < 0
+            assign pay_cents = 0
+          endif
+        endif
+    
+        if base_cents > 0 and pay_cents >= 0
+          if card_price_cents == -1 or pay_cents < card_price_cents
+            assign card_price_cents = pay_cents
+            assign card_compare_cents = base_cents
+          endif
+          if pay_cents > card_max_pay_cents
+            assign card_max_pay_cents = pay_cents
+          endif
+        endif
+      -%}
+    {%- endfor -%}
+    
+    {%- if card_price_cents >= 0 -%}
+      {%- liquid
+        assign show_from = false
+        if card_max_pay_cents > card_price_cents and from_label != blank
+          assign show_from = true
+        endif
+      -%}
+      <div class="{{ prefix }}__price">
+        {%- if show_from -%}
+          <span class="{{ prefix }}__price-from">{{ from_label }}</span>
+        {%- endif -%}
+        <span class="{{ prefix }}__price-current">{{ card_price_cents | money }}</span>
+        {%- if card_compare_cents > card_price_cents -%}
+          <span class="{{ prefix }}__price-compare">{{ card_compare_cents | money }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- endif -%}
+    {%- endif -%}

@@ -1412,6 +1412,10 @@ if (!customElements.get('nw-sticky-bar')) {
     _getVariantSaveCents(variant) {
       if (!variant) return 0;
 
+      if (this.config?.hasBundleKit) {
+        return Math.max(0, Number(variant.bundle_save_cents) || 0);
+      }
+
       const sitewide = this._getSitewideDisplay(variant);
       if (sitewide) return sitewide.save;
 

@@ -1,48 +1,53 @@
 {% doc %}
-  Save badge (SAVE $X or SAVE X%) from Shopify variant compare_at_price and price — not kit metafield math.
+  Bundle kit save badge label for PDP/cards (SAVE $X or SAVE X%).
   @param {object} product
-  @param {object} [variant]
-  @param {boolean} [for_collection_card]
-  @param {boolean} [prefer_percentage]
+  @param {object} [variant] - Single-variant kit pricing (sticky/PDP price only)
+  @param {boolean} [for_collection_card] - When true, uses best savings across all kit mappings
+  Outputs badge text only, e.g. "SAVE $500" or "SAVE 20%"; blank when no kit savings.
 {% enddoc %}
 
-{%- unless product == blank -%}
 {%- liquid
   assign badge_text = blank
-  assign save_cents = 0
-  assign compare_cents = 0
-
-  if for_collection_card
-    for v in product.variants
-      assign v_compare = v.compare_at_price | default: 0 | plus: 0
-      assign v_price = v.price | default: 0 | plus: 0
-      if v_compare > v_price
-        assign v_save = v_compare | minus: v_price
-        if v_save > save_cents
-          assign save_cents = v_save
-          assign compare_cents = v_compare
-        endif
-      endif
-    endfor
-  else
-    assign price_variant = variant | default: product.selected_or_first_available_variant
-    assign compare_cents = price_variant.compare_at_price | default: 0 | plus: 0
-    assign v_price = price_variant.price | default: 0 | plus: 0
-    if compare_cents > v_price
-      assign save_cents = compare_cents | minus: v_price
-    endif
+  assign use_max_kit_savings = for_collection_card
+  if use_max_kit_savings == false and variant == blank
+    assign use_max_kit_savings = true
   endif
 -%}
 
-{%- if save_cents > 0 and compare_cents > 0 -%}
-  {%- if prefer_percentage -%}
-    {%- assign save_pct = save_cents | times: 100.0 | divided_by: compare_cents | round -%}
-    {%- assign badge_text = 'SAVE ' | append: save_pct | append: '%' -%}
+{%- capture nw_bundle_discount_type -%}
+  {%- if use_max_kit_savings -%}
+    {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true, output_mode: 'discount_type' -%}
   {%- else -%}
-    {%- assign save_money = save_cents | money_without_trailing_zeros -%}
-    {%- assign badge_text = 'SAVE ' | append: save_money -%}
+    {%- render 'nw-bundle-save-percent', product: product, variant: variant, output_mode: 'discount_type' -%}
+  {%- endif -%}
+{%- endcapture -%}
+{%- assign nw_bundle_discount_type = nw_bundle_discount_type | strip -%}
+
+{%- if nw_bundle_discount_type == 'fixed' -%}
+  {%- capture nw_bundle_save_cents -%}
+    {%- if use_max_kit_savings -%}
+      {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true, output_mode: 'save_cents' -%}
+    {%- else -%}
+      {%- render 'nw-bundle-save-percent', product: product, variant: variant, output_mode: 'save_cents' -%}
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- assign nw_bundle_save_cents = nw_bundle_save_cents | strip | plus: 0 -%}
+  {%- if nw_bundle_save_cents > 0 -%}
+    {%- assign nw_bundle_save_money = nw_bundle_save_cents | money_without_trailing_zeros -%}
+    {%- assign badge_text = 'SAVE ' | append: nw_bundle_save_money -%}
+  {%- endif -%}
+{%- else -%}
+  {%- capture nw_bundle_save_pct -%}
+    {%- if use_max_kit_savings -%}
+      {%- render 'nw-bundle-save-percent', product: product, for_collection_card: true -%}
+    {%- else -%}
+      {%- render 'nw-bundle-save-percent', product: product, variant: variant -%}
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- assign nw_bundle_save_pct = nw_bundle_save_pct | strip -%}
+  {%- if nw_bundle_save_pct != blank -%}
+    {%- assign badge_text = 'SAVE ' | append: nw_bundle_save_pct | append: '%' -%}
   {%- endif -%}
 {%- endif -%}
 
 {{- badge_text -}}
-{%- endunless -%}
