@@ -17,7 +17,7 @@ Renders save and seller tags over NW product media images.
 
 {%- if nw_product_has_bundle_kit != blank -%}
   {%- capture bundle_save_badge -%}
-    {%- render 'nw-bundle-save-badge-display', product: product, for_collection_card: true -%}
+    {%- render 'nw-bundle-save-badge-display', product: product, variant: product.selected_or_first_available_variant -%}
   {%- endcapture -%}
   {%- assign bundle_save_badge = bundle_save_badge | strip -%}
 {%- else -%}
