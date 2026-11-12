@@ -254,6 +254,74 @@
         "icon_color": "#ffffff"
       }
     },
+    "nw_featured_marquee_N7CNCN": {
+      "type": "nw-featured-marquee",
+      "blocks": {
+        "logo_kM6NW9": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Inc_Logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_PbytUe": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/logo_9ad8d4db-f463-45b9-9f87-2a2135ebc184.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_aJJfXV": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Inc_Mens_Health_Logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_ykC6N9": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/new-york-logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_kM6NW9",
+        "logo_PbytUe",
+        "logo_aJJfXV",
+        "logo_ykC6N9"
+      ],
+      "custom_css": [
+        ".nw-featured-marquee {border-bottom: 1px solid #4e2f1466;}"
+      ],
+      "name": "NW Featured Marquee",
+      "settings": {
+        "heading": "as seen in",
+        "text_color": "#613916",
+        "enable_animation_desktop": true,
+        "enable_animation_mobile": true,
+        "direction": "rtl",
+        "speed": 30,
+        "pause_on_hover": true,
+        "show_edge_fade": true,
+        "gap_desktop": 36,
+        "gap_mobile": 18,
+        "logo_height_desktop": 48,
+        "logo_height_mobile": 40,
+        "bg_type": "color",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 24,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16
+      }
+    },
     "nw_marquee_xTGffW": {
       "type": "nw-marquee",
       "blocks": {
@@ -1614,6 +1682,7 @@
   "order": [
     "nw_hero_YTR6GB",
     "nw_marquee_v2_ntnTnh",
+    "nw_featured_marquee_N7CNCN",
     "nw_marquee_xTGffW",
     "nw_collection_v2_a4yrmy",
     "nw_review_video_i4rgrQ",
