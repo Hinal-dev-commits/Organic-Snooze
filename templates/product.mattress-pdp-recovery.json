@@ -75,6 +75,7 @@
         "item_VCg7fg",
         "item_VcYJtg"
       ],
+      "disabled": true,
       "name": "t:sections.nw-marquee-v2.name",
       "settings": {
         "enable_desktop_marquee": true,
@@ -126,7 +127,7 @@
         "description": {
           "type": "description",
           "settings": {
-            "custom_description": "<p><strong>The Mattress Gary Brecka Sleeps On.</strong></p><p>Premium organic comfort with a 4\" responsive organic latex euro-top layer and 1,100 zoned pocketed coils for balanced pressure relief and full-body support. Made with certified organic materials and built for recovery.</p>",
+            "custom_description": "<p><strong>The Mattress Gary Brecka Sleeps On.</strong></p><p>Experience bio-optimized recovery with responsive comfort that gently contours to your body, eases pressure points, and supports restorative sleep so you can wake up ready to perform.</p>",
             "margin_top": 0,
             "margin_bottom": 16,
             "margin_top_mobile": 0,
@@ -158,6 +159,7 @@
         },
         "promo_banner_Q6znVP": {
           "type": "promo_banner",
+          "disabled": true,
           "settings": {
             "use_discount_metaobject": true,
             "first_order_heading": "BLACK FRIDAY: Save [percentage]% + FREE Gifts!",
@@ -193,6 +195,63 @@
             "margin_bottom_mobile": 0
           }
         },
+        "icon_text_dGNAqm": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "Made with Certified Organic Materials",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/icon-certified.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 14,
+            "margin_bottom": 8,
+            "margin_top_mobile": 17,
+            "margin_bottom_mobile": 6
+          }
+        },
+        "icon_text_ykzhxB": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "No Chemical Flame Retardants",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/icon-no_chemical.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 6
+          }
+        },
+        "icon_text_hrkDMh": {
+          "type": "icon_text",
+          "settings": {
+            "style": "checklist",
+            "text": "No Polyurethane or Fiberglass",
+            "use_custom_icon": true,
+            "icon": "trial",
+            "custom_icon": "shopify://shop_images/No_Fiberglass.png",
+            "link": "",
+            "icon_color": "#878735",
+            "text_color": "#613916",
+            "icon_size": 28,
+            "icon_gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 8,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 6
+          }
+        },
         "icon_text_KzjrVr": {
           "type": "icon_text",
           "settings": {
@@ -206,10 +265,10 @@
             "text_color": "#613916",
             "icon_size": 28,
             "icon_gap": 8,
-            "margin_top": 24,
+            "margin_top": 0,
             "margin_bottom": 8,
-            "margin_top_mobile": 24,
-            "margin_bottom_mobile": 5
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 6
           }
         },
         "icon_text_iUeaBF": {
@@ -228,36 +287,18 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
+            "margin_bottom_mobile": 6
           }
         },
-        "icon_text_dGNAqm": {
+        "icon_text_tRPNk9": {
           "type": "icon_text",
+          "disabled": true,
           "settings": {
             "style": "checklist",
-            "text": "Made with Certified Organic Materials",
+            "text": "Designed for Better Recovery",
             "use_custom_icon": true,
             "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-certified.png",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 17,
-            "margin_bottom": 8,
-            "margin_top_mobile": 3,
-            "margin_bottom_mobile": 5
-          }
-        },
-        "icon_text_ykzhxB": {
-          "type": "icon_text",
-          "settings": {
-            "style": "checklist",
-            "text": "No Chemical Flame Retardants",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-no_chemical.png",
+            "custom_icon": "shopify://shop_images/icon-recovery.png",
             "link": "",
             "icon_color": "#878735",
             "text_color": "#613916",
@@ -285,44 +326,6 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
-          }
-        },
-        "icon_text_tRPNk9": {
-          "type": "icon_text",
-          "settings": {
-            "style": "checklist",
-            "text": "Designed for Better Recovery",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/icon-recovery.png",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 0,
-            "margin_bottom": 8,
-            "margin_top_mobile": 0,
-            "margin_bottom_mobile": 5
-          }
-        },
-        "icon_text_hrkDMh": {
-          "type": "icon_text",
-          "settings": {
-            "style": "checklist",
-            "text": "No Polyurethane or Fiberglass",
-            "use_custom_icon": true,
-            "icon": "trial",
-            "custom_icon": "shopify://shop_images/No_Fiberglass.png",
-            "link": "",
-            "icon_color": "#878735",
-            "text_color": "#613916",
-            "icon_size": 28,
-            "icon_gap": 8,
-            "margin_top": 0,
-            "margin_bottom": 8,
-            "margin_top_mobile": 0,
             "margin_bottom_mobile": 6
           }
         },
@@ -342,7 +345,7 @@
             "margin_top": 0,
             "margin_bottom": 8,
             "margin_top_mobile": 0,
-            "margin_bottom_mobile": 0
+            "margin_bottom_mobile": 6
           }
         },
         "sleepers_qg7fAY": {
@@ -374,8 +377,9 @@
             "firmness_guide_label": "Which firmness for me?",
             "firmness_popup_modal_id": "firmness-guide",
             "quantity_option_name": "Select Quantity",
-            "picker_gap": 32,
-            "picker_gap_mobile": 24,
+            "option_display_names": "",
+            "picker_gap": 11,
+            "picker_gap_mobile": 18,
             "option_position_order": "Firmness, Size",
             "option_1_values_order": "",
             "option_2_values_order": "",
@@ -397,17 +401,18 @@
         },
         "bundle_save_RJ6jjd": {
           "type": "bundle_save",
+          "disabled": true,
           "settings": {
             "product_source": "product_list",
             "product_list": [
-              "the-organic-snooze-kloud-pillow",
               "organic-cooling-sheets",
-              "organic-waterproof-mattress-protector"
+              "cool-comfort-blended-natural-sheet-set-linen-and-cotton",
+              "snoozelift-3-adjustable-base"
             ],
-            "heading": "&nbsp;Add-On Organic Bedding",
-            "preview_summary": "Sheets, protector, pillows & base",
-            "discount_percentage": 5,
-            "optional_subtitle": "Optional, Bundle & Save Up to [percent]%",
+            "heading": "Bundle & Save 20%",
+            "preview_summary": "See Sheets and SnoozeLift 3.0",
+            "discount_percentage": 20,
+            "optional_subtitle": "Complete your sleep system",
             "quick_view_title_override": "",
             "quick_view_description_override": "",
             "quick_view_description_limit": 220,
@@ -420,6 +425,46 @@
             "margin_top": 32,
             "margin_bottom": 0,
             "margin_top_mobile": 24,
+            "margin_bottom_mobile": 0
+          }
+        },
+        "nw_freegift_bw6qVj": {
+          "type": "nw_freegift",
+          "settings": {
+            "product_source": "product_list",
+            "product_list": [
+              "organic-waterproof-mattress-protector",
+              "the-organic-snooze-kloud-pillow"
+            ],
+            "show_eyebrow": false,
+            "eyebrow_text": "LIMITED TIME OFFER",
+            "heading": "Unlock Black Friday Gifts",
+            "show_header_free_badge": true,
+            "subtitle": "Choose King or Queen, Get $650+ Gift Value",
+            "free_badge_label": "FREE",
+            "display_font": "anton_n4",
+            "preview_summary": "2 organic pillows & a mattress protector, on us",
+            "start_expanded": false,
+            "notice_text": "Free gift with Queen, King & CA King mattresses. Gift not valid on Twin, Twin XL, Full or bundles.",
+            "value_bar_label": "With Purchase of a King or Queen Mattress",
+            "value_amount_mode": "manual",
+            "value_amount_text": "$650 FREE GIFT",
+            "value_promo_line": "+ 20% OFF ENTIRE ORDER",
+            "value_disclaimer": "<p>Discounts are automatically applied to your order; exclusions apply.*</p>",
+            "value_details_open_by_default": false,
+            "details_label": "See details",
+            "details_hide_label": "Hide details",
+            "gift_1_description": "<ul><li>Organic cotton sleep surface</li><li>Protects against spills and everyday wear</li></ul>",
+            "gift_2_description": "<ul><li>Medium-plush Feel, 100% Organic Fill&nbsp;</li><li>Machine washable cover</li></ul>",
+            "gift_3_description": "",
+            "gift_4_description": "",
+            "gift_5_description": "",
+            "gift_6_description": "",
+            "gift_7_description": "",
+            "gift_8_description": "",
+            "margin_top": 8,
+            "margin_bottom": 0,
+            "margin_top_mobile": 17,
             "margin_bottom_mobile": 0
           }
         },
@@ -440,7 +485,7 @@
           "type": "shipping_tag",
           "settings": {
             "text": "Ships from USA",
-            "delivery_threshold_days": 10,
+            "delivery_threshold_days": 6,
             "use_product_metafield": false,
             "use_custom_icon": true,
             "icon": "truck",
@@ -534,52 +579,12 @@
             "margin_bottom_mobile": 0
           }
         },
-        "nw_freegift_bw6qVj": {
-          "type": "nw_freegift",
-          "settings": {
-            "product_source": "product_list",
-            "product_list": [
-              "organic-waterproof-mattress-protector",
-              "two-pack-signature-organic-cotton-pillows"
-            ],
-            "show_eyebrow": true,
-            "eyebrow_text": "LIMITED TIME OFFER",
-            "heading": "Black Friday Gifts",
-            "show_header_free_badge": true,
-            "subtitle": "2 Free Pillows + Free Protector · [value]  Value",
-            "free_badge_label": "FREE",
-            "display_font": "anton_n4",
-            "preview_summary": "2 organic pillows & a mattress protector, on us",
-            "start_expanded": false,
-            "notice_text": "Added to your order automatically with any King or Queen size mattress.",
-            "value_bar_label": "TOTAL FREE GIFT VALUE",
-            "value_amount_mode": "auto",
-            "value_amount_text": "$459.98",
-            "value_promo_line": "+ 20% OFF ENTIRE ORDER",
-            "value_disclaimer": "<p>Offer valid for a limited time while supplies last on all Queen, King and CA King mattresses. Bundles excluded.</p>",
-            "value_details_open_by_default": true,
-            "details_label": "See details",
-            "details_hide_label": "Hide details",
-            "gift_1_description": "<ul><li>100% USDA organic cotton fill</li><li>Adjustable loft, add or remove fill for your neck</li><li>Handcrafted in the USA</li></ul>",
-            "gift_2_description": "<ul><li>Water-resistant layer helps guard against spills</li><li>Made with organic materials, chosen for breathability</li><li>Keeps your new mattress fresh from night one</li></ul>",
-            "gift_3_description": "",
-            "gift_4_description": "",
-            "gift_5_description": "",
-            "gift_6_description": "",
-            "gift_7_description": "",
-            "gift_8_description": "",
-            "margin_top": 48,
-            "margin_bottom": 0,
-            "margin_top_mobile": 32,
-            "margin_bottom_mobile": 0
-          }
-        },
         "collapsible_tab_W7etYx": {
           "type": "collapsible_tab",
           "settings": {
             "heading": "Product Specifications",
             "icon": "none",
-            "content": "<ul><li>13\" handcrafted profile (±1\")</li><li>Medium-Firm feel (4/10 comfort scale)</li><li>Hand-tufted construction for durability without adhesives</li><li>Certified organic cotton & wool comfort layers</li><li>Certified organic latex for responsive support</li><li>1,100 Coils 8\" 5-Zoned pocketed coil system with targeted support</li><li>Assemlbed in the USA using domestic and globally sourced materials</li><li>Adjustable base compatible</li></ul>",
+            "content": "<ul><li>13\" handcrafted profile (±1\")</li><li>Hand-tufted construction for durability without adhesives</li><li>Certified organic cotton & wool comfort layers</li><li>Certified organic latex for responsive support</li><li>1,100 Coils 8\" 5-Zoned pocketed coil system with targeted support</li><li>Assembled in the USA using domestic and globally sourced materials</li><li>Adjustable base compatible</li></ul>",
             "page": "",
             "margin_top": 40,
             "margin_bottom": 0,
@@ -592,7 +597,7 @@
           "settings": {
             "heading": "Why You'll Love It",
             "icon": "none",
-            "content": "<ul><li><strong>4\" Organic Latex:</strong> Responsive eurotop layer that lightly contours.&nbsp;</li><li><strong>1,100 Pocketed Coils:</strong> Zoned Support and motion control. (Medium-firm Support)</li><li><strong>Organic Wool:</strong> Keeps you cool, dry, and comfortable year-round.</li><li><strong>Hand-Tufted</strong>: No chemical glues. Built to last.</li><li><strong>Medium-Firm Feel</strong>: Balanced comfort for back and stomach sleepers.</li><li><strong>Certified Organic: </strong>Latex, Wool, and Cotton</li><li><strong>Made Without:</strong> Polyurethane, petroleum foam, fiberglass, or polyester.</li></ul>",
+            "content": "<ul><li><strong>4\" Organic Latex:</strong> Responsive eurotop layer that lightly contours.&nbsp;</li><li><strong>1,100 Pocketed Coils:</strong> Zoned Support and motion control.&nbsp;</li><li><strong>Organic Wool:</strong> Keeps you cool, dry, and comfortable year-round.</li><li><strong>Hand-Tufted</strong>: No chemical glues. Built to last.</li><li><strong>Certified Organic: </strong>Latex, Wool, and Cotton</li><li><strong>Made Without:</strong> Polyurethane, petroleum foam, fiberglass, or polyester.</li></ul>",
             "page": "",
             "margin_top": 0,
             "margin_bottom": 0,
@@ -799,24 +804,24 @@
         "affirm_pay_over_time_messaging_product_block_RzJw7G",
         "promo_banner_Q6znVP",
         "nw_benifits_list_fYL9X3",
-        "icon_text_KzjrVr",
-        "icon_text_iUeaBF",
         "icon_text_dGNAqm",
         "icon_text_ykzhxB",
-        "icon_text_cKXLDG",
-        "icon_text_tRPNk9",
         "icon_text_hrkDMh",
+        "icon_text_KzjrVr",
+        "icon_text_iUeaBF",
+        "icon_text_tRPNk9",
+        "icon_text_cKXLDG",
         "icon_text_3FhWzM",
         "sleepers_qg7fAY",
         "variant_picker",
         "quantity_selector",
         "bundle_save_RJ6jjd",
+        "nw_freegift_bw6qVj",
         "buy_buttons",
         "shipping_tag_Agd7QN",
         "trust_badges_UF8dKt",
         "payment_logos_aAAW97",
         "customer_reviews_n9JDUb",
-        "nw_freegift_bw6qVj",
         "collapsible_tab_W7etYx",
         "collapsible_tab_wP3yAA",
         "collapsible_tab_THr6Kx",
@@ -1666,7 +1671,7 @@
       "settings": {
         "badge_image": "shopify://shop_images/Vector_3.svg",
         "heading": "Try It for 100 Nights. Keep It for 30 Years",
-        "description": "<p>We know buying a mattress online is a big decision. That's why we give you 100-nights to decide if it's the right fit for your body. If not, we'll pick it up for a full refund. Backed by a 30-year warranty.</p>",
+        "description": "<p>We know buying a mattress online is a big decision. That's why we give you 100-nights to decide if it's the right fit for your body. If not, we'll pick it up for a refund. Backed by a 30-year warranty.</p>",
         "cta_heading": "Questions? Talk to a Sleep Expert",
         "show_primary_button": true,
         "primary_button_text": "CALL LIVE AGENT",
@@ -1750,14 +1755,7 @@
           "type": "faq_item",
           "settings": {
             "question": "What's the difference between the Pure and the Recovery Mattress?",
-            "answer": "<p>Both mattresses are handcrafted with certified organic materials and feature responsive organic latex, organic wool, organic cotton, and pocketed coils. The biggest differences are feel, comfort layer, and overall construction.</p><p><strong>Pure Organic Mattress</strong></p><ul><li><strong>Feel:</strong> Firm</li><li><strong>Height:</strong> 10\"</li><li><strong>Comfort Layer:</strong> 1\" responsive organic latex</li><li><strong>Support Core:</strong> 800 pocketed coils</li><li><strong>Best For:</strong> Sleepers who prefer a firmer, more minimalist feel with straightforward support.</li></ul><p><strong>Ultimate Recovery Mattress</strong></p><ul><li><strong>Feel:</strong> Medium-Firm</li><li><strong>Height:</strong> 13\"</li><li><strong>Comfort Layer:</strong> 4\" responsive organic latex Euro-top</li><li><strong>Support Core:</strong> 1,100 zoned pocketed coils</li><li><strong>Best For:</strong> Sleepers who want firm support with deeper pressure relief, enhanced contouring, and a more luxurious feel. This is the mattress Gary Brecka sleeps on and recommends.</li></ul>"
-          }
-        },
-        "faq_item_rnJYwh": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Is the Recovery mattress soft or firm?",
-            "answer": "<p>Medium-Firm — a 4 out of 10 on our comfort scale (1 = ultra firm, 10 = ultra plush).&nbsp;</p>"
+            "answer": "<p>Both mattresses are handcrafted with certified organic materials and feature responsive organic latex, organic wool, organic cotton, and pocketed coils. The biggest differences are feel, comfort layer, and overall construction.</p><p><strong>Pure Organic Mattress</strong></p><ul><li><strong>Feel:</strong> Firm/Mdium</li><li><strong>Height:</strong> 10\"</li><li><strong>Comfort Layer:</strong> 1\" responsive organic latex</li><li><strong>Support Core:</strong> 800 pocketed coils</li><li><strong>Best For:</strong> Sleepers who prefer a firmer, more minimalist feel with straightforward support.</li></ul><p><strong>Ultimate Recovery Mattress</strong></p><ul><li><strong>Feel:</strong> Firm/Mdium/Soft</li><li><strong>Height:</strong> 13\"</li><li><strong>Comfort Layer:</strong> 4\" responsive organic latex Euro-top</li><li><strong>Support Core:</strong> 1,100 zoned pocketed coils</li><li><strong>Best For:</strong> Sleepers who want firm support with deeper pressure relief, enhanced contouring, and a more luxurious feel. This is the mattress Gary Brecka sleeps on and recommends.</li></ul>"
           }
         },
         "faq_item_rG8phx": {
@@ -1805,7 +1803,6 @@
       },
       "block_order": [
         "faq_item_hb8tnf",
-        "faq_item_rnJYwh",
         "faq_item_rG8phx",
         "faq_item_qwBaqn",
         "faq_item_QbMgNb",

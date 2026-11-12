@@ -95,10 +95,10 @@
         "padding_desktop": 16,
         "padding_mobile": 12,
         "bg_type": "color",
-        "bg_color": "#E9B949",
+        "bg_color": "#e9b949",
         "bg_gradient": "",
         "text_color": "#000000",
-        "icon_color": "#FFFFFF"
+        "icon_color": "#ffffff"
       }
     },
     "main": {
@@ -288,11 +288,12 @@
           "type": "promo_banner",
           "settings": {
             "use_discount_metaobject": true,
+            "first_order_heading": "Black Friday - Save [percentage]% sitewide!",
             "heading": "Save 15% on your first order!",
             "description": "",
             "discount_code": "",
             "use_custom_icon": false,
-            "bg_color": "#FFF7E0",
+            "bg_color": "#fff7e0",
             "border_color": "#61391633",
             "text_color": "#454500",
             "icon_color": "#454500",
@@ -334,6 +335,7 @@
             "firmness_guide_label": "Firmness Guide",
             "firmness_popup_modal_id": "",
             "quantity_option_name": "Select Quantity",
+            "option_display_names": "",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
             "option_position_order": "Loft, Select Size, Select Quantity",
@@ -354,9 +356,9 @@
               "the-ultimate-snooze-organic-cotton-pillow",
               "organic-cooling-sheets"
             ],
-            "heading": "Bundle & save 5% on each add-on",
+            "heading": "Bundle & save on each add-on",
             "preview_summary": "Sheets, protector, pillows & base",
-            "discount_percentage": 5,
+            "discount_percentage": 20,
             "optional_subtitle": "Optional, Bundle & Save [percent]%",
             "quick_view_title_override": "",
             "quick_view_description_override": "",
