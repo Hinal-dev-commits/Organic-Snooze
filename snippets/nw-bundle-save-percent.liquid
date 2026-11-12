@@ -304,7 +304,9 @@
       endif
     endif
   -%}
-  {%- if base_cents > pay_cents and base_cents > 0 -%}
+  {%- if output_mode == 'pay_cents' and pay_cents > 0 -%}
+    {{- pay_cents -}}
+  {%- elsif base_cents > pay_cents and base_cents > 0 -%}
     {%- assign save_cents = base_cents | minus: pay_cents -%}
     {%- if save_cents > 0 -%}
       {%- if output_mode == 'discount_type' -%}

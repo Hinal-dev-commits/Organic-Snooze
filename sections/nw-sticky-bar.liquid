@@ -40,6 +40,13 @@
 {%- assign nw_sticky_has_bundle_kit = nw_sticky_has_bundle_kit | strip -%}
 
 {%- if nw_sticky_has_bundle_kit != blank -%}
+  {%- capture nw_sticky_bundle_pay_cents -%}
+    {%- render 'nw-bundle-save-percent', product: sticky_product, variant: current_variant, output_mode: 'pay_cents' -%}
+  {%- endcapture -%}
+  {%- assign nw_sticky_bundle_pay_cents = nw_sticky_bundle_pay_cents | strip | plus: 0 -%}
+  {%- if nw_sticky_bundle_pay_cents > 0 -%}
+    {%- assign sticky_price = nw_sticky_bundle_pay_cents -%}
+  {%- endif -%}
   {%- capture nw_sticky_bundle_save_cents -%}
     {%- render 'nw-bundle-save-percent', product: sticky_product, variant: current_variant, output_mode: 'save_cents' -%}
   {%- endcapture -%}
@@ -245,7 +252,12 @@
         "variants": [
           {%- for variant in sticky_product.variants -%}
             {%- assign variant_bundle_save_cents = 0 -%}
+            {%- assign variant_bundle_pay_cents = 0 -%}
             {%- if nw_sticky_has_bundle_kit != blank -%}
+              {%- capture nw_variant_bundle_pay_cents -%}
+                {%- render 'nw-bundle-save-percent', product: sticky_product, variant: variant, output_mode: 'pay_cents' -%}
+              {%- endcapture -%}
+              {%- assign variant_bundle_pay_cents = nw_variant_bundle_pay_cents | strip | plus: 0 -%}
               {%- capture nw_variant_bundle_save_cents -%}
                 {%- render 'nw-bundle-save-percent', product: sticky_product, variant: variant, output_mode: 'save_cents' -%}
               {%- endcapture -%}
@@ -255,6 +267,7 @@
               "id": {{ variant.id | json }},
               "price": {{ variant.price | json }},
               "compare_at_price": {{ variant.compare_at_price | json }},
+              "bundle_pay_cents": {{ variant_bundle_pay_cents | json }},
               "bundle_save_cents": {{ variant_bundle_save_cents | json }},
               "available": {{ variant.available | json }},
               "options": {{ variant.options | json }},
