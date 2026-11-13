@@ -1,6 +1,6 @@
 /**
  * Global cart gift rules driven by cart_gift_rule metaobjects.
- * Adds/removes gift lines based on trigger products or variants.
+ * Adds/removes gift lines based on trigger products or variants and trigger quantity.
  */
 (function initNwCartGiftRules() {
   if (window.__nwCartGiftRulesInitialized) return;
@@ -16,7 +16,7 @@
   const cartUpdatePath = '/cart/update';
   const cartJsPath = '/cart.js';
 
-  /** @typedef {{ id: string, title: string, triggerMode: string, triggerProductIds: number[], triggerVariantIds: number[], giftVariantId: number, giftQuantity: number, priority: number, internalId: string, lineProperty: { key: string, value: string } }} GiftRule */
+  /** @typedef {{ id: string, title: string, triggerMode: string, triggerProductIds: number[], triggerVariantIds: number[], triggerQuantity: number, giftVariantId: number, giftQuantity: number, priority: number, internalId: string, lineProperty: { key: string, value: string } }} GiftRule */
 
   /** @type {GiftRule[]} */
   let rules = [];
@@ -85,6 +85,7 @@
     const triggerMode = String(raw.triggerMode || 'variant').toLowerCase();
     const title = String(raw.title || raw.id || '').trim();
     const giftQuantity = Math.max(1, parseInt(raw.giftQuantity, 10) || 1);
+    const triggerQuantity = Math.max(1, parseInt(raw.triggerQuantity, 10) || 1);
 
     return {
       id: String(raw.id || title),
@@ -92,6 +93,7 @@
       triggerMode: triggerMode.includes('product') ? 'product' : 'variant',
       triggerProductIds: toIdList(raw.triggerProductIds),
       triggerVariantIds: toIdList(raw.triggerVariantIds),
+      triggerQuantity,
       giftVariantId: Number(raw.giftVariantId),
       giftQuantity,
       priority: parseInt(raw.priority, 10) || 0,
@@ -192,7 +194,16 @@
 
   const isTriggerMet = (cart, rule) => {
     const items = cart?.items || [];
-    return items.some((line) => lineMatchesTrigger(line, rule));
+    const requiredQty = rule.triggerQuantity;
+    let matchedQty = 0;
+
+    for (const line of items) {
+      if (!lineMatchesTrigger(line, rule)) continue;
+      matchedQty += Number(line.quantity) || 0;
+      if (matchedQty >= requiredQty) return true;
+    }
+
+    return false;
   };
 
   const getManagedLines = (cart, rule) => {
