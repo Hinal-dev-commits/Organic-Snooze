@@ -84,6 +84,8 @@
       .toLowerCase();
   }
 
+  const DEFAULT_ZIP_RADIUS_MILES = 75;
+
   function storeMatchesQuery(store, query) {
     if (!query) return true;
     const q = query.trim().toLowerCase();
@@ -92,6 +94,31 @@
     if (hay.indexOf(q) !== -1) return true;
     if (/^\d{5}$/.test(q) && String(store.postal_code || '').indexOf(q) !== -1) return true;
     return false;
+  }
+
+  function normalizeZip(value) {
+    const match = String(value || '').trim().match(/^(\d{5})(?:-\d{4})?$/);
+    return match ? match[1] : '';
+  }
+
+  function haversineMiles(lat1, lng1, lat2, lng2) {
+    const toRad = function (deg) {
+      return (deg * Math.PI) / 180;
+    };
+    const dLat = toRad(lat2 - lat1);
+    const dLng = toRad(lng2 - lng1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return 3958.7613 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function storesMatchingZipPrefix(stores, zip) {
+    const prefix = zip.slice(0, 3);
+    return stores.filter(function (store) {
+      const postal = normalizeZip(store.postal_code);
+      return postal && postal.slice(0, 3) === prefix;
+    });
   }
 
   function formatCountLabel(template, count, place) {
@@ -109,6 +136,9 @@
       this.allStores = this.stores.slice();
       this.filterQuery = '';
       this.filterLabel = '';
+      this.matchedIds = null;
+      this.searchToken = 0;
+      this.zipTimer = null;
       this.activeId = null;
       this.map = null;
       this.markers = new Map();
@@ -122,6 +152,8 @@
       this.emptyEl = root.querySelector('[data-nw-fu-empty]');
       this.mapEl = root.querySelector('[data-nw-fu-map]');
       this.cards = Array.from(root.querySelectorAll('[data-nw-fu-store-card]'));
+      this.cardOrder = this.cards.slice();
+      this.storesList = root.querySelector('.nw-find-us__stores');
 
       this.input = this.section ? this.section.querySelector('.nw-find-us__input') : null;
       this.submitBtn = this.section ? this.section.querySelector('.nw-find-us__submit') : null;
@@ -189,19 +221,67 @@
     }
 
     visibleStores() {
+      if (this.matchedIds) {
+        const order = new Map(this.matchedIds.map(function (id, index) {
+          return [id, index];
+        }));
+        return this.allStores
+          .filter(function (store) {
+            return order.has(store.id);
+          })
+          .sort(function (a, b) {
+            return order.get(a.id) - order.get(b.id);
+          });
+      }
       return this.allStores.filter((store) => storeMatchesQuery(store, this.filterQuery));
+    }
+
+    zipRadiusMiles() {
+      const radius = parseFloat(this.config.zipRadius);
+      return Number.isFinite(radius) && radius > 0 ? radius : DEFAULT_ZIP_RADIUS_MILES;
+    }
+
+    placeCards(visible) {
+      if (!this.storesList) return;
+      const visibleIds = new Set(visible.map(function (store) {
+        return store.id;
+      }));
+      const byId = new Map(this.cards.map(function (card) {
+        return [card.getAttribute('data-store-id'), card];
+      }));
+      visible.forEach((store) => {
+        const card = byId.get(store.id);
+        if (card) this.storesList.appendChild(card);
+      });
+      this.cardOrder.forEach((card) => {
+        if (!visibleIds.has(card.getAttribute('data-store-id'))) {
+          this.storesList.appendChild(card);
+        }
+      });
+    }
+
+    restoreCardOrder() {
+      if (!this.storesList) return;
+      this.cardOrder.forEach((card) => this.storesList.appendChild(card));
     }
 
     applyFilter(query, label, options) {
       options = options || {};
+      if (!options.keepToken) {
+        this.searchToken += 1;
+        clearTimeout(this.zipTimer);
+      }
       this.filterQuery = query || '';
       this.filterLabel = label || query || '';
+      this.matchedIds = options.matchedIds || null;
       if (!options.skipInput && this.input) {
         this.input.value = this.filterQuery;
       }
 
       const visible = this.visibleStores();
       const visibleIds = new Set(visible.map((s) => s.id));
+      if (this.matchedIds) this.placeCards(visible);
+      else this.restoreCardOrder();
 
       this.cards.forEach((card) => {
         const id = card.getAttribute('data-store-id');
@@ -370,7 +450,89 @@
 
     _onSubmit() {
       const query = this.input ? this.input.value : '';
+      const zip = normalizeZip(query);
+      if (zip) {
+        this.applyZipSearch(query.trim(), zip);
+        return;
+      }
       this.applyFilter(query, query.trim());
+    }
+
+    applyZipSearch(label, zip) {
+      this.searchToken += 1;
+      clearTimeout(this.zipTimer);
+      const token = this.searchToken;
+      let settled = false;
+
+      const finish = (ids) => {
+        if (settled || token !== this.searchToken) return;
+        settled = true;
+        clearTimeout(this.zipTimer);
+        this.applyFilter(label, label, { keepToken: true, matchedIds: ids });
+      };
+
+      const prefixFallback = () => {
+        finish(storesMatchingZipPrefix(this.allStores, zip).map(function (store) {
+          return store.id;
+        }));
+      };
+
+      const geocodeZip = () => {
+        if (!this.geocoder && window.google && window.google.maps) {
+          this.geocoder = new google.maps.Geocoder();
+        }
+        if (!this.geocoder) {
+          prefixFallback();
+          return;
+        }
+        this.geocoder.geocode(
+          { componentRestrictions: { country: 'US', postalCode: zip } },
+          (results, status) => {
+            if (token !== this.searchToken || settled) return;
+            if (status !== 'OK' || !results || !results[0] || !results[0].geometry) {
+              prefixFallback();
+              return;
+            }
+            const loc = results[0].geometry.location;
+            const lat = typeof loc.lat === 'function' ? loc.lat() : loc.lat;
+            const lng = typeof loc.lng === 'function' ? loc.lng() : loc.lng;
+            const radius = this.zipRadiusMiles();
+            const nearby = this.allStores
+              .map(function (store) {
+                return {
+                  store: store,
+                  miles: haversineMiles(lat, lng, store.lat, store.lng),
+                };
+              })
+              .filter(function (item) {
+                return item.miles <= radius || normalizeZip(item.store.postal_code) === zip;
+              })
+              .sort(function (a, b) {
+                return a.miles - b.miles;
+              });
+            finish(nearby.map(function (item) {
+              return item.store.id;
+            }));
+          }
+        );
+      };
+
+      this.zipTimer = setTimeout(prefixFallback, 5000);
+
+      if (this.geocoder || (window.google && window.google.maps)) {
+        geocodeZip();
+        return;
+      }
+
+      if (!this.config.apiKey) {
+        prefixFallback();
+        return;
+      }
+
+      loadGoogleMaps(this.config.apiKey, () => {
+        if (token !== this.searchToken || settled) return;
+        geocodeZip();
+      });
     }
 
     _onViewAll(e) {
@@ -431,6 +593,8 @@
     }
 
     destroy() {
+      clearTimeout(this.zipTimer);
+      this.searchToken += 1;
       if (this.submitBtn) this.submitBtn.removeEventListener('click', this._onSubmit);
       if (this.locationBtn) this.locationBtn.removeEventListener('click', this._onLocation);
       if (this.viewAllBtn) this.viewAllBtn.removeEventListener('click', this._onViewAll);

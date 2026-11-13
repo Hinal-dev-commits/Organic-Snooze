@@ -72,6 +72,28 @@
             "price_selector": ""
           }
         },
+        "promo_banner_AifGwi": {
+          "type": "promo_banner",
+          "settings": {
+            "use_discount_metaobject": true,
+            "first_order_heading": "Black Friday - Save [percentage]% sitewide!",
+            "heading": "Save 15% on your first order!",
+            "description": "",
+            "discount_code": "",
+            "use_custom_icon": false,
+            "bg_color": "#fff7e0",
+            "border_color": "#61391633",
+            "text_color": "#454500",
+            "icon_color": "#454500",
+            "code_bg_color": "#fffcf0",
+            "code_border_color": "#7f7f29",
+            "code_text_color": "#434300",
+            "margin_top": 16,
+            "margin_bottom": 16,
+            "margin_top_mobile": 16,
+            "margin_bottom_mobile": 16
+          }
+        },
         "nw_benifits_list_GaAXrh": {
           "type": "nw_benifits_list",
           "disabled": true,
@@ -221,8 +243,8 @@
             "swatch_shape": "circle",
             "firmness_option_name": "Firmness",
             "loft_option_name": "Loft",
-            "size_option_name": "Select Size",
-            "show_size_guide": false,
+            "size_option_name": "Size",
+            "show_size_guide": true,
             "size_guide_label": "Size Guide",
             "size_guide_popup_id": "",
             "bedding_size_option_name": "Size",
@@ -232,7 +254,7 @@
             "show_firmness_guide": false,
             "firmness_guide_label": "Firmness Guide",
             "firmness_popup_modal_id": "",
-            "quantity_option_name": "Select Quantity",
+            "quantity_option_name": "Pack",
             "option_display_names": "",
             "picker_gap": 32,
             "picker_gap_mobile": 24,
@@ -245,20 +267,18 @@
             "margin_bottom_mobile": 0
           }
         },
-        "bundle_save_K4nQ2p": {
+        "bundle_save_wYKg87": {
           "type": "bundle_save",
-          "disabled": true,
           "settings": {
             "product_source": "product_list",
             "product_list": [
               "organic-cooling-sheets",
-              "cool-comfort-blended-natural-sheet-set-linen-and-cotton",
-              "100-linen-natural-cool-sheet-set",
-              "organic-waterproof-mattress-protector"
+              "the-organic-snooze-kloud-pillow",
+              "the-organic-snooze-pillow"
             ],
-            "heading": "Bundle & save 10% on each add-on",
-            "preview_summary": "Sheets, protector, pillows & base",
-            "discount_percentage": 10,
+            "heading": "Bundle & save 20% on each add-on",
+            "preview_summary": "Complete your sleep system",
+            "discount_percentage": 20,
             "optional_subtitle": "Optional, Bundle & Save [percent]%",
             "quick_view_title_override": "",
             "quick_view_description_override": "",
@@ -505,6 +525,7 @@
         "nw_ultimate_snooze_bundles_kit_product_block_hryray",
         "price",
         "affirm_pay_over_time_messaging_product_block_tNcRNt",
+        "promo_banner_AifGwi",
         "nw_benifits_list_GaAXrh",
         "icon_text_ykzhxB",
         "icon_text_kaPYkD",
@@ -514,7 +535,7 @@
         "icon_text_3FhWzM",
         "sleepers_UPVWMw",
         "variant_picker",
-        "bundle_save_K4nQ2p",
+        "bundle_save_wYKg87",
         "buy_buttons",
         "shipping_tag_yBjN7L",
         "trust_badges_UF8dKt",

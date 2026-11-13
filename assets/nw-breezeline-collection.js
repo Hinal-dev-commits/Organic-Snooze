@@ -33,9 +33,10 @@ if (!customElements.get('nw-breezeline-collection')) {
           watchOverflow: true,
           breakpoints: {
             750: {
-              slidesPerView: 3,
+              slidesPerView: 'auto',
               spaceBetween: 24,
-              centeredSlides: false
+              centeredSlides: false,
+              centerInsufficientSlides: true
             }
           }
         };

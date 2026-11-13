@@ -110,6 +110,7 @@
       data-results-filtered-label="{{ section.settings.results_filtered_label | escape }}"
       data-pin-color="{{ section.settings.pin_color | default: '#C68B5F' }}"
       data-pin-active-color="{{ section.settings.pin_active_color | default: '#6A3D1E' }}"
+      data-zip-radius="{{ section.settings.zip_radius_miles | default: 75 }}"
     >
       <div class="nw-find-us__results-header">
         <div class="nw-find-us__results-meta">
@@ -377,6 +378,18 @@
       "id": "google_maps_api_key",
       "label": "Google Maps API Key",
       "info": "Required for the interactive map. Enable Maps JavaScript API and Geocoding API.",
+      "visible_if": "{{ section.settings.show_store_results == true }}"
+    },
+    {
+      "type": "range",
+      "id": "zip_radius_miles",
+      "label": "Nearby ZIP Radius",
+      "min": 15,
+      "max": 200,
+      "step": 5,
+      "unit": "mi",
+      "default": 75,
+      "info": "A searched ZIP includes stores within this distance. 81003 matches a store at 81007 when they are inside the radius.",
       "visible_if": "{{ section.settings.show_store_results == true }}"
     },
     {

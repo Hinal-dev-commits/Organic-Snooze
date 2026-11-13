@@ -1,0 +1,251 @@
+{{ 'nw-cart-popup.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign modal_link_id = section.settings.modal_link_id | default: 'cart-popup' | strip
+  assign modal_id = 'NwCartPopupModal-' | append: modal_link_id
+  assign content_alignment = section.settings.content_alignment | default: 'center'
+  assign dialog_label = section.settings.dialog_label | default: 'Cart popup' | strip
+  assign modal_has_image = false
+  for block in section.blocks
+    if block.type == 'image'
+      if block.settings.image != blank or block.settings.image_mobile != blank
+        assign modal_has_image = true
+        break
+      endif
+    endif
+  endfor
+-%}
+
+<modal-dialog
+  id="{{ modal_id }}"
+  class="product-popup-modal nw-cart-popup{% if modal_has_image %} nw-cart-popup-image{% endif %}"
+  data-nw-cart-popup
+  data-nw-cart-popup-link-id="{{ modal_link_id | escape }}"
+  data-nw-cart-popup-icon-url="{% if section.settings.upcart_info_icon != blank %}{{ section.settings.upcart_info_icon | image_url: width: 48 }}{% else %}https://cdn.shopify.com/s/files/1/0684/9721/1457/files/info.svg?v=1793355004{% endif %}"
+  {{ section.shopify_attributes }}
+>
+  <div
+    role="dialog"
+    aria-label="{{ dialog_label | escape }}"
+    aria-modal="true"
+    class="product-popup-modal__content nw-cart-popup__dialog"
+    tabindex="-1"
+  >
+    <div class="nw-cart-popup__inner">
+      <header class="nw-cart-popup__header">
+        <button
+          id="ModalClose-{{ section.id }}"
+          type="button"
+          class="product-popup-modal__toggle nw-cart-popup__close"
+          aria-label="{{ 'accessibility.close' | t }}"
+        >
+          {% render 'nw-icon', icon: 'close' %}
+        </button>
+      </header>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nw-cart-popup__blocks nw-cart-popup__blocks--align-{{ content_alignment }}">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'heading' -%}
+                {%- if block.settings.heading != blank -%}
+                  <div class="nw-cart-popup__heading" {{ block.shopify_attributes }}>
+                    {% render 'nw-section-heading', text: block.settings.heading, section_index: section.index %}
+                  </div>
+                {%- endif -%}
+
+              {%- when 'text' -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="nw-cart-popup__text rte" {{ block.shopify_attributes }}>
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+
+              {%- when 'image' -%}
+                {%- if block.settings.image != blank or block.settings.image_mobile != blank -%}
+                  <div
+                    class="nw-cart-popup__image nw-cart-popup__image--{{ block.settings.image_width | default: 'full' }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {% render 'nw-image-layout-media',
+                      image: block.settings.image,
+                      image_mobile: block.settings.image_mobile,
+                      alt: block.settings.image_alt,
+                      class_prefix: 'nw-cart-popup'
+                    %}
+                  </div>
+                {%- endif -%}
+
+              {%- when 'button' -%}
+                {%- if block.settings.button_label != blank -%}
+                  <div
+                    class="nw-cart-popup__button{% if block.settings.button_width == 'full' %} nw-cart-popup__button--full{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {% render 'nw-button',
+                      text: block.settings.button_label,
+                      link: block.settings.button_link,
+                      style: block.settings.button_style,
+                      btn_class: 'nw-cart-popup__btn'
+                    %}
+                  </div>
+                {%- endif -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</modal-dialog>
+
+<script src="{{ 'nw-cart-popup.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "NW Cart Popup",
+  "tag": "section",
+  "class": "section-nw-cart-popup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "modal_link_id",
+      "label": "Popup link ID",
+      "default": "cart-popup",
+      "info": "Builds modal ID NwCartPopupModal-{id}. Upcart links: use #cart-popup, a full store URL ending in #cart-popup, or onclick=\"openNwCartPopup('cart-popup')\"."
+    },
+    {
+      "type": "text",
+      "id": "dialog_label",
+      "label": "Dialog label (accessibility)",
+      "default": "Cart popup",
+      "info": "Screen reader name for the dialog. Does not appear on the page."
+    },
+    {
+      "type": "image_picker",
+      "id": "upcart_info_icon",
+      "label": "Upcart addon info icon",
+      "info": "Icon injected next to Upcart addon titles. Uses default info.svg when empty."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Before you checkout"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add a short message for shoppers in the cart drawer.</p>"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (mobile)"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "select",
+          "id": "image_width",
+          "label": "Image width",
+          "default": "full",
+          "options": [
+            { "value": "full", "label": "Full width" },
+            { "value": "medium", "label": "Medium" },
+            { "value": "narrow", "label": "Narrow" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "default": "primary",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "button_width",
+          "label": "Button width",
+          "default": "auto",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "full", "label": "Full width" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "NW Cart Popup",
+      "blocks": [
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "button" }
+      ]
+    }
+  ]
+}
+{% endschema %}
