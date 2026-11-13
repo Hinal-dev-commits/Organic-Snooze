@@ -55,18 +55,10 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_featured_marquee_za77Xj": {
+    "nw_featured_marquee_FJQjeR": {
       "type": "nw-featured-marquee",
       "blocks": {
-        "logo_dgWiWR": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Inc_Logo.png",
-            "svg_code": "",
-            "link": ""
-          }
-        },
-        "logo_QMLYER": {
+        "logo_UdmiGg": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/logo_9ad8d4db-f463-45b9-9f87-2a2135ebc184.png",
@@ -74,7 +66,23 @@
             "link": ""
           }
         },
-        "logo_3eNMfF": {
+        "logo_KiaRfE": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Brown_Forbes_Serif_Wordmark.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_xY4pxr": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Inc_Logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_HV8V6f": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/Inc_Mens_Health_Logo.png",
@@ -82,7 +90,7 @@
             "link": ""
           }
         },
-        "logo_fDxeWX": {
+        "logo_8JVYJa": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/new-york-logo.png",
@@ -92,10 +100,11 @@
         }
       },
       "block_order": [
-        "logo_dgWiWR",
-        "logo_QMLYER",
-        "logo_3eNMfF",
-        "logo_fDxeWX"
+        "logo_UdmiGg",
+        "logo_KiaRfE",
+        "logo_xY4pxr",
+        "logo_HV8V6f",
+        "logo_8JVYJa"
       ],
       "custom_css": [
         ".nw-featured-marquee {border-bottom: 1px solid #4e2f1466;}"
@@ -104,8 +113,8 @@
       "settings": {
         "heading": "as seen in",
         "text_color": "#613916",
-        "enable_animation_desktop": false,
-        "enable_animation_mobile": false,
+        "enable_animation_desktop": true,
+        "enable_animation_mobile": true,
         "direction": "rtl",
         "speed": 30,
         "pause_on_hover": true,
@@ -2225,7 +2234,7 @@
   "order": [
     "main",
     "nw_section_banner_DzGfeq",
-    "nw_featured_marquee_za77Xj",
+    "nw_featured_marquee_FJQjeR",
     "nw_founder_story_8heFDx",
     "nw_sleep_foundation_DpxKMT",
     "nw_biology_Q8CyJc",
