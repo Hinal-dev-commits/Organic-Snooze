@@ -7,12 +7,16 @@
   @param {string} [firmness_option_name] - Firmness option name match
   @param {string} [loft_option_name] - Loft option name match
   @param {string} [size_option_name] - Size option name match
+  @param {string} [bedding_size_option_name] - Bedding size option name match
   @param {string} [quantity_option_name] - Quantity option name match
   @param {string} [select_size_text] - Size guide link label
   @param {string} [variant_tag_text] - Variant tag label
   @param {string} [values_order] - Comma-separated value order
   @param {boolean} [show_size_guide] - Show size guide trigger
   @param {string} [size_guide_modal_id] - Modal id for size popup
+  @param {boolean} [show_bedding_size_guide] - Show bedding size guide trigger
+  @param {string} [bedding_size_guide_label] - Bedding size guide link label
+  @param {string} [bedding_size_guide_modal_id] - Modal id for bedding size popup
   @param {boolean} [show_firmness_guide] - Show firmness guide trigger
   @param {string} [firmness_guide_label] - Firmness guide link label
   @param {string} [firmness_popup_modal_id] - Modal id for firmness guide popup
@@ -26,6 +30,7 @@
   assign is_firmness_option = false
   assign is_loft_option = false
   assign is_size_option = false
+  assign is_bedding_size_option = false
   assign is_quantity_option = false
 
   if firmness_option_name != blank and current_option_name == firmness_option_name
@@ -36,8 +41,16 @@
     assign is_loft_option = true
   endif
 
+  if bedding_size_option_name != blank and current_option_name == bedding_size_option_name
+    assign is_bedding_size_option = true
+  endif
+
   if size_option_name != blank and current_option_name == size_option_name
-    assign is_size_option = true
+    if is_bedding_size_option and show_bedding_size_guide
+      assign is_size_option = false
+    else
+      assign is_size_option = true
+    endif
   endif
 
   if quantity_option_name != blank and current_option_name == quantity_option_name
@@ -49,7 +62,7 @@
     assign is_color_option = true
   endif
 
-  if is_firmness_option or is_loft_option or is_size_option or is_quantity_option
+  if is_firmness_option or is_loft_option or is_size_option or is_bedding_size_option or is_quantity_option
     assign picker_type = 'button'
   elsif swatch_count > 0 and block.settings.swatch_shape != 'none'
     if block.settings.picker_type == 'dropdown'
@@ -101,7 +114,7 @@
     </div>
   </fieldset>
 {%- elsif picker_type == 'button' -%}
-  <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness nw-variant-picker--card{% endif %}{% if is_loft_option %} nw-variant-picker--card nw-variant-picker--card-left{% endif %}{% if is_quantity_option %} nw-variant-picker--quantity{% endif %}{% if is_size_option %} nw-variant-picker--size{% endif %}">
+  <fieldset class="js product-form__input product-form__input--pill nw-variant-picker{% if is_firmness_option %} nw-variant-picker--firmness nw-variant-picker--card{% endif %}{% if is_loft_option %} nw-variant-picker--card nw-variant-picker--card-left{% endif %}{% if is_quantity_option %} nw-variant-picker--quantity{% endif %}{% if is_size_option or is_bedding_size_option %} nw-variant-picker--size{% endif %}{% if is_bedding_size_option %} nw-variant-picker--bedding-size{% endif %}"{% if is_bedding_size_option %} data-bedding-size-option{% endif %}>
     <legend class="visually-hidden">{{ option_display_name | escape }}</legend>
     <div class="nw-variant-picker__header">
       <span class="nw-variant-picker__label">{{ option_display_name | escape }}:</span>
@@ -117,6 +130,21 @@
               aria-haspopup="dialog"
             >
               {{ firmness_guide_label | escape }}
+            </button>
+          </modal-opener>
+        {%- endif -%}
+      {%- elsif is_bedding_size_option -%}
+        {%- if show_bedding_size_guide and bedding_size_guide_modal_id != blank and bedding_size_guide_label != blank -%}
+          <modal-opener
+            class="nw-variant-picker__size-guide-opener"
+            data-modal="#{{ bedding_size_guide_modal_id }}"
+          >
+            <button
+              type="button"
+              class="nw-variant-picker__size-guide link"
+              aria-haspopup="dialog"
+            >
+              {{ bedding_size_guide_label | escape }}
             </button>
           </modal-opener>
         {%- endif -%}
@@ -144,7 +172,7 @@
     </div>
     <div
       class="nw-variant-picker__options"
-      {% if is_size_option %}
+      {% if is_size_option or is_bedding_size_option %}
         data-option-count="{{ option.values.size }}"
       {% endif %}
     >

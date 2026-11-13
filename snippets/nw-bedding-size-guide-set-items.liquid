@@ -1,0 +1,115 @@
+{% doc %}
+  Sheet set item cards for bedding size guide panels (content from theme settings).
+  @param {string} set_items_layout - 'grid' or 'slider' (slider applies on mobile only; desktop always grid)
+  @param {string} flat_qty
+  @param {string} flat_name - inline richtext html
+  @param {string} flat_dimensions
+  @param {string} flat_note - inline richtext html
+  @param {string} fitted_qty
+  @param {string} fitted_name - inline richtext html
+  @param {string} fitted_dimensions
+  @param {string} fitted_note - inline richtext html
+  @param {string} sham_qty
+  @param {string} sham_name - inline richtext html
+  @param {string} sham_dimensions
+  @param {string} sham_note - inline richtext html
+  @param {string} sham_type - 'queen' or 'king'
+{% enddoc %}
+{%- liquid
+  assign set_items_layout = set_items_layout | default: 'grid' | strip | downcase
+  if set_items_layout != 'slider'
+    assign set_items_layout = 'grid'
+  endif
+-%}
+{%- if set_items_layout == 'slider' -%}
+  <div class="nw-bedding-size-guide__set-items nw-bedding-size-guide__set-items--layout-desktop">
+    {% render 'nw-bedding-size-guide-set-item',
+      qty: flat_qty,
+      visual_type: 'flat',
+      name: flat_name,
+      dimensions: flat_dimensions,
+      note: flat_note
+    %}
+    {% render 'nw-bedding-size-guide-set-item',
+      qty: fitted_qty,
+      visual_type: 'fitted',
+      name: fitted_name,
+      dimensions: fitted_dimensions,
+      note: fitted_note
+    %}
+    {% render 'nw-bedding-size-guide-set-item',
+      qty: sham_qty,
+      visual_type: 'sham',
+      sham_type: sham_type,
+      name: sham_name,
+      dimensions: sham_dimensions,
+      note: sham_note
+    %}
+  </div>
+  <div
+    class="nw-bedding-size-guide__set-items nw-bedding-size-guide__set-items--slider nw-bedding-size-guide__set-items--layout-mobile"
+    data-bedding-set-slider
+  >
+    <div class="swiper nw-bedding-size-guide__set-slider" data-bedding-set-swiper>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          {% render 'nw-bedding-size-guide-set-item',
+            qty: flat_qty,
+            visual_type: 'flat',
+            name: flat_name,
+            dimensions: flat_dimensions,
+            note: flat_note
+          %}
+        </div>
+        <div class="swiper-slide">
+          {% render 'nw-bedding-size-guide-set-item',
+            qty: fitted_qty,
+            visual_type: 'fitted',
+            name: fitted_name,
+            dimensions: fitted_dimensions,
+            note: fitted_note
+          %}
+        </div>
+        <div class="swiper-slide">
+          {% render 'nw-bedding-size-guide-set-item',
+            qty: sham_qty,
+            visual_type: 'sham',
+            sham_type: sham_type,
+            name: sham_name,
+            dimensions: sham_dimensions,
+            note: sham_note
+          %}
+        </div>
+      </div>
+    </div>
+    <div
+      class="nw-swiper-pagination nw-bedding-size-guide__set-slider-pagination"
+      data-bedding-set-pagination
+    ></div>
+  </div>
+{%- else -%}
+  <div class="nw-bedding-size-guide__set-items">
+    {% render 'nw-bedding-size-guide-set-item',
+      qty: flat_qty,
+      visual_type: 'flat',
+      name: flat_name,
+      dimensions: flat_dimensions,
+      note: flat_note
+    %}
+    {% render 'nw-bedding-size-guide-set-item',
+      qty: fitted_qty,
+      visual_type: 'fitted',
+      name: fitted_name,
+      dimensions: fitted_dimensions,
+      note: fitted_note
+    %}
+    {% render 'nw-bedding-size-guide-set-item',
+      qty: sham_qty,
+      visual_type: 'sham',
+      sham_type: sham_type,
+      name: sham_name,
+      dimensions: sham_dimensions,
+      note: sham_note
+    %}
+  </div>
+{%- endif -%}

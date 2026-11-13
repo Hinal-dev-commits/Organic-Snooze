@@ -748,6 +748,7 @@
                 {%- when 'nw_freegift' -%}
                   {%- render 'nw-product-freegift', block: block, product: product -%}
                 {%- when 'nw_size_popup' -%}
+                {%- when 'nw_bedding_size_popup' -%}
                 {%- when 'bundle_tabs' -%}
                   {%- render 'nw-product-bundle-tabs', block: block, section: section -%}
                 {%- when 'bundle_tab' -%}
@@ -976,6 +977,29 @@
       {%- endif -%}
       {%- for block in size_popups -%}
         {% render 'nw-product-size-popup', block: block %}
+      {%- endfor -%}
+
+      {% assign bedding_size_popups = section.blocks | where: 'type', 'nw_bedding_size_popup' %}
+      {%- if bedding_size_popups.size > 0 -%}
+        {{ 'nw-bedding-size-guide.css' | asset_url | stylesheet_tag }}
+        {%- assign bedding_size_guide_uses_slider = false -%}
+        {%- for block in bedding_size_popups -%}
+          {%- if block.settings.set_items_layout == 'slider' -%}
+            {%- assign bedding_size_guide_uses_slider = true -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if bedding_size_guide_uses_slider -%}
+          {{ 'nw-swiper.css' | asset_url | stylesheet_tag }}
+        {%- endif -%}
+        <script src="{{ 'nw-bedding-size-guide.js' | asset_url }}" defer="defer"></script>
+      {%- endif -%}
+      {%- assign variant_picker_block = section.blocks | where: 'type', 'variant_picker' | first -%}
+      {%- for block in bedding_size_popups -%}
+        {% render 'nw-product-bedding-size-popup',
+          block: block,
+          product: product,
+          variant_picker_block: variant_picker_block
+        %}
       {%- endfor -%}
 
       {% assign popups = section.blocks | where: 'type', 'popup' %}
@@ -1545,6 +1569,34 @@
           "label": "Size Guide Popup ID",
           "info": "Optional. Enter the same Popup link ID set on an NW Size Popup block. Leave blank to open the first NW Size Popup block in this section.",
           "visible_if": "{{ block.settings.show_size_guide == true }}"
+        },
+        {
+          "type": "text",
+          "id": "bedding_size_option_name",
+          "label": "Bedding Size Option Name",
+          "default": "Bedding Size",
+          "info": "Enter the variant option name (e.g. Bedding Size) to show the Bedding Size Guide link and populate popup tabs from that option's values."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bedding_size_guide",
+          "label": "Show Bedding Size Guide",
+          "default": false,
+          "info": "Shows a See Size Guide link on the Bedding Size variant option. Opens the NW Bedding Size Popup block modal."
+        },
+        {
+          "type": "text",
+          "id": "bedding_size_guide_label",
+          "label": "Bedding Size Guide Link Label",
+          "default": "See Size Guide",
+          "visible_if": "{{ block.settings.show_bedding_size_guide == true }}"
+        },
+        {
+          "type": "text",
+          "id": "bedding_size_guide_popup_id",
+          "label": "Bedding Size Guide Popup ID",
+          "info": "Optional. Enter the same Popup link ID set on an NW Bedding Size Popup block. Leave blank to open the first NW Bedding Size Popup block in this section.",
+          "visible_if": "{{ block.settings.show_bedding_size_guide == true }}"
         },
         {
           "type": "checkbox",
@@ -6037,6 +6089,822 @@
           "label": "Mobile image",
           "visible_if": "{{ block.settings.items_count >= 10 }}"
         }
+      ]
+    },
+    {
+      "type": "nw_bedding_size_popup",
+      "name": "NW Bedding Size Popup",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "paragraph",
+                        "content": "Sheet set bedding size guide modal with size tabs. Set a Popup link ID below and paste the same value in the Variant picker Bedding Size Guide Popup ID field. If both are blank, the first bedding size popup block in this section is used."
+                },
+                {
+                        "type": "text",
+                        "id": "link_id",
+                        "label": "Popup link ID",
+                        "info": "Optional custom ID (e.g. sheet-set-bedding-size-guide). Must match the Variant picker Bedding Size Guide Popup ID when linking a specific popup."
+                },
+                {
+                        "type": "header",
+                        "content": "Header"
+                },
+                {
+                        "type": "text",
+                        "id": "heading",
+                        "label": "Heading",
+                        "default": "Size Guide"
+                },
+                {
+                        "type": "text",
+                        "id": "subtext",
+                        "label": "Subtext",
+                        "default": "Select your size to see every piece in the sheet set."
+                },
+                {
+                        "type": "text",
+                        "id": "guidelines_heading",
+                        "label": "Guidelines section heading",
+                        "default": "Understanding Your Size"
+                },
+                {
+                        "type": "header",
+                        "content": "Set items"
+                },
+                {
+                        "type": "select",
+                        "id": "set_items_layout",
+                        "label": "Set items layout",
+                        "default": "grid",
+                        "options": [
+                                {
+                                        "value": "grid",
+                                        "label": "Grid"
+                                },
+                                {
+                                        "value": "slider",
+                                        "label": "Slider"
+                                }
+                        ],
+                        "info": "Grid shows all set pieces in a row on all screen sizes (default). Slider shows one piece at a time with pagination on mobile only (749px and below); desktop always uses the grid layout."
+                },
+                {
+                        "type": "header",
+                        "content": "Twin tab"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_tab_label",
+                        "label": "Tab label",
+                        "default": "Twin"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_set_summary",
+                        "label": "Set summary",
+                        "default": "In the Twin set: 1 flat sheet, 1 fitted sheet, 2 pillow shams"
+                },
+                {
+                        "type": "header",
+                        "content": "Twin — Flat sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_flat_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_flat_name",
+                        "label": "Name",
+                        "default": "Flat Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_flat_dimensions",
+                        "label": "Dimensions",
+                        "default": "70\" × 107\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_flat_note",
+                        "label": "Note",
+                        "default": "Generous tuck on all sides"
+                },
+                {
+                        "type": "header",
+                        "content": "Twin — Fitted sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_fitted_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_fitted_name",
+                        "label": "Name",
+                        "default": "Fitted Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_fitted_dimensions",
+                        "label": "Dimensions",
+                        "default": "38\" × 75\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_fitted_note",
+                        "label": "Note",
+                        "default": "15\" deep pocket"
+                },
+                {
+                        "type": "header",
+                        "content": "Twin — Pillow shams"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_sham_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 2"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_sham_name",
+                        "label": "Name",
+                        "default": "Queen Pillow Shams"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_sham_dimensions",
+                        "label": "Dimensions",
+                        "default": "20\" × 32\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_sham_note",
+                        "label": "Note",
+                        "default": "Fits standard & queen pillows"
+                },
+                {
+                        "type": "select",
+                        "id": "twin_sham_visual",
+                        "label": "Sham illustration size",
+                        "default": "queen",
+                        "options": [
+                                {
+                                        "value": "queen",
+                                        "label": "Queen"
+                                },
+                                {
+                                        "value": "king",
+                                        "label": "King"
+                                }
+                        ]
+                },
+                {
+                        "type": "header",
+                        "content": "Twin — Guidelines"
+                },
+                {
+                        "type": "richtext",
+                        "id": "twin_guidelines",
+                        "label": "Guideline bullets",
+                        "default": "<ul><li><strong>Best for:</strong> Ideal for kids, teens, or single adults in smaller rooms.</li><li><strong>Mattress fit:</strong> 38\" × 75\" mattresses up to 15\" tall, including any topper.</li><li><strong>Shams:</strong> Queen size, fits standard & queen pillows.</li></ul>"
+                },
+                {
+                        "type": "header",
+                        "content": "Twin XL tab"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_xl_tab_label",
+                        "label": "Tab label",
+                        "default": "Twin XL"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_xl_set_summary",
+                        "label": "Set summary",
+                        "default": "In the Twin XL set: 1 flat sheet, 1 fitted sheet, 2 pillow shams"
+                },
+                {
+                        "type": "header",
+                        "content": "Twin XL — Flat sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_xl_flat_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_xl_flat_name",
+                        "label": "Name",
+                        "default": "Flat Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_xl_flat_dimensions",
+                        "label": "Dimensions",
+                        "default": "70\" × 112\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_xl_flat_note",
+                        "label": "Note",
+                        "default": "Generous tuck on all sides"
+                },
+                {
+                        "type": "header",
+                        "content": "Twin XL — Fitted sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_xl_fitted_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_xl_fitted_name",
+                        "label": "Name",
+                        "default": "Fitted Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_xl_fitted_dimensions",
+                        "label": "Dimensions",
+                        "default": "38\" × 80\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_xl_fitted_note",
+                        "label": "Note",
+                        "default": "15\" deep pocket"
+                },
+                {
+                        "type": "header",
+                        "content": "Twin XL — Pillow shams"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_xl_sham_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 2"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_xl_sham_name",
+                        "label": "Name",
+                        "default": "Queen Pillow Shams"
+                },
+                {
+                        "type": "text",
+                        "id": "twin_xl_sham_dimensions",
+                        "label": "Dimensions",
+                        "default": "20\" × 32\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "twin_xl_sham_note",
+                        "label": "Note",
+                        "default": "Fits standard & queen pillows"
+                },
+                {
+                        "type": "select",
+                        "id": "twin_xl_sham_visual",
+                        "label": "Sham illustration size",
+                        "default": "queen",
+                        "options": [
+                                {
+                                        "value": "queen",
+                                        "label": "Queen"
+                                },
+                                {
+                                        "value": "king",
+                                        "label": "King"
+                                }
+                        ]
+                },
+                {
+                        "type": "header",
+                        "content": "Twin XL — Guidelines"
+                },
+                {
+                        "type": "richtext",
+                        "id": "twin_xl_guidelines",
+                        "label": "Guideline bullets",
+                        "default": "<ul><li><strong>Best for:</strong> Extra length for taller single sleepers and dorm beds.</li><li><strong>Mattress fit:</strong> 38\" × 80\" mattresses up to 15\" tall, including any topper.</li><li><strong>Shams:</strong> Queen size, fits standard & queen pillows.</li></ul>"
+                },
+                {
+                        "type": "header",
+                        "content": "Full tab"
+                },
+                {
+                        "type": "text",
+                        "id": "full_tab_label",
+                        "label": "Tab label",
+                        "default": "Full"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "full_set_summary",
+                        "label": "Set summary",
+                        "default": "In the Full set: 1 flat sheet, 1 fitted sheet, 2 pillow shams"
+                },
+                {
+                        "type": "header",
+                        "content": "Full — Flat sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "full_flat_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "full_flat_name",
+                        "label": "Name",
+                        "default": "Flat Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "full_flat_dimensions",
+                        "label": "Dimensions",
+                        "default": "86\" × 107\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "full_flat_note",
+                        "label": "Note",
+                        "default": "Generous tuck on all sides"
+                },
+                {
+                        "type": "header",
+                        "content": "Full — Fitted sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "full_fitted_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "full_fitted_name",
+                        "label": "Name",
+                        "default": "Fitted Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "full_fitted_dimensions",
+                        "label": "Dimensions",
+                        "default": "54\" × 75\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "full_fitted_note",
+                        "label": "Note",
+                        "default": "15\" deep pocket"
+                },
+                {
+                        "type": "header",
+                        "content": "Full — Pillow shams"
+                },
+                {
+                        "type": "text",
+                        "id": "full_sham_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 2"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "full_sham_name",
+                        "label": "Name",
+                        "default": "Queen Pillow Shams"
+                },
+                {
+                        "type": "text",
+                        "id": "full_sham_dimensions",
+                        "label": "Dimensions",
+                        "default": "20\" × 32\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "full_sham_note",
+                        "label": "Note",
+                        "default": "Fits standard & queen pillows"
+                },
+                {
+                        "type": "select",
+                        "id": "full_sham_visual",
+                        "label": "Sham illustration size",
+                        "default": "queen",
+                        "options": [
+                                {
+                                        "value": "queen",
+                                        "label": "Queen"
+                                },
+                                {
+                                        "value": "king",
+                                        "label": "King"
+                                }
+                        ]
+                },
+                {
+                        "type": "header",
+                        "content": "Full — Guidelines"
+                },
+                {
+                        "type": "richtext",
+                        "id": "full_guidelines",
+                        "label": "Guideline bullets",
+                        "default": "<ul><li><strong>Best for:</strong> Great for single adults who want more room to stretch.</li><li><strong>Mattress fit:</strong> 54\" × 75\" mattresses up to 15\" tall, including any topper.</li><li><strong>Shams:</strong> Queen size, fits standard & queen pillows.</li></ul>"
+                },
+                {
+                        "type": "header",
+                        "content": "Queen tab"
+                },
+                {
+                        "type": "text",
+                        "id": "queen_tab_label",
+                        "label": "Tab label",
+                        "default": "Queen"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "queen_set_summary",
+                        "label": "Set summary",
+                        "default": "In the Queen set: 1 flat sheet, 1 fitted sheet, 2 pillow shams"
+                },
+                {
+                        "type": "header",
+                        "content": "Queen — Flat sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "queen_flat_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "queen_flat_name",
+                        "label": "Name",
+                        "default": "Flat Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "queen_flat_dimensions",
+                        "label": "Dimensions",
+                        "default": "92\" × 112\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "queen_flat_note",
+                        "label": "Note",
+                        "default": "Generous tuck on all sides"
+                },
+                {
+                        "type": "header",
+                        "content": "Queen — Fitted sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "queen_fitted_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "queen_fitted_name",
+                        "label": "Name",
+                        "default": "Fitted Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "queen_fitted_dimensions",
+                        "label": "Dimensions",
+                        "default": "60\" × 80\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "queen_fitted_note",
+                        "label": "Note",
+                        "default": "15\" deep pocket"
+                },
+                {
+                        "type": "header",
+                        "content": "Queen — Pillow shams"
+                },
+                {
+                        "type": "text",
+                        "id": "queen_sham_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 2"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "queen_sham_name",
+                        "label": "Name",
+                        "default": "Queen Pillow Shams"
+                },
+                {
+                        "type": "text",
+                        "id": "queen_sham_dimensions",
+                        "label": "Dimensions",
+                        "default": "20\" × 32\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "queen_sham_note",
+                        "label": "Note",
+                        "default": "Fits standard & queen pillows"
+                },
+                {
+                        "type": "select",
+                        "id": "queen_sham_visual",
+                        "label": "Sham illustration size",
+                        "default": "queen",
+                        "options": [
+                                {
+                                        "value": "queen",
+                                        "label": "Queen"
+                                },
+                                {
+                                        "value": "king",
+                                        "label": "King"
+                                }
+                        ]
+                },
+                {
+                        "type": "header",
+                        "content": "Queen — Guidelines"
+                },
+                {
+                        "type": "richtext",
+                        "id": "queen_guidelines",
+                        "label": "Guideline bullets",
+                        "default": "<ul><li><strong>Best for:</strong> Perfect for most couples and spacious enough for single sleepers.</li><li><strong>Mattress fit:</strong> 60\" × 80\" mattresses up to 15\" tall, including any topper.</li><li><strong>Shams:</strong> Queen size, fits standard & queen pillows.</li></ul>"
+                },
+                {
+                        "type": "header",
+                        "content": "King tab"
+                },
+                {
+                        "type": "text",
+                        "id": "king_tab_label",
+                        "label": "Tab label",
+                        "default": "King"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "king_set_summary",
+                        "label": "Set summary",
+                        "default": "In the King set: 1 flat sheet, 1 fitted sheet, 2 pillow shams"
+                },
+                {
+                        "type": "header",
+                        "content": "King — Flat sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "king_flat_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "king_flat_name",
+                        "label": "Name",
+                        "default": "Flat Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "king_flat_dimensions",
+                        "label": "Dimensions",
+                        "default": "108\" × 112\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "king_flat_note",
+                        "label": "Note",
+                        "default": "Generous tuck on all sides"
+                },
+                {
+                        "type": "header",
+                        "content": "King — Fitted sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "king_fitted_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "king_fitted_name",
+                        "label": "Name",
+                        "default": "Fitted Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "king_fitted_dimensions",
+                        "label": "Dimensions",
+                        "default": "76\" × 80\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "king_fitted_note",
+                        "label": "Note",
+                        "default": "15\" deep pocket"
+                },
+                {
+                        "type": "header",
+                        "content": "King — Pillow shams"
+                },
+                {
+                        "type": "text",
+                        "id": "king_sham_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 2"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "king_sham_name",
+                        "label": "Name",
+                        "default": "King Pillow Shams"
+                },
+                {
+                        "type": "text",
+                        "id": "king_sham_dimensions",
+                        "label": "Dimensions",
+                        "default": "20\" × 40\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "king_sham_note",
+                        "label": "Note",
+                        "default": "Fits king pillows"
+                },
+                {
+                        "type": "select",
+                        "id": "king_sham_visual",
+                        "label": "Sham illustration size",
+                        "default": "king",
+                        "options": [
+                                {
+                                        "value": "queen",
+                                        "label": "Queen"
+                                },
+                                {
+                                        "value": "king",
+                                        "label": "King"
+                                }
+                        ]
+                },
+                {
+                        "type": "header",
+                        "content": "King — Guidelines"
+                },
+                {
+                        "type": "richtext",
+                        "id": "king_guidelines",
+                        "label": "Guideline bullets",
+                        "default": "<ul><li><strong>Best for:</strong> Best for couples who want maximum personal space.</li><li><strong>Mattress fit:</strong> 76\" × 80\" mattresses up to 15\" tall, including any topper.</li><li><strong>Shams:</strong> King size, fits king pillows.</li></ul>"
+                },
+                {
+                        "type": "header",
+                        "content": "Cal King tab"
+                },
+                {
+                        "type": "text",
+                        "id": "cal_king_tab_label",
+                        "label": "Tab label",
+                        "default": "Cal King"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "cal_king_set_summary",
+                        "label": "Set summary",
+                        "default": "In the Cal King set: 1 flat sheet, 1 fitted sheet, 2 pillow shams"
+                },
+                {
+                        "type": "header",
+                        "content": "Cal King — Flat sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "cal_king_flat_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "cal_king_flat_name",
+                        "label": "Name",
+                        "default": "Flat Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "cal_king_flat_dimensions",
+                        "label": "Dimensions",
+                        "default": "104\" × 116\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "cal_king_flat_note",
+                        "label": "Note",
+                        "default": "Generous tuck on all sides"
+                },
+                {
+                        "type": "header",
+                        "content": "Cal King — Fitted sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "cal_king_fitted_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 1"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "cal_king_fitted_name",
+                        "label": "Name",
+                        "default": "Fitted Sheet"
+                },
+                {
+                        "type": "text",
+                        "id": "cal_king_fitted_dimensions",
+                        "label": "Dimensions",
+                        "default": "72\" × 84\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "cal_king_fitted_note",
+                        "label": "Note",
+                        "default": "15\" deep pocket"
+                },
+                {
+                        "type": "header",
+                        "content": "Cal King — Pillow shams"
+                },
+                {
+                        "type": "text",
+                        "id": "cal_king_sham_qty",
+                        "label": "Quantity badge",
+                        "default": "Qty 2"
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "cal_king_sham_name",
+                        "label": "Name",
+                        "default": "King Pillow Shams"
+                },
+                {
+                        "type": "text",
+                        "id": "cal_king_sham_dimensions",
+                        "label": "Dimensions",
+                        "default": "20\" × 40\""
+                },
+                {
+                        "type": "inline_richtext",
+                        "id": "cal_king_sham_note",
+                        "label": "Note",
+                        "default": "Fits king pillows"
+                },
+                {
+                        "type": "select",
+                        "id": "cal_king_sham_visual",
+                        "label": "Sham illustration size",
+                        "default": "king",
+                        "options": [
+                                {
+                                        "value": "queen",
+                                        "label": "Queen"
+                                },
+                                {
+                                        "value": "king",
+                                        "label": "King"
+                                }
+                        ]
+                },
+                {
+                        "type": "header",
+                        "content": "Cal King — Guidelines"
+                },
+                {
+                        "type": "richtext",
+                        "id": "cal_king_guidelines",
+                        "label": "Guideline bullets",
+                        "default": "<ul><li><strong>Best for:</strong> Designed for taller sleepers who need extra length.</li><li><strong>Mattress fit:</strong> 72\" × 84\" mattresses up to 15\" tall, including any topper.</li><li><strong>Shams:</strong> King size, fits king pillows.</li></ul>"
+                }
       ]
     },
     {
