@@ -709,6 +709,34 @@
         },
         {
           "type": "text",
+          "id": "bedding_size_option_name",
+          "label": "Bedding size option name",
+          "default": "Bedding Size",
+          "info": "Enter the variant option name (e.g. Bedding Size) to show the Bedding Size Guide link and populate popup tabs from that option's values."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bedding_size_guide",
+          "label": "Show bedding size guide",
+          "default": false,
+          "info": "Shows a See Size Guide link on the Bedding Size variant option. Opens the NW Bedding Size Popup block modal."
+        },
+        {
+          "type": "text",
+          "id": "bedding_size_guide_label",
+          "label": "Bedding size guide link label",
+          "default": "See Size Guide",
+          "visible_if": "{{ block.settings.show_bedding_size_guide == true }}"
+        },
+        {
+          "type": "text",
+          "id": "bedding_size_guide_popup_id",
+          "label": "Bedding size guide popup ID",
+          "info": "Optional. Enter the same Popup link ID set on an NW Bedding Size Popup block. Leave blank to open the first NW Bedding Size Popup block in this section.",
+          "visible_if": "{{ block.settings.show_bedding_size_guide == true }}"
+        },
+        {
+          "type": "text",
           "id": "quantity_option_name",
           "label": "Quantity option name",
           "default": "Select Quantity",

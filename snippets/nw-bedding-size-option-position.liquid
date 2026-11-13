@@ -1,0 +1,22 @@
+{% doc %}
+  Resolves the product option position for the configured bedding size option name.
+  @param {object} product - Product
+  @param {string} [bedding_size_option_name] - Theme setting (exact Shopify option name)
+{% enddoc %}
+{%- liquid
+  assign bedding_option_label = bedding_size_option_name | default: 'Bedding Size' | strip
+  assign bedding_position = 0
+
+  if bedding_option_label != blank and product.options_by_name[bedding_option_label] != blank
+    assign bedding_position = product.options_by_name[bedding_option_label].position
+  elsif bedding_option_label != blank
+    assign bedding_option_label_clean = bedding_option_label | downcase
+    for option in product.options_with_values
+      assign option_name_clean = option.name | strip | downcase
+      if option_name_clean == bedding_option_label_clean
+        assign bedding_position = option.position
+        break
+      endif
+    endfor
+  endif
+-%}{{- bedding_position -}}

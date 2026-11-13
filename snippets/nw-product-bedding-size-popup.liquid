@@ -1,0 +1,87 @@
+{% doc %}
+  Bedding / sheet set size guide modal for main product blocks.
+  @param {object} block - nw_bedding_size_popup block settings
+  @param {object} product - Current product
+  @param {object} [variant_picker_block] - variant_picker block for Bedding Size value order
+{% enddoc %}
+
+{%- liquid
+  assign modal_id = 'NwBeddingSizePopupModal-' | append: block.id
+  assign heading = block.settings.heading
+  assign subtext = block.settings.subtext
+-%}
+
+{%- liquid
+  assign bedding_size_option_name = 'Bedding Size'
+  if variant_picker_block != blank
+    assign bedding_size_option_name = variant_picker_block.settings.bedding_size_option_name | strip
+    if bedding_size_option_name == blank
+      assign bedding_size_option_name = 'Bedding Size'
+    endif
+  endif
+-%}
+{%- capture bedding_size_value_tokens -%}
+  {%- render 'nw-bedding-size-variant-values',
+    product: product,
+    bedding_size_option_name: bedding_size_option_name
+  -%}
+{%- endcapture -%}
+{%- assign bedding_size_value_tokens = bedding_size_value_tokens | strip -%}
+
+{%- if bedding_size_value_tokens != blank and bedding_size_value_tokens != '|' -%}
+  <modal-dialog
+    id="{{ modal_id }}"
+    class="product-popup-modal nw-bedding-size-guide"
+    data-bedding-size-value-count="{{ bedding_size_value_tokens | split: '|' | size | minus: 2 }}"
+    {{ block.shopify_attributes }}
+  >
+    <div
+      role="dialog"
+      aria-label="{{ heading | escape }}"
+      aria-modal="true"
+      class="product-popup-modal__content nw-bedding-size-guide__dialog"
+      tabindex="-1"
+    >
+      <div class="nw-bedding-size-guide__inner">
+        <header class="nw-bedding-size-guide__header">
+          <div class="nw-bedding-size-guide__title-group">
+            {%- if heading != blank -%}
+              <h2 class="nw-bedding-size-guide__heading">{{ heading | escape }}</h2>
+            {%- endif -%}
+            {%- if subtext != blank -%}
+              <p class="nw-bedding-size-guide__subtext">{{ subtext | escape }}</p>
+            {%- endif -%}
+          </div>
+          <button
+            id="ModalClose-{{ block.id }}"
+            type="button"
+            class="product-popup-modal__toggle nw-bedding-size-guide__close"
+            aria-label="{{ 'accessibility.close' | t }}"
+          >
+            {% render 'nw-icon', icon: 'close' %}
+          </button>
+        </header>
+
+        <div class="nw-bedding-size-guide__tabs" role="tablist" aria-label="{{ heading | escape }}">
+          {% render 'nw-bedding-size-guide-variant-loop',
+            part: 'tab',
+            product: product,
+            block: block,
+            value_tokens: bedding_size_value_tokens,
+            variant_picker_block: variant_picker_block
+          %}
+        </div>
+
+        <div class="nw-bedding-size-guide__panels">
+          {% render 'nw-bedding-size-guide-variant-loop',
+            part: 'panel',
+            product: product,
+            block: block,
+            value_tokens: bedding_size_value_tokens,
+            variant_picker_block: variant_picker_block
+          %}
+        </div>
+      </div>
+    </div>
+  </modal-dialog>
+{%- endif -%}

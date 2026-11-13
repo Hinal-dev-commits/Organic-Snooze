@@ -1,0 +1,15 @@
+{% doc %}
+  Understanding your size section for bedding size guide panels.
+  @param {string} guidelines_heading
+  @param {string} guidelines_content - richtext html
+{% enddoc %}
+{%- if guidelines_heading != blank or guidelines_content != blank -%}
+  <div class="nw-bedding-size-guide__guidelines">
+    {%- if guidelines_heading != blank -%}
+      <h3 class="nw-bedding-size-guide__guidelines-heading">{{ guidelines_heading | escape }}</h3>
+    {%- endif -%}
+    {%- if guidelines_content != blank -%}
+      <div class="nw-bedding-size-guide__guidelines-body rte">{{ guidelines_content }}</div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

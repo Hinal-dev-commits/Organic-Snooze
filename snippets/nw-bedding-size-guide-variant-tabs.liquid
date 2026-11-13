@@ -1,0 +1,31 @@
+{% doc %}
+  Renders bedding size guide tabs and/or panels for one product option value.
+  @param {string} part - 'tab' or 'panel'
+  @param {object} block - nw_bedding_size_popup block
+  @param {string} value_label - Variant option value label
+  @param {string} tab_key - Theme setting prefix
+  @param {string} tab_slug - Panel/tab data slug
+  @param {boolean} is_first - Active tab on load
+{% enddoc %}
+{%- if part == 'tab' -%}
+  <button
+    type="button"
+    class="nw-bedding-size-guide__tab{% if is_first %} is-active{% endif %}"
+    role="tab"
+    id="BeddingSizeTab-{{ block.id }}-{{ tab_slug }}"
+    data-bedding-size-tab="{{ tab_slug }}"
+    data-bedding-size-value="{{ value_label | escape }}"
+    aria-controls="BeddingSizePanel-{{ block.id }}-{{ tab_slug }}"
+    aria-selected="{% if is_first %}true{% else %}false{% endif %}"
+    tabindex="{% if is_first %}0{% else %}-1{% endif %}"
+  >
+    <span class="nw-bedding-size-guide__tab-label">{{ value_label | escape }}</span>
+  </button>
+{%- elsif part == 'panel' -%}
+  {% render 'nw-bedding-size-guide-panel',
+    block: block,
+    tab_key: tab_key,
+    tab_slug: tab_slug,
+    is_first: is_first
+  %}
+{%- endif -%}

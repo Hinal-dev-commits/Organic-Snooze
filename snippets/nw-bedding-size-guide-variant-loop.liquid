@@ -1,0 +1,137 @@
+{% doc %}
+  Renders bedding size guide tabs or panels for the current product's Bedding Size variants.
+  @param {string} part - 'tab' or 'panel'
+  @param {object} product - Product
+  @param {object} block - nw_bedding_size_popup block
+  @param {string} value_tokens - Pipe-delimited unique Bedding Size values
+  @param {object} [variant_picker_block] - variant_picker block for value order
+{% enddoc %}
+{%- liquid
+  assign values_order = ''
+  assign bedding_size_option_name = 'Bedding Size'
+  if variant_picker_block != blank
+    assign bedding_size_option_name = variant_picker_block.settings.bedding_size_option_name | strip
+    if bedding_size_option_name == blank
+      assign bedding_size_option_name = 'Bedding Size'
+    endif
+  endif
+-%}
+{%- capture bedding_position_capture -%}
+  {%- render 'nw-bedding-size-option-position',
+    product: product,
+    bedding_size_option_name: bedding_size_option_name
+  -%}
+{%- endcapture -%}
+{%- liquid
+  assign bedding_position = bedding_position_capture | strip | plus: 0
+
+  if variant_picker_block != blank and bedding_position > 0
+    if bedding_position == 1
+      assign values_order = variant_picker_block.settings.option_1_values_order | strip
+    elsif bedding_position == 2
+      assign values_order = variant_picker_block.settings.option_2_values_order | strip
+    endif
+  endif
+
+  assign tabs_rendered = 0
+  assign is_first_active = true
+  assign value_tokens = value_tokens | default: '|' | strip
+-%}
+{%- if value_tokens == blank or value_tokens == '|' -%}
+{%- elsif values_order != blank -%}
+  {%- assign ordered_value_names = values_order | split: ',' -%}
+  {%- for order_value in ordered_value_names -%}
+    {%- if tabs_rendered >= 6 -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- assign order_value_clean = order_value | strip | downcase -%}
+    {%- if order_value_clean == blank -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- assign values_from_variants = value_tokens | split: '|' -%}
+    {%- for value_label in values_from_variants -%}
+      {%- if value_label == blank -%}
+        {%- continue -%}
+      {%- endif -%}
+      {%- assign value_label_clean = value_label | strip | downcase -%}
+      {%- if value_label_clean != order_value_clean -%}
+        {%- continue -%}
+      {%- endif -%}
+      {%- capture variant_item_markup -%}
+        {%- render 'nw-bedding-size-guide-variant-item',
+          part: part,
+          block: block,
+          value_label: value_label,
+          is_first: is_first_active
+        -%}
+      {%- endcapture -%}
+      {%- assign variant_item_markup = variant_item_markup | strip -%}
+      {%- if variant_item_markup != blank -%}
+        {{- variant_item_markup -}}
+        {%- assign tabs_rendered = tabs_rendered | plus: 1 -%}
+        {%- assign is_first_active = false -%}
+      {%- endif -%}
+      {%- break -%}
+    {%- endfor -%}
+  {%- endfor -%}
+
+  {%- assign values_from_variants = value_tokens | split: '|' -%}
+  {%- for value_label in values_from_variants -%}
+    {%- if tabs_rendered >= 6 -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- if value_label == blank -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- assign value_in_order = false -%}
+    {%- assign value_label_clean = value_label | strip | downcase -%}
+    {%- for order_value in ordered_value_names -%}
+      {%- assign order_value_clean = order_value | strip | downcase -%}
+      {%- if value_label_clean == order_value_clean -%}
+        {%- assign value_in_order = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if value_in_order -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- capture variant_item_markup -%}
+      {%- render 'nw-bedding-size-guide-variant-item',
+        part: part,
+        block: block,
+        value_label: value_label,
+        is_first: is_first_active
+      -%}
+    {%- endcapture -%}
+    {%- assign variant_item_markup = variant_item_markup | strip -%}
+    {%- if variant_item_markup != blank -%}
+      {{- variant_item_markup -}}
+      {%- assign tabs_rendered = tabs_rendered | plus: 1 -%}
+      {%- assign is_first_active = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- else -%}
+  {%- assign values_from_variants = value_tokens | split: '|' -%}
+  {%- for value_label in values_from_variants -%}
+    {%- if tabs_rendered >= 6 -%}
+      {%- break -%}
+    {%- endif -%}
+    {%- if value_label == blank -%}
+      {%- continue -%}
+    {%- endif -%}
+    {%- capture variant_item_markup -%}
+      {%- render 'nw-bedding-size-guide-variant-item',
+        part: part,
+        block: block,
+        value_label: value_label,
+        is_first: is_first_active
+      -%}
+    {%- endcapture -%}
+    {%- assign variant_item_markup = variant_item_markup | strip -%}
+    {%- if variant_item_markup != blank -%}
+      {{- variant_item_markup -}}
+      {%- assign tabs_rendered = tabs_rendered | plus: 1 -%}
+      {%- assign is_first_active = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}

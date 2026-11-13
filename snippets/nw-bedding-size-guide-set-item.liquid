@@ -1,0 +1,65 @@
+{% doc %}
+  One sheet set card for the bedding size guide.
+  @param {string} [qty]
+  @param {string} [visual_type] - flat, fitted, or sham
+  @param {string} [sham_type] - queen or king when visual_type is sham
+  @param {string} [name] - inline richtext html
+  @param {string} [dimensions]
+  @param {string} [note] - inline richtext html
+{% enddoc %}
+<div class="nw-bedding-size-guide__set-item">
+  {%- if qty != blank -%}
+    <span class="nw-bedding-size-guide__qty-badge">{{ qty | escape }}</span>
+  {%- endif -%}
+  <div class="nw-bedding-size-guide__visual">
+    {%- if visual_type == 'fitted' -%}
+      <div
+        class="nw-bedding-size-guide__fitted-body nw-bedding-size-guide__visual-body"
+        data-bedding-visual-kind="fitted"
+        {% if dimensions != blank %}
+          data-bedding-dimensions="{{ dimensions | escape }}"
+        {% endif %}
+      >
+        <div class="nw-bedding-size-guide__fitted-top"></div>
+      </div>
+    {%- elsif visual_type == 'sham' -%}
+      <div
+        class="nw-bedding-size-guide__sham-pair nw-bedding-size-guide__visual-body{% if sham_type == 'king' %} nw-bedding-size-guide__sham-pair--king{% endif %}"
+        data-bedding-visual-kind="sham"
+        {% if dimensions != blank %}
+          data-bedding-dimensions="{{ dimensions | escape }}"
+        {% endif %}
+      >
+        <div class="nw-bedding-size-guide__sham nw-bedding-size-guide__sham--back">
+          <div class="nw-bedding-size-guide__sham-flange"></div>
+        </div>
+        <div class="nw-bedding-size-guide__sham nw-bedding-size-guide__sham--front">
+          <div class="nw-bedding-size-guide__sham-flange"></div>
+        </div>
+      </div>
+    {%- else -%}
+      <div
+        class="nw-bedding-size-guide__flat-body nw-bedding-size-guide__visual-body"
+        data-bedding-visual-kind="flat"
+        {% if dimensions != blank %}
+          data-bedding-dimensions="{{ dimensions | escape }}"
+        {% endif %}
+      >
+        <div class="nw-bedding-size-guide__flat-cuff"></div>
+        <div class="nw-bedding-size-guide__flat-hem"></div>
+        <div class="nw-bedding-size-guide__flat-main"></div>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="nw-bedding-size-guide__label-stack">
+    {%- if name != blank -%}
+      <p class="nw-bedding-size-guide__item-name inline-richtext">{{ name }}</p>
+    {%- endif -%}
+    {%- if dimensions != blank -%}
+      <p class="nw-bedding-size-guide__item-dimensions">{{ dimensions | escape }}</p>
+    {%- endif -%}
+    {%- if note != blank -%}
+      <p class="nw-bedding-size-guide__item-note inline-richtext">{{ note }}</p>
+    {%- endif -%}
+  </div>
+</div>

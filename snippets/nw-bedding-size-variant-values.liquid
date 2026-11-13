@@ -1,0 +1,40 @@
+{% doc %}
+  Builds a pipe-delimited list of unique Bedding Size values from product variants (variant order).
+  Output format: |Twin XL|Queen|King|California King|
+  @param {object} product - Product
+  @param {string} [bedding_size_option_name] - Variant picker setting for option name
+{% enddoc %}
+{%- capture bedding_position_capture -%}
+  {%- render 'nw-bedding-size-option-position',
+    product: product,
+    bedding_size_option_name: bedding_size_option_name
+  -%}
+{%- endcapture -%}
+{%- liquid
+  assign bedding_position = bedding_position_capture | strip | plus: 0
+
+  assign value_tokens = '|'
+
+  if bedding_position > 0
+    for variant in product.variants
+      assign value_label = blank
+      if bedding_position == 1
+        assign value_label = variant.option1
+      elsif bedding_position == 2
+        assign value_label = variant.option2
+      elsif bedding_position == 3
+        assign value_label = variant.option3
+      endif
+
+      assign value_label = value_label | strip
+      if value_label == blank
+        continue
+      endif
+
+      assign wrapped = '|' | append: value_label | append: '|'
+      unless value_tokens contains wrapped
+        assign value_tokens = value_tokens | append: value_label | append: '|'
+      endunless
+    endfor
+  endif
+-%}{{- value_tokens -}}
