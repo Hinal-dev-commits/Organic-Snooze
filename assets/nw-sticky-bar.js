@@ -41,6 +41,7 @@ if (!customElements.get('nw-sticky-bar')) {
       this._bindVisibility(signal);
       this._bindVariantUpdates();
       this._bindAtcPriceSync(signal);
+      this._bindBundleKitPriceSync(signal);
       this._bindDrawerQuickViewBundleAdd(signal);
       this._bindThemeEditor(signal);
       this._scheduleDrawerPickerPrep(signal);
@@ -66,6 +67,17 @@ if (!customElements.get('nw-sticky-bar')) {
       this._variantChangeUnsubscriber = null;
       this._optionChangeUnsubscriber?.();
       this._optionChangeUnsubscriber = null;
+      this._bundleKitPriceObserver?.disconnect();
+      this._bundleKitPriceObserver = null;
+      this._bundleKitPriceHost = null;
+      if (this._bundleKitSyncTimer) {
+        window.clearTimeout(this._bundleKitSyncTimer);
+        this._bundleKitSyncTimer = null;
+      }
+      if (this._bundleKitPriceAttachTimer) {
+        window.clearInterval(this._bundleKitPriceAttachTimer);
+        this._bundleKitPriceAttachTimer = null;
+      }
       this._scrollListener = null;
       this._keydownListener = null;
       this._initialized = false;
@@ -1259,6 +1271,91 @@ if (!customElements.get('nw-sticky-bar')) {
       refresh();
     }
 
+    _bindBundleKitPriceSync(signal) {
+      if (!this.config?.hasBundleKit) return;
+
+      const schedule = () => {
+        window.clearTimeout(this._bundleKitSyncTimer);
+        this._bundleKitSyncTimer = window.setTimeout(() => this._syncStickyBarFromBundleKit(), 50);
+      };
+
+      schedule();
+      window.setTimeout(schedule, 400);
+      window.setTimeout(schedule, 1500);
+      document.addEventListener('product-info:loaded', schedule, { signal });
+
+      const attachObserver = () => {
+        const host = this._getMainBundleKitPriceHost();
+        if (!host) return false;
+        if (host === this._bundleKitPriceHost && this._bundleKitPriceObserver) return true;
+
+        this._bundleKitPriceObserver?.disconnect();
+        this._bundleKitPriceHost = host;
+        this._bundleKitPriceObserver = new MutationObserver(schedule);
+        this._bundleKitPriceObserver.observe(host, {
+          subtree: true,
+          childList: true,
+          characterData: true,
+        });
+        schedule();
+        return true;
+      };
+
+      if (!attachObserver()) {
+        let attempts = 0;
+        this._bundleKitPriceAttachTimer = window.setInterval(() => {
+          attempts += 1;
+          if (attachObserver() || attempts > 30) {
+            window.clearInterval(this._bundleKitPriceAttachTimer);
+            this._bundleKitPriceAttachTimer = null;
+          }
+        }, 200);
+      }
+    }
+
+    _getMainBundleKitPriceHost() {
+      const scope = this.productInfo || document;
+      return (
+        scope.querySelector('[data-nw-bundle-kit] .nw-bundle-kit__price') ||
+        scope.querySelector('.nw-bundle-kit__price')
+      );
+    }
+
+    _getMainBundleKitPayEl() {
+      const host = this._getMainBundleKitPriceHost();
+      return host?.querySelector('[data-kit-pay]') || this.productInfo?.querySelector('[data-kit-pay]');
+    }
+
+    _parseMoneyTextToCents(text) {
+      const cleaned = String(text ?? '')
+        .trim()
+        .replace(/[^\d.,-]/g, '')
+        .replace(/,/g, '');
+      const value = Number.parseFloat(cleaned);
+      if (!Number.isFinite(value)) return 0;
+      return Math.round(value * 100);
+    }
+
+    _syncStickyBarFromBundleKit() {
+      if (!this.config?.hasBundleKit) return false;
+
+      const payText = this._getMainBundleKitPayEl()?.textContent?.trim();
+      if (!payText) return false;
+
+      if (this.priceEl) this.priceEl.textContent = payText;
+      if (this.priceMobileEl) this.priceMobileEl.textContent = payText;
+
+      const payCents = this._parseMoneyTextToCents(payText);
+      if (payCents > 0 && this.config.showAffirm) {
+        this.affirmEls.forEach((el) => {
+          el.setAttribute('data-amount', String(payCents));
+        });
+        this._refreshAffirm();
+      }
+
+      return true;
+    }
+
     _computeStickyBarTotalCents() {
       if (this.productInfo && typeof customElements.get('product-form') !== 'undefined') {
         const ProductFormClass = customElements.get('product-form');
@@ -1290,6 +1387,10 @@ if (!customElements.get('nw-sticky-bar')) {
 
       if (!this.priceEl && !this.priceMobileEl) return;
 
+      if (this.config?.hasBundleKit && this._syncStickyBarFromBundleKit()) {
+        return;
+      }
+
       const totalCents = this._computeStickyBarTotalCents();
       const priceText = this._formatMoney(totalCents);
       if (this.priceEl) this.priceEl.textContent = priceText;
@@ -1312,6 +1413,12 @@ if (!customElements.get('nw-sticky-bar')) {
         this._syncDrawerFromMain();
         if (this.classList.contains('is-drawer-open')) {
           this._ensureDrawerBundle();
+        }
+
+        if (this.config?.hasBundleKit) {
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => this._syncStickyBarFromBundleKit());
+          });
         }
       });
 
@@ -1426,6 +1533,12 @@ if (!customElements.get('nw-sticky-bar')) {
 
     _getVariantDisplayPriceCents(variant) {
       if (!variant) return 0;
+
+      if (this.config?.hasBundleKit) {
+        const kitPay = Number(variant.bundle_pay_cents);
+        if (kitPay > 0) return kitPay;
+      }
+
       const sitewide = this._getSitewideDisplay(variant);
       if (sitewide) return sitewide.sale;
       return Number(variant.price) || 0;

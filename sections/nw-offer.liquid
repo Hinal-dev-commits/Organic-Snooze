@@ -21,7 +21,7 @@
       background-image: none !important;
     }
   }
-</style>
+  #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height | default: 860 }}px; } @media screen and (max-width: 749px) { #{{ offer_dom_id }} .nw-offer__form-embed { height: {{ section.settings.form_embed_height_mobile | default: 1000 }}px; } } #{{ offer_dom_id }} .nw-offer__card:has(.nw-offer__form-embed) { padding: 0 !important; overflow: hidden; } #{{ offer_dom_id }} .nw-offer__card:has(.nw-offer__form-embed) .nw-offer__portal { min-height: 0; }</style>
 
 <nw-offer
   id="{{ offer_dom_id }}"
@@ -89,7 +89,7 @@
         {%- if section.settings.card_title != blank -%}
           <h3 class="nw-offer__card-title">{{ section.settings.card_title | escape }}</h3>
         {%- endif -%}
-        <div class="nw-offer__portal"></div>
+        <div class="nw-offer__portal">{%- if section.settings.form_page_id != blank -%}<script type="module" src="https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js"></script><zapier-interfaces-page-embed class="nw-offer__form-embed" page-id="{{ section.settings.form_page_id | strip | escape }}" no-background="true" style="display:block;width:100%;max-width:100%;"></zapier-interfaces-page-embed><script>(function(){var p=document.querySelector('#{{ offer_dom_id }} .nw-offer__portal');if(!p)return;var e=p.querySelector('.nw-offer__form-embed');if(!e)return;var P=[[400,1046],[420,1034],[560,950],[680,930]],Y=50,R=260,EX=0,last=-1;function B(F){if(P[0][0]>=F)return P[0][1];for(var i=1;i!==P.length;i++){if(P[i][0]>=F){var a=P[i-1],b=P[i];return a[1]+(b[1]-a[1])*(F-a[0])/(b[0]-a[0]);}}return P[P.length-1][1];}function fit(force){var w=p.clientWidth;if(!w||(w===last&&!force))return;last=w;var F=(w+40)/0.981;if(400>F)F=400;var X=20+F*0.0095,s=w/(F-2*X);if(s>1)s=1;var b=B(F),H=Math.ceil(b+80+R+240);e.style.maxWidth='none';e.style.width=Math.round(F)+'px';e.style.height=H+'px';e.style.transformOrigin='top left';e.style.transform=s===1?'':'scale('+s+')';e.style.marginLeft=(-X*s)+'px';e.style.marginTop=(-Y*s)+'px';e.style.transition='margin-bottom .3s ease';e.style.marginBottom=((b+EX)*s-H)+'px';}function noScroll(){var f=e.shadowRoot&&e.shadowRoot.querySelector('iframe');if(!f){setTimeout(noScroll,200);return;}if(f.getAttribute('scrolling')!=='no'){f.setAttribute('scrolling','no');var u=f.src;if(u){f.src=u;}}}function grow(){if(EX)return;if(document.activeElement===e){EX=R;fit(true);}}fit();noScroll();window.addEventListener('blur',function(){setTimeout(grow,0);});if(window.ResizeObserver){new ResizeObserver(function(){fit();}).observe(p);}else{window.addEventListener('resize',function(){fit();});}})();</script>{%- endif -%}</div>
       </div>
     </div>
   </div>
@@ -212,7 +212,7 @@
     },
     {
       "type": "header",
-      "content": "UPLOAD CARD"
+      "content": "UPLOAD CARD" }, { "type": "text", "id": "form_page_id", "label": "Zapier form page ID", "default": "cmvg8by0q000msu5h32t0vf09", "info": "From Zapier form > Share > Embed: the page-id value. Leave blank to hide the form." }, { "type": "range", "id": "form_embed_height", "label": "Form height (desktop)", "min": 400, "max": 1400, "step": 20, "unit": "px", "default": 1120 }, { "type": "range", "id": "form_embed_height_mobile", "label": "Form height (mobile)", "min": 400, "max": 1600, "step": 20, "unit": "px", "default": 1140, "info": "Make the form tall enough to avoid an inner scrollbar."
     },
     {
       "type": "text",

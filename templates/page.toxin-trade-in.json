@@ -39,7 +39,7 @@
             "decimals": 0,
             "prefix": "$",
             "suffix": "",
-            "label": "Average instant discount"
+            "label": "Average discount"
           }
         },
         "stat_N4CXAi": {
@@ -117,7 +117,7 @@
       "settings": {
         "eyebrow": "",
         "heading": "Trade In The Toxins. Get $300 Off.",
-        "description": "<p>Snap a photo or video of your old mattress's law tag (or just the gross top-of-bed) and we'll knock $300 off any Ultimate Snooze mattress instantly, no trade-in required.</p>",
+        "description": "<p>Snap a photo or video of your old mattress's law tag (or just the gross top-of-bed) and we'll knock $300 off any Ultimate Snooze mattress (code emailed within 2 days), no trade-in required.</p>",
         "heading_color": "#613916",
         "description_color": "#613916",
         "text_color": "#613916",
@@ -168,14 +168,14 @@
           "type": "point",
           "settings": {
             "title": "Works with any mattress, any brand",
-            "text": "Law tag or a top-of-bed photo/video — either works."
+            "text": "Upload a Law tag or a top-of-bed photo works."
           }
         },
         "point_fiBtHB": {
           "type": "point",
           "settings": {
-            "title": "$300 applied instantly at checkout",
-            "text": "No waiting on approval, no mail-in rebate."
+            "title": "$300 code emailed within 2 days",
+            "text": "Every upload is reviewed within 2 days. No mail-in rebate."
           }
         }
       },
@@ -195,8 +195,8 @@
         "video_aspect_w": 380,
         "video_aspect_h": 676,
         "eyebrow": "SEE IT IN ACTION",
-        "heading": "<h2>Watch The Toxin&nbsp;<br/>Trade-In In 60 Seconds</h2>",
-        "description": "<p>This is our biggest event of the year — and it's built to be effortless. Watch exactly how a real customer finds their mattress's law tag, uploads it, and unlocks $300 off in under a minute.</p>",
+        "heading": "<h2>Watch The Toxin&nbsp;<br/>Trade-In In 30 Seconds</h2>",
+        "description": "<p>Watch exactly how a you can find your mattress's law tag, upload it in under a minute, and get your $300 off code within 2 days!</p>",
         "heading_color": "#613916",
         "description_color": "#613916",
         "show_button": true,
@@ -220,7 +220,7 @@
           "type": "step",
           "settings": {
             "step_number": "01",
-            "title": "Snap a Photo or Video",
+            "title": "Snap a Photo",
             "description": "<p>Show us your mattress's law tag (the ingredient label) or just the dirty top-of-bed — phone camera is fine.</p>",
             "footnote": ""
           }
@@ -229,8 +229,8 @@
           "type": "step",
           "settings": {
             "step_number": "02",
-            "title": "We Verify It Instantly",
-            "description": "<p>Our system checks the upload and confirms your $300 discount in under a minute. No back-and-forth.</p>",
+            "title": "We Verify It Within 2 Days",
+            "description": "<p>Our team reviews your upload and emails your $300 discount code within 2 days. No back-and-forth.</p>",
             "footnote": ""
           }
         },
@@ -239,7 +239,7 @@
           "settings": {
             "step_number": "03",
             "title": "Shop & Save $300",
-            "description": "<p>Apply your instant code to any Ultimate Snooze mattress at checkout. We'll even help you recycle the old one.</p>",
+            "description": "<p>Apply your code to any Ultimate Snooze mattress at checkout. We'll even help you recycle the old one.</p>",
             "footnote": ""
           }
         },
@@ -424,7 +424,7 @@
         "bullet_QmFzyk": {
           "type": "bullet",
           "settings": {
-            "text": "Instant approval with valid video/photo",
+            "text": "Approval within 2 days with a valid photo/video",
             "show_on_mobile": false
           }
         }
@@ -440,7 +440,7 @@
         "custom_id": "toxin-offer",
         "eyebrow": "THE OFFER",
         "headline": "$300 Off",
-        "description": "<p>Snap a photo or video of your old mattress's law tag (or just the gross top-of-bed) and we'll knock $300 off any Ultimate Snooze mattress instantly, no trade-in required.</p>",
+        "description": "<p>Snap a photo of your old mattress's law tag (or just the gross top-of-bed) and we'll knock $300 off any Ultimate Snooze mattress (code emailed within 2 days), no trade-in required.</p>",
         "description_mobile": "<p>Any mattress. Any size. One upload. Our biggest trade-in offer ever — ends when the event does.</p>",
         "eyebrow_color": "#cc926a",
         "headline_color": "#613916",
@@ -451,7 +451,10 @@
         "mobile_headline_color": "#ffffff",
         "mobile_description_color": "#ffffff",
         "mobile_bullet_color": "#ffffff",
-        "card_title": "Upload Your Toxin Trade-In",
+        "form_page_id": "cmvg8by0q000msu5h32t0vf09",
+        "form_embed_height": 1120,
+        "form_embed_height_mobile": 1140,
+        "card_title": "",
         "card_bg_color": "#ffffff",
         "card_title_color": "#613916",
         "portal_min_height_desktop": 560,
@@ -487,7 +490,7 @@
           "type": "point",
           "settings": {
             "title": "Takes 10 seconds to check",
-            "text": "Flip your mattress, find the white tag near the seam. That’s it."
+            "text": "Find the white tag near the seam on the head of the mattress."
           }
         },
         "point_pntNfp": {
@@ -638,9 +641,9 @@
         "product_card_a1": {
           "type": "product_card",
           "settings": {
-            "product": "3554-medium-ept-gary-brecka",
+            "product": "the-organic-snooze-kloud-pillow",
             "custom_title": "",
-            "subtitle": "Firm | Organic Latex | Organic Wool | Organic Cotton",
+            "subtitle": "Organic Latex | Organic Kapok | Organic Cotton",
             "price_text": "",
             "show_starting_at": true,
             "custom_link": "",
@@ -651,9 +654,9 @@
         "product_card_a2": {
           "type": "product_card",
           "settings": {
-            "product": "3556-eco-pure",
+            "product": "the-ultimate-snooze-pure-organic-mattress",
             "custom_title": "",
-            "subtitle": "Cushion-Firm | Organic Latex | Organic Wool | Organic Cotton",
+            "subtitle": "Organic Latex | Organic Wool | Organic Cotton",
             "price_text": "",
             "show_starting_at": true,
             "custom_link": "",
@@ -664,9 +667,9 @@
         "product_card_a3": {
           "type": "product_card",
           "settings": {
-            "product": "3557-topper-2-organic-latex",
+            "product": "the-ultimate-snooze-pillowtop-organic-mattress",
             "custom_title": "",
-            "subtitle": "Safe-Firm | Coconut Coir | Organic Wool | Organic Hemp | Organic Cotton",
+            "subtitle": "Organic Latex | Organic Wool | Organic Cotton",
             "price_text": "",
             "show_starting_at": false,
             "custom_link": "",
@@ -727,21 +730,21 @@
           "type": "faq_item",
           "settings": {
             "question": "How fast do I get my discount?",
-            "answer": "<p>Once your law tag photo is approved, your $300 credit is applied to your account within one business day.</p>"
+            "answer": "<p>Once your law tag photo is approved, we email you your unique $300 off code. We review every upload within 2 days.</p>"
           }
         },
         "faq_item_iBw9zb": {
           "type": "faq_item",
           "settings": {
             "question": "Is this a trade-in I have to ship?",
-            "answer": "<p>No shipping required. This is a photo verification event — keep your old mattress and use your credit toward a new Ultimate Snooze.</p>"
+            "answer": "<p>No shipping required. This is a photo verification event — keep your old mattress and use your credit toward a new Ultimate Snooze. We will also give you a credit towards free mattress haul away.</p>"
           }
         },
         "faq_item_bxW6gw": {
           "type": "faq_item",
           "settings": {
             "question": "Can I stack this with other offers?",
-            "answer": "<p>The $300 Toxin Trade-In credit cannot be combined with other sitewide promotions unless noted during checkout.</p>"
+            "answer": "<p>Yes! The $300 Toxin Trade-In credit can be combined with other sitewide promotions unless noted during checkout. This makes it the best offer available!</p>"
           }
         }
       },
@@ -819,7 +822,7 @@
         "eyebrow": "OUR STORY",
         "heading": "What Is The Ultimate Snooze?",
         "heading_mobile": "",
-        "description": "<p>The Ultimate Snooze is organic performance sleep — mattresses built from natural materials that support real recovery, not just rest. No polyurethane foam, no fiberglass, no toxic flame retardants. Just clean inputs, for a cleaner night's sleep. You spend nearly one-third of your life on your mattress. What it's made of matters.</p>",
+        "description": "<p>The Ultimate Snooze is organic recovery mattresses built from natural materials that support real recovery, not just rest. No polyurethane foam, no fiberglass, no toxic flame retardants. Just clean, natural inputs, for a cleaner night's sleep. You spend nearly one-third of your life on your mattress. What it's made of matters.</p>",
         "description_mobile": "<p>The Ultimate Snooze is organic performance sleep — mattresses built from natural materials that support real recovery, not just rest. No polyurethane foam, no fiberglass, no toxic flame retardants. Just clean inputs, for a cleaner night's sleep.</p>",
         "eyebrow_color": "#cc926a",
         "heading_color": "#613916",
