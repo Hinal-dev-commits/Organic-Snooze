@@ -1,6 +1,7 @@
 {% doc %}
   Serializes Cart Gift Rule metaobjects for nw-cart-gift-rules.js.
   Metaobject type: cart_gift_rule
+  Optional integer field trigger_quantity is the minimum trigger quantity. Blank defaults to 1.
 {% enddoc %}
 
 {%- liquid
@@ -16,6 +17,7 @@
       {%- liquid
         assign trigger_mode_raw = rule.trigger_mode.value | default: rule.trigger_mode | downcase | strip
         assign gift_qty = rule.gift_quantity.value | default: rule.gift_quantity | default: 1 | plus: 0
+        assign trigger_qty = rule.trigger_quantity.value | default: rule.trigger_quantity | default: 1 | plus: 0
         assign rule_priority = rule.priority.value | default: rule.priority | default: 0 | plus: 0
         assign rule_title = rule.title.value | default: rule.title | default: rule.system.handle
         assign rule_internal_id = rule.internal_id.value | default: rule.internal_id | strip
@@ -29,6 +31,7 @@
         "triggerMode": {{ trigger_mode_raw | json }},
         "triggerProductIds": {{ trigger_products | map: 'id' | json }},
         "triggerVariantIds": {{ trigger_variants | map: 'id' | json }},
+        "triggerQuantity": {{ trigger_qty }},
         "giftVariantId": {{ gift_variant.id }},
         "giftQuantity": {{ gift_qty }},
         "priority": {{ rule_priority }},
