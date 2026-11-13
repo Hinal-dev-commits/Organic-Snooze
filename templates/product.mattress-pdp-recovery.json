@@ -373,6 +373,10 @@
             "show_size_guide": true,
             "size_guide_label": "See Size Guide",
             "size_guide_popup_id": "",
+            "bedding_size_option_name": "Bedding Size",
+            "show_bedding_size_guide": false,
+            "bedding_size_guide_label": "See Size Guide",
+            "bedding_size_guide_popup_id": "",
             "show_firmness_guide": true,
             "firmness_guide_label": "Which firmness for me?",
             "firmness_popup_modal_id": "firmness-guide",
@@ -872,18 +876,10 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_featured_marquee_rTkknY": {
+    "nw_featured_marquee_ffCycL": {
       "type": "nw-featured-marquee",
       "blocks": {
-        "logo_3AyCQN": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/Inc_Logo.png",
-            "svg_code": "",
-            "link": ""
-          }
-        },
-        "logo_pyw7T6": {
+        "logo_gRVXNj": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/logo_9ad8d4db-f463-45b9-9f87-2a2135ebc184.png",
@@ -891,7 +887,23 @@
             "link": ""
           }
         },
-        "logo_QPBrKN": {
+        "logo_jiq6Yf": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Brown_Forbes_Serif_Wordmark.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_MRptVA": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Inc_Logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_zBTKF3": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/Inc_Mens_Health_Logo.png",
@@ -899,7 +911,7 @@
             "link": ""
           }
         },
-        "logo_KXh7qJ": {
+        "logo_JVTKhC": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/new-york-logo.png",
@@ -909,10 +921,11 @@
         }
       },
       "block_order": [
-        "logo_3AyCQN",
-        "logo_pyw7T6",
-        "logo_QPBrKN",
-        "logo_KXh7qJ"
+        "logo_gRVXNj",
+        "logo_jiq6Yf",
+        "logo_MRptVA",
+        "logo_zBTKF3",
+        "logo_JVTKhC"
       ],
       "custom_css": [
         ".nw-featured-marquee {border-bottom: 1px solid #4e2f1466;}"
@@ -1945,7 +1958,7 @@
   "order": [
     "nw_marquee_v2_RMtCkA",
     "main",
-    "nw_featured_marquee_rTkknY",
+    "nw_featured_marquee_ffCycL",
     "nw_firmness_popup_guide",
     "nw_sticky_bar_YhTzea",
     "disclosures",

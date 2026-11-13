@@ -162,72 +162,96 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_featured_marquee_N7CNCN": {
-      "type": "nw-featured-marquee",
+    "nw_marquee_v2_ntnTnh": {
+      "type": "nw-marquee-v2",
       "blocks": {
-        "logo_kM6NW9": {
-          "type": "logo",
+        "item_BfrRdB": {
+          "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Inc_Logo.png",
-            "svg_code": "",
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
             "link": ""
           }
         },
-        "logo_PbytUe": {
-          "type": "logo",
+        "item_Gwwwqw": {
+          "type": "item",
           "settings": {
-            "image": "shopify://shop_images/logo_9ad8d4db-f463-45b9-9f87-2a2135ebc184.png",
-            "svg_code": "",
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
             "link": ""
           }
         },
-        "logo_aJJfXV": {
-          "type": "logo",
+        "item_ihAbmy": {
+          "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Inc_Mens_Health_Logo.png",
-            "svg_code": "",
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+)",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
             "link": ""
           }
         },
-        "logo_ykC6N9": {
-          "type": "logo",
+        "item_9Acwh3": {
+          "type": "item",
           "settings": {
-            "image": "shopify://shop_images/new-york-logo.png",
-            "svg_code": "",
+            "text": "BLACK FRIDAY STARTS NOW",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_nYi7KY": {
+          "type": "item",
+          "settings": {
+            "text": "20% OFF SITEWIDE",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
+            "link": ""
+          }
+        },
+        "item_TzhpH8": {
+          "type": "item",
+          "settings": {
+            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+)",
+            "icon": "custom",
+            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
             "link": ""
           }
         }
       },
       "block_order": [
-        "logo_kM6NW9",
-        "logo_PbytUe",
-        "logo_aJJfXV",
-        "logo_ykC6N9"
+        "item_BfrRdB",
+        "item_Gwwwqw",
+        "item_ihAbmy",
+        "item_9Acwh3",
+        "item_nYi7KY",
+        "item_TzhpH8"
       ],
-      "custom_css": [
-        ".nw-featured-marquee {border-bottom: 1px solid #4e2f1466;}"
-      ],
-      "name": "NW Featured Marquee",
+      "name": "t:sections.nw-marquee-v2.name",
       "settings": {
-        "heading": "as seen in",
-        "text_color": "#613916",
-        "enable_animation_desktop": true,
-        "enable_animation_mobile": true,
-        "direction": "rtl",
-        "speed": 30,
+        "enable_desktop_marquee": true,
+        "direction": "right_to_left",
+        "speed": 85,
         "pause_on_hover": true,
-        "show_edge_fade": true,
-        "gap_desktop": 36,
-        "gap_mobile": 18,
-        "logo_height_desktop": 48,
-        "logo_height_mobile": 40,
+        "font_weight": 600,
+        "font_size": 20,
+        "font_size_tablet": 16,
+        "font_size_mobile": 14,
+        "gap_desktop": 28,
+        "gap_mobile": 12,
+        "icon_size_desktop": 28,
+        "icon_size_mobile": 20,
+        "gap_icon_text": 4,
+        "marquee_height_desktop": 60,
+        "marquee_height_mobile": 44,
+        "padding_desktop": 16,
+        "padding_mobile": 12,
         "bg_type": "color",
-        "bg_color": "#fffcf0",
+        "bg_color": "#e9b949",
         "bg_gradient": "",
-        "padding_top_desktop": 24,
-        "padding_bottom_desktop": 24,
-        "padding_top_mobile": 16,
-        "padding_bottom_mobile": 16
+        "text_color": "#000000",
+        "icon_color": "#ffffff"
       }
     },
     "nw_marquee_xTGffW": {
@@ -510,98 +534,6 @@
         "padding_bottom_mobile": 48
       }
     },
-    "nw_marquee_v2_ntnTnh": {
-      "type": "nw-marquee-v2",
-      "blocks": {
-        "item_BfrRdB": {
-          "type": "item",
-          "settings": {
-            "text": "BLACK FRIDAY STARTS NOW",
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
-            "link": ""
-          }
-        },
-        "item_Gwwwqw": {
-          "type": "item",
-          "settings": {
-            "text": "20% OFF SITEWIDE",
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
-            "link": ""
-          }
-        },
-        "item_ihAbmy": {
-          "type": "item",
-          "settings": {
-            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+)",
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
-            "link": ""
-          }
-        },
-        "item_9Acwh3": {
-          "type": "item",
-          "settings": {
-            "text": "BLACK FRIDAY STARTS NOW",
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
-            "link": ""
-          }
-        },
-        "item_nYi7KY": {
-          "type": "item",
-          "settings": {
-            "text": "20% OFF SITEWIDE",
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
-            "link": ""
-          }
-        },
-        "item_TzhpH8": {
-          "type": "item",
-          "settings": {
-            "text": "Get 2 FREE PILLOWS + FREE Mattress protector ($650 Value+)",
-            "icon": "custom",
-            "custom_icon": "shopify://shop_images/TUS_-_Icons_4_f5c9f3b2-4fb1-49f5-a96b-bcd2c23af88c.png",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "item_BfrRdB",
-        "item_Gwwwqw",
-        "item_ihAbmy",
-        "item_9Acwh3",
-        "item_nYi7KY",
-        "item_TzhpH8"
-      ],
-      "name": "t:sections.nw-marquee-v2.name",
-      "settings": {
-        "enable_desktop_marquee": true,
-        "direction": "right_to_left",
-        "speed": 85,
-        "pause_on_hover": true,
-        "font_weight": 600,
-        "font_size": 20,
-        "font_size_tablet": 16,
-        "font_size_mobile": 14,
-        "gap_desktop": 28,
-        "gap_mobile": 12,
-        "icon_size_desktop": 28,
-        "icon_size_mobile": 20,
-        "gap_icon_text": 4,
-        "marquee_height_desktop": 60,
-        "marquee_height_mobile": 44,
-        "padding_desktop": 16,
-        "padding_mobile": 12,
-        "bg_type": "color",
-        "bg_color": "#e9b949",
-        "bg_gradient": "",
-        "text_color": "#000000",
-        "icon_color": "#ffffff"
-      }
-    },
     "nw_review_video_i4rgrQ": {
       "type": "nw-review-video",
       "blocks": {
@@ -730,6 +662,83 @@
         "padding_bottom_desktop": 80,
         "padding_top_mobile": 48,
         "padding_bottom_mobile": 48
+      }
+    },
+    "nw_featured_marquee_N7CNCN": {
+      "type": "nw-featured-marquee",
+      "blocks": {
+        "logo_PbytUe": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/logo_9ad8d4db-f463-45b9-9f87-2a2135ebc184.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_8WV3Jk": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Brown_Forbes_Serif_Wordmark.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_kM6NW9": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Inc_Logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_aJJfXV": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/Inc_Mens_Health_Logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_ykC6N9": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/new-york-logo.png",
+            "svg_code": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_PbytUe",
+        "logo_8WV3Jk",
+        "logo_kM6NW9",
+        "logo_aJJfXV",
+        "logo_ykC6N9"
+      ],
+      "custom_css": [
+        ".nw-featured-marquee {border-bottom: 1px solid #4e2f1466;}"
+      ],
+      "name": "NW Featured Marquee",
+      "settings": {
+        "heading": "as seen in",
+        "text_color": "#613916",
+        "enable_animation_desktop": true,
+        "enable_animation_mobile": true,
+        "direction": "rtl",
+        "speed": 30,
+        "pause_on_hover": true,
+        "show_edge_fade": true,
+        "gap_desktop": 36,
+        "gap_mobile": 18,
+        "logo_height_desktop": 48,
+        "logo_height_mobile": 40,
+        "bg_type": "color",
+        "bg_color": "#fffcf0",
+        "bg_gradient": "",
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 24,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16
       }
     },
     "nw_testimonials_GhpGXC": {
