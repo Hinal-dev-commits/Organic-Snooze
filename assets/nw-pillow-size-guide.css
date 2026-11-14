@@ -1,0 +1,388 @@
+/* Pillow size guide modal — scoped to nw-size-guide--pillow only */
+
+modal-dialog.nw-size-guide--pillow[open] {
+  z-index: calc(var(--nw-sticky-bar-drawer-z, 101) + 15);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__dialog.product-popup-modal__content {
+  width: min(720px, calc(100vw - 48px));
+  max-width: 720px;
+  border: 1px solid var(--nw-sg-border-color, #eadcc9);
+  border-radius: 16px;
+  box-shadow: 0 16px 32px rgba(33, 21, 9, 0.25098);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 32px;
+  padding: 32px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 0;
+  position: static;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__header::before,
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__header::after {
+  content: none;
+  display: none;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-size-guide__title-group {
+  gap: 4px;
+  max-width: calc(100% - 60px);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-size-guide__heading {
+  font-family: var(--font-heading-family);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  color: var(--nw-sg-heading-color, #613916);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-size-guide__subtext {
+  font-family: var(--font-body-family);
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--nw-sg-subtext-color, #9e7b5a);
+  max-width: none;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__close.product-popup-modal__toggle {
+  position: relative;
+  top: auto;
+  right: auto;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  border: 1px solid var(--nw-sg-border-color, #eadcc9);
+  border-radius: 20px;
+  background: var(--nw-sg-close-bg, #f4efe8);
+  color: var(--nw-sg-heading-color, #613916);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__close .icon {
+  width: 28px;
+  height: 28px;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__sizes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 48px;
+  padding: 0 0 16px;
+  margin: 0;
+  border-bottom: 1px solid var(--nw-sg-border-color, #eadcc9);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__size {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 170px;
+  max-width: 100%;
+  flex: 0 0 auto;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__visual {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 90px;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 90px;
+  height: auto;
+  object-fit: contain;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__body {
+  box-sizing: border-box;
+  height: 72px;
+  background: rgba(244, 239, 232, 0.6);
+  border: 1px solid var(--nw-sg-heading-color, #613916);
+  border-radius: 10px;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__body--standard {
+  width: 94px;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__body--queen {
+  width: 108px;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__body--king {
+  width: 130px;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__labels {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 100%;
+  text-align: center;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__name {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 21px;
+  color: var(--nw-sg-size-text-color, #613916);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__dimensions {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--nw-sg-size-subtext-color, #a08873);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__beds {
+  margin: 0;
+  font-family: var(--font-body-family);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 14px;
+  color: rgba(160, 136, 115, 0.75);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-heading {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--nw-sg-content-heading-color, #613916);
+  width: 100%;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-body {
+  font-family: var(--font-body-family);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--nw-sg-content-color, #613916);
+  text-align: center;
+  width: 100%;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-body ul {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  max-width: min(656px, 100%);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-body li {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 22px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-body li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: calc(0.5 * 1.4 * 1em);
+  width: 6px;
+  height: 6px;
+  margin: 0;
+  border-radius: 3px;
+  background: var(--nw-sg-heading-color, #613916);
+  transform: translateY(-50%);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-body strong {
+  display: inline;
+  font-weight: 700;
+  color: var(--nw-sg-heading-color, #613916);
+}
+
+modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-body p {
+  margin: 0;
+}
+
+@media screen and (max-width: 989px) {
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__sizes {
+    gap: 32px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__dialog.product-popup-modal__content {
+    width: calc(100% - 32px);
+    border-radius: 24px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__inner {
+    gap: 24px;
+    padding: 32px 16px;
+    max-height: calc(100vh - 2rem);
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-size-guide__heading {
+    font-size: 28px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-size-guide__subtext {
+    font-size: 13px;
+    line-height: 18px;
+    max-width: none;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__close.product-popup-modal__toggle {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__sizes {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 24px;
+    margin-inline: -16px;
+    padding: 0 16px 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(97, 57, 22, 0.35) transparent;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__sizes::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__sizes::-webkit-scrollbar-thumb {
+    background: rgba(97, 57, 22, 0.35);
+    border-radius: 4px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__size {
+    flex: 0 0 140px;
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+    scroll-snap-align: start;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__visual {
+    height: 72px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__body--standard {
+    width: 94px;
+    max-width: 94px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__body--queen {
+    width: 108px;
+    max-width: 108px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__body--king {
+    width: 130px;
+    max-width: 130px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__name {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__dimensions {
+    font-size: 11px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__beds {
+    font-size: 10px;
+    line-height: 13px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-heading {
+    font-size: 18px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-body {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__content-body ul {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__inner {
+    gap: 20px;
+    padding: 24px 16px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-size-guide__heading {
+    font-size: 24px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__sizes {
+    gap: 20px;
+  }
+
+  modal-dialog.nw-size-guide--pillow .nw-pillow-size-guide__size {
+    flex: 0 0 132px;
+    width: 132px;
+    min-width: 132px;
+    max-width: 132px;
+  }
+}

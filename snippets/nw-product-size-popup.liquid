@@ -4,7 +4,12 @@
 {% enddoc %}
 
 {%- liquid
-  assign modal_id = 'NwSizePopupModal-' | append: block.id
+  if modal_id_override != blank
+    assign modal_id = modal_id_override
+  else
+    assign modal_id = 'NwSizePopupModal-' | append: block.id
+  endif
+  assign size_guide_extra_class = extra_class | default: ''
   assign items_count = block.settings.items_count | default: 6
   if items_count < 1
     assign items_count = 1
@@ -14,7 +19,7 @@
   endif
 -%}
 
-<modal-dialog id="{{ modal_id }}" class="product-popup-modal nw-size-guide" {{ block.shopify_attributes }}>
+<modal-dialog id="{{ modal_id }}" class="product-popup-modal nw-size-guide{{ size_guide_extra_class }}" {{ block.shopify_attributes }}>
   <div
     role="dialog"
     aria-label="{{ block.settings.heading | default: 'Size Guide' | escape }}"

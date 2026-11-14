@@ -1,4 +1,4 @@
-{%- liquid
+﻿{%- liquid
   assign update_product_url = true
   assign is_nw_product_page = false
 
@@ -748,6 +748,7 @@
                 {%- when 'nw_freegift' -%}
                   {%- render 'nw-product-freegift', block: block, product: product -%}
                 {%- when 'nw_size_popup' -%}
+                {%- when 'nw_pillow_size_popup' -%}
                 {%- when 'nw_bedding_size_popup' -%}
                 {%- when 'bundle_tabs' -%}
                   {%- render 'nw-product-bundle-tabs', block: block, section: section -%}
@@ -977,6 +978,15 @@
       {%- endif -%}
       {%- for block in size_popups -%}
         {% render 'nw-product-size-popup', block: block %}
+      {%- endfor -%}
+
+      {% assign pillow_size_popups = section.blocks | where: 'type', 'nw_pillow_size_popup' %}
+      {%- if pillow_size_popups.size > 0 -%}
+        {{ 'nw-size-guide.css' | asset_url | stylesheet_tag }}
+        {{ 'nw-pillow-size-guide.css' | asset_url | stylesheet_tag }}
+      {%- endif -%}
+      {%- for block in pillow_size_popups -%}
+        {% render 'nw-product-pillow-size-popup', block: block %}
       {%- endfor -%}
 
       {% assign bedding_size_popups = section.blocks | where: 'type', 'nw_bedding_size_popup' %}
@@ -1547,7 +1557,7 @@
           "id": "size_option_name",
           "label": "Size Option Name",
           "default": "Select Size",
-          "info": "Enter the variant option name (e.g. Size) to show custom.variant_tag for that option. When size guide is enabled, custom.select_size is hidden."
+          "info": "Enter the variant option name (e.g. Size) to show custom.variant_tag for that option. When the size guide or pillow size guide is enabled, custom.select_size is hidden."
         },
         {
           "type": "checkbox",
@@ -1597,6 +1607,27 @@
           "label": "Bedding Size Guide Popup ID",
           "info": "Optional. Enter the same Popup link ID set on an NW Bedding Size Popup block. Leave blank to open the first NW Bedding Size Popup block in this section.",
           "visible_if": "{{ block.settings.show_bedding_size_guide == true }}"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_pillow_size_guide",
+          "label": "Show Pillow Size Guide",
+          "default": false,
+          "info": "Shows a Pillow Size Guide link on the size variant option. Opens the NW Pillow Size Popup block modal. Hides custom.select_size when enabled."
+        },
+        {
+          "type": "text",
+          "id": "pillow_size_guide_label",
+          "label": "Pillow Size Guide Link Label",
+          "default": "Size Guide",
+          "visible_if": "{{ block.settings.show_pillow_size_guide == true }}"
+        },
+        {
+          "type": "text",
+          "id": "pillow_size_guide_popup_id",
+          "label": "Pillow Size Guide Popup ID",
+          "info": "Optional. Enter the same Popup link ID set on an NW Pillow Size Popup block. Leave blank to open the first NW Pillow Size Popup block in this section.",
+          "visible_if": "{{ block.settings.show_pillow_size_guide == true }}"
         },
         {
           "type": "checkbox",
@@ -5866,6 +5897,422 @@
           "id": "item_3_subtext",
           "label": "Subtext",
           "default": "54\" × 75\"",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_3_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_3_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 4",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_4_text",
+          "label": "Text",
+          "default": "Queen",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_4_subtext",
+          "label": "Subtext",
+          "default": "60\" × 80\"",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_4_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_4_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 4 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 5",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_5_text",
+          "label": "Text",
+          "default": "King",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_5_subtext",
+          "label": "Subtext",
+          "default": "76\" × 80\"",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_5_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_5_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 5 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 6",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_6_text",
+          "label": "Text",
+          "default": "Cal King",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_6_subtext",
+          "label": "Subtext",
+          "default": "72\" × 84\"",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_6_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_6_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 6 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 7",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_7_text",
+          "label": "Text",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_7_subtext",
+          "label": "Subtext",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_7_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_7_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 7 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 8",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_8_text",
+          "label": "Text",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_8_subtext",
+          "label": "Subtext",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_8_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_8_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 8 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 9",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_9_text",
+          "label": "Text",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_9_subtext",
+          "label": "Subtext",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_9_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_9_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 9 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 10",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_10_text",
+          "label": "Text",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_10_subtext",
+          "label": "Subtext",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_10_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_10_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 10 }}"
+        }
+      ]
+    },
+    {
+      "type": "nw_pillow_size_popup",
+      "name": "NW Pillow Size Popup",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Pillow size guide popup modal. Set a Popup link ID below and paste the same value in the Variant picker Pillow Size Guide Popup ID field. If both are blank, the first popup block in this section is used."
+        },
+        {
+          "type": "text",
+          "id": "link_id",
+          "label": "Popup link ID",
+          "info": "Optional custom ID (e.g. pillow-size-guide). Must match the Variant picker Pillow Size Guide Popup ID when linking a specific popup."
+        },
+        {
+          "type": "range",
+          "id": "items_count",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "label": "Number of size items",
+          "default": 3
+        },
+        {
+          "type": "header",
+          "content": "Header"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Size Guide"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext",
+          "default": "Choose the right pillow size for your bed."
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "content_heading",
+          "label": "Content heading",
+          "default": "Understanding Your Size"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<ul><li><strong>Standard:</strong> One per sleeper on a twin or Twin XL, or two side by side on a full.</li><li><strong>Queen:</strong> Two fill a queen bed, and one per sleeper works well on a Twin XL.</li><li><strong>Split King:</strong> Each side is a Twin XL, so use one standard or queen pillow per side.</li><li><strong>King:</strong> Two span a king or Cal King bed; also great as a reading or back support pillow.</li><li><strong>Tip:</strong> Match your pillowcase or sham to your pillow size, not your bed size.</li></ul>"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "heading_color",
+          "label": "Heading",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "subtext_color",
+          "label": "Subtext",
+          "default": "#9E7B5A"
+        },
+        {
+          "type": "color",
+          "id": "size_text_color",
+          "label": "Size text",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "size_subtext_color",
+          "label": "Size subtext",
+          "default": "#A08873"
+        },
+        {
+          "type": "color",
+          "id": "content_heading_color",
+          "label": "Content heading",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "content_color",
+          "label": "Content text",
+          "default": "#613916"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border",
+          "default": "#EADDC9"
+        },
+        {
+          "type": "color",
+          "id": "close_bg_color",
+          "label": "Close button background",
+          "default": "#F4EFE8"
+        },
+        {
+          "type": "header",
+          "content": "Size items"
+        },
+        {
+          "type": "header",
+          "content": "Size 1",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_1_text",
+          "label": "Text",
+          "default": "Standard",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_1_subtext",
+          "label": "Subtext",
+          "default": "20\" × 26\" — Twin, Twin XL & full beds",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_1_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 1 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 2",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_2_text",
+          "label": "Text",
+          "default": "Queen",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_2_subtext",
+          "label": "Subtext",
+          "default": "20\" × 30\" — Queen, Twin XL & split king",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_image",
+          "label": "Image",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "item_2_image_mobile",
+          "label": "Mobile image",
+          "visible_if": "{{ block.settings.items_count >= 2 }}"
+        },
+        {
+          "type": "header",
+          "content": "Size 3",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_3_text",
+          "label": "Text",
+          "default": "King",
+          "visible_if": "{{ block.settings.items_count >= 3 }}"
+        },
+        {
+          "type": "text",
+          "id": "item_3_subtext",
+          "label": "Subtext",
+          "default": "20\" × 36\" — King & Cal King beds",
           "visible_if": "{{ block.settings.items_count >= 3 }}"
         },
         {

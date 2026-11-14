@@ -52,6 +52,7 @@
     endif
 
     assign size_guide_modal_id = blank
+    assign pillow_size_guide_modal_id = blank
     assign bedding_size_guide_modal_id = blank
     assign firmness_popup_modal_id = blank
     assign show_bedding_size_guide = block.settings.show_bedding_size_guide
@@ -72,6 +73,35 @@
     elsif show_firmness_guide
       assign firmness_popup_modal_id = 'NwFirmnessPopupModal-firmness-guide'
     endif
+    assign show_pillow_size_guide = block.settings.show_pillow_size_guide
+    if show_pillow_size_guide == nil
+      assign show_pillow_size_guide = false
+    endif
+    assign pillow_size_guide_label = block.settings.pillow_size_guide_label | strip
+    if pillow_size_guide_label == blank
+      assign pillow_size_guide_label = 'Size Guide'
+    endif
+    if show_pillow_size_guide
+      assign pillow_popup_block = blank
+      assign pillow_popup_id_setting = block.settings.pillow_size_guide_popup_id | strip
+      if pillow_popup_id_setting != blank
+        for pillow_popup_candidate in section.blocks
+          if pillow_popup_candidate.type == 'nw_pillow_size_popup'
+            assign pillow_popup_link_id = pillow_popup_candidate.settings.link_id | strip
+            if pillow_popup_link_id == pillow_popup_id_setting or pillow_popup_candidate.id == pillow_popup_id_setting
+              assign pillow_popup_block = pillow_popup_candidate
+              break
+            endif
+          endif
+        endfor
+      else
+        assign pillow_popup_block = section.blocks | where: 'type', 'nw_pillow_size_popup' | first
+      endif
+      if pillow_popup_block != blank
+        assign pillow_size_guide_modal_id = 'NwPillowSizePopupModal-' | append: pillow_popup_block.id
+      endif
+    endif
+
     if show_size_guide
       assign popup_block = blank
       assign popup_id_setting = block.settings.size_guide_popup_id | strip
@@ -168,6 +198,9 @@
               values_order: values_order,
               show_size_guide: show_size_guide,
               size_guide_modal_id: size_guide_modal_id,
+              show_pillow_size_guide: show_pillow_size_guide,
+              pillow_size_guide_label: pillow_size_guide_label,
+              pillow_size_guide_modal_id: pillow_size_guide_modal_id,
               show_bedding_size_guide: show_bedding_size_guide,
               bedding_size_guide_label: bedding_size_guide_label,
               bedding_size_guide_modal_id: bedding_size_guide_modal_id,
@@ -207,6 +240,9 @@
             values_order: values_order,
             show_size_guide: show_size_guide,
             size_guide_modal_id: size_guide_modal_id,
+            show_pillow_size_guide: show_pillow_size_guide,
+            pillow_size_guide_label: pillow_size_guide_label,
+            pillow_size_guide_modal_id: pillow_size_guide_modal_id,
             show_bedding_size_guide: show_bedding_size_guide,
             bedding_size_guide_label: bedding_size_guide_label,
             bedding_size_guide_modal_id: bedding_size_guide_modal_id,
@@ -242,6 +278,9 @@
           values_order: values_order,
           show_size_guide: show_size_guide,
           size_guide_modal_id: size_guide_modal_id,
+          show_pillow_size_guide: show_pillow_size_guide,
+          pillow_size_guide_label: pillow_size_guide_label,
+          pillow_size_guide_modal_id: pillow_size_guide_modal_id,
           show_bedding_size_guide: show_bedding_size_guide,
           bedding_size_guide_label: bedding_size_guide_label,
           bedding_size_guide_modal_id: bedding_size_guide_modal_id,

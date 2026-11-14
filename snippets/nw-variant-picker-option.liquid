@@ -14,6 +14,9 @@
   @param {string} [values_order] - Comma-separated value order
   @param {boolean} [show_size_guide] - Show size guide trigger
   @param {string} [size_guide_modal_id] - Modal id for size popup
+  @param {boolean} [show_pillow_size_guide] - Show pillow size guide trigger
+  @param {string} [pillow_size_guide_label] - Pillow size guide link label
+  @param {string} [pillow_size_guide_modal_id] - Modal id for pillow size popup
   @param {boolean} [show_bedding_size_guide] - Show bedding size guide trigger
   @param {string} [bedding_size_guide_label] - Bedding size guide link label
   @param {string} [bedding_size_guide_modal_id] - Modal id for bedding size popup
@@ -152,7 +155,20 @@
         {%- liquid
           assign size_guide_label = block.settings.size_guide_label | strip
         -%}
-        {%- if show_size_guide and size_guide_modal_id != blank and size_guide_label != blank -%}
+        {%- if show_pillow_size_guide and pillow_size_guide_modal_id != blank and pillow_size_guide_label != blank -%}
+          <modal-opener
+            class="nw-variant-picker__size-guide-opener"
+            data-modal="#{{ pillow_size_guide_modal_id }}"
+          >
+            <button
+              type="button"
+              class="nw-variant-picker__size-guide link"
+              aria-haspopup="dialog"
+            >
+              {{ pillow_size_guide_label | escape }}
+            </button>
+          </modal-opener>
+        {%- elsif show_size_guide and size_guide_modal_id != blank and size_guide_label != blank -%}
           <modal-opener
             class="nw-variant-picker__size-guide-opener"
             data-modal="#{{ size_guide_modal_id }}"
@@ -165,7 +181,7 @@
               {{ size_guide_label | escape }}
             </button>
           </modal-opener>
-        {%- elsif show_size_guide == false and select_size_text != blank -%}
+        {%- elsif show_size_guide == false and show_pillow_size_guide == false and select_size_text != blank -%}
           <span class="nw-variant-picker__size-desc">{{ select_size_text }}</span>
         {%- endif -%}
       {%- endif -%}
