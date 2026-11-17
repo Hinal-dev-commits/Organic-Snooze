@@ -10,9 +10,9 @@
     endif
   -%}
   <head>
-  {% comment %}Loads Shogun Analytics. Removing this will disrupt analytics data collection.{% endcomment %}
-  <script type="text/javascript" async src="https://na.shgcdn3.com/pixel-collector.js"></script>
-{% render 'replo-head' %}
+    {% comment %}Loads Shogun Analytics. Removing this will disrupt analytics data collection.{% endcomment %}
+    <script type="text/javascript" async src="https://na.shgcdn3.com/pixel-collector.js"></script>
+    {% render 'replo-head' %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -48,17 +48,21 @@
       customElements.define('collection-component', StandardEvents.createViewEventElement());
       customElements.define(
         'product-component',
-        StandardEvents.createViewEventElement(HTMLElement, { defaultTrigger: 'intersect' }),
+        StandardEvents.createViewEventElement(HTMLElement, { defaultTrigger: 'intersect' })
       );
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const template = document.querySelector('main[data-template]')?.dataset.template || '';
-        document.dispatchEvent(
-          new StandardEvents.PageViewEvent({
-            page: { template, title: document.title, url: window.location.href },
-          })
-        );
-      }, { once: true });
+      document.addEventListener(
+        'DOMContentLoaded',
+        () => {
+          const template = document.querySelector('main[data-template]')?.dataset.template || '';
+          document.dispatchEvent(
+            new StandardEvents.PageViewEvent({
+              page: { template, title: document.title, url: window.location.href },
+            })
+          );
+        },
+        { once: true }
+      );
     </script>
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
@@ -88,7 +92,10 @@
     {%- comment -%} NW body type: DM Sans, only the weights this theme uses. {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    >
     {{ 'nw-swiper-bundle.min.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'nw-swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'nw-when-swiper-ready.js' | asset_url }}" defer="defer"></script>
@@ -104,10 +111,16 @@
       {% render 'nw-toxin-trade-in-page-head' %}
     {%- endif -%}
 
-  {% render 'shogun-head' %}
-  {%- comment -%} Gohighlevel code {%- endcomment -%}
-  <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6aa1684faa1a4795583990d8" data-source="WEB_USER" defer></script>
-</head>
+    {% render 'shogun-head' %}
+    {%- comment -%} Gohighlevel code {%- endcomment -%}
+    <script
+      src="https://widgets.leadconnectorhq.com/loader.js"
+      data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+      data-widget-id="6aa1684faa1a4795583990d8"
+      data-source="WEB_USER"
+      defer
+    ></script>
+  </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} nw-theme-{{ template.name }}">
     <div id="scrollbar-measure">
@@ -161,5 +174,188 @@
       {{ 'nw-toxin-trade-in-page.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-  <!-- TUS: fold free-gift tags in UpCart cart (BFCM 2026). Delete this line to undo. --><script>!function(){if(!window.__tusFoldGifts){window.__tusFoldGifts=!0;var t="tus-fold-gifts-style",e=".upcart-public-cart-summary__slide-codes",n="upcart-public-component-tag",r=!1,o=!1,i=0;!function n(){var o,a=document.getElementById("upCart");if(a&&a.shadowRoot)return c(o=a.shadowRoot),new MutationObserver(function(){c(o)}).observe(o,{childList:!0,subtree:!0,characterData:!0}),void o.addEventListener("click",function(n){try{var i=o.querySelector(e);if(!i||n.target!==i)return;var a=o.getElementById(t);if(!a||!a.textContent)return;r=!r,c(o)}catch(t){}});200>++i&&setTimeout(n,300)}()}function c(i){if(!o){o=!0;try{var c=i.querySelector(e),a=c?function(t){var o=Array.prototype.slice.call(t.children),i=[],c=0;if(o.forEach(function(t,e){if(t.classList&&t.classList.contains(n)){var r=t.querySelector("."+n+"__text");r&&/\bfree\b/i.test(r.textContent||"")?i.push(e+1):c++}}),!i.length||!c)return"";var a=e+'::after{content:"'+(r?"Show less":"+"+i.length+(1===i.length?" free gift":" free gifts"))+'";cursor:pointer;align-self:center;font-size:11.5px;line-height:17px;font-weight:600;text-transform:uppercase;text-decoration:underline;text-underline-offset:2px;color:#613916;padding:1px 2px;white-space:nowrap;}';return r?a:i.map(function(t){return e+">:nth-child("+t+")"}).join(",")+"{display:none!important;}"+a}(c):"",s=i.getElementById(t);s||((s=document.createElement("style")).id=t,i.appendChild(s)),s.textContent!==a&&(s.textContent=a)}catch(e){try{var l=i.getElementById(t);l&&(l.textContent="")}catch(t){}}o=!1}}}();</script><!-- TUS: show free ($0) cart items below paid items in UpCart (BFCM 2026). Delete this line to undo. --><script>!function(){if(!window.__tusGiftOrder){window.__tusGiftOrder=!0;var t="tus-gift-order-style",e=".upcart-public-cart-items",n=".upcart-public-component-product-tile",r=!1,i=0;!function t(){var e,n=document.getElementById("upCart");if(n&&n.shadowRoot)return o(e=n.shadowRoot),void new MutationObserver(function(){o(e)}).observe(e,{childList:!0,subtree:!0,characterData:!0});200>++i&&setTimeout(t,300)}()}function o(i){if(!r){r=!0;try{var o=i.querySelector(e),c=o?function(t){var r=Array.prototype.slice.call(t.children),i=[],o=0,c=0;if(r.forEach(function(t,e){t.classList&&t.classList.contains("upcart-public-cart-item")&&(c=e+1,function(t){var e=t.querySelector(".upcart-public-component-product-tile__price");if(!e)return!1;var n=(e.textContent||"").replace(/[^0-9]/g,"");return n.length>0&&/^0+$/.test(n)}(t)?i.push(e+1):o++)}),!i.length||!o)return"";var a=i[i.length-1],u=e+"{display:flex!important;flex-direction:column!important;}"+i.map(function(t){return e+">:nth-child("+t+")"}).join(",")+"{order:1;}";return a!==c&&(u+=e+">:nth-child("+c+") "+n+"{padding-bottom:0!important;}"+e+">:nth-child("+a+") "+n+"{padding-bottom:24px!important;}@media screen and (max-width:749px){"+e+">:nth-child("+a+") "+n+"{padding-bottom:20px!important;}}"),u}(o):"",a=i.getElementById(t);a||((a=document.createElement("style")).id=t,i.appendChild(a)),a.textContent!==c&&(a.textContent=c)}catch(e){try{var u=i.getElementById(t);u&&(u.textContent="")}catch(t){}}r=!1}}}();</script></body>
+    <!-- TUS: fold free-gift tags in UpCart cart (BFCM 2026). Delete this line to undo. -->
+    <script>
+      !(function () {
+        if (!window.__tusFoldGifts) {
+          window.__tusFoldGifts = !0;
+          var t = 'tus-fold-gifts-style',
+            e = '.upcart-public-cart-summary__slide-codes',
+            n = 'upcart-public-component-tag',
+            r = !1,
+            o = !1,
+            i = 0;
+          !(function n() {
+            var o,
+              a = document.getElementById('upCart');
+            if (a && a.shadowRoot)
+              return (
+                c((o = a.shadowRoot)),
+                new MutationObserver(function () {
+                  c(o);
+                }).observe(o, { childList: !0, subtree: !0, characterData: !0 }),
+                void o.addEventListener('click', function (n) {
+                  try {
+                    var i = o.querySelector(e);
+                    if (!i || n.target !== i) return;
+                    var a = o.getElementById(t);
+                    if (!a || !a.textContent) return;
+                    (r = !r), c(o);
+                  } catch (t) {}
+                })
+              );
+            200 > ++i && setTimeout(n, 300);
+          })();
+        }
+        function c(i) {
+          if (!o) {
+            o = !0;
+            try {
+              var c = i.querySelector(e),
+                a = c
+                  ? (function (t) {
+                      var o = Array.prototype.slice.call(t.children),
+                        i = [],
+                        c = 0;
+                      if (
+                        (o.forEach(function (t, e) {
+                          if (t.classList && t.classList.contains(n)) {
+                            var r = t.querySelector('.' + n + '__text');
+                            r && /\bfree\b/i.test(r.textContent || '') ? i.push(e + 1) : c++;
+                          }
+                        }),
+                        !i.length || !c)
+                      )
+                        return '';
+                      var a =
+                        e +
+                        '::after{content:"' +
+                        (r ? 'Show less' : '+' + i.length + (1 === i.length ? ' free gift' : ' free gifts')) +
+                        '";cursor:pointer;align-self:center;font-size:11.5px;line-height:17px;font-weight:600;text-transform:uppercase;text-decoration:underline;text-underline-offset:2px;color:#613916;padding:1px 2px;white-space:nowrap;}';
+                      return r
+                        ? a
+                        : i
+                            .map(function (t) {
+                              return e + '>:nth-child(' + t + ')';
+                            })
+                            .join(',') +
+                            '{display:none!important;}' +
+                            a;
+                    })(c)
+                  : '',
+                s = i.getElementById(t);
+              s || (((s = document.createElement('style')).id = t), i.appendChild(s)),
+                s.textContent !== a && (s.textContent = a);
+            } catch (e) {
+              try {
+                var l = i.getElementById(t);
+                l && (l.textContent = '');
+              } catch (t) {}
+            }
+            o = !1;
+          }
+        }
+      })();
+    </script>
+    <!-- TUS: show free ($0) cart items below paid items in UpCart (BFCM 2026). Delete this line to undo. -->
+    <script>
+      !(function () {
+        if (!window.__tusGiftOrder) {
+          window.__tusGiftOrder = !0;
+          var t = 'tus-gift-order-style',
+            e = '.upcart-public-cart-items',
+            n = '.upcart-public-component-product-tile',
+            r = !1,
+            i = 0;
+          !(function t() {
+            var e,
+              n = document.getElementById('upCart');
+            if (n && n.shadowRoot)
+              return (
+                o((e = n.shadowRoot)),
+                void new MutationObserver(function () {
+                  o(e);
+                }).observe(e, { childList: !0, subtree: !0, characterData: !0 })
+              );
+            200 > ++i && setTimeout(t, 300);
+          })();
+        }
+        function o(i) {
+          if (!r) {
+            r = !0;
+            try {
+              var o = i.querySelector(e),
+                c = o
+                  ? (function (t) {
+                      var r = Array.prototype.slice.call(t.children),
+                        i = [],
+                        o = 0,
+                        c = 0;
+                      if (
+                        (r.forEach(function (t, e) {
+                          t.classList &&
+                            t.classList.contains('upcart-public-cart-item') &&
+                            ((c = e + 1),
+                            (function (t) {
+                              var e = t.querySelector('.upcart-public-component-product-tile__price');
+                              if (!e) return !1;
+                              var n = (e.textContent || '').replace(/[^0-9]/g, '');
+                              return n.length > 0 && /^0+$/.test(n);
+                            })(t)
+                              ? i.push(e + 1)
+                              : o++);
+                        }),
+                        !i.length || !o)
+                      )
+                        return '';
+                      var a = i[i.length - 1],
+                        u =
+                          e +
+                          '{display:flex!important;flex-direction:column!important;}' +
+                          i
+                            .map(function (t) {
+                              return e + '>:nth-child(' + t + ')';
+                            })
+                            .join(',') +
+                          '{order:1;}';
+                      return (
+                        a !== c &&
+                          (u +=
+                            e +
+                            '>:nth-child(' +
+                            c +
+                            ') ' +
+                            n +
+                            '{padding-bottom:0!important;}' +
+                            e +
+                            '>:nth-child(' +
+                            a +
+                            ') ' +
+                            n +
+                            '{padding-bottom:24px!important;}@media screen and (max-width:749px){' +
+                            e +
+                            '>:nth-child(' +
+                            a +
+                            ') ' +
+                            n +
+                            '{padding-bottom:20px!important;}}'),
+                        u
+                      );
+                    })(o)
+                  : '',
+                a = i.getElementById(t);
+              a || (((a = document.createElement('style')).id = t), i.appendChild(a)),
+                a.textContent !== c && (a.textContent = c);
+            } catch (e) {
+              try {
+                var u = i.getElementById(t);
+                u && (u.textContent = '');
+              } catch (t) {}
+            }
+            r = !1;
+          }
+        }
+      })();
+    </script>
+  </body>
 </html>

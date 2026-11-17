@@ -111,15 +111,18 @@
       >
         {%- if section.blocks.first.settings.text != blank -%}
           <div class="announcement-bar__message h5 rte">
-           <span>{{ section.blocks.first.settings.text }}</span>
-           {%- if section.blocks.first.settings.link_text != blank -%}
-            {% if section.blocks.first.settings.show_divider == true %}
-              <span class="announcement-bar__link-divider"></span>
-            {% endif %}
-            <a href="{{ section.blocks.first.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
-              {{ section.blocks.first.settings.link_text }}
-            </a>
-           {%- endif -%}
+            <span>{{ section.blocks.first.settings.text }}</span>
+            {%- if section.blocks.first.settings.link_text != blank -%}
+              {% if section.blocks.first.settings.show_divider == true %}
+                <span class="announcement-bar__link-divider"></span>
+              {% endif %}
+              <a
+                href="{{ section.blocks.first.settings.link }}"
+                class="announcement-bar__link link link--text focus-inset animate-arrow"
+              >
+                {{ section.blocks.first.settings.link_text }}
+              </a>
+            {%- endif -%}
           </div>
         {%- endif -%}
       </div>
@@ -178,7 +181,10 @@
                         {% if block.settings.show_divider == true %}
                           <span class="announcement-bar__link-divider"></span>
                         {% endif %}
-                        <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                        <a
+                          href="{{ block.settings.link }}"
+                          class="announcement-bar__link link link--text focus-inset animate-arrow"
+                        >
                           {{ block.settings.link_text }}
                         </a>
                       {%- elsif block.settings.link != blank -%}
@@ -319,13 +325,13 @@
       "unit": "s",
       "label": "t:sections.announcement-bar.settings.change_slides_speed.label",
       "default": 5
-    },    
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-4"
-    },  
+    },
     {
       "type": "checkbox",
       "id": "show_line_separator",
@@ -338,8 +344,8 @@
     },
     {
       "type": "paragraph",
-         "content": "t:sections.announcement-bar.settings.paragraph.content"
-    },             
+      "content": "t:sections.announcement-bar.settings.paragraph.content"
+    },
     {
       "type": "checkbox",
       "id": "show_social",
