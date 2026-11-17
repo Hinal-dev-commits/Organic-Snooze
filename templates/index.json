@@ -646,6 +646,7 @@
         "logo_PbytUe": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/table-logo.svg",
             "svg_code": "",
             "link": ""
           }
@@ -653,6 +654,7 @@
         "logo_8WV3Jk": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/payment-method-icon-6.svg",
             "svg_code": "",
             "link": ""
           }
@@ -660,6 +662,15 @@
         "logo_kM6NW9": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/table-logo.svg",
+            "svg_code": "",
+            "link": ""
+          }
+        },
+        "logo_AXTWVq": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/table-logo.svg",
             "svg_code": "",
             "link": ""
           }
@@ -667,13 +678,7 @@
         "logo_aJJfXV": {
           "type": "logo",
           "settings": {
-            "svg_code": "",
-            "link": ""
-          }
-        },
-        "logo_ykC6N9": {
-          "type": "logo",
-          "settings": {
+            "image": "shopify://shop_images/judge-me-logo.png",
             "svg_code": "",
             "link": ""
           }
@@ -683,8 +688,8 @@
         "logo_PbytUe",
         "logo_8WV3Jk",
         "logo_kM6NW9",
-        "logo_aJJfXV",
-        "logo_ykC6N9"
+        "logo_AXTWVq",
+        "logo_aJJfXV"
       ],
       "custom_css": [
         ".nw-featured-marquee {border-bottom: 1px solid #4e2f1466;}"
@@ -693,7 +698,7 @@
       "settings": {
         "heading": "as seen in",
         "text_color": "#613916",
-        "enable_animation_desktop": true,
+        "enable_animation_desktop": false,
         "enable_animation_mobile": true,
         "direction": "rtl",
         "speed": 30,
