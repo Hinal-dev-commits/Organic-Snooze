@@ -53,17 +53,6 @@
             "margin_bottom_mobile": 0
           }
         },
-        "affirm_pay_over_time_messaging_product_block_mrJq7J": {
-          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
-          "settings": {
-            "logo_align": "left",
-            "font_size": 16,
-            "logo_color": "blue",
-            "logo_type": "logo",
-            "public_api_key": "",
-            "price_selector": ""
-          }
-        },
         "nw_benifits_list_NGGwWJ": {
           "type": "nw_benifits_list",
           "disabled": true,
@@ -481,7 +470,6 @@
         "title",
         "description",
         "price",
-        "affirm_pay_over_time_messaging_product_block_mrJq7J",
         "nw_benifits_list_NGGwWJ",
         "icon_text_tRPNk9",
         "icon_text_cKXLDG",
@@ -1389,20 +1377,6 @@
     },
     "1788864992be3bc876": {
       "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_pXtGWM": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_pXtGWM"
-      ],
       "settings": {
         "include_margins": true
       }

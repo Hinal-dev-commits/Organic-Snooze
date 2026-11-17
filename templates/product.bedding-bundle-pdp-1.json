@@ -66,25 +66,6 @@
             "margin_bottom_mobile": 0
           }
         },
-        "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA": {
-          "type": "shopify://apps/nw-ultimate-snooze-bundles/blocks/kit-product-block/01a0e2cc-18cc-7f11-97f3-0e082ec14e7f",
-          "settings": {
-            "product": "{{ section.settings.product }}",
-            "save_label": "Save [percentage]%"
-          }
-        },
-        "affirm_pay_over_time_messaging_product_block_mpCiRU": {
-          "type": "shopify://apps/affirm-pay-over-time-messaging/blocks/product-block/6dce54be-130d-4d13-9636-1e8f611b3071",
-          "disabled": true,
-          "settings": {
-            "logo_align": "left",
-            "font_size": 14,
-            "logo_color": "blue",
-            "logo_type": "logo",
-            "public_api_key": "",
-            "price_selector": ""
-          }
-        },
         "nw_benifits_list_xTL4Mb": {
           "type": "nw_benifits_list",
           "disabled": true,
@@ -468,8 +449,6 @@
         "title",
         "description",
         "price",
-        "nw_ultimate_snooze_bundles_kit_product_block_LwRxBA",
-        "affirm_pay_over_time_messaging_product_block_mpCiRU",
         "nw_benifits_list_xTL4Mb",
         "icon_text_WTq7CJ",
         "icon_text_Nwcnpt",
@@ -1580,20 +1559,6 @@
     },
     "178886477090f48344": {
       "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_FqJCfD": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_FqJCfD"
-      ],
       "settings": {
         "include_margins": true
       }
