@@ -698,7 +698,7 @@
       "settings": {
         "heading": "as seen in",
         "text_color": "#613916",
-        "enable_animation_desktop": false,
+        "enable_animation_desktop": true,
         "enable_animation_mobile": true,
         "direction": "rtl",
         "speed": 30,
@@ -807,6 +807,7 @@
         "layer_card_tBXUWG": {
           "type": "layer_card",
           "settings": {
+            "image": "shopify://shop_images/image_19.png",
             "title": "Organic Cotton",
             "icon": "check",
             "feature_text": "soft, breathable surface"
@@ -971,7 +972,7 @@
         "show_dots": true,
         "enable_autoplay": true,
         "autoplay_delay": 4,
-        "bg_type": "image",
+        "bg_type": "color",
         "bg_color": "#ffffffcc",
         "bg_color_image": "#ffffff",
         "bg_image_opacity": 16,
@@ -1112,27 +1113,23 @@
         "featured_logo_JaG9JE": {
           "type": "featured_logo",
           "settings": {
+            "image": "shopify://shop_images/table-logo.svg",
             "link": "",
             "logo_width": 120
           }
         },
-        "featured_logo_XMbmAG": {
+        "featured_logo_aJPdEQ": {
           "type": "featured_logo",
           "settings": {
+            "image": "shopify://shop_images/table-logo.svg",
             "link": "",
             "logo_width": 120
           }
         },
-        "featured_logo_qxgUVq": {
+        "featured_logo_hdMedJ": {
           "type": "featured_logo",
           "settings": {
-            "link": "",
-            "logo_width": 180
-          }
-        },
-        "featured_logo_q4DNmB": {
-          "type": "featured_logo",
-          "settings": {
+            "image": "shopify://shop_images/table-logo.svg",
             "link": "",
             "logo_width": 120
           }
@@ -1142,7 +1139,7 @@
           "settings": {
             "tag": "Recovery Insight #5",
             "quote": "<p>Your mattress could be your longest chemical exposure of the day. Seven to nine hours in direct contact with materials that may release VOCs.</p>",
-            "icon": "none"
+            "icon": "thermometer"
           }
         },
         "insight_slide_mabwVK": {
@@ -1172,9 +1169,8 @@
       },
       "block_order": [
         "featured_logo_JaG9JE",
-        "featured_logo_XMbmAG",
-        "featured_logo_qxgUVq",
-        "featured_logo_q4DNmB",
+        "featured_logo_aJPdEQ",
+        "featured_logo_hdMedJ",
         "insight_slide_xzrpk9",
         "insight_slide_mabwVK",
         "insight_slide_Y9r6UU",
@@ -1198,6 +1194,7 @@
         "role": "Longevity Expert & Co-founder of The Ultimate Snooze",
         "quote": "<p>\"I spent years using bloodwork and biomarkers in the life insurance industry to predict who was most likely to die early. That experience led me to dedicate my career to helping people live healthier, longer lives through The Ultimate Human.</p><p>While reducing unnecessary toxic exposure in my own life, I realized I had overlooked the one place we spend nearly one third of our lives, &nbsp;my mattress. I couldn't find a truly organic mattress that aligned with my philosophy on health and recovery, so I partnered with mattress expert Matt Smith to build one.\"</p><p><strong>We built Ultimate Snooze around one simple belief: better sleep creates a better life.</strong></p>",
         "media_type_desktop": "image",
+        "image": "shopify://shop_images/custom-review.png",
         "media_type_mobile": "image",
         "video_autoplay": true,
         "show_btn_1": true,
