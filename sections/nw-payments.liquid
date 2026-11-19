@@ -93,7 +93,10 @@
               <h3 class="nw-payments__title">{{ block.settings.title | escape }}</h3>
             {% endif %}
 
-            {% if block.settings.subtitle != blank or block.settings.description != blank or block.settings.description_2 != blank %}
+            {% if block.settings.subtitle != blank
+              or block.settings.description != blank
+              or block.settings.description_2 != blank
+            %}
               <hr class="nw-payments__divider">
             {% endif %}
 
