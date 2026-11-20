@@ -230,11 +230,30 @@
       "empty": "Add products to the custom.bundle metafield to show this block.",
       "empty_product_list": "Select products in the block settings to show this block.",
       "select_one": "Select at least one add-on to add to cart.",
-      "unavailable": "One or more selected items are unavailable."
+      "unavailable": "One or more selected items are unavailable.",
+      "save_badge": "{{ amount }} 절약",
+      "bundle_price_badge": "번들 가격, {{ amount }} 절약",
+      "subtitle_optional": "선택 사항, 번들 구매 시 {{ percent }}% 절약",
+      "added_summary": "__COUNT__ 추가됨, __AMOUNT__ 절약됨",
+      "preview_summary_default": "시트, 패드, 베개 및 매트리스 베이스",
+      "drawer_title_default": "추가 유기농 침구류",
+      "details": "세부 사항",
+      "quick_view": "빠른 보기",
+      "why_love_it": "왜 좋아하실까요?",
+      "specs": "사양",
+      "warranty_returns": "보증 및 반품",
+      "view_full_product": "전체 제품 페이지 보기",
+      "add_to_bundle": "번들에 추가 · __가격__",
+      "mount_selected_count": "__COUNT__개 선택됨"
     },
     "bundle_tabs": {
       "empty": "Add Included product tab blocks and select a product for each tab.",
       "empty_tab": "Select a product for this tab."
+    },
+    "freegift": {
+      "empty_metafield": "이 블록을 표시하려면 custom.free_gifts 메타필드에 제품을 추가하세요.",
+      "empty_product_list": "이 블록을 표시하려면 블록 설정에서 선물 상품을 선택하세요.",
+      "value_label": "값"
     }
   },
   "templates": {
